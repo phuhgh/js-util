@@ -1,0 +1,12 @@
+{
+  "name": "js-util",
+  "version": "0.0.0",
+  "main": "bin/index.js",
+  "scripts": {
+    "postinstall": "tsc"
+  },
+  "dependencies": {
+    "typescript": "2.4.x"
+  },
+  "private": true
+}

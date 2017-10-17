@@ -1,0 +1,4 @@
+bin/
+.vs/
+node_modules/
+js-util.njsproj.user
