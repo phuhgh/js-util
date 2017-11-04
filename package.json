@@ -6,7 +6,7 @@
     "postinstall": "tsc"
   },
   "dependencies": {
-    "typescript": "2.4.x"
+    "typescript": "2.6.x"
   },
   "private": true
 }
