@@ -12,7 +12,6 @@
     "sourceMap": true,
     "lib": [
       "es5"
-    ],
-    "typeRoots": []
+    ]
   }
 }

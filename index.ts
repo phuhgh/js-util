@@ -1,18 +1,7 @@
-﻿export interface IDictionary<T>
-{
-    [index: string]: T;
-}
+﻿export { IDictionary } from "./models/i-dictionary";
+export { TIndexableProp } from "./models/t-indexable-prop";
 
-export function undictionaryify<T>(d: IDictionary<T>): T[]
-{
-    const keys = Object.keys(d);
-    const l = keys.length;
-    const a = new Array<T>(l);
-
-    for (let i = 0; i < l; ++i)
-    {
-        a[i] = d[keys[i]];
-    }
-
-    return a;
-}
+export { arrayToDictionary } from "./conversions/array-to-dictionary";
+export { dictionaryToArray } from "./conversions/dictionary-to-array";
+export { cloneExtendObject } from "./conversions/clone-extend-object";
+export { extendObject } from "./conversions/extend-object";

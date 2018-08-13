@@ -1,0 +1,1 @@
+export type TIndexableProp<T extends object, TKey extends keyof T> = T[TKey] & (string | number);
