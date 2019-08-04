@@ -1,0 +1,4 @@
+PackageName:Underscore.js
+PackageVersion:1.10.2
+PackageHomePage:https://www.npmjs.com/package/underscore
+CreatorComment: binary find impl

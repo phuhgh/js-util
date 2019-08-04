@@ -1,25 +1,25 @@
-import { TIndexableProp } from "../models/t-indexable-prop";
-import { IDictionary } from "../models/i-dictionary";
-import { Debug } from "../debug/debug";
+import { _Debug } from "../../debug/_debug";
+import { IDictionary } from "../../i-dictionary";
+import { TIndexableProp } from "../../t-indexable-prop";
 
-export function arrayToDictionary<T extends object, TKey extends keyof T, TProp extends TIndexableProp<T, TKey>>(
+export function arrayIndexByKey<T extends object, TKey extends keyof T>(
     a: T[],
     keyOn: TKey,
     allowDuplicates?: boolean,
 ): IDictionary<T>
 {
-    DEBUG_MODE && Debug.runBlock(() =>
+    DEBUG_MODE && _Debug.runBlock(() =>
     {
         const keysIHaveSeenBefore: IDictionary<true | undefined> = {};
 
         for (let i = 0, l = a.length; i < l; ++i)
         {
             const key = a[i][keyOn] as TIndexableProp<T, TKey>;
-            Debug.assert(key != null, "DEBUG: do not use null / undefined as a key");
+            _Debug.assert(key != null, "DEBUG: do not use null / undefined as a key");
 
-            if (allowDuplicates == null || allowDuplicates === false)
+            if (allowDuplicates == null || !allowDuplicates)
             {
-                Debug.assert(keysIHaveSeenBefore[key] == null, "DEBUG: key appeared more than once");
+                _Debug.assert(keysIHaveSeenBefore[key] == null, "DEBUG: key appeared more than once");
                 keysIHaveSeenBefore[key] = true;
             }
         }

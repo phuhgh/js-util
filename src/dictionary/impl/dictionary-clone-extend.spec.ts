@@ -1,12 +1,20 @@
-import { cloneExtendObject } from "./clone-extend-object";
+import { _Debug } from "../../debug/_debug";
+import { dictionaryCloneExtend } from "./dictionary-clone-extend";
 
-describe("=> cloneExtendObject", () =>
+/* tslint:disable:newline-per-chained-call */
+describe("=> dictionaryCloneExtend", () =>
 {
+    beforeEach(() =>
+    {
+        _Debug.setFlag("DEBUG_MODE");
+        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT");
+    });
+
     it("| returns a new object, overwriting with the extension where common", () =>
     {
         const obj = { foo: true };
         const ext = { foo: false, moo: false };
-        const result = cloneExtendObject(obj, ext);
+        const result = dictionaryCloneExtend(obj, ext);
 
         const expectation = {
             foo: false,

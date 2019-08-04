@@ -1,6 +1,8 @@
-import { arrayToDictionary } from "./array-to-dictionary";
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../test-utils";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
+import { _Debug } from "../../debug/_debug";
+import { arrayIndexByKey } from "./array-index-by-key";
 
+/* tslint:disable:newline-per-chained-call */
 describe("=> arrayToDictionary", () =>
 {
     const testData = [
@@ -11,17 +13,18 @@ describe("=> arrayToDictionary", () =>
 
     beforeEach(() =>
     {
-        (DEBUG_MODE as boolean) = true;
+        _Debug.setFlag("DEBUG_MODE");
+        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT");
     });
 
     itShouldNotRunDebugWhenDebugIsFalse(() =>
     {
-        arrayToDictionary([{ k: "a" }], "k");
+        arrayIndexByKey([{ k: "a" }], "k");
     });
 
     it("| assigns the array elements by the key", () =>
         {
-            const actual = arrayToDictionary(testData, "k");
+            const actual = arrayIndexByKey(testData, "k");
 
             const expected = {
                 a: { k: "a" },
@@ -41,29 +44,29 @@ describe("=> arrayToDictionary", () =>
             { k: "a" },
         ];
 
-        describe("| false / undefined", () =>
+        describe("=> false / undefined", () =>
         {
             itShouldCallAssert(6, () =>
             {
-                arrayToDictionary(testData, "k");
+                arrayIndexByKey(testData, "k");
             });
 
             it("| errors when there are duplicates", () =>
             {
-                expect(() => arrayToDictionary(dataWithDupes, "k")).toThrow();
+                expect(() => arrayIndexByKey(dataWithDupes, "k")).toThrow();
             });
         });
 
-        describe("| true", () =>
+        describe("=> true", () =>
         {
             itShouldCallAssert(3, () =>
             {
-                arrayToDictionary(testData, "k", true);
+                arrayIndexByKey(testData, "k", true);
             });
 
             it("| returns object without duplicates", () =>
             {
-                const actual = arrayToDictionary(dataWithDupes, "k");
+                const actual = arrayIndexByKey(dataWithDupes, "k", true);
                 const expected = {
                     a: { k: "a" },
                     b: { k: "b" },

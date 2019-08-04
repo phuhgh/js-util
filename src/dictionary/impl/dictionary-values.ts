@@ -1,6 +1,6 @@
-import { IDictionary } from "../models/i-dictionary";
+import { IDictionary } from "../../i-dictionary";
 
-export function dictionaryToArray<T>(d: IDictionary<T>): T[]
+export function dictionaryValues<T>(d: IDictionary<T>): T[]
 {
     const keys = Object.keys(d);
     const l = keys.length;
