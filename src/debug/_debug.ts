@@ -17,7 +17,7 @@ export class _Debug
         return true;
     }
 
-    public static assert(condition: boolean, errorMessage: string): void
+    public static assert(condition: boolean, errorMessage: string): boolean
     {
         if (!condition)
         {
@@ -29,9 +29,11 @@ export class _Debug
 
             throw new Error(`assert fail: ${errorMessage}`);
         }
+
+        return true;
     }
 
-    public static error(message: string): void
+    public static error(message: string): boolean
     {
         if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
         {
