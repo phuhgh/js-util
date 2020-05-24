@@ -77,7 +77,7 @@ describe("=> binary index of", () =>
                     {
                         expect(binaryIndexOf([1, 2, 2, 3, 3], 1, (a, i) => a[i], 5, 1)).toBe(-1);
                         expect(binaryIndexOf([1, 2, 2, 3, 3], 3, (a, i) => a[i], 3)).toBe(-1);
-                    })
+                    });
                 });
             });
         });

@@ -14,7 +14,7 @@
     "jasmine-core": "^3.5.0",
     "tslint": "^6.1.2",
     "typescript": "~3.9.2",
-    "rc-lint-rules": "^4.0.0"
+    "rc-lint-rules": "^5.0.0"
   },
   "private": false
 }

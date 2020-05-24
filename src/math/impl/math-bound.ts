@@ -7,7 +7,7 @@ export function mathBound(value: number, min: number, max: number): number
 
     if (value < min)
     {
-        return min
+        return min;
     }
 
     return value;
