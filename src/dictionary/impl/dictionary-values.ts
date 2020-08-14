@@ -1,5 +1,8 @@
 import { IDictionary } from "../../i-dictionary";
 
+/**
+ * Equivalent to Object.values
+ */
 export function dictionaryValues<T>(d: IDictionary<T>): T[]
 {
     const keys = Object.keys(d);
