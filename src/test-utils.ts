@@ -16,8 +16,8 @@ export function itShouldNotRunDebugWhenDebugIsFalse(runTest: () => void): void
 {
     it("doesn't run asserts when DEBUG_MODE is false", () =>
     {
-        _Debug.unsetFlag("DEBUG_MODE");
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT");
+        _Debug.setFlag("DEBUG_MODE", false);
+        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
         spyOn(_Debug, "runBlock");
         spyOn(_Debug, "assert");
         runTest();

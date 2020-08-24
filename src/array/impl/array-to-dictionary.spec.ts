@@ -13,8 +13,8 @@ describe("=> arrayToDictionary", () =>
 
     beforeEach(() =>
     {
-        _Debug.setFlag("DEBUG_MODE");
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT");
+        _Debug.setFlag("DEBUG_MODE", true);
+        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
     });
 
     itShouldNotRunDebugWhenDebugIsFalse(() =>

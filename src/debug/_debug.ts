@@ -44,14 +44,14 @@ export class _Debug
         throw new Error(message);
     }
 
-    public static setFlag<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey]): void
+    public static setFlag<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey], value: boolean): void
     {
-        _Debug.getGlobal()[flag] = true;
+        _Debug.getGlobal()[flag] = value;
     }
 
-    public static unsetFlag<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey]): void
+    public static setCustomFlag(flag: string, value: boolean): void
     {
-        _Debug.getGlobal()[flag] = false;
+        _Debug.getGlobal()[flag] = value;
     }
 
     public static isFlagSet<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey]): boolean
