@@ -6,7 +6,8 @@ export type TGetComparisonValueAtIndex<T> = (indexable: T, index: number) => num
 /**
  * @internal
  */
-export function binaryFindInsertionIndex<T>(
+export function binaryFindInsertionIndex<T>
+(
     indexable: T,
     comparisonValueToSearchFor: number,
     getComparisonValueAtIndex: TGetComparisonValueAtIndex<T>,
@@ -14,7 +15,8 @@ export function binaryFindInsertionIndex<T>(
     adjustValue: (value: number) => number,
     length: number,
     startIndex: number = 0,
-): number
+)
+    : number
 {
     DEBUG_MODE && _Debug.runBlock(() =>
     {

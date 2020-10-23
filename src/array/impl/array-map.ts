@@ -1,4 +1,9 @@
-export function arrayMap<TItem, TMapped>(items: TItem[], callback: (item: TItem, index: number) => TMapped): TMapped[]
+export function arrayMap<TItem, TMapped>
+(
+    items: TItem[],
+    callback: (item: TItem, index: number) => TMapped
+)
+    : TMapped[]
 {
     const mapped = new Array<TMapped>(items.length);
 

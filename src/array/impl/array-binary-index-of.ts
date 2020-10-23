@@ -1,12 +1,14 @@
 import { binaryFindInsertionIndex, TGetComparisonValueAtIndex } from "./binary-find-insertion-index";
 
-export function arrayBinaryIndexOf<T>(
+export function arrayBinaryIndexOf<T>
+(
     indexable: T,
     comparisonValueToSearchFor: number,
     getComparisonValueAtIndex: TGetComparisonValueAtIndex<T>,
     length: number,
     start?: number,
-): number
+)
+    : number
 {
     const index = binaryFindInsertionIndex(
         indexable,

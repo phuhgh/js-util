@@ -1,6 +1,6 @@
 import { _Debug } from "../../debug/_debug";
 import { arrayIsArray } from "../../array/impl/array-is-array";
-import { IDictionary } from "../../i-dictionary";
+import { IDictionary } from "../../typescript/i-dictionary";
 
 /**
  * Apply extension to base (mutative)

@@ -1,4 +1,4 @@
-import { IDictionary } from "../../i-dictionary";
+import { IDictionary } from "../../typescript/i-dictionary";
 import { dictionaryExtend } from "./dictionary-extend";
 
 /**

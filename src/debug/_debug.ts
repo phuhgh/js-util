@@ -1,5 +1,5 @@
 import { debugFlags } from "./debug-flags";
-import { IDictionary } from "../i-dictionary";
+import { IDictionary } from "../typescript/i-dictionary";
 
 declare global
 {
@@ -44,7 +44,41 @@ export class _Debug
         throw new Error(message);
     }
 
-    public static setFlag<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey], value: boolean): void
+    public static breakpoint(): boolean
+    {
+        // tslint:disable-next-line:no-debugger
+        debugger;
+
+        return true;
+    }
+
+    public static getStackTrace(): string
+    {
+        const error = new Error();
+        let stack = error.stack;
+
+        if (stack == null)
+        {
+            try
+            {
+                // noinspection ExceptionCaughtLocallyJS
+                throw error;
+            }
+            catch (e)
+            {
+                stack = (e as Error).stack as string;
+            }
+        }
+
+        return stack.toString();
+    }
+
+    public static setFlag<TKey extends keyof typeof debugFlags>
+    (
+        flag: typeof debugFlags[TKey],
+        value: boolean
+    )
+        : void
     {
         _Debug.getGlobal()[flag] = value;
     }
