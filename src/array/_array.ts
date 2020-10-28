@@ -14,6 +14,8 @@ import { arrayCollect } from "./impl/array-collect";
 import { arrayRemoveMany } from "./impl/array-remove-many";
 import { arrayRemoveOne } from "./impl/array-remove-one";
 import { arrayReplaceOne } from "./impl/array-replace-one";
+import { arrayCompact } from "./impl/array-compact";
+import { arrayCompactMap } from "./impl/array-compact-map";
 
 // tslint:disable-next-line:class-name
 export class _Array
@@ -21,6 +23,8 @@ export class _Array
     public static readonly binaryIndexOf = arrayBinaryIndexOf;
     public static readonly binaryLastIndexOf = arrayBinaryLastIndexOf;
     public static readonly collect = arrayCollect;
+    public static readonly compact = arrayCompact;
+    public static readonly compactMap = arrayCompactMap;
     public static readonly copyInto = arrayCopyInto;
     public static readonly flatMap = arrayFlatMap;
     public static readonly forEach = arrayForEach;
