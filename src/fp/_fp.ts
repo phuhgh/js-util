@@ -4,6 +4,7 @@ import { fpNormalizeToUndefined } from "./impl/fp-normalize-to-undefined";
 import { fpOnce } from "./impl/fp-once";
 import { fpRejectFalse } from "./impl/fp-reject-false";
 import { fpRejectNull } from "./impl/fp-reject-null";
+import { fpNoOp } from "./impl/fp-no-op";
 
 // tslint:disable-next-line:class-name
 export class _Fp

@@ -1,4 +1,4 @@
-function fpNoOp(..._args: any[]): void
+export function fpNoOp(..._args: any[]): void
 // tslint:disable-next-line:no-empty
 {
 }
