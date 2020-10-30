@@ -9,6 +9,7 @@ import { fpRejectNull } from "./impl/fp-reject-null";
 export class _Fp
 {
     public static readonly identity = fpIdentity;
+    public static readonly noOp = fpNoOp;
     public static readonly normalizeToNull = fpNormalizeToNull;
     public static readonly normalizeToUndefined = fpNormalizeToUndefined;
     public static readonly once = fpOnce;
