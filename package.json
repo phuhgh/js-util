@@ -1,6 +1,6 @@
 {
   "name": "rc-js-util",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "license": "MIT",
   "scripts": {
     "build": "tsc -d",
