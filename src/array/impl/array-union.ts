@@ -3,7 +3,7 @@ import { mapValuesToArray } from "../../map/impl/map-values-to-array";
 
 export function arrayUnion<TItem>
 (
-    items: ArrayLike<ArrayLike<TItem>>,
+    items: readonly ArrayLike<TItem>[],
     getComparisonValue: (item: TItem) => unknown = fpIdentity,
 )
     : TItem[]
