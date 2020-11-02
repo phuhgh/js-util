@@ -16,6 +16,7 @@ import { arrayRemoveOne } from "./impl/array-remove-one";
 import { arrayReplaceOne } from "./impl/array-replace-one";
 import { arrayCompact } from "./impl/array-compact";
 import { arrayCompactMap } from "./impl/array-compact-map";
+import { arrayUnion } from "./impl/array-union";
 
 // tslint:disable-next-line:class-name
 export class _Array
@@ -38,6 +39,7 @@ export class _Array
     public static readonly removeMany = arrayRemoveMany;
     public static readonly removeOne = arrayRemoveOne;
     public static readonly replaceOne = arrayReplaceOne;
+    public static readonly union = arrayUnion;
 
     private constructor()
     {
