@@ -17,6 +17,7 @@ import { arrayReplaceOne } from "./impl/array-replace-one";
 import { arrayCompact } from "./impl/array-compact";
 import { arrayCompactMap } from "./impl/array-compact-map";
 import { arrayUnion } from "./impl/array-union";
+import { arrayPushUnique } from "./impl/array-push-unique";
 
 // tslint:disable-next-line:class-name
 export class _Array
@@ -36,6 +37,7 @@ export class _Array
     public static readonly map = arrayMap;
     public static readonly normalizeEmptyToUndefined = arrayNormalizeEmptyToUndefined;
     public static readonly normalizeNullUndefinedToEmpty = arrayNormalizeNullUndefinedToEmpty;
+    public static readonly pushUnique = arrayPushUnique;
     public static readonly removeMany = arrayRemoveMany;
     public static readonly removeOne = arrayRemoveOne;
     public static readonly replaceOne = arrayReplaceOne;
