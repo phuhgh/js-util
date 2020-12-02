@@ -17,5 +17,8 @@
       "ES2015.Promise",
       "ES2015.Iterable"
     ]
-  }
+  },
+  "include": [
+    "src"
+  ]
 }

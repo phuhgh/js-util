@@ -1,11 +1,6 @@
 import { debugFlags } from "./debug-flags";
 import { IDictionary } from "../typescript/i-dictionary";
-
-declare global
-{
-    export const DEBUG_MODE: boolean;
-    export const DEBUG_DISABLE_BREAKPOINT: boolean;
-}
+import "rc-js-util-globals/index";
 
 // tslint:disable-next-line:class-name
 export class _Debug

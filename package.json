@@ -8,6 +8,9 @@
     "prepare": "rm -rf bin && npm run lint && npm run build && npm run test",
     "test": "jasmine --config=jasmine.json"
   },
+  "dependencies": {
+    "rc-js-util-globals": "^0.0.2"
+  },
   "devDependencies": {
     "@types/jasmine": "^3.5.10",
     "jasmine": "^3.5.0",
