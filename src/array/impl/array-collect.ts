@@ -1,6 +1,6 @@
 export function arrayCollect<TRet, TItem>
 (
-    items: TItem[],
+    items: ArrayLike<TItem>,
     collected: TRet,
     collect: (collected: TRet, item: TItem) => void
 )

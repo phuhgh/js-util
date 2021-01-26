@@ -1,4 +1,4 @@
-export function arrayCopyInto<TItem>(from: TItem[], to: TItem[]): void
+export function arrayCopyInto<TItem>(from: ArrayLike<TItem>, to: TItem[]): void
 {
     to.length = from.length;
 
