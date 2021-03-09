@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayForEach } from "./array-for-each";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayForEach", () =>
+debugDescribe("=> arrayForEach", () =>
 {
     const values = ["a", "b", "c", "d"] as const;
 

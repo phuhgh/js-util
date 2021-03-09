@@ -9,7 +9,6 @@ import { dictionaryPush } from "./impl/dictionary-push";
  * @public
  * Utilities for 'dictionaries', i.e. \{ [index: string]: any \}.
  */
-// tslint:disable-next-line:class-name
 export class _Dictionary
 {
     /** {@inheritDoc dictionaryCloneExtend} */

@@ -7,7 +7,6 @@ import { mathBoundRandom } from "./impl/math-bound-random";
  * @public
  * Utilities relating to math.
  */
-// tslint:disable-next-line:class-name
 export class _Math
 {
     /** {@inheritDoc mathMin} */

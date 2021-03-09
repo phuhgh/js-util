@@ -1,7 +1,8 @@
 import { fpOnce } from "./fp-once";
+import { debugDescribe } from "../../test-utils";
 import createSpy = jasmine.createSpy;
 
-describe("=> fpOnce", () =>
+debugDescribe("=> fpOnce", () =>
 {
     it("| calls the function once with the expected arguments", () =>
     {

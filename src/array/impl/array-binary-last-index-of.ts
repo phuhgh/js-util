@@ -37,7 +37,7 @@ export function arrayBinaryLastIndexOf<T>
         comparisonValueToSearchFor,
         getComparisonValueAtIndex,
         isLowGetHighest,
-        (v) => v -1,
+        (v) => v - 1,
         length,
         start
     );

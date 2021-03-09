@@ -3,9 +3,9 @@
  * Returns a Promise of rejection with the supplied error if the value is `null` or `undefined`.
  *
  * @remarks
- * See {@link fpRejectNull}.
+ * See {@link promiseRejectNull}.
  */
-export async function fpRejectNull<T>(value: Promise<T> | T, error: unknown): Promise<Exclude<T, null | undefined>>
+export async function promiseRejectNull<T>(value: Promise<T> | T, error: unknown): Promise<Exclude<T, null | undefined>>
 {
     const result = await value;
 

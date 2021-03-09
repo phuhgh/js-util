@@ -10,7 +10,6 @@ import { mapValuesToArray } from "./impl/map-values-to-array";
  * @public
  * Utilities that apply to `Map`.
  */
-// tslint:disable-next-line:class-name
 export class _Map
 {
     /** {@inheritDoc mapArrayMap} */
@@ -23,7 +22,7 @@ export class _Map
     public static readonly firstValue = mapFirstValue;
 
     /** {@inheritDoc mapInitializeGet} */
-    public static readonly initializeGet= mapInitializeGet;
+    public static readonly initializeGet = mapInitializeGet;
 
     /** {@inheritDoc mapKeysToArray} */
     public static readonly keysToArray = mapKeysToArray;

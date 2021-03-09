@@ -1,14 +1,22 @@
 import { debugFlags } from "./debug-flags";
-import { IDictionary } from "../typescript/i-dictionary";
-import "rc-js-util-globals/index";
+import { getGlobal } from "../runtime/get-global";
 
 /**
  * @public
  * Utilities for debug builds.
  */
-// tslint:disable-next-line:class-name
 export class _Debug
 {
+    public static get label(): string | undefined
+    {
+        return _Debug._label;
+    }
+
+    public static set label(label: string | undefined)
+    {
+        _Debug._label = label;
+    }
+
     /**
      * Most debuggers will ignore `debugger` statements in node_modules.
      * Skirt around this by letting the consumer set their own callback for this.
@@ -117,6 +125,26 @@ export class _Debug
         return true;
     }
 
+    /**
+     * Logging which can be conditionally enabled by setting `DEBUG_VERBOSE` to true.
+     *
+     * @example
+     * ```typescript
+     * function foo(a1: number) {
+     *     DEBUG_MODE && _Debug.verboseLog(`got me a ${a1}`);
+     * }
+     * ```
+     */
+    public static verboseLog(message: string): void
+    {
+        if (!_Debug.isFlagSet(debugFlags.DEBUG_VERBOSE))
+        {
+            return;
+        }
+
+        console.debug(message);
+    }
+
     public static getStackTrace(): string
     {
         const error = new Error();
@@ -148,12 +176,12 @@ export class _Debug
     )
         : void
     {
-        _Debug.getGlobal()[flag] = value;
+        getGlobal()[flag] = value;
     }
 
     public static setCustomFlag(flag: string, value: boolean): void
     {
-        _Debug.getGlobal()[flag] = value;
+        getGlobal()[flag] = value;
     }
 
     /**
@@ -161,29 +189,17 @@ export class _Debug
      */
     public static isFlagSet<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey]): boolean
     {
-        return Boolean(_Debug.getGlobal()[flag]);
+        return Boolean(getGlobal()[flag]);
     }
 
-    private static getGlobal(): IDictionary<unknown>
+    private static onBreakpoint = () =>
     {
-        if (typeof global !== "undefined")
-        {
-            return global;
-        }
-
-        if (typeof window !== "undefined")
-        {
-            return window;
-        }
-
-        throw new Error("unsupported environment");
-    }
-
-    private static onBreakpoint= () => {
         // eslint-disable-next-line no-debugger
         debugger;
     }
+
+    private static _label: string | undefined = undefined;
 }
 
-declare let global: IDictionary<unknown>;
-declare let window: IDictionary<unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const console: any;

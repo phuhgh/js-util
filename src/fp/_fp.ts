@@ -2,19 +2,21 @@ import { fpIdentity } from "./impl/fp-identity";
 import { fpNormalizeToNull } from "./impl/fp-normalize-to-null";
 import { fpNormalizeToUndefined } from "./impl/fp-normalize-to-undefined";
 import { fpOnce } from "./impl/fp-once";
-import { fpRejectFalse } from "./impl/fp-reject-false";
-import { fpRejectNull } from "./impl/fp-reject-null";
 import { fpNoOp } from "./impl/fp-no-op";
+import { fpValueOrNull } from "./impl/fp-value-or-null";
+import { fpMaybeNewValue } from "./impl/fp-maybe-new-value";
 
 /**
  * @public
  * Utilities for functional programming.
  */
-// tslint:disable-next-line:class-name
 export class _Fp
 {
     /** {@inheritDoc fpIdentity} */
     public static readonly identity = fpIdentity;
+
+    /** {@inheritDoc fpMaybeNewValue} */
+    public static readonly maybeNewValue = fpMaybeNewValue;
 
     /** {@inheritDoc fpNoOp} */
     public static readonly noOp = fpNoOp;
@@ -28,11 +30,8 @@ export class _Fp
     /** {@inheritDoc fpOnce} */
     public static readonly once = fpOnce;
 
-    /** {@inheritDoc fpRejectFalse} */
-    public static readonly rejectFalse = fpRejectFalse;
-
-    /** {@inheritDoc fpRejectNull} */
-    public static readonly rejectNull = fpRejectNull;
+    /** {@inheritDoc fpValueOrNull} */
+    public static readonly valueOrNull = fpValueOrNull;
 
     private constructor()
     {

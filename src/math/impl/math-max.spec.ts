@@ -1,16 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
-import { _Debug } from "../../debug/_debug";
+import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { mathMax } from "./math-max";
 
-describe("=> mathMax", () =>
+debugDescribe("=> mathMax", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     it("| returns the larger value", () =>
     {
         expect(mathMax(1, 0)).toBe(1);

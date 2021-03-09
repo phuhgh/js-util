@@ -12,10 +12,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.1
 
+      - name: Install ninja
+        run: sudo apt-get install ninja-build
+
+      - name: Install emsdk
+        uses: mymindstorm/setup-emsdk@v8
+        with:
+          version: 'latest'
+
+      - name: Echo versions
+        run: |
+          emcc -v
+          ninja --version
+          cmake --version
+
       - name: Install and Build
         run: |
           npm ci
-          npm run prepare
+          npm run ci-build
           npm run generate-docs
 
       - name: Deploy docs

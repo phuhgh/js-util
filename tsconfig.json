@@ -1,6 +1,7 @@
 ﻿{
   "compilerOptions": {
-    "module": "commonjs",
+    "importHelpers": true,
+    "module": "CommonJS",
     "outDir": "bin/",
     "noImplicitReturns": true,
     "removeComments": false,
@@ -9,16 +10,22 @@
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "strict": true,
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
     "lib": [
       "es5",
+      "ES2015.Proxy",
       "ES2015.Collection",
       "ES2015.Promise",
-      "ES2015.Iterable"
+      "ES2015.Iterable",
+      "ESNext" // WeakRef & FinalizationRegistry, not part of public sig
+    ],
+    "types": [
+      "jasmine"
     ]
   },
   "include": [
-    "src"
+    "src",
+    "external"
   ]
 }

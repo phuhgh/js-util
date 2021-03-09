@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayReplaceOne } from "./array-replace-one";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayReplaceOne", () =>
+debugDescribe("=> arrayReplaceOne", () =>
 {
     const a = ["a", "b", "b", "c"];
 

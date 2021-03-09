@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayPushUnique } from "./array-push-unique";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayPushUnique", () =>
+debugDescribe("=> arrayPushUnique", () =>
 {
     it("| pushes if unique", () =>
     {

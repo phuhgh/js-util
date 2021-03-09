@@ -1,8 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayFlatMap } from "./array-flat-map";
 import { _Production } from "../../production/_production";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayFlatMap", () =>
+debugDescribe("=> arrayFlatMap", () =>
 {
     const values = ["a", "b", "c", "d"] as const;
 

@@ -1,16 +1,9 @@
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
-import { _Debug } from "../../debug/_debug";
+import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { arrayMapRange } from "./array-map-range";
 import { fpIdentity } from "../../fp/impl/fp-identity";
 
-describe("=> arrayMapRange", () =>
+debugDescribe("=> arrayMapRange", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     describe("=> in debug mode", () =>
     {
         itShouldCallAssert(2, () =>

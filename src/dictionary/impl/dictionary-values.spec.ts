@@ -1,8 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
 import { IDictionary } from "../../typescript/i-dictionary";
 import { dictionaryValues } from "./dictionary-values";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> dictionaryValues", () =>
+debugDescribe("=> dictionaryValues", () =>
 {
     const values: IDictionary<number> = { a: 1, b: 2 };
 

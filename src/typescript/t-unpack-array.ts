@@ -1,4 +1,4 @@
 /**
  * @public
  */
-export type TUnpackArray<T extends unknown[]> = T extends readonly (infer U)[] ? U : never;
+export type TUnpackArray<T extends ArrayLike<unknown>> = T extends ArrayLike<infer U> ? U : never;

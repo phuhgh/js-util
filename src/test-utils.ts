@@ -1,6 +1,5 @@
 import { _Debug } from "./debug/_debug";
-
-/* tslint:disable:newline-per-chained-call */
+import { SetDefaultUnitTestFlags } from "./debug/impl/set-default-unit-test-flags";
 
 export function itShouldCallAssert(times: number, runTest: () => void): void
 {
@@ -31,4 +30,44 @@ export function expectValueToBeNearTo(value: number, expectation: number, varian
 {
     expect(value).toBeLessThan(expectation + variance);
     expect(value).toBeGreaterThan(expectation - variance);
+}
+
+export function debugDescribe(label: string, callback: () => void): void
+{
+    describe(label, () =>
+    {
+        beforeEach(() =>
+        {
+            SetDefaultUnitTestFlags();
+        });
+
+        callback();
+    });
+}
+
+export function fdebugDescribe(label: string, callback: () => void): void
+{
+    fdescribe(label, () =>
+    {
+        beforeEach(() =>
+        {
+            SetDefaultUnitTestFlags();
+        });
+
+        callback();
+    });
+}
+
+export function debugIt(label: string, callback: () => void): void
+{
+    _Debug.label = label;
+    it(label, callback);
+    _Debug.label = undefined;
+}
+
+export function applyLabel(label: string, callback: () => void): void
+{
+    _Debug.label = label;
+    callback();
+    _Debug.label = undefined;
 }

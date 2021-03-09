@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { dictionaryForEach } from "./dictionary-foreach";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> dictionaryForEach", () =>
+debugDescribe("=> dictionaryForEach", () =>
 {
     const values = { a: 1, b: 2, c: 3 };
 
