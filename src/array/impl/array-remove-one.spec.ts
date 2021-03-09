@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayRemoveOne } from "./array-remove-one";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayRemoveOne", () =>
+debugDescribe("=> arrayRemoveOne", () =>
 {
     const a = ["a", "b", "b", "c"];
 

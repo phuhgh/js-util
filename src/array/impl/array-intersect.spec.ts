@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayIntersect } from "./array-intersect";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayIntersect", () =>
+debugDescribe("=> arrayIntersect", () =>
 {
     const a = ["a", "b", "c"] as const;
     const b = ["a", "d", "e"] as const;

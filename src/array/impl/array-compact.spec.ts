@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayCompact } from "./array-compact";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayCompact", () =>
+debugDescribe("=> arrayCompact", () =>
 {
     const values = ["a", "b", null, undefined] as const;
 

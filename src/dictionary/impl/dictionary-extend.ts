@@ -22,7 +22,7 @@ export function dictionaryExtend<T extends object>
         _Debug.assert(!arrayIsArray(base) && !arrayIsArray(extension), "should not be used with arrays");
     });
 
-    const keys  = Object.keys(extension) as (keyof T)[];
+    const keys = Object.keys(extension) as (keyof T)[];
 
     for (let i = 0, l = keys.length; i < l; ++i)
     {

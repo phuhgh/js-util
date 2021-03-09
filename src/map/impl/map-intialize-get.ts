@@ -9,13 +9,13 @@
  * @remarks
  * See {@link mapInitializeGet}.
  */
-export function mapInitializeGet<TKey, TValue>
+export function mapInitializeGet<TMapKey, TKey extends TMapKey, TMapValue, TValue extends TMapValue>
 (
-    map: Map<TKey, TValue>,
+    map: Map<TMapKey, TMapValue>,
     key: TKey,
     getValue: (key: TKey) => TValue,
 )
-    : TValue
+    : TMapValue
 {
     let value = map.get(key);
 

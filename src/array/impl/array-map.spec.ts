@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayMap } from "./array-map";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayMap", () =>
+debugDescribe("=> arrayMap", () =>
 {
     const values = ["a", "b", "c"] as const;
 

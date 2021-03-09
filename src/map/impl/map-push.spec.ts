@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { mapPush } from "./map-push";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> mapPush", () =>
+debugDescribe("=> mapPush", () =>
 {
     const values = new Map([["a", [1]]]);
 

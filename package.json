@@ -1,26 +1,44 @@
 {
   "name": "rc-js-util",
-  "version": "4.2.0",
+  "version": "5.0.0-alpha.0",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf bin && tsc -d",
+    "build": "npm run build-ts && npm run build-cpp",
+    "build-ts": "rimraf bin && tsc -d",
+    "build-cpp": "sh build.sh",
+    "lib": "rimraf bin && tsc -d -p tsconfig.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "rc-ts-lint -c node_modules/rc-lint-rules/.eslintrc.js src/",
-    "prepare": "npm run build && npm run lint && npm run test",
-    "test": "jasmine --config=jasmine.json"
+    "ci-build": "npm run build && npm run lint && npm run test && npm run lib",
+    "test": "jasmine --config=jasmine.json",
+    "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },
   "dependencies": {
-    "rc-js-util-globals": "^0.0.2"
+    "rc-js-util-globals": "^2.0.0",
+    "tslib": "^2.2.0"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.12.22",
-    "@microsoft/api-extractor": "^7.13.5",
+    "@microsoft/api-documenter": "^7.13.12",
+    "@microsoft/api-extractor": "^7.15.2",
     "@types/jasmine": "^3.6.9",
     "jasmine": "^3.7.0",
     "jasmine-core": "^3.7.1",
-    "rc-lint-rules": "^5.2.0",
-    "typescript": "~4.2.4",
+    "rc-lint-rules": "^5.3.0",
+    "typescript": "~4.3.2",
     "rimraf": "^3.0.2"
   },
-  "private": false
+  "main": "bin/src/index.js",
+  "typings": "bin/src/index.d.ts",
+  "private": false,
+  "keywords": [
+    "Util",
+    "stdlib",
+    "Server",
+    "Client",
+    "Browser",
+    "Emscripten",
+    "WebAssembly"
+  ],
+  "repository": "https://github.com/phuhgh/js-util",
+  "homepage": "https://phuhgh.github.io/js-util/rc-js-util.html"
 }

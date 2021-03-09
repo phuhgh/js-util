@@ -1,25 +1,17 @@
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
-import { _Debug } from "../../debug/_debug";
+import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { arrayBinaryIndexOf } from "./array-binary-index-of";
 import { arrayBinaryLastIndexOf } from "./array-binary-last-index-of";
 
-/* tslint:disable:newline-per-chained-call */
-describe("=> binary index of", () =>
+debugDescribe("=> binary index of", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     describe("=> common behaviour", () =>
     {
         [
-            arrayBinaryLastIndexOf,
-            arrayBinaryIndexOf,
-        ].forEach((binaryIndexOf) =>
+            [arrayBinaryLastIndexOf, "arrayBinaryLastIndexOf"] as const,
+            [arrayBinaryIndexOf, "arrayBinaryIndexOf"] as const,
+        ].forEach(([binaryIndexOf, name]) =>
         {
-            describe(`=> ${(binaryIndexOf as Function).name}`, () =>
+            describe(`=> ${name}`, () =>
             {
                 describe("=> in debug mode", () =>
                 {

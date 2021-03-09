@@ -5,7 +5,6 @@ import { debugFlags } from "../debug/debug-flags";
  * @public
  * Utilities for production builds.
  */
-// tslint:disable-next-line:class-name
 export class _Production
 {
     /**
@@ -42,6 +41,6 @@ export class _Production
      */
     public static assertValueIsNever(_value: never): never
     {
-        _Production.error("unexpected code path executed");
+        _Production.error("unexpected code path executed.");
     }
 }

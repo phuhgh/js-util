@@ -1,17 +1,35 @@
+import { _Debug } from "../../debug/_debug";
+
 /**
  * @public
  * Make an array contain the same items as another.
  * @param from - The array to copy from.
  * @param to - The array to copy into and resize.
+ * @param startIndex - The index to start with in the from array.
+ * @param length - The index to end with in the from array.
  * @remarks
  * See {@link arrayCopyInto}.
  */
-export function arrayCopyInto<TItem>(from: ArrayLike<TItem>, to: TItem[]): void
+export function arrayCopyInto<TItem>
+(
+    from: ArrayLike<TItem>,
+    to: TItem[],
+    startIndex: number = 0,
+    length: number = from.length
+)
+    : void
 {
-    to.length = from.length;
+    const end = startIndex + length;
+    to.length = length;
 
-    for (let i = 0, iEnd = to.length; i < iEnd; ++i)
+    DEBUG_MODE && _Debug.runBlock(() =>
     {
-        to[i] = from[i];
+        _Debug.assert(startIndex >= 0, "negative indexes are not supported");
+        _Debug.assert(end <= from.length, "length would overflow array");
+    });
+
+    for (let i = 0; startIndex < end; ++startIndex, ++i)
+    {
+        to[i] = from[startIndex];
     }
 }

@@ -21,12 +21,13 @@ import { arrayPushUnique } from "./impl/array-push-unique";
 import { arrayEmptyArray } from "./impl/array-empty-array";
 import { arrayGenerateRange } from "./impl/array-generate-range";
 import { arrayMapRange } from "./impl/array-map-range";
+import { arrayContains } from "./impl/array-contains";
+import { arrayInsertAtIndex } from "./impl/array-insert-at-index";
 
 /**
  * @public
  * Utilities that apply to `Array` and `ArrayLike`.
  */
-// tslint:disable-next-line:class-name
 export class _Array
 {
     /** {@inheritDoc arrayBinaryIndexOf} */
@@ -39,6 +40,8 @@ export class _Array
     public static readonly compact = arrayCompact;
     /** {@inheritDoc arrayCompactMap} */
     public static readonly compactMap = arrayCompactMap;
+    /** {@inheritDoc arrayContains} */
+    public static readonly contains = arrayContains;
     /** {@inheritDoc arrayCopyInto} */
     public static readonly copyInto = arrayCopyInto;
     /** {@inheritDoc arrayEmptyArray} */
@@ -51,6 +54,8 @@ export class _Array
     public static readonly generateRange = arrayGenerateRange;
     /** {@inheritDoc arrayIndex} */
     public static readonly index = arrayIndex;
+    /** {@inheritDoc arrayInsertAtIndex} */
+    public static readonly insertAtIndex = arrayInsertAtIndex;
     /** {@inheritDoc arrayIntersect} */
     public static readonly intersect = arrayIntersect;
     /** {@inheritDoc arrayIsArray} */
