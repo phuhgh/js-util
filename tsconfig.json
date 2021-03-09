@@ -16,9 +16,14 @@
       "ES2015.Collection",
       "ES2015.Promise",
       "ES2015.Iterable"
-    ]
+    ],
+    "types": []
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/test-utils.ts"
   ]
 }
