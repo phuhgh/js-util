@@ -6,7 +6,6 @@ import "rc-js-util-globals/index";
  * @public
  * Utilities for debug builds.
  */
-// tslint:disable-next-line:class-name
 export class _Debug
 {
     /**

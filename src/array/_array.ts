@@ -26,7 +26,6 @@ import { arrayMapRange } from "./impl/array-map-range";
  * @public
  * Utilities that apply to `Array` and `ArrayLike`.
  */
-// tslint:disable-next-line:class-name
 export class _Array
 {
     /** {@inheritDoc arrayBinaryIndexOf} */

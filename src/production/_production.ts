@@ -5,7 +5,6 @@ import { debugFlags } from "../debug/debug-flags";
  * @public
  * Utilities for production builds.
  */
-// tslint:disable-next-line:class-name
 export class _Production
 {
     /**

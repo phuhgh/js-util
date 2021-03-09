@@ -10,7 +10,6 @@ import { fpNoOp } from "./impl/fp-no-op";
  * @public
  * Utilities for functional programming.
  */
-// tslint:disable-next-line:class-name
 export class _Fp
 {
     /** {@inheritDoc fpIdentity} */

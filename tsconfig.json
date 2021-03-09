@@ -16,9 +16,13 @@
       "ES2015.Collection",
       "ES2015.Promise",
       "ES2015.Iterable"
+    ],
+    "types": [
+      "jasmine"
     ]
   },
   "include": [
-    "src"
+    "src",
+    "external"
   ]
 }

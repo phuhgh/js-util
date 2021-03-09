@@ -15,11 +15,11 @@ describe("=> binary index of", () =>
     describe("=> common behaviour", () =>
     {
         [
-            arrayBinaryLastIndexOf,
-            arrayBinaryIndexOf,
-        ].forEach((binaryIndexOf) =>
+            [arrayBinaryLastIndexOf, "arrayBinaryLastIndexOf"] as const,
+            [arrayBinaryIndexOf, "arrayBinaryIndexOf"] as const,
+        ].forEach(([binaryIndexOf, name]) =>
         {
-            describe(`=> ${(binaryIndexOf as Function).name}`, () =>
+            describe(`=> ${name}`, () =>
             {
                 describe("=> in debug mode", () =>
                 {

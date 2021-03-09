@@ -1,3 +1,8 @@
 *
 !bin/**/*
+!cpp/include/**/*
+!cpp/src/**/*
+!cpp/lib/**/*
 !README.md
+!CMakeLists.txt
+!components.spdx
