@@ -1,6 +1,13 @@
 import { fpIdentity } from "../../fp/impl/fp-identity";
 import { mapValuesToArray } from "../../map/impl/map-values-to-array";
 
+/**
+ * @public
+ * Given an `ArrayLike` of `ArrayLike`, provides all unique items in an `Array`.
+ *
+ * @remarks
+ * See {@link arrayUnion}.
+ */
 export function arrayUnion<TItem>
 (
     items: ArrayLike<ArrayLike<TItem>>,

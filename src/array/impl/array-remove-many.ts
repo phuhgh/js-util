@@ -1,7 +1,10 @@
 /**
- * Removes each item in itemsToRemove from items (including any repeated items).
+ * @public
+ * Removes each item in `itemsToRemove` from `items` (including any repeated items).
+ * @remarks
+ * See {@link arrayRemoveMany}.
  */
-export function arrayRemoveMany<TItem>(items: TItem[], itemsToRemove: TItem[]): void
+export function arrayRemoveMany<TItem>(items: TItem[], itemsToRemove: readonly TItem[]): void
 {
     const setOfItemsToRemove = new Set(itemsToRemove);
     let index = items.length;

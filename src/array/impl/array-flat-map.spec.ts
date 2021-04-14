@@ -1,6 +1,6 @@
 /* tslint:disable:newline-per-chained-call */
 import { arrayFlatMap } from "./array-flat-map";
-import { _Assert } from "../../assert/_assert";
+import { _Production } from "../../production/_production";
 
 describe("=> arrayFlatMap", () =>
 {
@@ -33,7 +33,7 @@ describe("=> arrayFlatMap", () =>
                 case "d":
                     return ["d"] as const;
                 default:
-                    return _Assert.valueIsNever(value);
+                    return _Production.assertValueIsNever(value);
             }
         });
 

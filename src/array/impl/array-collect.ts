@@ -1,3 +1,9 @@
+/**
+ * @public
+ * Like `Array.reduce` but without the requirement to return the value in the callback.
+ * @remarks
+ * See {@link arrayCollect}.
+ */
 export function arrayCollect<TRet, TItem>
 (
     items: ArrayLike<TItem>,

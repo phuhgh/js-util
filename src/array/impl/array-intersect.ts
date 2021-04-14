@@ -1,6 +1,13 @@
 import { arrayIndex } from "./array-index";
 import { fpIdentity } from "../../fp/impl/fp-identity";
 
+/**
+ * @public
+ * Given two `ArrayLike`, provides the items common between them in an `Array`.
+ *
+ * @remarks
+ * See {@link arrayIntersect}.
+ */
 export function arrayIntersect<TItem>
 (
     a: ArrayLike<TItem>,

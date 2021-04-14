@@ -1,3 +1,12 @@
+/**
+ * @public
+ * Like `Array.map` but with a `Map` input. Outputs an `Array`.
+ *
+ * @returns An array of mapped values.
+ *
+ * @remarks
+ * See {@link mapArrayMap}.
+ */
 export function mapArrayMap<TKey, TValue, TMapped>
 (
     map: Map<TKey, TValue>,

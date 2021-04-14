@@ -23,7 +23,7 @@ describe("=> binary index of", () =>
             {
                 describe("=> in debug mode", () =>
                 {
-                    itShouldCallAssert(8, () =>
+                    itShouldCallAssert(12, () =>
                     {
                         binaryIndexOf([1, 2, 3], 2, (a, i) => a[i], 3);
                     });
@@ -75,7 +75,7 @@ describe("=> binary index of", () =>
                 {
                     it("| is respected", () =>
                     {
-                        expect(binaryIndexOf([1, 2, 2, 3, 3], 1, (a, i) => a[i], 5, 1)).toBe(-1);
+                        expect(binaryIndexOf([1, 2, 2, 3, 3], 1, (a, i) => a[i], 4, 1)).toBe(-1);
                         expect(binaryIndexOf([1, 2, 2, 3, 3], 3, (a, i) => a[i], 3)).toBe(-1);
                     });
                 });
@@ -94,6 +94,15 @@ describe("=> binary index of", () =>
                 expect(arrayBinaryIndexOf([1, 2, 2, 3, 3], 3, (a, i) => a[i], 5)).toBe(3);
             });
         });
+
+        describe("=> where min max specified", () =>
+        {
+            it("| is respected", () =>
+            {
+                expect(arrayBinaryIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
+                expect(arrayBinaryIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3, )).toBe(2);
+            });
+        });
     });
 
     describe("=> binaryLastIndexOf", () =>
@@ -105,6 +114,15 @@ describe("=> binary index of", () =>
                 expect(arrayBinaryLastIndexOf([1, 2, 2, 3], 2, (a, i) => a[i], 4)).toBe(2);
                 expect(arrayBinaryLastIndexOf([1, 1, 2, 2, 3], 1, (a, i) => a[i], 5)).toBe(1);
                 expect(arrayBinaryLastIndexOf([1, 2, 2, 3, 3], 3, (a, i) => a[i], 5)).toBe(4);
+            });
+        });
+
+        describe("=> where min max specified", () =>
+        {
+            it("| is respected", () =>
+            {
+                expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
+                expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3, )).toBe(2);
             });
         });
     });

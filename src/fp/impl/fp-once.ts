@@ -1,3 +1,10 @@
+/**
+ * @public
+ * Creates a function that can be called many times but will run at most once.
+ *
+ * @remarks
+ * See {@link fpOnce}.
+ */
 export function fpOnce<TArgs extends any[], TRet>(initialize: (...args: TArgs) => TRet): (...args: TArgs) => TRet
 {
     let item: TRet;

@@ -1,3 +1,10 @@
+/**
+ * @public
+ * Like `Array.forEach` but for arbitrary objects.
+ *
+ * @remarks
+ * See {@link dictionaryForEach}.
+ */
 export function dictionaryForEach<TDict extends object, TKey extends keyof TDict>
 (
     dictionary: TDict,

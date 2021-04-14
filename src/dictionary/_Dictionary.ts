@@ -5,14 +5,29 @@ import { dictionaryForEach } from "./impl/dictionary-foreach";
 import { dictionaryPairs } from "./impl/dictionary-pairs";
 import { dictionaryPush } from "./impl/dictionary-push";
 
+/**
+ * @public
+ * Utilities for 'dictionaries', i.e. \{ [index: string]: any \}.
+ */
 // tslint:disable-next-line:class-name
 export class _Dictionary
 {
+    /** {@inheritDoc dictionaryCloneExtend} */
     public static readonly cloneExtend = dictionaryCloneExtend;
+
+    /** {@inheritDoc dictionaryExtend} */
     public static readonly extend = dictionaryExtend;
+
+    /** {@inheritDoc dictionaryForEach} */
     public static readonly forEach = dictionaryForEach;
+
+    /** {@inheritDoc dictionaryPairs} */
     public static readonly pairs = dictionaryPairs;
+
+    /** {@inheritDoc dictionaryPush} */
     public static readonly push = dictionaryPush;
+
+    /** {@inheritDoc dictionaryValues} */
     public static readonly values = dictionaryValues;
 
     private constructor()

@@ -1,5 +1,8 @@
 /**
+ * @public
  * Like _Array.map but where the callback returns null it will be omitted from the result.
+ * @remarks
+ * See {@link arrayCompactMap}.
  */
 export function arrayCompactMap<TItem, TTransformed>
 (

@@ -1,4 +1,7 @@
 bin/
+dist/
+docs/
+tmp/
 .vs/
 node_modules/
 

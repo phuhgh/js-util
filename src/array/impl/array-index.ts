@@ -1,10 +1,16 @@
 /**
- * Produce key values for a given array, keys which are null are omitted.
+ * @public
+ * Populates a `Map` given a key creating function and `ArrayLike`.
+ *
+ * @remarks
+ * keys which are null are omitted.
+ *
+ * See {@link arrayIndex}.
  */
 export function arrayIndex<TKey, TItem>
 (
     items: ArrayLike<TItem>,
-    getKey: (item: TItem, index: number) => TKey
+    getKey: (item: TItem, index: number) => TKey | null
 )
     : Map<Exclude<TKey, null>, TItem>
 {

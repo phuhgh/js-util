@@ -1,6 +1,6 @@
 /* tslint:disable:newline-per-chained-call */
 import { arrayIndex } from "./array-index";
-import { _Assert } from "../../assert/_assert";
+import { _Production } from "../../production/_production";
 
 describe("=> arrayIndex", () =>
 {
@@ -30,7 +30,7 @@ describe("=> arrayIndex", () =>
                 case "c":
                     return "d";
                 default:
-                    return _Assert.valueIsNever(value);
+                    return _Production.assertValueIsNever(value);
             }
         });
 

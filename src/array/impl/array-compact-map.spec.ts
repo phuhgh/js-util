@@ -1,6 +1,6 @@
 /* tslint:disable:newline-per-chained-call */
 import { arrayCompactMap } from "./array-compact-map";
-import { _Assert } from "../../assert/_assert";
+import { _Production } from "../../production/_production";
 
 describe("=> arrayCompactMap", () =>
 {
@@ -29,7 +29,7 @@ describe("=> arrayCompactMap", () =>
                 case "c":
                     return null;
                 default:
-                    return _Assert.valueIsNever(value);
+                    return _Production.assertValueIsNever(value);
             }
         });
 

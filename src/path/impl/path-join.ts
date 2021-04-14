@@ -1,3 +1,12 @@
+/**
+ * @public
+ * Joins two strings `start` and `end` with a `separator`.
+ *
+ * @returns The joined path.
+ *
+ * @remarks
+ * See {@link pathJoin}.
+ */
 export function pathJoin(start: string, end: string, separator: string = "/"): string
 {
     const startEndsWithSeparator = start[start.length - 1] === separator;

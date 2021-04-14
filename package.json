@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -d",
+    "generate-docs": "api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "prepare": "rm -rf bin && npm run lint && npm run build && npm run test",
     "test": "jasmine --config=jasmine.json"
@@ -12,12 +13,14 @@
     "rc-js-util-globals": "^0.0.2"
   },
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.12.22",
+    "@microsoft/api-extractor": "^7.13.5",
     "@types/jasmine": "^3.6.9",
     "jasmine": "^3.7.0",
     "jasmine-core": "^3.7.1",
+    "rc-lint-rules": "^5.0.0",
     "tslint": "^6.1.3",
-    "typescript": "~4.2.4",
-    "rc-lint-rules": "^5.0.0"
+    "typescript": "~4.2.4"
   },
   "private": false
 }
