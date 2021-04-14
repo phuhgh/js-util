@@ -1,7 +1,7 @@
 export function arrayFlatMap<TItem, TTransformed>
 (
     items: ArrayLike<TItem>,
-    map: (item: TItem) => TTransformed[] | null
+    mapCallback: (item: TItem, index: number) => ArrayLike<TTransformed> | null
 )
     : TTransformed[]
 {
@@ -9,9 +9,9 @@ export function arrayFlatMap<TItem, TTransformed>
 
     for (let i = 0, iEnd = items.length; i < iEnd; ++i)
     {
-        const currentResult = map(items[i]);
+        const currentResult = mapCallback(items[i], i);
 
-        if (currentResult == null)
+        if (currentResult === null)
         {
             continue;
         }

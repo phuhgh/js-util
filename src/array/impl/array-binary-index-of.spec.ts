@@ -28,17 +28,17 @@ describe("=> binary index of", () =>
                         binaryIndexOf([1, 2, 3], 2, (a, i) => a[i], 3);
                     });
 
-                    it("| should error if data isn't sorted", () =>
+                    it("| errors if data isn't sorted", () =>
                     {
                         expect(() => binaryIndexOf([3, 2, 3], 2, (a, i) => a[i], 3)).toThrow();
                     });
 
-                    it("| should error if the comparison value to search for is NaN", () =>
+                    it("| errors if the comparison value to search for is NaN", () =>
                     {
                         expect(() => binaryIndexOf([1, 2, 3], NaN, (a, i) => a[i], 3)).toThrow();
                     });
 
-                    it("| should error if generated comparison value is NaN", () =>
+                    it("| errors if generated comparison value is NaN", () =>
                     {
                         expect(() => binaryIndexOf([1, NaN, 3], 2, (a, i) => a[i], 3)).toThrow();
                     });

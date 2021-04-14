@@ -1,6 +1,6 @@
 export function arrayMap<TItem, TMapped>
 (
-    items: TItem[],
+    items: ArrayLike<TItem>,
     callback: (item: TItem, index: number) => TMapped
 )
     : TMapped[]

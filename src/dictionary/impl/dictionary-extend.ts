@@ -3,7 +3,7 @@ import { arrayIsArray } from "../../array/impl/array-is-array";
 import { IDictionary } from "../../typescript/i-dictionary";
 
 /**
- * Apply extension to base (mutative)
+ * Apply extension to base (mutative).
  */
 export function dictionaryExtend<T extends object>(base: T, extension: T): void
 {

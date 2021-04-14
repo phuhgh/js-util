@@ -1,7 +1,7 @@
 /**
- * @param map - writing into this, but only if the key is null / undefined
- * @param key - the key to set in the map
- * @param getValue - only called if empty
+ * @param map - Writing into this, but only if the key is null / undefined.
+ * @param key - The key to set in the map.
+ * @param getValue - Only called if empty.
  */
 export function mapInitializeGet<TKey, TValue>
 (

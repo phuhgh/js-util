@@ -1,3 +1,6 @@
+/**
+ * Replaces the first match of itemToRemove with replaceWith.
+ */
 export function arrayReplaceOne<TItem>(items: TItem[], itemToRemove: TItem, replaceWith: TItem): void
 {
     const index = items.indexOf(itemToRemove);

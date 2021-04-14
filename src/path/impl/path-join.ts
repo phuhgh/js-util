@@ -1,8 +1,11 @@
-export function pathJoin(start: string, end: string, separator: string  = "/"): string
+export function pathJoin(start: string, end: string, separator: string = "/"): string
 {
-    if (doesStringEndWithForwardSlash(start, separator))
+    const startEndsWithSeparator = start[start.length - 1] === separator;
+    const endStartsWithSeparator = end[0] === separator;
+
+    if (startEndsWithSeparator)
     {
-        if (doesStringStartWithForwardSlash(end, separator))
+        if (endStartsWithSeparator)
         {
             return start.concat(end.substring(1));
         }
@@ -13,7 +16,7 @@ export function pathJoin(start: string, end: string, separator: string  = "/"): 
     }
     else
     {
-        if (doesStringStartWithForwardSlash(end, separator))
+        if (endStartsWithSeparator)
         {
             return start.concat(end);
         }
@@ -22,14 +25,4 @@ export function pathJoin(start: string, end: string, separator: string  = "/"): 
             return `${start}${separator}${end}`;
         }
     }
-}
-
-function doesStringEndWithForwardSlash(str: string, separator: string): boolean
-{
-    return str[str.length - 1] === separator;
-}
-
-function doesStringStartWithForwardSlash(str: string, separator: string): boolean
-{
-    return str[0] === separator;
 }

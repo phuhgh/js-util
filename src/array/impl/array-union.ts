@@ -3,8 +3,8 @@ import { mapValuesToArray } from "../../map/impl/map-values-to-array";
 
 export function arrayUnion<TItem>
 (
-    items: readonly ArrayLike<TItem>[],
-    getComparisonValue: (item: TItem) => unknown = fpIdentity,
+    items: ArrayLike<ArrayLike<TItem>>,
+    getComparisonValue: (item: TItem, index: number) => unknown = fpIdentity,
 )
     : TItem[]
 {
@@ -17,7 +17,7 @@ export function arrayUnion<TItem>
         for (let j = 0, jEnd = innerItems.length; j < jEnd; ++j)
         {
             const item = innerItems[j];
-            result.set(getComparisonValue(item), item);
+            result.set(getComparisonValue(item, j), item);
         }
     }
 
