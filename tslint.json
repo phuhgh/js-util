@@ -1,5 +1,8 @@
 {
   "extends": [
     "rc-lint-rules/tslint.json"
-  ]
+  ],
+  "rules": {
+    "no-redundant-jsdoc": false
+  }
 }

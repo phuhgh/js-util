@@ -1,10 +1,16 @@
 /**
- * produce key values for a given array, keys which are null are omitted
+ * @public
+ * Populates a `Map` given a key creating function and `ArrayLike`.
+ *
+ * @remarks
+ * keys which are null are omitted.
+ *
+ * See {@link arrayIndex}.
  */
 export function arrayIndex<TKey, TItem>
 (
     items: ArrayLike<TItem>,
-    getKey: (item: TItem) => TKey
+    getKey: (item: TItem, index: number) => TKey | null
 )
     : Map<Exclude<TKey, null>, TItem>
 {
@@ -13,7 +19,7 @@ export function arrayIndex<TKey, TItem>
     for (let i = 0, iEnd = items.length; i < iEnd; ++i)
     {
         const item = items[i];
-        const key = getKey(item);
+        const key = getKey(item, i);
 
         if (key !== null)
         {

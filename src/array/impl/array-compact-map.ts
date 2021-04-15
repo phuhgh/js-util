@@ -1,10 +1,13 @@
 /**
- * like _Array.map but where the callback returns null it will be omitted from the result
+ * @public
+ * Like _Array.map but where the callback returns null it will be omitted from the result.
+ * @remarks
+ * See {@link arrayCompactMap}.
  */
 export function arrayCompactMap<TItem, TTransformed>
 (
     items: ArrayLike<TItem>,
-    map: (item: TItem) => TTransformed | null
+    map: (item: TItem, index: number) => TTransformed | null
 )
     : TTransformed[]
 {
@@ -12,9 +15,9 @@ export function arrayCompactMap<TItem, TTransformed>
 
     for (let i = 0, iEnd = items.length; i < iEnd; ++i)
     {
-        const transformed = map(items[i]);
+        const transformed = map(items[i], i);
 
-        if (transformed != null)
+        if (transformed !== null)
         {
             mapped.push(transformed);
         }

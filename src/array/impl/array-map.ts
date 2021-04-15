@@ -1,6 +1,14 @@
+/**
+ * @public
+ * Like `Array.map`.
+ * @remarks
+ * Has more consistent performance characteristics cross platform than the built in `Array.map`
+ *
+ * See {@link arrayMap}.
+ */
 export function arrayMap<TItem, TMapped>
 (
-    items: TItem[],
+    items: ArrayLike<TItem>,
     callback: (item: TItem, index: number) => TMapped
 )
     : TMapped[]

@@ -19,28 +19,52 @@ import { arrayCompactMap } from "./impl/array-compact-map";
 import { arrayUnion } from "./impl/array-union";
 import { arrayPushUnique } from "./impl/array-push-unique";
 
+/**
+ * @public
+ * Utilities that apply to `Array` and `ArrayLike`.
+ */
 // tslint:disable-next-line:class-name
 export class _Array
 {
+    /** {@inheritDoc arrayBinaryIndexOf} */
     public static readonly binaryIndexOf = arrayBinaryIndexOf;
+    /** {@inheritDoc arrayBinaryLastIndexOf} */
     public static readonly binaryLastIndexOf = arrayBinaryLastIndexOf;
+    /** {@inheritDoc arrayCollect} */
     public static readonly collect = arrayCollect;
+    /** {@inheritDoc arrayCompact} */
     public static readonly compact = arrayCompact;
+    /** {@inheritDoc arrayCompactMap} */
     public static readonly compactMap = arrayCompactMap;
+    /** {@inheritDoc arrayCopyInto} */
     public static readonly copyInto = arrayCopyInto;
+    /** {@inheritDoc arrayFlatMap} */
     public static readonly flatMap = arrayFlatMap;
+    /** {@inheritDoc arrayForEach} */
     public static readonly forEach = arrayForEach;
+    /** {@inheritDoc arrayIndex} */
     public static readonly index = arrayIndex;
+    /** {@inheritDoc arrayIntersect} */
     public static readonly intersect = arrayIntersect;
+    /** {@inheritDoc arrayIsArray} */
     public static readonly isArray = arrayIsArray;
+    /** {@inheritDoc arrayLast} */
     public static readonly last = arrayLast;
+    /** {@inheritDoc arrayMap} */
     public static readonly map = arrayMap;
+    /** {@inheritDoc arrayNormalizeEmptyToUndefined} */
     public static readonly normalizeEmptyToUndefined = arrayNormalizeEmptyToUndefined;
+    /** {@inheritDoc arrayNormalizeNullUndefinedToEmpty} */
     public static readonly normalizeNullUndefinedToEmpty = arrayNormalizeNullUndefinedToEmpty;
+    /** {@inheritDoc arrayPushUnique} */
     public static readonly pushUnique = arrayPushUnique;
+    /** {@inheritDoc arrayRemoveMany} */
     public static readonly removeMany = arrayRemoveMany;
+    /** {@inheritDoc arrayRemoveOne} */
     public static readonly removeOne = arrayRemoveOne;
+    /** {@inheritDoc arrayReplaceOne} */
     public static readonly replaceOne = arrayReplaceOne;
+    /** {@inheritDoc arrayUnion} */
     public static readonly union = arrayUnion;
 
     private constructor()

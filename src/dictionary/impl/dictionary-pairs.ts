@@ -1,3 +1,10 @@
+/**
+ * @public
+ * converts objects into key value pair tuples.
+ *
+ * @remarks
+ * See {@link dictionaryPairs}.
+ */
 export function dictionaryPairs<TKey extends string | number | symbol, TValue>
 (
     dictionary: { [index in TKey]: TValue },

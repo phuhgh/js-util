@@ -1,9 +1,10 @@
-import { TNullable } from "../../typescript/t-nullable";
-
 /**
- * @return a new array with null & undefined removed from items
+ * @public
+ * Strips null and undefined items from arrays (non mutative).
+ * @remarks
+ * See {@link arrayCompact}.
  */
-export function arrayCompact<TItem>(items: ArrayLike<TNullable<TItem>>): TItem[]
+export function arrayCompact<TItem>(items: ArrayLike<TItem | null | undefined>): TItem[]
 {
     const result: TItem[] = [];
 

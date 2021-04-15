@@ -3,7 +3,7 @@ import { arrayMap } from "./array-map";
 
 describe("=> arrayMap", () =>
 {
-    const values = ["a", "b", "c"];
+    const values = ["a", "b", "c"] as const;
 
     it("| calls the callback with the correct parameters", () =>
     {

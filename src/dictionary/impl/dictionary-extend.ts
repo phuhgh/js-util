@@ -3,7 +3,13 @@ import { arrayIsArray } from "../../array/impl/array-is-array";
 import { IDictionary } from "../../typescript/i-dictionary";
 
 /**
- * Apply extension to base (mutative)
+ * @public
+ * Modifies an object to include the keys and values of another.
+ * @param base - The object to be modified.
+ * @param extension - The object to be applied to `base`.
+ *
+ * @remarks
+ * See {@link dictionaryExtend}.
  */
 export function dictionaryExtend<T extends object>(base: T, extension: T): void
 {

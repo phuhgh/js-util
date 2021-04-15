@@ -1,6 +1,11 @@
-import { IDictionary } from "../../typescript/i-dictionary";
-
-export function dictionaryForEach<TDict extends IDictionary<any>, TKey extends keyof TDict>
+/**
+ * @public
+ * Like `Array.forEach` but for arbitrary objects.
+ *
+ * @remarks
+ * See {@link dictionaryForEach}.
+ */
+export function dictionaryForEach<TDict extends object, TKey extends keyof TDict>
 (
     dictionary: TDict,
     callback: (item: TDict[TKey], key: TKey, dictionary: TDict) => void

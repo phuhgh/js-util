@@ -1,10 +1,17 @@
 import { fpIdentity } from "../../fp/impl/fp-identity";
 import { mapValuesToArray } from "../../map/impl/map-values-to-array";
 
+/**
+ * @public
+ * Given an `ArrayLike` of `ArrayLike`, provides all unique items in an `Array`.
+ *
+ * @remarks
+ * See {@link arrayUnion}.
+ */
 export function arrayUnion<TItem>
 (
-    items: readonly ArrayLike<TItem>[],
-    getComparisonValue: (item: TItem) => unknown = fpIdentity,
+    items: ArrayLike<ArrayLike<TItem>>,
+    getComparisonValue: (item: TItem, index: number) => unknown = fpIdentity,
 )
     : TItem[]
 {
@@ -17,7 +24,7 @@ export function arrayUnion<TItem>
         for (let j = 0, jEnd = innerItems.length; j < jEnd; ++j)
         {
             const item = innerItems[j];
-            result.set(getComparisonValue(item), item);
+            result.set(getComparisonValue(item, j), item);
         }
     }
 

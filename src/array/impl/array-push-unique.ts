@@ -1,5 +1,11 @@
 import { fpIdentity } from "../../fp/impl/fp-identity";
 
+/**
+ * @public
+ * Like `Array.push` but checks if the value is unique first.
+ * @remarks
+ * See {@link arrayPushUnique}.
+ */
 export function arrayPushUnique<TItem>
 (
     items: TItem[],

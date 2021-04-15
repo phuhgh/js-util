@@ -1,6 +1,9 @@
 import { _Debug } from "../../debug/_debug";
 import { mathBound } from "../../math/impl/math-bound";
 
+/**
+ * @public
+ */
 export type TGetComparisonValueAtIndex<T> = (indexable: T, index: number) => number;
 
 /**

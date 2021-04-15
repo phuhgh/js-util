@@ -2,9 +2,20 @@ import { IDictionary } from "../../typescript/i-dictionary";
 import { dictionaryExtend } from "./dictionary-extend";
 
 /**
- * Create an object which is extended by base and then extension
+ * @public
+ * Creates an object which is extended sequentially by two additional objects.
+ * @param base - The object to apply first.
+ * @param extension - The object to apply second.
+ *
+ * @remarks
+ * See {@link dictionaryCloneExtend}.
  */
-export function dictionaryCloneExtend<T extends object, U extends object>(base: T, extension: U): T & U
+export function dictionaryCloneExtend<T extends object, U extends object>
+(
+    base: T,
+    extension: U
+)
+    : T & U
 {
     const extended: IDictionary<any> = {};
     dictionaryExtend(extended, base);
