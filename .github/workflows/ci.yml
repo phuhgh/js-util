@@ -19,8 +19,14 @@ jobs:
           npm run prepare
           npm run generate-docs
 
-      - name: Deploy
+      - name: Deploy docs
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: documentation
           folder: docs
+
+      - name: Publish to the npm registry
+        uses: "primer/publish@3.0.0"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
