@@ -19,7 +19,7 @@ describe("=> binary index of", () =>
             arrayBinaryIndexOf,
         ].forEach((binaryIndexOf) =>
         {
-            describe(`=> ${(binaryIndexOf as any).name}`, () =>
+            describe(`=> ${(binaryIndexOf as Function).name}`, () =>
             {
                 describe("=> in debug mode", () =>
                 {
@@ -100,7 +100,7 @@ describe("=> binary index of", () =>
             it("| is respected", () =>
             {
                 expect(arrayBinaryIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
-                expect(arrayBinaryIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3, )).toBe(2);
+                expect(arrayBinaryIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3,)).toBe(2);
             });
         });
     });
@@ -122,7 +122,7 @@ describe("=> binary index of", () =>
             it("| is respected", () =>
             {
                 expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
-                expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3, )).toBe(2);
+                expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3,)).toBe(2);
             });
         });
     });

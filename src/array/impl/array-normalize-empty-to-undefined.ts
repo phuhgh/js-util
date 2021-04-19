@@ -6,7 +6,7 @@
  * @remarks
  * See {@link arrayNormalizeEmptyToUndefined}.
  */
-export function arrayNormalizeEmptyToUndefined<TArray extends ArrayLike<any>>
+export function arrayNormalizeEmptyToUndefined<TArray extends ArrayLike<unknown>>
 (
     array: TArray | null | undefined
 )
