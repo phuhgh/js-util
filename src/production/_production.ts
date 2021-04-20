@@ -17,7 +17,7 @@ export class _Production
         {
             if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
             {
-                // tslint:disable-next-line
+                // eslint-disable-next-line no-debugger
                 debugger;
             }
         }

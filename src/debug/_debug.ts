@@ -54,7 +54,7 @@ export class _Debug
         {
             if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
             {
-                // tslint:disable-next-line
+                // eslint-disable-next-line no-debugger
                 debugger;
             }
 
@@ -85,7 +85,7 @@ export class _Debug
     {
         if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
         {
-            // tslint:disable-next-line
+            // eslint-disable-next-line no-debugger
             debugger;
         }
 
@@ -94,7 +94,7 @@ export class _Debug
 
     public static breakpoint(): boolean
     {
-        // tslint:disable-next-line:no-debugger
+        // eslint-disable-next-line no-debugger
         debugger;
 
         return true;
@@ -147,7 +147,7 @@ export class _Debug
         return Boolean(_Debug.getGlobal()[flag]);
     }
 
-    private static getGlobal(): IDictionary<any>
+    private static getGlobal(): IDictionary<unknown>
     {
         if (typeof global !== "undefined")
         {
@@ -163,5 +163,5 @@ export class _Debug
     }
 }
 
-declare var global: IDictionary<any>;
-declare var window: IDictionary<any>;
+declare let global: IDictionary<unknown>;
+declare let window: IDictionary<unknown>;
