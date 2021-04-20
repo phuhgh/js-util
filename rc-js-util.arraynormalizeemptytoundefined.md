@@ -9,7 +9,7 @@ Replaces length 0 `ArrayLike` with `undefined`<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export declare function arrayNormalizeEmptyToUndefined<TArray extends ArrayLike<any>>(array: TArray | null | undefined): TArray | undefined;
+export declare function arrayNormalizeEmptyToUndefined<TArray extends ArrayLike<unknown>>(array: TArray | null | undefined): TArray | undefined;
 ```
 
 ## Parameters

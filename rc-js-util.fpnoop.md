@@ -9,14 +9,14 @@ Does nothing (intentionally...).
 <b>Signature:</b>
 
 ```typescript
-export declare function fpNoOp(..._args: any[]): void;
+export declare function fpNoOp(..._args: unknown[]): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_args | any\[\] |  |
+|  \_args | unknown\[\] |  |
 
 <b>Returns:</b>
 

@@ -9,7 +9,7 @@ Creates a function that can be called many times but will run at most once.
 <b>Signature:</b>
 
 ```typescript
-export declare function fpOnce<TArgs extends any[], TRet>(initialize: (...args: TArgs) => TRet): (...args: TArgs) => TRet;
+export declare function fpOnce<TArgs extends unknown[], TRet>(initialize: (...args: TArgs) => TRet): (...args: TArgs) => TRet;
 ```
 
 ## Parameters
