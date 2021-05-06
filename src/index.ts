@@ -26,6 +26,7 @@ export { arrayCollect } from "./array/impl/array-collect";
 export { arrayCompact } from "./array/impl/array-compact";
 export { arrayCompactMap } from "./array/impl/array-compact-map";
 export { arrayCopyInto } from "./array/impl/array-copy-into";
+export { arrayEmptyArray } from "./array/impl/array-empty-array";
 export { arrayFlatMap } from "./array/impl/array-flat-map";
 export { arrayForEach } from "./array/impl/array-for-each";
 export { arrayIndex } from "./array/impl/array-index";

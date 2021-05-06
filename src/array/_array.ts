@@ -18,6 +18,7 @@ import { arrayCompact } from "./impl/array-compact";
 import { arrayCompactMap } from "./impl/array-compact-map";
 import { arrayUnion } from "./impl/array-union";
 import { arrayPushUnique } from "./impl/array-push-unique";
+import { arrayEmptyArray } from "./impl/array-empty-array";
 
 /**
  * @public
@@ -38,6 +39,8 @@ export class _Array
     public static readonly compactMap = arrayCompactMap;
     /** {@inheritDoc arrayCopyInto} */
     public static readonly copyInto = arrayCopyInto;
+    /** {@inheritDoc arrayEmptyArray} */
+    public static readonly emptyArray = arrayEmptyArray;
     /** {@inheritDoc arrayFlatMap} */
     public static readonly flatMap = arrayFlatMap;
     /** {@inheritDoc arrayForEach} */
