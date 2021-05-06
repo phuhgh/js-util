@@ -22,6 +22,7 @@ export declare class _Array
 |  [compact](./rc-js-util._array.compact.md) | <code>static</code> | typeof arrayCompact | Strips null and undefined items from arrays (non mutative). |
 |  [compactMap](./rc-js-util._array.compactmap.md) | <code>static</code> | typeof arrayCompactMap | Like \_Array.map but where the callback returns null it will be omitted from the result. |
 |  [copyInto](./rc-js-util._array.copyinto.md) | <code>static</code> | typeof arrayCopyInto | Make an array contain the same items as another. |
+|  [emptyArray](./rc-js-util._array.emptyarray.md) | <code>static</code> | readonly \[\] | An empty readonly array, useful to avoid GC pressure. |
 |  [flatMap](./rc-js-util._array.flatmap.md) | <code>static</code> | typeof arrayFlatMap | Iterate over <code>ArrayLike</code> calling a callback against it, the callback returns <code>ArrayLike</code> which is concatenated into a single <code>Array</code>. |
 |  [forEach](./rc-js-util._array.foreach.md) | <code>static</code> | typeof arrayForEach | Like <code>Array.forEach</code>. |
 |  [index](./rc-js-util._array.index.md) | <code>static</code> | typeof arrayIndex | Populates a <code>Map</code> given a key creating function and <code>ArrayLike</code>. |

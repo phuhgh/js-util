@@ -84,6 +84,7 @@
 
 |  Variable | Description |
 |  --- | --- |
+|  [arrayEmptyArray](./rc-js-util.arrayemptyarray.md) | An empty readonly array, useful to avoid GC pressure. |
 |  [debugFlags](./rc-js-util.debugflags.md) | Flags that can be stripped by dead code removal tools. Shouldn't be used in production. |
 
 ## Type Aliases
