@@ -17,7 +17,8 @@ export declare class _Debug
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [assert(condition, errorMessage)](./rc-js-util._debug.assert.md) | <code>static</code> | Throws an <code>Error</code> with the given message if the condition is false. |
-|  [breakpoint()](./rc-js-util._debug.breakpoint.md) | <code>static</code> |  |
+|  [breakpoint()](./rc-js-util._debug.breakpoint.md) | <code>static</code> | Used in place of <code>debugger</code> statements when writing libraries. Should generally not be used directly. |
+|  [configureBreakpoint(onBreakpoint)](./rc-js-util._debug.configurebreakpoint.md) | <code>static</code> | Most debuggers will ignore <code>debugger</code> statements in node\_modules. Skirt around this by letting the consumer set their own callback for this. |
 |  [error(message)](./rc-js-util._debug.error.md) | <code>static</code> | Throws an <code>Error</code> with the given message. |
 |  [getStackTrace()](./rc-js-util._debug.getstacktrace.md) | <code>static</code> |  |
 |  [isFlagSet(flag)](./rc-js-util._debug.isflagset.md) | <code>static</code> | Used to get debug flags in an environment independent way. |

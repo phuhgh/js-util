@@ -4,6 +4,8 @@
 
 ## \_Debug.breakpoint() method
 
+Used in place of `debugger` statements when writing libraries. Should generally not be used directly.
+
 <b>Signature:</b>
 
 ```typescript
