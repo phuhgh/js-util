@@ -10,6 +10,23 @@ import "rc-js-util-globals/index";
 export class _Debug
 {
     /**
+     * Most debuggers will ignore `debugger` statements in node_modules.
+     * Skirt around this by letting the consumer set their own callback for this.
+     *
+     * @param onBreakpoint - called on debug assert etc, you should provide a function with a `debugger` statement.
+     *
+     * @example
+     * ```typescript
+     * // the braces are not optional
+     * _Debug.configureBreakpoint(() => { debugger; })
+     * ```
+     */
+    public static configureBreakpoint(onBreakpoint: () => void): void
+    {
+        _Debug.onBreakpoint = onBreakpoint;
+    }
+
+    /**
      * Convenience method to run multiple asserts.
      *
      * @returns A boolean value to make linting happy...
@@ -54,8 +71,7 @@ export class _Debug
         {
             if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
             {
-                // eslint-disable-next-line no-debugger
-                debugger;
+                _Debug.breakpoint();
             }
 
             throw new Error(`assert fail: ${errorMessage}`);
@@ -85,17 +101,18 @@ export class _Debug
     {
         if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
         {
-            // eslint-disable-next-line no-debugger
-            debugger;
+            _Debug.breakpoint();
         }
 
         throw new Error(message);
     }
 
+    /**
+     * Used in place of `debugger` statements when writing libraries. Should generally not be used directly.
+     */
     public static breakpoint(): boolean
     {
-        // eslint-disable-next-line no-debugger
-        debugger;
+        _Debug.onBreakpoint();
 
         return true;
     }
@@ -160,6 +177,11 @@ export class _Debug
         }
 
         throw new Error("unsupported environment");
+    }
+
+    private static onBreakpoint= () => {
+        // eslint-disable-next-line no-debugger
+        debugger;
     }
 }
 
