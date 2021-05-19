@@ -32,11 +32,13 @@
 |  [arrayCopyInto(from, to)](./rc-js-util.arraycopyinto.md) | Make an array contain the same items as another. |
 |  [arrayFlatMap(items, mapCallback)](./rc-js-util.arrayflatmap.md) | Iterate over <code>ArrayLike</code> calling a callback against it, the callback returns <code>ArrayLike</code> which is concatenated into a single <code>Array</code>. |
 |  [arrayForEach(items, callback)](./rc-js-util.arrayforeach.md) | Like <code>Array.forEach</code>. |
+|  [arrayGenerateRange(from, to)](./rc-js-util.arraygeneraterange.md) | Generates a range of integers output in an <code>Array</code>. |
 |  [arrayIndex(items, getKey)](./rc-js-util.arrayindex.md) | Populates a <code>Map</code> given a key creating function and <code>ArrayLike</code>. |
 |  [arrayIntersect(a, b, getComparisonValue)](./rc-js-util.arrayintersect.md) | Given two <code>ArrayLike</code>, provides the items common between them in an <code>Array</code>. |
 |  [arrayIsArray(obj)](./rc-js-util.arrayisarray.md) | Checks if the parameter is an instance of <code>Array</code> or is a view of <code>ArrayBuffer</code>. |
 |  [arrayLast(items)](./rc-js-util.arraylast.md) | Gets the last value in <code>ArrayLike</code>. |
 |  [arrayMap(items, callback)](./rc-js-util.arraymap.md) | Like <code>Array.map</code>. |
+|  [arrayMapRange(from, to, callback)](./rc-js-util.arraymaprange.md) | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |
 |  [arrayNormalizeEmptyToUndefined(array)](./rc-js-util.arraynormalizeemptytoundefined.md) | Replaces length 0 <code>ArrayLike</code> with <code>undefined</code>. |
 |  [arrayNormalizeNullUndefinedToEmpty(array)](./rc-js-util.arraynormalizenullundefinedtoempty.md) | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
 |  [arrayPushUnique(items, itemToPush, getComparisonValue)](./rc-js-util.arraypushunique.md) | Like <code>Array.push</code> but checks if the value is unique first. |
@@ -65,6 +67,7 @@
 |  [mapPush(map, key, value)](./rc-js-util.mappush.md) | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
 |  [mapValuesToArray(map)](./rc-js-util.mapvaluestoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its values. |
 |  [mathBound(value, min, max)](./rc-js-util.mathbound.md) | Bound a value in to a range. |
+|  [mathBoundRandom(min, max)](./rc-js-util.mathboundrandom.md) | Create a random value between min and max. |
 |  [mathMax(a, b)](./rc-js-util.mathmax.md) | Returns the larger of the two parameters <code>a</code> and <code>b</code>. |
 |  [mathMin(a, b)](./rc-js-util.mathmin.md) | Returns the smaller of the two parameters <code>a</code> and <code>b</code>. |
 |  [pathJoin(start, end, separator)](./rc-js-util.pathjoin.md) | Joins two strings <code>start</code> and <code>end</code> with a <code>separator</code>. |

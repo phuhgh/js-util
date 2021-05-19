@@ -25,11 +25,13 @@ export declare class _Array
 |  [emptyArray](./rc-js-util._array.emptyarray.md) | <code>static</code> | readonly \[\] | An empty readonly array, useful to avoid GC pressure. |
 |  [flatMap](./rc-js-util._array.flatmap.md) | <code>static</code> | typeof arrayFlatMap | Iterate over <code>ArrayLike</code> calling a callback against it, the callback returns <code>ArrayLike</code> which is concatenated into a single <code>Array</code>. |
 |  [forEach](./rc-js-util._array.foreach.md) | <code>static</code> | typeof arrayForEach | Like <code>Array.forEach</code>. |
+|  [generateRange](./rc-js-util._array.generaterange.md) | <code>static</code> | typeof arrayGenerateRange | Generates a range of integers output in an <code>Array</code>. |
 |  [index](./rc-js-util._array.index.md) | <code>static</code> | typeof arrayIndex | Populates a <code>Map</code> given a key creating function and <code>ArrayLike</code>. |
 |  [intersect](./rc-js-util._array.intersect.md) | <code>static</code> | typeof arrayIntersect | Given two <code>ArrayLike</code>, provides the items common between them in an <code>Array</code>. |
 |  [isArray](./rc-js-util._array.isarray.md) | <code>static</code> | typeof arrayIsArray | Checks if the parameter is an instance of <code>Array</code> or is a view of <code>ArrayBuffer</code>. |
 |  [last](./rc-js-util._array.last.md) | <code>static</code> | typeof arrayLast | Gets the last value in <code>ArrayLike</code>. |
 |  [map](./rc-js-util._array.map.md) | <code>static</code> | typeof arrayMap | Like <code>Array.map</code>. |
+|  [mapRange](./rc-js-util._array.maprange.md) | <code>static</code> | typeof arrayMapRange | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |
 |  [normalizeEmptyToUndefined](./rc-js-util._array.normalizeemptytoundefined.md) | <code>static</code> | typeof arrayNormalizeEmptyToUndefined | Replaces length 0 <code>ArrayLike</code> with <code>undefined</code>. |
 |  [normalizeNullUndefinedToEmpty](./rc-js-util._array.normalizenullundefinedtoempty.md) | <code>static</code> | typeof arrayNormalizeNullUndefinedToEmpty | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
 |  [pushUnique](./rc-js-util._array.pushunique.md) | <code>static</code> | typeof arrayPushUnique | Like <code>Array.push</code> but checks if the value is unique first. |
