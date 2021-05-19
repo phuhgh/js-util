@@ -19,6 +19,8 @@ import { arrayCompactMap } from "./impl/array-compact-map";
 import { arrayUnion } from "./impl/array-union";
 import { arrayPushUnique } from "./impl/array-push-unique";
 import { arrayEmptyArray } from "./impl/array-empty-array";
+import { arrayGenerateRange } from "./impl/array-generate-range";
+import { arrayMapRange } from "./impl/array-map-range";
 
 /**
  * @public
@@ -45,6 +47,8 @@ export class _Array
     public static readonly flatMap = arrayFlatMap;
     /** {@inheritDoc arrayForEach} */
     public static readonly forEach = arrayForEach;
+    /** {@inheritDoc arrayGenerateRange} */
+    public static readonly generateRange = arrayGenerateRange;
     /** {@inheritDoc arrayIndex} */
     public static readonly index = arrayIndex;
     /** {@inheritDoc arrayIntersect} */
@@ -55,6 +59,8 @@ export class _Array
     public static readonly last = arrayLast;
     /** {@inheritDoc arrayMap} */
     public static readonly map = arrayMap;
+    /** {@inheritDoc arrayMapRange} */
+    public static readonly mapRange = arrayMapRange;
     /** {@inheritDoc arrayNormalizeEmptyToUndefined} */
     public static readonly normalizeEmptyToUndefined = arrayNormalizeEmptyToUndefined;
     /** {@inheritDoc arrayNormalizeNullUndefinedToEmpty} */
