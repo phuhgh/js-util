@@ -19,23 +19,6 @@
 |  [\_RegExp](./rc-js-util._regexp.md) | Utilities that apply to <code>RegExp</code>. |
 |  [\_Set](./rc-js-util._set.md) | Utilities that apply to <code>Set</code>. |
 |  [\_String](./rc-js-util._string.md) | Utilities that apply to <code>string</code>. |
-|  [AReferenceCounted](./rc-js-util.areferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. |
-|  [ASharedObject](./rc-js-util.asharedobject.md) | Wrapper of wasm object. |
-|  [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md) | Common methods of typed arrays, extend to make typed array tuples. |
-|  [CircularBuffer](./rc-js-util.circularbuffer.md) | Presents an array as if it were circular, going past the end or start loops around. |
-|  [CircularFIFOStack](./rc-js-util.circularfifostack.md) | Circular first in first out stack. |
-|  [Mat2F32](./rc-js-util.mat2f32.md) | Float32 row major 2x2 matrix. |
-|  [Mat3F32](./rc-js-util.mat3f32.md) | Float32 row major 3x3 matrix. |
-|  [MulticastEvent](./rc-js-util.multicastevent.md) |  |
-|  [SharedArray](./rc-js-util.sharedarray.md) | Typed array shared between wasm and javascript. |
-|  [XyMarginF32](./rc-js-util.xymarginf32.md) | Float32 row major 2x2 matrix representing margins on a rectangle. |
-|  [XyRangeF32](./rc-js-util.xyrangef32.md) | Float32 row major 2x2 matrix representing a 2d range. |
-
-## Enumerations
-
-|  Enumeration | Description |
-|  --- | --- |
-|  [ECircularStackOverflowMode](./rc-js-util.ecircularstackoverflowmode.md) | Sets the behavior of [CircularFIFOStack](./rc-js-util.circularfifostack.md) when a value is pushed which won't fit. |
 
 ## Functions
 
@@ -98,12 +81,7 @@
 |  Interface | Description |
 |  --- | --- |
 |  [IDictionary](./rc-js-util.idictionary.md) |  |
-|  [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md) |  |
-|  [IFIFOStack](./rc-js-util.ififostack.md) |  |
-|  [IMulticastEvent](./rc-js-util.imulticastevent.md) |  |
 |  [INumericKeyedDictionary](./rc-js-util.inumerickeyeddictionary.md) |  |
-|  [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md) |  |
-|  [IWebAssemblyMemoryMemory](./rc-js-util.iwebassemblymemorymemory.md) | Copied from lib.dom.d.ts to avoid portability issues. |
 
 ## Variables
 
@@ -117,18 +95,9 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [TGetComparisonValueAtIndex](./rc-js-util.tgetcomparisonvalueatindex.md) |  |
-|  [TListener](./rc-js-util.tlistener.md) |  |
-|  [TMat2CtorArgs](./rc-js-util.tmat2ctorargs.md) |  |
-|  [TMat3CtorArgs](./rc-js-util.tmat3ctorargs.md) |  |
 |  [TNullable](./rc-js-util.tnullable.md) |  |
 |  [TPickExcept](./rc-js-util.tpickexcept.md) |  |
-|  [TSharedArrayF32](./rc-js-util.tsharedarrayf32.md) |  |
-|  [TSharedArrayF64](./rc-js-util.tsharedarrayf64.md) |  |
-|  [TTypedArrayCtor](./rc-js-util.ttypedarrayctor.md) |  |
 |  [TUnionToIntersection](./rc-js-util.tuniontointersection.md) |  |
 |  [TUnpackArray](./rc-js-util.tunpackarray.md) |  |
 |  [TUnpackIfArray](./rc-js-util.tunpackifarray.md) |  |
-|  [TWebAssemblyMemoryListenerArgs](./rc-js-util.twebassemblymemorylistenerargs.md) |  |
-|  [TXyMarginCtorArgs](./rc-js-util.txymarginctorargs.md) |  |
-|  [TXyRangeCtorArgs](./rc-js-util.txyrangectorargs.md) |  |
 
