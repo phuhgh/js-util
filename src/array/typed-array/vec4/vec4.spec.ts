@@ -31,4 +31,18 @@ describe("=> Vec4", () =>
             expect(v[3]).toBe(4);
         });
     });
+
+    describe("=> update", () =>
+    {
+        it("| sets the expected values", () =>
+        {
+            const v = Vec4.f32.factory.createOneEmpty();
+            Vec4.f32.update(v, 1, 2, 3, 4);
+
+            expect(v[0]).toBe(1);
+            expect(v[1]).toBe(2);
+            expect(v[2]).toBe(3);
+            expect(v[3]).toBe(4);
+        });
+    });
 });

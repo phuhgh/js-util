@@ -14,7 +14,7 @@ export type TXyMarginCtorArgs = [left: number, right: number, top: number, botto
  * @public
  * Provider of typed array tuple {@link AXyMargin}. See static properties for factories and instance members for utilities.
  */
-export class XyMargin<TArray> extends XyRange<TArray>
+export class XyMargin<TArray extends EArrayTypeGuard> extends XyRange<TArray>
 {
     public static f32: XyMargin<EArrayTypeGuard.F32> = new XyMargin(new Mat2F32Factory<TXyMarginF32>());
 

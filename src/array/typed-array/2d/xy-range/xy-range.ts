@@ -12,7 +12,7 @@ export type TXyRangeCtorArgs = [xMin: number, xMax: number, yMin: number, yMax: 
  * @public
  * Provider of typed array tuple {@link AXyRange}. See static properties for factories and instance members for utilities.
  */
-export class XyRange<TArray>
+export class XyRange<TArray extends EArrayTypeGuard>
 {
     public static f32: XyRange<EArrayTypeGuard.F32> = new XyRange<EArrayTypeGuard.F32>(new Mat2F32Factory<TXyRangeF32>());
 

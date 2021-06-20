@@ -13,7 +13,7 @@ export type TMat2CtorArgs = [c1r1: number, c2r1: number, c2r2: number, c2r2: num
  * @public
  * Provider of typed array tuple {@link AMat2}. See static properties for factories and instance members for utilities.
  */
-export class Mat2<TArray>
+export class Mat2<TArray extends EArrayTypeGuard>
 {
     public static f32: Mat2<EArrayTypeGuard.F32> = new Mat2<EArrayTypeGuard.F32>(new Mat2F32Factory<TMat2F32>());
 
@@ -23,6 +23,7 @@ export class Mat2<TArray>
     )
     {
     }
+
     public createIdentityMatrix(): AMat2<TArray>
     {
         const result = this.factory.createOneEmpty();

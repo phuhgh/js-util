@@ -12,7 +12,7 @@ export type TVec2CtorArgs = [x: number, y: number];
  * @public
  * Provider of typed array tuple {@link AVec2}. See static properties for factories and instance members for utilities.
  */
-export class Vec2<TTypedArray>
+export class Vec2<TTypedArray extends EArrayTypeGuard>
 {
     public static f32: Vec2<EArrayTypeGuard.F32> = new Vec2<EArrayTypeGuard.F32>(new Vec2F32Factory<TVec2F32>())
 
@@ -31,6 +31,12 @@ export class Vec2<TTypedArray>
     public getY(vec: AVec2<TTypedArray>): number
     {
         return vec[1];
+    }
+
+    public update(vec: AVec2<TTypedArray>, x: number, y: number): void
+    {
+        vec[0] = x;
+        vec[1] = y;
     }
 
     public setX(vec: AVec2<TTypedArray>, x: number): void

@@ -8,7 +8,7 @@ import type { EArrayTypeGuard } from "../../e-typed-array-guard";
  * @remarks
  * See {@link XyMargin} for methods.
  */
-export abstract class AXyMargin<TArray> extends AXyRange<TArray>
+export abstract class AXyMargin<TArray extends EArrayTypeGuard> extends AXyRange<TArray>
 {
     /**
      * left

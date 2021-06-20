@@ -26,13 +26,25 @@ describe("=> Vec2", () =>
         });
     });
 
+    describe("=> update", () =>
+    {
+        it("| sets the expected values", () =>
+        {
+            const v = Vec2.f32.factory.createOneEmpty();
+            Vec2.f32.update(v, 1, 2);
+
+            expect(v[0]).toBe(1);
+            expect(v[1]).toBe(2);
+        });
+    });
+
     describe("=> dotProduct", () =>
     {
         it("| returns expected value", () =>
         {
             const a = Vec2.f32.factory.createOne(1, 2);
             const b = Vec2.f32.factory.createOne(3, 4);
-            const r = Vec2.f32.dotProduct(a,b);
+            const r = Vec2.f32.dotProduct(a, b);
 
             expect(r[0]).toBe(3);
             expect(r[1]).toBe(8);
