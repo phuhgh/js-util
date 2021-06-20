@@ -23,7 +23,7 @@ export type TMat3CtorArgs = [
  * @public
  * Provider of typed array tuple {@link AMat3}. See static properties for factories and instance members for utilities.
  */
-export class Mat3<TArray>
+export class Mat3<TArray extends EArrayTypeGuard>
 {
     public static f32: Mat3<EArrayTypeGuard.F32> = new Mat3<EArrayTypeGuard.F32>(new Mat3F32Factory<TMat3F32>());
 

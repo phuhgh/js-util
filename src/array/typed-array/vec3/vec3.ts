@@ -13,7 +13,7 @@ export type TVec3CtorArgs = [x: number, y: number, z: number];
  * @public
  * Provider of typed array tuple {@link AVec3}. See static properties for factories and instance members for utilities.
  */
-export class Vec3<TTypedArray>
+export class Vec3<TTypedArray extends EArrayTypeGuard>
 {
     public static f32: Vec3<EArrayTypeGuard.F32> = new Vec3<EArrayTypeGuard.F32>(new Vec3F32Factory<TVec3F32>());
 
@@ -39,6 +39,13 @@ export class Vec3<TTypedArray>
         return vec[2];
     }
 
+    public update(vec: AVec3<TTypedArray>, x: number, y: number, z: number): void
+    {
+        vec[0] = x;
+        vec[1] = y;
+        vec[2] = z;
+    }
+
     public setX(vec: AVec3<TTypedArray>, x: number): void
     {
         vec[0] = x;
@@ -54,12 +61,12 @@ export class Vec3<TTypedArray>
         vec[2] = z;
     }
 
-    public getMat3MultiplyX(a: AMat3<unknown>, x: number): number
+    public getMat3MultiplyX(a: AMat3<EArrayTypeGuard>, x: number): number
     {
         return a[0] * x + a[3] * x + a[6];
     }
 
-    public getMat3MultiplyY(a: AMat3<unknown>, y: number): number
+    public getMat3MultiplyY(a: AMat3<EArrayTypeGuard>, y: number): number
     {
         return a[1] * y + a[4] * y + a[7];
     }

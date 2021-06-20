@@ -30,6 +30,19 @@ describe("=> Vec3", () =>
         });
     });
 
+    describe("=> update", () =>
+    {
+        it("| sets the expected values", () =>
+        {
+            const v = Vec3.f32.factory.createOneEmpty();
+            Vec3.f32.update(v, 1, 2,3 );
+
+            expect(v[0]).toBe(1);
+            expect(v[1]).toBe(2);
+            expect(v[2]).toBe(3);
+        });
+    });
+
     describe("=> mat3 multiply component wise", () =>
     {
         it("| returns the expected values", () =>

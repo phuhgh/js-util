@@ -8,7 +8,7 @@ import type { EArrayTypeGuard } from "../../e-typed-array-guard";
  * @remarks
  * See {@link XyRange} for methods.
  */
-export abstract class AXyRange<TArray> extends AMat2<TArray>
+export abstract class AXyRange<TArray extends EArrayTypeGuard> extends AMat2<TArray>
 {
     /**
      * xMin
