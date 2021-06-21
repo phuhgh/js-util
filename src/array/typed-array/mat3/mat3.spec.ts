@@ -13,7 +13,7 @@ describe("=> Mat3", () =>
             {
                 for (let i = 0; i < 3; ++i)
                 {
-                    const index = Mat3.f32.getElement(i, j);
+                    const index = Mat3.f32.getIndex(i, j);
                     expect(m4[index]).toBe(counter++);
                 }
             }
@@ -30,7 +30,7 @@ describe("=> Mat3", () =>
             {
                 for (let j = 0; j < 3; ++j)
                 {
-                    expect(m3[Mat3.f32.getElement(i, j)]).toBe(i === j ? 1 : 0);
+                    expect(m3[Mat3.f32.getIndex(i, j)]).toBe(i === j ? 1 : 0);
                 }
             }
         });
@@ -44,9 +44,9 @@ describe("=> Mat3", () =>
                 .createOneEmpty()
                 .fill(1);
             Mat3.f32.createScalingMatrix(10, -10, m3);
-            expect(m3[Mat3.f32.getElement(0, 0)]).toBe(10);
-            expect(m3[Mat3.f32.getElement(1, 1)]).toBe(-10);
-            expect(m3[Mat3.f32.getElement(2, 2)]).toBe(1);
+            expect(m3[Mat3.f32.getIndex(0, 0)]).toBe(10);
+            expect(m3[Mat3.f32.getIndex(1, 1)]).toBe(-10);
+            expect(m3[Mat3.f32.getIndex(2, 2)]).toBe(1);
 
             for (let i = 0; i < 3; ++i)
             {
@@ -54,7 +54,7 @@ describe("=> Mat3", () =>
                 {
                     if (i !== j)
                     {
-                        expect(m3[Mat3.f32.getElement(i, j)]).toBe(0);
+                        expect(m3[Mat3.f32.getIndex(i, j)]).toBe(0);
                     }
                 }
             }
@@ -69,12 +69,12 @@ describe("=> Mat3", () =>
                 .createOneEmpty()
                 .fill(1);
             Mat3.f32.createTranslationMatrix(10, -10, m3);
-            expect(m3[Mat3.f32.getElement(0, 2)]).toBe(10);
-            expect(m3[Mat3.f32.getElement(1, 2)]).toBe(-10);
-            expect(m3[Mat3.f32.getElement(0, 0)]).toBe(1);
-            expect(m3[Mat3.f32.getElement(1, 1)]).toBe(1);
-            expect(m3[Mat3.f32.getElement(2, 2)]).toBe(1);
-            expect(m3.filter((value) => value === 0).length).toBe(4);
+            expect(m3[Mat3.f32.getIndex(0, 2)]).toBe(10);
+            expect(m3[Mat3.f32.getIndex(1, 2)]).toBe(-10);
+            expect(m3[Mat3.f32.getIndex(0, 0)]).toBe(1);
+            expect(m3[Mat3.f32.getIndex(1, 1)]).toBe(1);
+            expect(m3[Mat3.f32.getIndex(2, 2)]).toBe(1);
+            expect((m3).filter((value) => value === 0).length).toBe(4);
         });
     });
 
@@ -90,7 +90,7 @@ describe("=> Mat3", () =>
             {
                 for (let j = 0; j < 3; ++j)
                 {
-                    expect(m3[Mat3.f32.getElement(i, j)]).toBe(result[Mat3.f32.getElement(i, j)]);
+                    expect(m3[Mat3.f32.getIndex(i, j)]).toBe(result[Mat3.f32.getIndex(i, j)]);
                 }
             }
         });

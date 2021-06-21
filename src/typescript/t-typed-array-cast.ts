@@ -14,5 +14,4 @@ import { TPickExcept } from "./t-pick-except";
  * const ivec4: TVec4I32 = vec4 as TTypedArrayCast<TVec4I32> as TVec4I32;
  * ```
  */
-// eslint-disable-next-line
-export type TTypedArrayCast<U extends ATypedArrayTuple<any>> = TPickExcept<U, "TTypeGuardTypedArray" | keyof ATypedArrayTuple<any>>;
+export type TTypedArrayCast<U extends ATypedArrayTuple<number>> = TPickExcept<U, "TTypeGuardTypedArray" | keyof ATypedArrayTuple<number>>;

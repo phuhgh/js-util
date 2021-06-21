@@ -53,10 +53,10 @@ export class Mat4<TArray extends EArrayTypeGuard>
         return result;
     }
 
-    public getElement(column: number, row: number): Extract<keyof AMat4<never>, number>
+    public getIndex(column: number, row: number): Extract<keyof AMat4<never>, number>
     {
         DEBUG_MODE && _Debug.assert(column >= 0 && column < 4 && row >= 0 && row < 4, "out of bounds");
-        return row * 4 + column as Extract<keyof AMat4<never>, number> ;
+        return row * 4 + column as Extract<keyof AMat4<never>, number>;
     }
 
     public getLoggableValue(value: AMat4<TArray>): number[][]

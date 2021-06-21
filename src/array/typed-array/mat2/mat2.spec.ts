@@ -13,7 +13,7 @@ describe("=> Mat2", () =>
             {
                 for (let i = 0; i < 2; ++i)
                 {
-                    const index = Mat2.f32.getElement(i, j);
+                    const index = Mat2.f32.getIndex(i, j);
                     expect(m2[index]).toBe(counter++);
                 }
             }
@@ -30,7 +30,7 @@ describe("=> Mat2", () =>
             {
                 for (let j = 0; j < 2; ++j)
                 {
-                    expect(m2[Mat2.f32.getElement(i, j)]).toBe(i === j ? 1 : 0);
+                    expect(m2[Mat2.f32.getIndex(i, j)]).toBe(i === j ? 1 : 0);
                 }
             }
         });

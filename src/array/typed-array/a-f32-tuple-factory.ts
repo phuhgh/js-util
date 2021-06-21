@@ -1,11 +1,10 @@
-import { ATypedArrayTuple } from "./a-typed-array-tuple";
 import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory";
 import { IEmscriptenWrapper } from "../../web-assembly/emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { TDebugListener } from "rc-js-util-globals";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export abstract class AF32TupleFactory<T extends ATypedArrayTuple<any>, TCtorArgs extends number[]>
+export abstract class AF32TupleFactory<T extends object, TCtorArgs extends number[]>
     implements ITypedArrayTupleFactory<T, TCtorArgs>
 {
     protected constructor
@@ -34,7 +33,7 @@ export abstract class AF32TupleFactory<T extends ATypedArrayTuple<any>, TCtorArg
             RcJsUtilDebug.protectedViews.setValue(debugInstance, protectedView);
             RcJsUtilDebug.onAllocate.addListener(debugInstance);
 
-            return protectedView.createProtectedView(instance);
+            return protectedView.createProtectedView<T>(instance);
         }
 
         return instance;

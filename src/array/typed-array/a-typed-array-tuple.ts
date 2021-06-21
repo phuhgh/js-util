@@ -1,8 +1,10 @@
+import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length";
+
 /**
  * @public
  * Common methods of typed arrays, extend to make typed array tuples.
  */
-export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
+export abstract class ATypedArrayTuple<TLength extends number>
 {
     /**
      * The size in bytes of each element in the array.
@@ -26,7 +28,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
     /**
      * The length of the array.
      */
-    public abstract readonly length: number;
+    public abstract readonly length: TLength;
 
     /**
      * Returns the this object after copying a section of the array identified by start and end
@@ -47,7 +49,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * @param thisArg - An object to which the this keyword can refer in the callbackfn function.
      * If thisArg is omitted, undefined is used as the this value.
      */
-    public abstract every(callbackfn: (value: number, index: number, array: T) => boolean, thisArg?: unknown): boolean;
+    public abstract every(callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => boolean, thisArg?: unknown): boolean;
 
     /**
      * Returns the this object after filling the section identified by start and end with value
@@ -66,7 +68,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * @param thisArg - An object to which the this keyword can refer in the callbackfn function.
      * If thisArg is omitted, undefined is used as the this value.
      */
-    public abstract filter(callbackfn: (value: number, index: number, array: T) => unknown, thisArg?: unknown): T;
+    public abstract filter(callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => unknown, thisArg?: unknown): ATypedArrayTuple<number>;
 
     /**
      * Returns the value of the first element in the array where predicate is true, and undefined
@@ -77,7 +79,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * @param thisArg - If provided, it will be used as the this value for each invocation of
      * predicate. If it is not provided, undefined is used instead.
      */
-    public abstract find(predicate: (value: number, index: number, obj: T) => boolean, thisArg?: unknown): number | undefined;
+    public abstract find(predicate: (value: number, index: Extract<keyof this, number>, obj: this) => boolean, thisArg?: unknown): number | undefined;
 
     /**
      * Returns the index of the first element in the array where predicate is true, and -1
@@ -88,7 +90,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * @param thisArg - If provided, it will be used as the this value for each invocation of
      * predicate. If it is not provided, undefined is used instead.
      */
-    public abstract findIndex(predicate: (value: number, index: number, obj: T) => boolean, thisArg?: unknown): number;
+    public abstract findIndex(predicate: (value: number, index: Extract<keyof this, number>, obj: this) => boolean, thisArg?: unknown): number;
 
     /**
      * Performs the specified action for each element in an array.
@@ -97,7 +99,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * @param thisArg -  An object to which the this keyword can refer in the callbackfn function.
      * If thisArg is omitted, undefined is used as the this value.
      */
-    public abstract forEach(callbackfn: (value: number, index: number, array: T) => void, thisArg?: unknown): void;
+    public abstract forEach(callbackfn: (value: number, index: number, array: this) => void, thisArg?: unknown): void;
 
     /**
      * Returns the index of the first occurrence of a value in an array.
@@ -130,7 +132,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * @param thisArg - An object to which the this keyword can refer in the callbackfn function.
      * If thisArg is omitted, undefined is used as the this value.
      */
-    public abstract map(callbackfn: (value: number, index: number, array: T) => number, thisArg?: unknown): T;
+    public abstract map(callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => number, thisArg?: unknown): this;
 
     /**
      * Calls the specified callback function for all the elements in an array. The return value of
@@ -142,8 +144,8 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * the accumulation. The first call to the callbackfn function provides this value as an argument
      * instead of an array value.
      */
-    public abstract reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: T) => number): number;
-    public abstract reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: T) => number, initialValue: number): number;
+    public abstract reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number): number;
+    public abstract reduce(callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number, initialValue: number): number;
 
     /**
      * Calls the specified callback function for all the elements in an array. The return value of
@@ -155,7 +157,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * the accumulation. The first call to the callbackfn function provides this value as an argument
      * instead of an array value.
      */
-    public abstract reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: T) => U, initialValue: U): U;
+    public abstract reduce<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => U, initialValue: U): U;
 
     /**
      * Calls the specified callback function for all the elements in an array, in descending order.
@@ -167,8 +169,8 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * the accumulation. The first call to the callbackfn function provides this value as an
      * argument instead of an array value.
      */
-    public abstract reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: T) => number): number;
-    public abstract reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: T) => number, initialValue: number): number;
+    public abstract reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number): number;
+    public abstract reduceRight(callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number, initialValue: number): number;
 
     /**
      * Calls the specified callback function for all the elements in an array, in descending order.
@@ -180,26 +182,26 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * the accumulation. The first call to the callbackfn function provides this value as an argument
      * instead of an array value.
      */
-    public abstract reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: T) => U, initialValue: U): U;
+    public abstract reduceRight<U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => U, initialValue: U): U;
 
     /**
      * Reverses the elements in an Array.
      */
-    public abstract reverse(): T;
+    public abstract reverse(): this;
 
     /**
      * Sets a value or an array of values.
      * @param array - A typed or untyped array of values to set.
      * @param offset - The index in the current array at which the values are to be written.
      */
-    public abstract set(array: ArrayLike<number>, offset?: number): void;
+    public abstract set(array: TTupleLikeOfLength<number, TLength>, offset?: number): void;
 
     /**
      * Returns a section of an array.
      * @param start - The beginning of the specified portion of the array.
      * @param end - The end of the specified portion of the array.
      */
-    public abstract slice(start?: number, end?: number): T;
+    public abstract slice(start?: number, end?: number): this;
 
     /**
      * Determines whether the specified callback function returns true for any element of an array.
@@ -209,7 +211,7 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
      * @param thisArg - An object to which the this keyword can refer in the callbackfn function.
      * If thisArg is omitted, undefined is used as the this value.
      */
-    public abstract some(callbackfn: (value: number, index: number, array: T) => boolean, thisArg?: unknown): boolean;
+    public abstract some(callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => boolean, thisArg?: unknown): boolean;
 
     /**
      * Sorts an array.
@@ -219,12 +221,12 @@ export abstract class ATypedArrayTuple<T extends ATypedArrayTuple<T>>
     public abstract sort(compareFn?: (a: number, b: number) => number): this;
 
     /**
-     * Gets a new T view of the ArrayBuffer store for this array, referencing the elements
+     * Gets a new this view of the ArrayBuffer store for this array, referencing the elements
      * at begin, inclusive, up to end, exclusive.
      * @param begin - The index of the beginning of the array.
      * @param end - The index of the end of the array.
      */
-    public abstract subarray(begin: number, end?: number): T;
+    public abstract subarray(begin: number, end?: number): this;
 
     /**
      * Converts a number to a string by using the current locale.

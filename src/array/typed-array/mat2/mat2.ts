@@ -34,7 +34,7 @@ export class Mat2<TArray extends EArrayTypeGuard>
         return result;
     }
 
-    public getElement(column: number, row: number): Extract<keyof Mat2<never>, number>
+    public getIndex(column: number, row: number): Extract<keyof Mat2<never>, number>
     {
         DEBUG_MODE && _Debug.assert(column >= 0 && column < 2 && row >= 0 && row < 2, "out of bounds");
         return row * 2 + column as Extract<keyof Mat2<never>, number> ;

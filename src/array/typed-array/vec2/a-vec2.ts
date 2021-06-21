@@ -8,7 +8,7 @@ import type { EArrayTypeGuard } from "../e-typed-array-guard";
  * @remarks
  * see {@link Vec2} for methods.
  */
-export abstract class AVec2<TArray extends EArrayTypeGuard> extends ATypedArrayTuple<AVec2<TArray>>
+export abstract class AVec2<TArray extends EArrayTypeGuard> extends ATypedArrayTuple<2>
 {
     /**
      * x

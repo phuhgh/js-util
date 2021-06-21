@@ -13,7 +13,7 @@ describe("=> Mat4", () =>
             {
                 for (let i = 0; i < 4; ++i)
                 {
-                    const index = Mat4.f32.getElement(i, j);
+                    const index = Mat4.f32.getIndex(i, j);
                     expect(m4[index]).toBe(counter++);
                 }
             }
@@ -30,7 +30,7 @@ describe("=> Mat4", () =>
             {
                 for (let j = 0; j < 4; ++j)
                 {
-                    expect(m4[Mat4.f32.getElement(i, j)]).toBe(i === j ? 1 : 0);
+                    expect(m4[Mat4.f32.getIndex(i, j)]).toBe(i === j ? 1 : 0);
                 }
             }
         });

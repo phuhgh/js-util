@@ -8,7 +8,7 @@ import type { EArrayTypeGuard } from "../e-typed-array-guard";
  * @remarks
  * see {@link Mat3} for methods.
  */
-export abstract class AMat3<TArray extends EArrayTypeGuard> extends ATypedArrayTuple<AMat3<TArray>>
+export abstract class AMat3<TArray extends EArrayTypeGuard> extends ATypedArrayTuple<9>
 {
     /**
      * c1r1

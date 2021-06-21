@@ -48,9 +48,12 @@ export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-co
 export { IDictionary } from "./typescript/i-dictionary";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary";
 export { TKeysOf } from "./typescript/t-keys-of";
+export { TNextInt } from "./typescript/t-next-int";
 export { TNullable } from "./typescript/t-nullable";
 export { TPickExcept } from "./typescript/t-pick-except";
 export { TPredicate } from "./typescript/t-predicate";
+export { TTupleLike } from "./typescript/t-tuple-like";
+export { TTupleLikeOfLength } from "./typescript/t-tuple-like-of-length";
 export { TTypedArrayCast } from "./typescript/t-typed-array-cast";
 export { TUnionToIntersection } from "./typescript/t-union-to-intersection";
 export { TUnpackArray } from "./typescript/t-unpack-array";
