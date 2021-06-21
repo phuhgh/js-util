@@ -26,40 +26,40 @@ export class XyMargin<TArray extends EArrayTypeGuard> extends XyRange<TArray>
         super(factory);
     }
 
-    public getLeft(position: AXyMargin<TArray>): number
+    public getLeft(position: Readonly<AXyMargin<TArray>>): number
     {
         return position[0];
     }
 
-    public getRight(position: AXyMargin<TArray>): number
+    public getRight(position: Readonly<AXyMargin<TArray>>): number
     {
         return position[1];
     }
 
-    public getTop(position: AXyMargin<TArray>): number
+    public getTop(position: Readonly<AXyMargin<TArray>>): number
     {
         return position[2];
     }
 
-    public getBottom(position: AXyMargin<TArray>): number
+    public getBottom(position: Readonly<AXyMargin<TArray>>): number
     {
         return position[3];
     }
 
-    public sumX(position: AXyMargin<TArray>): number
+    public sumX(position: Readonly<AXyMargin<TArray>>): number
     {
         return position[0] + position[1];
     }
 
-    public sumY(position: AXyMargin<TArray>): number
+    public sumY(position: Readonly<AXyMargin<TArray>>): number
     {
         return position[2] + position[3];
     }
 
     public getInnerRange
     (
-        range: AXyRange<TArray>,
-        margins: AXyMargin<TArray>,
+        range: Readonly<AXyRange<TArray>>,
+        margins: Readonly<AXyMargin<TArray>>,
         result: AXyRange<TArray> = this.factory.createOneEmpty(),
     )
         : AXyRange<TArray>

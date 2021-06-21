@@ -120,8 +120,8 @@ export class Mat3<TArray extends EArrayTypeGuard>
 
     public multiplyMat3
     (
-        a: AMat3<TArray>,
-        b: AMat3<TArray>,
+        a: Readonly<AMat3<TArray>>,
+        b: Readonly<AMat3<TArray>>,
         result: AMat3<TArray> = this.factory.createOneEmpty(),
     )
         : AMat3<TArray>
@@ -142,7 +142,7 @@ export class Mat3<TArray extends EArrayTypeGuard>
         return result;
     }
 
-    public getLoggableValue(value: AMat3<TArray>): number[][]
+    public getLoggableValue(value: Readonly<AMat3<TArray>>): number[][]
     {
         return [
             [value[0], value[1], value[2]],

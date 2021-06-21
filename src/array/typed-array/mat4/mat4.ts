@@ -59,7 +59,7 @@ export class Mat4<TArray extends EArrayTypeGuard>
         return row * 4 + column as Extract<keyof AMat4<never>, number>;
     }
 
-    public getLoggableValue(value: AMat4<TArray>): number[][]
+    public getLoggableValue(value: Readonly<AMat4<TArray>>): number[][]
     {
         return [
             [value[0], value[1], value[2], value[3]],

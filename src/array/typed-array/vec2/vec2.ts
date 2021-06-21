@@ -2,6 +2,7 @@ import { AVec2, TVec2F32 } from "./a-vec2";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import type { EArrayTypeGuard } from "../e-typed-array-guard";
 import { Vec2F32Factory } from "./vec2-f32-factory";
+import { AMat3 } from "../mat3/a-mat3";
 
 /**
  * @public
@@ -23,12 +24,12 @@ export class Vec2<TTypedArray extends EArrayTypeGuard>
     {
     }
 
-    public getX(vec: AVec2<TTypedArray>): number
+    public getX(vec: Readonly<AVec2<TTypedArray>>): number
     {
         return vec[0];
     }
 
-    public getY(vec: AVec2<TTypedArray>): number
+    public getY(vec: Readonly<AVec2<TTypedArray>>): number
     {
         return vec[1];
     }
@@ -49,7 +50,7 @@ export class Vec2<TTypedArray extends EArrayTypeGuard>
         vec[1] = y;
     }
 
-    public add(a: AVec2<TTypedArray>, b: AVec2<TTypedArray>, result: AVec2<TTypedArray>): void
+    public add(a: Readonly<AVec2<TTypedArray>>, b: Readonly<AVec2<TTypedArray>>, result: AVec2<TTypedArray>): void
     {
         result[0] = a[0] + b[0];
         result[1] = a[1] + b[1];
@@ -57,8 +58,8 @@ export class Vec2<TTypedArray extends EArrayTypeGuard>
 
     public dotProduct
     (
-        a: AVec2<TTypedArray>,
-        b: AVec2<TTypedArray>,
+        a: Readonly<AVec2<TTypedArray>>,
+        b: Readonly<AVec2<TTypedArray>>,
         result: AVec2<TTypedArray> = this.factory.createOneEmpty(),
     )
         : AVec2<TTypedArray>
@@ -69,7 +70,21 @@ export class Vec2<TTypedArray extends EArrayTypeGuard>
         return result;
     }
 
-    public getLoggableValue(value: AVec2<TTypedArray>): number[][]
+    public mat3Multiply
+    (
+        a: Readonly<AMat3<EArrayTypeGuard>>,
+        b: Readonly<AVec2<TTypedArray>>,
+        result: AVec2<TTypedArray> = this.factory.createOneEmpty(),
+    )
+        : AVec2<TTypedArray>
+    {
+        result[0] = a[0] * b[0] + a[3] * b[0] + a[6];
+        result[1] = a[1] * b[1] + a[4] * b[1] + a[7];
+
+        return result;
+    }
+
+    public getLoggableValue(value: Readonly<AVec2<TTypedArray>>): number[][]
     {
         return [
             [value[0], value[1]],

@@ -23,22 +23,22 @@ export class Vec4<TTypedArray extends EArrayTypeGuard>
     {
     }
 
-    public getX(vec: AVec4<TTypedArray>): number
+    public getX(vec: Readonly<AVec4<TTypedArray>>): number
     {
         return vec[0];
     }
 
-    public getY(vec: AVec4<TTypedArray>): number
+    public getY(vec: Readonly<AVec4<TTypedArray>>): number
     {
         return vec[1];
     }
 
-    public getZ(vec: AVec4<TTypedArray>): number
+    public getZ(vec: Readonly<AVec4<TTypedArray>>): number
     {
         return vec[2];
     }
 
-    public getW(vec: AVec4<TTypedArray>): number
+    public getW(vec: Readonly<AVec4<TTypedArray>>): number
     {
         return vec[3];
     }
@@ -71,7 +71,7 @@ export class Vec4<TTypedArray extends EArrayTypeGuard>
         vec[3] = w;
     }
 
-    public getLoggableValue(value: AVec4<TTypedArray>): number[][]
+    public getLoggableValue(value: Readonly<AVec4<TTypedArray>>): number[][]
     {
         return [
             [value[0], value[1], value[2]],

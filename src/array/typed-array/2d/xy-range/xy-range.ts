@@ -43,60 +43,60 @@ export class XyRange<TArray extends EArrayTypeGuard>
         xyRange[3] = value;
     }
 
-    public getXMin(range: AXyRange<TArray>): number
+    public getXMin(range: Readonly<AXyRange<TArray>>): number
     {
         return range[0];
     }
 
-    public getXMax(range: AXyRange<TArray>): number
+    public getXMax(range: Readonly<AXyRange<TArray>>): number
     {
         return range[1];
     }
 
-    public getYMin(range: AXyRange<TArray>): number
+    public getYMin(range: Readonly<AXyRange<TArray>>): number
     {
         return range[2];
     }
 
-    public getYMax(range: AXyRange<TArray>): number
+    public getYMax(range: Readonly<AXyRange<TArray>>): number
     {
         return range[3];
     }
 
-    public getXRange(range: AXyRange<TArray>): number
+    public getXRange(range: Readonly<AXyRange<TArray>>): number
     {
         return range[1] - range[0];
     }
 
-    public getYRange(range: AXyRange<TArray>): number
+    public getYRange(range: Readonly<AXyRange<TArray>>): number
     {
         return range[3] - range[2];
     }
 
-    public getXCenter(range: AXyRange<TArray>): number
+    public getXCenter(range: Readonly<AXyRange<TArray>>): number
     {
         return (range[0] + range[1]) * 0.5;
     }
 
-    public getYCenter(range: AXyRange<TArray>): number
+    public getYCenter(range: Readonly<AXyRange<TArray>>): number
     {
         return (range[2] + range[3]) * 0.5;
     }
 
-    public getXSum(range: AXyRange<TArray>): number
+    public getXSum(range: Readonly<AXyRange<TArray>>): number
     {
         return range[0] + range[1];
     }
 
-    public getYSum(range: AXyRange<TArray>): number
+    public getYSum(range: Readonly<AXyRange<TArray>>): number
     {
         return range[2] + range[3];
     }
 
     public unionRange
     (
-        a: AXyRange<TArray>,
-        b: AXyRange<TArray>,
+        a: Readonly<AXyRange<TArray>>,
+        b: Readonly<AXyRange<TArray>>,
         writeTo: AXyRange<TArray> = this.factory.createOneEmpty(),
     )
         : AXyRange<TArray>

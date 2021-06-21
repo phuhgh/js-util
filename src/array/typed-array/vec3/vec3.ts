@@ -24,17 +24,17 @@ export class Vec3<TTypedArray extends EArrayTypeGuard>
     {
     }
 
-    public getX(vec: AVec3<TTypedArray>): number
+    public getX(vec: Readonly<AVec3<TTypedArray>>): number
     {
         return vec[0];
     }
 
-    public getY(vec: AVec3<TTypedArray>): number
+    public getY(vec: Readonly<AVec3<TTypedArray>>): number
     {
         return vec[1];
     }
 
-    public getZ(vec: AVec3<TTypedArray>): number
+    public getZ(vec: Readonly<AVec3<TTypedArray>>): number
     {
         return vec[2];
     }
@@ -61,17 +61,17 @@ export class Vec3<TTypedArray extends EArrayTypeGuard>
         vec[2] = z;
     }
 
-    public getMat3MultiplyX(a: AMat3<EArrayTypeGuard>, x: number): number
+    public getMat3MultiplyX(a: Readonly<AMat3<EArrayTypeGuard>>, x: number): number
     {
         return a[0] * x + a[3] * x + a[6];
     }
 
-    public getMat3MultiplyY(a: AMat3<EArrayTypeGuard>, y: number): number
+    public getMat3MultiplyY(a: Readonly<AMat3<EArrayTypeGuard>>, y: number): number
     {
         return a[1] * y + a[4] * y + a[7];
     }
 
-    public getLoggableValue(value: AVec3<TTypedArray>): number[][]
+    public getLoggableValue(value: Readonly<AVec3<TTypedArray>>): number[][]
     {
         return [
             [value[0], value[1], value[2]],
