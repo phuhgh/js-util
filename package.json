@@ -1,6 +1,6 @@
 {
   "name": "rc-js-util",
-  "version": "5.0.0-alpha.8",
+  "version": "5.0.0-alpha.9",
   "license": "MIT",
   "scripts": {
     "build": "npm run build-ts && npm run build-cpp",
@@ -9,7 +9,7 @@
     "lib": "rimraf bin && tsc -d -p tsconfig.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "rc-ts-lint -c node_modules/rc-lint-rules/.eslintrc.js src/",
-    "ci-build": "npm run build && npm run lint && npm run test && npm run lib",
+    "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
     "test": "jasmine --config=jasmine.json",
     "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },

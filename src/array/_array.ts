@@ -40,7 +40,7 @@ export class _Array
     public static readonly compact = arrayCompact;
     /** {@inheritDoc arrayCompactMap} */
     public static readonly compactMap = arrayCompactMap;
-    /** {@inheritDoc arrayContains} */
+    /** {@inheritDoc (arrayContains:2)} */
     public static readonly contains = arrayContains;
     /** {@inheritDoc arrayCopyInto} */
     public static readonly copyInto = arrayCopyInto;

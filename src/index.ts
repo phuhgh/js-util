@@ -36,6 +36,7 @@ export { AVec3, TVec3F32 } from "./array/typed-array/vec3/a-vec3";
 export { Vec3, TVec3CtorArgs } from "./array/typed-array/vec3/vec3";
 export { AVec4, TVec4F32 } from "./array/typed-array/vec4/a-vec4";
 export { Vec4, TVec4CtorArgs } from "./array/typed-array/vec4/vec4";
+export  { TTypedArray } from "./array/typed-array/t-typed-array";
 export { CircularBuffer } from "./collection/circular-buffer";
 export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circular-fifo-stack";
 export { IFIFOStack } from "./collection/i-fifo-stack";
