@@ -10,7 +10,7 @@ import { TPickExcept } from "./t-pick-except";
  * @example
  * ```typescript
  * const vec4 = Vec4.f32.factory.createOneEmpty();
- * type TVec4I32 = AVec4<EArrayTypeGuard.I32>;
+ * type TVec4I32 = AVec4<TTypedArray.I32>;
  * const ivec4: TVec4I32 = vec4 as TTypedArrayCast<TVec4I32> as TVec4I32;
  * ```
  */

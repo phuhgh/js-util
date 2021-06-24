@@ -1,10 +1,9 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { AMat2 } from "./a-mat2";
 import { TMat2CtorArgs } from "./mat2";
-import type { EArrayTypeGuard } from "../e-typed-array-guard";
 import { AF64TupleFactory } from "../a-f64-tuple-factory";
 
-export class Mat2F64Factory<T extends AMat2<EArrayTypeGuard.F64>>
+export class Mat2F64Factory<T extends AMat2<Float64Array>>
     extends AF64TupleFactory<T, TMat2CtorArgs>
     implements ITypedArrayTupleFactory<T, TMat2CtorArgs>
 {

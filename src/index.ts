@@ -17,7 +17,6 @@ export { _Set } from "./set/_set";
 export { _String } from "./string/_string";
 
 export { TGetComparisonValueAtIndex } from "./array/impl/binary-find-insertion-index";
-export { EArrayTypeGuard } from "./array/typed-array/e-typed-array-guard";
 export { TTypedArrayCtor } from "./array/typed-array/t-typed-array-ctor";
 export { ATypedArrayTuple } from "./array/typed-array/a-typed-array-tuple";
 export { ITypedArrayTupleFactory } from "./array/typed-array/i-typed-array-tuple-factory";

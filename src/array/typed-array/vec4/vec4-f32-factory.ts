@@ -2,9 +2,8 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { AF32TupleFactory } from "../a-f32-tuple-factory";
 import { AVec4 } from "./a-vec4";
 import { TVec4CtorArgs } from "./vec4";
-import type { EArrayTypeGuard } from "../e-typed-array-guard";
 
-export class Vec4F32Factory<T extends AVec4<EArrayTypeGuard.F32>>
+export class Vec4F32Factory<T extends AVec4<Float32Array>>
     extends AF32TupleFactory<T, TVec4CtorArgs>
     implements ITypedArrayTupleFactory<T, TVec4CtorArgs>
 {

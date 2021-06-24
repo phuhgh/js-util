@@ -1,5 +1,5 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
-import type { EArrayTypeGuard } from "../e-typed-array-guard";
+import { TTypedArray } from "../t-typed-array";
 
 /**
  * @public
@@ -8,7 +8,7 @@ import type { EArrayTypeGuard } from "../e-typed-array-guard";
  * @remarks
  * see {@link Vec2} for methods.
  */
-export abstract class AVec2<TArray extends EArrayTypeGuard> extends ATypedArrayTuple<2>
+export abstract class AVec2<TArray extends TTypedArray> extends ATypedArrayTuple<2>
 {
     /**
      * x
@@ -27,4 +27,4 @@ export abstract class AVec2<TArray extends EArrayTypeGuard> extends ATypedArrayT
  * @public
  * Float32 {@link AVec2}.
  */
-export type TVec2F32 = AVec2<EArrayTypeGuard.F32>;
+export type TVec2F32 = AVec2<Float32Array>;

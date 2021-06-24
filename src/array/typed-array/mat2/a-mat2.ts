@@ -1,5 +1,5 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
-import type { EArrayTypeGuard } from "../e-typed-array-guard";
+import { TTypedArray } from "../t-typed-array";
 
 /**
  * @public
@@ -8,7 +8,7 @@ import type { EArrayTypeGuard } from "../e-typed-array-guard";
  * @remarks
  * see {@link Mat2} for methods.
  */
-export abstract class AMat2<TArray extends EArrayTypeGuard> extends ATypedArrayTuple<4>
+export abstract class AMat2<TArray extends TTypedArray> extends ATypedArrayTuple<4>
 {
     /**
      * c1r1
@@ -35,5 +35,5 @@ export abstract class AMat2<TArray extends EArrayTypeGuard> extends ATypedArrayT
  * @public
  * Float32 {@link AMat2}.
  */
-export type TMat2F32 = AMat2<EArrayTypeGuard.F32>;
-export type TMat2F64 = AMat2<EArrayTypeGuard.F64>;
+export type TMat2F32 = AMat2<Float32Array>;
+export type TMat2F64 = AMat2<Float64Array>;

@@ -1,8 +1,8 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { AMat4, TMat4 } from "./a-mat4";
-import type { EArrayTypeGuard } from "../e-typed-array-guard";
 import { Mat4F32Factory } from "./mat4-f32-factory";
 import { _Debug } from "../../../debug/_debug";
+import { TTypedArray } from "../t-typed-array";
 
 /**
  * @public
@@ -30,9 +30,9 @@ export type TMat4CtorArgs = [
  * @public
  * Provider of typed array tuple {@link AMat4}. See static properties for factories and instance members for utilities.
  */
-export class Mat4<TArray extends EArrayTypeGuard>
+export class Mat4<TArray extends TTypedArray>
 {
-    public static f32 = new Mat4<EArrayTypeGuard.F32>(new Mat4F32Factory<TMat4>());
+    public static f32 = new Mat4<Float32Array>(new Mat4F32Factory<TMat4>());
 
     protected constructor
     (

@@ -1,5 +1,5 @@
 import { AMat2 } from "../../mat2/a-mat2";
-import type { EArrayTypeGuard } from "../../e-typed-array-guard";
+import { TTypedArray } from "../../t-typed-array";
 
 /**
  * @public
@@ -8,7 +8,7 @@ import type { EArrayTypeGuard } from "../../e-typed-array-guard";
  * @remarks
  * See {@link XyRange} for methods.
  */
-export abstract class AXyRange<TArray extends EArrayTypeGuard> extends AMat2<TArray>
+export abstract class AXyRange<TArray extends TTypedArray> extends AMat2<TArray>
 {
     /**
      * xMin
@@ -34,5 +34,5 @@ export abstract class AXyRange<TArray extends EArrayTypeGuard> extends AMat2<TAr
  * @public
  * A float32 {@link AXyRange}.
  */
-export type TXyRangeF32 = AXyRange<EArrayTypeGuard.F32>;
-export type TXyRangeF64 = AXyRange<EArrayTypeGuard.F64>;
+export type TXyRangeF32 = AXyRange<Float32Array>;
+export type TXyRangeF64 = AXyRange<Float64Array>;

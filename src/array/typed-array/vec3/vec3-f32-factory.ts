@@ -1,10 +1,10 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { AF32TupleFactory } from "../a-f32-tuple-factory";
-import type { EArrayTypeGuard } from "../e-typed-array-guard";
 import { AVec3 } from "./a-vec3";
 import { TVec3CtorArgs } from "./vec3";
+import { TTypedArray } from "../t-typed-array";
 
-export class Vec3F32Factory<T extends AVec3<EArrayTypeGuard.F32>>
+export class Vec3F32Factory<T extends AVec3<TTypedArray>>
     extends AF32TupleFactory<T, TVec3CtorArgs>
     implements ITypedArrayTupleFactory<T, TVec3CtorArgs>
 {

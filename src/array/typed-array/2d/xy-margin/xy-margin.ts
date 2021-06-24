@@ -3,7 +3,7 @@ import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { AXyMargin, TXyMarginF32 } from "./a-xy-margin";
 import { AXyRange } from "../xy-range/a-xy-range";
 import { Mat2F32Factory } from "../../mat2/mat2-f32-factory";
-import type { EArrayTypeGuard } from "../../e-typed-array-guard";
+import { TTypedArray } from "../../t-typed-array";
 
 /**
  * @public
@@ -14,9 +14,9 @@ export type TXyMarginCtorArgs = [left: number, right: number, top: number, botto
  * @public
  * Provider of typed array tuple {@link AXyMargin}. See static properties for factories and instance members for utilities.
  */
-export class XyMargin<TArray extends EArrayTypeGuard> extends XyRange<TArray>
+export class XyMargin<TArray extends TTypedArray> extends XyRange<TArray>
 {
-    public static f32: XyMargin<EArrayTypeGuard.F32> = new XyMargin(new Mat2F32Factory<TXyMarginF32>());
+    public static f32: XyMargin<Float32Array> = new XyMargin(new Mat2F32Factory<TXyMarginF32>());
 
     protected constructor
     (
