@@ -1,9 +1,9 @@
 import { XyRange } from "../xy-range/xy-range";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
-import { AXyMargin, TXyMarginF32 } from "./a-xy-margin";
+import { AXyMargin } from "./a-xy-margin";
 import { AXyRange } from "../xy-range/a-xy-range";
-import { Mat2F32Factory } from "../../mat2/mat2-f32-factory";
 import { TTypedArray } from "../../t-typed-array";
+import { Mat2Factory } from "../../mat2/mat2-factory";
 
 /**
  * @public
@@ -16,7 +16,15 @@ export type TXyMarginCtorArgs = [left: number, right: number, top: number, botto
  */
 export class XyMargin<TArray extends TTypedArray> extends XyRange<TArray>
 {
-    public static f32: XyMargin<Float32Array> = new XyMargin(new Mat2F32Factory<TXyMarginF32>());
+    public static f64 = new XyMargin(new Mat2Factory(Float64Array));
+    public static f32 = new XyMargin(new Mat2Factory(Float32Array));
+    public static u32 = new XyMargin(new Mat2Factory(Uint32Array));
+    public static i32 = new XyMargin(new Mat2Factory(Int32Array));
+    public static u16 = new XyMargin(new Mat2Factory(Uint16Array));
+    public static i16 = new XyMargin(new Mat2Factory(Int16Array));
+    public static u8c = new XyMargin(new Mat2Factory(Uint8ClampedArray));
+    public static u8 = new XyMargin(new Mat2Factory(Uint8Array));
+    public static i8 = new XyMargin(new Mat2Factory(Int8Array));
 
     protected constructor
     (

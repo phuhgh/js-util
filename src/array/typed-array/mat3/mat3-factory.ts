@@ -1,15 +1,19 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { TMat3CtorArgs } from "./mat3";
-import { AF32TupleFactory } from "../a-f32-tuple-factory";
 import { AMat3 } from "./a-mat3";
+import { ATypedTupleFactory } from "../a-typed-tuple-factory";
+import { TTypedArrayCtor } from "../t-typed-array-ctor";
 
-export class Mat3F32Factory<T extends AMat3<Float32Array>>
-    extends AF32TupleFactory<T, TMat3CtorArgs>
+export class Mat3Factory<T extends AMat3<InstanceType<TCtor>>, TCtor extends TTypedArrayCtor>
+    extends ATypedTupleFactory<T, TMat3CtorArgs>
     implements ITypedArrayTupleFactory<T, TMat3CtorArgs>
 {
-    public constructor()
+    public constructor
+    (
+        ctor: TCtor,
+    )
     {
-        super(9);
+        super(9, ctor);
     }
 
     public createOne

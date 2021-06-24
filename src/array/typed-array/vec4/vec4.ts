@@ -1,6 +1,6 @@
-import { AVec4, TVec4F32 } from "./a-vec4";
+import { AVec4 } from "./a-vec4";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { Vec4F32Factory } from "./vec4-f32-factory";
+import { Vec4Factory } from "./vec4-factory";
 import { TTypedArray } from "../t-typed-array";
 
 /**
@@ -14,7 +14,15 @@ export type TVec4CtorArgs = [x: number, y: number, z: number, w: number];
  */
 export class Vec4<TArray extends TTypedArray>
 {
-    public static f32: Vec4<Float32Array> = new Vec4<Float32Array>(new Vec4F32Factory<TVec4F32>());
+    public static f64 = new Vec4(new Vec4Factory(Float64Array));
+    public static f32 = new Vec4(new Vec4Factory(Float32Array));
+    public static u32 = new Vec4(new Vec4Factory(Uint32Array));
+    public static i32 = new Vec4(new Vec4Factory(Int32Array));
+    public static u16 = new Vec4(new Vec4Factory(Uint16Array));
+    public static i16 = new Vec4(new Vec4Factory(Int16Array));
+    public static u8c = new Vec4(new Vec4Factory(Uint8ClampedArray));
+    public static u8 = new Vec4(new Vec4Factory(Uint8Array));
+    public static i8 = new Vec4(new Vec4Factory(Int8Array));
 
     protected constructor
     (

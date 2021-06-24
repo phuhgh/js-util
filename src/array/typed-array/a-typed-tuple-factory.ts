@@ -3,6 +3,8 @@ import { TTypedArrayCtor } from "./t-typed-array-ctor";
 import { IEmscriptenWrapper } from "../../web-assembly/emscripten/i-emscripten-wrapper";
 import { TDebugListener } from "rc-js-util-globals";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
+import { INormalizedDataView } from "./normalized-data-view/i-normalized-data-view";
+import { NormalizedDataViewProvider } from "./normalized-data-view/normalized-data-view-provider";
 
 export abstract class ATypedTupleFactory<T extends object, TCtorArgs extends number[]>
     implements ITypedArrayTupleFactory<T, TCtorArgs>
@@ -10,30 +12,47 @@ export abstract class ATypedTupleFactory<T extends object, TCtorArgs extends num
     protected constructor
     (
         protected readonly length: number,
-        private readonly ctor: TTypedArrayCtor,
+        protected readonly ctor: TTypedArrayCtor,
     )
     {
+        this.dataView = NormalizedDataViewProvider.getView(ctor);
     }
 
     public abstract createOne(...args: TCtorArgs): T;
 
-    public abstract copyFromBuffer
+    public copyFromBuffer
     (
         memoryDataView: DataView,
         pointer: number,
-        writeTo?: T,
-        littleEndian?: boolean,
+        writeTo: T = this.createOneEmpty(),
+        littleEndian: boolean = true,
     )
-        : T;
+        : T
+    {
+        for (let i = 0, iEnd = this.length; i < iEnd; ++i)
+        {
+            (writeTo as unknown as number[])[i] = this.dataView.getValue(memoryDataView, pointer, littleEndian);
+            pointer += this.ctor.BYTES_PER_ELEMENT;
+        }
 
-    public abstract copyToBuffer
+        return writeTo;
+    }
+
+    public copyToBuffer
     (
         memoryDataView: DataView,
         writeFrom: T,
         pointer: number,
-        littleEndian?: boolean,
+        littleEndian: boolean = true,
     )
-        : void;
+        : void
+    {
+        for (let i = 0, iEnd = this.length; i < iEnd; ++i)
+        {
+            this.dataView.setValue(memoryDataView, pointer, (writeFrom as unknown as number[])[i], littleEndian);
+            pointer += this.ctor.BYTES_PER_ELEMENT;
+        }
+    }
 
     public createOneEmpty(): T
     {
@@ -57,4 +76,6 @@ export abstract class ATypedTupleFactory<T extends object, TCtorArgs extends num
 
         return instance;
     }
+
+    protected dataView: INormalizedDataView;
 }

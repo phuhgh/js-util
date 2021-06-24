@@ -1,8 +1,7 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AMat2, TMat2F32, TMat2F64 } from "./a-mat2";
-import { Mat2F32Factory } from "./mat2-f32-factory";
+import { AMat2 } from "./a-mat2";
 import { _Debug } from "../../../debug/_debug";
-import { Mat2F64Factory } from "./mat2-f64-factory";
+import { Mat2Factory } from "./mat2-factory";
 import { TTypedArray } from "../t-typed-array";
 
 /**
@@ -16,8 +15,15 @@ export type TMat2CtorArgs = [c1r1: number, c2r1: number, c2r2: number, c2r2: num
  */
 export class Mat2<TArray extends TTypedArray>
 {
-    public static f32: Mat2<Float32Array> = new Mat2<Float32Array>(new Mat2F32Factory<TMat2F32>());
-    public static f64: Mat2<Float64Array> = new Mat2<Float64Array>(new Mat2F64Factory<TMat2F64>());
+    public static f64 = new Mat2(new Mat2Factory(Float64Array));
+    public static f32 = new Mat2(new Mat2Factory(Float32Array));
+    public static u32 = new Mat2(new Mat2Factory(Uint32Array));
+    public static i32 = new Mat2(new Mat2Factory(Int32Array));
+    public static u16 = new Mat2(new Mat2Factory(Uint16Array));
+    public static i16 = new Mat2(new Mat2Factory(Int16Array));
+    public static u8c = new Mat2(new Mat2Factory(Uint8ClampedArray));
+    public static u8 = new Mat2(new Mat2Factory(Uint8Array));
+    public static i8 = new Mat2(new Mat2Factory(Int8Array));
 
     protected constructor
     (

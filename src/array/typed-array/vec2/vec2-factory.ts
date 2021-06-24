@@ -1,15 +1,19 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AF32TupleFactory } from "../a-f32-tuple-factory";
 import { AVec2 } from "./a-vec2";
 import { TVec2CtorArgs } from "./vec2";
+import { ATypedTupleFactory } from "../a-typed-tuple-factory";
+import { TTypedArrayCtor } from "../t-typed-array-ctor";
 
-export class Vec2F32Factory<T extends AVec2<Float32Array>>
-    extends AF32TupleFactory<T, TVec2CtorArgs>
+export class Vec2Factory<T extends AVec2<InstanceType<TCtor>>, TCtor extends TTypedArrayCtor>
+    extends ATypedTupleFactory<T, TVec2CtorArgs>
     implements ITypedArrayTupleFactory<T, TVec2CtorArgs>
 {
-    public constructor()
+    public constructor
+    (
+        ctor: TCtor,
+    )
     {
-        super(2);
+        super(2, ctor);
     }
 
     public createOne
@@ -35,8 +39,8 @@ export class Vec2F32Factory<T extends AVec2<Float32Array>>
     )
         : T
     {
-        writeTo[0] = memoryDataView.getFloat32(pointer, littleEndian);
-        writeTo[1] = memoryDataView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[0] = this.dataView.getValue(memoryDataView, pointer, littleEndian);
+        writeTo[1] = this.dataView.getValue(memoryDataView, pointer += this.ctor.BYTES_PER_ELEMENT, littleEndian);
 
         return writeTo;
     }
@@ -50,7 +54,7 @@ export class Vec2F32Factory<T extends AVec2<Float32Array>>
     )
         : void
     {
-        memoryDataView.setFloat32(pointer, writeFrom[0], littleEndian);
-        memoryDataView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
+        this.dataView.setValue(memoryDataView, pointer, writeFrom[0], littleEndian);
+        this.dataView.setValue(memoryDataView, pointer += this.ctor.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
     }
 }

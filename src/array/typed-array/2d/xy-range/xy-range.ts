@@ -1,7 +1,6 @@
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
-import { AXyRange, TXyRangeF32, TXyRangeF64 } from "./a-xy-range";
-import { Mat2F32Factory } from "../../mat2/mat2-f32-factory";
-import { Mat2F64Factory } from "../../mat2/mat2-f64-factory";
+import { AXyRange } from "./a-xy-range";
+import { Mat2Factory } from "../../mat2/mat2-factory";
 import { TTypedArray } from "../../t-typed-array";
 
 /**
@@ -15,8 +14,15 @@ export type TXyRangeCtorArgs = [xMin: number, xMax: number, yMin: number, yMax: 
  */
 export class XyRange<TArray extends TTypedArray>
 {
-    public static f32: XyRange<Float32Array> = new XyRange<Float32Array>(new Mat2F32Factory<TXyRangeF32>());
-    public static f64: XyRange<Float64Array> = new XyRange<Float64Array>(new Mat2F64Factory<TXyRangeF64>());
+    public static f64 = new XyRange(new Mat2Factory(Float64Array));
+    public static f32 = new XyRange(new Mat2Factory(Float32Array));
+    public static u32 = new XyRange(new Mat2Factory(Uint32Array));
+    public static i32 = new XyRange(new Mat2Factory(Int32Array));
+    public static u16 = new XyRange(new Mat2Factory(Uint16Array));
+    public static i16 = new XyRange(new Mat2Factory(Int16Array));
+    public static u8c = new XyRange(new Mat2Factory(Uint8ClampedArray));
+    public static u8 = new XyRange(new Mat2Factory(Uint8Array));
+    public static i8 = new XyRange(new Mat2Factory(Int8Array));
 
     protected constructor
     (

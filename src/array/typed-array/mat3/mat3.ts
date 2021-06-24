@@ -1,6 +1,6 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AMat3, TMat3F32 } from "./a-mat3";
-import { Mat3F32Factory } from "./mat3-f32-factory";
+import { AMat3 } from "./a-mat3";
+import { Mat3Factory } from "./mat3-factory";
 import { _Debug } from "../../../debug/_debug";
 import { TTypedArray } from "../t-typed-array";
 
@@ -25,7 +25,15 @@ export type TMat3CtorArgs = [
  */
 export class Mat3<TArray extends TTypedArray>
 {
-    public static f32: Mat3<Float32Array> = new Mat3<Float32Array>(new Mat3F32Factory<TMat3F32>());
+    public static f64 = new Mat3(new Mat3Factory(Float64Array));
+    public static f32 = new Mat3(new Mat3Factory(Float32Array));
+    public static u32 = new Mat3(new Mat3Factory(Uint32Array));
+    public static i32 = new Mat3(new Mat3Factory(Int32Array));
+    public static u16 = new Mat3(new Mat3Factory(Uint16Array));
+    public static i16 = new Mat3(new Mat3Factory(Int16Array));
+    public static u8c = new Mat3(new Mat3Factory(Uint8ClampedArray));
+    public static u8 = new Mat3(new Mat3Factory(Uint8Array));
+    public static i8 = new Mat3(new Mat3Factory(Int8Array));
 
     protected constructor
     (
@@ -48,7 +56,7 @@ export class Mat3<TArray extends TTypedArray>
     public getIndex(column: number, row: number): Extract<keyof AMat3<never>, number>
     {
         DEBUG_MODE && _Debug.assert(column >= 0 && column < 3 && row >= 0 && row < 3, "out of bounds");
-        return row * 3 + column as Extract<keyof AMat3<never>, number> ;
+        return row * 3 + column as Extract<keyof AMat3<never>, number>;
     }
 
     /**
