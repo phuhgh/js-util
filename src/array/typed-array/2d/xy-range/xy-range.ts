@@ -1,7 +1,8 @@
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
-import { AXyRange, TXyRangeF32 } from "./a-xy-range";
+import { AXyRange, TXyRangeF32, TXyRangeF64 } from "./a-xy-range";
 import type { EArrayTypeGuard } from "../../e-typed-array-guard";
 import { Mat2F32Factory } from "../../mat2/mat2-f32-factory";
+import { Mat2F64Factory } from "../../mat2/mat2-f64-factory";
 
 /**
  * @public
@@ -15,6 +16,7 @@ export type TXyRangeCtorArgs = [xMin: number, xMax: number, yMin: number, yMax: 
 export class XyRange<TArray extends EArrayTypeGuard>
 {
     public static f32: XyRange<EArrayTypeGuard.F32> = new XyRange<EArrayTypeGuard.F32>(new Mat2F32Factory<TXyRangeF32>());
+    public static f64: XyRange<EArrayTypeGuard.F64> = new XyRange<EArrayTypeGuard.F64>(new Mat2F64Factory<TXyRangeF64>());
 
     protected constructor
     (
