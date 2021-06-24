@@ -14,15 +14,15 @@ export type TXyRangeCtorArgs = [xMin: number, xMax: number, yMin: number, yMax: 
  */
 export class XyRange<TArray extends TTypedArray>
 {
-    public static f64 = new XyRange(new Mat2Factory(Float64Array));
-    public static f32 = new XyRange(new Mat2Factory(Float32Array));
-    public static u32 = new XyRange(new Mat2Factory(Uint32Array));
-    public static i32 = new XyRange(new Mat2Factory(Int32Array));
-    public static u16 = new XyRange(new Mat2Factory(Uint16Array));
-    public static i16 = new XyRange(new Mat2Factory(Int16Array));
-    public static u8c = new XyRange(new Mat2Factory(Uint8ClampedArray));
-    public static u8 = new XyRange(new Mat2Factory(Uint8Array));
-    public static i8 = new XyRange(new Mat2Factory(Int8Array));
+    public static f64: XyRange<Float64Array> = new XyRange(new Mat2Factory(Float64Array));
+    public static f32: XyRange<Float32Array> = new XyRange(new Mat2Factory(Float32Array));
+    public static u32: XyRange<Uint32Array> = new XyRange(new Mat2Factory(Uint32Array));
+    public static i32: XyRange<Int32Array> = new XyRange(new Mat2Factory(Int32Array));
+    public static u16: XyRange<Uint16Array> = new XyRange(new Mat2Factory(Uint16Array));
+    public static i16: XyRange<Int16Array> = new XyRange(new Mat2Factory(Int16Array));
+    public static u8c: XyRange<Uint8ClampedArray> = new XyRange(new Mat2Factory(Uint8ClampedArray));
+    public static u8: XyRange<Uint8Array> = new XyRange(new Mat2Factory(Uint8Array));
+    public static i8: XyRange<Int8Array> = new XyRange(new Mat2Factory(Int8Array));
 
     protected constructor
     (

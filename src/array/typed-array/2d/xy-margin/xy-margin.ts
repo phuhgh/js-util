@@ -16,15 +16,15 @@ export type TXyMarginCtorArgs = [left: number, right: number, top: number, botto
  */
 export class XyMargin<TArray extends TTypedArray> extends XyRange<TArray>
 {
-    public static f64 = new XyMargin(new Mat2Factory(Float64Array));
-    public static f32 = new XyMargin(new Mat2Factory(Float32Array));
-    public static u32 = new XyMargin(new Mat2Factory(Uint32Array));
-    public static i32 = new XyMargin(new Mat2Factory(Int32Array));
-    public static u16 = new XyMargin(new Mat2Factory(Uint16Array));
-    public static i16 = new XyMargin(new Mat2Factory(Int16Array));
-    public static u8c = new XyMargin(new Mat2Factory(Uint8ClampedArray));
-    public static u8 = new XyMargin(new Mat2Factory(Uint8Array));
-    public static i8 = new XyMargin(new Mat2Factory(Int8Array));
+    public static f64: XyMargin<Float64Array> = new XyMargin(new Mat2Factory(Float64Array));
+    public static f32: XyMargin<Float32Array> = new XyMargin(new Mat2Factory(Float32Array));
+    public static u32: XyMargin<Uint32Array> = new XyMargin(new Mat2Factory(Uint32Array));
+    public static i32: XyMargin<Int32Array> = new XyMargin(new Mat2Factory(Int32Array));
+    public static u16: XyMargin<Uint16Array> = new XyMargin(new Mat2Factory(Uint16Array));
+    public static i16: XyMargin<Int16Array> = new XyMargin(new Mat2Factory(Int16Array));
+    public static u8c: XyMargin<Uint8ClampedArray> = new XyMargin(new Mat2Factory(Uint8ClampedArray));
+    public static u8: XyMargin<Uint8Array> = new XyMargin(new Mat2Factory(Uint8Array));
+    public static i8: XyMargin<Int8Array> = new XyMargin(new Mat2Factory(Int8Array));
 
     protected constructor
     (

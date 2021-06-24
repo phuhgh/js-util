@@ -32,15 +32,15 @@ export type TMat4CtorArgs = [
  */
 export class Mat4<TArray extends TTypedArray>
 {
-    public static f64 = new Mat4(new Mat4Factory(Float64Array));
-    public static f32 = new Mat4(new Mat4Factory(Float32Array));
-    public static u32 = new Mat4(new Mat4Factory(Uint32Array));
-    public static i32 = new Mat4(new Mat4Factory(Int32Array));
-    public static u16 = new Mat4(new Mat4Factory(Uint16Array));
-    public static i16 = new Mat4(new Mat4Factory(Int16Array));
-    public static u8c = new Mat4(new Mat4Factory(Uint8ClampedArray));
-    public static u8 = new Mat4(new Mat4Factory(Uint8Array));
-    public static i8 = new Mat4(new Mat4Factory(Int8Array));
+    public static f64: Mat4<Float64Array> = new Mat4(new Mat4Factory(Float64Array));
+    public static f32: Mat4<Float32Array> = new Mat4(new Mat4Factory(Float32Array));
+    public static u32: Mat4<Uint32Array> = new Mat4(new Mat4Factory(Uint32Array));
+    public static i32: Mat4<Int32Array> = new Mat4(new Mat4Factory(Int32Array));
+    public static u16: Mat4<Uint16Array> = new Mat4(new Mat4Factory(Uint16Array));
+    public static i16: Mat4<Int16Array> = new Mat4(new Mat4Factory(Int16Array));
+    public static u8c: Mat4<Uint8ClampedArray> = new Mat4(new Mat4Factory(Uint8ClampedArray));
+    public static u8: Mat4<Uint8Array> = new Mat4(new Mat4Factory(Uint8Array));
+    public static i8: Mat4<Int8Array> = new Mat4(new Mat4Factory(Int8Array));
 
     protected constructor
     (

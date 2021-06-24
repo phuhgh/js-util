@@ -15,15 +15,15 @@ export type TVec3CtorArgs = [x: number, y: number, z: number];
  */
 export class Vec3<TArray extends TTypedArray>
 {
-    public static f64 = new Vec3(new Vec3Factory(Float64Array));
-    public static f32 = new Vec3(new Vec3Factory(Float32Array));
-    public static u32 = new Vec3(new Vec3Factory(Uint32Array));
-    public static i32 = new Vec3(new Vec3Factory(Int32Array));
-    public static u16 = new Vec3(new Vec3Factory(Uint16Array));
-    public static i16 = new Vec3(new Vec3Factory(Int16Array));
-    public static u8c = new Vec3(new Vec3Factory(Uint8ClampedArray));
-    public static u8 = new Vec3(new Vec3Factory(Uint8Array));
-    public static i8 = new Vec3(new Vec3Factory(Int8Array));
+    public static f64: Vec3<Float64Array> = new Vec3(new Vec3Factory(Float64Array));
+    public static f32: Vec3<Float32Array> = new Vec3(new Vec3Factory(Float32Array));
+    public static u32: Vec3<Uint32Array> = new Vec3(new Vec3Factory(Uint32Array));
+    public static i32: Vec3<Int32Array> = new Vec3(new Vec3Factory(Int32Array));
+    public static u16: Vec3<Uint16Array> = new Vec3(new Vec3Factory(Uint16Array));
+    public static i16: Vec3<Int16Array> = new Vec3(new Vec3Factory(Int16Array));
+    public static u8c: Vec3<Uint8ClampedArray> = new Vec3(new Vec3Factory(Uint8ClampedArray));
+    public static u8: Vec3<Uint8Array> = new Vec3(new Vec3Factory(Uint8Array));
+    public static i8: Vec3<Int8Array> = new Vec3(new Vec3Factory(Int8Array));
 
     protected constructor
     (

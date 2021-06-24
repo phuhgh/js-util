@@ -15,15 +15,15 @@ export type TMat2CtorArgs = [c1r1: number, c2r1: number, c2r2: number, c2r2: num
  */
 export class Mat2<TArray extends TTypedArray>
 {
-    public static f64 = new Mat2(new Mat2Factory(Float64Array));
-    public static f32 = new Mat2(new Mat2Factory(Float32Array));
-    public static u32 = new Mat2(new Mat2Factory(Uint32Array));
-    public static i32 = new Mat2(new Mat2Factory(Int32Array));
-    public static u16 = new Mat2(new Mat2Factory(Uint16Array));
-    public static i16 = new Mat2(new Mat2Factory(Int16Array));
-    public static u8c = new Mat2(new Mat2Factory(Uint8ClampedArray));
-    public static u8 = new Mat2(new Mat2Factory(Uint8Array));
-    public static i8 = new Mat2(new Mat2Factory(Int8Array));
+    public static f64: Mat2<Float64Array> = new Mat2(new Mat2Factory(Float64Array));
+    public static f32: Mat2<Float32Array> = new Mat2(new Mat2Factory(Float32Array));
+    public static u32: Mat2<Uint32Array> = new Mat2(new Mat2Factory(Uint32Array));
+    public static i32: Mat2<Int32Array> = new Mat2(new Mat2Factory(Int32Array));
+    public static u16: Mat2<Uint16Array> = new Mat2(new Mat2Factory(Uint16Array));
+    public static i16: Mat2<Int16Array> = new Mat2(new Mat2Factory(Int16Array));
+    public static u8c: Mat2<Uint8ClampedArray> = new Mat2(new Mat2Factory(Uint8ClampedArray));
+    public static u8: Mat2<Uint8Array> = new Mat2(new Mat2Factory(Uint8Array));
+    public static i8: Mat2<Int8Array> = new Mat2(new Mat2Factory(Int8Array));
 
     protected constructor
     (
@@ -45,7 +45,7 @@ export class Mat2<TArray extends TTypedArray>
     public getIndex(column: number, row: number): Extract<keyof Mat2<never>, number>
     {
         DEBUG_MODE && _Debug.assert(column >= 0 && column < 2 && row >= 0 && row < 2, "out of bounds");
-        return row * 2 + column as Extract<keyof Mat2<never>, number> ;
+        return row * 2 + column as Extract<keyof Mat2<never>, number>;
     }
 
     public getLoggableValue(value: Readonly<AMat2<TArray>>): number[][]
