@@ -1,8 +1,9 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AMat2, TMat2F32 } from "./a-mat2";
+import { AMat2, TMat2F32, TMat2F64 } from "./a-mat2";
 import type { EArrayTypeGuard } from "../e-typed-array-guard";
 import { Mat2F32Factory } from "./mat2-f32-factory";
 import { _Debug } from "../../../debug/_debug";
+import { Mat2F64Factory } from "./mat2-f64-factory";
 
 /**
  * @public
@@ -16,6 +17,7 @@ export type TMat2CtorArgs = [c1r1: number, c2r1: number, c2r2: number, c2r2: num
 export class Mat2<TArray extends EArrayTypeGuard>
 {
     public static f32: Mat2<EArrayTypeGuard.F32> = new Mat2<EArrayTypeGuard.F32>(new Mat2F32Factory<TMat2F32>());
+    public static f64: Mat2<EArrayTypeGuard.F64> = new Mat2<EArrayTypeGuard.F64>(new Mat2F64Factory<TMat2F64>());
 
     protected constructor
     (

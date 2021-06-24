@@ -11,6 +11,14 @@ import { ISharedObject } from "../../lifecycle/a-shared-object";
  */
 export interface ISharedArray<TCtor extends TTypedArrayCtor> extends ISharedObject
 {
-    size: number;
+    readonly ctor: TCtor;
+    /**
+     * For (in)consistency, size as per c++, aka length in javascript.
+     */
+    readonly size: number;
+    /**
+     * Size of element in the array, size * elementByteSize is not necessarily the size of the object.
+     */
+    readonly elementByteSize: number;
     getInstance(): InstanceType<TCtor>;
 }

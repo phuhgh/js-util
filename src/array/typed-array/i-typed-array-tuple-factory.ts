@@ -13,7 +13,7 @@ export interface ITypedArrayTupleFactory<TBuffer, TCtorArgs extends number[]>
 
     copyFromBuffer
     (
-        bufferView: DataView,
+        memoryDataView: DataView,
         pointer: number,
         writeTo?: TBuffer,
         littleEndian?: boolean,
@@ -22,7 +22,7 @@ export interface ITypedArrayTupleFactory<TBuffer, TCtorArgs extends number[]>
 
     copyToBuffer
     (
-        bufferView: DataView,
+        memoryDataView: DataView,
         writeFrom: TBuffer,
         pointer: number,
         littleEndian?: boolean,

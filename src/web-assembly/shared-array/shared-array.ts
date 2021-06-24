@@ -92,7 +92,9 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         return ptr;
     }
 
+    public readonly ctor: TCtor;
     public readonly size: number;
+    public readonly elementByteSize: number;
     public debugOnAllocate?: (() => void);
 
     public getInstance(): InstanceType<TCtor>
@@ -128,6 +130,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         this.cDelete = `${cMethodPrefix}_delete`;
         this.cGetArrayAddress = `${cMethodPrefix}_getArrayAddress`;
         this.wrapper = wrapper;
+        this.elementByteSize = ctor.BYTES_PER_ELEMENT;
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
@@ -193,7 +196,6 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
     private wrapper: IEmscriptenWrapper | null;
     private instance: InstanceType<TCtor>;
-    private readonly ctor: TCtor;
     private readonly cGetArrayAddress: string;
     private readonly cDelete: string;
 }

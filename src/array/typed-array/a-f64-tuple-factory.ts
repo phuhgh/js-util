@@ -1,7 +1,7 @@
 import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory";
 import { ATypedTupleFactory } from "./a-typed-tuple-factory";
 
-export abstract class AF32TupleFactory<T extends object, TCtorArgs extends number[]>
+export abstract class AF64TupleFactory<T extends object, TCtorArgs extends number[]>
     extends ATypedTupleFactory<T, TCtorArgs>
     implements ITypedArrayTupleFactory<T, TCtorArgs>
 {
@@ -10,10 +10,8 @@ export abstract class AF32TupleFactory<T extends object, TCtorArgs extends numbe
         length: number,
     )
     {
-        super(length, Float32Array);
+        super(length, Float64Array);
     }
-
-    public abstract createOne(...args: TCtorArgs): T;
 
     public copyFromBuffer
     (
@@ -26,8 +24,8 @@ export abstract class AF32TupleFactory<T extends object, TCtorArgs extends numbe
     {
         for (let i = 0, iEnd = this.length; i < iEnd; ++i)
         {
-            (writeTo as unknown as number[])[i] = memoryDataView.getFloat32(pointer, littleEndian);
-            pointer += Float32Array.BYTES_PER_ELEMENT;
+            (writeTo as unknown as number[])[i] = memoryDataView.getFloat64(pointer, littleEndian);
+            pointer += Float64Array.BYTES_PER_ELEMENT;
         }
 
         return writeTo;
@@ -44,8 +42,8 @@ export abstract class AF32TupleFactory<T extends object, TCtorArgs extends numbe
     {
         for (let i = 0, iEnd = this.length; i < iEnd; ++i)
         {
-            memoryDataView.setFloat32(pointer, (writeFrom as unknown as number[])[i], littleEndian);
-            pointer += Float32Array.BYTES_PER_ELEMENT;
+            memoryDataView.setFloat64(pointer, (writeFrom as unknown as number[])[i], littleEndian);
+            pointer += Float64Array.BYTES_PER_ELEMENT;
         }
     }
 }

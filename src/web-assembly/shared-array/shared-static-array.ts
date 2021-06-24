@@ -35,7 +35,9 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         return new SharedStaticArray(Float64Array, wrapper, pointer, size);
     }
 
+    public readonly ctor: TCtor;
     public readonly size: number;
+    public readonly elementByteSize: number;
     public debugOnAllocate?: (() => void);
 
     public getInstance(): InstanceType<TCtor>
@@ -68,6 +70,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         this.size = size;
         this.ctor = ctor;
         this.wrapper = wrapper;
+        this.elementByteSize = ctor.BYTES_PER_ELEMENT;
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
@@ -122,5 +125,4 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
 
     private wrapper: IEmscriptenWrapper | null;
     private instance: InstanceType<TCtor>;
-    private readonly ctor: TCtor;
 }

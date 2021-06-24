@@ -36,3 +36,4 @@ export abstract class AMat2<TArray extends EArrayTypeGuard> extends ATypedArrayT
  * Float32 {@link AMat2}.
  */
 export type TMat2F32 = AMat2<EArrayTypeGuard.F32>;
+export type TMat2F64 = AMat2<EArrayTypeGuard.F64>;

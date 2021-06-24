@@ -1,11 +1,11 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AF32TupleFactory } from "../a-f32-tuple-factory";
 import { AMat2 } from "./a-mat2";
 import { TMat2CtorArgs } from "./mat2";
 import type { EArrayTypeGuard } from "../e-typed-array-guard";
+import { AF64TupleFactory } from "../a-f64-tuple-factory";
 
-export class Mat2F32Factory<T extends AMat2<EArrayTypeGuard.F32>>
-    extends AF32TupleFactory<T, TMat2CtorArgs>
+export class Mat2F64Factory<T extends AMat2<EArrayTypeGuard.F64>>
+    extends AF64TupleFactory<T, TMat2CtorArgs>
     implements ITypedArrayTupleFactory<T, TMat2CtorArgs>
 {
     public constructor()
@@ -40,10 +40,10 @@ export class Mat2F32Factory<T extends AMat2<EArrayTypeGuard.F32>>
     )
         : T
     {
-        writeTo[0] = memoryDataView.getFloat32(pointer, littleEndian);
-        writeTo[1] = memoryDataView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
-        writeTo[2] = memoryDataView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
-        writeTo[3] = memoryDataView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[0] = memoryDataView.getFloat64(pointer, littleEndian);
+        writeTo[1] = memoryDataView.getFloat64(pointer += Float64Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[2] = memoryDataView.getFloat64(pointer += Float64Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[3] = memoryDataView.getFloat64(pointer += Float64Array.BYTES_PER_ELEMENT, littleEndian);
 
         return writeTo;
     }
@@ -57,9 +57,9 @@ export class Mat2F32Factory<T extends AMat2<EArrayTypeGuard.F32>>
     )
         : void
     {
-        memoryDataView.setFloat32(pointer, writeFrom[0], littleEndian);
-        memoryDataView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
-        memoryDataView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[2], littleEndian);
-        memoryDataView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[3], littleEndian);
+        memoryDataView.setFloat64(pointer, writeFrom[0], littleEndian);
+        memoryDataView.setFloat64(pointer += Float64Array.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
+        memoryDataView.setFloat64(pointer += Float64Array.BYTES_PER_ELEMENT, writeFrom[2], littleEndian);
+        memoryDataView.setFloat64(pointer += Float64Array.BYTES_PER_ELEMENT, writeFrom[3], littleEndian);
     }
 }

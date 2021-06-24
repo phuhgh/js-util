@@ -33,33 +33,33 @@ export class Vec4F32Factory<T extends AVec4<EArrayTypeGuard.F32>>
 
     public override copyFromBuffer
     (
-        bufferView: DataView,
+        memoryDataView: DataView,
         pointer: number,
         writeTo: T = this.createOneEmpty(),
         littleEndian: boolean = true,
     )
         : T
     {
-        writeTo[0] = bufferView.getFloat32(pointer, littleEndian);
-        writeTo[1] = bufferView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
-        writeTo[2] = bufferView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
-        writeTo[3] = bufferView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[0] = memoryDataView.getFloat32(pointer, littleEndian);
+        writeTo[1] = memoryDataView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[2] = memoryDataView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[3] = memoryDataView.getFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, littleEndian);
 
         return writeTo;
     }
 
     public override copyToBuffer
     (
-        bufferView: DataView,
+        memoryDataView: DataView,
         writeFrom: T,
         pointer: number,
         littleEndian: boolean = true,
     )
         : void
     {
-        bufferView.setFloat32(pointer, writeFrom[0], littleEndian);
-        bufferView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
-        bufferView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[2], littleEndian);
-        bufferView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[3], littleEndian);
+        memoryDataView.setFloat32(pointer, writeFrom[0], littleEndian);
+        memoryDataView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
+        memoryDataView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[2], littleEndian);
+        memoryDataView.setFloat32(pointer += Float32Array.BYTES_PER_ELEMENT, writeFrom[3], littleEndian);
     }
 }
