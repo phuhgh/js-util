@@ -1,4 +1,5 @@
 import { Mat3 } from "./mat3";
+import { Vec2 } from "../vec2/vec2";
 
 describe("=> Mat3", () =>
 {
@@ -59,6 +60,15 @@ describe("=> Mat3", () =>
                 }
             }
         });
+
+        it("| multiplies as expected", () =>
+        {
+            const m3 = Mat3.f32.createScalingMatrix(2, 3);
+            const v2 = Vec2.f32.factory.createOne(1, 1);
+            const result = Vec2.f32.mat3Multiply(m3, v2);
+            expect(Vec2.f32.getX(result)).toBe(2);
+            expect(Vec2.f32.getY(result)).toBe(3);
+        });
     });
 
     describe("=> createTranslationMatrix", () =>
@@ -75,6 +85,15 @@ describe("=> Mat3", () =>
             expect(m3[Mat3.f32.getIndex(1, 1)]).toBe(1);
             expect(m3[Mat3.f32.getIndex(2, 2)]).toBe(1);
             expect((m3).filter((value) => value === 0).length).toBe(4);
+        });
+
+        it("| multiplies as expected", () =>
+        {
+            const m3 = Mat3.f32.createTranslationMatrix(5, 7);
+            const v2 = Vec2.f32.factory.createOne(1, 1);
+            const result = Vec2.f32.mat3Multiply(m3, v2);
+            expect(Vec2.f32.getX(result)).toBe(6);
+            expect(Vec2.f32.getY(result)).toBe(8);
         });
     });
 
@@ -93,6 +112,28 @@ describe("=> Mat3", () =>
                     expect(m3[Mat3.f32.getIndex(i, j)]).toBe(result[Mat3.f32.getIndex(i, j)]);
                 }
             }
+        });
+
+        it("| multiplies as expected transform & scale", () =>
+        {
+            const m3t = Mat3.f32.createTranslationMatrix(5, 7);
+            const m3s = Mat3.f32.createScalingMatrix(2, 3);
+            const m3 = Mat3.f32.multiplyMat3(m3t, m3s);
+            const v2 = Vec2.f32.factory.createOne(1, 1);
+            const result = Vec2.f32.mat3Multiply(m3, v2);
+            expect(Vec2.f32.getX(result)).toBe(12);
+            expect(Vec2.f32.getY(result)).toBe(24);
+        });
+
+        it("| multiplies as expected scale & transform", () =>
+        {
+            const m3t = Mat3.f32.createTranslationMatrix(5, 7);
+            const m3s = Mat3.f32.createScalingMatrix(2, 3);
+            const m3 = Mat3.f32.multiplyMat3(m3s, m3t);
+            const v2 = Vec2.f32.factory.createOne(1, 1);
+            const result = Vec2.f32.mat3Multiply(m3, v2);
+            expect(Vec2.f32.getX(result)).toBe(7);
+            expect(Vec2.f32.getY(result)).toBe(10);
         });
     });
 });

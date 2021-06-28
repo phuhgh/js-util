@@ -6,9 +6,9 @@ import { TTypedArray } from "../../t-typed-array";
  * Row major 2x2 matrix representing a 2d range.
  *
  * @remarks
- * See {@link XyRange} for methods.
+ * See {@link Range2d} for methods.
  */
-export abstract class AXyRange<TArray extends TTypedArray> extends AMat2<TArray>
+export abstract class ARange2d<TArray extends TTypedArray> extends AMat2<TArray>
 {
     /**
      * xMin
@@ -27,12 +27,12 @@ export abstract class AXyRange<TArray extends TTypedArray> extends AMat2<TArray>
      */
     public abstract 3: number;
 
-    protected abstract TTypeGuardXyRange: true;
+    protected abstract TTypeGuardRange2d: true;
 }
 
 /**
  * @public
- * A float32 {@link AXyRange}.
+ * A float32 {@link ARange2d}.
  */
-export type TXyRangeF32 = AXyRange<Float32Array>;
-export type TXyRangeF64 = AXyRange<Float64Array>;
+export type TF32Range2d = ARange2d<Float32Array>;
+export type TF64Range2d = ARange2d<Float64Array>;

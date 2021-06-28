@@ -1,4 +1,4 @@
-import { AXyRange } from "../xy-range/a-xy-range";
+import { ARange2d } from "../range2d/a-range2d";
 import { TTypedArray } from "../../t-typed-array";
 
 /**
@@ -6,9 +6,9 @@ import { TTypedArray } from "../../t-typed-array";
  * Row major 2x2 matrix representing margins on a rectangle.
  *
  * @remarks
- * See {@link XyMargin} for methods.
+ * See {@link Margin2d} for methods.
  */
-export abstract class AXyMargin<TArray extends TTypedArray> extends AXyRange<TArray>
+export abstract class AMargin2d<TArray extends TTypedArray> extends ARange2d<TArray>
 {
     /**
      * left
@@ -27,11 +27,11 @@ export abstract class AXyMargin<TArray extends TTypedArray> extends AXyRange<TAr
      */
     public abstract 3: number;
 
-    protected abstract TTypeGuardAXyPositionPosition: true;
+    protected abstract TTypeGuardAMargin2d: true;
 }
 
 /**
  * @public
- * A float32 {@link AXyMargin}.
+ * A float32 {@link AMargin2d}.
  */
-export type TXyMarginF32 = AXyMargin<Float32Array>;
+export type TF32Margin2d = AMargin2d<Float32Array>;

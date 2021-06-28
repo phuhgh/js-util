@@ -1,5 +1,5 @@
 import { _Debug } from "./debug/_debug";
-import { SetDefaultUnitTestFlags } from "./debug/impl/set-default-unit-test-flags";
+import { setDefaultUnitTestFlags } from "./debug/impl/set-default-unit-test-flags";
 
 export function itShouldCallAssert(times: number, runTest: () => void): void
 {
@@ -38,7 +38,7 @@ export function debugDescribe(label: string, callback: () => void): void
     {
         beforeEach(() =>
         {
-            SetDefaultUnitTestFlags();
+            setDefaultUnitTestFlags();
         });
 
         callback();
@@ -51,7 +51,7 @@ export function fdebugDescribe(label: string, callback: () => void): void
     {
         beforeEach(() =>
         {
-            SetDefaultUnitTestFlags();
+            setDefaultUnitTestFlags();
         });
 
         callback();

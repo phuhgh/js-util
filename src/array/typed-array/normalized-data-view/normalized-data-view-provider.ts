@@ -33,4 +33,8 @@ export class NormalizedDataViewProvider
         [Uint8Array, new Uint8DataView()],
         [Uint8ClampedArray, new Uint8ClampedDataView()],
     ]);
+
+    private constructor()
+    {
+    }
 }

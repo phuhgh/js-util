@@ -20,10 +20,10 @@ export { TGetComparisonValueAtIndex } from "./array/impl/binary-find-insertion-i
 export { TTypedArrayCtor } from "./array/typed-array/t-typed-array-ctor";
 export { ATypedArrayTuple } from "./array/typed-array/a-typed-array-tuple";
 export { ITypedArrayTupleFactory } from "./array/typed-array/i-typed-array-tuple-factory";
-export { AXyMargin, TXyMarginF32 } from "./array/typed-array/2d/xy-margin/a-xy-margin";
-export { TXyMarginCtorArgs, XyMargin } from "./array/typed-array/2d/xy-margin/xy-margin";
-export { AXyRange, TXyRangeF32 } from "./array/typed-array/2d/xy-range/a-xy-range";
-export { XyRange, TXyRangeCtorArgs } from "./array/typed-array/2d/xy-range/xy-range";
+export { AMargin2d, TF32Margin2d } from "./array/typed-array/2d/margin2d/a-margin2d";
+export { TMargin2dCtorArgs, Margin2d } from "./array/typed-array/2d/margin2d/margin2d";
+export { ARange2d, TF32Range2d } from "./array/typed-array/2d/range2d/a-range2d";
+export { Range2d, TRange2dCtorArgs } from "./array/typed-array/2d/range2d/range2d";
 export { AMat2, TMat2F32 } from "./array/typed-array/mat2/a-mat2";
 export { Mat2, TMat2CtorArgs } from "./array/typed-array/mat2/mat2";
 export { AMat3, TMat3F32 } from "./array/typed-array/mat3/a-mat3";
