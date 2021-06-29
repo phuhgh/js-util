@@ -7,10 +7,10 @@ describe("=> Vec4", () =>
         it("| provides the expected values", () =>
         {
             const v = Vec4.f32.factory.createOne(1, 2, 3, 4);
-            expect(Vec4.f32.getX(v)).toBe(1);
-            expect(Vec4.f32.getY(v)).toBe(2);
-            expect(Vec4.f32.getZ(v)).toBe(3);
-            expect(Vec4.f32.getW(v)).toBe(4);
+            expect(v.getX()).toBe(1);
+            expect(v.getY()).toBe(2);
+            expect(v.getZ()).toBe(3);
+            expect(v.getW()).toBe(4);
 
         });
     });
@@ -20,10 +20,10 @@ describe("=> Vec4", () =>
         it("| sets the expected values", () =>
         {
             const v = Vec4.f32.factory.createOneEmpty();
-            Vec4.f32.setX(v, 1);
-            Vec4.f32.setY(v, 2);
-            Vec4.f32.setZ(v, 3);
-            Vec4.f32.setW(v, 4);
+            v.setX(1);
+            v.setY(2);
+            v.setZ(3);
+            v.setW(4);
 
             expect(v[0]).toBe(1);
             expect(v[1]).toBe(2);
@@ -37,7 +37,7 @@ describe("=> Vec4", () =>
         it("| sets the expected values", () =>
         {
             const v = Vec4.f32.factory.createOneEmpty();
-            Vec4.f32.update(v, 1, 2, 3, 4);
+            v.update(1, 2, 3, 4);
 
             expect(v[0]).toBe(1);
             expect(v[1]).toBe(2);

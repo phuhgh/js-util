@@ -1,9 +1,10 @@
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AMat3 } from "./a-mat3";
-import { Mat3Factory } from "./mat3-factory";
-import { _Debug } from "../../../debug/_debug";
+import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
+import { getMat3Ctor } from "./get-mat3-ctor";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -21,141 +22,119 @@ export type TMat3CtorArgs = [
 
 /**
  * @public
- * Provider of typed array tuple {@link AMat3}. See static properties for factories and instance members for utilities.
+ * Constructor for {@link Mat3}.
  */
-export class Mat3<TArray extends TTypedArray>
+export interface Mat3Ctor<TArray extends TTypedArray>
 {
-    public static f64: Mat3<Float64Array> = new Mat3(new Mat3Factory(Float64Array));
-    public static f32: Mat3<Float32Array> = new Mat3(new Mat3Factory(Float32Array));
-    public static u32: Mat3<Uint32Array> = new Mat3(new Mat3Factory(Uint32Array));
-    public static i32: Mat3<Int32Array> = new Mat3(new Mat3Factory(Int32Array));
-    public static u16: Mat3<Uint16Array> = new Mat3(new Mat3Factory(Uint16Array));
-    public static i16: Mat3<Int16Array> = new Mat3(new Mat3Factory(Int16Array));
-    public static u8c: Mat3<Uint8ClampedArray> = new Mat3(new Mat3Factory(Uint8ClampedArray));
-    public static u8: Mat3<Uint8Array> = new Mat3(new Mat3Factory(Uint8Array));
-    public static i8: Mat3<Int8Array> = new Mat3(new Mat3Factory(Int8Array));
+    /**
+     * The size in bytes of each element in the array.
+     */
+    readonly BYTES_PER_ELEMENT: number;
+    readonly prototype: Mat3<TArray>;
+    readonly factory: ITypedArrayTupleFactory<Mat3<TArray>, TMat3CtorArgs>;
+    new(): Mat3<TArray>;
+}
 
-    protected constructor
-    (
-        public factory: ITypedArrayTupleFactory<AMat3<TArray>, TMat3CtorArgs>,
-    )
+/**
+ * @public
+ * Row major 3x3 matrix.
+ *
+ * @remarks
+ * See static properties for factories.
+ */
+export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<9>
+{
+    public static f64: Mat3Ctor<Float64Array> = getMat3Ctor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
+    public static f32: Mat3Ctor<Float32Array> = getMat3Ctor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
+    public static u32: Mat3Ctor<Uint32Array> = getMat3Ctor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
+    public static i32: Mat3Ctor<Int32Array> = getMat3Ctor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
+    public static u16: Mat3Ctor<Uint16Array> = getMat3Ctor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
+    public static i16: Mat3Ctor<Int16Array> = getMat3Ctor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
+    public static u8c: Mat3Ctor<Uint8ClampedArray> = getMat3Ctor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
+    public static u8: Mat3Ctor<Uint8Array> = getMat3Ctor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
+    public static i8: Mat3Ctor<Int8Array> = getMat3Ctor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+
+    /**
+     * c1r1
+     */
+    public 0!: number;
+    /**
+     * c2r1
+     */
+    public 1!: number;
+    /**
+     * c3r1
+     */
+    public 2!: number;
+    /**
+     * c1r2
+     */
+    public 3!: number;
+    /**
+     * c2r2
+     */
+    public 4!: number;
+    /**
+     * c3r2
+     */
+    public 5!: number;
+    /**
+     * c1r3
+     */
+    public 6!: number;
+    /**
+     * c2r3
+     */
+    public 7!: number;
+    /**
+     * c3r3
+     */
+    public 8!: number;
+
+    public setIdentityMatrix(): Mat3<TArray>
     {
+        throw new Error();
     }
 
-    public createIdentityMatrix(): AMat3<TArray>
+    public getValueAt(_column: number, _row: number): number
     {
-        const result = this.factory.createOneEmpty();
-
-        result[0] = 1;
-        result[4] = 1;
-        result[8] = 1;
-
-        return result;
-    }
-
-    public getIndex(column: number, row: number): Extract<keyof AMat3<never>, number>
-    {
-        DEBUG_MODE && _Debug.assert(column >= 0 && column < 3 && row >= 0 && row < 3, "out of bounds");
-        return row * 3 + column as Extract<keyof AMat3<never>, number>;
+        throw new Error();
     }
 
     /**
-     * counter clockwise
+     * counter clockwise, in radians
      */
-    public createRotationMatrix
-    (
-        angle: number,
-        result: AMat3<TArray> = this.factory.createOneEmpty()
-    )
-        : AMat3<TArray>
+    public setRotationMatrix(_angle: number): Mat3<TArray>
     {
-        const sine = Math.sin(angle);
-        const cosine = Math.cos(angle);
-
-        result[0] = cosine;
-        result[1] = -sine;
-        result[2] = 0;
-        result[3] = sine;
-        result[4] = cosine;
-        result[5] = 0;
-        result[6] = 0;
-        result[7] = 0;
-        result[8] = 1;
-
-        return result;
+        throw new Error();
     }
 
-    public createScalingMatrix(scalingFactorX: number, scalingFactorY: number, result?: AMat3<TArray>): AMat3<TArray>
+    public setScalingMatrix(_scalingFactorX: number, _scalingFactorY: number): Mat3<TArray>
     {
-        if (result == null)
-        {
-            result = this.factory.createOneEmpty();
-        }
-
-        result[0] = scalingFactorX;
-        result[1] = 0;
-        result[2] = 0;
-        result[3] = 0;
-        result[4] = scalingFactorY;
-        result[5] = 0;
-        result[6] = 0;
-        result[7] = 0;
-        result[8] = 1;
-
-        return result;
+        throw new Error();
     }
 
-    public createTranslationMatrix
-    (
-        translationX: number,
-        translationY: number,
-        result: AMat3<TArray> = this.factory.createOneEmpty(),
-    )
-        : AMat3<TArray>
+    public setTranslationMatrix(_translationX: number, _translationY: number): Mat3<TArray>
     {
-        result[0] = 1;
-        result[1] = 0;
-        result[2] = 0;
-        result[3] = 0;
-        result[4] = 1;
-        result[5] = 0;
-        result[6] = translationX;
-        result[7] = translationY;
-        result[8] = 1;
-
-        return result;
+        throw new Error();
     }
 
-    public multiplyMat3
-    (
-        a: Readonly<AMat3<TArray>>,
-        b: Readonly<AMat3<TArray>>,
-        result: AMat3<TArray> = this.factory.createOneEmpty(),
-    )
-        : AMat3<TArray>
+    public multiplyMat3(_mat: Readonly<Mat3<TArray>>, _result?: Mat3<TArray>): Mat3<TArray>
     {
-        const [a0, a1, a2, a3, a4, a5, a6, a7, a8] = a as unknown as number[];
-        const [b0, b1, b2, b3, b4, b5, b6, b7, b8] = b as unknown as number[];
-
-        result[0] = a0 * b0 + a1 * b3 + a2 * b6;
-        result[1] = a0 * b1 + a1 * b4 + a2 * b7;
-        result[2] = a0 * b2 + a1 * b5 + a2 * b8;
-        result[3] = a3 * b0 + a4 * b3 + a5 * b6;
-        result[4] = a3 * b1 + a4 * b4 + a5 * b7;
-        result[5] = a3 * b2 + a4 * b5 + a5 * b8;
-        result[6] = a6 * b0 + a7 * b3 + a8 * b6;
-        result[7] = a6 * b1 + a7 * b4 + a8 * b7;
-        result[8] = a6 * b2 + a7 * b5 + a8 * b8;
-
-        return result;
+        throw new Error();
     }
 
-    public getLoggableValue(value: Readonly<AMat3<TArray>>): number[][]
+    public getLoggableValue(): number[][]
     {
-        return [
-            [value[0], value[1], value[2]],
-            [value[3], value[4], value[5]],
-            [value[6], value[7], value[8]],
-        ];
+        throw new Error();
     }
+
+    protected TTypeGuardMat3!: true;
+    protected TTypeGuardTypedArray!: TArray;
 }
+
+/**
+ * @public
+ * Float32 {@link Mat3}.
+ */
+export type TMat3F32 = Mat3<Float32Array>;

@@ -13,8 +13,7 @@ describe("=> Mat2", () =>
             {
                 for (let i = 0; i < 2; ++i)
                 {
-                    const index = Mat2.f32.getIndex(i, j);
-                    expect(m2[index]).toBe(counter++);
+                    expect(m2.getValueAt(i, j)).toBe(counter++);
                 }
             }
         });
@@ -24,13 +23,15 @@ describe("=> Mat2", () =>
     {
         it("| returns expected values", () =>
         {
-            const m2 = Mat2.f32.createIdentityMatrix();
+            const m2 = Mat2.f32.factory
+                .createOneEmpty()
+                .setIdentityMatrix();
 
             for (let i = 0; i < 2; ++i)
             {
                 for (let j = 0; j < 2; ++j)
                 {
-                    expect(m2[Mat2.f32.getIndex(i, j)]).toBe(i === j ? 1 : 0);
+                    expect(m2.getValueAt(i, j)).toBe(i === j ? 1 : 0);
                 }
             }
         });

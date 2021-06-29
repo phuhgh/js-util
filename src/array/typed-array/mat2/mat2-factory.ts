@@ -1,22 +1,23 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AMat2 } from "./a-mat2";
-import { TMat2CtorArgs } from "./mat2";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { TTypedArray } from "../t-typed-array";
+import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
+import { Mat2, Mat2Ctor, TMat2CtorArgs } from "./mat2";
 
-export class Mat2Factory<T extends AMat2<InstanceType<TCtor>>, TCtor extends TTypedArrayCtor>
+export class Mat2Factory<T extends Mat2<TTypedArray>>
     extends ATypedTupleFactory<T, TMat2CtorArgs>
     implements ITypedArrayTupleFactory<T, TMat2CtorArgs>
 {
     public constructor
     (
-        ctor: TCtor,
+        private readonly ctor: Mat2Ctor<TTypedArray>,
+        dataView: INormalizedDataView,
     )
     {
-        super(4, ctor);
+        super(4, ctor.BYTES_PER_ELEMENT, dataView);
     }
 
-    public createOne
+    public override createOne
     (
         c1r1: number,
         c1r2: number,
@@ -32,6 +33,11 @@ export class Mat2Factory<T extends AMat2<InstanceType<TCtor>>, TCtor extends TTy
         a[3] = c2r2;
 
         return a as T;
+    }
+
+    public override createOneEmpty(): T
+    {
+        return new this.ctor() as T;
     }
 
     public override copyFromBuffer

@@ -1,9 +1,10 @@
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AMat4 } from "./a-mat4";
-import { Mat4Factory } from "./mat4-factory";
-import { _Debug } from "../../../debug/_debug";
+import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
+import { getMat4Ctor } from "./get-mat4-ctor";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -28,52 +29,125 @@ export type TMat4CtorArgs = [
 
 /**
  * @public
- * Provider of typed array tuple {@link AMat4}. See static properties for factories and instance members for utilities.
+ * Constructor for {@link Mat4}.
  */
-export class Mat4<TArray extends TTypedArray>
+export interface Mat4Ctor<TArray extends TTypedArray>
 {
-    public static f64: Mat4<Float64Array> = new Mat4(new Mat4Factory(Float64Array));
-    public static f32: Mat4<Float32Array> = new Mat4(new Mat4Factory(Float32Array));
-    public static u32: Mat4<Uint32Array> = new Mat4(new Mat4Factory(Uint32Array));
-    public static i32: Mat4<Int32Array> = new Mat4(new Mat4Factory(Int32Array));
-    public static u16: Mat4<Uint16Array> = new Mat4(new Mat4Factory(Uint16Array));
-    public static i16: Mat4<Int16Array> = new Mat4(new Mat4Factory(Int16Array));
-    public static u8c: Mat4<Uint8ClampedArray> = new Mat4(new Mat4Factory(Uint8ClampedArray));
-    public static u8: Mat4<Uint8Array> = new Mat4(new Mat4Factory(Uint8Array));
-    public static i8: Mat4<Int8Array> = new Mat4(new Mat4Factory(Int8Array));
-
-    protected constructor
-    (
-        public factory: ITypedArrayTupleFactory<AMat4<TArray>, TMat4CtorArgs>,
-    )
-    {
-    }
-
-    public createIdentityMatrix(): AMat4<TArray>
-    {
-        const result = this.factory.createOneEmpty();
-
-        result[0] = 1;
-        result[5] = 1;
-        result[10] = 1;
-        result[15] = 1;
-
-        return result;
-    }
-
-    public getIndex(column: number, row: number): Extract<keyof AMat4<never>, number>
-    {
-        DEBUG_MODE && _Debug.assert(column >= 0 && column < 4 && row >= 0 && row < 4, "out of bounds");
-        return row * 4 + column as Extract<keyof AMat4<never>, number>;
-    }
-
-    public getLoggableValue(value: Readonly<AMat4<TArray>>): number[][]
-    {
-        return [
-            [value[0], value[1], value[2], value[3]],
-            [value[4], value[5], value[6], value[7]],
-            [value[8], value[9], value[10], value[11]],
-            [value[12], value[13], value[14], value[15]],
-        ];
-    }
+    /**
+     * The size in bytes of each element in the array.
+     */
+    readonly BYTES_PER_ELEMENT: number;
+    readonly prototype: Mat4<TArray>;
+    readonly factory: ITypedArrayTupleFactory<Mat4<TArray>, TMat4CtorArgs>;
+    new(): Mat4<TArray>;
 }
+
+/**
+ * @public
+ * Row major 4x4 matrix.
+ *
+ * @remarks
+ * See static properties for factories.
+ */
+export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<16>
+{
+    public static f64: Mat4Ctor<Float64Array> = getMat4Ctor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
+    public static f32: Mat4Ctor<Float32Array> = getMat4Ctor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
+    public static u32: Mat4Ctor<Uint32Array> = getMat4Ctor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
+    public static i32: Mat4Ctor<Int32Array> = getMat4Ctor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
+    public static u16: Mat4Ctor<Uint16Array> = getMat4Ctor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
+    public static i16: Mat4Ctor<Int16Array> = getMat4Ctor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
+    public static u8c: Mat4Ctor<Uint8ClampedArray> = getMat4Ctor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
+    public static u8: Mat4Ctor<Uint8Array> = getMat4Ctor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
+    public static i8: Mat4Ctor<Int8Array> = getMat4Ctor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+
+    /**
+     * c1r1
+     */
+    public 0!: number;
+    /**
+     * c2r1
+     */
+    public 1!: number;
+    /**
+     * c3r1
+     */
+    public 2!: number;
+    /**
+     * c4r1
+     */
+    public 3!: number;
+    /**
+     * c1r2
+     */
+    public 4!: number;
+    /**
+     * c2r2
+     */
+    public 5!: number;
+    /**
+     * c3r2
+     */
+    public 6!: number;
+    /**
+     * c4r2
+     */
+    public 7!: number;
+    /**
+     * c1r3
+     */
+    public 8!: number;
+    /**
+     * c2r3
+     */
+    public 9!: number;
+    /**
+     * c3r3
+     */
+    public 10!: number;
+    /**
+     * c4r3
+     */
+    public 11!: number;
+    /**
+     * c1r4
+     */
+    public 12!: number;
+    /**
+     * c2r4
+     */
+    public 13!: number;
+    /**
+     * c3r4
+     */
+    public 14!: number;
+    /**
+     * c4r4
+     */
+    public 15!: number;
+
+
+    public setIdentityMatrix(): Mat4<TArray>
+    {
+        throw new Error();
+    }
+
+    public getValueAt(_column: number, _row: number): number
+    {
+        throw new Error();
+    }
+
+    public getLoggableValue(): number[][]
+    {
+        throw new Error();
+    }
+
+    protected TTypeGuardMat4!: true;
+    protected TTypeGuardTypedArray!: TArray;
+}
+
+/**
+ * @public
+ * Float32 {@link Mat4}.
+ */
+export type TMat4 = Mat4<Float32Array>;

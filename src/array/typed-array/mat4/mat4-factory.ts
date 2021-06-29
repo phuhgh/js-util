@@ -1,19 +1,25 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { TMat4CtorArgs } from "./mat4";
-import { AMat4 } from "./a-mat4";
+import { Mat4, Mat4Ctor, TMat4CtorArgs } from "./mat4";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { TTypedArray } from "../t-typed-array";
+import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 
-export class Mat4Factory<T extends AMat4<InstanceType<TCtor>>, TCtor extends TTypedArrayCtor>
+export class Mat4Factory<T extends Mat4<TTypedArray>>
     extends ATypedTupleFactory<T, TMat4CtorArgs>
     implements ITypedArrayTupleFactory<T, TMat4CtorArgs>
 {
     public constructor
     (
-        ctor: TCtor,
+        private ctor: Mat4Ctor<TTypedArray>,
+        dataView: INormalizedDataView,
     )
     {
-        super(16, ctor);
+        super(16, ctor.BYTES_PER_ELEMENT, dataView);
+    }
+
+    public createOneEmpty(): T
+    {
+        return new this.ctor() as T;
     }
 
     public createOne
@@ -55,6 +61,6 @@ export class Mat4Factory<T extends AMat4<InstanceType<TCtor>>, TCtor extends TTy
         a[14] = c3r4;
         a[15] = c4r4;
 
-        return a as T;
+        return a;
     }
 }

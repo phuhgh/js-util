@@ -1,19 +1,25 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { TMat3CtorArgs } from "./mat3";
-import { AMat3 } from "./a-mat3";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { TTypedArray } from "../t-typed-array";
+import { Mat3, Mat3Ctor, TMat3CtorArgs } from "./mat3";
+import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 
-export class Mat3Factory<T extends AMat3<InstanceType<TCtor>>, TCtor extends TTypedArrayCtor>
+export class Mat3Factory<T extends Mat3<TTypedArray>>
     extends ATypedTupleFactory<T, TMat3CtorArgs>
     implements ITypedArrayTupleFactory<T, TMat3CtorArgs>
 {
     public constructor
     (
-        ctor: TCtor,
+        private ctor: Mat3Ctor<TTypedArray>,
+        dataView: INormalizedDataView,
     )
     {
-        super(9, ctor);
+        super(9, ctor.BYTES_PER_ELEMENT, dataView);
+    }
+
+    public createOneEmpty(): T
+    {
+        return new this.ctor() as T;
     }
 
     public createOne

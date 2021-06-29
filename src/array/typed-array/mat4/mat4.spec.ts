@@ -13,8 +13,7 @@ describe("=> Mat4", () =>
             {
                 for (let i = 0; i < 4; ++i)
                 {
-                    const index = Mat4.f32.getIndex(i, j);
-                    expect(m4[index]).toBe(counter++);
+                    expect(m4.getValueAt(i, j)).toBe(counter++);
                 }
             }
         });
@@ -24,13 +23,15 @@ describe("=> Mat4", () =>
     {
         it("| returns expected values", () =>
         {
-            const m4 = Mat4.f32.createIdentityMatrix();
+            const m4 = Mat4.f32.factory
+                .createOneEmpty()
+                .setIdentityMatrix();
 
             for (let i = 0; i < 4; ++i)
             {
                 for (let j = 0; j < 4; ++j)
                 {
-                    expect(m4[Mat4.f32.getIndex(i, j)]).toBe(i === j ? 1 : 0);
+                    expect(m4.getValueAt(i, j)).toBe(i === j ? 1 : 0);
                 }
             }
         });

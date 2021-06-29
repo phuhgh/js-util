@@ -8,8 +8,8 @@ describe("=> Vec2", () =>
         it("| provides the expected values", () =>
         {
             const v = Vec2.f32.factory.createOne(1, 2);
-            expect(Vec2.f32.getX(v)).toBe(1);
-            expect(Vec2.f32.getY(v)).toBe(2);
+            expect(v.getX()).toBe(1);
+            expect(v.getY()).toBe(2);
 
         });
     });
@@ -19,8 +19,8 @@ describe("=> Vec2", () =>
         it("| sets the expected values", () =>
         {
             const v = Vec2.f32.factory.createOneEmpty();
-            Vec2.f32.setX(v, 1);
-            Vec2.f32.setY(v, 2);
+            v.setX(1);
+            v.setY(2);
 
             expect(v[0]).toBe(1);
             expect(v[1]).toBe(2);
@@ -32,7 +32,7 @@ describe("=> Vec2", () =>
         it("| sets the expected values", () =>
         {
             const v = Vec2.f32.factory.createOneEmpty();
-            Vec2.f32.update(v, 1, 2);
+            v.update(1, 2);
 
             expect(v[0]).toBe(1);
             expect(v[1]).toBe(2);
@@ -45,7 +45,7 @@ describe("=> Vec2", () =>
         {
             const a = Vec2.f32.factory.createOne(1, 2);
             const b = Vec2.f32.factory.createOne(3, 4);
-            const r = Vec2.f32.dotProduct(a, b);
+            const r = a.dotProduct(b);
 
             expect(r[0]).toBe(3);
             expect(r[1]).toBe(8);
@@ -57,13 +57,17 @@ describe("=> Vec2", () =>
         it("| returns the expected values", () =>
         {
             const v = Vec2.f32.factory.createOne(1, 2);
-            const identityMatrix = Mat3.f32.createIdentityMatrix();
-            const result = Vec2.f32.mat3Multiply(identityMatrix, v);
+            const identityMatrix = Mat3.f32.factory
+                .createOneEmpty()
+                .setIdentityMatrix();
+            const result = v.mat3Multiply(identityMatrix);
             expect(result[0]).toBe(1);
             expect(result[1]).toBe(2);
 
-            const txMatrix = Mat3.f32.createTranslationMatrix(10, -10);
-            const result2 = Vec2.f32.mat3Multiply(txMatrix, v);
+            const txMatrix = Mat3.f32.factory
+                .createOneEmpty()
+                .setTranslationMatrix(10, -10);
+            const result2 = v.mat3Multiply(txMatrix);
             expect(result2[0]).toBe(11);
             expect(result2[1]).toBe(-8);
         });

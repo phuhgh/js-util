@@ -1,10 +1,10 @@
 import { Range2d } from "../range2d/range2d";
-import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
-import { AMargin2d } from "./a-margin2d";
-import { ARange2d } from "../range2d/a-range2d";
 import { TTypedArray } from "../../t-typed-array";
-import { Mat2Factory } from "../../mat2/mat2-factory";
+import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
+import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
+import { getMargin2dCtor } from "./get-margin2d-ctor";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -12,71 +12,95 @@ export type TMargin2dCtorArgs = [left: number, right: number, top: number, botto
 
 /**
  * @public
- * Provider of typed array tuple {@link AMargin2d}. See static properties for factories and instance members for utilities.
+ * Constructor for {@link Margin2d}.
  */
-export class Margin2d<TArray extends TTypedArray> extends Range2d<TArray>
+export interface Margin2dCtor<TArray extends TTypedArray>
 {
-    public static f64: Margin2d<Float64Array> = new Margin2d(new Mat2Factory(Float64Array));
-    public static f32: Margin2d<Float32Array> = new Margin2d(new Mat2Factory(Float32Array));
-    public static u32: Margin2d<Uint32Array> = new Margin2d(new Mat2Factory(Uint32Array));
-    public static i32: Margin2d<Int32Array> = new Margin2d(new Mat2Factory(Int32Array));
-    public static u16: Margin2d<Uint16Array> = new Margin2d(new Mat2Factory(Uint16Array));
-    public static i16: Margin2d<Int16Array> = new Margin2d(new Mat2Factory(Int16Array));
-    public static u8c: Margin2d<Uint8ClampedArray> = new Margin2d(new Mat2Factory(Uint8ClampedArray));
-    public static u8: Margin2d<Uint8Array> = new Margin2d(new Mat2Factory(Uint8Array));
-    public static i8: Margin2d<Int8Array> = new Margin2d(new Mat2Factory(Int8Array));
-
-    protected constructor
-    (
-        public factory: ITypedArrayTupleFactory<AMargin2d<TArray>, TMargin2dCtorArgs>,
-    )
-    {
-        super(factory);
-    }
-
-    public getLeft(position: Readonly<AMargin2d<TArray>>): number
-    {
-        return position[0];
-    }
-
-    public getRight(position: Readonly<AMargin2d<TArray>>): number
-    {
-        return position[1];
-    }
-
-    public getTop(position: Readonly<AMargin2d<TArray>>): number
-    {
-        return position[2];
-    }
-
-    public getBottom(position: Readonly<AMargin2d<TArray>>): number
-    {
-        return position[3];
-    }
-
-    public sumX(position: Readonly<AMargin2d<TArray>>): number
-    {
-        return position[0] + position[1];
-    }
-
-    public sumY(position: Readonly<AMargin2d<TArray>>): number
-    {
-        return position[2] + position[3];
-    }
-
-    public getInnerRange
-    (
-        range: Readonly<ARange2d<TArray>>,
-        margins: Readonly<AMargin2d<TArray>>,
-        result: ARange2d<TArray> = this.factory.createOneEmpty(),
-    )
-        : ARange2d<TArray>
-    {
-        result[0] = range[0] + margins[0];
-        result[1] = range[1] - margins[1];
-        result[2] = range[2] + margins[2];
-        result[3] = range[3] - margins[3];
-
-        return result;
-    }
+    /**
+     * The size in bytes of each element in the array.
+     */
+    readonly BYTES_PER_ELEMENT: number;
+    readonly prototype: Margin2d<TArray>;
+    readonly factory: ITypedArrayTupleFactory<Margin2d<TArray>, TMargin2dCtorArgs>;
+    new(): Margin2d<TArray>;
 }
+
+/**
+ * @public
+ * Row major 2x2 matrix representing margins on a rectangle.
+ *
+ * @remarks
+ * See static properties for factories.
+ */
+export abstract class Margin2d<TArray extends TTypedArray> extends Range2d<TArray>
+{
+    public static f64: Margin2dCtor<Float64Array> = getMargin2dCtor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
+    public static f32: Margin2dCtor<Float32Array> = getMargin2dCtor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
+    public static u32: Margin2dCtor<Uint32Array> = getMargin2dCtor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
+    public static i32: Margin2dCtor<Int32Array> = getMargin2dCtor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
+    public static u16: Margin2dCtor<Uint16Array> = getMargin2dCtor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
+    public static i16: Margin2dCtor<Int16Array> = getMargin2dCtor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
+    public static u8c: Margin2dCtor<Uint8ClampedArray> = getMargin2dCtor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
+    public static u8: Margin2dCtor<Uint8Array> = getMargin2dCtor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
+    public static i8: Margin2dCtor<Int8Array> = getMargin2dCtor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+
+    /**
+     * left
+     */
+    public 0!: number;
+    /**
+     * right
+     */
+    public 1!: number;
+    /**
+     * top
+     */
+    public 2!: number;
+    /**
+     * bottom
+     */
+    public 3!: number;
+
+    public getLeft(): number
+    {
+        throw new Error();
+    }
+
+    public getRight(): number
+    {
+        throw new Error();
+    }
+
+    public getTop(): number
+    {
+        throw new Error();
+    }
+
+    public getBottom(): number
+    {
+        throw new Error();
+    }
+
+    public sumX(): number
+    {
+        throw new Error();
+    }
+
+    public sumY(): number
+    {
+        throw new Error();
+    }
+
+    public getInnerRange(_range: Readonly<Range2d<TArray>>, _result?: Range2d<TArray>): Range2d<TArray>
+    {
+        throw new Error();
+    }
+
+    public TTypeGuardAMargin2d!: true;
+}
+
+/**
+ * @public
+ * A float32 {@link Margin2d}.
+ */
+export type TF32Margin2d = Margin2d<Float32Array>;

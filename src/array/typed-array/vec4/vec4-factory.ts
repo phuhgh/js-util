@@ -1,19 +1,25 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { AVec4 } from "./a-vec4";
-import { TVec4CtorArgs } from "./vec4";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { TTypedArray } from "../t-typed-array";
+import { Vec4, TVec4CtorArgs, Vec4Ctor } from "./vec4";
+import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 
-export class Vec4Factory<T extends AVec4<InstanceType<TCtor>>, TCtor extends TTypedArrayCtor>
+export class Vec4Factory<T extends Vec4<TTypedArray>>
     extends ATypedTupleFactory<T, TVec4CtorArgs>
     implements ITypedArrayTupleFactory<T, TVec4CtorArgs>
 {
     public constructor
     (
-        ctor: TCtor,
+        private readonly ctor: Vec4Ctor<TTypedArray>,
+        dataView: INormalizedDataView,
     )
     {
-        super(4, ctor);
+        super(4, ctor.BYTES_PER_ELEMENT, dataView);
+    }
+
+    public createOneEmpty(): T
+    {
+        return new this.ctor() as T;
     }
 
     public createOne

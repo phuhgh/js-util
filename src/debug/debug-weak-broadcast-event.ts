@@ -1,7 +1,7 @@
 import { TListener } from "../eventing/t-listener";
 import { IDebugWeakBroadcastEvent } from "rc-js-util-globals";
 
-export class DebugWeakBroadcastEvent<K extends string,TArgs extends unknown[]> implements IDebugWeakBroadcastEvent<K,TArgs>
+export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> implements IDebugWeakBroadcastEvent<K, TArgs>
 {
     public constructor
     (

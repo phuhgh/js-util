@@ -1,29 +1,26 @@
-import { IEmscriptenWrapper } from "../../web-assembly/emscripten/i-emscripten-wrapper";
-
 /**
  * @public
  * Defines utility methods for creating typed array tuples.
  */
-export interface ITypedArrayTupleFactory<TBuffer, TCtorArgs extends number[]>
+export interface ITypedArrayTupleFactory<TArray, TCtorArgs extends number[]>
 {
-    createOne(...args: TCtorArgs): TBuffer;
-    createOneReusingBuffer(wrapper: IEmscriptenWrapper, pointerToStatic: number): TBuffer;
+    createOne(...args: TCtorArgs): TArray;
 
-    createOneEmpty(): TBuffer;
+    createOneEmpty(): TArray;
 
     copyFromBuffer
     (
         memoryDataView: DataView,
         pointer: number,
-        writeTo?: TBuffer,
+        writeTo?: TArray,
         littleEndian?: boolean,
     )
-        : TBuffer;
+        : TArray;
 
     copyToBuffer
     (
         memoryDataView: DataView,
-        writeFrom: TBuffer,
+        writeFrom: TArray,
         pointer: number,
         littleEndian?: boolean,
     )

@@ -1,9 +1,11 @@
 import { debugDescribe } from "../../../test-utils";
 import { Mat3Factory } from "./mat3-factory";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { Mat3 } from "./mat3";
 
 debugDescribe("=> Mat3Factory", () =>
 {
-    const factory = new Mat3Factory(Float32Array);
+    const factory = new Mat3Factory(Mat3.f32, NormalizedDataViewProvider.getView(Float32Array));
 
     describe("=> create one", () =>
     {

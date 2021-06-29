@@ -1,101 +1,121 @@
-import { AVec2 } from "./a-vec2";
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { Vec2Factory } from "./vec2-factory";
-import { AMat3 } from "../mat3/a-mat3";
+import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
+import { Mat3 } from "../mat3/mat3";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
+import { getVec2Ctor } from "./get-vec2-ctor";
 
 /**
  * @public
  */
 export type TVec2CtorArgs = [x: number, y: number];
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /**
  * @public
- * Provider of typed array tuple {@link AVec2}. See static properties for factories and instance members for utilities.
+ * Constructor for {@link Vec2}.
  */
-export class Vec2<TArray extends TTypedArray>
+export interface Vec2Ctor<TArray extends TTypedArray>
 {
-    public static f64: Vec2<Float64Array> = new Vec2(new Vec2Factory(Float64Array));
-    public static f32: Vec2<Float32Array> = new Vec2(new Vec2Factory(Float32Array));
-    public static u32: Vec2<Uint32Array> = new Vec2(new Vec2Factory(Uint32Array));
-    public static i32: Vec2<Int32Array> = new Vec2(new Vec2Factory(Int32Array));
-    public static u16: Vec2<Uint16Array> = new Vec2(new Vec2Factory(Uint16Array));
-    public static i16: Vec2<Int16Array> = new Vec2(new Vec2Factory(Int16Array));
-    public static u8c: Vec2<Uint8ClampedArray> = new Vec2(new Vec2Factory(Uint8ClampedArray));
-    public static u8: Vec2<Uint8Array> = new Vec2(new Vec2Factory(Uint8Array));
-    public static i8: Vec2<Int8Array> = new Vec2(new Vec2Factory(Int8Array));
+    /**
+     * The size in bytes of each element in the array.
+     */
+    readonly BYTES_PER_ELEMENT: number;
+    readonly prototype: Vec2<TArray>;
+    readonly factory: ITypedArrayTupleFactory<Vec2<TArray>, TVec2CtorArgs>;
+    new(): Vec2<TArray>;
+}
 
-    protected constructor
-    (
-        public readonly factory: ITypedArrayTupleFactory<AVec2<TArray>, TVec2CtorArgs>,
-    )
+/**
+ * @public
+ * Vector 2.
+ *
+ * @remarks
+ * See static properties for factories.
+ */
+export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<2>
+{
+    public static f64: Vec2Ctor<Float64Array> = getVec2Ctor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
+    public static f32: Vec2Ctor<Float32Array> = getVec2Ctor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
+    public static u32: Vec2Ctor<Uint32Array> = getVec2Ctor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
+    public static i32: Vec2Ctor<Int32Array> = getVec2Ctor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
+    public static u16: Vec2Ctor<Uint16Array> = getVec2Ctor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
+    public static i16: Vec2Ctor<Int16Array> = getVec2Ctor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
+    public static u8c: Vec2Ctor<Uint8ClampedArray> = getVec2Ctor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
+    public static u8: Vec2Ctor<Uint8Array> = getVec2Ctor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
+    public static i8: Vec2Ctor<Int8Array> = getVec2Ctor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+
+    /**
+     * x
+     */
+    public 0!: number;
+    /**
+     * y
+     */
+    public 1!: number;
+
+    public getX(): number
     {
+        throw new Error();
     }
 
-    public getX(vec: Readonly<AVec2<TArray>>): number
+    public getY(): number
     {
-        return vec[0];
+        throw new Error();
     }
 
-    public getY(vec: Readonly<AVec2<TArray>>): number
+    public update(_x: number, _y: number): void
     {
-        return vec[1];
+        throw new Error();
     }
 
-    public update(vec: AVec2<TArray>, x: number, y: number): void
+    public setX(_x: number): void
     {
-        vec[0] = x;
-        vec[1] = y;
+        throw new Error();
     }
 
-    public setX(vec: AVec2<TArray>, x: number): void
+    public setY(_y: number): void
     {
-        vec[0] = x;
+        throw new Error();
     }
 
-    public setY(vec: AVec2<TArray>, y: number): void
+    public add(_vec: Readonly<Vec2<TArray>>, _result?: Vec2<TArray>): void
     {
-        vec[1] = y;
-    }
-
-    public add(a: Readonly<AVec2<TArray>>, b: Readonly<AVec2<TArray>>, result: AVec2<TArray>): void
-    {
-        result[0] = a[0] + b[0];
-        result[1] = a[1] + b[1];
+        throw new Error();
     }
 
     public dotProduct
     (
-        a: Readonly<AVec2<TArray>>,
-        b: Readonly<AVec2<TArray>>,
-        result: AVec2<TArray> = this.factory.createOneEmpty(),
+        _vec: Readonly<Vec2<TArray>>,
+        _result?: Vec2<TArray>,
     )
-        : AVec2<TArray>
+        : Vec2<TArray>
     {
-        result[0] = a[0] * b[0];
-        result[1] = a[1] * b[1];
-
-        return result;
+        throw new Error();
     }
 
     public mat3Multiply
     (
-        a: Readonly<AMat3<TArray>>,
-        b: Readonly<AVec2<TArray>>,
-        result: AVec2<TArray> = this.factory.createOneEmpty(),
+        _mat: Readonly<Mat3<TArray>>,
+        _result?: Vec2<TArray>,
     )
-        : AVec2<TArray>
+        : Vec2<TArray>
     {
-        result[0] = a[0] * b[0] + a[3] * b[0] + a[6];
-        result[1] = a[1] * b[1] + a[4] * b[1] + a[7];
-
-        return result;
+        throw new Error();
     }
 
-    public getLoggableValue(value: Readonly<AVec2<TArray>>): number[][]
+    public getLoggableValue(): number[][]
     {
-        return [
-            [value[0], value[1]],
-        ];
+        throw new Error();
     }
+
+    public TTypeGuardVec2!: true;
+    public TTypeGuardTypedArray!: TArray;
 }
+
+/**
+ * @public
+ * Float32 {@link Vec2}.
+ */
+export type TVec2F32 = Vec2<Float32Array>;

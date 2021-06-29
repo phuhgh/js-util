@@ -1,9 +1,11 @@
 import { debugDescribe } from "../../../test-utils";
 import { Vec3Factory } from "./vec3-factory";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { Vec3 } from "./vec3";
 
 debugDescribe("=> Vec3Factory", () =>
 {
-    const factory = new Vec3Factory(Float32Array);
+    const factory = new Vec3Factory(Vec3.f32, NormalizedDataViewProvider.getView(Float32Array));
 
     describe("=> create one", () =>
     {
