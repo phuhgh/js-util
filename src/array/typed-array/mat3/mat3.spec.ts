@@ -1,5 +1,6 @@
 import { Vec2 } from "../vec2/vec2";
 import { Mat3 } from "./mat3";
+import { Vec3 } from "../vec3/vec3";
 
 describe("=> Mat3", () =>
 {
@@ -176,6 +177,23 @@ describe("=> Mat3", () =>
             expect(slice.length).toBe(2);
             expect(slice[0]).toBe(2);
             expect(slice[1]).toBe(3);
+        });
+    });
+
+    describe("=> mat3 multiply component wise", () =>
+    {
+        it("| returns the expected values", () =>
+        {
+            const v = Vec3.f32.factory.createOne(1, 2, 0);
+            const identityMatrix = Mat3.f32.factory
+                .createOneEmpty()
+                .setIdentityMatrix();
+            expect(identityMatrix.getVec3MultiplyX(v.getX())).toBe(1);
+            expect(identityMatrix.getVec3MultiplyY(v.getY())).toBe(2);
+
+            const txMatrix = Mat3.f32.factory.createOneEmpty().setTranslationMatrix(10, -10);
+            expect(txMatrix.getVec3MultiplyX(v.getX())).toBe(11);
+            expect(txMatrix.getVec3MultiplyY(v.getY())).toBe(-8);
         });
     });
 });

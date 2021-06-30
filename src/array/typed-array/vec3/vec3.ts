@@ -1,6 +1,5 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
-import { Mat3 } from "../mat3/mat3";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec3Ctor } from "./get-vec3-ctor";
@@ -89,16 +88,6 @@ export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<
     }
 
     public setZ(_z: number): void
-    {
-        throw new Error();
-    }
-
-    public getMat3MultiplyX(_mat: Readonly<Mat3<TTypedArray>>): number
-    {
-        throw new Error();
-    }
-
-    public getMat3MultiplyY(_mat: Readonly<Mat3<TTypedArray>>): number
     {
         throw new Error();
     }

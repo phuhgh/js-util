@@ -124,6 +124,16 @@ export function getMat3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ma
             return result;
         }
 
+        public override getVec3MultiplyX(x: number): number
+        {
+            return this[0] * x + this[3] * x + this[6];
+        }
+
+        public override getVec3MultiplyY(y: number): number
+        {
+            return this[1] * y + this[4] * y + this[7];
+        }
+
         public override getLoggableValue(): number[][]
         {
             return [

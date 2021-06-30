@@ -4,7 +4,6 @@ import { TVec3CtorArgs, Vec3, Vec3Ctor } from "./vec3";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec3Factory } from "./vec3-factory";
-import { Mat3 } from "../mat3/mat3";
 
 /**
  * @internal
@@ -60,16 +59,6 @@ export function getVec3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ve
         public override setZ(z: number): void
         {
             this[2] = z;
-        }
-
-        public override getMat3MultiplyX(mat: Readonly<Mat3<TTypedArray>>): number
-        {
-            return mat[0] * this[0] + mat[3] * this[0] + mat[6];
-        }
-
-        public override getMat3MultiplyY(mat: Readonly<Mat3<TTypedArray>>): number
-        {
-            return mat[1] * this[1] + mat[4] * this[1] + mat[7];
         }
 
         public override getLoggableValue(): number[][]

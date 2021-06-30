@@ -124,6 +124,16 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    public getVec3MultiplyX(_x: number): number
+    {
+        throw new Error();
+    }
+
+    public getVec3MultiplyY(_y: number): number
+    {
+        throw new Error();
+    }
+
     public getLoggableValue(): number[][]
     {
         throw new Error();
