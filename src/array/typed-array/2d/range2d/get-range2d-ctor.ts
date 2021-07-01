@@ -101,6 +101,11 @@ export function getRange2dCtor<TArray extends TTypedArray>(ctor: ITypedArrayCtor
             return writeTo;
         }
 
+        public isPointInRange(x: number, y: number): boolean
+        {
+            return x >= this.getXMin() && x <= this.getXMax() && y >= this.getYMin() && y <= this.getXMax();
+        }
+
         public TTypeGuardRange2d!: true;
     } as Range2dCtor<TArray>;
 }

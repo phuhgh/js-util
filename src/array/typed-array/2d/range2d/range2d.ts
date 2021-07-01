@@ -136,6 +136,11 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    public isPointInRange(_x: number, _y: number): boolean
+    {
+        throw new Error();
+    }
+
     public TTypeGuardRange2d!: true;
 }
 
