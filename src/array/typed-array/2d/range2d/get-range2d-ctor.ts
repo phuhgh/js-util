@@ -106,7 +106,7 @@ export function getRange2dCtor<TArray extends TTypedArray>(ctor: ITypedArrayCtor
         {
             const x = point.getX();
             const y = point.getY();
-            return x >= this.getXMin() && x <= this.getXMax() && y >= this.getYMin() && y <= this.getXMax();
+            return x >= this.getXMin() && x <= this.getXMax() && y >= this.getYMin() && y <= this.getYMax();
         }
 
         public TTypeGuardRange2d!: true;
