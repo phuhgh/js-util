@@ -6,6 +6,7 @@ import { Range2d, Range2dCtor, TRange2dCtorArgs } from "./range2d";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
+import { Vec2 } from "../../vec2/vec2";
 
 /**
  * @internal
@@ -101,8 +102,10 @@ export function getRange2dCtor<TArray extends TTypedArray>(ctor: ITypedArrayCtor
             return writeTo;
         }
 
-        public isPointInRange(x: number, y: number): boolean
+        public isPointInRange(point: Vec2<TArray>): boolean
         {
+            const x = point.getX();
+            const y = point.getY();
             return x >= this.getXMin() && x <= this.getXMax() && y >= this.getYMin() && y <= this.getXMax();
         }
 

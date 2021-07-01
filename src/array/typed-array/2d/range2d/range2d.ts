@@ -3,6 +3,7 @@ import { TTypedArray } from "../../t-typed-array";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getRange2dCtor } from "./get-range2d-ctor";
+import { Vec2 } from "../../vec2/vec2";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
@@ -136,7 +137,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public isPointInRange(_x: number, _y: number): boolean
+    public isPointInRange(_point: Vec2<TArray>): boolean
     {
         throw new Error();
     }
