@@ -1,6 +1,6 @@
 import { _Debug } from "../_debug";
 
-export function setDefaultUnitTestFlags(): void
+export function setDefaultAppTestFlags(): void
 {
     _Debug.setFlag("DEBUG_MODE", true);
     _Debug.setFlag("DEBUG_PEDANTIC", true);
