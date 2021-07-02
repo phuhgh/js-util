@@ -205,6 +205,15 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             }
         }
 
+        public translateBy(dx: number, dy: number): void
+        {
+            this.setXMin(this.getXMin() + dx);
+            this.setXMax(this.getXMax() + dx);
+
+            this.setYMin(this.getYMin() + dy);
+            this.setYMax(this.getYMax() + dy);
+        }
+
         private static tmp = Range2dImpl.Vec2.factory.createOneEmpty();
 
         public TTypeGuardRange2d!: true;
