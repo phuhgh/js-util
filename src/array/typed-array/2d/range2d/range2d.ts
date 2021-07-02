@@ -115,7 +115,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public getCenter(_result: Vec2<TArray>): Vec2<TArray>
+    public getCenter(_result?: Vec2<TArray>): Vec2<TArray>
     {
         throw new Error();
     }
@@ -150,11 +150,30 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public scale(_scalingFactor: number, _relativeTo: Vec2<TArray>, _result?: Range2d<TArray>): Range2d<TArray>
+    /**
+     * Scales the range relative to a point (may not be outside of the range).
+     *
+     * @remarks
+     * If the point is at a boundary, then the range will be scaled such that that boundary is not changed. Where the
+     * point is away from a boundary, the updated range will have boundaries proportional to the distance from the center
+     * of the range.
+     *
+     * E.g. scaling factor of 0.5, P represents the position of the point in the range:
+     *
+     * XMin                      XMax
+     *  |P-------------------------|
+     *  |-------------|
+     *
+     *  |------------P-------------|
+     *        |-------------|
+     *
+     */
+    public scaleRelativeTo(_scalingFactor: number, _relativeTo: Vec2<TArray>, _result?: Range2d<TArray>): Range2d<TArray>
     {
         throw new Error();
     }
 
+    // todo jack: check if these can be made protected
     public TTypeGuardRange2d!: true;
 }
 
