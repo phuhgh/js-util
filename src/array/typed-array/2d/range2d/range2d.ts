@@ -175,6 +175,19 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    /**
+     * Bound this range to the argument.
+     *
+     * @remarks
+     * Where this range is larger than the bounding range, it will be resized to fit.
+     * Where this range is smaller than the bounding range but not contained, it will be moved maintaining its size. It
+     * Will be moved such that the the side furthest from the bounding range will be at the edge of the boundary.
+     */
+    public bound(_boundTo: Range2d<TArray>): void
+    {
+        throw new Error();
+    }
+
     // todo jack: check if these can be made protected
     public TTypeGuardRange2d!: true;
 }

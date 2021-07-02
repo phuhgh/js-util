@@ -89,4 +89,37 @@ debugDescribe("=> F32Range2d", () =>
             });
         });
     });
+
+    describe("=> bound", () =>
+    {
+        it("| bounds ranges that are too large", () =>
+        {
+            const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
+            range.bound(Range2d.f32.factory.createOne(2, 8, 2, 8));
+            expect(range.getXMin()).toBe(2);
+            expect(range.getYMin()).toBe(2);
+            expect(range.getXMax()).toBe(8);
+            expect(range.getYMax()).toBe(8);
+        });
+
+        it("| translates ranges that are out of bounds (neg)", () =>
+        {
+            const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
+            range.bound(Range2d.f32.factory.createOne(-20, -5, -20, -5));
+            expect(range.getXMin()).toBe(-15);
+            expect(range.getYMin()).toBe(-15);
+            expect(range.getXMax()).toBe(-5);
+            expect(range.getYMax()).toBe(-5);
+        });
+
+        it("| translates ranges that are out of bounds (pos)", () =>
+        {
+            const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
+            range.bound(Range2d.f32.factory.createOne(15, 30, 15, 30));
+            expect(range.getXMin()).toBe(15);
+            expect(range.getYMin()).toBe(15);
+            expect(range.getXMax()).toBe(25);
+            expect(range.getYMax()).toBe(25);
+        });
+    });
 });

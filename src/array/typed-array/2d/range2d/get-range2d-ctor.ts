@@ -166,6 +166,45 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return result;
         }
 
+        public bound(boundTo: Range2d<InstanceType<TCtor>>): void
+        {
+            if (this.getXRange() > boundTo.getXRange())
+            {
+                this.setXMin(boundTo.getXMin());
+                this.setXMax(boundTo.getXMax());
+            }
+            else if (this.getXMax() > boundTo.getXMax())
+            {
+                const range = this.getXRange();
+                this.setXMax(boundTo.getXMax());
+                this.setXMin(boundTo.getXMax() - range);
+            }
+            else if (this.getXMin() < boundTo.getXMin())
+            {
+                const range = this.getXRange();
+                this.setXMin(boundTo.getXMin());
+                this.setXMax(boundTo.getXMin() + range);
+            }
+
+            if (this.getYRange() > boundTo.getYRange())
+            {
+                this.setYMin(boundTo.getYMin());
+                this.setYMax(boundTo.getYMax());
+            }
+            else if (this.getYMax() > boundTo.getYMax())
+            {
+                const range = this.getYRange();
+                this.setYMax(boundTo.getYMax());
+                this.setYMin(boundTo.getYMax() - range);
+            }
+            else if (this.getYMin() < boundTo.getYMin())
+            {
+                const range = this.getYRange();
+                this.setYMin(boundTo.getYMin());
+                this.setYMax(boundTo.getYMin() + range);
+            }
+        }
+
         private static tmp = Range2dImpl.Vec2.factory.createOneEmpty();
 
         public TTypeGuardRange2d!: true;
