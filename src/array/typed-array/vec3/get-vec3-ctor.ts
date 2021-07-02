@@ -1,18 +1,18 @@
-import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { TVec3CtorArgs, Vec3, Vec3Ctor } from "./vec3";
-import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec3Factory } from "./vec3-factory";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { TTypedArrayCtor } from "../t-typed-array-ctor";
 
 /**
  * @internal
  */
-export function getVec3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Vec3<TArray>>, dataView: INormalizedDataView): Vec3Ctor<TArray>
+export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec3Ctor<InstanceType<TCtor>>
 {
-    return class Vec3Impl extends ctor
+    return class Vec3Impl extends (ctor as unknown as ITypedArrayCtor<Vec3<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Vec3<TArray>, TVec3CtorArgs> = new Vec3Factory(Vec3Impl, dataView);
+        public static factory: ITypedArrayTupleFactory<Vec3<InstanceType<TCtor>>, TVec3CtorArgs> = new Vec3Factory(Vec3Impl, NormalizedDataViewProvider.getView(ctor));
 
         public constructor
         (

@@ -1,19 +1,19 @@
-import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { TVec2CtorArgs, Vec2, Vec2Ctor } from "./vec2";
-import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec2Factory } from "./vec2-factory";
 import { Mat3 } from "../mat3/mat3";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { TTypedArrayCtor } from "../t-typed-array-ctor";
 
 /**
  * @internal
  */
-export function getVec2Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Vec2<TArray>>, dataView: INormalizedDataView): Vec2Ctor<TArray>
+export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Ctor<InstanceType<TCtor>>
 {
-    return class Vec2Impl extends ctor
+    return class Vec2Impl extends (ctor as unknown as ITypedArrayCtor<Vec2<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Vec2<TArray>, TVec2CtorArgs> = new Vec2Factory(Vec2Impl, dataView);
+        public static factory: ITypedArrayTupleFactory<Vec2<InstanceType<TCtor>>, TVec2CtorArgs> = new Vec2Factory(Vec2Impl, NormalizedDataViewProvider.getView(ctor));
 
         public constructor
         (
@@ -52,7 +52,7 @@ export function getVec2Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ve
             this[1] = y;
         }
 
-        public override add(vec: Readonly<Vec2<TArray>>, result: Vec2<TArray>): void
+        public override add(vec: Readonly<Vec2<InstanceType<TCtor>>>, result: Vec2<InstanceType<TCtor>>): void
         {
             result[0] = this[0] + vec[0];
             result[1] = this[1] + vec[1];
@@ -60,10 +60,10 @@ export function getVec2Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ve
 
         public override dotProduct
         (
-            vec: Readonly<Vec2<TArray>>,
-            result: Vec2<TArray> = (this.constructor as Vec2Ctor<TArray>).factory.createOneEmpty(),
+            vec: Readonly<Vec2<InstanceType<TCtor>>>,
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as Vec2Ctor<InstanceType<TCtor>>).factory.createOneEmpty(),
         )
-            : Vec2<TArray>
+            : Vec2<InstanceType<TCtor>>
         {
             result[0] = this[0] * vec[0];
             result[1] = this[1] * vec[1];
@@ -73,13 +73,28 @@ export function getVec2Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ve
 
         public override mat3Multiply
         (
-            mat: Readonly<Mat3<TArray>>,
-            result: Vec2<TArray> = (this.constructor as Vec2Ctor<TArray>).factory.createOneEmpty(),
+            mat: Readonly<Mat3<InstanceType<TCtor>>>,
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as Vec2Ctor<InstanceType<TCtor>>).factory.createOneEmpty(),
         )
-            : Vec2<TArray>
+            : Vec2<InstanceType<TCtor>>
         {
             result[0] = mat[0] * this[0] + mat[3] * this[0] + mat[6];
             result[1] = mat[1] * this[1] + mat[4] * this[1] + mat[7];
+
+            return result;
+        }
+
+        public override difference
+        (
+            vec: Vec2<InstanceType<TCtor>>,
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as Vec2Ctor<InstanceType<TCtor>>).factory.createOneEmpty()
+        )
+            : Vec2<InstanceType<TCtor>>
+        {
+            result.update(
+                this.getX() - vec.getX(),
+                this.getY() - vec.getY()
+            );
 
             return result;
         }

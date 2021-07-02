@@ -1,10 +1,8 @@
 import { Range2d } from "../range2d/range2d";
 import { TTypedArray } from "../../t-typed-array";
-import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getMargin2dCtor } from "./get-margin2d-ctor";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -34,15 +32,15 @@ export interface Margin2dCtor<TArray extends TTypedArray>
  */
 export abstract class Margin2d<TArray extends TTypedArray> extends Range2d<TArray>
 {
-    public static f64: Margin2dCtor<Float64Array> = getMargin2dCtor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
-    public static f32: Margin2dCtor<Float32Array> = getMargin2dCtor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
-    public static u32: Margin2dCtor<Uint32Array> = getMargin2dCtor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
-    public static i32: Margin2dCtor<Int32Array> = getMargin2dCtor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
-    public static u16: Margin2dCtor<Uint16Array> = getMargin2dCtor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
-    public static i16: Margin2dCtor<Int16Array> = getMargin2dCtor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
-    public static u8c: Margin2dCtor<Uint8ClampedArray> = getMargin2dCtor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
-    public static u8: Margin2dCtor<Uint8Array> = getMargin2dCtor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
-    public static i8: Margin2dCtor<Int8Array> = getMargin2dCtor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+    public static f64: Margin2dCtor<Float64Array> = getMargin2dCtor(Float64Array);
+    public static f32: Margin2dCtor<Float32Array> = getMargin2dCtor(Float32Array);
+    public static u32: Margin2dCtor<Uint32Array> = getMargin2dCtor(Uint32Array);
+    public static i32: Margin2dCtor<Int32Array> = getMargin2dCtor(Int32Array);
+    public static u16: Margin2dCtor<Uint16Array> = getMargin2dCtor(Uint16Array);
+    public static i16: Margin2dCtor<Int16Array> = getMargin2dCtor(Int16Array);
+    public static u8c: Margin2dCtor<Uint8ClampedArray> = getMargin2dCtor(Uint8ClampedArray);
+    public static u8: Margin2dCtor<Uint8Array> = getMargin2dCtor(Uint8Array);
+    public static i8: Margin2dCtor<Int8Array> = getMargin2dCtor(Int8Array);
 
     /**
      * left

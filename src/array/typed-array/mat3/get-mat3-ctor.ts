@@ -1,19 +1,19 @@
-import { TTypedArray } from "../t-typed-array";
-import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { Mat3, Mat3Ctor, TMat3CtorArgs } from "./mat3";
-import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat3Factory } from "./mat3-factory";
 import { _Debug } from "../../../debug/_debug";
+import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { ITypedArrayCtor } from "../i-typed-array-ctor";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 
 /**
  * @internal
  */
-export function getMat3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Mat3<TArray>>, dataView: INormalizedDataView): Mat3Ctor<TArray>
+export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Ctor<InstanceType<TCtor>>
 {
-    return class Mat3Impl extends ctor
+    return class Mat3Impl extends (ctor as unknown as ITypedArrayCtor<Mat3<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Mat3<TArray>, TMat3CtorArgs> = new Mat3Factory(Mat3Impl, dataView);
+        public static factory: ITypedArrayTupleFactory<Mat3<InstanceType<TCtor>>, TMat3CtorArgs> = new Mat3Factory(Mat3Impl, NormalizedDataViewProvider.getView(ctor));
 
         public constructor
         (
@@ -25,7 +25,7 @@ export function getMat3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ma
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
-        public override setIdentityMatrix(): Mat3<TArray>
+        public override setIdentityMatrix(): Mat3<InstanceType<TCtor>>
         {
             this.fill(0);
             this[0] = 1;
@@ -48,7 +48,7 @@ export function getMat3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ma
         (
             angle: number,
         )
-            : Mat3<TArray>
+            : Mat3<InstanceType<TCtor>>
         {
             const sine = Math.sin(angle);
             const cosine = Math.cos(angle);
@@ -66,7 +66,7 @@ export function getMat3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ma
             return this;
         }
 
-        public override setScalingMatrix(scalingFactorX: number, scalingFactorY: number): Mat3<TArray>
+        public override setScalingMatrix(scalingFactorX: number, scalingFactorY: number): Mat3<InstanceType<TCtor>>
         {
             this[0] = scalingFactorX;
             this[1] = 0;
@@ -86,7 +86,7 @@ export function getMat3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ma
             translationX: number,
             translationY: number,
         )
-            : Mat3<TArray>
+            : Mat3<InstanceType<TCtor>>
         {
             this[0] = 1;
             this[1] = 0;
@@ -103,10 +103,10 @@ export function getMat3Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ma
 
         public override multiplyMat3
         (
-            mat: Readonly<Mat3<TArray>>,
-            result: Mat3<TArray> = (this.constructor as Mat3Ctor<TArray>).factory.createOneEmpty(),
+            mat: Readonly<Mat3<InstanceType<TCtor>>>,
+            result: Mat3<InstanceType<TCtor>> = (this.constructor as Mat3Ctor<InstanceType<TCtor>>).factory.createOneEmpty(),
         )
-            : Mat3<TArray>
+            : Mat3<InstanceType<TCtor>>
         {
             const [a0, a1, a2, a3, a4, a5, a6, a7, a8] = this as unknown as number[];
             const [b0, b1, b2, b3, b4, b5, b6, b7, b8] = mat as unknown as number[];

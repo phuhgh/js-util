@@ -1,10 +1,8 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat3Ctor } from "./get-mat3-ctor";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -44,15 +42,15 @@ export interface Mat3Ctor<TArray extends TTypedArray>
  */
 export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<9>
 {
-    public static f64: Mat3Ctor<Float64Array> = getMat3Ctor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
-    public static f32: Mat3Ctor<Float32Array> = getMat3Ctor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
-    public static u32: Mat3Ctor<Uint32Array> = getMat3Ctor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
-    public static i32: Mat3Ctor<Int32Array> = getMat3Ctor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
-    public static u16: Mat3Ctor<Uint16Array> = getMat3Ctor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
-    public static i16: Mat3Ctor<Int16Array> = getMat3Ctor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
-    public static u8c: Mat3Ctor<Uint8ClampedArray> = getMat3Ctor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
-    public static u8: Mat3Ctor<Uint8Array> = getMat3Ctor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
-    public static i8: Mat3Ctor<Int8Array> = getMat3Ctor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+    public static f64: Mat3Ctor<Float64Array> = getMat3Ctor(Float64Array);
+    public static f32: Mat3Ctor<Float32Array> = getMat3Ctor(Float32Array);
+    public static u32: Mat3Ctor<Uint32Array> = getMat3Ctor(Uint32Array);
+    public static i32: Mat3Ctor<Int32Array> = getMat3Ctor(Int32Array);
+    public static u16: Mat3Ctor<Uint16Array> = getMat3Ctor(Uint16Array);
+    public static i16: Mat3Ctor<Int16Array> = getMat3Ctor(Int16Array);
+    public static u8c: Mat3Ctor<Uint8ClampedArray> = getMat3Ctor(Uint8ClampedArray);
+    public static u8: Mat3Ctor<Uint8Array> = getMat3Ctor(Uint8Array);
+    public static i8: Mat3Ctor<Int8Array> = getMat3Ctor(Int8Array);
 
     /**
      * c1r1

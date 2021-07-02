@@ -1,10 +1,8 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec4Ctor } from "./get-vec4-ctor";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -34,15 +32,15 @@ export interface Vec4Ctor<TArray extends TTypedArray>
  */
 export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<4>
 {
-    public static f64: Vec4Ctor<Float64Array> = getVec4Ctor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
-    public static f32: Vec4Ctor<Float32Array> = getVec4Ctor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
-    public static u32: Vec4Ctor<Uint32Array> = getVec4Ctor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
-    public static i32: Vec4Ctor<Int32Array> = getVec4Ctor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
-    public static u16: Vec4Ctor<Uint16Array> = getVec4Ctor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
-    public static i16: Vec4Ctor<Int16Array> = getVec4Ctor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
-    public static u8c: Vec4Ctor<Uint8ClampedArray> = getVec4Ctor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
-    public static u8: Vec4Ctor<Uint8Array> = getVec4Ctor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
-    public static i8: Vec4Ctor<Int8Array> = getVec4Ctor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+    public static f64: Vec4Ctor<Float64Array> = getVec4Ctor(Float64Array);
+    public static f32: Vec4Ctor<Float32Array> = getVec4Ctor(Float32Array);
+    public static u32: Vec4Ctor<Uint32Array> = getVec4Ctor(Uint32Array);
+    public static i32: Vec4Ctor<Int32Array> = getVec4Ctor(Int32Array);
+    public static u16: Vec4Ctor<Uint16Array> = getVec4Ctor(Uint16Array);
+    public static i16: Vec4Ctor<Int16Array> = getVec4Ctor(Int16Array);
+    public static u8c: Vec4Ctor<Uint8ClampedArray> = getVec4Ctor(Uint8ClampedArray);
+    public static u8: Vec4Ctor<Uint8Array> = getVec4Ctor(Uint8Array);
+    public static i8: Vec4Ctor<Int8Array> = getVec4Ctor(Int8Array);
 
     /**
      * x

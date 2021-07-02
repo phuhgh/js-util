@@ -1,21 +1,19 @@
-import { TTypedArray } from "../../t-typed-array";
-import { ITypedArrayCtor } from "../../i-typed-array-ctor";
-import { Mat2 } from "../../mat2/mat2";
-import { INormalizedDataView } from "../../normalized-data-view/i-normalized-data-view";
 import { Margin2d, Margin2dCtor, TMargin2dCtorArgs } from "./margin2d";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
 import { Range2d } from "../range2d/range2d";
 import { getRange2dCtor } from "../range2d/get-range2d-ctor";
+import { TTypedArrayCtor } from "../../t-typed-array-ctor";
+import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 
 /**
  * @internal
  */
-export function getMargin2dCtor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Mat2<TArray>>, dataView: INormalizedDataView): Margin2dCtor<TArray>
+export function getMargin2dCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Margin2dCtor<InstanceType<TCtor>>
 {
-    return class Margin2dImpl extends (getRange2dCtor(ctor, dataView) as Margin2dCtor<TArray>) implements Margin2d<TArray>
+    return class Margin2dImpl extends (getRange2dCtor(ctor) as Margin2dCtor<InstanceType<TCtor>>) implements Margin2d<InstanceType<TCtor>>
     {
-        public static factory: ITypedArrayTupleFactory<Margin2d<TArray>, TMargin2dCtorArgs> = new Mat2Factory(Margin2dImpl, dataView);
+        public static factory: ITypedArrayTupleFactory<Margin2d<InstanceType<TCtor>>, TMargin2dCtorArgs> = new Mat2Factory(Margin2dImpl, NormalizedDataViewProvider.getView(ctor));
 
         public getLeft(): number
         {
@@ -49,10 +47,10 @@ export function getMargin2dCtor<TArray extends TTypedArray>(ctor: ITypedArrayCto
 
         public getInnerRange
         (
-            range: Readonly<Range2d<TArray>>,
-            result: Range2d<TArray> = (this.constructor as Margin2dCtor<TArray>).factory.createOneEmpty(),
+            range: Readonly<Range2d<InstanceType<TCtor>>>,
+            result: Range2d<InstanceType<TCtor>> = (this.constructor as Margin2dCtor<InstanceType<TCtor>>).factory.createOneEmpty(),
         )
-            : Range2d<TArray>
+            : Range2d<InstanceType<TCtor>>
         {
             result[0] = range[0] + this[0];
             result[1] = range[1] - this[1];
@@ -64,5 +62,5 @@ export function getMargin2dCtor<TArray extends TTypedArray>(ctor: ITypedArrayCto
 
         public TTypeGuardAMargin2d!: true;
 
-    } as Margin2dCtor<TArray>;
+    } as Margin2dCtor<InstanceType<TCtor>>;
 }

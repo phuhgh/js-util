@@ -1,19 +1,23 @@
-import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { Mat2, Mat2Ctor, TMat2CtorArgs } from "./mat2";
-import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat2Factory } from "./mat2-factory";
 import { _Debug } from "../../../debug/_debug";
+import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 
 /**
  * @internal
  */
-export function getMat2Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Mat2<TArray>>, dataView: INormalizedDataView): Mat2Ctor<TArray>
+export function getMat2Ctor<TCtor extends TTypedArrayCtor>
+(
+    ctor: TCtor,
+)
+    : Mat2Ctor<InstanceType<TCtor>>
 {
-    return class Mat2Impl extends ctor
+    return class Mat2Impl extends (ctor as unknown as ITypedArrayCtor<Mat2<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Mat2<TArray>, TMat2CtorArgs> = new Mat2Factory(Mat2Impl, dataView);
+        public static factory: ITypedArrayTupleFactory<Mat2<InstanceType<TCtor>>, TMat2CtorArgs> = new Mat2Factory(Mat2Impl, NormalizedDataViewProvider.getView(ctor));
 
         public constructor
         (
@@ -25,7 +29,7 @@ export function getMat2Ctor<TArray extends TTypedArray>(ctor: ITypedArrayCtor<Ma
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
-        public override setIdentityMatrix(): Mat2<TArray>
+        public override setIdentityMatrix(): Mat2<InstanceType<TCtor>>
         {
             this.fill(0);
             this[0] = 1;

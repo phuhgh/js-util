@@ -1,10 +1,8 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat4Ctor } from "./get-mat4-ctor";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -51,15 +49,15 @@ export interface Mat4Ctor<TArray extends TTypedArray>
  */
 export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<16>
 {
-    public static f64: Mat4Ctor<Float64Array> = getMat4Ctor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
-    public static f32: Mat4Ctor<Float32Array> = getMat4Ctor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
-    public static u32: Mat4Ctor<Uint32Array> = getMat4Ctor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
-    public static i32: Mat4Ctor<Int32Array> = getMat4Ctor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
-    public static u16: Mat4Ctor<Uint16Array> = getMat4Ctor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
-    public static i16: Mat4Ctor<Int16Array> = getMat4Ctor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
-    public static u8c: Mat4Ctor<Uint8ClampedArray> = getMat4Ctor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
-    public static u8: Mat4Ctor<Uint8Array> = getMat4Ctor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
-    public static i8: Mat4Ctor<Int8Array> = getMat4Ctor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+    public static f64: Mat4Ctor<Float64Array> = getMat4Ctor(Float64Array);
+    public static f32: Mat4Ctor<Float32Array> = getMat4Ctor(Float32Array);
+    public static u32: Mat4Ctor<Uint32Array> = getMat4Ctor(Uint32Array);
+    public static i32: Mat4Ctor<Int32Array> = getMat4Ctor(Int32Array);
+    public static u16: Mat4Ctor<Uint16Array> = getMat4Ctor(Uint16Array);
+    public static i16: Mat4Ctor<Int16Array> = getMat4Ctor(Int16Array);
+    public static u8c: Mat4Ctor<Uint8ClampedArray> = getMat4Ctor(Uint8ClampedArray);
+    public static u8: Mat4Ctor<Uint8Array> = getMat4Ctor(Uint8Array);
+    public static i8: Mat4Ctor<Int8Array> = getMat4Ctor(Int8Array);
 
     /**
      * c1r1

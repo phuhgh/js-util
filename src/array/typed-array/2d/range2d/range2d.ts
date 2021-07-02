@@ -1,11 +1,9 @@
 import { Mat2 } from "../../mat2/mat2";
 import { TTypedArray } from "../../t-typed-array";
-import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getRange2dCtor } from "./get-range2d-ctor";
 import { Vec2 } from "../../vec2/vec2";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @public
  */
@@ -35,15 +33,15 @@ export interface Range2dCtor<TArray extends TTypedArray>
  */
 export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
 {
-    public static f64: Range2dCtor<Float64Array> = getRange2dCtor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
-    public static f32: Range2dCtor<Float32Array> = getRange2dCtor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
-    public static u32: Range2dCtor<Uint32Array> = getRange2dCtor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
-    public static i32: Range2dCtor<Int32Array> = getRange2dCtor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
-    public static u16: Range2dCtor<Uint16Array> = getRange2dCtor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
-    public static i16: Range2dCtor<Int16Array> = getRange2dCtor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
-    public static u8c: Range2dCtor<Uint8ClampedArray> = getRange2dCtor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
-    public static u8: Range2dCtor<Uint8Array> = getRange2dCtor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
-    public static i8: Range2dCtor<Int8Array> = getRange2dCtor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+    public static f64: Range2dCtor<Float64Array> = getRange2dCtor(Float64Array);
+    public static f32: Range2dCtor<Float32Array> = getRange2dCtor(Float32Array);
+    public static u32: Range2dCtor<Uint32Array> = getRange2dCtor(Uint32Array);
+    public static i32: Range2dCtor<Int32Array> = getRange2dCtor(Int32Array);
+    public static u16: Range2dCtor<Uint16Array> = getRange2dCtor(Uint16Array);
+    public static i16: Range2dCtor<Int16Array> = getRange2dCtor(Int16Array);
+    public static u8c: Range2dCtor<Uint8ClampedArray> = getRange2dCtor(Uint8ClampedArray);
+    public static u8: Range2dCtor<Uint8Array> = getRange2dCtor(Uint8Array);
+    public static i8: Range2dCtor<Int8Array> = getRange2dCtor(Int8Array);
 
     /**
      * xMin
@@ -102,12 +100,22 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    public getRange(_result: Vec2<TArray>): Vec2<TArray>
+    {
+        throw new Error();
+    }
+
     public getXRange(): number
     {
         throw new Error();
     }
 
     public getYRange(): number
+    {
+        throw new Error();
+    }
+
+    public getCenter(_result: Vec2<TArray>): Vec2<TArray>
     {
         throw new Error();
     }
@@ -138,6 +146,11 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     }
 
     public isPointInRange(_point: Vec2<TArray>): boolean
+    {
+        throw new Error();
+    }
+
+    public scale(_scalingFactor: number, _relativeTo: Vec2<TArray>, _result?: Range2d<TArray>): Range2d<TArray>
     {
         throw new Error();
     }

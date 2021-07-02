@@ -1,7 +1,6 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
 import { Mat3 } from "../mat3/mat3";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec2Ctor } from "./get-vec2-ctor";
 
@@ -9,8 +8,6 @@ import { getVec2Ctor } from "./get-vec2-ctor";
  * @public
  */
 export type TVec2CtorArgs = [x: number, y: number];
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /**
  * @public
@@ -36,15 +33,15 @@ export interface Vec2Ctor<TArray extends TTypedArray>
  */
 export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<2>
 {
-    public static f64: Vec2Ctor<Float64Array> = getVec2Ctor(Float64Array as any, NormalizedDataViewProvider.getView(Float64Array));
-    public static f32: Vec2Ctor<Float32Array> = getVec2Ctor(Float32Array as any, NormalizedDataViewProvider.getView(Float32Array));
-    public static u32: Vec2Ctor<Uint32Array> = getVec2Ctor(Uint32Array as any, NormalizedDataViewProvider.getView(Uint32Array));
-    public static i32: Vec2Ctor<Int32Array> = getVec2Ctor(Int32Array as any, NormalizedDataViewProvider.getView(Int32Array));
-    public static u16: Vec2Ctor<Uint16Array> = getVec2Ctor(Uint16Array as any, NormalizedDataViewProvider.getView(Uint16Array));
-    public static i16: Vec2Ctor<Int16Array> = getVec2Ctor(Int16Array as any, NormalizedDataViewProvider.getView(Int16Array));
-    public static u8c: Vec2Ctor<Uint8ClampedArray> = getVec2Ctor(Uint8ClampedArray as any, NormalizedDataViewProvider.getView(Uint8ClampedArray));
-    public static u8: Vec2Ctor<Uint8Array> = getVec2Ctor(Uint8Array as any, NormalizedDataViewProvider.getView(Uint8Array));
-    public static i8: Vec2Ctor<Int8Array> = getVec2Ctor(Int8Array as any, NormalizedDataViewProvider.getView(Int8Array));
+    public static f64: Vec2Ctor<Float64Array> = getVec2Ctor(Float64Array);
+    public static f32: Vec2Ctor<Float32Array> = getVec2Ctor(Float32Array);
+    public static u32: Vec2Ctor<Uint32Array> = getVec2Ctor(Uint32Array);
+    public static i32: Vec2Ctor<Int32Array> = getVec2Ctor(Int32Array);
+    public static u16: Vec2Ctor<Uint16Array> = getVec2Ctor(Uint16Array);
+    public static i16: Vec2Ctor<Int16Array> = getVec2Ctor(Int16Array);
+    public static u8c: Vec2Ctor<Uint8ClampedArray> = getVec2Ctor(Uint8ClampedArray);
+    public static u8: Vec2Ctor<Uint8Array> = getVec2Ctor(Uint8Array);
+    public static i8: Vec2Ctor<Int8Array> = getVec2Ctor(Int8Array);
 
     /**
      * x
@@ -101,6 +98,11 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         _result?: Vec2<TArray>,
     )
         : Vec2<TArray>
+    {
+        throw new Error();
+    }
+
+    public difference(_vec: Vec2<TArray>, _result?: Vec2<TArray>): Vec2<TArray>
     {
         throw new Error();
     }
