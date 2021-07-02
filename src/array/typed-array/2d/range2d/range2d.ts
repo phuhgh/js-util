@@ -150,6 +150,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    /* eslint-disable no-irregular-whitespace */
     /**
      * Scales the range relative to a point (may not be outside of the range).
      *
@@ -159,15 +160,16 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
      * of the range.
      *
      * E.g. scaling factor of 0.5, P represents the position of the point in the range:
-     *
+     *```
      * XMin                      XMax
      *  |P-------------------------|
      *  |-------------|
      *
      *  |------------P-------------|
-     *        |-------------|
-     *
+     *        |-------------|
+     *```
      */
+    /* eslint-enable no-irregular-whitespace */
     public scaleRelativeTo(_scalingFactor: number, _relativeTo: Vec2<TArray>, _result?: Range2d<TArray>): Range2d<TArray>
     {
         throw new Error();
