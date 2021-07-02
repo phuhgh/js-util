@@ -22,12 +22,12 @@ export { ATypedArrayTuple, TDecayedTypedArrayTuple } from "./array/typed-array/a
 export { ITypedArrayTupleFactory } from "./array/typed-array/i-typed-array-tuple-factory";
 export { Margin2d, TF32Margin2d, TMargin2dCtorArgs, Margin2dCtor } from "./array/typed-array/2d/margin2d/margin2d";
 export { Range2d, TF32Range2d, TRange2dCtorArgs, Range2dCtor } from "./array/typed-array/2d/range2d/range2d";
-export { Mat2, TMat2F32, TMat2CtorArgs, Mat2Ctor } from "./array/typed-array/mat2/mat2";
-export { Mat3, TMat3F32, TMat3CtorArgs, Mat3Ctor } from "./array/typed-array/mat3/mat3";
-export { Mat4, TMat4, TMat4CtorArgs, Mat4Ctor } from "./array/typed-array/mat4/mat4";
-export { Vec2, TVec2F32, TVec2CtorArgs, Vec2Ctor } from "./array/typed-array/vec2/vec2";
-export { Vec3, TVec3F32, TVec3CtorArgs, Vec3Ctor } from "./array/typed-array/vec3/vec3";
-export { Vec4, TVec4F32, TVec4CtorArgs, Vec4Ctor } from "./array/typed-array/vec4/vec4";
+export { Mat2, TF32Mat2, TMat2CtorArgs, Mat2Ctor } from "./array/typed-array/mat2/mat2";
+export { Mat3, TF32Mat3, TMat3CtorArgs, Mat3Ctor } from "./array/typed-array/mat3/mat3";
+export { Mat4, TF32Mat4, TMat4CtorArgs, Mat4Ctor } from "./array/typed-array/mat4/mat4";
+export { Vec2, TF32Vec2, TVec2CtorArgs, Vec2Ctor } from "./array/typed-array/vec2/vec2";
+export { Vec3, TF32Vec3, TVec3CtorArgs, Vec3Ctor } from "./array/typed-array/vec3/vec3";
+export { Vec4, TF32Vec4, TVec4CtorArgs, Vec4Ctor } from "./array/typed-array/vec4/vec4";
 export { NormalizedDataViewProvider } from "./array/typed-array/normalized-data-view/normalized-data-view-provider";
 export { INormalizedDataView } from "./array/typed-array/normalized-data-view/i-normalized-data-view";
 export { TTypedArray } from "./array/typed-array/t-typed-array";
