@@ -5,6 +5,7 @@ import { mapInitializeGet } from "./impl/map-intialize-get";
 import { mapKeysToArray } from "./impl/map-keys-to-array";
 import { mapPush } from "./impl/map-push";
 import { mapValuesToArray } from "./impl/map-values-to-array";
+import { mapEntriesToArray } from "./impl/map-entries-to-array";
 
 /**
  * @public
@@ -14,6 +15,9 @@ export class _Map
 {
     /** {@inheritDoc mapArrayMap} */
     public static readonly arrayMap = mapArrayMap;
+
+    /** {@inheritDoc mapEntriesToArray} */
+    public static readonly entriesToArray = mapEntriesToArray;
 
     /** {@inheritDoc mapFirstKey} */
     public static readonly firstKey = mapFirstKey;
