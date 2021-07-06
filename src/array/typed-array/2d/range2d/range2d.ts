@@ -196,7 +196,6 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    // todo jack: check if these can be made protected
     public TTypeGuardRange2d!: true;
 }
 
