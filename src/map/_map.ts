@@ -17,7 +17,7 @@ export class _Map
     /** {@inheritDoc mapArrayMap} */
     public static readonly arrayMap = mapArrayMap;
 
-    /** {@inheritDoc mapDeleteGet} */
+    /** {@inheritDoc (mapDeleteGet: 1)} */
     public static readonly deleteGet = mapDeleteGet;
 
     /** {@inheritDoc mapEntriesToArray} */
@@ -35,7 +35,7 @@ export class _Map
     /** {@inheritDoc mapKeysToArray} */
     public static readonly keysToArray = mapKeysToArray;
 
-    /** {@inheritDoc mapPush} */
+    /** {@inheritDoc (mapPush: 1)} */
     public static readonly push = mapPush;
 
     /** {@inheritDoc mapValuesToArray} */
