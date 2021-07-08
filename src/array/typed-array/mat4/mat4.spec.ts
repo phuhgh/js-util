@@ -36,4 +36,19 @@ describe("=> Mat4", () =>
             }
         });
     });
+
+    describe("=> set", () =>
+    {
+        it("| sets the values after the index", () =>
+        {
+            const m4 = Mat4.f32.factory
+                .createOneEmpty()
+                .setIdentityMatrix();
+
+            m4.set([1, 2, 3, 4], 4);
+
+            expect(m4[4]).toBe(1);
+            expect(m4[7]).toBe(4);
+        });
+    });
 });
