@@ -99,6 +99,6 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Range2d<TArra
 
 /**
  * @public
- * A float32 {@link Margin2d}.
+ * Float32 {@link Margin2d}.
  */
 export type TF32Margin2d = Margin2d<Float32Array>;

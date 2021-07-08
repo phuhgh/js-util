@@ -2,7 +2,6 @@ import { debugDescribe } from "../../../../test-utils";
 import { Range2d } from "./range2d";
 import { Vec2 } from "../../vec2/vec2";
 
-
 debugDescribe("=> F32Range2d", () =>
 {
     describe("=> isPointInRange", () =>

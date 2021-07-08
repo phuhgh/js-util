@@ -201,6 +201,6 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
 
 /**
  * @public
- * A float32 {@link Range2d}.
+ * Float32 {@link Range2d}.
  */
 export type TF32Range2d = Range2d<Float32Array>;
