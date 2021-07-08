@@ -110,4 +110,14 @@ declare global
         export const error: (message: string) => void;
         export const sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecks;
     }
+
+    interface RcJsUtilDebugFlags
+    {
+        DEBUG_MODE: "DEBUG_MODE",
+        DEBUG_DISABLE_BREAKPOINT: "DEBUG_DISABLE_BREAKPOINT";
+        DEBUG_VERBOSE: "DEBUG_VERBOSE";
+        DEBUG_DISABLE_EXPENSIVE_CHECKS: "DEBUG_DISABLE_EXPENSIVE_CHECKS";
+        DEBUG_PEDANTIC: "DEBUG_PEDANTIC";
+        DEBUG_VERBOSE_MEMORY_MANAGEMENT: "DEBUG_VERBOSE_MEMORY_MANAGEMENT";
+    }
 }

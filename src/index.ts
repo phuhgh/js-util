@@ -4,7 +4,6 @@ export { RcJsUtilDebugImpl } from "./debug/debug-namepace";
 export { Emscripten } from "../external/emscripten";
 export { _Array } from "./array/_array";
 export { _Debug } from "./debug/_debug";
-export { debugFlags } from "./debug/debug-flags";
 export { _Dictionary } from "./dictionary/_-dictionary";
 export { NestableError } from "./error-handling/nestable-error";
 export { _Production } from "./production/_production";

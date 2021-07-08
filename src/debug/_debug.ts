@@ -1,4 +1,3 @@
-import { debugFlags } from "./debug-flags";
 import { getGlobal } from "../runtime/get-global";
 
 /**
@@ -55,6 +54,37 @@ export class _Debug
     }
 
     /**
+     * Convenience method to run multiple asserts if flag set.
+     *
+     * @returns A boolean value to make linting happy...
+     *
+     * @remarks
+     * Must still be hidden behind DEBUG_MODE check for dead code removal.
+     *
+     * @example
+     * ```typescript
+     * DEBUG_MODE && _Debug.conditionalBlock("SOME_FLAG", () => {
+     *     _Debug.assert(someCondition, "someCondition was wrong");
+     *     // ...
+     * });
+     * ```
+     */
+    public static conditionalBlock<TKey extends keyof RcJsUtilDebugFlags>
+    (
+        flag: RcJsUtilDebugFlags[TKey],
+        cb: () => void,
+    )
+        : boolean
+    {
+        if (this.isFlagSet(flag))
+        {
+            cb();
+        }
+
+        return true;
+    }
+
+    /**
      * Throws an `Error` with the given message if the condition is false.
      *
      * @returns A boolean value to make linting happy...
@@ -77,7 +107,7 @@ export class _Debug
     {
         if (!condition)
         {
-            if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
+            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
             {
                 _Debug.breakpoint();
             }
@@ -103,11 +133,11 @@ export class _Debug
      * ```
      *
      * @remarks
-     * If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+     * If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT` is false or unset then a breakpoint will be hit first.
      */
     public static error(message: string): boolean
     {
-        if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
+        if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
         {
             _Debug.breakpoint();
         }
@@ -137,7 +167,7 @@ export class _Debug
      */
     public static verboseLog(message: string): void
     {
-        if (!_Debug.isFlagSet(debugFlags.DEBUG_VERBOSE))
+        if (!_Debug.isFlagSet("DEBUG_VERBOSE"))
         {
             return;
         }
@@ -169,9 +199,9 @@ export class _Debug
     /**
      * Used to set debug flags in an environment independent way.
      */
-    public static setFlag<TKey extends keyof typeof debugFlags>
+    public static setFlag<TKey extends keyof RcJsUtilDebugFlags>
     (
-        flag: typeof debugFlags[TKey],
+        flag: RcJsUtilDebugFlags[TKey],
         value: boolean
     )
         : void
@@ -179,23 +209,10 @@ export class _Debug
         getGlobal()[flag] = value;
     }
 
-    public static setCustomFlag(flag: string, value: boolean): void
-    {
-        getGlobal()[flag] = value;
-    }
-
-    /**
-     * Used to get custom debug flags in an environment independent way.
-     */
-    public static isCustomFlagSet(flag: string): boolean
-    {
-        return Boolean(getGlobal()[flag]);
-    }
-
     /**
      * Used to get debug flags in an environment independent way.
      */
-    public static isFlagSet<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey]): boolean
+    public static isFlagSet<TKey extends keyof RcJsUtilDebugFlags>(flag: RcJsUtilDebugFlags[TKey]): boolean
     {
         return Boolean(getGlobal()[flag]);
     }

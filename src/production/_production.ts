@@ -1,5 +1,4 @@
 import { _Debug } from "../debug/_debug";
-import { debugFlags } from "../debug/debug-flags";
 
 /**
  * @public
@@ -15,7 +14,7 @@ export class _Production
     {
         if (DEBUG_MODE)
         {
-            if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
+            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
             {
                 _Debug.breakpoint();
             }
