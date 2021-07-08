@@ -103,6 +103,7 @@ export { fpValueOrNull } from "./fp/impl/fp-value-or-null";
 export { promiseRejectFalsey } from "./promise/impl/promise-reject-falsey";
 export { promiseRejectNull } from "./promise/impl/promise-reject-null";
 export { mapArrayMap } from "./map/impl/map-array-map";
+export { mapDeleteGet } from "./map/impl/map-delete-get";
 export { mapEntriesToArray } from "./map/impl/map-entries-to-array";
 export { mapFirstKey } from "./map/impl/map-first-key";
 export { mapFirstValue } from "./map/impl/map-first-value";
