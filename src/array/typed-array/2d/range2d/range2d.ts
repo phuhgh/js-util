@@ -3,6 +3,7 @@ import { TTypedArray } from "../../t-typed-array";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getRange2dCtor } from "./get-range2d-ctor";
 import { Vec2 } from "../../vec2/vec2";
+import { Mat3 } from "../../mat3/mat3";
 
 /**
  * @public
@@ -136,6 +137,16 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     }
 
     public getYSum(): number
+    {
+        throw new Error();
+    }
+
+    public mat3Multiply
+    (
+        _mat: Readonly<Mat3<TArray>>,
+        _writeTo?: Range2d<TArray>,
+    )
+        : Range2d<TArray>
     {
         throw new Error();
     }

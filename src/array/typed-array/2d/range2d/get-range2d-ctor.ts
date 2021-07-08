@@ -7,6 +7,7 @@ import { Mat2Factory } from "../../mat2/mat2-factory";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { getVec2Factory } from "../../vec2/vec2-factory-by-type";
 import { _Debug } from "../../../../debug/_debug";
+import { Mat3 } from "../../mat3/mat3";
 
 /**
  * @internal
@@ -106,6 +107,21 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         public getYSum(): number
         {
             return this[2] + this[3];
+        }
+
+        public mat3Multiply
+        (
+            mat: Readonly<Mat3<InstanceType<TCtor>>>,
+            writeTo: Range2d<InstanceType<TCtor>> = (this.constructor as Range2dCtor<InstanceType<TCtor>>).factory.createOneEmpty(),
+        )
+            : Range2d<InstanceType<TCtor>>
+        {
+            writeTo.setXMin(mat.getVec3MultiplyX(this.getXMin()));
+            writeTo.setXMax(mat.getVec3MultiplyX(this.getXMax()));
+            writeTo.setYMin(mat.getVec3MultiplyY(this.getYMin()));
+            writeTo.setYMax(mat.getVec3MultiplyY(this.getYMax()));
+
+            return writeTo;
         }
 
         public unionRange

@@ -1,6 +1,7 @@
 import { debugDescribe } from "../../../../test-utils";
 import { Range2d } from "./range2d";
 import { Vec2 } from "../../vec2/vec2";
+import { Mat3 } from "../../mat3/mat3";
 
 debugDescribe("=> F32Range2d", () =>
 {
@@ -119,6 +120,21 @@ debugDescribe("=> F32Range2d", () =>
             expect(range.getYMin()).toBe(15);
             expect(range.getXMax()).toBe(25);
             expect(range.getYMax()).toBe(25);
+        });
+    });
+
+    describe("=> mat3Multiply", () => {
+        it("| moves the range as expected", () => {
+            const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
+            const tm = Mat3.f32.factory
+                .createOneEmpty()
+                .setTranslationMatrix(3, 4);
+            range.mat3Multiply(tm, range);
+
+            expect(range.getXMin()).toBe(3);
+            expect(range.getXMax()).toBe(13);
+            expect(range.getYMin()).toBe(4);
+            expect(range.getYMax()).toBe(14);
         });
     });
 });
