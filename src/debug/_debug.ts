@@ -185,6 +185,14 @@ export class _Debug
     }
 
     /**
+     * Used to get custom debug flags in an environment independent way.
+     */
+    public static isCustomFlagSet(flag: string): boolean
+    {
+        return Boolean(getGlobal()[flag]);
+    }
+
+    /**
      * Used to get debug flags in an environment independent way.
      */
     public static isFlagSet<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey]): boolean
