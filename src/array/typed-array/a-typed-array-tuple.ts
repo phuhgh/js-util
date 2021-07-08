@@ -1,4 +1,5 @@
 import { TTupleLike } from "../../typescript/t-tuple-like";
+import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length";
 
 /**
  * @public
@@ -240,6 +241,13 @@ export class ATypedArrayTuple<TLength extends number>
      * @param _array - A typed or untyped array of values to set.
      * @param _offset - The index in the current array at which the values are to be written.
      */
+    public set(_array: ArrayLike<number>, _offset: number): void;
+    /**
+     * Sets a value or an array of values. Where an offset is not provided the array must be a tuple of the same length.
+     * To perform a partial write from the start of the array, set an offset of 0.
+     * @param _array - A tuple of size equal to that which is being set.
+     */
+    public set(_array:  TTupleLikeOfLength<number, TLength>): void
     public set(_array: ArrayLike<number>, _offset?: number): void
     {
         throw new Error();

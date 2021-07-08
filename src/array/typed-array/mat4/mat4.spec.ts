@@ -49,6 +49,9 @@ describe("=> Mat4", () =>
 
             expect(m4[4]).toBe(1);
             expect(m4[7]).toBe(4);
+
+            // @ts-expect-error - a tuple of incorrect length should be a compile error where offset not supplied
+            m4.set([1, 2, 3, 4]);
         });
     });
 });
