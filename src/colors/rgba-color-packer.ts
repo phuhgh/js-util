@@ -62,7 +62,7 @@ export class RgbaColorPacker
      */
     public static makeDomColorString(color: number): string
     {
-        const tmp = RgbaColorPacker.tmp;
+        const tmp = RgbaColorPacker.colorStringTmp;
 
         tmp[1] = (color & ERgbaMasks.R) >>> ERgbaShift.R;
         tmp[3] = (color & ERgbaMasks.G) >>> ERgbaShift.G;
@@ -70,6 +70,26 @@ export class RgbaColorPacker
         tmp[7] = ((color & ERgbaMasks.A) >>> ERgbaShift.A) * 0.0039215686274509803921568627451; // divide by 255
 
         return tmp.join("");
+    }
+
+    /**
+     * Given a packed color, produce a dom color string like `#FF0000`.
+     *
+     * @remarks
+     * Made up of only 6 components, the alpha channel will be masked out.
+     */
+    public static getHexColorString(value: number): string
+    {
+        if (value !== value)
+        {
+            return "NaN";
+        }
+
+        value = value & (~ERgbaMasks.A);
+
+        RgbaColorPacker.hexColorTmp[1] = value.toString(16).toUpperCase();
+
+        return RgbaColorPacker.hexColorTmp.join("");
     }
 
     public static generateRandomPackedRGBA(): number
@@ -80,5 +100,6 @@ export class RgbaColorPacker
                ((Math.random() * 255) << ERgbaShift.A);
     }
 
-    private static tmp = ["rgba(", 1, ",", 3, ",", 5, ",", 7, ")"];
+    private static colorStringTmp = ["rgba(", 1, ",", 3, ",", 5, ",", 7, ")"];
+    private static hexColorTmp = ["#", 0];
 }
