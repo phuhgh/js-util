@@ -25,4 +25,6 @@ export interface ITypedArrayTupleFactory<TArray, TCtorArgs extends number[]>
         littleEndian?: boolean,
     )
         : void;
+
+    clone(typedArrayTuple: TArray): TArray;
 }

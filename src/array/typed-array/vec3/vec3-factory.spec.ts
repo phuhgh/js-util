@@ -50,4 +50,16 @@ debugDescribe("=> Vec3Factory", () =>
             expect(memory[5]).toBe(6);
         });
     });
+
+    describe("=> clone", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = factory.createOne(1, 2,3 );
+            const b = factory.clone(a);
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.getX).toBeDefined();
+        });
+    });
 });

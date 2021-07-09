@@ -54,4 +54,16 @@ describe("=> Mat4", () =>
             m4.set([1, 2, 3, 4]);
         });
     });
+
+    describe("=> clone", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+            const b = Mat4.f32.factory.clone(a);
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.setIdentityMatrix).toBeDefined();
+        });
+    });
 });

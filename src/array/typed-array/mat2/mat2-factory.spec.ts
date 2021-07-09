@@ -52,4 +52,16 @@ debugDescribe("=> Mat2Factory", () =>
             expect(memory[5]).toBe(6);
         });
     });
+
+    describe("=> clone", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
+            const b = Mat2.f32.factory.clone(a);
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.setIdentityMatrix).toBeDefined();
+        });
+    });
 });

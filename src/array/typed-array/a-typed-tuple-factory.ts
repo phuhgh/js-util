@@ -1,8 +1,9 @@
 import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory";
 import { INormalizedDataView } from "./normalized-data-view/i-normalized-data-view";
+import { ATypedArrayTuple } from "./a-typed-array-tuple";
 
-export abstract class ATypedTupleFactory<T extends object, TCtorArgs extends number[]>
-    implements ITypedArrayTupleFactory<T, TCtorArgs>
+export abstract class ATypedTupleFactory<TArray extends object, TCtorArgs extends number[]>
+    implements ITypedArrayTupleFactory<TArray, TCtorArgs>
 {
     protected constructor
     (
@@ -13,18 +14,23 @@ export abstract class ATypedTupleFactory<T extends object, TCtorArgs extends num
     {
     }
 
-    public abstract createOne(...args: TCtorArgs): T;
+    public abstract createOne(...args: TCtorArgs): TArray;
 
-    public abstract createOneEmpty(): T;
+    public abstract createOneEmpty(): TArray;
+
+    public clone(typedArrayTuple: TArray): TArray
+    {
+        return (typedArrayTuple as unknown as ATypedArrayTuple<number>).slice() as unknown as TArray;
+    }
 
     public copyFromBuffer
     (
         memoryDataView: DataView,
         pointer: number,
-        writeTo: T = this.createOneEmpty(),
+        writeTo: TArray = this.createOneEmpty(),
         littleEndian: boolean = true,
     )
-        : T
+        : TArray
     {
         for (let i = 0, iEnd = this.length; i < iEnd; ++i)
         {
@@ -38,7 +44,7 @@ export abstract class ATypedTupleFactory<T extends object, TCtorArgs extends num
     public copyToBuffer
     (
         memoryDataView: DataView,
-        writeFrom: T,
+        writeFrom: TArray,
         pointer: number,
         littleEndian: boolean = true,
     )
