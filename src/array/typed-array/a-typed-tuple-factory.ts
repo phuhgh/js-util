@@ -18,7 +18,7 @@ export abstract class ATypedTupleFactory<TArray extends object, TCtorArgs extend
 
     public abstract createOneEmpty(): TArray;
 
-    public clone(typedArrayTuple: TArray): TArray
+    public clone(typedArrayTuple: Readonly<TArray>): TArray
     {
         return (typedArrayTuple as unknown as ATypedArrayTuple<number>).slice() as unknown as TArray;
     }
@@ -44,7 +44,7 @@ export abstract class ATypedTupleFactory<TArray extends object, TCtorArgs extend
     public copyToBuffer
     (
         memoryDataView: DataView,
-        writeFrom: TArray,
+        writeFrom: Readonly<TArray>,
         pointer: number,
         littleEndian: boolean = true,
     )
