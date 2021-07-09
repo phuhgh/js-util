@@ -34,6 +34,8 @@ export { TTypedArray } from "./array/typed-array/t-typed-array";
 export { CircularBuffer } from "./collection/circular-buffer";
 export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circular-fifo-stack";
 export { IFIFOStack } from "./collection/i-fifo-stack";
+export { ERgbaMasks, ERgbaShift } from "./colors/e-rgba-masks";
+export { RgbaColorPacker } from "./colors/rgba-color-packer";
 export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localization";
 export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
