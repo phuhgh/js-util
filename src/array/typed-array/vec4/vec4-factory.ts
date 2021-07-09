@@ -60,7 +60,7 @@ export class Vec4Factory<T extends Vec4<TTypedArray>>
     public override copyToBuffer
     (
         memoryDataView: DataView,
-        writeFrom: T,
+        writeFrom: Readonly<T>,
         pointer: number,
         littleEndian: boolean = true,
     )

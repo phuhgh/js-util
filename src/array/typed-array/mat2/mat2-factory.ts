@@ -60,7 +60,7 @@ export class Mat2Factory<T extends Mat2<TTypedArray>>
     public override copyToBuffer
     (
         memoryDataView: DataView,
-        writeFrom: T,
+        writeFrom: Readonly<T>,
         pointer: number,
         littleEndian: boolean = true,
     )

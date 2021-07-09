@@ -20,11 +20,11 @@ export interface ITypedArrayTupleFactory<TArray, TCtorArgs extends number[]>
     copyToBuffer
     (
         memoryDataView: DataView,
-        writeFrom: TArray,
+        writeFrom: Readonly<TArray>,
         pointer: number,
         littleEndian?: boolean,
     )
         : void;
 
-    clone(typedArrayTuple: TArray): TArray;
+    clone(typedArrayTuple: Readonly<TArray>): TArray;
 }
