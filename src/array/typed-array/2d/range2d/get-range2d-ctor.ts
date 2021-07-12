@@ -152,7 +152,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             scalingFactor: number,
             relativeTo: Vec2<InstanceType<TCtor>>,
             result: Range2d<InstanceType<TCtor>> = (this.constructor as Range2dCtor<InstanceType<TCtor>>).factory.createOneEmpty(),
-        ): Range2d<InstanceType<TCtor>>
+        )
+            : Range2d<InstanceType<TCtor>>
         {
             DEBUG_MODE && _Debug.assert(this.isPointInRange(relativeTo), "relativeTo must be inside the range");
 

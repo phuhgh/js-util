@@ -2,6 +2,8 @@ import { Range2d } from "../range2d/range2d";
 import { TTypedArray } from "../../t-typed-array";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getMargin2dCtor } from "./get-margin2d-ctor";
+import { TTypedArrayCtor } from "../../t-typed-array-ctor";
+import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 
 /**
  * @public
@@ -41,6 +43,13 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Range2d<TArra
     public static u8c: Margin2dCtor<Uint8ClampedArray> = getMargin2dCtor(Uint8ClampedArray);
     public static u8: Margin2dCtor<Uint8Array> = getMargin2dCtor(Uint8Array);
     public static i8: Margin2dCtor<Int8Array> = getMargin2dCtor(Int8Array);
+
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TTypedArrayCtor): Margin2dCtor<InstanceType<TCtor>>
+    {
+        return Margin2d.constructors.get(ctor) as Margin2dCtor<InstanceType<TCtor>>;
+    }
+
+    protected static constructors = populateTypedArrayConstructorMap(Margin2d);
 
     /**
      * left

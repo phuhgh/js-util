@@ -4,6 +4,8 @@ import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getRange2dCtor } from "./get-range2d-ctor";
 import { Vec2 } from "../../vec2/vec2";
 import { Mat3 } from "../../mat3/mat3";
+import { TTypedArrayCtor } from "../../t-typed-array-ctor";
+import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 
 /**
  * @public
@@ -43,6 +45,13 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     public static u8c: Range2dCtor<Uint8ClampedArray> = getRange2dCtor(Uint8ClampedArray);
     public static u8: Range2dCtor<Uint8Array> = getRange2dCtor(Uint8Array);
     public static i8: Range2dCtor<Int8Array> = getRange2dCtor(Int8Array);
+
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TTypedArrayCtor): Range2dCtor<InstanceType<TCtor>>
+    {
+        return Range2d.constructors.get(ctor) as Range2dCtor<InstanceType<TCtor>>;
+    }
+
+    protected static constructors = populateTypedArrayConstructorMap(Range2d);
 
     /**
      * xMin
@@ -180,6 +189,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
      *        |-------------|
      *```
      */
+
     /* eslint-enable no-irregular-whitespace */
     public scaleRelativeTo(_scalingFactor: number, _relativeTo: Vec2<TArray>, _result?: Range2d<TArray>): Range2d<TArray>
     {

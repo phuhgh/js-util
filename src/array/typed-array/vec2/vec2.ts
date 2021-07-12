@@ -3,6 +3,8 @@ import { TTypedArray } from "../t-typed-array";
 import { Mat3 } from "../mat3/mat3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec2Ctor } from "./get-vec2-ctor";
+import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
 
 /**
  * @public
@@ -42,6 +44,13 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
     public static u8c: Vec2Ctor<Uint8ClampedArray> = getVec2Ctor(Uint8ClampedArray);
     public static u8: Vec2Ctor<Uint8Array> = getVec2Ctor(Uint8Array);
     public static i8: Vec2Ctor<Int8Array> = getVec2Ctor(Int8Array);
+
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TTypedArrayCtor): Vec2Ctor<InstanceType<TCtor>>
+    {
+        return Vec2.constructors.get(ctor) as Vec2Ctor<InstanceType<TCtor>>;
+    }
+
+    protected static constructors = populateTypedArrayConstructorMap(Vec2);
 
     /**
      * x
