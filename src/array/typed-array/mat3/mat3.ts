@@ -54,7 +54,7 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
     public static u8: Mat3Ctor<Uint8Array> = getMat3Ctor(Uint8Array);
     public static i8: Mat3Ctor<Int8Array> = getMat3Ctor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TTypedArrayCtor): Mat3Ctor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Ctor<InstanceType<TCtor>>
     {
         return Mat3.constructors.get(ctor) as Mat3Ctor<InstanceType<TCtor>>;
     }

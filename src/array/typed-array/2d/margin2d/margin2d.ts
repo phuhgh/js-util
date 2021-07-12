@@ -44,7 +44,7 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Range2d<TArra
     public static u8: Margin2dCtor<Uint8Array> = getMargin2dCtor(Uint8Array);
     public static i8: Margin2dCtor<Int8Array> = getMargin2dCtor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TTypedArrayCtor): Margin2dCtor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Margin2dCtor<InstanceType<TCtor>>
     {
         return Margin2d.constructors.get(ctor) as Margin2dCtor<InstanceType<TCtor>>;
     }

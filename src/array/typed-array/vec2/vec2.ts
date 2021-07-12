@@ -45,7 +45,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
     public static u8: Vec2Ctor<Uint8Array> = getVec2Ctor(Uint8Array);
     public static i8: Vec2Ctor<Int8Array> = getVec2Ctor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TTypedArrayCtor): Vec2Ctor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Ctor<InstanceType<TCtor>>
     {
         return Vec2.constructors.get(ctor) as Vec2Ctor<InstanceType<TCtor>>;
     }

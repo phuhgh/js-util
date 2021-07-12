@@ -46,7 +46,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     public static u8: Range2dCtor<Uint8Array> = getRange2dCtor(Uint8Array);
     public static i8: Range2dCtor<Int8Array> = getRange2dCtor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TTypedArrayCtor): Range2dCtor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Range2dCtor<InstanceType<TCtor>>
     {
         return Range2d.constructors.get(ctor) as Range2dCtor<InstanceType<TCtor>>;
     }
