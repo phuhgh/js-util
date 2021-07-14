@@ -61,7 +61,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Cto
         public override dotProduct
         (
             vec: Readonly<Vec2<InstanceType<TCtor>>>,
-            result: Vec2<InstanceType<TCtor>> = (this.constructor as Vec2Ctor<InstanceType<TCtor>>).factory.createOneEmpty(),
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty(),
         )
             : Vec2<InstanceType<TCtor>>
         {
@@ -74,7 +74,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Cto
         public override mat3Multiply
         (
             mat: Readonly<Mat3<InstanceType<TCtor>>>,
-            result: Vec2<InstanceType<TCtor>> = (this.constructor as Vec2Ctor<InstanceType<TCtor>>).factory.createOneEmpty(),
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty(),
         )
             : Vec2<InstanceType<TCtor>>
         {
@@ -87,7 +87,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Cto
         public override difference
         (
             vec: Vec2<InstanceType<TCtor>>,
-            result: Vec2<InstanceType<TCtor>> = (this.constructor as Vec2Ctor<InstanceType<TCtor>>).factory.createOneEmpty()
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty()
         )
             : Vec2<InstanceType<TCtor>>
         {

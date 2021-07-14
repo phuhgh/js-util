@@ -140,16 +140,6 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public getXSum(): number
-    {
-        throw new Error();
-    }
-
-    public getYSum(): number
-    {
-        throw new Error();
-    }
-
     public mat3Multiply
     (
         _mat: Readonly<Mat3<TArray>>,

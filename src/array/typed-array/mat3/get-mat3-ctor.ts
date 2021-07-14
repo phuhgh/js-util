@@ -104,7 +104,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Cto
         public override multiplyMat3
         (
             mat: Readonly<Mat3<InstanceType<TCtor>>>,
-            result: Mat3<InstanceType<TCtor>> = (this.constructor as Mat3Ctor<InstanceType<TCtor>>).factory.createOneEmpty(),
+            result: Mat3<InstanceType<TCtor>> = (this.constructor as typeof Mat3Impl).factory.createOneEmpty(),
         )
             : Mat3<InstanceType<TCtor>>
         {

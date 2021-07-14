@@ -4,6 +4,7 @@ import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getMargin2dCtor } from "./get-margin2d-ctor";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
+import { Mat2 } from "../../mat2/mat2";
 
 /**
  * @public
@@ -32,7 +33,7 @@ export interface Margin2dCtor<TArray extends TTypedArray>
  * @remarks
  * See static properties for factories.
  */
-export abstract class Margin2d<TArray extends TTypedArray> extends Range2d<TArray>
+export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
 {
     public static f64: Margin2dCtor<Float64Array> = getMargin2dCtor(Float64Array);
     public static f32: Margin2dCtor<Float32Array> = getMargin2dCtor(Float32Array);

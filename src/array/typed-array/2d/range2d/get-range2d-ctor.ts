@@ -5,7 +5,6 @@ import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
-import { getVec2Factory } from "../../vec2/vec2-factory-by-type";
 import { _Debug } from "../../../../debug/_debug";
 import { Mat3 } from "../../mat3/mat3";
 
@@ -21,7 +20,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
     return class Range2dImpl extends getMat2Ctor(ctor) implements Range2d<InstanceType<TCtor>>
     {
         public static factory: ITypedArrayTupleFactory<Range2d<InstanceType<TCtor>>, TRange2dCtorArgs> = new Mat2Factory(Range2dImpl, NormalizedDataViewProvider.getView(ctor));
-        protected static Vec2 = getVec2Factory<TCtor>(ctor);
+        protected static vec2Ctor = Vec2.getCtor(ctor);
 
         public setXMin(value: number): void
         {
@@ -81,7 +80,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return this[3] - this[2];
         }
 
-        public getCenter(result: Vec2<InstanceType<TCtor>> = Range2dImpl.Vec2.factory.createOneEmpty()): Vec2<InstanceType<TCtor>>
+        public getCenter(result: Vec2<InstanceType<TCtor>> = Range2dImpl.vec2Ctor.factory.createOneEmpty()): Vec2<InstanceType<TCtor>>
         {
             result.setX(this.getXCenter());
             result.setY(this.getYCenter());
@@ -99,20 +98,10 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return (this[2] + this[3]) * 0.5;
         }
 
-        public getXSum(): number
-        {
-            return this[0] + this[1];
-        }
-
-        public getYSum(): number
-        {
-            return this[2] + this[3];
-        }
-
         public mat3Multiply
         (
             mat: Readonly<Mat3<InstanceType<TCtor>>>,
-            writeTo: Range2d<InstanceType<TCtor>> = (this.constructor as Range2dCtor<InstanceType<TCtor>>).factory.createOneEmpty(),
+            writeTo: Range2d<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty(),
         )
             : Range2d<InstanceType<TCtor>>
         {
@@ -127,7 +116,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         public unionRange
         (
             range: Readonly<Range2d<InstanceType<TCtor>>>,
-            writeTo: Range2d<InstanceType<TCtor>> = (this.constructor as Range2dCtor<InstanceType<TCtor>>).factory.createOneEmpty(),
+            writeTo: Range2d<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty(),
         )
             : Range2d<InstanceType<TCtor>>
         {
@@ -151,7 +140,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         (
             scalingFactor: number,
             relativeTo: Vec2<InstanceType<TCtor>>,
-            result: Range2d<InstanceType<TCtor>> = (this.constructor as Range2dCtor<InstanceType<TCtor>>).factory.createOneEmpty(),
+            result: Range2d<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty(),
         )
             : Range2d<InstanceType<TCtor>>
         {
@@ -231,7 +220,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             this.setYMax(this.getYMax() + dy);
         }
 
-        private static tmp = Range2dImpl.Vec2.factory.createOneEmpty();
+        private static tmp = Range2dImpl.vec2Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange2d!: true;
     } as Range2dCtor<InstanceType<TCtor>>;
