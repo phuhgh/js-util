@@ -247,7 +247,7 @@ export class ATypedArrayTuple<TLength extends number>
      * To perform a partial write from the start of the array, set an offset of 0.
      * @param _array - A tuple of size equal to that which is being set.
      */
-    public set(_array:  TTupleLikeOfLength<number, TLength>): void
+    public set(_array: TTupleLikeOfLength<number, TLength>): void
     public set(_array: ArrayLike<number>, _offset?: number): void
     {
         throw new Error();

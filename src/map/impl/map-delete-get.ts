@@ -14,7 +14,7 @@ export function mapDeleteGet<TKey, TValue>(map: Map<TKey, TValue>, key: TKey): T
  * See {@link (mapDeleteGet: 2)}.
  */
 export function mapDeleteGet<TKey extends object, TValue>(map: WeakMap<TKey, TValue>, key: TKey): TValue | undefined;
-export function mapDeleteGet<TKey extends  object, TValue>
+export function mapDeleteGet<TKey extends object, TValue>
 (
     map: Map<TKey, TValue> | WeakMap<TKey, TValue>,
     key: TKey,

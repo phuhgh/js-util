@@ -123,8 +123,10 @@ debugDescribe("=> F32Range2d", () =>
         });
     });
 
-    describe("=> mat3Multiply", () => {
-        it("| moves the range as expected", () => {
+    describe("=> mat3Multiply", () =>
+    {
+        it("| moves the range as expected", () =>
+        {
             const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
             const tm = Mat3.f32.factory
                 .createOneEmpty()
