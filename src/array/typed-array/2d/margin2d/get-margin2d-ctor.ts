@@ -57,10 +57,10 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
         )
             : Range2d<InstanceType<TCtor>>
         {
-            result[0] = range[0] + this[0];
-            result[1] = range[1] - this[1];
-            result[2] = range[2] + this[2];
-            result[3] = range[3] - this[3];
+            result[0] = range[0] + this[0]; // xMin
+            result[1] = range[1] - this[1]; // xMax
+            result[2] = range[2] + this[3]; // yMin
+            result[3] = range[3] - this[2]; // yMax
 
             return result;
         }
