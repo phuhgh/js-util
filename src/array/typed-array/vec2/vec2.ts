@@ -5,6 +5,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec2Ctor } from "./get-vec2-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
+import { Range2d } from "../2d/range2d/range2d";
 
 /**
  * @public
@@ -107,6 +108,15 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         _result?: Vec2<TArray>,
     )
         : Vec2<TArray>
+    {
+        throw new Error();
+    }
+
+    /**
+     * If this point is outside of the range, set that dimension to the extrema of the range.
+     * @param _range - The range to be bound to, inclusive.
+     */
+    public bound(_range: Range2d<TArray>): void
     {
         throw new Error();
     }

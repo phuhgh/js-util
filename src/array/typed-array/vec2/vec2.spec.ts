@@ -1,5 +1,6 @@
 import { Vec2 } from "./vec2";
 import { Mat3 } from "../mat3/mat3";
+import { Range2d } from "../2d/range2d/range2d";
 
 describe("=> Vec2", () =>
 {
@@ -70,6 +71,33 @@ describe("=> Vec2", () =>
             const result2 = v.mat3Multiply(txMatrix);
             expect(result2[0]).toBe(11);
             expect(result2[1]).toBe(-8);
+        });
+    });
+
+    describe("=> bound", () =>
+    {
+        it("| bounds up", () =>
+        {
+            const v = Vec2.f32.factory.createOne(0, 0);
+            const range = Range2d.f32.factory.createOne(2, 4, 2, 4);
+            v.bound(range);
+            expect(v).toEqual(Vec2.f32.factory.createOne(2, 2));
+        });
+
+        it("| bounds down", () =>
+        {
+            const v = Vec2.f32.factory.createOne(6, 6);
+            const range = Range2d.f32.factory.createOne(2, 4, 2, 4);
+            v.bound(range);
+            expect(v).toEqual(Vec2.f32.factory.createOne(4, 4));
+        });
+
+        it("| leaves values that are bounded", () =>
+        {
+            const v = Vec2.f32.factory.createOne(1, 1);
+            const range = Range2d.f32.factory.createOne(0, 4, 0, 4);
+            v.bound(range);
+            expect(v).toEqual(Vec2.f32.factory.createOne(1, 1));
         });
     });
 });

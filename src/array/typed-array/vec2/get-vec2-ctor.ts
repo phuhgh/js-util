@@ -5,6 +5,7 @@ import { Vec2Factory } from "./vec2-factory";
 import { Mat3 } from "../mat3/mat3";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { Range2d } from "../2d/range2d/range2d";
 
 /**
  * @internal
@@ -84,10 +85,31 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Cto
             return result;
         }
 
+        public bound(range: Range2d<InstanceType<TCtor>>): void
+        {
+            if (this[0] < range.getXMin())
+            {
+                this[0] = range.getXMin();
+            }
+            else if (this[0] > range.getXMax())
+            {
+                this[0] = range.getXMax();
+            }
+
+            if (this[1] < range.getYMin())
+            {
+                this[1] = range.getYMin();
+            }
+            else if (this[1] > range.getYMax())
+            {
+                this[1] = range.getYMax();
+            }
+        }
+
         public override difference
         (
             vec: Vec2<InstanceType<TCtor>>,
-            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty()
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty(),
         )
             : Vec2<InstanceType<TCtor>>
         {
