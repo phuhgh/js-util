@@ -121,6 +121,14 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    /**
+     * Shifts this position by the arguments.
+     */
+    public translateBy(_dx: number, _dy: number): void
+    {
+        throw new Error();
+    }
+
     public difference(_vec: Vec2<TArray>, _result?: Vec2<TArray>): Vec2<TArray>
     {
         throw new Error();

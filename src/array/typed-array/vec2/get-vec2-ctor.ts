@@ -85,7 +85,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Cto
             return result;
         }
 
-        public bound(range: Range2d<InstanceType<TCtor>>): void
+        public override bound(range: Range2d<InstanceType<TCtor>>): void
         {
             if (this[0] < range.getXMin())
             {
@@ -104,6 +104,12 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Cto
             {
                 this[1] = range.getYMax();
             }
+        }
+
+        public override translateBy(dx: number, dy: number): void
+        {
+            this[0] += dx;
+            this[1] += dy;
         }
 
         public override difference
