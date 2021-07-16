@@ -4,6 +4,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat4Ctor } from "./get-mat4-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
+import { Vec4 } from "../vec4/vec4";
 
 /**
  * @public
@@ -133,13 +134,27 @@ export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 15!: number;
 
-
     public setIdentityMatrix(): Mat4<TArray>
     {
         throw new Error();
     }
 
     public getValueAt(_column: number, _row: number): number
+    {
+        throw new Error();
+    }
+
+    public setValueAt(_column: number, _row: number, _value: number): void
+    {
+        throw new Error();
+    }
+
+    public getRow(_row: number, _writeTo?: Vec4<TArray>): Vec4<TArray>
+    {
+        throw new Error();
+    }
+
+    public setRow(_row: number, _writeFrom: Vec4<TArray>): void
     {
         throw new Error();
     }

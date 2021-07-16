@@ -2,6 +2,7 @@ import { debugDescribe } from "../../../test-utils";
 import { Mat2Factory } from "./mat2-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat2 } from "./mat2";
+import { Vec2 } from "../vec2/vec2";
 
 debugDescribe("=> Mat2Factory", () =>
 {
@@ -62,6 +63,35 @@ debugDescribe("=> Mat2Factory", () =>
             expect(a).toEqual(b);
             expect(a).not.toBe(b);
             expect(a.setIdentityMatrix).toBeDefined();
+        });
+    });
+
+    describe("=> setValueAt", () =>
+    {
+        it("| sets the expected element", () =>
+        {
+            const m4 = Mat2.f32.factory.createOne(1, 2, 3, 4);
+            m4.setValueAt(0, 1, 99);
+            expect(m4[2]).toBe(99);
+        });
+    });
+
+    describe("=> getRow", () =>
+    {
+        it("| returns rows as vec2", () =>
+        {
+            const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
+            expect(a.getRow(1)).toEqual(Vec2.f32.factory.createOne(3, 4));
+        });
+    });
+
+    describe("=> setRow", () =>
+    {
+        it("| modifies the array as expected", () =>
+        {
+            const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
+            a.setRow(1, Vec2.f32.factory.createOne(1, 2,));
+            expect(a).toEqual(Mat2.f32.factory.createOne(1, 2, 1, 2));
         });
     });
 });

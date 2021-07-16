@@ -5,6 +5,8 @@ import { _Debug } from "../../../debug/_debug";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { Mat2 } from "../mat2/mat2";
+import { Vec3 } from "../vec3/vec3";
 
 /**
  * @internal
@@ -14,6 +16,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Cto
     return class Mat3Impl extends (ctor as unknown as ITypedArrayCtor<Mat3<InstanceType<TCtor>>>)
     {
         public static factory: ITypedArrayTupleFactory<Mat3<InstanceType<TCtor>>, TMat3CtorArgs> = new Mat3Factory(Mat3Impl, NormalizedDataViewProvider.getView(ctor));
+        protected static vec3Ctor = Vec3.getCtor(ctor);
 
         public constructor
         (
@@ -41,9 +44,42 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Cto
             return this[row * 3 + column as Extract<keyof Mat3<never>, number>];
         }
 
-        /**
-         * counter clockwise
-         */
+        public override setValueAt(column: number, row: number, value: number): void
+        {
+            DEBUG_MODE && _Debug.assert(column >= 0 && column < 3 && row >= 0 && row < 3, "out of bounds");
+            this[row * 3 + column as Extract<keyof Mat2<never>, number>] = value;
+        }
+
+        public override getRow
+        (
+            row: number,
+            writeTo: Vec3<InstanceType<TCtor>> = (this.constructor as typeof Mat3Impl).vec3Ctor.factory.createOneEmpty(),
+        )
+            : Vec3<InstanceType<TCtor>>
+        {
+            DEBUG_MODE && _Debug.assert(row >= 0 && row < 3, "index out of bounds");
+
+            writeTo[0] = this.getValueAt(0, row);
+            writeTo[1] = this.getValueAt(1, row);
+            writeTo[2] = this.getValueAt(2, row);
+
+            return writeTo;
+        }
+
+        public override setRow
+        (
+            row: number,
+            writeFrom: Vec3<InstanceType<TCtor>>,
+        )
+            : void
+        {
+            DEBUG_MODE && _Debug.assert(row >= 0 && row < 3, "index out of bounds");
+
+            this.setValueAt(0, row, writeFrom[0]);
+            this.setValueAt(1, row, writeFrom[1]);
+            this.setValueAt(2, row, writeFrom[2]);
+        }
+
         public override setRotationMatrix
         (
             angle: number,

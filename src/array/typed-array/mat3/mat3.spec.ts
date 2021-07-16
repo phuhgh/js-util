@@ -196,4 +196,33 @@ describe("=> Mat3", () =>
             expect(txMatrix.getVec3MultiplyY(v.getY())).toBe(-8);
         });
     });
+
+    describe("=> setValueAt", () =>
+    {
+        it("| sets the expected element", () =>
+        {
+            const m4 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            m4.setValueAt(0, 2, 99);
+            expect(m4[6]).toBe(99);
+        });
+    });
+
+    describe("=> getRow", () =>
+    {
+        it("| returns rows as vec3", () =>
+        {
+            const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            expect(a.getRow(2)).toEqual(Vec3.f32.factory.createOne(7, 8, 9));
+        });
+    });
+
+    describe("=> setRow", () =>
+    {
+        it("| modifies the array as expected", () =>
+        {
+            const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            a.setRow(2, Vec3.f32.factory.createOne(1, 2, 3));
+            expect(a).toEqual(Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 1, 2, 3));
+        });
+    });
 });

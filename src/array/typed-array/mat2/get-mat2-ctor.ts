@@ -5,6 +5,7 @@ import { Mat2Factory } from "./mat2-factory";
 import { _Debug } from "../../../debug/_debug";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { Vec2 } from "../vec2/vec2";
 
 /**
  * @internal
@@ -18,6 +19,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
     return class Mat2Impl extends (ctor as unknown as ITypedArrayCtor<Mat2<InstanceType<TCtor>>>)
     {
         public static factory: ITypedArrayTupleFactory<Mat2<InstanceType<TCtor>>, TMat2CtorArgs> = new Mat2Factory(Mat2Impl, NormalizedDataViewProvider.getView(ctor));
+        protected static vec2Ctor = Vec2.getCtor(ctor);
 
         public constructor
         (
@@ -42,6 +44,40 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
         {
             DEBUG_MODE && _Debug.assert(column >= 0 && column < 2 && row >= 0 && row < 2, "out of bounds");
             return this[row * 2 + column as Extract<keyof Mat2<never>, number>];
+        }
+
+        public override setValueAt(column: number, row: number, value: number): void
+        {
+            DEBUG_MODE && _Debug.assert(column >= 0 && column < 2 && row >= 0 && row < 2, "out of bounds");
+            this[row * 2 + column as Extract<keyof Mat2<never>, number>] = value;
+        }
+
+        public override getRow
+        (
+            row: number,
+            writeTo: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Mat2Impl).vec2Ctor.factory.createOneEmpty(),
+        )
+            : Vec2<InstanceType<TCtor>>
+        {
+            DEBUG_MODE && _Debug.assert(row >= 0 && row < 2, "index out of bounds");
+
+            writeTo[0] = this.getValueAt(0, row);
+            writeTo[1] = this.getValueAt(1, row);
+
+            return writeTo;
+        }
+
+        public override setRow
+        (
+            row: number,
+            writeFrom: Vec2<InstanceType<TCtor>>,
+        )
+            : void
+        {
+            DEBUG_MODE && _Debug.assert(row >= 0 && row < 2, "index out of bounds");
+
+            this.setValueAt(0, row, writeFrom[0]);
+            this.setValueAt(1, row, writeFrom[1]);
         }
 
         public override getLoggableValue(): number[][]
