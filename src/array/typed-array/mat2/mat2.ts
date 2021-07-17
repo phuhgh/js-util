@@ -31,7 +31,7 @@ export interface Mat2Ctor<TArray extends TTypedArray>
  * Row major 2x2 matrix.
  *
  * @remarks
- * See static properties for factories.
+ * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
 export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<4>
 {

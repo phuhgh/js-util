@@ -32,7 +32,7 @@ export interface Vec2Ctor<TArray extends TTypedArray>
  * Vector 2.
  *
  * @remarks
- * See static properties for factories.
+ * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
 export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<2>
 {

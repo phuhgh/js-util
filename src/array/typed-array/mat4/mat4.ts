@@ -48,7 +48,7 @@ export interface Mat4Ctor<TArray extends TTypedArray>
  * Row major 4x4 matrix.
  *
  * @remarks
- * See static properties for factories.
+ * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
 export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<16>
 {

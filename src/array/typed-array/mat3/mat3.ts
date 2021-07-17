@@ -41,7 +41,7 @@ export interface Mat3Ctor<TArray extends TTypedArray>
  * Row major 3x3 matrix.
  *
  * @remarks
- * See static properties for factories.
+ * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
 export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<9>
 {

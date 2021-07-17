@@ -31,7 +31,7 @@ export interface Margin2dCtor<TArray extends TTypedArray>
  * Row major 2x2 matrix representing margins on a rectangle.
  *
  * @remarks
- * See static properties for factories.
+ * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
 export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
 {
