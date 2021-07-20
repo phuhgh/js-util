@@ -33,12 +33,13 @@ export const emscriptenSafeStackTestModuleOptions: ISanitizedTestModuleOptions =
     quitThrowsWith: {},
 };
 
-export class SanitizedEmscriptenTestModule
+export class SanitizedEmscriptenTestModule<T extends Emscripten.EmscriptenModule>
 {
     public constructor
     (
         private readonly testModule: Emscripten.EmscriptenModuleFactory,
         private readonly options: ISanitizedTestModuleOptions,
+        private readonly extension?: Partial<T>,
     )
     {
     }
@@ -65,15 +66,16 @@ export class SanitizedEmscriptenTestModule
             {
                 // emscripten hits asserts if quit doesn't interrupt execution
                 // the default behavior in node is to kill the process which would kill the tests
-                // by throwing something unique we can catch but avoid swallowing errors actual errors
+                // by throwing something unique we can catch but avoid swallowing actual errors
                 throw this.options.quitThrowsWith;
             },
+            ...this.extension,
         });
     }
 
     public get wrapper(): IEmscriptenWrapper
     {
-        _Debug.assert(this._wrapper != null, "initialize must be called first");
+        DEBUG_MODE && _Debug.assert(this._wrapper != null, "initialize must be called first");
         return this._wrapper;
     }
 
