@@ -67,7 +67,7 @@ export class RgbaColorPacker
         tmp[1] = (color & ERgbaMasks.R) >>> ERgbaShift.R;
         tmp[3] = (color & ERgbaMasks.G) >>> ERgbaShift.G;
         tmp[5] = (color & ERgbaMasks.B) >>> ERgbaShift.B;
-        tmp[7] = ((color & ERgbaMasks.A) >>> ERgbaShift.A) * 0.0039215686274509803921568627451; // divide by 255
+        tmp[7] = ((color & ERgbaMasks.A) >>> ERgbaShift.A) * 0.00392156862745098; // divide by 255
 
         return tmp.join("");
     }
