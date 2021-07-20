@@ -61,8 +61,8 @@ export { getEmscriptenWrapper } from "./web-assembly/emscripten/get-emscripten-w
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/t-web-assembly-memory-listener-args";
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array";
 export { IWebAssemblyMemoryMemory } from "../external/i-web-assembly-memory";
-export { SharedArray, TSharedArrayF32, TSharedArrayF64 } from "./web-assembly/shared-array/shared-array";
-export { SharedStaticArray, TSharedStaticArrayF32, TSharedStaticArrayF64 } from "./web-assembly/shared-array/shared-static-array";
+export { SharedArray, TF32SharedArray, TF64SharedArray } from "./web-assembly/shared-array/shared-array";
+export { SharedStaticArray, TF32SharedStaticArray, TF64SharedStaticArray } from "./web-assembly/shared-array/shared-static-array";
 
 export { arrayBinaryIndexOf } from "./array/impl/array-binary-index-of";
 export { arrayBinaryLastIndexOf } from "./array/impl/array-binary-last-index-of";

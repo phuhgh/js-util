@@ -10,12 +10,12 @@ import { TDebugListener } from "rc-js-util-globals";
  * @public
  * Float32 {@link SharedStaticArray}
  */
-export type TSharedStaticArrayF32 = ISharedArray<Float32ArrayConstructor>;
+export type TF32SharedStaticArray = ISharedArray<Float32ArrayConstructor>;
 /**
  * @public
  * Float64 {@link SharedStaticArray}
  */
-export type TSharedStaticArrayF64 = ISharedArray<Float64ArrayConstructor>;
+export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
 
 /**
  * @public
@@ -25,12 +25,12 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     extends ASharedObject
     implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper, pointer: number, size: number): TSharedStaticArrayF32
+    public static createOneF32(wrapper: IEmscriptenWrapper, pointer: number, size: number): TF32SharedStaticArray
     {
         return new SharedStaticArray(Float32Array, wrapper, pointer, size);
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper, pointer: number, size: number): TSharedStaticArrayF64
+    public static createOneF64(wrapper: IEmscriptenWrapper, pointer: number, size: number): TF64SharedStaticArray
     {
         return new SharedStaticArray(Float64Array, wrapper, pointer, size);
     }

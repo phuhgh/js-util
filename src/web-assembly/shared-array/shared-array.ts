@@ -15,12 +15,12 @@ import { TDebugListener } from "rc-js-util-globals";
  * @public
  * Float32 {@link SharedArray}
  */
-export type TSharedArrayF32 = ISharedArray<Float32ArrayConstructor>;
+export type TF32SharedArray = ISharedArray<Float32ArrayConstructor>;
 /**
  * @public
  * Float64 {@link SharedArray}
  */
-export type TSharedArrayF64 = ISharedArray<Float64ArrayConstructor>;
+export type TF64SharedArray = ISharedArray<Float64ArrayConstructor>;
 
 /**
  * @public
@@ -30,8 +30,8 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     extends ASharedObject
     implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper, size: number, clearMemory?: boolean): TSharedArrayF32
-    public static createOneF32(wrapper: IEmscriptenWrapper, size: number, clearMemory: boolean, allocationFailThrows: boolean): TSharedArrayF32 | null
+    public static createOneF32(wrapper: IEmscriptenWrapper, size: number, clearMemory?: boolean): TF32SharedArray
+    public static createOneF32(wrapper: IEmscriptenWrapper, size: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null
     public static createOneF32
     (
         wrapper: IEmscriptenWrapper,
@@ -39,13 +39,13 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
-        : TSharedArrayF32 | null
+        : TF32SharedArray | null
     {
         return SharedArray.createOne("_f32SharedArray", wrapper, size, clearMemory, allocationFailThrows);
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper, size: number, clearMemory?: boolean): TSharedArrayF32
-    public static createOneF64(wrapper: IEmscriptenWrapper, size: number, clearMemory: boolean, allocationFailThrows: boolean): TSharedArrayF32 | null
+    public static createOneF64(wrapper: IEmscriptenWrapper, size: number, clearMemory?: boolean): TF32SharedArray
+    public static createOneF64(wrapper: IEmscriptenWrapper, size: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null
     public static createOneF64
     (
         wrapper: IEmscriptenWrapper,
@@ -53,7 +53,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
-        : TSharedArrayF32 | null
+        : TF32SharedArray | null
     {
         return SharedArray.createOne("_f64SharedArray", wrapper, size, clearMemory, allocationFailThrows);
     }
@@ -66,7 +66,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
-        : TSharedArrayF32 | null
+        : TF32SharedArray | null
     {
         const ptr = SharedArray.allocateMemory(prefix, wrapper, size, clearMemory, allocationFailThrows);
         return fpValueOrNull(ptr !== nullPointer, new SharedArray(prefix, Float32Array, wrapper, size, ptr));

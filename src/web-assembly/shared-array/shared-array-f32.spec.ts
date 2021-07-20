@@ -1,5 +1,5 @@
 import { Emscripten } from "../../../external/emscripten";
-import { SharedArray, TSharedArrayF32 } from "./shared-array";
+import { SharedArray, TF32SharedArray } from "./shared-array";
 import { emscriptenAsanTestModuleOptions, emscriptenSafeStackTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module";
 import { applyLabel, debugDescribe, debugIt } from "../../test-utils";
 
@@ -27,7 +27,7 @@ debugDescribe("=> F32SharedArray", () =>
 
         describe("=> getInstance", () =>
         {
-            let sharedArray: TSharedArrayF32;
+            let sharedArray: TF32SharedArray;
 
             beforeEach(() =>
             {

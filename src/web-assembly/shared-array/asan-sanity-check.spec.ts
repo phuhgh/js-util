@@ -1,5 +1,5 @@
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module";
-import { SharedArray, TSharedArrayF32 } from "./shared-array";
+import { SharedArray, TF32SharedArray } from "./shared-array";
 import { applyLabel, debugIt } from "../../test-utils";
 import { Emscripten } from "../../../external/emscripten";
 
@@ -10,7 +10,7 @@ const asanTestModule = require("../../../external/asan-test-module");
 describe("=> asan sanity check", () =>
 {
     const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
-    let leakedShared: TSharedArrayF32;
+    let leakedShared: TF32SharedArray;
 
     beforeAll(async () =>
     {

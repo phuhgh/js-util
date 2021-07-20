@@ -1,7 +1,7 @@
 import { Emscripten } from "../../../external/emscripten";
 import { emscriptenAsanTestModuleOptions, emscriptenSafeStackTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module";
-import { SharedStaticArray, TSharedStaticArrayF32 } from "./shared-static-array";
-import { SharedArray, TSharedArrayF32 } from "./shared-array";
+import { SharedStaticArray, TF32SharedStaticArray } from "./shared-static-array";
+import { SharedArray, TF32SharedArray } from "./shared-array";
 import { applyLabel, debugDescribe, debugIt } from "../../test-utils";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory;
@@ -15,7 +15,7 @@ debugDescribe("=> F32SharedStaticArray", () =>
     describe("=> asan tests", () =>
     {
         const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
-        let sharedArray: TSharedArrayF32;
+        let sharedArray: TF32SharedArray;
 
         beforeAll(async () =>
         {
@@ -40,7 +40,7 @@ debugDescribe("=> F32SharedStaticArray", () =>
 
         describe("=> getInstance", () =>
         {
-            let sharedStaticArray: TSharedStaticArrayF32;
+            let sharedStaticArray: TF32SharedStaticArray;
 
             beforeEach(() =>
             {
@@ -101,7 +101,7 @@ debugDescribe("=> F32SharedStaticArray", () =>
     });
 });
 
-function getCArrayPtr(testModule: SanitizedEmscriptenTestModule<Emscripten.EmscriptenModule>, sharedArray: TSharedArrayF32)
+function getCArrayPtr(testModule: SanitizedEmscriptenTestModule<Emscripten.EmscriptenModule>, sharedArray: TF32SharedArray)
 {
     return testModule.wrapper.instance._f32SharedArray_getArrayAddress(sharedArray.getPtr());
 }
