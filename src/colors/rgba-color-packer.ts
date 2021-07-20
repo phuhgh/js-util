@@ -12,7 +12,7 @@ export class RgbaColorPacker
      */
     public static unpackR(color: number): number
     {
-        return (color & ERgbaMasks.R) >> ERgbaShift.R;
+        return (color & ERgbaMasks.R) >>> ERgbaShift.R;
     }
 
     /**
@@ -21,7 +21,7 @@ export class RgbaColorPacker
      */
     public static unpackG(color: number): number
     {
-        return (color & ERgbaMasks.G) >> ERgbaShift.G;
+        return (color & ERgbaMasks.G) >>> ERgbaShift.G;
     }
 
     /**
@@ -30,7 +30,7 @@ export class RgbaColorPacker
      */
     public static unpackB(color: number): number
     {
-        return (color & ERgbaMasks.B) >> ERgbaShift.B;
+        return (color & ERgbaMasks.B) >>> ERgbaShift.B;
     }
 
     /**
@@ -39,7 +39,7 @@ export class RgbaColorPacker
      */
     public static unpackA(color: number): number
     {
-        return (color & ERgbaMasks.A) >> ERgbaShift.A;
+        return (color & ERgbaMasks.A) >>> ERgbaShift.A;
     }
 
     /**
