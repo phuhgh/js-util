@@ -3,6 +3,7 @@
     "importHelpers": true,
     "module": "CommonJS",
     "outDir": "bin/",
+    "experimentalDecorators": true,
     "noImplicitReturns": true,
     "removeComments": false,
     "noUnusedLocals": true,
