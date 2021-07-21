@@ -2,7 +2,7 @@
 
 #include <span>
 #include <emscripten.h>
-#include "../include/Debug.h"
+#include "Debug.h"
 
 namespace JsUtil
 {
