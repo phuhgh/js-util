@@ -42,12 +42,12 @@ debugDescribe("=> F32SharedArray", () =>
                 const actualArray = sharedArray.getInstance();
                 expect(actualArray.length).toBe(8);
                 expect(sharedArray.getInstance()).toBeInstanceOf(Float32Array);
-                sharedArray.pointer.release();
+                sharedArray.sharedObject.release();
             });
 
             debugIt("| throws an exception if there isn't enough memory", () =>
             {
-                sharedArray.pointer.release();
+                sharedArray.sharedObject.release();
                 expect(() => SharedArray.createOneF32(testModule.wrapper, 0xffffffff)).toThrowError("Failed to allocate memory for shared array.");
             });
 
@@ -55,13 +55,13 @@ debugDescribe("=> F32SharedArray", () =>
             {
                 debugIt("| errors when called after release", () =>
                 {
-                    sharedArray.pointer.release();
+                    sharedArray.sharedObject.release();
                     expect(() => sharedArray.getInstance()).toThrow();
                 });
 
                 debugIt("| errors when array members are accessed after release", () =>
                 {
-                    sharedArray.pointer.release();
+                    sharedArray.sharedObject.release();
                     expect(() => sharedArray.getInstance().length).toThrow();
                 });
 
@@ -71,8 +71,8 @@ debugDescribe("=> F32SharedArray", () =>
                     expect(instance[0]).toBe(0);
                     const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 8);
                     expect(() => instance[0]).toThrow();
-                    sharedArray2.pointer.release();
-                    sharedArray.pointer.release();
+                    sharedArray2.sharedObject.release();
+                    sharedArray.sharedObject.release();
                 });
             });
         });
@@ -95,8 +95,8 @@ debugDescribe("=> F32SharedArray", () =>
                 const i1 = sharedArray.getInstance();
                 const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 2097152);
                 expect(i1 === sharedArray.getInstance()).toBeFalse();
-                sharedArray.pointer.release();
-                sharedArray2.pointer.release();
+                sharedArray.sharedObject.release();
+                sharedArray2.sharedObject.release();
             });
         });
     });

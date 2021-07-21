@@ -37,7 +37,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     public readonly ctor: TCtor;
     public readonly size: number;
     public readonly elementByteSize: number;
-    public readonly pointer: IReferenceCountedPtr;
+    public readonly sharedObject: IReferenceCountedPtr;
     public debugOnAllocate?: (() => void);
 
     public getInstance(): InstanceType<TCtor>
@@ -68,7 +68,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this.pointer);
+            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this.sharedObject);
             RcJsUtilDebug.protectedViews
                 .getValue(this)
                 .invalidate();
@@ -86,7 +86,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         size: number,
     )
     {
-        this.pointer = new ReferenceCountedPtr(true, pointer, this);
+        this.sharedObject = new ReferenceCountedPtr(true, pointer, this);
         this.size = size;
         this.ctor = ctor;
         this.wrapper = wrapper;
@@ -97,7 +97,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             const protectedView = DebugProtectedView.createTypedArrayView();
             this.debugOnAllocate = () => protectedView.invalidate();
             RcJsUtilDebug.protectedViews.setValue(this, protectedView);
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this.pointer);
+            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this.sharedObject);
             RcJsUtilDebug.onAllocate.addListener(this);
         });
 
@@ -113,7 +113,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             return new this.ctor(0) as InstanceType<TCtor>;
         }
 
-        const instance = new this.ctor(this.wrapper.memory.buffer, this.pointer.getPtr(), this.size) as InstanceType<TCtor>;
+        const instance = new this.ctor(this.wrapper.memory.buffer, this.sharedObject.getPtr(), this.size) as InstanceType<TCtor>;
 
         if (DEBUG_MODE)
         {

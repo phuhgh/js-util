@@ -20,7 +20,7 @@ describe("=> asan sanity check", () =>
         {
             leakedShared = SharedArray.createOneF32(testModule.wrapper, 8, true);
             const shared = SharedArray.createOneF32(testModule.wrapper, 8, true);
-            shared.pointer.release();
+            shared.sharedObject.release();
             // oh noes, we missed one
         });
     });
@@ -28,6 +28,6 @@ describe("=> asan sanity check", () =>
     debugIt("| throws when the program ends and memory has not been released", async () =>
     {
         expect(() => testModule.endEmscriptenProgram()).toThrow();
-        leakedShared.pointer.release();
+        leakedShared.sharedObject.release();
     });
 });

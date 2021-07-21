@@ -8,7 +8,7 @@ import { nullPointer } from "../web-assembly/emscripten/null-pointer";
  */
 export interface ISharedObject
 {
-    readonly pointer: IReferenceCountedPtr;
+    readonly sharedObject: IReferenceCountedPtr;
 }
 
 /**

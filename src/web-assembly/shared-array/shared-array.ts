@@ -94,7 +94,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public readonly ctor: TCtor;
     public readonly size: number;
     public readonly elementByteSize: number;
-    public readonly pointer: IReferenceCountedPtr;
+    public readonly sharedObject: IReferenceCountedPtr;
     public debugOnAllocate?: (() => void);
 
     public getInstance(): InstanceType<TCtor>
@@ -125,15 +125,15 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this.pointer);
+            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this.sharedObject);
             RcJsUtilDebug.protectedViews
                 .getValue(this)
                 .invalidate();
-            _Debug.verboseLog(`released shared array ${numberGetHexString(this.pointer.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
+            _Debug.verboseLog(`released shared array ${numberGetHexString(this.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
         });
 
         this.wrapper.memoryResize.removeListener(this);
-        this.wrapper.instance[this.cDelete](this.pointer.getPtr());
+        this.wrapper.instance[this.cDelete](this.sharedObject.getPtr());
         this.wrapper = null;
     }
 
@@ -146,7 +146,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         pointer: number,
     )
     {
-        this.pointer = new ReferenceCountedPtr(false, pointer, this);
+        this.sharedObject = new ReferenceCountedPtr(false, pointer, this);
         this.size = size;
         this.ctor = ctor;
         this.cDelete = `${cMethodPrefix}_delete`;
@@ -159,12 +159,12 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
             const protectedView = DebugProtectedView.createTypedArrayView();
             this.debugOnAllocate = () => protectedView.invalidate();
             RcJsUtilDebug.protectedViews.setValue(this, protectedView);
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this.pointer);
+            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this.sharedObject);
             RcJsUtilDebug.onAllocate.addListener(this);
 
             if (_Debug.isFlagSet("DEBUG_VERBOSE_MEMORY_MANAGEMENT"))
             {
-                _Debug.verboseLog(`claimed shared array ${numberGetHexString(this.pointer.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
+                _Debug.verboseLog(`claimed shared array ${numberGetHexString(this.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
             }
         });
 
@@ -180,7 +180,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
             return new this.ctor(this.size) as InstanceType<TCtor>;
         }
 
-        const arrayPtr = this.wrapper.instance[this.cGetArrayAddress](this.pointer.getPtr());
+        const arrayPtr = this.wrapper.instance[this.cGetArrayAddress](this.sharedObject.getPtr());
         DEBUG_MODE && _Debug.assert(arrayPtr !== nullPointer, "failed to get array address");
         const instance = new this.ctor(this.wrapper.memory.buffer, arrayPtr, this.size) as InstanceType<TCtor>;
 
