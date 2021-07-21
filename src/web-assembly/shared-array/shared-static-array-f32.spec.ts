@@ -55,8 +55,8 @@ debugDescribe("=> F32SharedStaticArray", () =>
                 expect(actualArray[1]).toBe(3);
                 expect(actualArray[2]).toBe(4);
                 expect(actualArray[3]).toBe(5);
-                sharedStaticArray.release();
-                sharedArray.release();
+                sharedStaticArray.pointer.release();
+                sharedArray.pointer.release();
             });
 
             describe("=> debug mode", () =>
@@ -67,9 +67,9 @@ debugDescribe("=> F32SharedStaticArray", () =>
                     expect(instance[0]).toBe(2);
                     const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 8);
                     expect(() => instance[0]).toThrow();
-                    sharedArray2.release();
-                    sharedStaticArray.release();
-                    sharedArray.release();
+                    sharedArray2.pointer.release();
+                    sharedStaticArray.pointer.release();
+                    sharedArray.pointer.release();
                 });
             });
         });
@@ -93,9 +93,9 @@ debugDescribe("=> F32SharedStaticArray", () =>
                 const i1 = sharedStaticArray.getInstance();
                 const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 2097152, true);
                 expect(i1 === sharedStaticArray.getInstance()).toBeFalse();
-                sharedStaticArray.release();
-                sharedArray2.release();
-                sharedArray.release();
+                sharedStaticArray.pointer.release();
+                sharedArray2.pointer.release();
+                sharedArray.pointer.release();
             });
         });
     });
@@ -103,5 +103,5 @@ debugDescribe("=> F32SharedStaticArray", () =>
 
 function getCArrayPtr(testModule: SanitizedEmscriptenTestModule<Emscripten.EmscriptenModule>, sharedArray: TF32SharedArray)
 {
-    return testModule.wrapper.instance._f32SharedArray_getArrayAddress(sharedArray.getPtr());
+    return testModule.wrapper.instance._f32SharedArray_getArrayAddress(sharedArray.pointer.getPtr());
 }

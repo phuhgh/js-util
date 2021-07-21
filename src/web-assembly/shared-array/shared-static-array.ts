@@ -1,19 +1,19 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { ASharedObject } from "../../lifecycle/a-shared-object";
 import { _Debug } from "../../debug/_debug";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { ISharedArray } from "./i-shared-array";
 import { TDebugListener } from "rc-js-util-globals";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
 
 /**
  * @public
- * Float32 {@link SharedStaticArray}
+ * Float32 {@link ISharedArray} (static).
  */
 export type TF32SharedStaticArray = ISharedArray<Float32ArrayConstructor>;
 /**
  * @public
- * Float64 {@link SharedStaticArray}
+ * Float64 {@link ISharedArray} (static).
  */
 export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
 
@@ -22,7 +22,6 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
  * Typed array representing static memory in wasm.
  */
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
-    extends ASharedObject
     implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
 {
     public static createOneF32(wrapper: IEmscriptenWrapper, pointer: number, size: number): TF32SharedStaticArray
@@ -38,6 +37,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     public readonly ctor: TCtor;
     public readonly size: number;
     public readonly elementByteSize: number;
+    public readonly pointer: IReferenceCountedPtr;
     public debugOnAllocate?: (() => void);
 
     public getInstance(): InstanceType<TCtor>
@@ -58,6 +58,26 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         this.instance = this.createLocalInstance();
     }
 
+    public onRelease(): void
+    {
+        if (this.wrapper == null)
+        {
+            DEBUG_MODE && _Debug.error("object already released");
+            return;
+        }
+
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this.pointer);
+            RcJsUtilDebug.protectedViews
+                .getValue(this)
+                .invalidate();
+        });
+
+        this.wrapper.memoryResize.removeListener(this);
+        this.wrapper = null;
+    }
+
     protected constructor
     (
         ctor: TCtor,
@@ -66,7 +86,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         size: number,
     )
     {
-        super(true, pointer);
+        this.pointer = new ReferenceCountedPtr(true, pointer, this);
         this.size = size;
         this.ctor = ctor;
         this.wrapper = wrapper;
@@ -77,32 +97,12 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             const protectedView = DebugProtectedView.createTypedArrayView();
             this.debugOnAllocate = () => protectedView.invalidate();
             RcJsUtilDebug.protectedViews.setValue(this, protectedView);
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this);
+            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this.pointer);
             RcJsUtilDebug.onAllocate.addListener(this);
         });
 
         wrapper.memoryResize.addListener(this);
         this.instance = this.createLocalInstance();
-    }
-
-    protected onRelease(): void
-    {
-        if (this.wrapper == null)
-        {
-            DEBUG_MODE && _Debug.error("object already released");
-            return;
-        }
-
-        DEBUG_MODE && _Debug.runBlock(() =>
-        {
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this);
-            RcJsUtilDebug.protectedViews
-                .getValue(this)
-                .invalidate();
-        });
-
-        this.wrapper.memoryResize.removeListener(this);
-        this.wrapper = null;
     }
 
     private createLocalInstance(): InstanceType<TCtor>
@@ -113,7 +113,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             return new this.ctor(0) as InstanceType<TCtor>;
         }
 
-        const instance = new this.ctor(this.wrapper.memory.buffer, this.wasmPtr, this.size) as InstanceType<TCtor>;
+        const instance = new this.ctor(this.wrapper.memory.buffer, this.pointer.getPtr(), this.size) as InstanceType<TCtor>;
 
         if (DEBUG_MODE)
         {

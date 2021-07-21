@@ -1,5 +1,5 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { ISharedObject } from "../../lifecycle/a-shared-object";
+import { ISharedObject } from "../../lifecycle/reference-counted-ptr";
 
 /**
  * @public

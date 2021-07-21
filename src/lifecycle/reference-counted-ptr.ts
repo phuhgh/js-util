@@ -4,9 +4,18 @@ import { nullPointer } from "../web-assembly/emscripten/null-pointer";
 
 /**
  * @public
+ * Holds a reference to wasm object.
+ */
+export interface ISharedObject
+{
+    readonly pointer: IReferenceCountedPtr;
+}
+
+/**
+ * @public
  * Wrapper of wasm object.
  */
-export interface ISharedObject extends IReferenceCounted
+export interface IReferenceCountedPtr extends IReferenceCounted
 {
     isStatic: boolean;
     getPtr(): number;
@@ -16,17 +25,23 @@ export interface ISharedObject extends IReferenceCounted
  * @public
  * Wrapper of wasm object.
  */
-export abstract class ASharedObject extends AReferenceCounted implements ISharedObject
+export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr
 {
     public getPtr(): number
     {
         return this.wasmPtr;
     }
 
-    protected constructor
+    public onRelease(): void
+    {
+        this.listener.onRelease();
+    }
+
+    public constructor
     (
         public isStatic: boolean,
         protected wasmPtr: number,
+        public listener: { onRelease(): void },
     )
     {
         super();
