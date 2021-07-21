@@ -1,6 +1,6 @@
 #pragma once
 
-#include "emscripten.h"
+#include <emscripten.h>
 #include <cstdlib>
 
 namespace JsUtil

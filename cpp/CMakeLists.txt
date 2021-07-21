@@ -1,7 +1,14 @@
 cmake_minimum_required(VERSION 3.17)
 project(JsUtil)
 
+set(CMAKE_CXX_STANDARD 20)
+
 add_subdirectory(external)
+
+set(SOURCE_FILES
+        src/SharedArray.cpp
+        src/Debug.cpp
+        )
 
 if (${BUILD_JSUTIL_TEST})
     # test modules - matches the names of the ts module
@@ -9,7 +16,7 @@ if (${BUILD_JSUTIL_TEST})
     set(CommonLinkFlags "-O0 -g -s NODEJS_CATCH_REJECTION=0 -s NODEJS_CATCH_EXIT=0 -s IMPORTED_MEMORY -s MODULARIZE=1")
     set(CommonCompileFlags "-O0 -g")
 
-    add_executable(asan-test-module src/SharedArray.cpp src/Debug.cpp)
+    add_executable(asan-test-module "${SOURCE_FILES}")
     set_target_properties(asan-test-module PROPERTIES
             LINK_FLAGS "${CommonLinkFlags} -s INITIAL_MEMORY=512mb -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1"
             COMPILE_FLAGS "${CommonCompileFlags} -fsanitize=address -fsanitize=undefined"
@@ -17,7 +24,7 @@ if (${BUILD_JSUTIL_TEST})
     target_link_libraries(asan-test-module PUBLIC GSL)
     target_include_directories(asan-test-module PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
 
-    add_executable(safe-heap-test-module src/SharedArray.cpp src/Debug.cpp)
+    add_executable(safe-heap-test-module "${SOURCE_FILES}")
     set_target_properties(safe-heap-test-module PROPERTIES
             LINK_FLAGS "${CommonLinkFlags} -s INITIAL_MEMORY=8192kb -s ALLOW_MEMORY_GROWTH=1 -s SAFE_HEAP"
             COMPILE_FLAGS "${CommonCompileFlags}"
@@ -27,7 +34,7 @@ if (${BUILD_JSUTIL_TEST})
 endif ()
 
 # create library
-add_library(JsUtil STATIC src/SharedArray.cpp src/Debug.cpp)
+add_library(JsUtil STATIC "${SOURCE_FILES}")
 target_link_libraries(JsUtil PUBLIC GSL)
 
 # add include directories
