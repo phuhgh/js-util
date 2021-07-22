@@ -5,6 +5,7 @@ import { getMargin2dCtor } from "./get-margin2d-ctor";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 import { Mat2 } from "../../mat2/mat2";
+import { Mat3 } from "../../mat3/mat3";
 
 /**
  * @public
@@ -89,6 +90,26 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    public setLeft(_value: number): void
+    {
+        throw new Error();
+    }
+
+    public setRight(_value: number): void
+    {
+        throw new Error();
+    }
+
+    public setTop(_value: number): void
+    {
+        throw new Error();
+    }
+
+    public setBottom(_value: number): void
+    {
+        throw new Error();
+    }
+
     public sumX(): number
     {
         throw new Error();
@@ -103,6 +124,21 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
     {
         throw new Error();
     }
+
+    /**
+     * Applies `Mat3.getTransformedXLength` `Mat3.getTransformedYLength` with a minimum of 0 and a maximum of
+     * whatever the margin is.
+     */
+    public mat3TransformLength
+    (
+        _mat: Readonly<Mat3<TArray>>,
+        _writeTo?: Margin2d<TArray>,
+    )
+        : Margin2d<TArray>
+    {
+        throw new Error();
+    }
+
 
     public TTypeGuardAMargin2d!: true;
 }

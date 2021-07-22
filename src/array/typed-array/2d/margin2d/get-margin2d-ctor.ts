@@ -5,6 +5,7 @@ import { Range2d } from "../range2d/range2d";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
+import { Mat3 } from "../../mat3/mat3";
 
 /**
  * @internal
@@ -40,6 +41,26 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
             return this[3];
         }
 
+        public setLeft(value: number): void
+        {
+            this[0] = value;
+        }
+
+        public setRight(value: number): void
+        {
+            this[1] = value;
+        }
+
+        public setTop(value: number): void
+        {
+            this[2] = value;
+        }
+
+        public setBottom(value: number): void
+        {
+            this[3] = value;
+        }
+
         public sumX(): number
         {
             return this[0] + this[1];
@@ -63,6 +84,21 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
             result[3] = range[3] - this[2]; // yMax
 
             return result;
+        }
+
+        public mat3TransformLength
+        (
+            mat: Readonly<Mat3<InstanceType<TCtor>>>,
+            writeTo: Margin2d<InstanceType<TCtor>> = (this.constructor as typeof Margin2dImpl).factory.createOneEmpty(),
+        )
+            : Margin2d<InstanceType<TCtor>>
+        {
+            writeTo.setLeft(mat.getTransformedXLength(0, this.getLeft()));
+            writeTo.setRight(mat.getTransformedXLength(0, this.getRight()));
+            writeTo.setTop(mat.getTransformedYLength(0, this.getTop()));
+            writeTo.setBottom(mat.getTransformedYLength(0, this.getBottom()));
+
+            return writeTo;
         }
 
         public TTypeGuardAMargin2d!: true;

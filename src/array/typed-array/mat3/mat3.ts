@@ -157,6 +157,22 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    /**
+     * Apply this transform as if it were x in a vec3 to both min and max, return the difference.
+     */
+    public getTransformedXLength(_min: number, _max: number): number
+    {
+        throw new Error();
+    }
+
+    /**
+     * Apply this transform as if it were y in a vec3 to both min and max, return the difference.
+     */
+    public getTransformedYLength(_min: number, _max: number): number
+    {
+        throw new Error();
+    }
+
     public getLoggableValue(): number[][]
     {
         throw new Error();

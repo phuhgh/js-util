@@ -170,6 +170,16 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Cto
             return this[1] * y + this[4] * y + this[7];
         }
 
+        public override getTransformedXLength(min: number, max: number): number
+        {
+            return this.getVec3MultiplyX(max) - this.getVec3MultiplyX(min);
+        }
+
+        public override getTransformedYLength(min: number, max: number): number
+        {
+            return this.getVec3MultiplyY(max) - this.getVec3MultiplyY(min);
+        }
+
         public override getLoggableValue(): number[][]
         {
             return [

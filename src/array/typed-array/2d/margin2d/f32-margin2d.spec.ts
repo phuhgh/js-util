@@ -1,6 +1,7 @@
 import { debugDescribe } from "../../../../test-utils";
 import { Range2d } from "../range2d/range2d";
 import { Margin2d } from "./margin2d";
+import { Mat3 } from "../../mat3/mat3";
 
 debugDescribe("=> F32Margin2d", () =>
 {
@@ -18,6 +19,27 @@ debugDescribe("=> F32Margin2d", () =>
             expect(innerRange.getXMax()).toBe(92);
             expect(innerRange.getYMin()).toBe(56);
             expect(innerRange.getYMax()).toBe(93);
+        });
+    });
+
+    describe("=> mat3TransformLength", () =>
+    {
+        it("| produces the expected range", () =>
+        {
+            const transform = Mat3.f32.factory
+                .createOneEmpty()
+                .setScalingMatrix(2, 2);
+
+            const newRange = Margin2d.f32.factory
+                .createOne(9, 8, 7, 6)
+                .mat3TransformLength(
+                    transform,
+                );
+
+            expect(newRange.getLeft()).toBe(18);
+            expect(newRange.getRight()).toBe(16);
+            expect(newRange.getTop()).toBe(14);
+            expect(newRange.getBottom()).toBe(12);
         });
     });
 });
