@@ -1,5 +1,5 @@
 import { Emscripten } from "../../../external/emscripten";
-import { geWasmTestMemory } from "../get-wasm-test-memory";
+import { getWasmTestMemory } from "../get-wasm-test-memory";
 import { getEmscriptenWrapper } from "./get-emscripten-wrapper";
 import { _Fp } from "../../fp/_fp";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
@@ -26,7 +26,7 @@ export const emscriptenAsanTestModuleOptions: ISanitizedTestModuleOptions = {
     quitThrowsWith: {},
 };
 
-export const emscriptenSafeStackTestModuleOptions: ISanitizedTestModuleOptions = {
+export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: new Set<string>(),
     initialMemoryPages: 128,
     maxMemoryPages: 512,
@@ -46,8 +46,7 @@ export class SanitizedEmscriptenTestModule<T extends Emscripten.EmscriptenModule
 
     public async initialize(): Promise<void>
     {
-        const asanTestMemory = { initial: this.options.initialMemoryPages, maximum: this.options.maxMemoryPages };
-        const memory = geWasmTestMemory(asanTestMemory);
+        const memory = getWasmTestMemory({ initial: this.options.initialMemoryPages, maximum: this.options.maxMemoryPages });
 
         this._wrapper = await getEmscriptenWrapper(memory, this.testModule, {
             ASAN_OPTIONS: "allocator_may_return_null=1",

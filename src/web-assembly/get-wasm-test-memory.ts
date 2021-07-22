@@ -3,7 +3,7 @@ import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory";
 /**
  * @internal
  */
-export function geWasmTestMemory(options: { initial: number, maximum?: number }): IWebAssemblyMemoryMemory
+export function getWasmTestMemory(options: { initial: number, maximum?: number }): IWebAssemblyMemoryMemory
 {
     return new WebAssembly.Memory(options);
 }
