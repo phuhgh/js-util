@@ -62,7 +62,11 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return this[3];
         }
 
-        public getRange(result: Vec2<InstanceType<TCtor>>): Vec2<InstanceType<TCtor>>
+        public getRange
+        (
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty(),
+        )
+            : Vec2<InstanceType<TCtor>>
         {
             result.setX(this.getXRange());
             result.setY(this.getYRange());
@@ -80,7 +84,11 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return this[3] - this[2];
         }
 
-        public getCenter(result: Vec2<InstanceType<TCtor>> = Range2dImpl.vec2Ctor.factory.createOneEmpty()): Vec2<InstanceType<TCtor>>
+        public getCenter
+        (
+            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty(),
+        )
+            : Vec2<InstanceType<TCtor>>
         {
             result.setX(this.getXCenter());
             result.setY(this.getYCenter());
@@ -147,8 +155,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             DEBUG_MODE && _Debug.assert(this.isPointInRange(relativeTo), "relativeTo must be inside the range");
 
             const difference = this
-                .getCenter(Range2dImpl.tmp)
-                .difference(relativeTo, Range2dImpl.tmp);
+                .getCenter((this.constructor as typeof Range2dImpl).tmp)
+                .difference(relativeTo, (this.constructor as typeof Range2dImpl).tmp);
 
             // multiply by 2 as we want to compare to half the range
             // make the difference relative, varies from -1 to 1
@@ -220,7 +228,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             this.setYMax(this.getYMax() + dy);
         }
 
-        private static tmp = Range2dImpl.vec2Ctor.factory.createOneEmpty();
+        private static readonly tmp = Range2dImpl.vec2Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange2d!: true;
     } as Range2dCtor<InstanceType<TCtor>>;

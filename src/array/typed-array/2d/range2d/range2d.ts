@@ -110,7 +110,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public getRange(_result: Vec2<TArray>): Vec2<TArray>
+    public getRange(_result?: Vec2<TArray>): Vec2<TArray>
     {
         throw new Error();
     }

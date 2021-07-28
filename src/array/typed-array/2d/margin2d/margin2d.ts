@@ -48,7 +48,7 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
 
     public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Margin2dCtor<InstanceType<TCtor>>
     {
-        return Margin2d.constructors.get(ctor) as Margin2dCtor<InstanceType<TCtor>>;
+        return this.constructors.get(ctor) as Margin2dCtor<InstanceType<TCtor>>;
     }
 
     protected static constructors = populateTypedArrayConstructorMap(Margin2d);
