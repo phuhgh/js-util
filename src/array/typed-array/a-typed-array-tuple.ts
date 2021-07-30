@@ -1,6 +1,13 @@
 import { TTupleLike } from "../../typescript/t-tuple-like";
 import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length";
 import { TTypedArray } from "./t-typed-array";
+import { TNeverFallback } from "../../typescript/t-never-fallback";
+
+/**
+ * @public
+ * Extract numerical indexes out of a type, if there aren't any fallback to number.
+ */
+export type TExtractIndexes<T> = TNeverFallback<Extract<keyof T, number>, number>;
 
 /**
  * @public
@@ -60,7 +67,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * @param _thisArg - An object to which the this keyword can refer in the _callbackfn function.
      * If _thisArg is omitted, undefined is used as the this value.
      */
-    public every(_callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => boolean, _thisArg?: unknown): boolean
+    public every(_callbackfn: (value: number, index: TExtractIndexes<this>, array: this) => boolean, _thisArg?: unknown): boolean
     {
         throw new Error();
     }
@@ -85,7 +92,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * @param _thisArg - An object to which the this keyword can refer in the _callbackfn function.
      * If _thisArg is omitted, undefined is used as the this value.
      */
-    public filter(_callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => unknown, _thisArg?: unknown): TDecayedTypedArrayTuple
+    public filter(_callbackfn: (value: number, index: TExtractIndexes<this>, array: this) => unknown, _thisArg?: unknown): TDecayedTypedArrayTuple
     {
         throw new Error();
     }
@@ -99,7 +106,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * @param _thisArg - If provided, it will be used as the this value for each invocation of
      * predicate. If it is not provided, undefined is used instead.
      */
-    public find(_predicate: (value: number, index: Extract<keyof this, number>, obj: this) => boolean, _thisArg?: unknown): number | undefined
+    public find(_predicate: (value: number, index: TExtractIndexes<this>, obj: this) => boolean, _thisArg?: unknown): number | undefined
     {
         throw new Error();
     }
@@ -113,7 +120,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * @param _thisArg - If provided, it will be used as the this value for each invocation of
      * predicate. If it is not provided, undefined is used instead.
      */
-    public findIndex(_predicate: (value: number, index: Extract<keyof this, number>, obj: this) => boolean, _thisArg?: unknown): number
+    public findIndex(_predicate: (value: number, index: TExtractIndexes<this>, obj: this) => boolean, _thisArg?: unknown): number
     {
         throw new Error();
     }
@@ -170,7 +177,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * @param _thisArg - An object to which the this keyword can refer in the _callbackfn function.
      * If _thisArg is omitted, undefined is used as the this value.
      */
-    public map(_callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => number, _thisArg?: unknown): this
+    public map(_callbackfn: (value: number, index: TExtractIndexes<this>, array: this) => number, _thisArg?: unknown): this
     {
         throw new Error();
     }
@@ -185,7 +192,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * the accumulation. The first call to the _callbackfn function provides this value as an argument
      * instead of an array value.
      */
-    public reduce<U>(_callbackfn: (previousValue: U, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => U, initialValue: U): U;
+    public reduce<U>(_callbackfn: (previousValue: U, currentValue: number, currentIndex: TExtractIndexes<this>, array: this) => U, initialValue: U): U;
     /**
      * Calls the specified callback function for all the elements in an array. The return value of
      * the callback function is the accumulated result, and is provided as an argument in the next
@@ -196,8 +203,8 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * the accumulation. The first call to the _callbackfn function provides this value as an argument
      * instead of an array value.
      */
-    public reduce(_callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number, initialValue?: number): number
-    public reduce(__callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number, _initialValue?: number): number
+    public reduce(_callbackfn: (previousValue: number, currentValue: number, currentIndex: TExtractIndexes<this>, array: this) => number, initialValue?: number): number
+    public reduce(__callbackfn: (previousValue: number, currentValue: number, currentIndex: TExtractIndexes<this>, array: this) => number, _initialValue?: number): number
     {
         throw new Error();
     }
@@ -212,7 +219,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * the accumulation. The first call to the _callbackfn function provides this value as an argument
      * instead of an array value.
      */
-    public reduceRight<U>(_callbackfn: (previousValue: U, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => U, initialValue: U): U
+    public reduceRight<U>(_callbackfn: (previousValue: U, currentValue: number, currentIndex: TExtractIndexes<this>, array: this) => U, initialValue: U): U
     /**
      * Calls the specified callback function for all the elements in an array, in descending order.
      * The return value of the callback function is the accumulated result, and is provided as an
@@ -223,8 +230,8 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * the accumulation. The first call to the _callbackfn function provides this value as an
      * argument instead of an array value.
      */
-    public reduceRight(_callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number, initialValue?: number): number
-    public reduceRight(__callbackfn: (previousValue: number, currentValue: number, currentIndex: Extract<keyof this, number>, array: this) => number, _initialValue?: number): number
+    public reduceRight(_callbackfn: (previousValue: number, currentValue: number, currentIndex: TExtractIndexes<this>, array: this) => number, initialValue?: number): number
+    public reduceRight(__callbackfn: (previousValue: number, currentValue: number, currentIndex: TExtractIndexes<this>, array: this) => number, _initialValue?: number): number
     {
         throw new Error();
     }
@@ -272,7 +279,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * @param _thisArg - An object to which the this keyword can refer in the _callbackfn function.
      * If _thisArg is omitted, undefined is used as the this value.
      */
-    public some(_callbackfn: (value: number, index: Extract<keyof this, number>, array: this) => boolean, _thisArg?: unknown): boolean
+    public some(_callbackfn: (value: number, index: TExtractIndexes<this>, array: this) => boolean, _thisArg?: unknown): boolean
     {
         throw new Error();
     }
@@ -314,5 +321,5 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
         throw new Error();
     }
 
-    protected TTypeGuardTypedArray!: TArray;
+    public TTypeGuardTypedArray!: TArray;
 }

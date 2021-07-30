@@ -18,7 +18,7 @@ export { _String } from "./string/_string";
 
 export { TGetComparisonValueAtIndex } from "./array/impl/binary-find-insertion-index";
 export { TTypedArrayCtor } from "./array/typed-array/t-typed-array-ctor";
-export { ATypedArrayTuple, TDecayedTypedArrayTuple } from "./array/typed-array/a-typed-array-tuple";
+export { ATypedArrayTuple, TDecayedTypedArrayTuple, TExtractIndexes } from "./array/typed-array/a-typed-array-tuple";
 export { ITypedArrayTupleFactory } from "./array/typed-array/i-typed-array-tuple-factory";
 export { Margin2d, TF32Margin2d, TMargin2dCtorArgs, Margin2dCtor } from "./array/typed-array/2d/margin2d/margin2d";
 export { Range2d, TF32Range2d, TRange2dCtorArgs, Range2dCtor } from "./array/typed-array/2d/range2d/range2d";
@@ -44,7 +44,10 @@ export { ReferenceCountedPtr, IReferenceCountedPtr, ISharedObject } from "./life
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted";
 export { IDictionary } from "./typescript/i-dictionary";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary";
+export { TExtractTypeTypedArrayTuple } from "./typescript/t-extract-type-typed-array-tuple";
 export { TKeysOf } from "./typescript/t-keys-of";
+export { TNeverFallback } from "./typescript/t-never-fallback";
+export { TNeverPredicate } from "./typescript/t-never-predicate";
 export { TNextInt } from "./typescript/t-next-int";
 export { TNullable } from "./typescript/t-nullable";
 export { TPickExcept } from "./typescript/t-pick-except";
