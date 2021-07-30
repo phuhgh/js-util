@@ -32,7 +32,7 @@ export interface Vec3Ctor<TArray extends TTypedArray>
  * @remarks
  * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
-export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<3>
+export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<3, TArray>
 {
     public static f64: Vec3Ctor<Float64Array> = getVec3Ctor(Float64Array);
     public static f32: Vec3Ctor<Float32Array> = getVec3Ctor(Float32Array);
@@ -105,7 +105,6 @@ export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<
     }
 
     public TTypeGuardVec3!: true;
-    public TTypeGuardTypedArray!: TArray;
 }
 
 /**

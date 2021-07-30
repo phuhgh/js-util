@@ -1,6 +1,7 @@
 import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory";
 import { INormalizedDataView } from "./normalized-data-view/i-normalized-data-view";
 import { ATypedArrayTuple } from "./a-typed-array-tuple";
+import { TTypedArray } from "./t-typed-array";
 
 export abstract class ATypedTupleFactory<TArray extends object, TCtorArgs extends number[]>
     implements ITypedArrayTupleFactory<TArray, TCtorArgs>
@@ -20,7 +21,7 @@ export abstract class ATypedTupleFactory<TArray extends object, TCtorArgs extend
 
     public clone(typedArrayTuple: Readonly<TArray>): TArray
     {
-        return (typedArrayTuple as unknown as ATypedArrayTuple<number>).slice() as unknown as TArray;
+        return (typedArrayTuple as unknown as ATypedArrayTuple<number, TTypedArray>).slice() as unknown as TArray;
     }
 
     public copyFromBuffer

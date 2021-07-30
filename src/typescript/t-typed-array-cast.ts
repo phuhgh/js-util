@@ -1,5 +1,6 @@
 import { ATypedArrayTuple } from "../array/typed-array/a-typed-array-tuple";
 import { TPickExcept } from "./t-pick-except";
+import { TTypedArray } from "../array/typed-array/t-typed-array";
 
 /**
  * @public
@@ -14,4 +15,4 @@ import { TPickExcept } from "./t-pick-except";
  * const ivec4: TVec4I32 = vec4 as TTypedArrayCast<TVec4I32> as TVec4I32;
  * ```
  */
-export type TTypedArrayCast<U extends ATypedArrayTuple<number>> = TPickExcept<U, "TTypeGuardTypedArray" | keyof ATypedArrayTuple<number>>;
+export type TTypedArrayCast<U extends ATypedArrayTuple<number, TTypedArray>> = TPickExcept<U, "TTypeGuardTypedArray" | keyof ATypedArrayTuple<number, TTypedArray>>;

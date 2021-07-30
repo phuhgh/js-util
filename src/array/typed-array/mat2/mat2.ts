@@ -33,7 +33,7 @@ export interface Mat2Ctor<TArray extends TTypedArray>
  * @remarks
  * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
-export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<4>
+export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<4, TArray>
 {
     public static f64: Mat2Ctor<Float64Array> = getMat2Ctor(Float64Array);
     public static f32: Mat2Ctor<Float32Array> = getMat2Ctor(Float32Array);
@@ -100,7 +100,6 @@ export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<
     }
 
     protected TTypeGuardMat2!: true;
-    protected TTypeGuardTypedArray!: TArray;
 }
 
 /**

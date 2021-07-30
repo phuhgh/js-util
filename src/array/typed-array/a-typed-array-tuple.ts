@@ -1,17 +1,18 @@
 import { TTupleLike } from "../../typescript/t-tuple-like";
 import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length";
+import { TTypedArray } from "./t-typed-array";
 
 /**
  * @public
  * Like ATypedArrayTuple but indexable with any number.
  */
-export type TDecayedTypedArrayTuple = TTupleLike<number, number, number> & ATypedArrayTuple<number>
+export type TDecayedTypedArrayTuple = TTupleLike<number, number, number> & ATypedArrayTuple<number, TTypedArray>
 
 /**
  * @public
  * Common methods of typed arrays, extend to make typed array tuples.
  */
-export class ATypedArrayTuple<TLength extends number>
+export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray>
 {
     /**
      * The size in bytes of each element in the array.
@@ -312,4 +313,6 @@ export class ATypedArrayTuple<TLength extends number>
     {
         throw new Error();
     }
+
+    protected TTypeGuardTypedArray!: TArray;
 }
