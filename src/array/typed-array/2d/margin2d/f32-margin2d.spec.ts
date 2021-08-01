@@ -42,4 +42,16 @@ debugDescribe("=> F32Margin2d", () =>
             expect(newRange.getBottom()).toBe(12);
         });
     });
+
+    describe("=> slice", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Margin2d.f32.factory.createOne(1, 2, 3, 4);
+            const b = a.slice();
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.getInnerRange).toBeDefined();
+        });
+    });
 });

@@ -139,4 +139,16 @@ debugDescribe("=> F32Range2d", () =>
             expect(range.getYMax()).toBe(14);
         });
     });
+
+    describe("=> slice", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Range2d.f32.factory.createOne(1, 2, 3, 4);
+            const b = a.slice();
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.scaleRelativeTo).toBeDefined();
+        });
+    });
 });

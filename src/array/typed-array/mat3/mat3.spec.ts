@@ -1,5 +1,5 @@
 import { Vec2 } from "../vec2/vec2";
-import { Mat3 } from "./mat3";
+import { Mat3, TF32Mat3 } from "./mat3";
 import { Vec3 } from "../vec3/vec3";
 
 describe("=> Mat3", () =>
@@ -252,6 +252,18 @@ describe("=> Mat3", () =>
             const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             a.setRow(2, Vec3.f32.factory.createOne(1, 2, 3));
             expect(a).toEqual(Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 1, 2, 3));
+        });
+    });
+
+    describe("=> slice", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            const b: TF32Mat3 = a.slice();
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.setIdentityMatrix).toBeDefined();
         });
     });
 });

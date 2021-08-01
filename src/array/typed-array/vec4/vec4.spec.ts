@@ -1,4 +1,4 @@
-import { Vec4 } from "./vec4";
+import { TF32Vec4, Vec4 } from "./vec4";
 
 describe("=> Vec4", () =>
 {
@@ -43,6 +43,18 @@ describe("=> Vec4", () =>
             expect(v[1]).toBe(2);
             expect(v[2]).toBe(3);
             expect(v[3]).toBe(4);
+        });
+    });
+
+    describe("=> slice", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Vec4.f32.factory.createOne(1, 2, 3, 4);
+            const b: TF32Vec4 = a.slice();
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.getX).toBeDefined();
         });
     });
 });

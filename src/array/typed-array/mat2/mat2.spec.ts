@@ -1,4 +1,4 @@
-import { Mat2 } from "./mat2";
+import { Mat2, TF32Mat2 } from "./mat2";
 
 describe("=> Mat2", () =>
 {
@@ -34,6 +34,18 @@ describe("=> Mat2", () =>
                     expect(m2.getValueAt(i, j)).toBe(i === j ? 1 : 0);
                 }
             }
+        });
+    });
+
+    describe("=> slice", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
+            const b: TF32Mat2 = a.slice();
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.setIdentityMatrix).toBeDefined();
         });
     });
 });

@@ -30,8 +30,6 @@ export interface ITypedArrayTupleFactory<TArray extends ATypedArrayTuple<number,
     )
         : void;
 
-    clone(typedArrayTuple: Readonly<TArray>): TArray;
-
     /**
      * Although the typed array tuples extend a typed array, they are not considered structurally compatible by typescript.
      * This function returns the argument passed without modification but cast as the underlying storage type, e.g. Float32Array.

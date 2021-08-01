@@ -1,4 +1,4 @@
-import { Vec2 } from "./vec2";
+import { TF32Vec2, Vec2 } from "./vec2";
 import { Mat3 } from "../mat3/mat3";
 import { Range2d } from "../2d/range2d/range2d";
 
@@ -98,6 +98,19 @@ describe("=> Vec2", () =>
             const range = Range2d.f32.factory.createOne(0, 4, 0, 4);
             v.bound(range);
             expect(v).toEqual(Vec2.f32.factory.createOne(1, 1));
+        });
+    });
+
+
+    describe("=> slice", () =>
+    {
+        it("| creates a copy", () =>
+        {
+            const a = Vec2.f32.factory.createOne(1, 2);
+            const b: TF32Vec2 = a.slice();
+            expect(a).toEqual(b);
+            expect(a).not.toBe(b);
+            expect(a.getX).toBeDefined();
         });
     });
 });

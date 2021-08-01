@@ -25,11 +25,6 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
 
     public abstract createOneEmpty(): TArray;
 
-    public clone(typedArrayTuple: Readonly<TArray>): TArray
-    {
-        return typedArrayTuple.slice() as unknown as TArray;
-    }
-
     public copyFromBuffer
     (
         memoryDataView: DataView,

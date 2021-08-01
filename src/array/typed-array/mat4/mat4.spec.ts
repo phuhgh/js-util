@@ -1,4 +1,4 @@
-import { Mat4 } from "./mat4";
+import { Mat4, TF32Mat4 } from "./mat4";
 import { Vec4 } from "../vec4/vec4";
 
 describe("=> Mat4", () =>
@@ -66,12 +66,12 @@ describe("=> Mat4", () =>
         });
     });
 
-    describe("=> clone", () =>
+    describe("=> slice", () =>
     {
         it("| creates a copy", () =>
         {
             const a = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-            const b = Mat4.f32.factory.clone(a);
+            const b: TF32Mat4 = a.slice();
             expect(a).toEqual(b);
             expect(a).not.toBe(b);
             expect(a.setIdentityMatrix).toBeDefined();

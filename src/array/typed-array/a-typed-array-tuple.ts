@@ -261,12 +261,10 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
         throw new Error();
     }
 
-    /**
-     * Returns a section of an array.
-     * @param _start - The beginning of the specified portion of the array.
-     * @param _end - The end of the specified portion of the array.
-     */
+
+    public slice(): this
     public slice(_start?: number, _end?: number): TDecayedTypedArrayTuple
+    public slice(_start?: number, _end?: number): never
     {
         throw new Error();
     }
