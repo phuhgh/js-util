@@ -84,12 +84,17 @@ export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public getRow(_row: number, _writeTo?: Vec2<TArray>): Vec2<TArray>
+    public getRow<TResult extends TTypedArray = TArray>
+    (
+        _row: number,
+        _writeTo?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
     {
         throw new Error();
     }
 
-    public setRow(_row: number, _writeFrom: Vec2<TArray>): void
+    public setRow(_row: number, _writeFrom: Vec2<TTypedArray>): void
     {
         throw new Error();
     }

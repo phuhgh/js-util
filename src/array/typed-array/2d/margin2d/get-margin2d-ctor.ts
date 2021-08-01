@@ -6,6 +6,7 @@ import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
 import { Mat3 } from "../../mat3/mat3";
+import { TTypedArray } from "../../t-typed-array";
 
 /**
  * @internal
@@ -71,12 +72,12 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
             return this[2] + this[3];
         }
 
-        public getInnerRange
+        public getInnerRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            range: Readonly<Range2d<InstanceType<TCtor>>>,
-            result: Range2d<InstanceType<TCtor>> = (this.constructor as typeof Margin2dImpl).rangeCtor.factory.createOneEmpty(),
+            range: Readonly<Range2d<TTypedArray>>,
+            result: Range2d<TResult> = (this.constructor as typeof Margin2dImpl).rangeCtor.factory.createOneEmpty() as Range2d<TResult>,
         )
-            : Range2d<InstanceType<TCtor>>
+            : Range2d<TResult>
         {
             result[0] = range[0] + this[0]; // xMin
             result[1] = range[1] - this[1]; // xMax
@@ -86,12 +87,12 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
             return result;
         }
 
-        public mat3TransformLength
+        public mat3TransformLength<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat3<InstanceType<TCtor>>>,
-            writeTo: Margin2d<InstanceType<TCtor>> = (this.constructor as typeof Margin2dImpl).factory.createOneEmpty(),
+            mat: Readonly<Mat3<TTypedArray>>,
+            writeTo: Margin2d<TResult> = (this.constructor as typeof Margin2dImpl).factory.createOneEmpty() as Margin2d<TResult>,
         )
-            : Margin2d<InstanceType<TCtor>>
+            : Margin2d<TResult>
         {
             writeTo.setLeft(mat.getTransformedXLength(0, this.getLeft()));
             writeTo.setRight(mat.getTransformedXLength(0, this.getRight()));

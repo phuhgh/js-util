@@ -6,6 +6,7 @@ import { _Debug } from "../../../debug/_debug";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Vec4 } from "../vec4/vec4";
+import { TTypedArray } from "../t-typed-array";
 
 /**
  * @internal
@@ -51,12 +52,12 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat4Cto
             this[row * 4 + column as Extract<keyof Mat4<never>, number>] = value;
         }
 
-        public override getRow
+        public override getRow<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             row: number,
-            writeTo: Vec4<InstanceType<TCtor>> = (this.constructor as typeof Mat4Impl).vec4Ctor.factory.createOneEmpty(),
+            writeTo: Vec4<TResult> = (this.constructor as typeof Mat4Impl).vec4Ctor.factory.createOneEmpty() as Vec4<TResult>,
         )
-            : Vec4<InstanceType<TCtor>>
+            : Vec4<TResult>
         {
             DEBUG_MODE && _Debug.assert(row >= 0 && row < 4, "index out of bounds");
 
@@ -71,7 +72,7 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat4Cto
         public override setRow
         (
             row: number,
-            writeFrom: Vec4<InstanceType<TCtor>>,
+            writeFrom: Vec4<TTypedArray>,
         )
             : void
         {

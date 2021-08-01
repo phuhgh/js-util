@@ -114,12 +114,22 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public getRow(_row: number, _writeTo?: Vec3<TArray>): Vec3<TArray>
+    public getRow<TResult extends TTypedArray = TArray>
+    (
+        _row: number,
+        _writeTo?: Vec3<TResult>
+    )
+        : Vec3<TResult>
     {
         throw new Error();
     }
 
-    public setRow(_row: number, _writeFrom: Vec3<TArray>): void
+    public setRow
+    (
+        _row: number,
+        _writeFrom: Vec3<TTypedArray>
+    )
+        : void
     {
         throw new Error();
     }
@@ -142,7 +152,12 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public multiplyMat3(_mat: Readonly<Mat3<TArray>>, _result?: Mat3<TArray>): Mat3<TArray>
+    public multiplyMat3<TResult extends TTypedArray = TArray>
+    (
+        _mat: Readonly<Mat3<TTypedArray>>,
+        _result?: Mat3<TResult>,
+    )
+        : Mat3<TResult>
     {
         throw new Error();
     }

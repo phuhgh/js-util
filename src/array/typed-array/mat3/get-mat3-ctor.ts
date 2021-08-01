@@ -7,6 +7,7 @@ import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat2 } from "../mat2/mat2";
 import { Vec3 } from "../vec3/vec3";
+import { TTypedArray } from "../t-typed-array";
 
 /**
  * @internal
@@ -50,12 +51,12 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Cto
             this[row * 3 + column as Extract<keyof Mat2<never>, number>] = value;
         }
 
-        public override getRow
+        public override getRow<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             row: number,
-            writeTo: Vec3<InstanceType<TCtor>> = (this.constructor as typeof Mat3Impl).vec3Ctor.factory.createOneEmpty(),
+            writeTo: Vec3<TResult> = (this.constructor as typeof Mat3Impl).vec3Ctor.factory.createOneEmpty() as Vec3<TResult>,
         )
-            : Vec3<InstanceType<TCtor>>
+            : Vec3<TResult>
         {
             DEBUG_MODE && _Debug.assert(row >= 0 && row < 3, "index out of bounds");
 
@@ -69,7 +70,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Cto
         public override setRow
         (
             row: number,
-            writeFrom: Vec3<InstanceType<TCtor>>,
+            writeFrom: Vec3<TTypedArray>,
         )
             : void
         {
@@ -137,12 +138,12 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Cto
             return this;
         }
 
-        public override multiplyMat3
+        public multiplyMat3<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat3<InstanceType<TCtor>>>,
-            result: Mat3<InstanceType<TCtor>> = (this.constructor as typeof Mat3Impl).factory.createOneEmpty(),
+            mat: Readonly<Mat3<TTypedArray>>,
+            result: Mat3<TResult> = (this.constructor as typeof Mat3Impl).factory.createOneEmpty() as Mat3<TResult>,
         )
-            : Mat3<InstanceType<TCtor>>
+            : Mat3<TResult>
         {
             const [a0, a1, a2, a3, a4, a5, a6, a7, a8] = this as unknown as TMat3CtorArgs;
             const [b0, b1, b2, b3, b4, b5, b6, b7, b8] = mat as unknown as TMat3CtorArgs;

@@ -153,6 +153,35 @@ describe("=> Mat3", () =>
             expect(result.getX()).toBe(7);
             expect(result.getY()).toBe(10);
         });
+
+        describe("=> compile checks", () =>
+        {
+            it("allows different input types", () =>
+            {
+                const m3t = Mat3.f32.factory
+                    .createOneEmpty()
+                    .setTranslationMatrix(5, 7);
+                const m3s = Mat3.u8.factory
+                    .createOneEmpty()
+                    .setScalingMatrix(2, 3);
+                const result = m3s.multiplyMat3(m3t);
+                expect(result).toBeInstanceOf(Mat3.u8);
+            });
+
+            it("allows different output types", () =>
+            {
+                const m3t = Mat3.f32.factory
+                    .createOneEmpty()
+                    .setTranslationMatrix(5, 7);
+                const m3s = Mat3.u8.factory
+                    .createOneEmpty()
+                    .setScalingMatrix(2, 3);
+
+                const result = Mat3.u16.factory.createOneEmpty();
+                const returnedResult: Mat3<Uint16Array> = m3s.multiplyMat3(m3t, result);
+                expect(returnedResult).toBeInstanceOf(Mat3.u16);
+            });
+        });
     });
 
     describe("=> slice", () =>

@@ -7,6 +7,7 @@ import { Mat2Factory } from "../../mat2/mat2-factory";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { _Debug } from "../../../../debug/_debug";
 import { Mat3 } from "../../mat3/mat3";
+import { TTypedArray } from "../../t-typed-array";
 
 /**
  * @internal
@@ -62,11 +63,11 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return this[3];
         }
 
-        public getRange
+        public getRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty(),
+            result: Vec2<TResult> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
         )
-            : Vec2<InstanceType<TCtor>>
+            : Vec2<TResult>
         {
             result.setX(this.getXRange());
             result.setY(this.getYRange());
@@ -84,11 +85,11 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return this[3] - this[2];
         }
 
-        public getCenter
+        public getCenter<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            result: Vec2<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty(),
+            result: Vec2<TResult> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
         )
-            : Vec2<InstanceType<TCtor>>
+            : Vec2<TResult>
         {
             result.setX(this.getXCenter());
             result.setY(this.getYCenter());
@@ -106,12 +107,12 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return (this[2] + this[3]) * 0.5;
         }
 
-        public mat3Multiply
+        public mat3Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat3<InstanceType<TCtor>>>,
-            writeTo: Range2d<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty(),
+            mat: Readonly<Mat3<TTypedArray>>,
+            writeTo: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
         )
-            : Range2d<InstanceType<TCtor>>
+            : Range2d<TResult>
         {
             writeTo.setXMin(mat.getVec3MultiplyX(this.getXMin()));
             writeTo.setXMax(mat.getVec3MultiplyX(this.getXMax()));
@@ -121,12 +122,12 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return writeTo;
         }
 
-        public unionRange
+        public unionRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            range: Readonly<Range2d<InstanceType<TCtor>>>,
-            writeTo: Range2d<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty(),
+            range: Readonly<Range2d<TTypedArray>>,
+            writeTo: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
         )
-            : Range2d<InstanceType<TCtor>>
+            : Range2d<TResult>
         {
             writeTo[0] = this[0] > range[0] ? range[0] : this[0];
             writeTo[1] = this[1] < range[1] ? range[1] : this[1];
@@ -136,7 +137,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return writeTo;
         }
 
-        public isPointInRange(point: Vec2<InstanceType<TCtor>>): boolean
+        public isPointInRange(point: Vec2<TTypedArray>): boolean
         {
             const x = point.getX();
             const y = point.getY();
@@ -144,13 +145,13 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return x >= this.getXMin() && x <= this.getXMax() && y >= this.getYMin() && y <= this.getYMax();
         }
 
-        public scaleRelativeTo
+        public scaleRelativeTo<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             scalingFactor: number,
-            relativeTo: Vec2<InstanceType<TCtor>>,
-            result: Range2d<InstanceType<TCtor>> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty(),
+            relativeTo: Vec2<TTypedArray>,
+            result: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
         )
-            : Range2d<InstanceType<TCtor>>
+            : Range2d<TResult>
         {
             DEBUG_MODE && _Debug.assert(this.isPointInRange(relativeTo), "relativeTo must be inside the range");
 
@@ -180,7 +181,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return result;
         }
 
-        public bound(boundTo: Range2d<InstanceType<TCtor>>): void
+        public bound(boundTo: Range2d<TTypedArray>): void
         {
             if (this.getXRange() > boundTo.getXRange())
             {

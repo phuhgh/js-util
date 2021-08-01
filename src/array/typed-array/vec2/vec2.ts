@@ -87,27 +87,32 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public add(_vec: Readonly<Vec2<TArray>>, _result?: Vec2<TArray>): void
+    public add<TResult extends TTypedArray = TArray>
+    (
+        _vec: Readonly<Vec2<TTypedArray>>,
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
     {
         throw new Error();
     }
 
-    public dotProduct
+    public dotProduct<TResult extends TTypedArray = TArray>
     (
-        _vec: Readonly<Vec2<TArray>>,
-        _result?: Vec2<TArray>,
+        _vec: Readonly<Vec2<TTypedArray>>,
+        _result?: Vec2<TResult>,
     )
-        : Vec2<TArray>
+        : Vec2<TResult>
     {
         throw new Error();
     }
 
-    public mat3Multiply
+    public mat3Multiply<TResult extends TTypedArray = TArray>
     (
-        _mat: Readonly<Mat3<TArray>>,
-        _result?: Vec2<TArray>,
+        _mat: Readonly<Mat3<TTypedArray>>,
+        _result?: Vec2<TResult>,
     )
-        : Vec2<TArray>
+        : Vec2<TResult>
     {
         throw new Error();
     }
@@ -116,7 +121,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
      * If this point is outside of the range, set that dimension to the extrema of the range.
      * @param _range - The range to be bound to, inclusive.
      */
-    public bound(_range: Range2d<TArray>): void
+    public bound(_range: Range2d<TTypedArray>): void
     {
         throw new Error();
     }
@@ -129,7 +134,12 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public difference(_vec: Vec2<TArray>, _result?: Vec2<TArray>): Vec2<TArray>
+    public difference<TResult extends TTypedArray = TArray>
+    (
+        _vec: Vec2<TTypedArray>,
+        _result?: Vec2<TResult>
+    )
+        : Vec2<TResult>
     {
         throw new Error();
     }

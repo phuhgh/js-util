@@ -120,7 +120,12 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public getInnerRange(_range: Readonly<Range2d<TArray>>, _result?: Range2d<TArray>): Range2d<TArray>
+    public getInnerRange<TResult extends TTypedArray = TArray>
+    (
+        _range: Readonly<Range2d<TTypedArray>>,
+        _result?: Range2d<TResult>,
+    )
+        : Range2d<TResult>
     {
         throw new Error();
     }
@@ -129,12 +134,12 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
      * Applies `Mat3.getTransformedXLength` `Mat3.getTransformedYLength` with a minimum of 0 and a maximum of
      * whatever the margin is.
      */
-    public mat3TransformLength
+    public mat3TransformLength<TResult extends TTypedArray = TArray>
     (
-        _mat: Readonly<Mat3<TArray>>,
-        _writeTo?: Margin2d<TArray>,
+        _mat: Readonly<Mat3<TTypedArray>>,
+        _writeTo?: Margin2d<TResult>,
     )
-        : Margin2d<TArray>
+        : Margin2d<TResult>
     {
         throw new Error();
     }

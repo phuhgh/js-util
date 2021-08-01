@@ -110,7 +110,11 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public getRange(_result?: Vec2<TArray>): Vec2<TArray>
+    public getRange<TResult extends TTypedArray = TArray>
+    (
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
     {
         throw new Error();
     }
@@ -125,7 +129,11 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public getCenter(_result?: Vec2<TArray>): Vec2<TArray>
+    public getCenter<TResult extends TTypedArray = TArray>
+    (
+        _result?: Vec2<TResult>
+    )
+        : Vec2<TResult>
     {
         throw new Error();
     }
@@ -140,22 +148,27 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public mat3Multiply
+    public mat3Multiply<TResult extends TTypedArray = TArray>
     (
-        _mat: Readonly<Mat3<TArray>>,
-        _writeTo?: Range2d<TArray>,
+        _mat: Readonly<Mat3<TTypedArray>>,
+        _writeTo?: Range2d<TResult>,
     )
-        : Range2d<TArray>
+        : Range2d<TResult>
     {
         throw new Error();
     }
 
-    public unionRange(_range: Readonly<Range2d<TArray>>, _writeTo?: Range2d<TArray>): Range2d<TArray>
+    public unionRange<TResult extends TTypedArray = TArray>
+    (
+        _range: Readonly<Range2d<TTypedArray>>,
+        _writeTo?: Range2d<TResult>
+    )
+        : Range2d<TResult>
     {
         throw new Error();
     }
 
-    public isPointInRange(_point: Vec2<TArray>): boolean
+    public isPointInRange(_point: Vec2<TTypedArray>): boolean
     {
         throw new Error();
     }
@@ -181,7 +194,13 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
      */
 
     /* eslint-enable no-irregular-whitespace */
-    public scaleRelativeTo(_scalingFactor: number, _relativeTo: Vec2<TArray>, _result?: Range2d<TArray>): Range2d<TArray>
+    public scaleRelativeTo<TResult extends TTypedArray = TArray>
+    (
+        _scalingFactor: number,
+        _relativeTo: Vec2<TTypedArray>,
+        _result?: Range2d<TResult>,
+    )
+        : Range2d<TResult>
     {
         throw new Error();
     }
@@ -194,7 +213,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
      * Where this range is smaller than the bounding range but not contained, it will be moved maintaining its size. It
      * Will be moved such that the the side furthest from the bounding range will be at the edge of the boundary.
      */
-    public bound(_boundTo: Range2d<TArray>): void
+    public bound(_boundTo: Range2d<TTypedArray>): void
     {
         throw new Error();
     }
