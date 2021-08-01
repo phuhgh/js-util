@@ -201,3 +201,9 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
  * Float32 {@link Mat3}.
  */
 export type TF32Mat3 = Mat3<Float32Array>;
+
+/**
+ * @public
+ * Float64 {@link Mat3}.
+ */
+export type TF64Mat3 = Mat3<Float64Array>;

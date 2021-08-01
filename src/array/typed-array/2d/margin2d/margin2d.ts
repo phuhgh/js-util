@@ -153,3 +153,9 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
  * Float32 {@link Margin2d}.
  */
 export type TF32Margin2d = Margin2d<Float32Array>;
+
+/**
+ * @public
+ * Float64 {@link Margin2d}.
+ */
+export type TF64Margin2d = Margin2d<Float64Array>;

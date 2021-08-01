@@ -157,3 +157,9 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
  * Float32 {@link Vec2}.
  */
 export type TF32Vec2 = Vec2<Float32Array>;
+
+/**
+ * @public
+ * Float64 {@link Vec2}.
+ */
+export type TF64Vec2 = Vec2<Float64Array>;

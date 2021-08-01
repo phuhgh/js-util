@@ -177,3 +177,9 @@ export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<
  * Float32 {@link Mat4}.
  */
 export type TF32Mat4 = Mat4<Float32Array>;
+
+/**
+ * @public
+ * Float64 {@link Mat4}.
+ */
+export type TF64Mat4 = Mat4<Float64Array>;
