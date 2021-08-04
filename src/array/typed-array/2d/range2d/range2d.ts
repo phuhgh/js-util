@@ -29,7 +29,7 @@ export interface Range2dCtor<TArray extends TTypedArray>
 
 /**
  * @public
- * Row major 2x2 matrix representing a 2d range.
+ * 2x2 matrix representing a 2d range.
  *
  * @remarks
  * See static properties for constructors. Instances are not an extension of this class, but of the static members.
