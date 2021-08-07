@@ -29,7 +29,7 @@ export class _Map
     /** {@inheritDoc mapFirstValue} */
     public static readonly firstValue = mapFirstValue;
 
-    /** {@inheritDoc mapInitializeGet} */
+    /** {@inheritDoc (mapInitializeGet:1)} */
     public static readonly initializeGet = mapInitializeGet;
 
     /** {@inheritDoc mapKeysToArray} */
