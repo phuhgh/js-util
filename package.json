@@ -1,6 +1,6 @@
 {
   "name": "rc-js-util",
-  "version": "5.0.0-alpha.51",
+  "version": "5.0.0-alpha.52",
   "license": "MIT",
   "scripts": {
     "build": "npm run build-ts && npm run build-cpp",

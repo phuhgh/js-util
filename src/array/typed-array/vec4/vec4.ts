@@ -77,6 +77,14 @@ export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    /**
+     * @param _normalized - Format of the color stored in the Vec4, if true 0 - 1, else 0 - 255.
+     */
+    public getPackedRGBAColor(_normalized?: boolean): number
+    {
+        throw new Error();
+    }
+
     public getX(): number
     {
         throw new Error();

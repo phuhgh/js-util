@@ -25,7 +25,7 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec4Cto
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
-        public setRGBAColor(packedRGBA: number, normalize: boolean = false): Vec4<InstanceType<TCtor>>
+        public override setRGBAColor(packedRGBA: number, normalize: boolean = false): Vec4<InstanceType<TCtor>>
         {
             if (normalize)
             {
@@ -44,6 +44,18 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec4Cto
             }
 
             return this;
+        }
+
+        public override getPackedRGBAColor(normalized: boolean = false): number
+        {
+            if (normalized)
+            {
+                return RgbaColorPacker.packColor(this[0] * 255, this[1] * 255, this[2] * 255, this[3] * 255);
+            }
+            else
+            {
+                return RgbaColorPacker.packColor(this[0], this[1], this[2], this[3]);
+            }
         }
 
         public override getX(): number
