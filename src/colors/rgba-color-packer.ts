@@ -85,9 +85,13 @@ export class RgbaColorPacker
             return "NaN";
         }
 
-        value = value & (~ERgbaMasks.A);
+        // shift off the alpha channel
+        value = value >>> 8;
 
-        RgbaColorPacker.hexColorTmp[1] = value.toString(16).toUpperCase();
+        RgbaColorPacker.hexColorTmp[1] = value
+            .toString(16)
+            .toUpperCase()
+            .padStart(6, "0");
 
         return RgbaColorPacker.hexColorTmp.join("");
     }

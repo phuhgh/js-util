@@ -8,10 +8,10 @@
  */
 export enum ERgbaShift
 {
-    R = 0,
-    G = 8,
-    B = 16,
-    A = 24,
+    R = 24,
+    G = 16,
+    B = 8,
+    A = 0,
 }
 
 /**
@@ -20,8 +20,8 @@ export enum ERgbaShift
  */
 export enum ERgbaMasks
 {
-    R = 255 << ERgbaShift.R,
-    G = 255 << ERgbaShift.G,
-    B = 255 << ERgbaShift.B,
-    A = 255 << ERgbaShift.A,
+    R = 0xFF << ERgbaShift.R,
+    G = 0xFF << ERgbaShift.G,
+    B = 0xFF << ERgbaShift.B,
+    A = 0xFF << ERgbaShift.A,
 }
