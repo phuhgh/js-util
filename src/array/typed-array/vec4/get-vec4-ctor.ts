@@ -4,6 +4,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec4Factory } from "./vec4-factory";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
+import { RgbaColorPacker } from "../../../colors/rgba-color-packer";
 
 /**
  * @internal
@@ -22,6 +23,16 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec4Cto
         )
         {
             super(bufferOrLength as ArrayBufferLike, offset, length);
+        }
+
+        public setRGBAColor(packedRGBA: number): Vec4<InstanceType<TCtor>>
+        {
+            this[0] = RgbaColorPacker.unpackR(packedRGBA);
+            this[1] = RgbaColorPacker.unpackG(packedRGBA);
+            this[2] = RgbaColorPacker.unpackB(packedRGBA);
+            this[3] = RgbaColorPacker.unpackA(packedRGBA);
+
+            return this;
         }
 
         public override getX(): number

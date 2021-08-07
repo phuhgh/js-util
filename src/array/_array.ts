@@ -68,7 +68,7 @@ export class _Array
     public static readonly mapRange = arrayMapRange;
     /** {@inheritDoc arrayNormalizeEmptyToUndefined} */
     public static readonly normalizeEmptyToUndefined = arrayNormalizeEmptyToUndefined;
-    /** {@inheritDoc arrayNormalizeNullUndefinedToEmpty} */
+    /** {@inheritDoc arrayNormalizeNullishToEmpty} */
     public static readonly normalizeNullishToEmpty = arrayNormalizeNullishToEmpty;
     /** {@inheritDoc arrayPushUnique} */
     public static readonly pushUnique = arrayPushUnique;

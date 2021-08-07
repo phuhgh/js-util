@@ -68,6 +68,11 @@ export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 3!: number;
 
+    public setRGBAColor(_packedRGBA: number): Vec4<TArray>
+    {
+        throw new Error();
+    }
+
     public getX(): number
     {
         throw new Error();
