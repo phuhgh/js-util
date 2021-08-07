@@ -68,7 +68,11 @@ export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 3!: number;
 
-    public setRGBAColor(_packedRGBA: number): Vec4<TArray>
+    /**
+     * @param _packedRGBA - The number to be unpacked.
+     * @param _normalize - If true, normalize components between 0 - 1.
+     */
+    public setRGBAColor(_packedRGBA: number, _normalize?: boolean): Vec4<TArray>
     {
         throw new Error();
     }

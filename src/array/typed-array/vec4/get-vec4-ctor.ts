@@ -25,12 +25,23 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec4Cto
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
-        public setRGBAColor(packedRGBA: number): Vec4<InstanceType<TCtor>>
+        public setRGBAColor(packedRGBA: number, normalize: boolean = false): Vec4<InstanceType<TCtor>>
         {
-            this[0] = RgbaColorPacker.unpackR(packedRGBA);
-            this[1] = RgbaColorPacker.unpackG(packedRGBA);
-            this[2] = RgbaColorPacker.unpackB(packedRGBA);
-            this[3] = RgbaColorPacker.unpackA(packedRGBA);
+            if (normalize)
+            {
+                // 1 / 255
+                this[0] = RgbaColorPacker.unpackR(packedRGBA) * 0.00392156862745098;
+                this[1] = RgbaColorPacker.unpackG(packedRGBA) * 0.00392156862745098;
+                this[2] = RgbaColorPacker.unpackB(packedRGBA) * 0.00392156862745098;
+                this[3] = RgbaColorPacker.unpackA(packedRGBA) * 0.00392156862745098;
+            }
+            else
+            {
+                this[0] = RgbaColorPacker.unpackR(packedRGBA);
+                this[1] = RgbaColorPacker.unpackG(packedRGBA);
+                this[2] = RgbaColorPacker.unpackB(packedRGBA);
+                this[3] = RgbaColorPacker.unpackA(packedRGBA);
+            }
 
             return this;
         }
