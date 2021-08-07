@@ -9,7 +9,7 @@ import { arrayIndex } from "./impl/array-index";
 import { arrayIntersect } from "./impl/array-intersect";
 import { arrayLast } from "./impl/array-last";
 import { arrayNormalizeEmptyToUndefined } from "./impl/array-normalize-empty-to-undefined";
-import { arrayNormalizeNullUndefinedToEmpty } from "./impl/array-normalize-null-undefined-to-empty";
+import { arrayNormalizeNullishToEmpty } from "./impl/array-normalize-nullish-to-empty";
 import { arrayCollect } from "./impl/array-collect";
 import { arrayRemoveMany } from "./impl/array-remove-many";
 import { arrayRemoveOne } from "./impl/array-remove-one";
@@ -69,7 +69,7 @@ export class _Array
     /** {@inheritDoc arrayNormalizeEmptyToUndefined} */
     public static readonly normalizeEmptyToUndefined = arrayNormalizeEmptyToUndefined;
     /** {@inheritDoc arrayNormalizeNullUndefinedToEmpty} */
-    public static readonly normalizeNullUndefinedToEmpty = arrayNormalizeNullUndefinedToEmpty;
+    public static readonly normalizeNullishToEmpty = arrayNormalizeNullishToEmpty;
     /** {@inheritDoc arrayPushUnique} */
     public static readonly pushUnique = arrayPushUnique;
     /** {@inheritDoc arrayRemoveMany} */

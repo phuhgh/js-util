@@ -86,7 +86,7 @@ export { arrayMapRange } from "./array/impl/array-map-range";
 export { arrayMap } from "./array/impl/array-map";
 export { arrayContains } from "./array/impl/array-contains";
 export { arrayNormalizeEmptyToUndefined } from "./array/impl/array-normalize-empty-to-undefined";
-export { arrayNormalizeNullUndefinedToEmpty } from "./array/impl/array-normalize-null-undefined-to-empty";
+export { arrayNormalizeNullishToEmpty } from "./array/impl/array-normalize-nullish-to-empty";
 export { arrayPushUnique } from "./array/impl/array-push-unique";
 export { arrayRemoveMany } from "./array/impl/array-remove-many";
 export { arrayRemoveOne } from "./array/impl/array-remove-one";
