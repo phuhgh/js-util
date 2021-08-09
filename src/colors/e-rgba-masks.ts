@@ -5,13 +5,14 @@
  * @remarks
  * After masking zero fill right shift to unpack.
  * Left shift to pack (0-255 as input).
+ * Stored as ABGR to allow packing of RGB into float32.
  */
 export enum ERgbaShift
 {
-    R = 24,
-    G = 16,
-    B = 8,
-    A = 0,
+    R = 0,
+    G = 8,
+    B = 16,
+    A = 24,
 }
 
 /**

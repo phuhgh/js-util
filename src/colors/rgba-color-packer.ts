@@ -85,8 +85,11 @@ export class RgbaColorPacker
             return "NaN";
         }
 
-        // shift off the alpha channel
-        value = value >>> 8;
+        // mask off the alpha channel
+        value = value & (~ERgbaMasks.A);
+
+        // switch from ABGR to RGB
+        value = ((value & 0xFF) << 16) | (value & 0xFF00) | ((value & 0xFF0000) >> 16);
 
         RgbaColorPacker.hexColorTmp[1] = value
             .toString(16)
