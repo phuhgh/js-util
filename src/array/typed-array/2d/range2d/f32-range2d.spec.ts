@@ -11,7 +11,7 @@ debugDescribe("=> F32Range2d", () =>
 
         it("| returns true if the point is in the range", () =>
         {
-            expect(range.isPointInRange((Vec2.f32.factory.createOne(7, 7)))).toBe(true);
+            expect(range.isPointInRange(Vec2.f32.factory.createOne(7, 7))).toBe(true);
         });
 
         it("| returns false if the point is not in the range", () =>

@@ -80,7 +80,7 @@ describe("=> Vec2", () =>
         {
             const v = Vec2.f32.factory.createOne(0, 0);
             const range = Range2d.f32.factory.createOne(2, 4, 2, 4);
-            v.bound(range);
+            v.bound2d(range);
             expect(v).toEqual(Vec2.f32.factory.createOne(2, 2));
         });
 
@@ -88,7 +88,7 @@ describe("=> Vec2", () =>
         {
             const v = Vec2.f32.factory.createOne(6, 6);
             const range = Range2d.f32.factory.createOne(2, 4, 2, 4);
-            v.bound(range);
+            v.bound2d(range);
             expect(v).toEqual(Vec2.f32.factory.createOne(4, 4));
         });
 
@@ -96,7 +96,7 @@ describe("=> Vec2", () =>
         {
             const v = Vec2.f32.factory.createOne(1, 1);
             const range = Range2d.f32.factory.createOne(0, 4, 0, 4);
-            v.bound(range);
+            v.bound2d(range);
             expect(v).toEqual(Vec2.f32.factory.createOne(1, 1));
         });
     });

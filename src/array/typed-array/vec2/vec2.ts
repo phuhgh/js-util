@@ -121,7 +121,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
      * If this point is outside of the range, set that dimension to the extrema of the range.
      * @param _range - The range to be bound to, inclusive.
      */
-    public bound(_range: Range2d<TTypedArray>): void
+    public bound2d(_range: Range2d<TTypedArray>): void
     {
         throw new Error();
     }
@@ -129,7 +129,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
     /**
      * Shifts this position by the arguments.
      */
-    public translateBy(_dx: number, _dy: number): void
+    public translate2d(_dx: number, _dy: number): void
     {
         throw new Error();
     }
