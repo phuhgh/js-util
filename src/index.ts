@@ -52,6 +52,7 @@ export { TNextInt } from "./typescript/t-next-int";
 export { TNullable } from "./typescript/t-nullable";
 export { TPickExcept } from "./typescript/t-pick-except";
 export { TPredicate } from "./typescript/t-predicate";
+export { TPickRequired } from "./typescript/t-pick-required";
 export { TTupleLike } from "./typescript/t-tuple-like";
 export { TTupleLikeOfLength } from "./typescript/t-tuple-like-of-length";
 export { TTypedArrayCast } from "./typescript/t-typed-array-cast";
