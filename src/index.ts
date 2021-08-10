@@ -26,6 +26,7 @@ export { Mat2, TF32Mat2, TMat2CtorArgs, Mat2Ctor, TF64Mat2 } from "./array/typed
 export { Mat3, TF32Mat3, TMat3CtorArgs, Mat3Ctor, TF64Mat3 } from "./array/typed-array/mat3/mat3";
 export { Mat4, TF32Mat4, TMat4CtorArgs, Mat4Ctor, TF64Mat4 } from "./array/typed-array/mat4/mat4";
 export { Vec2, TF32Vec2, TVec2CtorArgs, Vec2Ctor, TF64Vec2 } from "./array/typed-array/vec2/vec2";
+export { Range1d, TF32Range1d, TF64Range1d, TRange1dCtorArgs, Range1dCtor } from "./array/typed-array/vec2/range1d/range1d";
 export { Vec3, TF32Vec3, TVec3CtorArgs, Vec3Ctor, TF64Vec3 } from "./array/typed-array/vec3/vec3";
 export { Vec4, TF32Vec4, TVec4CtorArgs, Vec4Ctor, TF64Vec4 } from "./array/typed-array/vec4/vec4";
 export { NormalizedDataViewProvider } from "./array/typed-array/normalized-data-view/normalized-data-view-provider";
