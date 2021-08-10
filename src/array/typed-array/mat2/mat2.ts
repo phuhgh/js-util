@@ -84,6 +84,31 @@ export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    public setScalingMatrix(_scalingFactor: number): Mat2<TArray>
+    {
+        throw new Error();
+    }
+
+    public setTranslationMatrix(_translation: number): Mat2<TArray>
+    {
+        throw new Error();
+    }
+
+    public multiplyMat2<TResult extends TTypedArray = TArray>
+    (
+        _mat: Readonly<Mat2<TTypedArray>>,
+        _result?: Mat2<TResult>,
+    )
+        : Mat2<TResult>
+    {
+        throw new Error();
+    }
+
+    public getVec2MultiplyX(_x: number): number
+    {
+        throw new Error();
+    }
+
     public getRow<TResult extends TTypedArray = TArray>
     (
         _row: number,

@@ -6,6 +6,7 @@ import { _Debug } from "../../../../debug/_debug";
 import { TTypedArray } from "../../t-typed-array";
 import { getVec2Ctor } from "../get-vec2-ctor";
 import { Vec2Factory } from "../vec2-factory";
+import { Mat2 } from "../../mat2/mat2";
 
 /**
  * @internal
@@ -48,6 +49,19 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public getCenter(): number
         {
             return (this[0] + this[1]) * 0.5;
+        }
+
+        public mat2Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            mat: Readonly<Mat2<TTypedArray>>,
+            writeTo: Range1d<TResult> = (this.constructor as typeof Range1dImpl).factory.createOneEmpty() as Range1d<TResult>,
+        )
+            : Range1d<TResult>
+        {
+            writeTo.setMin(mat.getVec2MultiplyX(this.getMin()));
+            writeTo.setMax(mat.getVec2MultiplyX(this.getMax()));
+
+            return writeTo;
         }
 
         public unionRange<TResult extends TTypedArray = InstanceType<TCtor>>

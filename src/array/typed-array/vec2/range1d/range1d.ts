@@ -4,6 +4,7 @@ import { getRange1dCtor } from "./get-range1d-ctor";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 import { Vec2 } from "../vec2";
+import { Mat2 } from "../../mat2/mat2";
 
 /**
  * @public
@@ -86,6 +87,16 @@ export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
     }
 
     public getCenter(): number
+    {
+        throw new Error();
+    }
+
+    public mat2Multiply<TResult extends TTypedArray = TArray>
+    (
+        _mat: Readonly<Mat2<TTypedArray>>,
+        _writeTo?: Range1d<TResult>,
+    )
+        : Range1d<TResult>
     {
         throw new Error();
     }

@@ -1,5 +1,6 @@
 import { debugDescribe } from "../../../../test-utils";
 import { Range1d } from "./range1d";
+import { Mat2 } from "../../mat2/mat2";
 
 debugDescribe("=> Range1d", () =>
 {
@@ -98,6 +99,21 @@ debugDescribe("=> Range1d", () =>
             range.bound1d(Range1d.f32.factory.createOne(15, 30));
             expect(range.getMin()).toBe(15);
             expect(range.getMax()).toBe(25);
+        });
+    });
+
+    describe("=> mat2Multiply", () =>
+    {
+        it("| moves the range as expected", () =>
+        {
+            const range = Range1d.f32.factory.createOne(0, 10);
+            const tm = Mat2.f32.factory
+                .createOneEmpty()
+                .setTranslationMatrix(3);
+            range.mat2Multiply(tm, range);
+
+            expect(range.getMin()).toBe(3);
+            expect(range.getMax()).toBe(13);
         });
     });
 

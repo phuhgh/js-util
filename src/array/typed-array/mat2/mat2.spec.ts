@@ -37,6 +37,101 @@ describe("=> Mat2", () =>
         });
     });
 
+    describe("=> createScalingMatrix", () =>
+    {
+        it("| returns the expected matrix", () =>
+        {
+            const m2 = Mat2.f32.factory
+                .createOneEmpty()
+                .fill(1)
+                .setScalingMatrix(10);
+
+            expect(m2.getValueAt(0, 0)).toBe(10);
+            expect(m2.getValueAt(1, 1)).toBe(1);
+            expect(m2.getValueAt(0, 1)).toBe(0);
+            expect(m2.getValueAt(1, 0)).toBe(0);
+        });
+
+        it("| multiplies as expected", () =>
+        {
+            const m2 = Mat2.f32.factory
+                .createOneEmpty()
+                .setScalingMatrix(2);
+
+            expect(m2.getVec2MultiplyX(1)).toBe(2);
+        });
+    });
+
+    describe("=> createTranslationMatrix", () =>
+    {
+        it("| returns the expected matrix", () =>
+        {
+            const m2 = Mat2.f32.factory
+                .createOneEmpty()
+                .fill(1)
+                .setTranslationMatrix(10);
+            expect(m2.getValueAt(0, 0)).toBe(1);
+            expect(m2.getValueAt(1, 1)).toBe(1);
+            expect(m2.getValueAt(0, 1)).toBe(10);
+            expect(m2.getValueAt(1, 0)).toBe(0);
+        });
+
+        it("| multiplies as expected", () =>
+        {
+            const m2 = Mat2.f32.factory
+                .createOneEmpty()
+                .setTranslationMatrix(5);
+
+            expect(m2.getVec2MultiplyX(1)).toBe(6);
+        });
+    });
+
+    describe("=> multiplyMat2", () =>
+    {
+        it("| returns the expected matrix", () =>
+        {
+            const identityMatrix = Mat2.f32.factory
+                .createOneEmpty()
+                .setIdentityMatrix();
+            const m2 = Mat2.f32.factory
+                .createOneEmpty()
+                .setIdentityMatrix();
+            const result = m2.multiplyMat2(identityMatrix);
+
+            for (let i = 0; i < 2; ++i)
+            {
+                for (let j = 0; j < 2; ++j)
+                {
+                    expect(m2.getValueAt(i, j)).toBe(result.getValueAt(i, j));
+                }
+            }
+        });
+
+        it("| multiplies as expected transform & scale", () =>
+        {
+            const m2t = Mat2.f32.factory
+                .createOneEmpty()
+                .setTranslationMatrix(5);
+            const m2s = Mat2.f32.factory
+                .createOneEmpty()
+                .setScalingMatrix(2);
+            const m2 = m2t.multiplyMat2(m2s);
+            expect(m2.getVec2MultiplyX(1)).toBe(12);
+        });
+
+        it("| multiplies as expected scale & transform", () =>
+        {
+            const m2t = Mat2.f32.factory
+                .createOneEmpty()
+                .setTranslationMatrix(5);
+            const m2s = Mat2.f32.factory
+                .createOneEmpty()
+                .setScalingMatrix(2);
+            const m2 = m2s.multiplyMat2(m2t);
+            expect(m2.getVec2MultiplyX(1)).toBe(7);
+        });
+    });
+
     describe("=> slice", () =>
     {
         it("| creates a copy", () =>

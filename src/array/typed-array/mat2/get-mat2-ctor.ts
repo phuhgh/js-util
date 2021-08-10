@@ -53,6 +53,49 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
             this[row * 2 + column as Extract<keyof Mat2<never>, number>] = value;
         }
 
+        public setScalingMatrix(scalingFactor: number): Mat2<InstanceType<TCtor>>
+        {
+            this[0] = scalingFactor;
+            this[1] = 0;
+            this[2] = 0;
+            this[3] = 1;
+
+            return this;
+        }
+
+        public setTranslationMatrix(translation: number): Mat2<InstanceType<TCtor>>
+        {
+            this[0] = 1;
+            this[1] = 0;
+            this[2] = translation;
+            this[3] = 1;
+
+            return this;
+        }
+
+        public multiplyMat2<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            mat: Readonly<Mat2<TTypedArray>>,
+            result: Mat2<TResult> = (this.constructor as typeof Mat2Impl).factory.createOneEmpty() as Mat2<TResult>,
+        )
+            : Mat2<TResult>
+        {
+            const [a0, a1, a2, a3] = this as unknown as TMat2CtorArgs;
+            const [b0, b1, b2, b3] = mat as unknown as TMat2CtorArgs;
+
+            result[0] = a0 * b0 + a1 * b2;
+            result[1] = a0 * b1 + a1 * b3;
+            result[2] = a2 * b0 + a3 * b2;
+            result[3] = a2 * b1 + a3 * b3;
+
+            return result;
+        }
+
+        public override getVec2MultiplyX(x: number): number
+        {
+            return this[0] * x + this[2];
+        }
+
         public override getRow<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             row: number,
