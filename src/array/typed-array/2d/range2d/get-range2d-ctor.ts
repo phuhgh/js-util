@@ -22,6 +22,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
     {
         public static factory: ITypedArrayTupleFactory<Range2d<InstanceType<TCtor>>, TRange2dCtorArgs> = new Mat2Factory(Range2dImpl, NormalizedDataViewProvider.getView(ctor));
         protected static vec2Ctor = Vec2.getCtor(ctor);
+        protected static mat3Ctor = Mat3.getCtor(ctor);
 
         public setXMin(value: number): void
         {
@@ -137,6 +138,32 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return writeTo;
         }
 
+        public getRangeTransform<TArray extends TTypedArray = InstanceType<TCtor>>
+        (
+            toRange: Readonly<Range2d<TTypedArray>>,
+            result: Mat3<TArray> = (this.constructor as typeof Range2dImpl).mat3Ctor.factory.createOneEmpty() as Mat3<TArray>,
+        )
+            : Mat3<TArray>
+        {
+            DEBUG_MODE && _Debug.runBlock(() =>
+            {
+                _Debug.assert(this.getXRange() !== 0, "divide by 0");
+                _Debug.assert(this.getYRange() !== 0, "divide by 0");
+            });
+
+            const xSf = toRange.getXRange() / this.getXRange();
+            const ySf = toRange.getYRange() / this.getYRange();
+            const xTx = toRange.getXMin() - this.getXMin() * xSf;
+            const yTx = toRange.getYMin() - this.getYMin() * ySf;
+            const transformMatrix = (this.constructor as typeof Range2dImpl).tmpMat3;
+
+            result.setScalingMatrix(xSf, ySf);
+            transformMatrix.setTranslationMatrix(xTx, yTx);
+            result.multiplyMat3(transformMatrix, result);
+
+            return result;
+        }
+
         public isPointInRange(point: Vec2<TTypedArray>): boolean
         {
             const x = point.getX();
@@ -156,8 +183,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             DEBUG_MODE && _Debug.assert(this.isPointInRange(relativeTo), "relativeTo must be inside the range");
 
             const difference = this
-                .getCenter((this.constructor as typeof Range2dImpl).tmp)
-                .difference(relativeTo, (this.constructor as typeof Range2dImpl).tmp);
+                .getCenter((this.constructor as typeof Range2dImpl).tmpVec)
+                .difference(relativeTo, (this.constructor as typeof Range2dImpl).tmpVec);
 
             // multiply by 2 as we want to compare to half the range
             // make the difference relative, varies from -1 to 1
@@ -229,7 +256,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             this.setYMax(this.getYMax() + dy);
         }
 
-        private static readonly tmp = Range2dImpl.vec2Ctor.factory.createOneEmpty();
+        private static readonly tmpVec = Range2dImpl.vec2Ctor.factory.createOneEmpty();
+        private static readonly tmpMat3 = Range2dImpl.mat3Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange2d!: true;
     } as Range2dCtor<InstanceType<TCtor>>;

@@ -168,6 +168,19 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    /**
+     * Creates a transform matrix that maps values in this range onto `_toRange`.
+     */
+    public getRangeTransform<TArray extends TTypedArray = TTypedArray>
+    (
+        _toRange: Readonly<Range2d<TTypedArray>>,
+        _result?: Mat3<TArray>,
+    )
+        : Mat3<TArray>
+    {
+        throw new Error();
+    }
+
     public isPointInRange(_point: Vec2<TTypedArray>): boolean
     {
         throw new Error();

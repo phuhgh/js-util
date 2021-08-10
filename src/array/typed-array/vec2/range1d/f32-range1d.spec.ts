@@ -1,4 +1,4 @@
-import { debugDescribe } from "../../../../test-utils";
+import { debugDescribe, expectValueToBeNearTo } from "../../../../test-utils";
 import { Range1d } from "./range1d";
 import { Mat2 } from "../../mat2/mat2";
 
@@ -126,6 +126,42 @@ debugDescribe("=> Range1d", () =>
             expect(a).toEqual(b);
             expect(a).not.toBe(b);
             expect(a.bound1d).toBeDefined();
+        });
+    });
+
+    describe("=> get2dRangeTransformMatrix", () =>
+    {
+        const transform = Range1d.f32.factory
+            .createOne(-100, -50)
+            .getRangeTransform(
+                Range1d.f32.factory.createOne(-0.75, -0.5),
+            );
+
+        it("| creates the expected matrix", () =>
+        {
+            // scaling factors
+            expectValueToBeNearTo(transform.getValueAt(0, 0), 0.25 / 50);
+            // transform
+            expectValueToBeNearTo(transform.getValueAt(0, 1), -0.25);
+        });
+
+        it("maps values as expected", () =>
+        {
+            expectValueToBeNearTo(transform.getVec2MultiplyX(-75), -0.625);
+            expectValueToBeNearTo(transform.getVec2MultiplyX(50), 0);
+        });
+
+        it("inverts ranges where ranges are backwards", () =>
+        {
+            // backwards in that the min is the max and the max is the min
+            const backwardsTransform = Range1d.f32.factory
+                .createOne(0, 10)
+                .getRangeTransform(
+                    Range1d.f32.factory.createOne(-10, -5),
+                );
+
+            expectValueToBeNearTo(backwardsTransform.getVec2MultiplyX(0), -10);
+            expectValueToBeNearTo(backwardsTransform.getVec2MultiplyX(10), -5);
         });
     });
 });

@@ -1,4 +1,4 @@
-import { debugDescribe } from "../../../../test-utils";
+import { debugDescribe, expectValueToBeNearTo } from "../../../../test-utils";
 import { Range2d } from "./range2d";
 import { Vec2 } from "../../vec2/vec2";
 import { Mat3 } from "../../mat3/mat3";
@@ -149,6 +149,48 @@ debugDescribe("=> F32Range2d", () =>
             expect(a).toEqual(b);
             expect(a).not.toBe(b);
             expect(a.scaleRelativeTo).toBeDefined();
+        });
+    });
+
+    describe("=> get2dRangeTransformMatrix", () =>
+    {
+        const transform = Range2d.f32.factory
+            .createOne(-100, -50, 0, 100)
+            .getRangeTransform(
+                Range2d.f32.factory.createOne(-0.75, -0.5, -1, 1),
+            );
+
+        it("| creates the expected matrix", () =>
+        {
+            // scaling factors
+            expectValueToBeNearTo(transform.getValueAt(0, 0), 0.25 / 50);
+            expectValueToBeNearTo(transform.getValueAt(1, 1), 2 / 100);
+            // transform
+            expectValueToBeNearTo(transform.getValueAt(0, 2), -0.25);
+            expectValueToBeNearTo(transform.getValueAt(1, 2), -1);
+        });
+
+        it("maps vec2s as expected", () =>
+        {
+            const point = Vec2.f32.factory.createOne(-75, 50);
+            const result = point.mat3Multiply(transform);
+            expectValueToBeNearTo(result.getX(), -0.625);
+            expectValueToBeNearTo(result.getY(), 0);
+        });
+
+        it("inverts ranges where ranges are backwards", () =>
+        {
+            // backwards in that the min is the max and the max is the min
+            const backwardsTransform = Range2d.f32.factory
+                .createOne(0, 10, 0, 10)
+                .getRangeTransform(
+                    Range2d.f32.factory.createOne(-10, -5, -10, -5),
+                );
+
+            const point = Vec2.f32.factory.createOne(0, 10);
+            const result = point.mat3Multiply(backwardsTransform);
+            expectValueToBeNearTo(result.getX(), -10);
+            expectValueToBeNearTo(result.getY(), -5);
         });
     });
 });

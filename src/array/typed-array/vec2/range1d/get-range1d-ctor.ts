@@ -20,6 +20,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
     return class Range1dImpl extends getVec2Ctor(ctor) implements Range1d<InstanceType<TCtor>>
     {
         public static factory: ITypedArrayTupleFactory<Range1d<InstanceType<TCtor>>, TRange1dCtorArgs> = new Vec2Factory(Range1dImpl, NormalizedDataViewProvider.getView(ctor));
+        protected static mat2Ctor = Mat2.getCtor(ctor);
 
         public setMin(value: number): void
         {
@@ -77,6 +78,26 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
             return writeTo;
         }
 
+        public getRangeTransform<TArray extends TTypedArray = InstanceType<TCtor>>
+        (
+            toRange: Readonly<Range1d<TTypedArray>>,
+            result: Mat2<TArray> = (this.constructor as typeof Range1dImpl).mat2Ctor.factory.createOneEmpty() as Mat2<TArray>,
+        )
+            : Mat2<TArray>
+        {
+            DEBUG_MODE && _Debug.assert(this.getRange() !== 0, "divide by 0");
+
+            const sf = toRange.getRange() / this.getRange();
+            const tx = toRange.getMin() - this.getMin() * sf;
+            const transformMatrix = (this.constructor as typeof Range1dImpl).tmpMat2;
+
+            result.setScalingMatrix(sf);
+            transformMatrix.setTranslationMatrix(tx);
+            result.multiplyMat2(transformMatrix, result);
+
+            return result;
+        }
+
         public isValueInRange1d(value: number): boolean
         {
             return value >= this.getMin() && value <= this.getMax();
@@ -132,6 +153,8 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
             this.setMin(this.getMin() + dv);
             this.setMax(this.getMax() + dv);
         }
+
+        private static readonly tmpMat2 = Range1dImpl.mat2Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange1d!: true;
     } as Range1dCtor<InstanceType<TCtor>>;

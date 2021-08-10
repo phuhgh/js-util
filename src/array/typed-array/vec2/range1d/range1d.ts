@@ -111,6 +111,19 @@ export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
         throw new Error();
     }
 
+    /**
+     * Creates a transform matrix that maps values in this range onto `_toRange`.
+     */
+    public getRangeTransform<TArray extends TTypedArray = TTypedArray>
+    (
+        _toRange: Readonly<Range1d<TTypedArray>>,
+        _result?: Mat2<TArray>,
+    )
+        : Mat2<TArray>
+    {
+        throw new Error();
+    }
+
     public isValueInRange1d(_value: number): boolean
     {
         throw new Error();
@@ -127,7 +140,7 @@ export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
      *
      * E.g. scaling factor of 0.5, P represents the position of the point in the range:
      *```
-     * XMin                      XMax
+     *  min                       max
      *  |P-------------------------|
      *  |-------------|
      *
