@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { TVec2CtorArgs, Vec2, Vec2Ctor } from "./vec2";
+import { TVec2CtorArgs, Vec2, IVec2Ctor } from "./vec2";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec2Factory } from "./vec2-factory";
 import { Mat3 } from "../mat3/mat3";
@@ -11,7 +11,7 @@ import { TTypedArray } from "../t-typed-array";
 /**
  * @internal
  */
-export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec2Ctor<InstanceType<TCtor>>
+export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ctor<InstanceType<TCtor>>
 {
     return class Vec2Impl extends (ctor as unknown as ITypedArrayCtor<Vec2<InstanceType<TCtor>>>)
     {

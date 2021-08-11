@@ -1,5 +1,5 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { TVec3CtorArgs, Vec3, Vec3Ctor } from "./vec3";
+import { TVec3CtorArgs, Vec3, IVec3Ctor } from "./vec3";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
 import { TTypedArray } from "../t-typed-array";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
@@ -10,7 +10,7 @@ export class Vec3Factory<T extends Vec3<TTypedArray>>
 {
     public constructor
     (
-        private ctor: Vec3Ctor<TTypedArray>,
+        private ctor: IVec3Ctor<TTypedArray>,
         dataView: INormalizedDataView,
     )
     {

@@ -16,7 +16,7 @@ export type TMargin2dCtorArgs = [left: number, right: number, top: number, botto
  * @public
  * Constructor for {@link Margin2d}.
  */
-export interface Margin2dCtor<TArray extends TTypedArray>
+export interface IMargin2dCtor<TArray extends TTypedArray>
 {
     /**
      * The size in bytes of each element in the array.
@@ -36,19 +36,19 @@ export interface Margin2dCtor<TArray extends TTypedArray>
  */
 export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
 {
-    public static f64: Margin2dCtor<Float64Array> = getMargin2dCtor(Float64Array);
-    public static f32: Margin2dCtor<Float32Array> = getMargin2dCtor(Float32Array);
-    public static u32: Margin2dCtor<Uint32Array> = getMargin2dCtor(Uint32Array);
-    public static i32: Margin2dCtor<Int32Array> = getMargin2dCtor(Int32Array);
-    public static u16: Margin2dCtor<Uint16Array> = getMargin2dCtor(Uint16Array);
-    public static i16: Margin2dCtor<Int16Array> = getMargin2dCtor(Int16Array);
-    public static u8c: Margin2dCtor<Uint8ClampedArray> = getMargin2dCtor(Uint8ClampedArray);
-    public static u8: Margin2dCtor<Uint8Array> = getMargin2dCtor(Uint8Array);
-    public static i8: Margin2dCtor<Int8Array> = getMargin2dCtor(Int8Array);
+    public static f64: IMargin2dCtor<Float64Array> = getMargin2dCtor(Float64Array);
+    public static f32: IMargin2dCtor<Float32Array> = getMargin2dCtor(Float32Array);
+    public static u32: IMargin2dCtor<Uint32Array> = getMargin2dCtor(Uint32Array);
+    public static i32: IMargin2dCtor<Int32Array> = getMargin2dCtor(Int32Array);
+    public static u16: IMargin2dCtor<Uint16Array> = getMargin2dCtor(Uint16Array);
+    public static i16: IMargin2dCtor<Int16Array> = getMargin2dCtor(Int16Array);
+    public static u8c: IMargin2dCtor<Uint8ClampedArray> = getMargin2dCtor(Uint8ClampedArray);
+    public static u8: IMargin2dCtor<Uint8Array> = getMargin2dCtor(Uint8Array);
+    public static i8: IMargin2dCtor<Int8Array> = getMargin2dCtor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Margin2dCtor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMargin2dCtor<InstanceType<TCtor>>
     {
-        return this.constructors.get(ctor) as Margin2dCtor<InstanceType<TCtor>>;
+        return this.constructors.get(ctor) as IMargin2dCtor<InstanceType<TCtor>>;
     }
 
     protected static constructors = populateTypedArrayConstructorMap(Margin2d);

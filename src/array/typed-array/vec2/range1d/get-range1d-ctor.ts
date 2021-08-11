@@ -1,4 +1,4 @@
-import { Range1d, Range1dCtor, TRange1dCtorArgs } from "./range1d";
+import { Range1d, IRange1dCtor, TRange1dCtorArgs } from "./range1d";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
@@ -15,7 +15,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
 (
     ctor: TCtor
 )
-    : Range1dCtor<InstanceType<TCtor>>
+    : IRange1dCtor<InstanceType<TCtor>>
 {
     return class Range1dImpl extends getVec2Ctor(ctor) implements Range1d<InstanceType<TCtor>>
     {
@@ -157,5 +157,5 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         private static readonly tmpMat2 = Range1dImpl.mat2Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange1d!: true;
-    } as Range1dCtor<InstanceType<TCtor>>;
+    } as IRange1dCtor<InstanceType<TCtor>>;
 }

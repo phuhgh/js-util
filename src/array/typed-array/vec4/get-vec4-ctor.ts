@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { TVec4CtorArgs, Vec4, Vec4Ctor } from "./vec4";
+import { TVec4CtorArgs, Vec4, IVec4Ctor } from "./vec4";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec4Factory } from "./vec4-factory";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
@@ -9,7 +9,7 @@ import { RgbaColorPacker } from "../../../colors/rgba-color-packer";
 /**
  * @internal
  */
-export function getVec4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec4Ctor<InstanceType<TCtor>>
+export function getVec4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec4Ctor<InstanceType<TCtor>>
 {
     return class Vec4Impl extends (ctor as unknown as ITypedArrayCtor<Vec4<InstanceType<TCtor>>>)
     {

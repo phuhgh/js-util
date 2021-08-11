@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { TVec3CtorArgs, Vec3, Vec3Ctor } from "./vec3";
+import { TVec3CtorArgs, Vec3, IVec3Ctor } from "./vec3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec3Factory } from "./vec3-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
@@ -8,7 +8,7 @@ import { TTypedArrayCtor } from "../t-typed-array-ctor";
 /**
  * @internal
  */
-export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec3Ctor<InstanceType<TCtor>>
+export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ctor<InstanceType<TCtor>>
 {
     return class Vec3Impl extends (ctor as unknown as ITypedArrayCtor<Vec3<InstanceType<TCtor>>>)
     {

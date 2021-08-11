@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { Mat4, Mat4Ctor, TMat4CtorArgs } from "./mat4";
+import { Mat4, IMat4Ctor, TMat4CtorArgs } from "./mat4";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat4Factory } from "./mat4-factory";
 import { _Debug } from "../../../debug/_debug";
@@ -11,7 +11,7 @@ import { TTypedArray } from "../t-typed-array";
 /**
  * @internal
  */
-export function getMat4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat4Ctor<InstanceType<TCtor>>
+export function getMat4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat4Ctor<InstanceType<TCtor>>
 {
     return class Mat4Impl extends (ctor as unknown as ITypedArrayCtor<Mat4<InstanceType<TCtor>>>)
     {

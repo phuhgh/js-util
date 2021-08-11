@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { Mat2, Mat2Ctor, TMat2CtorArgs } from "./mat2";
+import { Mat2, IMat2Ctor, TMat2CtorArgs } from "./mat2";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat2Factory } from "./mat2-factory";
 import { _Debug } from "../../../debug/_debug";
@@ -15,7 +15,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
 (
     ctor: TCtor,
 )
-    : Mat2Ctor<InstanceType<TCtor>>
+    : IMat2Ctor<InstanceType<TCtor>>
 {
     return class Mat2Impl extends (ctor as unknown as ITypedArrayCtor<Mat2<InstanceType<TCtor>>>)
     {

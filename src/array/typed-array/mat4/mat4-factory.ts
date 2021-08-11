@@ -1,5 +1,5 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { Mat4, Mat4Ctor, TMat4CtorArgs } from "./mat4";
+import { Mat4, IMat4Ctor, TMat4CtorArgs } from "./mat4";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
 import { TTypedArray } from "../t-typed-array";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
@@ -10,7 +10,7 @@ export class Mat4Factory<T extends Mat4<TTypedArray>>
 {
     public constructor
     (
-        private ctor: Mat4Ctor<TTypedArray>,
+        private ctor: IMat4Ctor<TTypedArray>,
         dataView: INormalizedDataView,
     )
     {

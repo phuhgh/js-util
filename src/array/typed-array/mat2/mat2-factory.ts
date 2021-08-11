@@ -2,7 +2,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
 import { TTypedArray } from "../t-typed-array";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
-import { Mat2, Mat2Ctor, TMat2CtorArgs } from "./mat2";
+import { Mat2, IMat2Ctor, TMat2CtorArgs } from "./mat2";
 
 export class Mat2Factory<T extends Mat2<TTypedArray>>
     extends ATypedTupleFactory<T, TMat2CtorArgs>
@@ -10,7 +10,7 @@ export class Mat2Factory<T extends Mat2<TTypedArray>>
 {
     public constructor
     (
-        private readonly ctor: Mat2Ctor<TTypedArray>,
+        private readonly ctor: IMat2Ctor<TTypedArray>,
         dataView: INormalizedDataView,
     )
     {

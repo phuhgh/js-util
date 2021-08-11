@@ -1,7 +1,7 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
 import { TTypedArray } from "../t-typed-array";
-import { TVec4CtorArgs, Vec4, Vec4Ctor } from "./vec4";
+import { TVec4CtorArgs, Vec4, IVec4Ctor } from "./vec4";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 
 export class Vec4Factory<T extends Vec4<TTypedArray>>
@@ -10,7 +10,7 @@ export class Vec4Factory<T extends Vec4<TTypedArray>>
 {
     public constructor
     (
-        private readonly ctor: Vec4Ctor<TTypedArray>,
+        private readonly ctor: IVec4Ctor<TTypedArray>,
         dataView: INormalizedDataView,
     )
     {

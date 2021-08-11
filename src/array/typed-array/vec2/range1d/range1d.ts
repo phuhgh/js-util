@@ -15,7 +15,7 @@ export type TRange1dCtorArgs = [min: number, max: number];
  * @public
  * Constructor for {@link Range1d}.
  */
-export interface Range1dCtor<TArray extends TTypedArray>
+export interface IRange1dCtor<TArray extends TTypedArray>
 {
     /**
      * The size in bytes of each element in the array.
@@ -35,19 +35,19 @@ export interface Range1dCtor<TArray extends TTypedArray>
  */
 export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
 {
-    public static f64: Range1dCtor<Float64Array> = getRange1dCtor(Float64Array);
-    public static f32: Range1dCtor<Float32Array> = getRange1dCtor(Float32Array);
-    public static u32: Range1dCtor<Uint32Array> = getRange1dCtor(Uint32Array);
-    public static i32: Range1dCtor<Int32Array> = getRange1dCtor(Int32Array);
-    public static u16: Range1dCtor<Uint16Array> = getRange1dCtor(Uint16Array);
-    public static i16: Range1dCtor<Int16Array> = getRange1dCtor(Int16Array);
-    public static u8c: Range1dCtor<Uint8ClampedArray> = getRange1dCtor(Uint8ClampedArray);
-    public static u8: Range1dCtor<Uint8Array> = getRange1dCtor(Uint8Array);
-    public static i8: Range1dCtor<Int8Array> = getRange1dCtor(Int8Array);
+    public static f64: IRange1dCtor<Float64Array> = getRange1dCtor(Float64Array);
+    public static f32: IRange1dCtor<Float32Array> = getRange1dCtor(Float32Array);
+    public static u32: IRange1dCtor<Uint32Array> = getRange1dCtor(Uint32Array);
+    public static i32: IRange1dCtor<Int32Array> = getRange1dCtor(Int32Array);
+    public static u16: IRange1dCtor<Uint16Array> = getRange1dCtor(Uint16Array);
+    public static i16: IRange1dCtor<Int16Array> = getRange1dCtor(Int16Array);
+    public static u8c: IRange1dCtor<Uint8ClampedArray> = getRange1dCtor(Uint8ClampedArray);
+    public static u8: IRange1dCtor<Uint8Array> = getRange1dCtor(Uint8Array);
+    public static i8: IRange1dCtor<Int8Array> = getRange1dCtor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Range1dCtor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IRange1dCtor<InstanceType<TCtor>>
     {
-        return Range1d.constructors.get(ctor) as Range1dCtor<InstanceType<TCtor>>;
+        return Range1d.constructors.get(ctor) as IRange1dCtor<InstanceType<TCtor>>;
     }
 
     protected static constructors = populateTypedArrayConstructorMap(Range1d);

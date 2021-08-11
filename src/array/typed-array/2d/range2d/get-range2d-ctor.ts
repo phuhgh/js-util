@@ -1,4 +1,4 @@
-import { Range2d, Range2dCtor, TRange2dCtorArgs } from "./range2d";
+import { Range2d, IRange2dCtor, TRange2dCtorArgs } from "./range2d";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
 import { Vec2 } from "../../vec2/vec2";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
@@ -16,7 +16,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 (
     ctor: TCtor
 )
-    : Range2dCtor<InstanceType<TCtor>>
+    : IRange2dCtor<InstanceType<TCtor>>
 {
     return class Range2dImpl extends getMat2Ctor(ctor) implements Range2d<InstanceType<TCtor>>
     {
@@ -260,5 +260,5 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         private static readonly tmpMat3 = Range2dImpl.mat3Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange2d!: true;
-    } as Range2dCtor<InstanceType<TCtor>>;
+    } as IRange2dCtor<InstanceType<TCtor>>;
 }

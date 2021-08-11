@@ -1,4 +1,4 @@
-import { Mat3, Mat3Ctor, TMat3CtorArgs } from "./mat3";
+import { Mat3, IMat3Ctor, TMat3CtorArgs } from "./mat3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat3Factory } from "./mat3-factory";
 import { _Debug } from "../../../debug/_debug";
@@ -12,7 +12,7 @@ import { TTypedArray } from "../t-typed-array";
 /**
  * @internal
  */
-export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Ctor<InstanceType<TCtor>>
+export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ctor<InstanceType<TCtor>>
 {
     return class Mat3Impl extends (ctor as unknown as ITypedArrayCtor<Mat3<InstanceType<TCtor>>>)
     {

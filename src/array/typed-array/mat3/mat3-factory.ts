@@ -1,7 +1,7 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
 import { TTypedArray } from "../t-typed-array";
-import { Mat3, Mat3Ctor, TMat3CtorArgs } from "./mat3";
+import { Mat3, IMat3Ctor, TMat3CtorArgs } from "./mat3";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
 
 export class Mat3Factory<T extends Mat3<TTypedArray>>
@@ -10,7 +10,7 @@ export class Mat3Factory<T extends Mat3<TTypedArray>>
 {
     public constructor
     (
-        private ctor: Mat3Ctor<TTypedArray>,
+        private ctor: IMat3Ctor<TTypedArray>,
         dataView: INormalizedDataView,
     )
     {

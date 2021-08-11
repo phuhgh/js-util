@@ -1,4 +1,4 @@
-import { Margin2d, Margin2dCtor, TMargin2dCtorArgs } from "./margin2d";
+import { Margin2d, IMargin2dCtor, TMargin2dCtorArgs } from "./margin2d";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
 import { Range2d } from "../range2d/range2d";
@@ -15,7 +15,7 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
 (
     ctor: TCtor
 )
-    : Margin2dCtor<InstanceType<TCtor>>
+    : IMargin2dCtor<InstanceType<TCtor>>
 {
     return class Margin2dImpl extends getMat2Ctor(ctor) implements Margin2d<InstanceType<TCtor>>
     {
@@ -104,5 +104,5 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
 
         public TTypeGuardAMargin2d!: true;
 
-    } as Margin2dCtor<InstanceType<TCtor>>;
+    } as IMargin2dCtor<InstanceType<TCtor>>;
 }

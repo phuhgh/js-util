@@ -14,7 +14,7 @@ export type TVec4CtorArgs = [x: number, y: number, z: number, w: number];
  * @public
  * Constructor for {@link Vec4}.
  */
-export interface Vec4Ctor<TArray extends TTypedArray>
+export interface IVec4Ctor<TArray extends TTypedArray>
 {
     /**
      * The size in bytes of each element in the array.
@@ -34,19 +34,19 @@ export interface Vec4Ctor<TArray extends TTypedArray>
  */
 export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<4, TArray>
 {
-    public static f64: Vec4Ctor<Float64Array> = getVec4Ctor(Float64Array);
-    public static f32: Vec4Ctor<Float32Array> = getVec4Ctor(Float32Array);
-    public static u32: Vec4Ctor<Uint32Array> = getVec4Ctor(Uint32Array);
-    public static i32: Vec4Ctor<Int32Array> = getVec4Ctor(Int32Array);
-    public static u16: Vec4Ctor<Uint16Array> = getVec4Ctor(Uint16Array);
-    public static i16: Vec4Ctor<Int16Array> = getVec4Ctor(Int16Array);
-    public static u8c: Vec4Ctor<Uint8ClampedArray> = getVec4Ctor(Uint8ClampedArray);
-    public static u8: Vec4Ctor<Uint8Array> = getVec4Ctor(Uint8Array);
-    public static i8: Vec4Ctor<Int8Array> = getVec4Ctor(Int8Array);
+    public static f64: IVec4Ctor<Float64Array> = getVec4Ctor(Float64Array);
+    public static f32: IVec4Ctor<Float32Array> = getVec4Ctor(Float32Array);
+    public static u32: IVec4Ctor<Uint32Array> = getVec4Ctor(Uint32Array);
+    public static i32: IVec4Ctor<Int32Array> = getVec4Ctor(Int32Array);
+    public static u16: IVec4Ctor<Uint16Array> = getVec4Ctor(Uint16Array);
+    public static i16: IVec4Ctor<Int16Array> = getVec4Ctor(Int16Array);
+    public static u8c: IVec4Ctor<Uint8ClampedArray> = getVec4Ctor(Uint8ClampedArray);
+    public static u8: IVec4Ctor<Uint8Array> = getVec4Ctor(Uint8Array);
+    public static i8: IVec4Ctor<Int8Array> = getVec4Ctor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Vec4Ctor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec4Ctor<InstanceType<TCtor>>
     {
-        return Vec4.constructors.get(ctor) as Vec4Ctor<InstanceType<TCtor>>;
+        return Vec4.constructors.get(ctor) as IVec4Ctor<InstanceType<TCtor>>;
     }
 
     protected static constructors = populateTypedArrayConstructorMap(Vec4);

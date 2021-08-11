@@ -25,7 +25,7 @@ export type TMat3CtorArgs = [
  * @public
  * Constructor for {@link Mat3}.
  */
-export interface Mat3Ctor<TArray extends TTypedArray>
+export interface IMat3Ctor<TArray extends TTypedArray>
 {
     /**
      * The size in bytes of each element in the array.
@@ -45,19 +45,19 @@ export interface Mat3Ctor<TArray extends TTypedArray>
  */
 export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<9, TArray>
 {
-    public static f64: Mat3Ctor<Float64Array> = getMat3Ctor(Float64Array);
-    public static f32: Mat3Ctor<Float32Array> = getMat3Ctor(Float32Array);
-    public static u32: Mat3Ctor<Uint32Array> = getMat3Ctor(Uint32Array);
-    public static i32: Mat3Ctor<Int32Array> = getMat3Ctor(Int32Array);
-    public static u16: Mat3Ctor<Uint16Array> = getMat3Ctor(Uint16Array);
-    public static i16: Mat3Ctor<Int16Array> = getMat3Ctor(Int16Array);
-    public static u8c: Mat3Ctor<Uint8ClampedArray> = getMat3Ctor(Uint8ClampedArray);
-    public static u8: Mat3Ctor<Uint8Array> = getMat3Ctor(Uint8Array);
-    public static i8: Mat3Ctor<Int8Array> = getMat3Ctor(Int8Array);
+    public static f64: IMat3Ctor<Float64Array> = getMat3Ctor(Float64Array);
+    public static f32: IMat3Ctor<Float32Array> = getMat3Ctor(Float32Array);
+    public static u32: IMat3Ctor<Uint32Array> = getMat3Ctor(Uint32Array);
+    public static i32: IMat3Ctor<Int32Array> = getMat3Ctor(Int32Array);
+    public static u16: IMat3Ctor<Uint16Array> = getMat3Ctor(Uint16Array);
+    public static i16: IMat3Ctor<Int16Array> = getMat3Ctor(Int16Array);
+    public static u8c: IMat3Ctor<Uint8ClampedArray> = getMat3Ctor(Uint8ClampedArray);
+    public static u8: IMat3Ctor<Uint8Array> = getMat3Ctor(Uint8Array);
+    public static i8: IMat3Ctor<Int8Array> = getMat3Ctor(Int8Array);
 
-    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): Mat3Ctor<InstanceType<TCtor>>
+    public static getCtor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ctor<InstanceType<TCtor>>
     {
-        return Mat3.constructors.get(ctor) as Mat3Ctor<InstanceType<TCtor>>;
+        return Mat3.constructors.get(ctor) as IMat3Ctor<InstanceType<TCtor>>;
     }
 
     protected static constructors = populateTypedArrayConstructorMap(Mat3);
