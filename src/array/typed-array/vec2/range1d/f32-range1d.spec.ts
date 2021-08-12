@@ -164,4 +164,42 @@ debugDescribe("=> Range1d", () =>
             expectValueToBeNearTo(backwardsTransform.getVec2MultiplyX(10), -5);
         });
     });
+
+    describe("=> extendRange", () =>
+    {
+        const range = Range1d.f32.factory.createOne(5, 10);
+
+        it("| extends the range down", () =>
+        {
+            const extended = range.extendRange(4);
+            expect(extended.getMin()).toBe(4);
+            expect(extended.getMax()).toBe(10);
+        });
+
+        it("| extends the range up", () =>
+        {
+            const extended = range.extendRange(12);
+            expect(extended.getMin()).toBe(5);
+            expect(extended.getMax()).toBe(12);
+        });
+    });
+
+    describe("=> unionRange", () =>
+    {
+        const range = Range1d.f32.factory.createOne(5, 10);
+
+        it("| extends the range down", () =>
+        {
+            const extended = range.unionRange(Range1d.f32.factory.createOne(4, 10));
+            expect(extended.getMin()).toBe(4);
+            expect(extended.getMax()).toBe(10);
+        });
+
+        it("| extends the range up", () =>
+        {
+            const extended = range.unionRange(Range1d.f32.factory.createOne(5, 12));
+            expect(extended.getMin()).toBe(5);
+            expect(extended.getMax()).toBe(12);
+        });
+    });
 });

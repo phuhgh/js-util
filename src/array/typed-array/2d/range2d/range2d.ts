@@ -161,7 +161,18 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     public unionRange<TResult extends TTypedArray = TArray>
     (
         _range: Readonly<Range2d<TTypedArray>>,
-        _writeTo?: Range2d<TResult>
+        _writeTo?: Range2d<TResult>,
+    )
+        : Range2d<TResult>
+    {
+        throw new Error();
+    }
+
+    public extendRange<TResult extends TTypedArray = TArray>
+    (
+        _x: number,
+        _y: number,
+        _writeTo?: Range2d<TResult>,
     )
         : Range2d<TResult>
     {

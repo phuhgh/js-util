@@ -193,4 +193,50 @@ debugDescribe("=> F32Range2d", () =>
             expectValueToBeNearTo(result.getY(), -5);
         });
     });
+
+    describe("=> extendRange", () =>
+    {
+        const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
+
+        it("| extends the range down", () =>
+        {
+            const extended = range.extendRange(4, 4);
+            expect(extended.getXMin()).toBe(4);
+            expect(extended.getYMin()).toBe(4);
+            expect(extended.getXMax()).toBe(10);
+            expect(extended.getYMax()).toBe(10);
+        });
+
+        it("| extends the range up", () =>
+        {
+            const extended = range.extendRange(12, 12);
+            expect(extended.getXMin()).toBe(5);
+            expect(extended.getYMin()).toBe(5);
+            expect(extended.getXMax()).toBe(12);
+            expect(extended.getYMax()).toBe(12);
+        });
+    });
+
+    describe("=> unionRange", () =>
+    {
+        const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
+
+        it("| extends the range down", () =>
+        {
+            const extended = range.unionRange(Range2d.f32.factory.createOne(4, 10, 4, 10));
+            expect(extended.getXMin()).toBe(4);
+            expect(extended.getYMin()).toBe(4);
+            expect(extended.getXMax()).toBe(10);
+            expect(extended.getYMax()).toBe(10);
+        });
+
+        it("| extends the range up", () =>
+        {
+            const extended = range.unionRange(Range2d.f32.factory.createOne(5, 12, 5, 12));
+            expect(extended.getXMin()).toBe(5);
+            expect(extended.getYMin()).toBe(5);
+            expect(extended.getXMax()).toBe(12);
+            expect(extended.getYMax()).toBe(12);
+        });
+    });
 });

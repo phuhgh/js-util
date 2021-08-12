@@ -1,4 +1,4 @@
-import { Range1d, IRange1dCtor, TRange1dCtorArgs } from "./range1d";
+import { IRange1dCtor, Range1d, TRange1dCtorArgs } from "./range1d";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
@@ -77,6 +77,20 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
 
             return writeTo;
         }
+
+        public extendRange<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: number,
+            writeTo: Range1d<TResult> = (this.constructor as typeof Range1dImpl).factory.createOneEmpty() as Range1d<TResult>,
+        )
+            : Range1d<TResult>
+        {
+            writeTo[0] = this[0] > value ? value : this[0];
+            writeTo[1] = this[1] < value ? value : this[1];
+
+            return writeTo;
+        }
+
 
         public getRangeTransform<TArray extends TTypedArray = InstanceType<TCtor>>
         (

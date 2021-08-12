@@ -104,6 +104,16 @@ export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
     public unionRange<TResult extends TTypedArray = TArray>
     (
         _range: Readonly<Range1d<TTypedArray>>,
+        _writeTo?: Range1d<TResult>,
+    )
+        : Range1d<TResult>
+    {
+        throw new Error();
+    }
+
+    public extendRange<TResult extends TTypedArray = TArray>
+    (
+        _value: number,
         _writeTo?: Range1d<TResult>
     )
         : Range1d<TResult>

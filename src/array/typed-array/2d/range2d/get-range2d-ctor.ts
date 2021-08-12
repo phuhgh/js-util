@@ -1,4 +1,4 @@
-import { Range2d, IRange2dCtor, TRange2dCtorArgs } from "./range2d";
+import { IRange2dCtor, Range2d, TRange2dCtorArgs } from "./range2d";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
 import { Vec2 } from "../../vec2/vec2";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
@@ -134,6 +134,22 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             writeTo[1] = this[1] < range[1] ? range[1] : this[1];
             writeTo[2] = this[2] > range[2] ? range[2] : this[2];
             writeTo[3] = this[3] < range[3] ? range[3] : this[3];
+
+            return writeTo;
+        }
+
+        public extendRange<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            x: number,
+            y: number,
+            writeTo: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
+        )
+            : Range2d<TResult>
+        {
+            writeTo[0] = this[0] > x ? x : this[0];
+            writeTo[1] = this[1] < x ? x : this[1];
+            writeTo[2] = this[2] > y ? y : this[2];
+            writeTo[3] = this[3] < y ? y : this[3];
 
             return writeTo;
         }
