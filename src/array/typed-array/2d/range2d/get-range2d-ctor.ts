@@ -169,13 +169,16 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
             const xSf = toRange.getXRange() / this.getXRange();
             const ySf = toRange.getYRange() / this.getYRange();
-            const xTx = toRange.getXMin() - this.getXMin() * xSf;
-            const yTx = toRange.getYMin() - this.getYMin() * ySf;
-            const transformMatrix = (this.constructor as typeof Range2dImpl).tmpMat3;
 
-            result.setScalingMatrix(xSf, ySf);
-            transformMatrix.setTranslationMatrix(xTx, yTx);
-            result.multiplyMat3(transformMatrix, result);
+            result[0] = xSf;
+            result[1] = 0;
+            result[2] = 0;
+            result[3] = 0;
+            result[4] = ySf;
+            result[5] = 0;
+            result[6] = toRange.getXMin() - this.getXMin() * xSf;
+            result[7] = toRange.getYMin() - this.getYMin() * ySf;
+            result[8] = 1;
 
             return result;
         }
@@ -273,7 +276,6 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         }
 
         private static readonly tmpVec = Range2dImpl.vec2Ctor.factory.createOneEmpty();
-        private static readonly tmpMat3 = Range2dImpl.mat3Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange2d!: true;
     } as IRange2dCtor<InstanceType<TCtor>>;

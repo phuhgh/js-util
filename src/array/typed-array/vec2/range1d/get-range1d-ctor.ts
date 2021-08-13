@@ -91,7 +91,6 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
             return writeTo;
         }
 
-
         public getRangeTransform<TArray extends TTypedArray = InstanceType<TCtor>>
         (
             toRange: Readonly<Range1d<TTypedArray>>,
@@ -102,12 +101,11 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
             DEBUG_MODE && _Debug.assert(this.getRange() !== 0, "divide by 0");
 
             const sf = toRange.getRange() / this.getRange();
-            const tx = toRange.getMin() - this.getMin() * sf;
-            const transformMatrix = (this.constructor as typeof Range1dImpl).tmpMat2;
 
-            result.setScalingMatrix(sf);
-            transformMatrix.setTranslationMatrix(tx);
-            result.multiplyMat2(transformMatrix, result);
+            result[0] = sf;
+            result[1] = 0;
+            result[2] = toRange.getMin() - this.getMin() * sf;
+            result[3] = 1;
 
             return result;
         }
@@ -167,8 +165,6 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
             this.setMin(this.getMin() + dv);
             this.setMax(this.getMax() + dv);
         }
-
-        private static readonly tmpMat2 = Range1dImpl.mat2Ctor.factory.createOneEmpty();
 
         public TTypeGuardRange1d!: true;
     } as IRange1dCtor<InstanceType<TCtor>>;
