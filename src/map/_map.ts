@@ -8,6 +8,7 @@ import { mapValuesToArray } from "./impl/map-values-to-array";
 import { mapEntriesToArray } from "./impl/map-entries-to-array";
 import { mapDeleteGet } from "./impl/map-delete-get";
 import { mapAddToSet } from "./impl/map-add-to-set";
+import { mapDeleteFromSet } from "./impl/map-delete-from-set";
 
 /**
  * @public
@@ -20,6 +21,9 @@ export class _Map
 
     /** {@inheritDoc mapArrayMap} */
     public static readonly arrayMap = mapArrayMap;
+
+    /** {@inheritDoc (mapDeleteFromSet: 1)} */
+    public static readonly deleteFromSet = mapDeleteFromSet;
 
     /** {@inheritDoc (mapDeleteGet: 1)} */
     public static readonly deleteGet = mapDeleteGet;

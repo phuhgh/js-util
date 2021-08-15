@@ -113,6 +113,7 @@ export { promiseRejectFalsey } from "./promise/impl/promise-reject-falsey";
 export { promiseRejectNull } from "./promise/impl/promise-reject-null";
 export { mapAddToSet } from "./map/impl/map-add-to-set";
 export { mapArrayMap } from "./map/impl/map-array-map";
+export { mapDeleteFromSet } from "./map/impl/map-delete-from-set";
 export { mapDeleteGet } from "./map/impl/map-delete-get";
 export { mapEntriesToArray } from "./map/impl/map-entries-to-array";
 export { mapFirstKey } from "./map/impl/map-first-key";
