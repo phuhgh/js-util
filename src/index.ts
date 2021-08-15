@@ -111,6 +111,7 @@ export { fpOnce } from "./fp/impl/fp-once";
 export { fpValueOrNull } from "./fp/impl/fp-value-or-null";
 export { promiseRejectFalsey } from "./promise/impl/promise-reject-falsey";
 export { promiseRejectNull } from "./promise/impl/promise-reject-null";
+export { mapAddToSet } from "./map/impl/map-add-to-set";
 export { mapArrayMap } from "./map/impl/map-array-map";
 export { mapDeleteGet } from "./map/impl/map-delete-get";
 export { mapEntriesToArray } from "./map/impl/map-entries-to-array";
