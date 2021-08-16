@@ -121,6 +121,7 @@ export { mapFirstValue } from "./map/impl/map-first-value";
 export { mapInitializeGet } from "./map/impl/map-intialize-get";
 export { mapKeysToArray } from "./map/impl/map-keys-to-array";
 export { mapPush } from "./map/impl/map-push";
+export { mapReportingAddToSet } from "./map/impl/map-reporting-add-to-set";
 export { mapValuesToArray } from "./map/impl/map-values-to-array";
 export { mathBound } from "./math/impl/math-bound";
 export { mathBoundRandom } from "./math/impl/math-bound-random";

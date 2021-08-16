@@ -9,6 +9,7 @@ import { mapEntriesToArray } from "./impl/map-entries-to-array";
 import { mapDeleteGet } from "./impl/map-delete-get";
 import { mapAddToSet } from "./impl/map-add-to-set";
 import { mapDeleteFromSet } from "./impl/map-delete-from-set";
+import { mapReportingAddToSet } from "./impl/map-reporting-add-to-set";
 
 /**
  * @public
@@ -45,6 +46,9 @@ export class _Map
 
     /** {@inheritDoc (mapPush: 1)} */
     public static readonly push = mapPush;
+
+    /** {@inheritDoc (mapReportingAddToSet: 1)} */
+    public static readonly reportingAddToSet = mapReportingAddToSet;
 
     /** {@inheritDoc mapValuesToArray} */
     public static readonly valuesToArray = mapValuesToArray;
