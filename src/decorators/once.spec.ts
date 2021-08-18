@@ -14,13 +14,13 @@ debugDescribe("=> once decorator", () =>
         {
         }
 
-        @Once()
+        @Once
         public increment()
         {
             return ++this.v;
         }
 
-        @Once()
+        @Once
         public argumentTest(a: number, b: number)
         {
             expect(a).toBe(1);
@@ -33,7 +33,6 @@ debugDescribe("=> once decorator", () =>
 
     it("| runs the method only once", () =>
     {
-
         expect(t1.increment()).toBe(1);
         expect(t1.increment()).toBe(1);
 

@@ -102,6 +102,7 @@ export { dictionaryPairs } from "./dictionary/impl/dictionary-pairs";
 export { dictionaryPush } from "./dictionary/impl/dictionary-push";
 export { dictionaryValues } from "./dictionary/impl/dictionary-values";
 export { Once } from "./decorators/once";
+export { fpDebounce } from "./fp/impl/fp-debounce";
 export { fpIdentity } from "./fp/impl/fp-identity";
 export { fpMaybeNewValue } from "./fp/impl/fp-maybe-new-value";
 export { fpNoOp } from "./fp/impl/fp-no-op";

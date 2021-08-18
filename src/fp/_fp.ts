@@ -5,6 +5,7 @@ import { fpOnce } from "./impl/fp-once";
 import { fpNoOp } from "./impl/fp-no-op";
 import { fpValueOrNull } from "./impl/fp-value-or-null";
 import { fpMaybeNewValue } from "./impl/fp-maybe-new-value";
+import { fpDebounce } from "./impl/fp-debounce";
 
 /**
  * @public
@@ -12,6 +13,9 @@ import { fpMaybeNewValue } from "./impl/fp-maybe-new-value";
  */
 export class _Fp
 {
+    /** {@inheritDoc fpDebounce} */
+    public static readonly debounce = fpDebounce;
+
     /** {@inheritDoc fpIdentity} */
     public static readonly identity = fpIdentity;
 
