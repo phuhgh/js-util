@@ -191,6 +191,20 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return x >= this.getXMin() && x <= this.getXMax() && y >= this.getYMin() && y <= this.getYMax();
         }
 
+        public doesRangeIntersect(range: Range2d<TTypedArray>): boolean
+        {
+            return (Math.abs((this[0] + this[1]) - (range[0] + range[1])) < (this.getXRange() + range.getXRange()))
+                   && (Math.abs(((this[2] + this[3])) - (range[2] + range[3])) < (this.getYRange() + range.getYRange()));
+        }
+
+        public containsRange(range: Range2d<TTypedArray>): boolean
+        {
+            return this.getXMin() <= range.getXMin()
+                   && this.getXMax() >= range.getXMax()
+                   && this.getYMin() <= range.getYMin()
+                   && this.getYMax() >= range.getYMax();
+        }
+
         public scaleRelativeTo<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             scalingFactor: number,

@@ -23,6 +23,45 @@ debugDescribe("=> F32Range2d", () =>
         });
     });
 
+    describe("=> doesRangeIntersect", () =>
+    {
+        const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
+
+        it("| returns true if the ranges overlap", () =>
+        {
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(6, 7, 6, 7))).toBe(true);
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(4, 7, 4, 7))).toBe(true);
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(4, 11, 4, 11))).toBe(true);
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(7, 11, 7, 11))).toBe(true);
+        });
+
+        it("| returns false if the ranges do not overlap", () =>
+        {
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(1, 4, 6, 7))).toBe(false);
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(11, 14, 6, 7))).toBe(false);
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(6, 7, 1, 4))).toBe(false);
+            expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(6, 7, 11, 14))).toBe(false);
+        });
+    });
+
+    describe("=> containsRange", () =>
+    {
+        const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
+
+        it("| returns true if the ranges is contained", () =>
+        {
+            expect(range.containsRange(Range2d.f32.factory.createOne(6, 7, 6, 7))).toBe(true);
+        });
+
+        it("| returns false if the ranges do not overlap", () =>
+        {
+            expect(range.containsRange(Range2d.f32.factory.createOne(1, 4, 6, 7))).toBe(false);
+            expect(range.containsRange(Range2d.f32.factory.createOne(11, 14, 6, 7))).toBe(false);
+            expect(range.containsRange(Range2d.f32.factory.createOne(6, 7, 1, 4))).toBe(false);
+            expect(range.containsRange(Range2d.f32.factory.createOne(6, 7, 11, 14))).toBe(false);
+        });
+    });
+
     describe("=> scaleRelativeTo", () =>
     {
         describe("=> zooming out", () =>

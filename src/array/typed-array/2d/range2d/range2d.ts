@@ -197,6 +197,16 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    public doesRangeIntersect(_range: Range2d<TArray>): boolean
+    {
+        throw new Error();
+    }
+
+    public containsRange(_range: Range2d<TArray>): boolean
+    {
+        throw new Error();
+    }
+
     /* eslint-disable no-irregular-whitespace */
     /**
      * Scales the range relative to a point (may not be outside of the range).

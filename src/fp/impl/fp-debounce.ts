@@ -1,3 +1,6 @@
+/**
+ * @public
+ */
 export type TDebouncedFn<TArgs extends unknown[]> =
     & ((...args: TArgs) => void)
     & { cancel: () => void }
