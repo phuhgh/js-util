@@ -182,12 +182,12 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     /**
      * Creates a transform matrix that maps values in this range onto `_toRange`.
      */
-    public getRangeTransform<TArray extends TTypedArray = TTypedArray>
+    public getRangeTransform<TResult extends TTypedArray = TArray>
     (
         _toRange: Readonly<Range2d<TTypedArray>>,
-        _result?: Mat3<TArray>,
+        _result?: Mat3<TResult>,
     )
-        : Mat3<TArray>
+        : Mat3<TResult>
     {
         throw new Error();
     }

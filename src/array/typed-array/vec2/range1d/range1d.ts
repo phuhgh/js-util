@@ -124,12 +124,12 @@ export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
     /**
      * Creates a transform matrix that maps values in this range onto `_toRange`.
      */
-    public getRangeTransform<TArray extends TTypedArray = TTypedArray>
+    public getRangeTransform<TResult extends TTypedArray = TArray>
     (
         _toRange: Readonly<Range1d<TTypedArray>>,
-        _result?: Mat2<TArray>,
+        _result?: Mat2<TResult>,
     )
-        : Mat2<TArray>
+        : Mat2<TResult>
     {
         throw new Error();
     }
