@@ -48,8 +48,7 @@ describe("=> Vec2", () =>
             const b = Vec2.f32.factory.createOne(3, 4);
             const r = a.dotProduct(b);
 
-            expect(r[0]).toBe(3);
-            expect(r[1]).toBe(8);
+            expect(r).toBe(11);
         });
     });
 

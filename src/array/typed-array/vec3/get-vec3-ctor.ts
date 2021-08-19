@@ -1,9 +1,10 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { TVec3CtorArgs, Vec3, IVec3Ctor } from "./vec3";
+import { IVec3Ctor, TVec3CtorArgs, Vec3 } from "./vec3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec3Factory } from "./vec3-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
+import { TTypedArray } from "../t-typed-array";
 
 /**
  * @internal
@@ -37,6 +38,31 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
         public override getZ(): number
         {
             return this[2];
+        }
+
+        public getMagnitude(): number
+        {
+            const x = this[0];
+            const y = this[1];
+            const z = this[2];
+            return Math.sqrt(x * x + y * y + z * z);
+        }
+
+        public getMagnitudeSquared(): number
+        {
+            const x = this[0];
+            const y = this[1];
+            const z = this[2];
+            return x * x + y * y + z * z;
+        }
+
+        public override dotProduct
+        (
+            vec: Readonly<Vec3<TTypedArray>>,
+        )
+            : number
+        {
+            return this[0] * vec[0] + this[1] * vec[1] + this[2] * vec[2];
         }
 
         public override update(x: number, y: number, z: number): void

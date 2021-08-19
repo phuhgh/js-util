@@ -79,6 +79,25 @@ export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    public getMagnitude(): number
+    {
+        throw new Error();
+    }
+
+    public getMagnitudeSquared(): number
+    {
+        throw new Error();
+    }
+
+    public dotProduct
+    (
+        _vec: Readonly<Vec3<TTypedArray>>,
+    )
+        : number
+    {
+        throw new Error();
+    }
+
     public update(_x: number, _y: number, _z: number): void
     {
         throw new Error();

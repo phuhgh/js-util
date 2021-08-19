@@ -72,6 +72,16 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    public getMagnitude(): number
+    {
+        throw new Error();
+    }
+
+    public getMagnitudeSquared(): number
+    {
+        throw new Error();
+    }
+
     public update(_x: number, _y: number): void
     {
         throw new Error();
@@ -97,12 +107,21 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public dotProduct<TResult extends TTypedArray = TArray>
+    public subtract<TResult extends TTypedArray = TArray>
     (
         _vec: Readonly<Vec2<TTypedArray>>,
         _result?: Vec2<TResult>,
     )
         : Vec2<TResult>
+    {
+        throw new Error();
+    }
+
+    public dotProduct
+    (
+        _vec: Readonly<Vec2<TTypedArray>>,
+    )
+        : number
     {
         throw new Error();
     }
@@ -130,16 +149,6 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
      * Shifts this position by the arguments.
      */
     public translate2d(_dx: number, _dy: number): void
-    {
-        throw new Error();
-    }
-
-    public difference<TResult extends TTypedArray = TArray>
-    (
-        _vec: Vec2<TTypedArray>,
-        _result?: Vec2<TResult>
-    )
-        : Vec2<TResult>
     {
         throw new Error();
     }

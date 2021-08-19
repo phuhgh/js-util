@@ -217,7 +217,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
             const difference = this
                 .getCenter((this.constructor as typeof Range2dImpl).tmpVec)
-                .difference(relativeTo, (this.constructor as typeof Range2dImpl).tmpVec);
+                .subtract(relativeTo, (this.constructor as typeof Range2dImpl).tmpVec);
 
             // multiply by 2 as we want to compare to half the range
             // make the difference relative, varies from -1 to 1

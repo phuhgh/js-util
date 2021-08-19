@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { TVec2CtorArgs, Vec2, IVec2Ctor } from "./vec2";
+import { IVec2Ctor, TVec2CtorArgs, Vec2 } from "./vec2";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec2Factory } from "./vec2-factory";
 import { Mat3 } from "../mat3/mat3";
@@ -37,6 +37,20 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return this[1];
         }
 
+        public getMagnitude(): number
+        {
+            const x = this[0];
+            const y = this[1];
+            return Math.sqrt(x * x + y * y);
+        }
+
+        public getMagnitudeSquared(): number
+        {
+            const x = this[0];
+            const y = this[1];
+            return x * x + y * y;
+        }
+
         public override update(x: number, y: number): void
         {
             this[0] = x;
@@ -66,17 +80,26 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
-        public override dotProduct<TResult extends TTypedArray = InstanceType<TCtor>>
+        public override subtract<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             vec: Readonly<Vec2<TTypedArray>>,
             result: Vec2<TResult> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
         {
-            result[0] = this[0] * vec[0];
-            result[1] = this[1] * vec[1];
+            result[0] = this[0] - vec[0];
+            result[1] = this[1] - vec[1];
 
             return result;
+        }
+
+        public override dotProduct
+        (
+            vec: Readonly<Vec2<TTypedArray>>,
+        )
+            : number
+        {
+            return this[0] * vec[0] + this[1] * vec[1];
         }
 
         public override mat3Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
@@ -117,21 +140,6 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
         {
             this[0] += dx;
             this[1] += dy;
-        }
-
-        public override difference<TResult extends TTypedArray = InstanceType<TCtor>>
-        (
-            vec: Vec2<TTypedArray>,
-            result: Vec2<TResult> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty() as Vec2<TResult>,
-        )
-            : Vec2<TResult>
-        {
-            result.update(
-                this.getX() - vec.getX(),
-                this.getY() - vec.getY()
-            );
-
-            return result;
         }
 
         public override getLoggableValue(): number[][]
