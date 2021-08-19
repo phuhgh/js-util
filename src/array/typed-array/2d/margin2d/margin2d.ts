@@ -110,6 +110,11 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    public update(..._args: TMargin2dCtorArgs): void
+    {
+        throw new Error();
+    }
+
     public sumX(): number
     {
         throw new Error();

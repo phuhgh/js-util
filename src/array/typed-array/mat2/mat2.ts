@@ -69,6 +69,11 @@ export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 3!: number;
 
+    public update(..._args: TMat2CtorArgs): void
+    {
+        throw new Error();
+    }
+
     public setIdentityMatrix(): Mat2<TArray>
     {
         throw new Error();

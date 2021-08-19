@@ -32,10 +32,19 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
+        public override update(a1: number, a2: number, a3: number, a4: number): void
+        {
+            this[0] = a1;
+            this[1] = a2;
+            this[2] = a3;
+            this[3] = a4;
+        }
+
         public override setIdentityMatrix(): Mat2<InstanceType<TCtor>>
         {
-            this.fill(0);
             this[0] = 1;
+            this[1] = 0;
+            this[2] = 0;
             this[3] = 1;
 
             return this;
