@@ -50,7 +50,7 @@ export class _Map
     public static readonly push = mapPush;
 
     /** {@inheritDoc (mapReportingAddToSet: 1)} */
-    public static readonly mapRemoveManyFromArray = mapRemoveManyFromArray;
+    public static readonly removeManyFromArray = mapRemoveManyFromArray;
 
     /** {@inheritDoc (mapRemoveOneFromArray: 1)} */
     public static readonly removeOneFromArray = mapRemoveOneFromArray;
