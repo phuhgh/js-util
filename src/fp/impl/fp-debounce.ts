@@ -22,9 +22,9 @@ export type TDebouncedFn<TArgs extends unknown[]> =
  */
 export function fpDebounce<TArgs extends unknown[]>
 (
-    functionToProxy: (...args: TArgs) => void,
     wait: number,
-    immediate: boolean = false,
+    immediate: boolean,
+    functionToProxy: (...args: TArgs) => void,
 )
     : TDebouncedFn<TArgs>
 {
