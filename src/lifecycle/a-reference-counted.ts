@@ -14,6 +14,7 @@ export interface IReferenceCounted
 /**
  * @public
  * Provides a way to handle cleanup of manually managed resources where there is not a single owner.
+ * NB The object is pre-claimed (ref count 1) on creation.
  */
 export abstract class AReferenceCounted implements IReferenceCounted
 {

@@ -69,6 +69,7 @@ export { ISharedArray } from "./web-assembly/shared-array/i-shared-array";
 export { IWebAssemblyMemoryMemory } from "../external/i-web-assembly-memory";
 export { SharedArray, TF32SharedArray, TF64SharedArray } from "./web-assembly/shared-array/shared-array";
 export { SharedStaticArray, TF32SharedStaticArray, TF64SharedStaticArray } from "./web-assembly/shared-array/shared-static-array";
+export { RawVoidPointer, IRawVoidPointer } from "./web-assembly/raw-void-pointer";
 
 export { arrayBinaryIndexOf } from "./array/impl/array-binary-index-of";
 export { arrayBinaryLastIndexOf } from "./array/impl/array-binary-last-index-of";

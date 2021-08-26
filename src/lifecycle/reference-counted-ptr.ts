@@ -14,6 +14,7 @@ export interface ISharedObject
 /**
  * @public
  * Wrapper of wasm object.
+ * NB The object is pre-claimed (ref count 1) on creation.
  */
 export interface IReferenceCountedPtr extends IReferenceCounted
 {
