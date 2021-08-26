@@ -29,32 +29,32 @@ export type TF64SharedArray = ISharedArray<Float64ArrayConstructor>;
 export class SharedArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper, size: number, clearMemory?: boolean): TF32SharedArray
-    public static createOneF32(wrapper: IEmscriptenWrapper, size: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null
+    public static createOneF32(wrapper: IEmscriptenWrapper, length: number, clearMemory?: boolean): TF32SharedArray
+    public static createOneF32(wrapper: IEmscriptenWrapper, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null
     public static createOneF32
     (
         wrapper: IEmscriptenWrapper,
-        size: number,
+        length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
         : TF32SharedArray | null
     {
-        return SharedArray.createOne("_f32SharedArray", wrapper, Float32Array, size, clearMemory, allocationFailThrows);
+        return SharedArray.createOne("_f32SharedArray", wrapper, Float32Array, length, clearMemory, allocationFailThrows);
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper, size: number, clearMemory?: boolean): TF64SharedArray
-    public static createOneF64(wrapper: IEmscriptenWrapper, size: number, clearMemory: boolean, allocationFailThrows: boolean): TF64SharedArray | null
+    public static createOneF64(wrapper: IEmscriptenWrapper, length: number, clearMemory?: boolean): TF64SharedArray
+    public static createOneF64(wrapper: IEmscriptenWrapper, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF64SharedArray | null
     public static createOneF64
     (
         wrapper: IEmscriptenWrapper,
-        size: number,
+        length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
         : TF64SharedArray | null
     {
-        return SharedArray.createOne("_f64SharedArray", wrapper, Float64Array, size, clearMemory, allocationFailThrows);
+        return SharedArray.createOne("_f64SharedArray", wrapper, Float64Array, length, clearMemory, allocationFailThrows);
     }
 
     private static createOne<TCtor extends TTypedArrayCtor>
@@ -62,17 +62,17 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         prefix: string,
         wrapper: IEmscriptenWrapper,
         ctor: TCtor,
-        size: number,
+        length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
         : ISharedArray<TCtor> | null
     {
-        const ptr = SharedArray.allocateMemory(prefix, wrapper, size, clearMemory, allocationFailThrows);
+        const ptr = SharedArray.allocateMemory(prefix, wrapper, length, clearMemory, allocationFailThrows);
 
         if (ptr !== nullPointer)
         {
-            return new SharedArray(prefix, ctor, wrapper, size, ptr);
+            return new SharedArray(prefix, ctor, wrapper, length, ptr);
         }
 
         return null;
@@ -82,13 +82,13 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     (
         cMethodPrefix: string,
         wrapper: IEmscriptenWrapper,
-        size: number,
+        length: number,
         clearMemory: boolean,
         allocationFailThrows: boolean,
     )
         : number
     {
-        const ptr = wrapper.instance[`${cMethodPrefix}_createOne`](size, clearMemory);
+        const ptr = wrapper.instance[`${cMethodPrefix}_createOne`](length, clearMemory);
 
         if (ptr === nullPointer && allocationFailThrows)
         {
@@ -99,7 +99,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     }
 
     public readonly ctor: TCtor;
-    public readonly size: number;
+    public readonly length: number;
     public readonly elementByteSize: number;
     public readonly sharedObject: IReferenceCountedPtr;
     public debugOnAllocate?: (() => void);
@@ -149,12 +149,12 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         cMethodPrefix: string,
         ctor: TCtor,
         wrapper: IEmscriptenWrapper,
-        size: number,
+        length: number,
         pointer: number,
     )
     {
         this.sharedObject = new ReferenceCountedPtr(false, pointer, this);
-        this.size = size;
+        this.length = length;
         this.ctor = ctor;
         this.cDelete = `${cMethodPrefix}_delete`;
         this.cGetArrayAddress = `${cMethodPrefix}_getArrayAddress`;
@@ -184,12 +184,12 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         if (this.wrapper == null)
         {
             DEBUG_MODE && _Debug.error("object has been destroyed");
-            return new this.ctor(this.size) as InstanceType<TCtor>;
+            return new this.ctor(this.length) as InstanceType<TCtor>;
         }
 
         const arrayPtr = this.wrapper.instance[this.cGetArrayAddress](this.sharedObject.getPtr());
         DEBUG_MODE && _Debug.assert(arrayPtr !== nullPointer, "failed to get array address");
-        const instance = new this.ctor(this.wrapper.memory.buffer, arrayPtr, this.size) as InstanceType<TCtor>;
+        const instance = new this.ctor(this.wrapper.memory.buffer, arrayPtr, this.length) as InstanceType<TCtor>;
 
         if (DEBUG_MODE)
         {

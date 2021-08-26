@@ -24,18 +24,18 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper, pointer: number, size: number): TF32SharedStaticArray
+    public static createOneF32(wrapper: IEmscriptenWrapper, pointer: number, length: number): TF32SharedStaticArray
     {
-        return new SharedStaticArray(Float32Array, wrapper, pointer, size);
+        return new SharedStaticArray(Float32Array, wrapper, pointer, length);
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper, pointer: number, size: number): TF64SharedStaticArray
+    public static createOneF64(wrapper: IEmscriptenWrapper, pointer: number, length: number): TF64SharedStaticArray
     {
-        return new SharedStaticArray(Float64Array, wrapper, pointer, size);
+        return new SharedStaticArray(Float64Array, wrapper, pointer, length);
     }
 
     public readonly ctor: TCtor;
-    public readonly size: number;
+    public readonly length: number;
     public readonly elementByteSize: number;
     public readonly sharedObject: IReferenceCountedPtr;
     public debugOnAllocate?: (() => void);
@@ -83,11 +83,11 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         ctor: TCtor,
         wrapper: IEmscriptenWrapper,
         pointer: number,
-        size: number,
+        length: number,
     )
     {
         this.sharedObject = new ReferenceCountedPtr(true, pointer, this);
-        this.size = size;
+        this.length = length;
         this.ctor = ctor;
         this.wrapper = wrapper;
         this.elementByteSize = ctor.BYTES_PER_ELEMENT;
@@ -113,7 +113,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             return new this.ctor(0) as InstanceType<TCtor>;
         }
 
-        const instance = new this.ctor(this.wrapper.memory.buffer, this.sharedObject.getPtr(), this.size) as InstanceType<TCtor>;
+        const instance = new this.ctor(this.wrapper.memory.buffer, this.sharedObject.getPtr(), this.length) as InstanceType<TCtor>;
 
         if (DEBUG_MODE)
         {

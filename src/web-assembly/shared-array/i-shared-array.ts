@@ -12,12 +12,9 @@ import { ISharedObject } from "../../lifecycle/reference-counted-ptr";
 export interface ISharedArray<TCtor extends TTypedArrayCtor> extends ISharedObject
 {
     readonly ctor: TCtor;
+    readonly length: number;
     /**
-     * For (in)consistency, size as per c++, aka length in javascript.
-     */
-    readonly size: number;
-    /**
-     * Size of element in the array, size * elementByteSize is not necessarily the size of the object.
+     * Size of element in the array, length * elementByteSize is not necessarily the size of the object.
      */
     readonly elementByteSize: number;
     getInstance(): InstanceType<TCtor>;
