@@ -13,6 +13,8 @@
       <option name="CLASS_CONSTRUCTOR_INIT_LIST_WRAP" value="2" />
       <option name="SUPERCLASS_LIST_WRAP" value="2" />
       <option name="SUPERCLASS_LIST_BEFORE_COLON" value="0" />
+      <option name="SPACE_AFTER_POINTER_IN_DECLARATION" value="true" />
+      <option name="SPACE_AFTER_REFERENCE_IN_DECLARATION" value="true" />
     </Objective-C>
     <TypeScriptCodeStyleSettings version="0">
       <option name="FIELD_PREFIX" value="" />

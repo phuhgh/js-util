@@ -1,6 +1,7 @@
 #pragma once
 
-#include <emscripten.h>
+#include <emscripten/em_macros.h>
+#include <emscripten/em_js.h>
 #include <cstdlib>
 
 namespace JsUtil
@@ -9,11 +10,12 @@ namespace JsUtil
     {
     public:
         static void OnBeforeAllocate();
-        static void Error(char const *message);
+        static void Error(char const * message);
     };
 }
 
 extern "C"
 {
-EMSCRIPTEN_KEEPALIVE void endProgram(int statusCode);
+EMSCRIPTEN_KEEPALIVE
+void endProgram(int statusCode);
 }

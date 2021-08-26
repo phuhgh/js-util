@@ -15,7 +15,7 @@ void JsUtil::Debug::OnBeforeAllocate()
 #endif
 }
 
-void JsUtil::Debug::Error(char const *message)
+void JsUtil::Debug::Error(char const * message)
 {
 #ifdef DEBUG_MODE
     Debug_error(message);
