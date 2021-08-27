@@ -21,8 +21,3 @@ void JsUtil::Debug::Error(char const * message)
     Debug_error(message);
 #endif
 }
-
-void endProgram(int statusCode)
-{
-    std::exit(statusCode);
-};

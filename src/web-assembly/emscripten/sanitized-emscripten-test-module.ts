@@ -83,7 +83,7 @@ export class SanitizedEmscriptenTestModule<T extends Emscripten.EmscriptenModule
         // kick off asan checks
         try
         {
-            this.wrapper.instance._endProgram(0);
+            this.wrapper.instance._jsUtilEndProgram(0);
         }
         catch (error)
         {

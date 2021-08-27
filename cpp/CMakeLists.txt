@@ -7,6 +7,7 @@ add_subdirectory(external)
 
 set(SOURCE_FILES
         src/SharedArray.cpp
+        src/JsUtil.cpp
         src/Debug.cpp
         )
 

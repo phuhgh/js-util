@@ -41,7 +41,7 @@ export class Vec2Factory<T extends Vec2<TTypedArray>>
         memoryDataView: DataView,
         pointer: number,
         writeTo: T = this.createOneEmpty(),
-        littleEndian: boolean = true,
+        littleEndian: boolean = Vec2Factory.littleEndian,
     )
         : T
     {
@@ -56,7 +56,7 @@ export class Vec2Factory<T extends Vec2<TTypedArray>>
         memoryDataView: DataView,
         writeFrom: Readonly<T>,
         pointer: number,
-        littleEndian: boolean = true,
+        littleEndian: boolean = Vec2Factory.littleEndian,
     )
         : void
     {

@@ -45,7 +45,7 @@ export class Mat2Factory<T extends Mat2<TTypedArray>>
         memoryDataView: DataView,
         pointer: number,
         writeTo: T = this.createOneEmpty(),
-        littleEndian: boolean = true,
+        littleEndian: boolean = Mat2Factory.littleEndian,
     )
         : T
     {
@@ -62,7 +62,7 @@ export class Mat2Factory<T extends Mat2<TTypedArray>>
         memoryDataView: DataView,
         writeFrom: Readonly<T>,
         pointer: number,
-        littleEndian: boolean = true,
+        littleEndian: boolean = Mat2Factory.littleEndian,
     )
         : void
     {

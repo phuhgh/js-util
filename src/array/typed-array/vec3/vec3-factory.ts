@@ -43,7 +43,7 @@ export class Vec3Factory<T extends Vec3<TTypedArray>>
         memoryDataView: DataView,
         pointer: number,
         writeTo: T = this.createOneEmpty(),
-        littleEndian: boolean = true,
+        littleEndian: boolean = Vec3Factory.littleEndian,
     )
         : T
     {
@@ -59,7 +59,7 @@ export class Vec3Factory<T extends Vec3<TTypedArray>>
         memoryDataView: DataView,
         writeFrom: Readonly<T>,
         pointer: number,
-        littleEndian: boolean = true,
+        littleEndian: boolean = Vec3Factory.littleEndian,
     )
         : void
     {

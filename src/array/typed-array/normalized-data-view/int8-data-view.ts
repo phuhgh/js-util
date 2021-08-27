@@ -9,6 +9,6 @@ export class Int8DataView implements INormalizedDataView
 
     public setValue(dataView: DataView, ptr: number, value: number): void
     {
-        dataView.setInt8(ptr, value);
+        dataView.setInt8(ptr, value,);
     }
 }

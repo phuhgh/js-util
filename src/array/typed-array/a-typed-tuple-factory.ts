@@ -3,6 +3,7 @@ import { INormalizedDataView } from "./normalized-data-view/i-normalized-data-vi
 import { ATypedArrayTuple } from "./a-typed-array-tuple";
 import { TTypedArray } from "./t-typed-array";
 import { TExtractTypeTypedArrayTuple } from "../../typescript/t-extract-type-typed-array-tuple";
+import { isLittleEndian } from "../../web-assembly/is-little-endian";
 
 export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number, TTypedArray>, TCtorArgs extends number[]>
     implements ITypedArrayTupleFactory<TArray, TCtorArgs>
@@ -30,7 +31,7 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
         memoryDataView: DataView,
         pointer: number,
         writeTo: TArray = this.createOneEmpty(),
-        littleEndian: boolean = true,
+        littleEndian: boolean = ATypedTupleFactory.littleEndian,
     )
         : TArray
     {
@@ -48,7 +49,7 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
         memoryDataView: DataView,
         writeFrom: Readonly<TArray>,
         pointer: number,
-        littleEndian: boolean = true,
+        littleEndian: boolean = ATypedTupleFactory.littleEndian,
     )
         : void
     {
@@ -58,4 +59,6 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
             pointer += this.bytesPerElement;
         }
     }
+
+    protected static littleEndian = isLittleEndian;
 }

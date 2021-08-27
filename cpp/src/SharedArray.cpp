@@ -49,6 +49,9 @@ T const * sharedArray_getArrayAddress(JsUtil::SharedArray<T> * sharedArray)
                       .data();
 }
 
+template class JsUtil::SharedArray<float>;
+template class JsUtil::SharedArray<double>;
+
 // float 32 impl
 [[maybe_unused]]
 JsUtil::SharedArray<float> * f32SharedArray_createOne(size_t size, bool clearMemory)

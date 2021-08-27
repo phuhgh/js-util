@@ -1,6 +1,5 @@
 import { IReferenceCountedPtr, ISharedObject, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
 import { IEmscriptenWrapper } from "./emscripten/i-emscripten-wrapper";
-import { Emscripten } from "../../external/emscripten";
 import { nullPointer } from "./emscripten/null-pointer";
 import { _Production } from "../production/_production";
 
@@ -19,6 +18,7 @@ export interface IRawVoidPointer extends ISharedObject
  */
 export class RawVoidPointer implements IRawVoidPointer
 {
+    public readonly dataView: DataView;
     public readonly sharedObject: IReferenceCountedPtr;
     public readonly pointer: number;
     public readonly byteSize: number;
@@ -34,7 +34,7 @@ export class RawVoidPointer implements IRawVoidPointer
         : RawVoidPointer
     {
         DEBUG_MODE && RcJsUtilDebug.onAllocate.emit();
-        const pointer = (wrapper.instance as Emscripten.EmscriptenModule)._malloc(byteSize);
+        const pointer = wrapper.instance._jsUtilMalloc(byteSize);
 
         if (pointer == nullPointer)
         {
@@ -49,7 +49,7 @@ export class RawVoidPointer implements IRawVoidPointer
 
     public onRelease(): void
     {
-        (this.wrapper.instance as Emscripten.EmscriptenModule)._free(this.pointer);
+        this.wrapper.instance._jsUtilFree(this.pointer);
         (this.pointer as number) = nullPointer;
     }
 
@@ -63,5 +63,6 @@ export class RawVoidPointer implements IRawVoidPointer
         this.pointer = pointer;
         this.byteSize = byteSize;
         this.sharedObject = new ReferenceCountedPtr(false, pointer, this);
+        this.dataView = new DataView(this.wrapper.memory.buffer, this.pointer, this.byteSize);
     }
 }
