@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { Mat2, IMat2Ctor, TMat2CtorArgs } from "./mat2";
+import { IMat2Ctor, Mat2, TMat2CtorArgs } from "./mat2";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat2Factory } from "./mat2-factory";
 import { _Debug } from "../../../debug/_debug";

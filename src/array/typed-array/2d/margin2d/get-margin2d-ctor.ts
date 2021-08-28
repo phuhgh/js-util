@@ -1,4 +1,4 @@
-import { Margin2d, IMargin2dCtor, TMargin2dCtorArgs } from "./margin2d";
+import { IMargin2dCtor, Margin2d, TMargin2dCtorArgs } from "./margin2d";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
 import { Range2d } from "../range2d/range2d";

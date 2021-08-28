@@ -1,5 +1,5 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { Mat4, IMat4Ctor, TMat4CtorArgs } from "./mat4";
+import { IMat4Ctor, Mat4, TMat4CtorArgs } from "./mat4";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
 import { TTypedArray } from "../t-typed-array";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";

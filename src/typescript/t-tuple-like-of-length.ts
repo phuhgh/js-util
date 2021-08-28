@@ -12,6 +12,6 @@ export type TTupleLikeOfLength<TItem, TLength extends number, TCounter extends n
     TCounter extends TLength
         ? TTupleLike<TKeys, TItem, TLength>
         : TCounter extends 17
-        ? TTupleLike<number, TItem, TLength>
-        : TTupleLikeOfLength<TItem, TLength, TNextInt<TCounter>, TKeys | TCounter>
+            ? TTupleLike<number, TItem, TLength>
+            : TTupleLikeOfLength<TItem, TLength, TNextInt<TCounter>, TKeys | TCounter>
     ;

@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { TVec4CtorArgs, Vec4, IVec4Ctor } from "./vec4";
+import { IVec4Ctor, TVec4CtorArgs, Vec4 } from "./vec4";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec4Factory } from "./vec4-factory";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";

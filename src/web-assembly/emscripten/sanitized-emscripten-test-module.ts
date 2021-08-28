@@ -34,13 +34,13 @@ export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = 
     quitThrowsWith: {},
 };
 
-export class SanitizedEmscriptenTestModule<T extends object>
+export class SanitizedEmscriptenTestModule<T extends object, U extends object>
 {
     public constructor
     (
-        private readonly testModule: Emscripten.EmscriptenModuleFactory<T & IDebugBindings>,
+        private readonly testModule: Emscripten.EmscriptenModuleFactory<T>,
         private readonly options: ISanitizedTestModuleOptions,
-        private readonly extension?: T,
+        private readonly extension?: U,
     )
     {
     }
@@ -70,10 +70,10 @@ export class SanitizedEmscriptenTestModule<T extends object>
                 throw this.options.quitThrowsWith;
             },
             ...this.extension,
-        });
+        } as T) as IEmscriptenWrapper<T & U & IDebugBindings>;
     }
 
-    public get wrapper(): IEmscriptenWrapper<T & IDebugBindings>
+    public get wrapper(): IEmscriptenWrapper<T & U & IDebugBindings>
     {
         DEBUG_MODE && _Debug.assert(this._wrapper != null, "initialize must be called first");
         return this._wrapper;
@@ -95,5 +95,5 @@ export class SanitizedEmscriptenTestModule<T extends object>
         }
     }
 
-    private _wrapper!: IEmscriptenWrapper<T & IDebugBindings>;
+    private _wrapper!: IEmscriptenWrapper<T & U & IDebugBindings>;
 }

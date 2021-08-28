@@ -1,5 +1,5 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { TVec3CtorArgs, Vec3, IVec3Ctor } from "./vec3";
+import { IVec3Ctor, TVec3CtorArgs, Vec3 } from "./vec3";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
 import { TTypedArray } from "../t-typed-array";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";

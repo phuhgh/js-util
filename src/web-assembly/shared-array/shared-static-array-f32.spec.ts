@@ -102,7 +102,7 @@ debugDescribe("=> F32SharedStaticArray", () =>
     });
 });
 
-function getCArrayPtr(testModule: SanitizedEmscriptenTestModule<JsUtilBindings>, sharedArray: TF32SharedArray)
+function getCArrayPtr(testModule: SanitizedEmscriptenTestModule<JsUtilBindings, {}>, sharedArray: TF32SharedArray)
 {
     return testModule.wrapper.instance._f32SharedArray_getArrayAddress(sharedArray.sharedObject.getPtr());
 }

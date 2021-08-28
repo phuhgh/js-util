@@ -1,4 +1,4 @@
-import { Mat3, IMat3Ctor, TMat3CtorArgs } from "./mat3";
+import { IMat3Ctor, Mat3, TMat3CtorArgs } from "./mat3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat3Factory } from "./mat3-factory";
 import { _Debug } from "../../../debug/_debug";
