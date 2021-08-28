@@ -11,13 +11,13 @@ import { DebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event"
  * @public
  * Factory for creating wrapped emscripten module.
  */
-export async function getEmscriptenWrapper<T extends Emscripten.EmscriptenModule>
+export async function getEmscriptenWrapper<TExt extends object, TMod extends object>
 (
     memory: IWebAssemblyMemoryMemory,
-    emscriptenModuleFactory: Emscripten.EmscriptenModuleFactory,
-    extension?: Partial<T>,
+    emscriptenModuleFactory: Emscripten.EmscriptenModuleFactory<TMod>,
+    extension?: Partial<TExt>,
 )
-    : Promise<IEmscriptenWrapper>
+    : Promise<IEmscriptenWrapper<TExt & TMod>>
 {
     const memoryListener = DEBUG_MODE
         ? new DebugWeakBroadcastEvent<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize")
@@ -26,7 +26,7 @@ export async function getEmscriptenWrapper<T extends Emscripten.EmscriptenModule
     const instance = await emscriptenModuleFactory({
         wasmMemory: memory,
         ...extension,
-    });
+    } as TExt) as TExt & TMod & Emscripten.EmscriptenModule;
 
     shimWebAssemblyMemory(memory, (buffer, previous, delta) =>
     {
@@ -35,7 +35,7 @@ export async function getEmscriptenWrapper<T extends Emscripten.EmscriptenModule
         memoryListener.emit(buffer, previous, delta);
     });
 
-    const wrapper: IEmscriptenWrapper = {
+    const wrapper: IEmscriptenWrapper<TExt & TMod> = {
         memory: memory,
         memoryResize: memoryListener,
         instance: instance,

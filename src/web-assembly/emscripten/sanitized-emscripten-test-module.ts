@@ -4,6 +4,7 @@ import { getEmscriptenWrapper } from "./get-emscripten-wrapper";
 import { _Fp } from "../../fp/_fp";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
 import { _Debug } from "../../debug/_debug";
+import { IDebugBindings } from "./i-debug-bindings";
 
 export interface ISanitizedTestModuleOptions
 {
@@ -33,13 +34,13 @@ export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = 
     quitThrowsWith: {},
 };
 
-export class SanitizedEmscriptenTestModule<T extends Emscripten.EmscriptenModule>
+export class SanitizedEmscriptenTestModule<T extends object>
 {
     public constructor
     (
-        private readonly testModule: Emscripten.EmscriptenModuleFactory,
+        private readonly testModule: Emscripten.EmscriptenModuleFactory<T & IDebugBindings>,
         private readonly options: ISanitizedTestModuleOptions,
-        private readonly extension?: Partial<T>,
+        private readonly extension?: T,
     )
     {
     }
@@ -51,7 +52,7 @@ export class SanitizedEmscriptenTestModule<T extends Emscripten.EmscriptenModule
         this._wrapper = await getEmscriptenWrapper(memory, this.testModule, {
             ASAN_OPTIONS: "allocator_may_return_null=1",
             print: _Fp.noOp,
-            printErr: (error) =>
+            printErr: (error: string) =>
             {
                 // looks like asan writes to stderr regardless of option...
                 if (this.options.disabledErrors.has(error))
@@ -72,7 +73,7 @@ export class SanitizedEmscriptenTestModule<T extends Emscripten.EmscriptenModule
         });
     }
 
-    public get wrapper(): IEmscriptenWrapper
+    public get wrapper(): IEmscriptenWrapper<T & IDebugBindings>
     {
         DEBUG_MODE && _Debug.assert(this._wrapper != null, "initialize must be called first");
         return this._wrapper;
@@ -94,5 +95,5 @@ export class SanitizedEmscriptenTestModule<T extends Emscripten.EmscriptenModule
         }
     }
 
-    private _wrapper!: IEmscriptenWrapper;
+    private _wrapper!: IEmscriptenWrapper<T & IDebugBindings>;
 }

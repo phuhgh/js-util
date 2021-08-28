@@ -27,3 +27,6 @@ void jsUtilFree(void * ptr)
     free(ptr);
 }
 }
+
+static std::uint32_t const POINTER_SIZE = sizeof(void *);
+static std::uint32_t const SIZE_T_SIZE = sizeof(std::size_t *);

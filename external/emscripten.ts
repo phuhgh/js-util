@@ -95,7 +95,5 @@ export namespace Emscripten
     /**
      * @public
      */
-    export type EmscriptenModuleFactory<T extends EmscriptenModule = EmscriptenModule> = (
-        moduleOverrides?: Partial<T>,
-    ) => Promise<T>;
+    export type EmscriptenModuleFactory<T extends object> = (moduleOverrides?: Partial<T & EmscriptenModule>) => Promise<EmscriptenModule & T>;
 }

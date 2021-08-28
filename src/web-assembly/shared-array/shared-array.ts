@@ -6,9 +6,9 @@ import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { _Production } from "../../production/_production";
 import { nullPointer } from "../emscripten/null-pointer";
 import { ISharedArray } from "./i-shared-array";
-import { stringNormalizeNullUndefinedToEmpty } from "../../string/impl/string-normalize-null-undefined-to-empty";
-import { numberGetHexString } from "../../number/impl/number-get-hex-string";
 import { TDebugListener } from "rc-js-util-globals";
+import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
+import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings";
 
 /**
  * @public
@@ -29,38 +29,38 @@ export type TF64SharedArray = ISharedArray<Float64ArrayConstructor>;
 export class SharedArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper, length: number, clearMemory?: boolean): TF32SharedArray
-    public static createOneF32(wrapper: IEmscriptenWrapper, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null
+    public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory?: boolean): TF32SharedArray
+    public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null
     public static createOneF32
     (
-        wrapper: IEmscriptenWrapper,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
         : TF32SharedArray | null
     {
-        return SharedArray.createOne("_f32SharedArray", wrapper, Float32Array, length, clearMemory, allocationFailThrows);
+        return SharedArray.createOne("f32SharedArray", wrapper, Float32Array, length, clearMemory, allocationFailThrows);
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper, length: number, clearMemory?: boolean): TF64SharedArray
-    public static createOneF64(wrapper: IEmscriptenWrapper, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF64SharedArray | null
+    public static createOneF64(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory?: boolean): TF64SharedArray
+    public static createOneF64(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF64SharedArray | null
     public static createOneF64
     (
-        wrapper: IEmscriptenWrapper,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
         : TF64SharedArray | null
     {
-        return SharedArray.createOne("_f64SharedArray", wrapper, Float64Array, length, clearMemory, allocationFailThrows);
+        return SharedArray.createOne("f64SharedArray", wrapper, Float64Array, length, clearMemory, allocationFailThrows);
     }
 
     private static createOne<TCtor extends TTypedArrayCtor>
     (
-        prefix: string,
-        wrapper: IEmscriptenWrapper,
+        prefix: TSharedArrayPrefix,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         ctor: TCtor,
         length: number,
         clearMemory: boolean = false,
@@ -80,15 +80,15 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
     private static allocateMemory
     (
-        cMethodPrefix: string,
-        wrapper: IEmscriptenWrapper,
+        cMethodPrefix: TSharedArrayPrefix,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         length: number,
         clearMemory: boolean,
         allocationFailThrows: boolean,
     )
         : number
     {
-        const ptr = wrapper.instance[`${cMethodPrefix}_createOne`](length, clearMemory);
+        const ptr = wrapper.instance[`_${cMethodPrefix}_createOne`](length, clearMemory);
 
         if (ptr === nullPointer && allocationFailThrows)
         {
@@ -130,14 +130,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
             return;
         }
 
-        DEBUG_MODE && _Debug.runBlock(() =>
-        {
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this.sharedObject);
-            RcJsUtilDebug.protectedViews
-                .getValue(this)
-                .invalidate();
-            _Debug.verboseLog(`released shared array ${numberGetHexString(this.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
-        });
+        DEBUG_MODE && _Debug.runBlock(() => DebugSharedObjectChecks.unregister(this, "shared array"));
 
         this.wrapper.memoryResize.removeListener(this);
         this.wrapper.instance[this.cDelete](this.sharedObject.getPtr());
@@ -146,9 +139,9 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
     protected constructor
     (
-        cMethodPrefix: string,
+        cMethodPrefix: TSharedArrayPrefix,
         ctor: TCtor,
-        wrapper: IEmscriptenWrapper,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         length: number,
         pointer: number,
     )
@@ -156,23 +149,15 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         this.sharedObject = new ReferenceCountedPtr(false, pointer, this);
         this.length = length;
         this.ctor = ctor;
-        this.cDelete = `${cMethodPrefix}_delete`;
-        this.cGetArrayAddress = `${cMethodPrefix}_getArrayAddress`;
+        this.cDelete = `_${cMethodPrefix}_delete`;
+        this.cGetArrayAddress = `_${cMethodPrefix}_getArrayAddress`;
         this.wrapper = wrapper;
         this.elementByteSize = ctor.BYTES_PER_ELEMENT;
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
             const protectedView = DebugProtectedView.createTypedArrayView();
-            this.debugOnAllocate = () => protectedView.invalidate();
-            RcJsUtilDebug.protectedViews.setValue(this, protectedView);
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this.sharedObject);
-            RcJsUtilDebug.onAllocate.addListener(this);
-
-            if (_Debug.isFlagSet("DEBUG_VERBOSE_MEMORY_MANAGEMENT"))
-            {
-                _Debug.verboseLog(`claimed shared array ${numberGetHexString(this.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
-            }
+            DebugSharedObjectChecks.register(this, protectedView, "shared array");
         });
 
         wrapper.memoryResize.addListener(this);
@@ -201,8 +186,8 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         return instance;
     }
 
-    private wrapper: IEmscriptenWrapper | null;
+    private wrapper: IEmscriptenWrapper<ISharedArrayBindings> | null;
     private instance: InstanceType<TCtor>;
-    private readonly cGetArrayAddress: string;
-    private readonly cDelete: string;
+    private readonly cGetArrayAddress: `_${TSharedArrayPrefix}_getArrayAddress`;
+    private readonly cDelete: `_${TSharedArrayPrefix}_delete`;
 }

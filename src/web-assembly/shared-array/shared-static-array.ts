@@ -5,6 +5,8 @@ import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { ISharedArray } from "./i-shared-array";
 import { TDebugListener } from "rc-js-util-globals";
 import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
+import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
+import { ISharedArrayBindings } from "./i-shared-array-bindings";
 
 /**
  * @public
@@ -24,12 +26,12 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper, pointer: number, length: number): TF32SharedStaticArray
+    public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF32SharedStaticArray
     {
         return new SharedStaticArray(Float32Array, wrapper, pointer, length);
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper, pointer: number, length: number): TF64SharedStaticArray
+    public static createOneF64(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF64SharedStaticArray
     {
         return new SharedStaticArray(Float64Array, wrapper, pointer, length);
     }
@@ -66,13 +68,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             return;
         }
 
-        DEBUG_MODE && _Debug.runBlock(() =>
-        {
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(this.sharedObject);
-            RcJsUtilDebug.protectedViews
-                .getValue(this)
-                .invalidate();
-        });
+        DEBUG_MODE && _Debug.runBlock(() => DebugSharedObjectChecks.unregister(this, ""));
 
         this.wrapper.memoryResize.removeListener(this);
         this.wrapper = null;
@@ -81,7 +77,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     protected constructor
     (
         ctor: TCtor,
-        wrapper: IEmscriptenWrapper,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         pointer: number,
         length: number,
     )
@@ -94,11 +90,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
-            const protectedView = DebugProtectedView.createTypedArrayView();
-            this.debugOnAllocate = () => protectedView.invalidate();
-            RcJsUtilDebug.protectedViews.setValue(this, protectedView);
-            RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(this.sharedObject);
-            RcJsUtilDebug.onAllocate.addListener(this);
+            DebugSharedObjectChecks.register(this, DebugProtectedView.createTypedArrayView(), "");
         });
 
         wrapper.memoryResize.addListener(this);
@@ -123,6 +115,6 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         return instance;
     }
 
-    private wrapper: IEmscriptenWrapper | null;
+    private wrapper: IEmscriptenWrapper<ISharedArrayBindings> | null;
     private instance: InstanceType<TCtor>;
 }

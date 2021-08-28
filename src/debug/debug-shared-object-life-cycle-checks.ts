@@ -3,6 +3,9 @@ import { DebugPointer } from "./debug-pointer";
 import { _Production } from "../production/_production";
 import { IDebugSharedObject, IDebugSharedObjectLifeCycleChecks } from "rc-js-util-globals";
 
+/**
+ * When a javascript object is garbage collected, check if the corresponding WASM object has been freed.
+ */
 export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeCycleChecks
 {
     public registerFinalizationCheck(sharedObject: IDebugSharedObject): void

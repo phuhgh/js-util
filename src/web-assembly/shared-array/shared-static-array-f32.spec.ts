@@ -3,8 +3,9 @@ import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, S
 import { SharedStaticArray, TF32SharedStaticArray } from "./shared-static-array";
 import { SharedArray, TF32SharedArray } from "./shared-array";
 import { applyLabel, debugDescribe, debugIt } from "../../test-utils";
+import { JsUtilBindings } from "../js-util-bindings";
 
-declare const require: (path: string) => Emscripten.EmscriptenModuleFactory;
+declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<JsUtilBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const asanTestModule = require("../../../external/asan-test-module");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -101,7 +102,7 @@ debugDescribe("=> F32SharedStaticArray", () =>
     });
 });
 
-function getCArrayPtr(testModule: SanitizedEmscriptenTestModule<Emscripten.EmscriptenModule>, sharedArray: TF32SharedArray)
+function getCArrayPtr(testModule: SanitizedEmscriptenTestModule<JsUtilBindings>, sharedArray: TF32SharedArray)
 {
     return testModule.wrapper.instance._f32SharedArray_getArrayAddress(sharedArray.sharedObject.getPtr());
 }

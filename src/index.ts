@@ -41,7 +41,7 @@ export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localizatio
 export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
 export { TListener } from "./eventing/t-listener";
-export { ReferenceCountedPtr, IReferenceCountedPtr, ISharedObject } from "./lifecycle/reference-counted-ptr";
+export { ReferenceCountedPtr, IReferenceCountedPtr, ISharedObject, IOnRelease } from "./lifecycle/reference-counted-ptr";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted";
 export { IDictionary } from "./typescript/i-dictionary";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary";
@@ -55,6 +55,7 @@ export { TPickExcept } from "./typescript/t-pick-except";
 export { TPredicate } from "./typescript/t-predicate";
 export { TPickPartial } from "./typescript/t-pick-partial";
 export { TPickRequired } from "./typescript/t-pick-required";
+export { TProperty } from "./typescript/t-property";
 export { TTupleLike } from "./typescript/t-tuple-like";
 export { TTupleLikeOfLength } from "./typescript/t-tuple-like-of-length";
 export { TTypedArrayCast } from "./typescript/t-typed-array-cast";
@@ -67,10 +68,14 @@ export { getEmscriptenWrapper } from "./web-assembly/emscripten/get-emscripten-w
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/t-web-assembly-memory-listener-args";
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array";
 export { IWebAssemblyMemoryMemory } from "../external/i-web-assembly-memory";
-export { SharedArray, TF32SharedArray, TF64SharedArray } from "./web-assembly/shared-array/shared-array";
+export { SharedArray, TF32SharedArray, TF64SharedArray} from "./web-assembly/shared-array/shared-array";
 export { SharedStaticArray, TF32SharedStaticArray, TF64SharedStaticArray } from "./web-assembly/shared-array/shared-static-array";
+export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bindings";
 export { isLittleEndian } from "./web-assembly/is-little-endian";
 export { RawVoidPointer, IRawVoidPointer } from "./web-assembly/raw-void-pointer";
+export { DebugSharedObjectChecks } from "./web-assembly/debug-shared-object-checks";
+export { JsUtilBindings } from "./web-assembly/js-util-bindings";
+export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings";
 
 export { arrayBinaryIndexOf } from "./array/impl/array-binary-index-of";
 export { arrayBinaryLastIndexOf } from "./array/impl/array-binary-last-index-of";
@@ -138,3 +143,5 @@ export { regexEscapeRegex } from "./reg-exp/impl/regex-escape-regex";
 export { setValuesToArray } from "./set/impl/set-values-to-array";
 export { stringNormalizeEmptyToUndefined } from "./string/impl/string-normalize-empty-to-undefined";
 export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normalize-null-undefined-to-empty";
+export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings";
+export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings";

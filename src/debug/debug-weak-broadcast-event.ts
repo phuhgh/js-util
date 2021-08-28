@@ -12,6 +12,8 @@ export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> 
 
     public addListener(listener: TListener<K, TArgs>): void
     {
+        this.removeListener(listener);
+
         const ref = new WeakRef(listener);
         this.listenersSet.add(ref);
         this.listenersMap.set(listener, ref);
@@ -40,6 +42,7 @@ export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> 
 
         if (ref != null)
         {
+            this.listenersMap.delete(listener);
             this.listenersSet.delete(ref);
         }
     }

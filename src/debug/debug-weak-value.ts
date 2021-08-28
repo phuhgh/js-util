@@ -15,6 +15,11 @@ export class DebugWeakValue<T> implements IDebugWeakStore<T>
         this.values.set(listener, value);
     }
 
+    public deleteValue(listener: object): void
+    {
+        this.values.delete(listener);
+    }
+
     public getValue(listener: object): T
     {
         DEBUG_MODE && _Debug.assert(this.values.has(listener), "expected to find value");

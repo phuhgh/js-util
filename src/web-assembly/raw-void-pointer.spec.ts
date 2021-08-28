@@ -2,8 +2,9 @@ import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, S
 import { debugDescribe } from "../test-utils";
 import { Emscripten } from "../../external/emscripten";
 import { RawVoidPointer } from "./raw-void-pointer";
+import { JsUtilBindings } from "./js-util-bindings";
 
-declare const require: (path: string) => Emscripten.EmscriptenModuleFactory;
+declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<JsUtilBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const asanTestModule = require("../../external/asan-test-module");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -25,7 +26,7 @@ debugDescribe("=> RawVoidPointer", () =>
             testModule.endEmscriptenProgram();
         });
 
-        it("| creates and destroys as expected", () =>
+        it("| creates, writes, reads and destroys without triggering the asan", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             expect(rvp.dataView.byteLength).toEqual(128);
@@ -50,10 +51,30 @@ debugDescribe("=> RawVoidPointer", () =>
             await testModule.initialize();
         });
 
-        it("| provides a view into the memory, regardless of page resizes", () =>
+        it("| invalidates dataView on memory resize", () =>
+        {
+            const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
+            const dataView = rvp.dataView;
+            const rvp2 = RawVoidPointer.createOne(testModule.wrapper, 8388608);
+            expect(() => dataView.getFloat32(0)).toThrow();
+
+            rvp.sharedObject.release();
+            rvp2.sharedObject.release();
+        });
+
+        it("| invalidates dataView on memory release", () =>
+        {
+            const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
+            rvp.sharedObject.release();
+            expect(() => rvp.dataView.getFloat32(0)).toThrow();
+        });
+
+        it("| updates the dataView on resize", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             const rvp2 = RawVoidPointer.createOne(testModule.wrapper, 8388608);
+            rvp.dataView.getFloat32(0);
+
             rvp.sharedObject.release();
             rvp2.sharedObject.release();
         });

@@ -24,9 +24,17 @@ export interface IReferenceCountedPtr extends IReferenceCounted
 
 /**
  * @public
+ */
+export interface IOnRelease
+{
+    onRelease(): void
+}
+
+/**
+ * @public
  * Wrapper of wasm object.
  */
-export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr
+export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr, IOnRelease
 {
     public getPtr(): number
     {
@@ -46,6 +54,6 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     )
     {
         super();
-        DEBUG_MODE && _Debug.assert(this.wasmPtr !== nullPointer, "expected pointer to object but got null pointer");
+        DEBUG_MODE && _Debug.assert(this.wasmPtr !== nullPointer && this.wasmPtr != null, "expected pointer to object but got null pointer");
     }
 }

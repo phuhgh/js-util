@@ -2,8 +2,9 @@ import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "
 import { SharedArray, TF32SharedArray } from "./shared-array";
 import { applyLabel, debugIt } from "../../test-utils";
 import { Emscripten } from "../../../external/emscripten";
+import { JsUtilBindings } from "../js-util-bindings";
 
-declare const require: (path: string) => Emscripten.EmscriptenModuleFactory;
+declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<JsUtilBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const asanTestModule = require("../../../external/asan-test-module");
 
