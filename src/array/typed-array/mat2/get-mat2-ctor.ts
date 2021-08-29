@@ -22,6 +22,8 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
         public static factory: ITypedArrayTupleFactory<Mat2<InstanceType<TCtor>>, TMat2CtorArgs> = new Mat2Factory(Mat2Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec2Ctor = Vec2.getCtor(ctor);
 
+        public ["constructor"]: typeof Mat2Impl;
+
         public constructor
         (
             bufferOrLength: number | ArrayBufferLike = 4,
@@ -85,7 +87,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
         public multiplyMat2<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: Readonly<Mat2<TTypedArray>>,
-            result: Mat2<TResult> = (this.constructor as typeof Mat2Impl).factory.createOneEmpty() as Mat2<TResult>,
+            result: Mat2<TResult> = this.constructor.factory.createOneEmpty() as Mat2<TResult>,
         )
             : Mat2<TResult>
         {
@@ -108,7 +110,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
         public override getRow<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             row: number,
-            writeTo: Vec2<TResult> = (this.constructor as typeof Mat2Impl).vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
+            writeTo: Vec2<TResult> = this.constructor.vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
         {

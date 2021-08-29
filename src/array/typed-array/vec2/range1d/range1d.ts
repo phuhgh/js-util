@@ -52,6 +52,8 @@ export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
 
     protected static constructors = populateTypedArrayConstructorMap(Range1d);
 
+    public ["constructor"]: IRange1dCtor<TArray>;
+
     /**
      * min
      */

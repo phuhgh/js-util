@@ -19,6 +19,8 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ct
         public static factory: ITypedArrayTupleFactory<Mat3<InstanceType<TCtor>>, TMat3CtorArgs> = new Mat3Factory(Mat3Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec3Ctor = Vec3.getCtor(ctor);
 
+        public ["constructor"]: typeof Mat3Impl;
+
         public constructor
         (
             bufferOrLength: number | ArrayBufferLike = 9,
@@ -54,7 +56,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ct
         public override getRow<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             row: number,
-            writeTo: Vec3<TResult> = (this.constructor as typeof Mat3Impl).vec3Ctor.factory.createOneEmpty() as Vec3<TResult>,
+            writeTo: Vec3<TResult> = this.constructor.vec3Ctor.factory.createOneEmpty() as Vec3<TResult>,
         )
             : Vec3<TResult>
         {
@@ -141,7 +143,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ct
         public override multiplyMat3<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: Readonly<Mat3<TTypedArray>>,
-            result: Mat3<TResult> = (this.constructor as typeof Mat3Impl).factory.createOneEmpty() as Mat3<TResult>,
+            result: Mat3<TResult> = this.constructor.factory.createOneEmpty() as Mat3<TResult>,
         )
             : Mat3<TResult>
         {

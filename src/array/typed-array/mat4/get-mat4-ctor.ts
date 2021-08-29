@@ -18,6 +18,8 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat4Ct
         public static factory: ITypedArrayTupleFactory<Mat4<InstanceType<TCtor>>, TMat4CtorArgs> = new Mat4Factory(Mat4Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec4Ctor = Vec4.getCtor(ctor);
 
+        public ["constructor"]: typeof Mat4Impl;
+
         public constructor
         (
             bufferOrLength: number | ArrayBufferLike = 16,
@@ -55,7 +57,7 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat4Ct
         public override getRow<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             row: number,
-            writeTo: Vec4<TResult> = (this.constructor as typeof Mat4Impl).vec4Ctor.factory.createOneEmpty() as Vec4<TResult>,
+            writeTo: Vec4<TResult> = this.constructor.vec4Ctor.factory.createOneEmpty() as Vec4<TResult>,
         )
             : Vec4<TResult>
         {

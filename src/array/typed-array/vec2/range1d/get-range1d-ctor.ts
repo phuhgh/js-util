@@ -22,6 +22,8 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public static factory: ITypedArrayTupleFactory<Range1d<InstanceType<TCtor>>, TRange1dCtorArgs> = new Vec2Factory(Range1dImpl, NormalizedDataViewProvider.getView(ctor));
         protected static mat2Ctor = Mat2.getCtor(ctor);
 
+        public ["constructor"]: typeof Range1dImpl;
+
         public setMin(value: number): void
         {
             this[0] = value;
@@ -55,7 +57,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public mat2Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: Readonly<Mat2<TTypedArray>>,
-            writeTo: Range1d<TResult> = (this.constructor as typeof Range1dImpl).factory.createOneEmpty() as Range1d<TResult>,
+            writeTo: Range1d<TResult> = this.constructor.factory.createOneEmpty() as Range1d<TResult>,
         )
             : Range1d<TResult>
         {
@@ -68,7 +70,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public unionRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             range: Readonly<Range1d<TTypedArray>>,
-            writeTo: Range1d<TResult> = (this.constructor as typeof Range1dImpl).factory.createOneEmpty() as Range1d<TResult>,
+            writeTo: Range1d<TResult> = this.constructor.factory.createOneEmpty() as Range1d<TResult>,
         )
             : Range1d<TResult>
         {
@@ -81,7 +83,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public extendRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             value: number,
-            writeTo: Range1d<TResult> = (this.constructor as typeof Range1dImpl).factory.createOneEmpty() as Range1d<TResult>,
+            writeTo: Range1d<TResult> = this.constructor.factory.createOneEmpty() as Range1d<TResult>,
         )
             : Range1d<TResult>
         {
@@ -94,7 +96,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public getRangeTransform<TArray extends TTypedArray = InstanceType<TCtor>>
         (
             toRange: Readonly<Range1d<TTypedArray>>,
-            result: Mat2<TArray> = (this.constructor as typeof Range1dImpl).mat2Ctor.factory.createOneEmpty() as Mat2<TArray>,
+            result: Mat2<TArray> = this.constructor.mat2Ctor.factory.createOneEmpty() as Mat2<TArray>,
         )
             : Mat2<TArray>
         {
@@ -119,7 +121,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         (
             scalingFactor: number,
             relativeTo: number,
-            result: Range1d<TResult> = (this.constructor as typeof Range1dImpl).factory.createOneEmpty() as Range1d<TResult>,
+            result: Range1d<TResult> = this.constructor.factory.createOneEmpty() as Range1d<TResult>,
         )
             : Range1d<TResult>
         {

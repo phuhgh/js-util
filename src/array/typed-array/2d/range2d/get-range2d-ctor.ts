@@ -24,6 +24,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         protected static vec2Ctor = Vec2.getCtor(ctor);
         protected static mat3Ctor = Mat3.getCtor(ctor);
 
+        public ["constructor"]: typeof Range2dImpl;
+
         public setXMin(value: number): void
         {
             this[0] = value;
@@ -66,7 +68,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public getRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            result: Vec2<TResult> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
+            result: Vec2<TResult> = this.constructor.vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
         {
@@ -88,7 +90,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public getCenter<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            result: Vec2<TResult> = (this.constructor as typeof Range2dImpl).vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
+            result: Vec2<TResult> = this.constructor.vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
         {
@@ -111,7 +113,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         public mat3Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: Readonly<Mat3<TTypedArray>>,
-            writeTo: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
+            writeTo: Range2d<TResult> = this.constructor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
         {
@@ -126,7 +128,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         public unionRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             range: Readonly<Range2d<TTypedArray>>,
-            writeTo: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
+            writeTo: Range2d<TResult> = this.constructor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
         {
@@ -142,7 +144,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         (
             x: number,
             y: number,
-            writeTo: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
+            writeTo: Range2d<TResult> = this.constructor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
         {
@@ -157,7 +159,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         public getRangeTransform<TArray extends TTypedArray = InstanceType<TCtor>>
         (
             toRange: Readonly<Range2d<TTypedArray>>,
-            result: Mat3<TArray> = (this.constructor as typeof Range2dImpl).mat3Ctor.factory.createOneEmpty() as Mat3<TArray>,
+            result: Mat3<TArray> = this.constructor.mat3Ctor.factory.createOneEmpty() as Mat3<TArray>,
         )
             : Mat3<TArray>
         {
@@ -209,15 +211,15 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         (
             scalingFactor: number,
             relativeTo: Vec2<TTypedArray>,
-            result: Range2d<TResult> = (this.constructor as typeof Range2dImpl).factory.createOneEmpty() as Range2d<TResult>,
+            result: Range2d<TResult> = this.constructor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
         {
             DEBUG_MODE && _Debug.assert(this.isPointInRange(relativeTo), "relativeTo must be inside the range");
 
             const difference = this
-                .getCenter((this.constructor as typeof Range2dImpl).tmpVec)
-                .subtract(relativeTo, (this.constructor as typeof Range2dImpl).tmpVec);
+                .getCenter(this.constructor.tmpVec)
+                .subtract(relativeTo, this.constructor.tmpVec);
 
             // multiply by 2 as we want to compare to half the range
             // make the difference relative, varies from -1 to 1

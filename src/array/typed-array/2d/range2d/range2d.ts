@@ -53,6 +53,8 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
 
     protected static constructors = populateTypedArrayConstructorMap(Range2d);
 
+    public ["constructor"]: IRange2dCtor<TArray>;
+
     /**
      * xMin
      */

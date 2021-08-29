@@ -22,6 +22,8 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
         public static factory: ITypedArrayTupleFactory<Margin2d<InstanceType<TCtor>>, TMargin2dCtorArgs> = new Mat2Factory(Margin2dImpl, NormalizedDataViewProvider.getView(ctor));
         private static rangeCtor = Range2d.getCtor(ctor);
 
+        public ["constructor"]: typeof Margin2dImpl;
+
         public getLeft(): number
         {
             return this[0];
@@ -75,7 +77,7 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
         public getInnerRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             range: Readonly<Range2d<TTypedArray>>,
-            result: Range2d<TResult> = (this.constructor as typeof Margin2dImpl).rangeCtor.factory.createOneEmpty() as Range2d<TResult>,
+            result: Range2d<TResult> = this.constructor.rangeCtor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
         {
@@ -90,7 +92,7 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
         public mat3TransformLength<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: Readonly<Mat3<TTypedArray>>,
-            writeTo: Margin2d<TResult> = (this.constructor as typeof Margin2dImpl).factory.createOneEmpty() as Margin2d<TResult>,
+            writeTo: Margin2d<TResult> = this.constructor.factory.createOneEmpty() as Margin2d<TResult>,
         )
             : Margin2d<TResult>
         {

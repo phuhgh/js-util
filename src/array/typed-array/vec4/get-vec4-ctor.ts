@@ -15,6 +15,8 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec4Ct
     {
         public static factory: ITypedArrayTupleFactory<Vec4<InstanceType<TCtor>>, TVec4CtorArgs> = new Vec4Factory(Vec4Impl, NormalizedDataViewProvider.getView(ctor));
 
+        public ["constructor"]: typeof Vec4Impl;
+
         public constructor
         (
             bufferOrLength: number | ArrayBufferLike = 4,

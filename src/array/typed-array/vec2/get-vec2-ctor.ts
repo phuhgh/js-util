@@ -17,6 +17,8 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
     {
         public static factory: ITypedArrayTupleFactory<Vec2<InstanceType<TCtor>>, TVec2CtorArgs> = new Vec2Factory(Vec2Impl, NormalizedDataViewProvider.getView(ctor));
 
+        public ["constructor"]: typeof Vec2Impl;
+
         public constructor
         (
             bufferOrLength: number | ArrayBufferLike = 2,
@@ -70,7 +72,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
         public override add<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             vec: Readonly<Vec2<TTypedArray>>,
-            result: Vec2<TResult> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty() as Vec2<TResult>,
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
         {
@@ -83,7 +85,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
         public override subtract<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             vec: Readonly<Vec2<TTypedArray>>,
-            result: Vec2<TResult> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty() as Vec2<TResult>,
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
         {
@@ -105,7 +107,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
         public override mat3Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: Readonly<Mat3<TTypedArray>>,
-            result: Vec2<TResult> = (this.constructor as typeof Vec2Impl).factory.createOneEmpty() as Vec2<TResult>,
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
         {
