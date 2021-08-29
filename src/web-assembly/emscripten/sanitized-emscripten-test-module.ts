@@ -79,6 +79,10 @@ export class SanitizedEmscriptenTestModule<T extends object, U extends object>
         return this._wrapper;
     }
 
+
+    /**
+     * NB you MUST set the flag `-s EXIT_RUNTIME=1` for this to work.
+     */
     public endEmscriptenProgram(): void
     {
         // kick off asan checks
