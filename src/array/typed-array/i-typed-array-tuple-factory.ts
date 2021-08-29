@@ -12,6 +12,9 @@ export interface ITypedArrayTupleFactory<TArray extends ATypedArrayTuple<number,
 
     createOneEmpty(): TArray;
 
+    /**
+     * If endianness is not supplied the platform's endianness will be used.
+     */
     copyFromBuffer
     (
         memoryDataView: DataView,
