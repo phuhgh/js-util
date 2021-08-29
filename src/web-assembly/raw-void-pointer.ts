@@ -16,7 +16,7 @@ export interface IRawVoidPointer extends ISharedObject, IOnRelease
 {
     readonly pointer: number;
     readonly byteSize: number;
-    readonly dataView: DataView;
+    getDataView(): DataView;
 }
 
 /**
@@ -24,7 +24,6 @@ export interface IRawVoidPointer extends ISharedObject, IOnRelease
  */
 export class RawVoidPointer implements IRawVoidPointer
 {
-    public dataView: DataView;
     public readonly sharedObject: IReferenceCountedPtr;
     public readonly pointer: number;
     public readonly byteSize: number;
@@ -53,6 +52,20 @@ export class RawVoidPointer implements IRawVoidPointer
         return new RawVoidPointer(wrapper, pointer, byteSize);
     }
 
+    public getDataView(): DataView
+    {
+        if (DEBUG_MODE)
+        {
+            return RcJsUtilDebug.protectedViews
+                .getValue(this)
+                .createProtectedView(this.dataView);
+        }
+        else
+        {
+            return this.dataView;
+        }
+    }
+
     public onRelease(): void
     {
         this.wrapper.memoryResize.removeListener(this);
@@ -70,7 +83,7 @@ export class RawVoidPointer implements IRawVoidPointer
             return;
         }
 
-        this.dataView = this.getDataView();
+        this.dataView = this.recreateDataView();
     }
 
     protected constructor
@@ -87,34 +100,19 @@ export class RawVoidPointer implements IRawVoidPointer
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
-            const protectedView = new DebugProtectedView([], `memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`);
-            this.debugOnAllocate = () =>
-            {
-                protectedView.invalidate();
-                this.dataView = this.getDataView();
-            };
+            const protectedView = new DebugProtectedView([], `RVP - memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`);
             DebugSharedObjectChecks.register(this, protectedView, "RVP");
         });
 
-        this.dataView = this.getDataView();
+        this.dataView = this.recreateDataView();
     }
 
-    private getDataView(): DataView
+    private recreateDataView(): DataView
     {
-        const dataView = new DataView(this.wrapper.memory.buffer, this.pointer, this.byteSize);
-
-        if (DEBUG_MODE)
-        {
-            return RcJsUtilDebug.protectedViews
-                .getValue(this)
-                .createProtectedView(dataView);
-        }
-        else
-        {
-            return dataView;
-        }
+        return new DataView(this.wrapper.memory.buffer, this.pointer, this.byteSize);
     }
 
+    private dataView: DataView;
     public debugOnAllocate?: (() => void);
 }
 

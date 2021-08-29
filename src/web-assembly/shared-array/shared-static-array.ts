@@ -44,9 +44,18 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
 
     public getInstance(): InstanceType<TCtor>
     {
-        DEBUG_MODE && _Debug.assert(this.wrapper != null, "access violation - object has been destroyed");
+        if (DEBUG_MODE)
+        {
+            _Debug.assert(this.wrapper != null, "access violation - object has been destroyed");
 
-        return this.instance;
+            return RcJsUtilDebug.protectedViews
+                .getValue(this)
+                .createProtectedView(this.instance);
+        }
+        else
+        {
+            return this.instance;
+        }
     }
 
     public onMemoryResize = (): void =>
@@ -105,14 +114,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             return new this.ctor(0) as InstanceType<TCtor>;
         }
 
-        const instance = new this.ctor(this.wrapper.memory.buffer, this.sharedObject.getPtr(), this.length) as InstanceType<TCtor>;
-
-        if (DEBUG_MODE)
-        {
-            return RcJsUtilDebug.protectedViews.getValue(this).createProtectedView(instance);
-        }
-
-        return instance;
+        return new this.ctor(this.wrapper.memory.buffer, this.sharedObject.getPtr(), this.length) as InstanceType<TCtor>;
     }
 
     private wrapper: IEmscriptenWrapper<ISharedArrayBindings> | null;

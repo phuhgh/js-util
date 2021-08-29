@@ -8,7 +8,7 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
 {
     public static createTypedArrayView = <TCtor extends TTypedArrayCtor>(): DebugProtectedView<InstanceType<TCtor>> =>
     {
-        return new DebugProtectedView<InstanceType<TCtor>>(["BYTES_PER_ELEMENT"], "memory resize danger, refresh instance with getInstance");
+        return new DebugProtectedView<InstanceType<TCtor>>(["BYTES_PER_ELEMENT"], "Shared Array - memory resize danger, refresh instance with getInstance");
     }
 
     public constructor

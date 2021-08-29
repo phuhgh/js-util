@@ -29,13 +29,13 @@ debugDescribe("=> RawVoidPointer", () =>
         it("| creates, writes, reads and destroys without triggering the asan", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
-            expect(rvp.dataView.byteLength).toEqual(128);
-            new Float32Array(rvp.dataView.buffer, rvp.pointer, 4).set([1, 2, 3, 4]);
+            expect(rvp.getDataView().byteLength).toEqual(128);
+            new Float32Array(rvp.getDataView().buffer, rvp.pointer, 4).set([1, 2, 3, 4]);
 
-            expect(rvp.dataView.getFloat32(0, true)).toEqual(1);
-            expect(rvp.dataView.getFloat32(Float32Array.BYTES_PER_ELEMENT, true)).toEqual(2);
-            expect(rvp.dataView.getFloat32(Float32Array.BYTES_PER_ELEMENT * 2, true)).toEqual(3);
-            expect(rvp.dataView.getFloat32(Float32Array.BYTES_PER_ELEMENT * 3, true)).toEqual(4);
+            expect(rvp.getDataView().getFloat32(0, true)).toEqual(1);
+            expect(rvp.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT, true)).toEqual(2);
+            expect(rvp.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 2, true)).toEqual(3);
+            expect(rvp.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 3, true)).toEqual(4);
 
             rvp.sharedObject.release();
             expect(rvp.sharedObject.getIsDestroyed()).toBeTrue();
@@ -54,7 +54,7 @@ debugDescribe("=> RawVoidPointer", () =>
         it("| invalidates dataView on memory resize", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
-            const dataView = rvp.dataView;
+            const dataView = rvp.getDataView();
             const rvp2 = RawVoidPointer.createOne(testModule.wrapper, 8388608);
             expect(() => dataView.getFloat32(0)).toThrow();
 
@@ -66,14 +66,14 @@ debugDescribe("=> RawVoidPointer", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             rvp.sharedObject.release();
-            expect(() => rvp.dataView.getFloat32(0)).toThrow();
+            expect(() => rvp.getDataView().getFloat32(0)).toThrow();
         });
 
         it("| updates the dataView on resize", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             const rvp2 = RawVoidPointer.createOne(testModule.wrapper, 8388608);
-            rvp.dataView.getFloat32(0);
+            rvp.getDataView().getFloat32(0);
 
             rvp.sharedObject.release();
             rvp2.sharedObject.release();

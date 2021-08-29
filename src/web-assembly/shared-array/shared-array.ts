@@ -106,9 +106,17 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
     public getInstance(): InstanceType<TCtor>
     {
-        DEBUG_MODE && _Debug.assert(this.wrapper != null, "access violation - object has been destroyed");
-
-        return this.instance;
+        if (DEBUG_MODE)
+        {
+            _Debug.assert(this.wrapper != null, "access violation - object has been destroyed");
+            return RcJsUtilDebug.protectedViews
+                .getValue(this)
+                .createProtectedView(this.instance);
+        }
+        else
+        {
+            return this.instance;
+        }
     }
 
     public onMemoryResize = (): void =>
@@ -174,16 +182,8 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
         const arrayPtr = this.wrapper.instance[this.cGetArrayAddress](this.sharedObject.getPtr());
         DEBUG_MODE && _Debug.assert(arrayPtr !== nullPointer, "failed to get array address");
-        const instance = new this.ctor(this.wrapper.memory.buffer, arrayPtr, this.length) as InstanceType<TCtor>;
 
-        if (DEBUG_MODE)
-        {
-            return RcJsUtilDebug.protectedViews
-                .getValue(this)
-                .createProtectedView(instance);
-        }
-
-        return instance;
+        return new this.ctor(this.wrapper.memory.buffer, arrayPtr, this.length) as InstanceType<TCtor>;
     }
 
     private wrapper: IEmscriptenWrapper<ISharedArrayBindings> | null;
