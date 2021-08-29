@@ -47,7 +47,7 @@ export abstract class AReferenceCounted implements IReferenceCounted
 
     public getIsDestroyed(): boolean
     {
-        return this.references === 0;
+        return this.references <= 0;
     }
 
     private references = 1;
