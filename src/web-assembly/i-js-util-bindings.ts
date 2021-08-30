@@ -5,7 +5,7 @@ import { IDebugBindings } from "./emscripten/i-debug-bindings";
 /**
  * @public
  */
-export interface JsUtilBindings
+export interface IJsUtilBindings
     extends ISharedArrayBindings,
             IMemoryUtilBindings,
             IDebugBindings

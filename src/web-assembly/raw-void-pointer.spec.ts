@@ -2,9 +2,9 @@ import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, S
 import { debugDescribe } from "../test-utils";
 import { Emscripten } from "../../external/emscripten";
 import { RawVoidPointer } from "./raw-void-pointer";
-import { JsUtilBindings } from "./js-util-bindings";
+import { IJsUtilBindings } from "./i-js-util-bindings";
 
-declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<JsUtilBindings>;
+declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const asanTestModule = require("../../external/asan-test-module");
 // eslint-disable-next-line @typescript-eslint/no-var-requires

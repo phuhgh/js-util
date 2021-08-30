@@ -74,7 +74,7 @@ export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bin
 export { isLittleEndian } from "./web-assembly/is-little-endian";
 export { RawVoidPointer, IRawVoidPointer } from "./web-assembly/raw-void-pointer";
 export { DebugSharedObjectChecks } from "./web-assembly/debug-shared-object-checks";
-export { JsUtilBindings } from "./web-assembly/js-util-bindings";
+export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings";
 
 export { arrayBinaryIndexOf } from "./array/impl/array-binary-index-of";

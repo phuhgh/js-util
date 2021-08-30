@@ -1,6 +1,7 @@
 import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
 import { _Debug } from "../debug/_debug";
 import { nullPointer } from "../web-assembly/emscripten/null-pointer";
+import { TListener } from "../eventing/t-listener";
 
 /**
  * @public
@@ -28,6 +29,10 @@ export interface IReferenceCountedPtr extends IReferenceCounted
 export interface IOnRelease
 {
     onRelease(): void
+}
+
+export interface IOnMemoryResize extends TListener<"onMemoryResize", []>
+{
 }
 
 /**

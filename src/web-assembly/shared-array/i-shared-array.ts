@@ -1,5 +1,5 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { IOnRelease, ISharedObject } from "../../lifecycle/reference-counted-ptr";
+import { ISharedObject } from "../../lifecycle/reference-counted-ptr";
 
 /**
  * @public
@@ -9,7 +9,7 @@ import { IOnRelease, ISharedObject } from "../../lifecycle/reference-counted-ptr
  * NB the pointer does not necessarily point to the start of the block (e.g. it may be related to life cycle instead),
  * this is implementation defined.
  */
-export interface ISharedArray<TCtor extends TTypedArrayCtor> extends ISharedObject, IOnRelease
+export interface ISharedArray<TCtor extends TTypedArrayCtor> extends ISharedObject
 {
     readonly ctor: TCtor;
     readonly length: number;

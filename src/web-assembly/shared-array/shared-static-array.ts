@@ -3,8 +3,7 @@ import { _Debug } from "../../debug/_debug";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { ISharedArray } from "./i-shared-array";
-import { TDebugListener } from "rc-js-util-globals";
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
+import { IOnMemoryResize, IOnRelease, IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings } from "./i-shared-array-bindings";
 
@@ -24,7 +23,9 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
  * Typed array representing static memory in wasm.
  */
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
-    implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
+    implements ISharedArray<TCtor>,
+               IOnRelease,
+               IOnMemoryResize
 {
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF32SharedStaticArray
     {

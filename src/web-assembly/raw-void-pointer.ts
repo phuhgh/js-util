@@ -1,4 +1,4 @@
-import { IOnRelease, IReferenceCountedPtr, ISharedObject, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
+import { IOnMemoryResize, IOnRelease, IReferenceCountedPtr, ISharedObject, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
 import { IEmscriptenWrapper } from "./emscripten/i-emscripten-wrapper";
 import { nullPointer } from "./emscripten/null-pointer";
 import { _Production } from "../production/_production";
@@ -12,7 +12,10 @@ import { _Number } from "../number/_number";
  * @public
  * Provides a reference counted wrapper to a pointer `malloc`'d from JS and is `free`'d on reference count hitting 0.
  */
-export interface IRawVoidPointer extends ISharedObject, IOnRelease
+export interface IRawVoidPointer
+    extends ISharedObject,
+            IOnRelease,
+            IOnMemoryResize
 {
     readonly pointer: number;
     readonly byteSize: number;

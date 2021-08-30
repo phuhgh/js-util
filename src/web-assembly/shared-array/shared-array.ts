@@ -1,12 +1,11 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
+import { IOnMemoryResize, IOnRelease, IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
 import { _Debug } from "../../debug/_debug";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { _Production } from "../../production/_production";
 import { nullPointer } from "../emscripten/null-pointer";
 import { ISharedArray } from "./i-shared-array";
-import { TDebugListener } from "rc-js-util-globals";
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings";
 
@@ -27,7 +26,9 @@ export type TF64SharedArray = ISharedArray<Float64ArrayConstructor>;
  * Typed array shared between wasm and javascript.
  */
 export class SharedArray<TCtor extends TTypedArrayCtor>
-    implements ISharedArray<TCtor>, TDebugListener<"debugOnAllocate", []>
+    implements ISharedArray<TCtor>,
+               IOnRelease,
+               IOnMemoryResize
 {
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory?: boolean): TF32SharedArray
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null

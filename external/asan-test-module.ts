@@ -1,10 +1,10 @@
 import { Emscripten } from "./emscripten";
-import { JsUtilBindings } from "../src";
+import { IJsUtilBindings } from "../src";
 
 /**
  * @internal
  */
-declare const Module: Emscripten.EmscriptenModuleFactory<JsUtilBindings>;
+declare const Module: Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
 /**
  * @internal
  */
