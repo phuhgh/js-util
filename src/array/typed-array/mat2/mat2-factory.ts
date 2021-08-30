@@ -50,9 +50,9 @@ export class Mat2Factory<T extends Mat2<TTypedArray>>
         : T
     {
         writeTo[0] = this.dataView.getValue(memoryDataView, pointer, littleEndian);
-        writeTo[1] = this.dataView.getValue(memoryDataView, pointer += Float64Array.BYTES_PER_ELEMENT, littleEndian);
-        writeTo[2] = this.dataView.getValue(memoryDataView, pointer += Float64Array.BYTES_PER_ELEMENT, littleEndian);
-        writeTo[3] = this.dataView.getValue(memoryDataView, pointer += Float64Array.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[1] = this.dataView.getValue(memoryDataView, pointer += this.bytesPerElement, littleEndian);
+        writeTo[2] = this.dataView.getValue(memoryDataView, pointer += this.bytesPerElement, littleEndian);
+        writeTo[3] = this.dataView.getValue(memoryDataView, pointer += this.bytesPerElement, littleEndian);
 
         return writeTo;
     }
@@ -67,8 +67,8 @@ export class Mat2Factory<T extends Mat2<TTypedArray>>
         : void
     {
         this.dataView.setValue(memoryDataView, pointer, writeFrom[0], littleEndian);
-        this.dataView.setValue(memoryDataView, pointer += Float64Array.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
-        this.dataView.setValue(memoryDataView, pointer += Float64Array.BYTES_PER_ELEMENT, writeFrom[2], littleEndian);
-        this.dataView.setValue(memoryDataView, pointer += Float64Array.BYTES_PER_ELEMENT, writeFrom[3], littleEndian);
+        this.dataView.setValue(memoryDataView, pointer += this.bytesPerElement, writeFrom[1], littleEndian);
+        this.dataView.setValue(memoryDataView, pointer += this.bytesPerElement, writeFrom[2], littleEndian);
+        this.dataView.setValue(memoryDataView, pointer += this.bytesPerElement, writeFrom[3], littleEndian);
     }
 }

@@ -31,6 +31,9 @@ export interface IOnRelease
     onRelease(): void
 }
 
+/**
+ * @public
+ */
 export interface IOnMemoryResize extends TListener<"onMemoryResize", []>
 {
 }

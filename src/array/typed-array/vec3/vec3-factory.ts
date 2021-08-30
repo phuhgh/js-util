@@ -48,8 +48,8 @@ export class Vec3Factory<T extends Vec3<TTypedArray>>
         : T
     {
         writeTo[0] = this.dataView.getValue(memoryDataView, pointer, littleEndian);
-        writeTo[1] = this.dataView.getValue(memoryDataView, pointer += this.ctor.BYTES_PER_ELEMENT, littleEndian);
-        writeTo[2] = this.dataView.getValue(memoryDataView, pointer += this.ctor.BYTES_PER_ELEMENT, littleEndian);
+        writeTo[1] = this.dataView.getValue(memoryDataView, pointer += this.bytesPerElement, littleEndian);
+        writeTo[2] = this.dataView.getValue(memoryDataView, pointer += this.bytesPerElement, littleEndian);
 
         return writeTo;
     }
@@ -64,7 +64,7 @@ export class Vec3Factory<T extends Vec3<TTypedArray>>
         : void
     {
         this.dataView.setValue(memoryDataView, pointer, writeFrom[0], littleEndian);
-        this.dataView.setValue(memoryDataView, pointer += this.ctor.BYTES_PER_ELEMENT, writeFrom[1], littleEndian);
-        this.dataView.setValue(memoryDataView, pointer += this.ctor.BYTES_PER_ELEMENT, writeFrom[2], littleEndian);
+        this.dataView.setValue(memoryDataView, pointer += this.bytesPerElement, writeFrom[1], littleEndian);
+        this.dataView.setValue(memoryDataView, pointer += this.bytesPerElement, writeFrom[2], littleEndian);
     }
 }
