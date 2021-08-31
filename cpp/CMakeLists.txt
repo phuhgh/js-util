@@ -27,7 +27,7 @@ if (${BUILD_JSUTIL_TEST})
 
     add_executable(safe-heap-test-module "${SOURCE_FILES}")
     set_target_properties(safe-heap-test-module PROPERTIES
-            LINK_FLAGS "${CommonLinkFlags} -s INITIAL_MEMORY=8192kb -s ALLOW_MEMORY_GROWTH=1 -s SAFE_HEAP"
+            LINK_FLAGS "${CommonLinkFlags} -s INITIAL_MEMORY=8192kb -s ALLOW_MEMORY_GROWTH=1 -s SAFE_HEAP -fsanitize=undefined"
             COMPILE_FLAGS "${CommonCompileFlags}"
             )
     target_link_libraries(safe-heap-test-module PUBLIC GSL)
