@@ -1,5 +1,6 @@
 import { _Debug } from "./debug/_debug";
 import { setDefaultUnitTestFlags } from "./debug/impl/set-default-unit-test-flags";
+import { RcJsUtilDebugImpl } from "./debug/debug-namepace";
 
 export function itShouldCallAssert(times: number, runTest: () => void): void
 {
@@ -39,6 +40,7 @@ export function debugDescribe(label: string, callback: () => void): void
         beforeEach(() =>
         {
             setDefaultUnitTestFlags();
+            RcJsUtilDebugImpl.uniquePointers.clear();
         });
 
         callback();
@@ -52,6 +54,7 @@ export function fdebugDescribe(label: string, callback: () => void): void
         beforeEach(() =>
         {
             setDefaultUnitTestFlags();
+            RcJsUtilDebugImpl.uniquePointers.clear();
         });
 
         callback();

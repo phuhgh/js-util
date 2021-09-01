@@ -165,14 +165,21 @@ export class _Debug
      * }
      * ```
      */
-    public static verboseLog(message: string): void
+    public static verboseLog(message: string, ancillaryObject?: object): void
     {
         if (!_Debug.isFlagSet("DEBUG_VERBOSE"))
         {
             return;
         }
 
-        console.debug(message);
+        if (ancillaryObject == null)
+        {
+            console.debug(message);
+        }
+        else
+        {
+            console.debug(message, ancillaryObject);
+        }
     }
 
     public static getStackTrace(): string

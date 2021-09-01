@@ -1,6 +1,6 @@
 {
   "name": "rc-js-util",
-  "version": "5.0.0-alpha.81",
+  "version": "5.0.0-alpha.82",
   "license": "MIT",
   "scripts": {
     "build": "npm run build-ts && npm run build-cpp",
@@ -14,7 +14,7 @@
     "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },
   "dependencies": {
-    "rc-js-util-globals": "^4.0.1",
+    "rc-js-util-globals": "^5.0.0",
     "tslib": "^2.3.1"
   },
   "devDependencies": {

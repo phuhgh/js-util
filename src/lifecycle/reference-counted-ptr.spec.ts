@@ -1,6 +1,7 @@
 import { ReferenceCountedPtr } from "./reference-counted-ptr";
+import { debugDescribe } from "../test-utils";
 
-describe("=> ReferenceCountedPtr", () =>
+debugDescribe("=> ReferenceCountedPtr", () =>
 {
     describe("=> bindLifecycle", () =>
     {
@@ -20,17 +21,8 @@ describe("=> ReferenceCountedPtr", () =>
         {
             const a = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             const b = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
-            const c = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             a.bindLifecycle(b);
-            b.bindLifecycle(c);
-            expect(() => c.bindLifecycle(a)).toThrow();
-        });
-
-        it("| errors if the same address is linked", () =>
-        {
-            const a = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
-            const b = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
-            expect(() => a.bindLifecycle(b)).toThrow();
+            expect(() => b.bindLifecycle(a)).toThrow();
         });
     });
 

@@ -4,6 +4,7 @@ import { nullPointer } from "../web-assembly/emscripten/null-pointer";
 import { _Array } from "../array/_array";
 import { IOnFree } from "./i-on-free";
 import { ITemporaryListener, TemporaryListener } from "./temporary-listener";
+import { RcJsUtilDebugImpl } from "../debug/debug-namepace";
 
 /**
  * @public
@@ -55,6 +56,11 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
 
     public onFree(): void
     {
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            RcJsUtilDebugImpl.uniquePointers.delete(this.wasmPtr);
+        });
+
         if (this.onFreeListener != null)
         {
             this.onFreeListener.clearingEmit();
@@ -145,7 +151,16 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     )
     {
         super();
-        DEBUG_MODE && _Debug.assert(this.wasmPtr !== nullPointer && this.wasmPtr != null, "expected pointer to object but got null pointer");
+        DEBUG_MODE && _Debug.runBlock(() =>
+        {
+            _Debug.assert(this.wasmPtr !== nullPointer && this.wasmPtr != null, "expected pointer to object but got null pointer");
+
+            if (!this.isStatic)
+            {
+                _Debug.assert(!RcJsUtilDebugImpl.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
+                RcJsUtilDebugImpl.uniquePointers.add(this.wasmPtr);
+            }
+        });
     }
 
     public static getWrappedReferences(ptr: ReferenceCountedPtr): ReferenceCountedPtr[] | null

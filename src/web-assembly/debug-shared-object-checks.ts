@@ -50,7 +50,10 @@ export class DebugSharedObjectChecks
 
         if (!instance.sharedObject.isStatic && _Debug.isFlagSet("DEBUG_VERBOSE_MEMORY_MANAGEMENT"))
         {
-            _Debug.verboseLog(`claimed ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
+            // stringifying the stack would be far too verbose, most debuggers allow expansion of objects...
+            const allocationStack = { stack: _Debug.getStackTrace() };
+            const message = `claimed ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`;
+            _Debug.verboseLog(message, allocationStack);
         }
 
         return protectedView;

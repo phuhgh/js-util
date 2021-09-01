@@ -62,7 +62,7 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
             // the js object may leak in production too (resize listener), but we don't know
             // fixing one fixes the other
             const message = [
-                "Leaked shared instance object:",
+                "Finalization registry found unreleased wasm object allocated by:",
                 owner.toString(),
             ].join("\n");
 

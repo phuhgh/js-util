@@ -30,6 +30,8 @@ export namespace RcJsUtilDebugImpl
      * {@link IDebugSharedObjectLifeCycleChecks}.
      */
     export let sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecks;
+
+    export let uniquePointers: Set<number>;
 }
 
 DEBUG_MODE && _Debug.runBlock(() =>
@@ -38,6 +40,7 @@ DEBUG_MODE && _Debug.runBlock(() =>
     RcJsUtilDebugImpl.protectedViews = new DebugWeakValue<DebugProtectedView<object>>();
     RcJsUtilDebugImpl.error = (message: string): void => fpNoOp(_Debug.error(message));
     RcJsUtilDebugImpl.sharedObjectLifeCycleChecks = new DebugSharedObjectLifeCycleChecks();
+    RcJsUtilDebugImpl.uniquePointers = new Set<number>();
 
     getGlobal()["RcJsUtilDebug"] = RcJsUtilDebugImpl;
 });

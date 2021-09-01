@@ -106,6 +106,7 @@ declare global
         export const protectedViews: IDebugWeakStore<IDebugProtectedView<object>>;
         export const error: (message: string) => void;
         export const sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecks;
+        export const uniquePointers: Set<number>;
     }
 
     interface RcJsUtilDebugFlags
