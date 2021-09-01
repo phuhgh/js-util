@@ -59,7 +59,7 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
 
         if (hiddenView == null)
         {
-            throw _Debug.error("expected to find hidden view, was the proxy created by DebugProtectedView?");
+            return view;
         }
 
         return hiddenView as T;
