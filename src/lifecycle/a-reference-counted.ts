@@ -1,4 +1,5 @@
 import { _Debug } from "../debug/_debug";
+import { IOnFree } from "./i-on-free";
 
 /**
  * @public
@@ -16,7 +17,7 @@ export interface IReferenceCounted
  * Provides a way to handle cleanup of manually managed resources where there is not a single owner.
  * NB The object is pre-claimed (ref count 1) on creation.
  */
-export abstract class AReferenceCounted implements IReferenceCounted
+export abstract class AReferenceCounted implements IReferenceCounted, IOnFree
 {
     /**
      * Call when the object is received.
@@ -39,11 +40,11 @@ export abstract class AReferenceCounted implements IReferenceCounted
     {
         if (--this.references === 0)
         {
-            this.onRelease();
+            this.onFree();
         }
     }
 
-    protected abstract onRelease(): void;
+    public abstract onFree(): void;
 
     public getIsDestroyed(): boolean
     {

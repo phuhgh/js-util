@@ -1,8 +1,8 @@
-import { ISharedObject } from "../lifecycle/reference-counted-ptr";
 import { _Debug } from "../debug/_debug";
 import { numberGetHexString } from "../number/impl/number-get-hex-string";
 import { stringNormalizeNullUndefinedToEmpty } from "../string/impl/string-normalize-null-undefined-to-empty";
 import { IDebugProtectedView } from "rc-js-util-globals";
+import { ISharedObject } from "../lifecycle/i-shared-object";
 
 /**
  * @public

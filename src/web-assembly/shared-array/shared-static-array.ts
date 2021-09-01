@@ -3,9 +3,11 @@ import { _Debug } from "../../debug/_debug";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { ISharedArray } from "./i-shared-array";
-import { IOnMemoryResize, IOnRelease, IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings } from "./i-shared-array-bindings";
+import { IOnFree } from "../../lifecycle/i-on-free";
+import { IOnMemoryResize } from "../emscripten/i-on-memory-resize";
 
 /**
  * @public
@@ -24,7 +26,7 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
  */
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>,
-               IOnRelease,
+               IOnFree,
                IOnMemoryResize
 {
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF32SharedStaticArray
@@ -70,7 +72,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         this.instance = this.createLocalInstance();
     }
 
-    public onRelease(): void
+    public onFree(): void
     {
         if (this.wrapper == null)
         {

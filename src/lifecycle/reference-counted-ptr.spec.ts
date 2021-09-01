@@ -6,8 +6,8 @@ describe("=> ReferenceCountedPtr", () =>
     {
         it("| ties the lifecycle", () =>
         {
-            const owner = new ReferenceCountedPtr(false, 1, { onRelease: () => undefined });
-            const child = new ReferenceCountedPtr(false, 2, { onRelease: () => undefined });
+            const owner = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
+            const child = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
             owner.bindLifecycle(child);
             child.release();
             expect(child.getIsDestroyed()).toBeFalse();
@@ -18,9 +18,9 @@ describe("=> ReferenceCountedPtr", () =>
 
         it("| errors if a cycle is detected", () =>
         {
-            const a = new ReferenceCountedPtr(false, 1, { onRelease: () => undefined });
-            const b = new ReferenceCountedPtr(false, 2, { onRelease: () => undefined });
-            const c = new ReferenceCountedPtr(false, 1, { onRelease: () => undefined });
+            const a = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
+            const b = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
+            const c = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             a.bindLifecycle(b);
             b.bindLifecycle(c);
             expect(() => c.bindLifecycle(a)).toThrow();
@@ -28,8 +28,8 @@ describe("=> ReferenceCountedPtr", () =>
 
         it("| errors if the same address is linked", () =>
         {
-            const a = new ReferenceCountedPtr(false, 1, { onRelease: () => undefined });
-            const b = new ReferenceCountedPtr(false, 1, { onRelease: () => undefined });
+            const a = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
+            const b = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             expect(() => a.bindLifecycle(b)).toThrow();
         });
     });
@@ -38,8 +38,8 @@ describe("=> ReferenceCountedPtr", () =>
     {
         it("| ties the lifecycle", () =>
         {
-            const owner = new ReferenceCountedPtr(false, 1, { onRelease: () => undefined });
-            const child = new ReferenceCountedPtr(false, 2, { onRelease: () => undefined });
+            const owner = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
+            const child = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
             owner.takeOwnership(child);
             expect(child.getIsDestroyed()).toBeFalse();
             owner.release();
@@ -52,9 +52,9 @@ describe("=> ReferenceCountedPtr", () =>
     {
         it("| unbinds each shared ptr", () =>
         {
-            const a = new ReferenceCountedPtr(false, 1, { onRelease: () => undefined });
-            const b = new ReferenceCountedPtr(false, 2, { onRelease: () => undefined });
-            const c = new ReferenceCountedPtr(false, 3, { onRelease: () => undefined });
+            const a = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
+            const b = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
+            const c = new ReferenceCountedPtr(false, 3, { onFree: () => undefined });
             a.takeOwnership(b);
             a.takeOwnership(c);
             a.release();

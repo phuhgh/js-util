@@ -1,4 +1,4 @@
-import { IOnMemoryResize, IOnRelease, IReferenceCountedPtr, ISharedObject, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
 import { IEmscriptenWrapper } from "./emscripten/i-emscripten-wrapper";
 import { nullPointer } from "./emscripten/null-pointer";
 import { _Production } from "../production/_production";
@@ -7,6 +7,9 @@ import { _Debug } from "../debug/_debug";
 import { DebugSharedObjectChecks } from "./debug-shared-object-checks";
 import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings";
 import { _Number } from "../number/_number";
+import { ISharedObject } from "../lifecycle/i-shared-object";
+import { IOnFree } from "../lifecycle/i-on-free";
+import { IOnMemoryResize } from "./emscripten/i-on-memory-resize";
 
 /**
  * @public
@@ -14,7 +17,7 @@ import { _Number } from "../number/_number";
  */
 export interface IRawVoidPointer
     extends ISharedObject,
-            IOnRelease,
+            IOnFree,
             IOnMemoryResize
 {
     readonly pointer: number;
@@ -69,7 +72,7 @@ export class RawVoidPointer implements IRawVoidPointer
         }
     }
 
-    public onRelease(): void
+    public onFree(): void
     {
         this.wrapper.memoryResize.removeListener(this);
         this.wrapper.instance._jsUtilFree(this.pointer);

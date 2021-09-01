@@ -41,7 +41,7 @@ export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localizatio
 export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
 export { TListener } from "./eventing/t-listener";
-export { ReferenceCountedPtr, IReferenceCountedPtr, ISharedObject, IOnRelease, IOnMemoryResize } from "./lifecycle/reference-counted-ptr";
+export { ReferenceCountedPtr, IReferenceCountedPtr} from "./lifecycle/reference-counted-ptr";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted";
 export { IDictionary } from "./typescript/i-dictionary";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary";
@@ -145,3 +145,6 @@ export { stringNormalizeEmptyToUndefined } from "./string/impl/string-normalize-
 export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normalize-null-undefined-to-empty";
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings";
 export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings";
+export { ISharedObject } from "./lifecycle/i-shared-object";
+export { IOnFree } from "./lifecycle/i-on-free";
+export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize";

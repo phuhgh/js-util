@@ -1,17 +1,8 @@
 import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
 import { _Debug } from "../debug/_debug";
 import { nullPointer } from "../web-assembly/emscripten/null-pointer";
-import { TListener } from "../eventing/t-listener";
 import { _Array } from "../array/_array";
-
-/**
- * @public
- * Holds a reference to wasm object.
- */
-export interface ISharedObject
-{
-    readonly sharedObject: IReferenceCountedPtr;
-}
+import { IOnFree } from "./i-on-free";
 
 /**
  * @public
@@ -22,6 +13,7 @@ export interface IReferenceCountedPtr extends IReferenceCounted
 {
     isStatic: boolean;
     getPtr(): number;
+    setNullPtr(): void;
 
     /**
      * Claims the `referenceCountedObject` and releases when this object is released.
@@ -47,33 +39,23 @@ export interface IReferenceCountedPtr extends IReferenceCounted
 
 /**
  * @public
- */
-export interface IOnRelease
-{
-    onRelease(): void
-}
-
-/**
- * @public
- */
-export interface IOnMemoryResize extends TListener<"onMemoryResize", []>
-{
-}
-
-/**
- * @public
  * Wrapper of wasm object.
  */
-export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr, IOnRelease
+export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr, IOnFree
 {
     public getPtr(): number
     {
         return this.wasmPtr;
     }
 
-    public onRelease(): void
+    public setNullPtr(): void
     {
-        this.listener.onRelease();
+        this.wasmPtr = ReferenceCountedPtr.nullPtr;
+    }
+
+    public onFree(): void
+    {
+        this.listener.onFree();
 
         const wrappedReferences = this.wrappedReferences;
 
@@ -143,7 +125,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     (
         public isStatic: boolean,
         protected wasmPtr: number,
-        public listener: { onRelease(): void },
+        public listener: IOnFree,
     )
     {
         super();
@@ -151,6 +133,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     }
 
     public wrappedReferences: ReferenceCountedPtr[] | null = null;
+    private static nullPtr = nullPointer;
 }
 
 function getHasCycle(referencingTo: ReferenceCountedPtr, referencingFrom: ReferenceCountedPtr): boolean

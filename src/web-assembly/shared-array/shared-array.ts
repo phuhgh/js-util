@@ -1,5 +1,5 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { IOnMemoryResize, IOnRelease, IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
 import { _Debug } from "../../debug/_debug";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
@@ -8,6 +8,8 @@ import { nullPointer } from "../emscripten/null-pointer";
 import { ISharedArray } from "./i-shared-array";
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings";
+import { IOnFree } from "../../lifecycle/i-on-free";
+import { IOnMemoryResize } from "../emscripten/i-on-memory-resize";
 
 /**
  * @public
@@ -27,7 +29,7 @@ export type TF64SharedArray = ISharedArray<Float64ArrayConstructor>;
  */
 export class SharedArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>,
-               IOnRelease,
+               IOnFree,
                IOnMemoryResize
 {
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory?: boolean): TF32SharedArray
@@ -131,7 +133,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         this.instance = this.createLocalInstance();
     }
 
-    public onRelease(): void
+    public onFree(): void
     {
         if (this.wrapper == null)
         {
