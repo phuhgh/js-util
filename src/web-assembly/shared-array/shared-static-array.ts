@@ -47,7 +47,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     {
         if (DEBUG_MODE)
         {
-            _Debug.assert(this.wrapper != null, "access violation - object has been destroyed");
+            _Debug.assert(!this.sharedObject.getIsDestroyed(), "access violation - object has been destroyed");
 
             return RcJsUtilDebug.protectedViews
                 .getValue(this)

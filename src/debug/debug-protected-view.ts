@@ -4,6 +4,9 @@ import { arrayContains } from "../array/impl/array-contains";
 import { IDebugProtectedView } from "rc-js-util-globals";
 import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor";
 
+/**
+ * @public
+ */
 export class DebugProtectedView<T extends object> implements IDebugProtectedView<T>
 {
     public static createTypedArrayView = <TCtor extends TTypedArrayCtor>(): DebugProtectedView<InstanceType<TCtor>> =>
@@ -28,7 +31,7 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
     {
         this.validViews.add(view);
 
-        return new Proxy(view, {
+        const proxy = new Proxy(view, {
             get: (_target: T, property: string | symbol) =>
             {
                 if (!Boolean(this.validViews.has(view)))
@@ -44,7 +47,24 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
                 return view[property as keyof T];
             }
         });
+
+        DebugProtectedView.views.set(proxy, view);
+
+        return proxy;
+    }
+
+    public static unwrapProtectedView<T extends object>(view: T): T
+    {
+        const hiddenView = DebugProtectedView.views.get(view);
+
+        if (hiddenView == null)
+        {
+            throw _Debug.error("expected to find hidden view, was the proxy created by DebugProtectedView?");
+        }
+
+        return hiddenView as T;
     }
 
     private validViews = new Set<object>();
+    private static views = new WeakMap<object, object>();
 }

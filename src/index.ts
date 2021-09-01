@@ -37,6 +37,7 @@ export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circ
 export { IFIFOStack } from "./collection/i-fifo-stack";
 export { ERgbaMasks, ERgbaShift } from "./colors/e-rgba-masks";
 export { RgbaColorPacker } from "./colors/rgba-color-packer";
+export { DebugProtectedView } from "./debug/debug-protected-view";
 export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localization";
 export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
