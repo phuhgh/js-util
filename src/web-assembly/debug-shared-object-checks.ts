@@ -9,8 +9,7 @@ import { ISharedObject } from "../lifecycle/i-shared-object";
  * Provides life cycle and access checks for shared objects.
  *
  * @remarks
- * Requires `DEBUG_PEDANTIC` to be set for GC checks to be run. `ProtectedViews` will be invalidated any time a memory resize
- * might occur with standard `DEBUG_MODE` set.
+ * `ProtectedViews` will be invalidated any time a memory resize might occur with standard `DEBUG_MODE` set.
  *
  * On garbage collect of the javascript object, the associated WASM pointer is checked to see if it has been disposed of.
  */
@@ -52,7 +51,8 @@ export class DebugSharedObjectChecks
         {
             // stringifying the stack would be far too verbose, most debuggers allow expansion of objects...
             const allocationStack = { stack: _Debug.getStackTrace() };
-            const message = `claimed ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`;
+            const type = instance.sharedObject.isStatic ? "static" : "instance";
+            const message = `claimed (${type}) ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`;
             _Debug.verboseLog(message, allocationStack);
         }
 
@@ -76,7 +76,8 @@ export class DebugSharedObjectChecks
 
         if (!instance.sharedObject.isStatic && _Debug.isFlagSet("DEBUG_VERBOSE_MEMORY_MANAGEMENT"))
         {
-            _Debug.verboseLog(`released ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
+            const type = instance.sharedObject.isStatic ? "static" : "instance";
+            _Debug.verboseLog(`released (${type}) ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
         }
     }
 }

@@ -20,14 +20,11 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
             ].join("\n"));
         }
 
-        const debugPointer = new DebugPointer(sharedObject.getPtr(), sharedObject.constructor);
+        const debugPointer = new DebugPointer(sharedObject.getPtr(), sharedObject.constructor, sharedObject.isStatic);
+        this.debugPointers.add(debugPointer);
+        this.sharedObjToPtr.set(sharedObject, debugPointer);
 
-        if (sharedObject.isStatic)
-        {
-            this.staticPointers.add(debugPointer);
-            this.sharedObjToPtr.set(sharedObject, debugPointer);
-        }
-        else
+        if (!sharedObject.isStatic)
         {
             this.owningPointers.set(debugPointer.pointer, debugPointer);
         }
@@ -37,58 +34,52 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
 
     public markReadyForFinalize(sharedObject: IDebugSharedObject): void
     {
-        if (sharedObject.isStatic)
-        {
-            const pointer = this.sharedObjToPtr.get(sharedObject);
-
-            if (pointer == null)
-            {
-                _Production.error("expected to find pointer");
-            }
-
-            this.staticPointers.delete(pointer);
-        }
-        else
+        if (!sharedObject.isStatic)
         {
             this.owningPointers.delete(sharedObject.getPtr());
         }
+
+        const pointer = this.sharedObjToPtr.get(sharedObject);
+
+        if (pointer == null)
+        {
+            _Production.error("expected to find pointer");
+        }
+
+        this.debugPointers.delete(pointer);
     }
 
-    private finalizationRegistry = new FinalizationRegistry((owner: DebugPointer) =>
+    private finalizationRegistry = new FinalizationRegistry((debugPointer: DebugPointer) =>
     {
-        if (this.owningPointers.has(owner.pointer))
+        if (this.debugPointers.has(debugPointer))
         {
-            // the wasm memory hasn't been cleaned up
-            // the js object may leak in production too (resize listener), but we don't know
-            // fixing one fixes the other
-            const message = [
-                "Finalization registry found unreleased wasm object allocated by:",
-                owner.toString(),
-            ].join("\n");
+            // must have failed to clean up for the pointer to still be present
 
-            // finalizers can be quite janky...
-            if (_Debug.isFlagSet("DEBUG_PEDANTIC"))
+            if (debugPointer.isStatic)
             {
+                // the wasm memory hasn't been cleaned up
+                // the js object may leak in production too (resize listener), but we don't know
+                // fixing one fixes the other
+                const message = [
+                    "Finalization registry found unreleased wasm object allocated by:",
+                    debugPointer.toString(),
+                ].join("\n");
+
                 _Debug.error(message);
             }
             else
             {
-                _Debug.verboseLog(message);
+                // wasm memory never gets cleaned up (static)
+                // the js object will leak in production (resize listener is a strong reference in that case)
+                _Debug.error([
+                    "Leaked shared static object on the JS side:",
+                    debugPointer.toString(),
+                ].join("\n"));
             }
-        }
-
-        if (this.staticPointers.has(owner))
-        {
-            // wasm memory never gets cleaned up (static)
-            // the js object will leak in production (resize listener is a strong reference in that case)
-            _Debug.error([
-                "Leaked shared static object:",
-                owner.toString(),
-            ].join("\n"));
         }
     });
 
     private owningPointers = new Map<number, DebugPointer>();
-    private staticPointers = new Set<DebugPointer>();
     private sharedObjToPtr = new WeakMap<IDebugSharedObject, DebugPointer>();
+    private debugPointers = new Set<DebugPointer>();
 }

@@ -49,7 +49,7 @@ export class RawVoidPointer implements IRawVoidPointer
         {
             if (allocationFailThrows ?? false)
             {
-                throw _Production.error("Failed to allocate memory for raw pointer.");
+                _Production.error("Failed to allocate memory for raw pointer.");
             }
         }
 

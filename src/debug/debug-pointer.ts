@@ -10,6 +10,7 @@ export class DebugPointer
     (
         public readonly pointer: number,
         public readonly objectConstructor: Function,
+        public readonly isStatic: boolean,
         public readonly instanceLabel: string | undefined = _Debug.label,
     )
     {
