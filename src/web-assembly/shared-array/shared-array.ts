@@ -8,7 +8,6 @@ import { nullPointer } from "../emscripten/null-pointer";
 import { ISharedArray } from "./i-shared-array";
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings";
-import { IOnFree } from "../../lifecycle/i-on-free";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize";
 
 /**
@@ -29,7 +28,6 @@ export type TF64SharedArray = ISharedArray<Float64ArrayConstructor>;
  */
 export class SharedArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>,
-               IOnFree,
                IOnMemoryResize
 {
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory?: boolean): TF32SharedArray
@@ -124,28 +122,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
     public onMemoryResize = (): void =>
     {
-        if (this.wrapper == null)
-        {
-            DEBUG_MODE && _Debug.error("object has been destroyed");
-            return;
-        }
-
         this.instance = this.createLocalInstance();
-    }
-
-    public onFree(): void
-    {
-        if (this.wrapper == null)
-        {
-            DEBUG_MODE && _Debug.error("object already released");
-            return;
-        }
-
-        DEBUG_MODE && _Debug.runBlock(() => DebugSharedObjectChecks.unregister(this, "shared array"));
-
-        this.wrapper.memoryResize.removeListener(this);
-        this.wrapper.instance[this.cDelete](this.sharedObject.getPtr());
-        this.wrapper = null;
     }
 
     protected constructor
@@ -157,7 +134,9 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         pointer: number,
     )
     {
-        this.sharedObject = new ReferenceCountedPtr(false, pointer, this);
+        this.sharedObject = new ReferenceCountedPtr(false, pointer);
+        this.sharedObject.registerOnFreeListener(() => this.wrapper.instance[this.cDelete](this.sharedObject.getPtr()));
+        this.sharedObject.registerOnFreeListener(wrapper.memoryResize.addTemporaryListener(this));
         this.length = length;
         this.ctor = ctor;
         this.cDelete = `_${cMethodPrefix}_delete`;
@@ -168,29 +147,22 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         DEBUG_MODE && _Debug.runBlock(() =>
         {
             const protectedView = DebugProtectedView.createTypedArrayView();
-            DebugSharedObjectChecks.register(this, protectedView, "shared array");
+            DebugSharedObjectChecks.registerWithCleanup(this, protectedView, "shared array");
         });
 
-        wrapper.memoryResize.addListener(this);
         this.instance = this.createLocalInstance();
     }
 
     private createLocalInstance(): InstanceType<TCtor>
     {
-        if (this.wrapper == null)
-        {
-            DEBUG_MODE && _Debug.error("object has been destroyed");
-            return new this.ctor(this.length) as InstanceType<TCtor>;
-        }
-
         const arrayPtr = this.wrapper.instance[this.cGetArrayAddress](this.sharedObject.getPtr());
         DEBUG_MODE && _Debug.assert(arrayPtr !== nullPointer, "failed to get array address");
 
         return new this.ctor(this.wrapper.memory.buffer, arrayPtr, this.length) as InstanceType<TCtor>;
     }
 
-    private wrapper: IEmscriptenWrapper<ISharedArrayBindings> | null;
     private instance: InstanceType<TCtor>;
+    private readonly wrapper: IEmscriptenWrapper<ISharedArrayBindings>;
     private readonly cGetArrayAddress: `_${TSharedArrayPrefix}_getArrayAddress`;
     private readonly cDelete: `_${TSharedArrayPrefix}_delete`;
 }

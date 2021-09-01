@@ -6,7 +6,6 @@ import { ISharedArray } from "./i-shared-array";
 import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings } from "./i-shared-array-bindings";
-import { IOnFree } from "../../lifecycle/i-on-free";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize";
 
 /**
@@ -26,7 +25,6 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
  */
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>,
-               IOnFree,
                IOnMemoryResize
 {
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF32SharedStaticArray
@@ -63,27 +61,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
 
     public onMemoryResize = (): void =>
     {
-        if (this.wrapper == null)
-        {
-            DEBUG_MODE && _Debug.error("object has been destroyed");
-            return;
-        }
-
         this.instance = this.createLocalInstance();
-    }
-
-    public onFree(): void
-    {
-        if (this.wrapper == null)
-        {
-            DEBUG_MODE && _Debug.error("object already released");
-            return;
-        }
-
-        DEBUG_MODE && _Debug.runBlock(() => DebugSharedObjectChecks.unregister(this, ""));
-
-        this.wrapper.memoryResize.removeListener(this);
-        this.wrapper = null;
     }
 
     protected constructor
@@ -94,7 +72,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         length: number,
     )
     {
-        this.sharedObject = new ReferenceCountedPtr(true, pointer, this);
+        this.sharedObject = new ReferenceCountedPtr(true, pointer);
         this.length = length;
         this.ctor = ctor;
         this.wrapper = wrapper;
@@ -102,24 +80,18 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
-            DebugSharedObjectChecks.register(this, DebugProtectedView.createTypedArrayView(), "");
+            DebugSharedObjectChecks.registerWithCleanup(this, DebugProtectedView.createTypedArrayView(), "");
         });
 
-        wrapper.memoryResize.addListener(this);
+        this.sharedObject.registerOnFreeListener(wrapper.memoryResize.addTemporaryListener(this));
         this.instance = this.createLocalInstance();
     }
 
     private createLocalInstance(): InstanceType<TCtor>
     {
-        if (this.wrapper == null)
-        {
-            DEBUG_MODE && _Debug.error("object has been destroyed");
-            return new this.ctor(0) as InstanceType<TCtor>;
-        }
-
         return new this.ctor(this.wrapper.memory.buffer, this.sharedObject.getPtr(), this.length) as InstanceType<TCtor>;
     }
 
-    private wrapper: IEmscriptenWrapper<ISharedArrayBindings> | null;
+    private readonly wrapper: IEmscriptenWrapper<ISharedArrayBindings>;
     private instance: InstanceType<TCtor>;
 }

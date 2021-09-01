@@ -8,7 +8,6 @@ import { DebugSharedObjectChecks } from "./debug-shared-object-checks";
 import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings";
 import { _Number } from "../number/_number";
 import { ISharedObject } from "../lifecycle/i-shared-object";
-import { IOnFree } from "../lifecycle/i-on-free";
 import { IOnMemoryResize } from "./emscripten/i-on-memory-resize";
 
 /**
@@ -17,7 +16,6 @@ import { IOnMemoryResize } from "./emscripten/i-on-memory-resize";
  */
 export interface IRawVoidPointer
     extends ISharedObject,
-            IOnFree,
             IOnMemoryResize
 {
     readonly pointer: number;
@@ -72,15 +70,6 @@ export class RawVoidPointer implements IRawVoidPointer
         }
     }
 
-    public onFree(): void
-    {
-        this.wrapper.memoryResize.removeListener(this);
-        this.wrapper.instance._jsUtilFree(this.pointer);
-        (this.pointer as number) = nullPointer;
-
-        DEBUG_MODE && _Debug.runBlock(() => DebugSharedObjectChecks.unregister(this, "RVP"));
-    }
-
     public onMemoryResize = (): void =>
     {
         if (this.wrapper == null)
@@ -101,13 +90,14 @@ export class RawVoidPointer implements IRawVoidPointer
     {
         this.pointer = pointer;
         this.byteSize = byteSize;
-        this.sharedObject = new ReferenceCountedPtr(false, pointer, this);
-        this.wrapper.memoryResize.addListener(this);
+        this.sharedObject = new ReferenceCountedPtr(false, pointer);
+        this.sharedObject.registerOnFreeListener(this.wrapper.memoryResize.addTemporaryListener(this));
+        this.sharedObject.registerOnFreeListener(() => this.wrapper.instance._jsUtilFree(this.pointer));
 
         DEBUG_MODE && _Debug.runBlock(() =>
         {
             const protectedView = new DebugProtectedView([], `RVP - memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`);
-            DebugSharedObjectChecks.register(this, protectedView, "RVP");
+            DebugSharedObjectChecks.registerWithCleanup(this, protectedView, "RVP");
         });
 
         this.dataView = this.recreateDataView();

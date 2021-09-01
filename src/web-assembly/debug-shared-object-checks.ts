@@ -16,6 +16,21 @@ import { ISharedObject } from "../lifecycle/i-shared-object";
  */
 export class DebugSharedObjectChecks
 {
+    /**
+     * Calls register on the shared object but also registers the associated cleanup on release too.
+     */
+    public static registerWithCleanup<T extends object>
+    (
+        instance: { debugOnAllocate?: () => void } & ISharedObject,
+        protectedView: IDebugProtectedView<T>,
+        nameOfInstance: string,
+    )
+        : IDebugProtectedView<T>
+    {
+        instance.sharedObject.registerOnFreeListener(() => DebugSharedObjectChecks.unregister(instance, nameOfInstance));
+        return DebugSharedObjectChecks.register(instance, protectedView, nameOfInstance);
+    }
+
     public static register<T extends object>
     (
         instance: { debugOnAllocate?: () => void } & ISharedObject,

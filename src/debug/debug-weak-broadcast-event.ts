@@ -19,6 +19,13 @@ export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> 
         this.listenersMap.set(listener, ref);
     }
 
+    public addTemporaryListener(listener: TListener<K, TArgs>): () => void
+    {
+        this.addListener(listener);
+
+        return () => this.removeListener(listener);
+    }
+
     public emit(...args: TArgs): void
     {
         this.listenersSet.forEach(ref =>

@@ -3,17 +3,17 @@ import { _Debug } from "../debug/_debug";
 import { nullPointer } from "../web-assembly/emscripten/null-pointer";
 import { _Array } from "../array/_array";
 import { IOnFree } from "./i-on-free";
+import { ITemporaryListener, TemporaryListener } from "./temporary-listener";
 
 /**
  * @public
  * Wrapper of wasm object.
- * NB The object is pre-claimed (ref count 1) on creation.
+ * NB The object is pre-claimed (ref count 1) on creation. On free the pointer will be set to null.
  */
 export interface IReferenceCountedPtr extends IReferenceCounted
 {
     isStatic: boolean;
     getPtr(): number;
-    setNullPtr(): void;
 
     /**
      * Claims the `referenceCountedObject` and releases when this object is released.
@@ -35,6 +35,11 @@ export interface IReferenceCountedPtr extends IReferenceCounted
      * Releases claims on the the `referenceCountedObjects`.
      */
     unbindLifecycles(referenceCountedObjects: IReferenceCountedPtr[]): void;
+
+    /**
+     * Callback will be called when the reference count hits 0. Useful for cleanup.
+     */
+    registerOnFreeListener(callback: () => void): void;
 }
 
 /**
@@ -48,14 +53,17 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
         return this.wasmPtr;
     }
 
-    public setNullPtr(): void
-    {
-        this.wasmPtr = ReferenceCountedPtr.nullPtr;
-    }
-
     public onFree(): void
     {
-        this.listener.onFree();
+        if (this.onFreeListener != null)
+        {
+            this.onFreeListener.clearingEmit();
+        }
+
+        if (this.listenerObj != null)
+        {
+            this.listenerObj.onFree();
+        }
 
         const wrappedReferences = this.wrappedReferences;
 
@@ -68,6 +76,8 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
 
             this.wrappedReferences = null;
         }
+
+        this.wasmPtr = ReferenceCountedPtr.nullPtr;
     }
 
     public bindLifecycle(referenceCountedObject: IReferenceCountedPtr): void
@@ -121,18 +131,30 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
         }
     }
 
+    public registerOnFreeListener(callback: () => void): void
+    {
+        this.onFreeListener = this.onFreeListener ?? new TemporaryListener();
+        this.onFreeListener.addListener(callback);
+    }
+
     public constructor
     (
         public isStatic: boolean,
         protected wasmPtr: number,
-        public listener: IOnFree,
+        public listenerObj?: IOnFree,
     )
     {
         super();
         DEBUG_MODE && _Debug.assert(this.wasmPtr !== nullPointer && this.wasmPtr != null, "expected pointer to object but got null pointer");
     }
 
-    public wrappedReferences: ReferenceCountedPtr[] | null = null;
+    public static getWrappedReferences(ptr: ReferenceCountedPtr): ReferenceCountedPtr[] | null
+    {
+        return ptr.wrappedReferences;
+    }
+
+    private wrappedReferences: ReferenceCountedPtr[] | null = null;
+    private onFreeListener: ITemporaryListener<void> | null = null;
     private static nullPtr = nullPointer;
 }
 
@@ -143,14 +165,16 @@ function getHasCycle(referencingTo: ReferenceCountedPtr, referencingFrom: Refere
         return true;
     }
 
-    if (referencingFrom.wrappedReferences == null)
+    const refs = ReferenceCountedPtr.getWrappedReferences(referencingFrom);
+
+    if (refs == null)
     {
         return false;
     }
 
-    for (let i = 0, iEnd = referencingFrom.wrappedReferences.length; i < iEnd; ++i)
+    for (let i = 0, iEnd = refs.length; i < iEnd; ++i)
     {
-        if (getHasCycle(referencingTo, referencingFrom.wrappedReferences[i]))
+        if (getHasCycle(referencingTo, refs[i]))
         {
             return true;
         }

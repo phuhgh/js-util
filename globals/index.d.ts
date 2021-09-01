@@ -32,12 +32,8 @@ export type TDebugListener<K extends string, TArgs extends unknown[]> = {
  */
 export interface IDebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]>
 {
-    /**
-     * The listener will be retained as long as the key hasn't been garbage collected.
-     * @param key - Stronlgy refrenced.
-     * @param listener - Weakly referenced.
-     */
     addListener(listener: TDebugListener<K, TArgs>): void;
+    addTemporaryListener(listener: TDebugListener<K, TArgs>): () => void;
     removeListener(listener: TDebugListener<K, TArgs>): void;
     emit(...args: TArgs): void;
 }

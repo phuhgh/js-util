@@ -21,6 +21,13 @@ export class BroadcastEvent<K extends string, TArgs extends unknown[]> implement
         this.listeners.add(listener);
     }
 
+    public addTemporaryListener(listener: TListener<K, TArgs>): () => void
+    {
+        this.listeners.add(listener);
+
+        return () => this.removeListener(listener);
+    }
+
     public removeListener(listener: TListener<K, TArgs>): void
     {
         this.listeners.delete(listener);

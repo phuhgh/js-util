@@ -41,8 +41,10 @@ export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localizatio
 export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
 export { TListener } from "./eventing/t-listener";
-export { ReferenceCountedPtr, IReferenceCountedPtr} from "./lifecycle/reference-counted-ptr";
+export { ReferenceCountedPtr, IReferenceCountedPtr } from "./lifecycle/reference-counted-ptr";
+export { AOnDestroy, IOnDestroy } from "./lifecycle/i-on-destroy";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted";
+export { TemporaryListener, ITemporaryListener } from "./lifecycle/temporary-listener";
 export { IDictionary } from "./typescript/i-dictionary";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary";
 export { TExtractTypeTypedArrayTuple } from "./typescript/t-extract-type-typed-array-tuple";

@@ -7,6 +7,7 @@ import { TListener } from "./t-listener";
 export interface IBroadcastEvent<K extends string, TArgs extends unknown[]>
 {
     addListener(listener: TListener<K, TArgs>): void;
+    addTemporaryListener(listener: TListener<K, TArgs>): () => void;
     removeListener(listener: TListener<K, TArgs>): void;
     emit(...args: TArgs): void;
 }
