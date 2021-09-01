@@ -17,6 +17,7 @@ export class _Math
 
     /** {@inheritDoc mathBound} */
     public static readonly bound = mathBound;
+
     /** {@inheritDoc mathBoundRandom} */
     public static readonly boundRandom = mathBoundRandom;
 

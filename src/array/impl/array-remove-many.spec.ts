@@ -3,13 +3,13 @@ import { debugDescribe } from "../../test-utils";
 
 debugDescribe("=> arrayRemoveMany", () =>
 {
-    const a = ["a", "b", "c"];
-    const b = ["b"];
-
     it("| removes matches from the first argument", () =>
     {
-        arrayRemoveMany(a, b);
+        const a = ["a", "b", "c"];
+        const b = ["b", "d"];
+
+        expect(arrayRemoveMany(a, b)).toBe(1) ;
         expect(a).toEqual(["a", "c"]);
-        expect(b).toEqual(["b"]);
+        expect(b).toEqual(["b", "d"]);
     });
 });

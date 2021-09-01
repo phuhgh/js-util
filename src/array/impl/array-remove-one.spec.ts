@@ -3,11 +3,16 @@ import { debugDescribe } from "../../test-utils";
 
 debugDescribe("=> arrayRemoveOne", () =>
 {
-    const a = ["a", "b", "b", "c"];
-
     it("| removes a single match from the first argument", () =>
     {
-        arrayRemoveOne(a, "b");
+        const a = ["a", "b", "b", "c"];
+        expect(arrayRemoveOne(a, "b")).toBe(true);
         expect(a).toEqual(["a", "b", "c"]);
+    });
+
+    it("| returns false when nothing is removed", () =>
+    {
+        const a = ["a", "b", "b", "c"];
+        expect(arrayRemoveOne(a, "f")).toBe(false);
     });
 });

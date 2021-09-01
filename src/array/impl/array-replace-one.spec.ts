@@ -7,7 +7,7 @@ debugDescribe("=> arrayReplaceOne", () =>
 
     it("| replaces a single match from the first argument", () =>
     {
-        arrayReplaceOne(a, "b", "e");
+        expect(arrayReplaceOne(a, "b", "e")).toBeTrue();
         expect(a).toEqual(["a", "e", "b", "c"]);
     });
 });

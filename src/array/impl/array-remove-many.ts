@@ -11,14 +11,16 @@ export function arrayRemoveMany<TItem>(items: TItem[], itemsToRemove: readonly T
 {
     const setOfItemsToRemove = new Set(itemsToRemove);
     let index = items.length;
+    let removedItems = 0;
 
     while (index-- > 0)
     {
         if (setOfItemsToRemove.has(items[index]))
         {
             items.splice(index, 1);
+            ++removedItems;
         }
     }
 
-    return setOfItemsToRemove.size;
+    return removedItems;
 }
