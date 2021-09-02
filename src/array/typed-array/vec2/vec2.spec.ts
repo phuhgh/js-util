@@ -100,7 +100,6 @@ describe("=> Vec2", () =>
         });
     });
 
-
     describe("=> slice", () =>
     {
         it("| creates a copy", () =>
@@ -110,6 +109,15 @@ describe("=> Vec2", () =>
             expect(a).toEqual(b);
             expect(a).not.toBe(b);
             expect(a.getX).toBeDefined();
+        });
+    });
+
+    describe("=> normalize", () =>
+    {
+        it("| returns a unit vector in the same direction", () =>
+        {
+            const a = Vec2.f32.factory.createOne(10, 10);
+            expect(a.normalize()).toEqual(Vec2.f32.factory.createOne(1 / Math.sqrt(2), 1 / Math.sqrt(2)));
         });
     });
 });

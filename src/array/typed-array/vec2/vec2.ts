@@ -119,6 +119,35 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    public scalarMultiply<TResult extends TTypedArray = TArray>
+    (
+        _value: number,
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
+    {
+        throw new Error();
+    }
+
+    public scalarDivide<TResult extends TTypedArray = TArray>
+    (
+        _value: number,
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
+    {
+        throw new Error();
+    }
+
+    public normalize<TResult extends TTypedArray = TArray>
+    (
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
+    {
+        throw new Error();
+    }
+
     public dotProduct
     (
         _vec: Readonly<Vec2<TTypedArray>>,

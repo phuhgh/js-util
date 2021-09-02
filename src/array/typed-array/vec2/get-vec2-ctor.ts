@@ -95,6 +95,44 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
+        public scalarMultiply<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: number,
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
+        )
+            : Vec2<TResult>
+        {
+            result[0] = this[0] * value;
+            result[1] = this[1] * value;
+
+            return result;
+        }
+
+        public scalarDivide<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: number,
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
+        )
+            : Vec2<TResult>
+        {
+            result[0] = this[0] / value;
+            result[1] = this[1] / value;
+
+            return result;
+        }
+
+        public normalize<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
+        )
+            : Vec2<TResult>
+        {
+            const magnitude = this.getMagnitude();
+            this.scalarDivide(magnitude, result);
+
+            return result;
+        }
+
         public override dotProduct
         (
             vec: Readonly<Vec2<TTypedArray>>,
