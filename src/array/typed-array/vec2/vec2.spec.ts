@@ -120,4 +120,13 @@ describe("=> Vec2", () =>
             expect(a.normalize()).toEqual(Vec2.f32.factory.createOne(1 / Math.sqrt(2), 1 / Math.sqrt(2)));
         });
     });
+
+    describe("=> getNormal", () =>
+    {
+        it("| returns a normal to the vector", () =>
+        {
+            const a = Vec2.f32.factory.createOne(1, 2);
+            expect(a.getNormal()).toEqual(Vec2.f32.factory.createOne(2, -1));
+        });
+    });
 });

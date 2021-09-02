@@ -139,8 +139,8 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
         )
             : Vec2<TResult>
         {
-            result[0] = result[1];
-            result[1] = -result[0];
+            result[0] = this[1];
+            result[1] = -this[0];
 
             return result;
         }
