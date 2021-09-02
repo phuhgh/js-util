@@ -139,6 +139,9 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    /**
+     * Returns a unit vector in the direction of this vector.
+     */
     public normalize<TResult extends TTypedArray = TArray>
     (
         _result?: Vec2<TResult>,
@@ -147,6 +150,19 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
     {
         throw new Error();
     }
+
+    /**
+     * Returns the normal to this vector.
+     */
+    public getNormal<TResult extends TTypedArray = TArray>
+    (
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
+    {
+        throw new Error();
+    }
+
 
     public dotProduct
     (

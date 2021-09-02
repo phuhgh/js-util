@@ -133,6 +133,18 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
+        public getNormal<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
+        )
+            : Vec2<TResult>
+        {
+            result[0] = result[1];
+            result[1] = -result[0];
+
+            return result;
+        }
+
         public override dotProduct
         (
             vec: Readonly<Vec2<TTypedArray>>,
