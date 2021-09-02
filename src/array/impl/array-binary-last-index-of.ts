@@ -2,7 +2,7 @@ import { binaryFindInsertionIndex, TGetComparisonValueAtIndex } from "./binary-f
 
 /**
  * @public
- * Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example `Array`. Custom data structure are also supported.
+ * Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example `Array`. Custom data structures are also supported.
  * @param indexable - The thing to be searched. This must be sorted ascending.
  * @param comparisonValueToSearchFor - The comparison value which is being searched for.
  * @param getComparisonValueAtIndex - A function that provides the value for comparison at a given index.
