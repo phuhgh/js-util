@@ -13,7 +13,7 @@ export interface IOnDestroy
  */
 export class AOnDestroy implements IOnDestroy
 {
-    protected onDestroyListener: ITemporaryListener<void> = new TemporaryListener<void>();
+    protected onDestroyListener: ITemporaryListener<[]> = new TemporaryListener<[]>();
 
     public onDestroy(): void
     {

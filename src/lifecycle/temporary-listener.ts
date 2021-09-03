@@ -1,37 +1,38 @@
 /**
  * @public
  */
-export interface ITemporaryListener<TArg>
+export interface ITemporaryListener<TArgs extends []>
 {
     /**
      * Emits an event and then clears the listeners.
      */
-    clearingEmit(arg: TArg): void;
-    emit(arg: TArg): void;
+    clearingEmit(...args: TArgs): void;
+    emit(...args: TArgs): void;
     clearListeners(): void;
 
-    initializeListener(callback: () => ((arg: TArg) => void)): void;
-    addListener(listener: (arg: TArg) => void): void;
+    initializeListener(callback: () => ((...args: TArgs) => void)): void;
+    addListener(listener: (...args: TArgs) => void): void;
+    getTargets(): readonly ((...args: TArgs) => void)[];
 }
 
 /**
  * @public
  */
-export class TemporaryListener<TArg> implements ITemporaryListener<TArg>
+export class TemporaryListener<TArgs extends []> implements ITemporaryListener<TArgs>
 {
-    public clearingEmit(arg: TArg): void
+    public clearingEmit(...args: TArgs): void
     {
-        this.emit(arg);
+        this.emit(...args);
         this.clearListeners();
     }
 
-    public emit(arg: TArg): void
+    public emit(...args: TArgs): void
     {
         const listenerCallback = this.listeners;
 
         for (let i = 0, iEnd = listenerCallback.length; i < iEnd; ++i)
         {
-            listenerCallback[i](arg);
+            listenerCallback[i](...args);
         }
     }
 
@@ -40,15 +41,20 @@ export class TemporaryListener<TArg> implements ITemporaryListener<TArg>
         this.listeners.length = 0;
     }
 
-    public initializeListener(callback: () => ((arg: TArg) => void)): void
+    public initializeListener(callback: () => ((...args: TArgs) => void)): void
     {
         this.listeners.push(callback());
     }
 
-    public addListener(listener: (arg: TArg) => void): void
+    public addListener(listener: (...args: TArgs) => void): void
     {
         this.listeners.push(listener);
     }
 
-    private listeners: ((arg: TArg) => void)[] = [];
+    public getTargets(): readonly ((...args: TArgs) => void)[]
+    {
+        return this.listeners;
+    }
+
+    private listeners: ((...args: TArgs) => void)[] = [];
 }

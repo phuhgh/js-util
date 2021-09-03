@@ -169,7 +169,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     }
 
     private wrappedReferences: ReferenceCountedPtr[] | null = null;
-    private onFreeListener: ITemporaryListener<void> | null = null;
+    private onFreeListener: ITemporaryListener<[]> | null = null;
     private static nullPtr = nullPointer;
 }
 
