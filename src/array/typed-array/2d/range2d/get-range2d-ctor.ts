@@ -282,6 +282,23 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             }
         }
 
+        public ensureAABB(): void
+        {
+            if (this[0] > this[1])
+            {
+                const tmp = this[0];
+                this[0] = this[1];
+                this[1] = tmp;
+            }
+
+            if (this[2] > this[3])
+            {
+                const tmp = this[2];
+                this[2] = this[3];
+                this[3] = tmp;
+            }
+        }
+
         public translateBy(dx: number, dy: number): void
         {
             this.setXMin(this.getXMin() + dx);

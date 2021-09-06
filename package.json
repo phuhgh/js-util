@@ -1,6 +1,6 @@
 {
   "name": "rc-js-util",
-  "version": "5.0.0-alpha.90",
+  "version": "5.0.0-alpha.91",
   "license": "MIT",
   "scripts": {
     "build": "npm run build-ts && npm run build-cpp",
@@ -18,7 +18,7 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.13.42",
+    "@microsoft/api-documenter": "^7.13.44",
     "@microsoft/api-extractor": "^7.18.7",
     "@types/jasmine": "^3.8.2",
     "jasmine": "^3.9.0",

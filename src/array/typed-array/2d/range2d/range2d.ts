@@ -260,6 +260,14 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     }
 
     /**
+     * Ensure min is < max in both directions.
+     */
+    public ensureAABB(): void
+    {
+        throw new Error();
+    }
+
+    /**
      * Shifts the range by (dx, dy).
      */
     public translateBy(_dx: number, _dy: number): void

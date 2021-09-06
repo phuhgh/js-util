@@ -278,4 +278,21 @@ debugDescribe("=> F32Range2d", () =>
             expect(extended.getYMax()).toBe(12);
         });
     });
+
+    describe("=> ensureAABB", () =>
+    {
+        it("| corrects ranges in x", () =>
+        {
+            const range = Range2d.f32.factory.createOne(1, 0, 0, 1);
+            range.ensureAABB();
+            expect(range).toEqual(Range2d.f32.factory.createOne(0, 1, 0, 1));
+        });
+
+        it("| corrects ranges in y", () =>
+        {
+            const range = Range2d.f32.factory.createOne(0, 1, 1, 0);
+            range.ensureAABB();
+            expect(range).toEqual(Range2d.f32.factory.createOne(0, 1, 0, 1));
+        });
+    });
 });
