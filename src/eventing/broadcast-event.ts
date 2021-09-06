@@ -29,16 +29,19 @@ export class BroadcastEvent<TKey extends string, TArgs extends unknown[]> implem
         return () => this.removeListener(listener);
     }
 
-    public addOneTimeListener(listener: TListener<TKey, TArgs>): void
+    public addOneTimeListener(listener: TListener<TKey, TArgs>): () => void
     {
         const temporaryListener = {
-            [this.key]: (...args: TArgs) => {
+            [this.key]: (...args: TArgs) =>
+            {
                 this.removeListener(temporaryListener);
                 return listener[this.key](...args);
             }
         } as TListener<TKey, TArgs>;
 
         this.addListener(temporaryListener);
+
+        return () => this.removeListener(temporaryListener);
     }
 
     public removeListener(listener: TListener<TKey, TArgs>): void
