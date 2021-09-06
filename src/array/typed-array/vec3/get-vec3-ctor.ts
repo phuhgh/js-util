@@ -42,7 +42,7 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
             return this[2];
         }
 
-        public getMagnitude(): number
+        public override getMagnitude(): number
         {
             const x = this[0];
             const y = this[1];
@@ -50,7 +50,7 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
             return Math.sqrt(x * x + y * y + z * z);
         }
 
-        public getMagnitudeSquared(): number
+        public override getMagnitudeSquared(): number
         {
             const x = this[0];
             const y = this[1];

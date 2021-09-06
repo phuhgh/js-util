@@ -46,7 +46,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return Math.sqrt(x * x + y * y);
         }
 
-        public getMagnitudeSquared(): number
+        public override getMagnitudeSquared(): number
         {
             const x = this[0];
             const y = this[1];
@@ -95,7 +95,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
-        public scalarMultiply<TResult extends TTypedArray = InstanceType<TCtor>>
+        public override scalarMultiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             value: number,
             result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
@@ -108,7 +108,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
-        public scalarDivide<TResult extends TTypedArray = InstanceType<TCtor>>
+        public override scalarDivide<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             value: number,
             result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
@@ -121,7 +121,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
-        public normalize<TResult extends TTypedArray = InstanceType<TCtor>>
+        public override normalize<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )
@@ -133,7 +133,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
-        public getNormal<TResult extends TTypedArray = InstanceType<TCtor>>
+        public override getNormal<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )

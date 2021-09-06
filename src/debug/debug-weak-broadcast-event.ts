@@ -1,16 +1,16 @@
 import { TListener } from "../eventing/t-listener";
 import { IDebugWeakBroadcastEvent } from "rc-js-util-globals";
 
-export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> implements IDebugWeakBroadcastEvent<K, TArgs>
+export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[]> implements IDebugWeakBroadcastEvent<TKey, TArgs>
 {
     public constructor
     (
-        private readonly key: K,
+        private readonly key: TKey,
     )
     {
     }
 
-    public addListener(listener: TListener<K, TArgs>): void
+    public addListener(listener: TListener<TKey, TArgs>): void
     {
         this.removeListener(listener);
 
@@ -19,7 +19,7 @@ export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> 
         this.listenersMap.set(listener, ref);
     }
 
-    public addTemporaryListener(listener: TListener<K, TArgs>): () => void
+    public addTemporaryListener(listener: TListener<TKey, TArgs>): () => void
     {
         this.addListener(listener);
 
@@ -43,7 +43,7 @@ export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> 
         });
     }
 
-    public removeListener(listener: TListener<K, TArgs>): void
+    public removeListener(listener: TListener<TKey, TArgs>): void
     {
         const ref = this.listenersMap.get(listener);
 
@@ -54,6 +54,27 @@ export class DebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> 
         }
     }
 
-    private readonly listenersSet = new Set<WeakRef<TListener<K, TArgs>>>();
-    private readonly listenersMap = new WeakMap<TListener<K, TArgs>, WeakRef<TListener<K, TArgs>>>();
+    public getTargets(): readonly TListener<TKey, TArgs>[]
+    {
+        const targets: TListener<TKey, TArgs>[] = [];
+
+        this.listenersSet.forEach(ref =>
+        {
+            const listener = ref.deref();
+
+            if (listener == null)
+            {
+                this.listenersSet.delete(ref);
+            }
+            else
+            {
+                targets.push(listener);
+            }
+        });
+
+        return targets;
+    }
+
+    private readonly listenersSet = new Set<WeakRef<TListener<TKey, TArgs>>>();
+    private readonly listenersMap = new WeakMap<TListener<TKey, TArgs>, WeakRef<TListener<TKey, TArgs>>>();
 }

@@ -4,10 +4,11 @@ import { TListener } from "./t-listener";
  * @public
  * Simple one to many communication channel. Proxies the arguments of emit to each listener.
  */
-export interface IBroadcastEvent<K extends string, TArgs extends unknown[]>
+export interface IBroadcastEvent<TKey extends string, TArgs extends unknown[]>
 {
-    addListener(listener: TListener<K, TArgs>): void;
-    addTemporaryListener(listener: TListener<K, TArgs>): () => void;
-    removeListener(listener: TListener<K, TArgs>): void;
+    addListener(listener: TListener<TKey, TArgs>): void;
+    addTemporaryListener(listener: TListener<TKey, TArgs>): () => void;
+    removeListener(listener: TListener<TKey, TArgs>): void;
     emit(...args: TArgs): void;
+    getTargets(): readonly TListener<TKey, TArgs>[];
 }

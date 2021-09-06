@@ -64,7 +64,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
             this[row * 2 + column as Extract<keyof Mat2<never>, number>] = value;
         }
 
-        public setScalingMatrix(scalingFactor: number): Mat2<InstanceType<TCtor>>
+        public override setScalingMatrix(scalingFactor: number): Mat2<InstanceType<TCtor>>
         {
             this[0] = scalingFactor;
             this[1] = 0;
@@ -74,7 +74,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
             return this;
         }
 
-        public setTranslationMatrix(translation: number): Mat2<InstanceType<TCtor>>
+        public override setTranslationMatrix(translation: number): Mat2<InstanceType<TCtor>>
         {
             this[0] = 1;
             this[1] = 0;
@@ -84,7 +84,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
             return this;
         }
 
-        public multiplyMat2<TResult extends TTypedArray = InstanceType<TCtor>>
+        public override multiplyMat2<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: Readonly<Mat2<TTypedArray>>,
             result: Mat2<TResult> = this.constructor.factory.createOneEmpty() as Mat2<TResult>,
