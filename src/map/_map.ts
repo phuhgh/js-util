@@ -12,6 +12,10 @@ import { mapDeleteFromSet } from "./impl/map-delete-from-set";
 import { mapReportingAddToSet } from "./impl/map-reporting-add-to-set";
 import { mapRemoveManyFromArray } from "./impl/map-remove-many-from-array";
 import { mapRemoveOneFromArray } from "./impl/map-remove-one-from-array";
+import { mapSetDifference } from "./impl/map-set-difference";
+import { mapSymmetricDifference } from "./impl/map-symmetric-difference";
+import { mapUnion } from "./impl/map-union";
+import { mapIntersect } from "./impl/map-intersect";
 
 /**
  * @public
@@ -40,6 +44,9 @@ export class _Map
     /** {@inheritDoc mapFirstValue} */
     public static readonly firstValue = mapFirstValue;
 
+    /** {@inheritDoc mapIntersect} */
+    public static readonly intersect = mapIntersect;
+
     /** {@inheritDoc (mapInitializeGet:1)} */
     public static readonly initializeGet = mapInitializeGet;
 
@@ -57,6 +64,15 @@ export class _Map
 
     /** {@inheritDoc (mapReportingAddToSet: 1)} */
     public static readonly reportingAddToSet = mapReportingAddToSet;
+
+    /** {@inheritDoc mapSetDifference} */
+    public static readonly setDifference = mapSetDifference;
+
+    /** {@inheritDoc mapSymmetricDifference} */
+    public static readonly symmetricDifference = mapSymmetricDifference;
+
+    /** {@inheritDoc mapUnion} */
+    public static readonly union = mapUnion;
 
     /** {@inheritDoc mapValuesToArray} */
     public static readonly valuesToArray = mapValuesToArray;
