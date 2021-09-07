@@ -23,6 +23,8 @@ import { arrayGenerateRange } from "./impl/array-generate-range";
 import { arrayMapRange } from "./impl/array-map-range";
 import { arrayContains } from "./impl/array-contains";
 import { arrayInsertAtIndex } from "./impl/array-insert-at-index";
+import { arraySymmetricDifference } from "./impl/array-symmetric-difference";
+import { arraySetDifference } from "./impl/array-set-difference";
 
 /**
  * @public
@@ -78,6 +80,10 @@ export class _Array
     public static readonly removeOne = arrayRemoveOne;
     /** {@inheritDoc arrayReplaceOne} */
     public static readonly replaceOne = arrayReplaceOne;
+    /** {@inheritDoc arraySetDifference} */
+    public static readonly setDifference = arraySetDifference;
+    /** {@inheritDoc arraySymmetricDifference} */
+    public static readonly symmetricDifference = arraySymmetricDifference;
     /** {@inheritDoc arrayUnion} */
     public static readonly union = arrayUnion;
 
