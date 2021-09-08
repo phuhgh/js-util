@@ -55,7 +55,7 @@ export class CircularFIFOStack<TValue> implements IFIFOStack<TValue>
     }
 
     /**
-     * Pushes a value to the front of the stack (depending on `mode`).
+     * Pushes a value to the top of the stack (depending on `mode`).
      */
     public push(value: TValue): void
     {
@@ -88,7 +88,7 @@ export class CircularFIFOStack<TValue> implements IFIFOStack<TValue>
     }
 
     /**
-     * Remove the first inserted element in the stack and return it.
+     * Remove the bottom element in the stack and return it.
      *
      * @remarks
      * Attempting to pop an empty stack is considered exceptional regardless of `mode`. You can
