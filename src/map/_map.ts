@@ -16,6 +16,7 @@ import { mapSetDifference } from "./impl/map-set-difference";
 import { mapSymmetricDifference } from "./impl/map-symmetric-difference";
 import { mapUnion } from "./impl/map-union";
 import { mapIntersect } from "./impl/map-intersect";
+import { mapConcat } from "./impl/map-concat";
 
 /**
  * @public
@@ -28,6 +29,9 @@ export class _Map
 
     /** {@inheritDoc mapArrayMap} */
     public static readonly arrayMap = mapArrayMap;
+
+    /** {@inheritDoc (mapConcat: 1)} */
+    public static readonly concat = mapConcat;
 
     /** {@inheritDoc (mapDeleteFromSet: 1)} */
     public static readonly deleteFromSet = mapDeleteFromSet;
