@@ -145,6 +145,7 @@ export { mapUnion } from "./map/impl/map-union";
 export { mapValuesToArray } from "./map/impl/map-values-to-array";
 export { mathBound } from "./math/impl/math-bound";
 export { mathBoundRandom } from "./math/impl/math-bound-random";
+export { mathHypot2 } from "./math/impl/math-hypot";
 export { mathMax } from "./math/impl/math-max";
 export { mathMin } from "./math/impl/math-min";
 export { numberGetHexString } from "./number/impl/number-get-hex-string";
