@@ -16,11 +16,23 @@ export declare class _Map
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [addToSet](./rc-js-util._map.addtoset.md) | <code>static</code> | typeof mapAddToSet | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [arrayMap](./rc-js-util._map.arraymap.md) | <code>static</code> | typeof mapArrayMap | Like <code>Array.map</code> but with a <code>Map</code> input. Outputs an <code>Array</code>. |
+|  [concat](./rc-js-util._map.concat.md) | <code>static</code> | typeof mapConcat | Used with maps that store arrays. Where an array exists for a given key the values will be appended to that array, otherwise a copy of values array will be inserted. |
+|  [deleteFromSet](./rc-js-util._map.deletefromset.md) | <code>static</code> | typeof mapDeleteFromSet | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set. |
+|  [deleteGet](./rc-js-util._map.deleteget.md) | <code>static</code> | typeof mapDeleteGet | Get the stored value if present, then delete the key. |
+|  [entriesToArray](./rc-js-util._map.entriestoarray.md) | <code>static</code> | typeof mapEntriesToArray | Converts a <code>Map</code> into an <code>Array</code> of its key value pairs. |
 |  [firstKey](./rc-js-util._map.firstkey.md) | <code>static</code> | typeof mapFirstKey | Gets the first inserted key in a <code>Map</code>. |
 |  [firstValue](./rc-js-util._map.firstvalue.md) | <code>static</code> | typeof mapFirstValue | Gets the first inserted value in a <code>Map</code>. |
 |  [initializeGet](./rc-js-util._map.initializeget.md) | <code>static</code> | typeof mapInitializeGet | Gets the value from a <code>Map</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
+|  [intersect](./rc-js-util._map.intersect.md) | <code>static</code> | typeof mapIntersect | Does not check value equality, only key. Takes items from A. |
 |  [keysToArray](./rc-js-util._map.keystoarray.md) | <code>static</code> | typeof mapKeysToArray | Converts a <code>Map</code> into an <code>Array</code> of its keys. |
 |  [push](./rc-js-util._map.push.md) | <code>static</code> | typeof mapPush | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
+|  [removeManyFromArray](./rc-js-util._map.removemanyfromarray.md) | <code>static</code> | typeof mapRemoveManyFromArray | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
+|  [removeOneFromArray](./rc-js-util._map.removeonefromarray.md) | <code>static</code> | typeof mapRemoveOneFromArray | Used with maps that store arrays. Where an array exists for a given key the value will be removed from that array. |
+|  [reportingAddToSet](./rc-js-util._map.reportingaddtoset.md) | <code>static</code> | typeof mapReportingAddToSet | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
+|  [setDifference](./rc-js-util._map.setdifference.md) | <code>static</code> | typeof mapSetDifference |  |
+|  [symmetricDifference](./rc-js-util._map.symmetricdifference.md) | <code>static</code> | typeof mapSymmetricDifference |  |
+|  [union](./rc-js-util._map.union.md) | <code>static</code> | typeof mapUnion |  |
 |  [valuesToArray](./rc-js-util._map.valuestoarray.md) | <code>static</code> | typeof mapValuesToArray | Converts a <code>Map</code> into an <code>Array</code> of its values. |
 

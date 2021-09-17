@@ -16,11 +16,12 @@ export declare class _Fp
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [debounce](./rc-js-util._fp.debounce.md) | <code>static</code> | typeof fpDebounce | Creates a function that will proxy calls to <code>functionToProxy</code> when <code>wait</code> time has passed since the last call, using the most recent arguments. Where <code>immediate</code> is true, the function immediately proxies the call and will not proxy again until <code>wait</code> time passes since the last call. |
 |  [identity](./rc-js-util._fp.identity.md) | <code>static</code> | typeof fpIdentity | Returns the argument. |
+|  [maybeNewValue](./rc-js-util._fp.maybenewvalue.md) | <code>static</code> | typeof fpMaybeNewValue | Returns the newValue if defined, else the old value. |
 |  [noOp](./rc-js-util._fp.noop.md) | <code>static</code> | typeof fpNoOp | Does nothing (intentionally...). |
 |  [normalizeToNull](./rc-js-util._fp.normalizetonull.md) | <code>static</code> | typeof fpNormalizeToNull | Normalizes <code>undefined</code> input to <code>null</code>. |
 |  [normalizeToUndefined](./rc-js-util._fp.normalizetoundefined.md) | <code>static</code> | typeof fpNormalizeToUndefined | Normalizes <code>null</code> input to <code>undefined</code>. |
 |  [once](./rc-js-util._fp.once.md) | <code>static</code> | typeof fpOnce | Creates a function that can be called many times but will run at most once. |
-|  [rejectFalse](./rc-js-util._fp.rejectfalse.md) | <code>static</code> | typeof fpRejectFalse | Returns a Promise of rejection with the supplied error if the <code>value</code> is falsy. |
-|  [rejectNull](./rc-js-util._fp.rejectnull.md) | <code>static</code> | typeof fpRejectNull | Returns a Promise of rejection with the supplied error if the value is <code>null</code> or <code>undefined</code>. |
+|  [valueOrNull](./rc-js-util._fp.valueornull.md) | <code>static</code> | typeof fpValueOrNull | Returns the value if the predicate is true, else null. |
 

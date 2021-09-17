@@ -28,6 +28,5 @@ void
 ```typescript
 // the braces are not optional
 _Debug.configureBreakpoint(() => { debugger; })
-
 ```
 

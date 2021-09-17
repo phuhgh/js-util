@@ -9,7 +9,7 @@ Make an array contain the same items as another.
 <b>Signature:</b>
 
 ```typescript
-export declare function arrayCopyInto<TItem>(from: ArrayLike<TItem>, to: TItem[]): void;
+export declare function arrayCopyInto<TItem>(from: ArrayLike<TItem>, to: TItem[], startIndex?: number, length?: number): void;
 ```
 
 ## Parameters
@@ -18,6 +18,8 @@ export declare function arrayCopyInto<TItem>(from: ArrayLike<TItem>, to: TItem[]
 |  --- | --- | --- |
 |  from | ArrayLike&lt;TItem&gt; | The array to copy from. |
 |  to | TItem\[\] | The array to copy into and resize. |
+|  startIndex | number | The index to start with in the from array. |
+|  length | number | The index to end with in the from array. |
 
 <b>Returns:</b>
 

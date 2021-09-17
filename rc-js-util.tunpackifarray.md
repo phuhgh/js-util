@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type TUnpackIfArray<T> = T extends readonly (infer U)[] ? U : never;
+export declare type TUnpackIfArray<T> = T extends ArrayLike<infer U> ? U : never;
 ```

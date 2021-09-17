@@ -9,7 +9,7 @@ Removes each item in `itemsToRemove` from `items` (including any repeated items)
 <b>Signature:</b>
 
 ```typescript
-export declare function arrayRemoveMany<TItem>(items: TItem[], itemsToRemove: readonly TItem[]): void;
+export declare function arrayRemoveMany<TItem>(items: TItem[], itemsToRemove: readonly TItem[]): number;
 ```
 
 ## Parameters
@@ -21,7 +21,9 @@ export declare function arrayRemoveMany<TItem>(items: TItem[], itemsToRemove: re
 
 <b>Returns:</b>
 
-void
+number
+
+The number of items that were removed.
 
 ## Remarks
 

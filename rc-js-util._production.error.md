@@ -4,7 +4,7 @@
 
 ## \_Production.error() method
 
-Throws an `Error` with the given message. If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+Throws an `Error` with the given message. If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first. Should not be used for "expected" errors (bad input etc).
 
 <b>Signature:</b>
 

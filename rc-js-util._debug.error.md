@@ -26,7 +26,7 @@ A boolean value to make linting happy... will never return.
 
 ## Remarks
 
-If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT` is false or unset then a breakpoint will be hit first.
 
 ## Example
 
@@ -38,6 +38,5 @@ if (errorCondition) {
     // in production we fall back to some other behavior
     return errorConditionValue;
 }
-
 ```
 

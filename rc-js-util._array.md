@@ -16,27 +16,31 @@ export declare class _Array
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [binaryIndexOf](./rc-js-util._array.binaryindexof.md) | <code>static</code> | typeof arrayBinaryIndexOf | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structure are also supported. |
-|  [binaryLastIndexOf](./rc-js-util._array.binarylastindexof.md) | <code>static</code> | typeof arrayBinaryLastIndexOf | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structure are also supported. |
+|  [binaryIndexOf](./rc-js-util._array.binaryindexof.md) | <code>static</code> | typeof arrayBinaryIndexOf | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
+|  [binaryLastIndexOf](./rc-js-util._array.binarylastindexof.md) | <code>static</code> | typeof arrayBinaryLastIndexOf | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
 |  [collect](./rc-js-util._array.collect.md) | <code>static</code> | typeof arrayCollect | Like <code>Array.reduce</code> but without the requirement to return the value in the callback. |
 |  [compact](./rc-js-util._array.compact.md) | <code>static</code> | typeof arrayCompact | Strips null and undefined items from arrays (non mutative). |
 |  [compactMap](./rc-js-util._array.compactmap.md) | <code>static</code> | typeof arrayCompactMap | Like \_Array.map but where the callback returns null it will be omitted from the result. |
+|  [contains](./rc-js-util._array.contains.md) | <code>static</code> | typeof arrayContains | Returns true if the item is present in the list (=== equality test). |
 |  [copyInto](./rc-js-util._array.copyinto.md) | <code>static</code> | typeof arrayCopyInto | Make an array contain the same items as another. |
 |  [emptyArray](./rc-js-util._array.emptyarray.md) | <code>static</code> | readonly \[\] | An empty readonly array, useful to avoid GC pressure. |
 |  [flatMap](./rc-js-util._array.flatmap.md) | <code>static</code> | typeof arrayFlatMap | Iterate over <code>ArrayLike</code> calling a callback against it, the callback returns <code>ArrayLike</code> which is concatenated into a single <code>Array</code>. |
 |  [forEach](./rc-js-util._array.foreach.md) | <code>static</code> | typeof arrayForEach | Like <code>Array.forEach</code>. |
 |  [generateRange](./rc-js-util._array.generaterange.md) | <code>static</code> | typeof arrayGenerateRange | Generates a range of integers output in an <code>Array</code>. |
 |  [index](./rc-js-util._array.index.md) | <code>static</code> | typeof arrayIndex | Populates a <code>Map</code> given a key creating function and <code>ArrayLike</code>. |
+|  [insertAtIndex](./rc-js-util._array.insertatindex.md) | <code>static</code> | typeof arrayInsertAtIndex | Modifies input array by inserting at given index. |
 |  [intersect](./rc-js-util._array.intersect.md) | <code>static</code> | typeof arrayIntersect | Given two <code>ArrayLike</code>, provides the items common between them in an <code>Array</code>. |
 |  [isArray](./rc-js-util._array.isarray.md) | <code>static</code> | typeof arrayIsArray | Checks if the parameter is an instance of <code>Array</code> or is a view of <code>ArrayBuffer</code>. |
 |  [last](./rc-js-util._array.last.md) | <code>static</code> | typeof arrayLast | Gets the last value in <code>ArrayLike</code>. |
 |  [map](./rc-js-util._array.map.md) | <code>static</code> | typeof arrayMap | Like <code>Array.map</code>. |
 |  [mapRange](./rc-js-util._array.maprange.md) | <code>static</code> | typeof arrayMapRange | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |
 |  [normalizeEmptyToUndefined](./rc-js-util._array.normalizeemptytoundefined.md) | <code>static</code> | typeof arrayNormalizeEmptyToUndefined | Replaces length 0 <code>ArrayLike</code> with <code>undefined</code>. |
-|  [normalizeNullUndefinedToEmpty](./rc-js-util._array.normalizenullundefinedtoempty.md) | <code>static</code> | typeof arrayNormalizeNullUndefinedToEmpty | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
+|  [normalizeNullishToEmpty](./rc-js-util._array.normalizenullishtoempty.md) | <code>static</code> | typeof arrayNormalizeNullishToEmpty | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
 |  [pushUnique](./rc-js-util._array.pushunique.md) | <code>static</code> | typeof arrayPushUnique | Like <code>Array.push</code> but checks if the value is unique first. |
 |  [removeMany](./rc-js-util._array.removemany.md) | <code>static</code> | typeof arrayRemoveMany | Removes each item in <code>itemsToRemove</code> from <code>items</code> (including any repeated items). |
 |  [removeOne](./rc-js-util._array.removeone.md) | <code>static</code> | typeof arrayRemoveOne | Removes either 0 or one item from items, even if itemToRemove appears more than once. |
 |  [replaceOne](./rc-js-util._array.replaceone.md) | <code>static</code> | typeof arrayReplaceOne | Replaces the first match of itemToRemove with replaceWith. |
+|  [setDifference](./rc-js-util._array.setdifference.md) | <code>static</code> | typeof arraySetDifference |  |
+|  [symmetricDifference](./rc-js-util._array.symmetricdifference.md) | <code>static</code> | typeof arraySymmetricDifference |  |
 |  [union](./rc-js-util._array.union.md) | <code>static</code> | typeof arrayUnion | Given an <code>ArrayLike</code> of <code>ArrayLike</code>, provides all unique items in an <code>Array</code>. |
 

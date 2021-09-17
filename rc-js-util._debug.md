@@ -12,17 +12,24 @@ Utilities for debug builds.
 export declare class _Debug 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [label](./rc-js-util._debug.label.md) | <code>static</code> | string \| undefined |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [assert(condition, errorMessage)](./rc-js-util._debug.assert.md) | <code>static</code> | Throws an <code>Error</code> with the given message if the condition is false. |
 |  [breakpoint()](./rc-js-util._debug.breakpoint.md) | <code>static</code> | Used in place of <code>debugger</code> statements when writing libraries. Should generally not be used directly. |
+|  [conditionalBlock(flag, cb)](./rc-js-util._debug.conditionalblock.md) | <code>static</code> | Convenience method to run multiple asserts if flag set. |
 |  [configureBreakpoint(onBreakpoint)](./rc-js-util._debug.configurebreakpoint.md) | <code>static</code> | Most debuggers will ignore <code>debugger</code> statements in node\_modules. Skirt around this by letting the consumer set their own callback for this. |
 |  [error(message)](./rc-js-util._debug.error.md) | <code>static</code> | Throws an <code>Error</code> with the given message. |
 |  [getStackTrace()](./rc-js-util._debug.getstacktrace.md) | <code>static</code> |  |
 |  [isFlagSet(flag)](./rc-js-util._debug.isflagset.md) | <code>static</code> | Used to get debug flags in an environment independent way. |
 |  [runBlock(cb)](./rc-js-util._debug.runblock.md) | <code>static</code> | Convenience method to run multiple asserts. |
-|  [setCustomFlag(flag, value)](./rc-js-util._debug.setcustomflag.md) | <code>static</code> |  |
 |  [setFlag(flag, value)](./rc-js-util._debug.setflag.md) | <code>static</code> | Used to set debug flags in an environment independent way. |
+|  [verboseLog(message, ancillaryObject)](./rc-js-util._debug.verboselog.md) | <code>static</code> | Logging which can be conditionally enabled by setting <code>DEBUG_VERBOSE</code> to true. |
 

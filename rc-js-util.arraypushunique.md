@@ -9,7 +9,7 @@ Like `Array.push` but checks if the value is unique first.
 <b>Signature:</b>
 
 ```typescript
-export declare function arrayPushUnique<TItem>(items: TItem[], itemToPush: TItem, getComparisonValue?: (item: TItem) => unknown): void;
+export declare function arrayPushUnique<TItem>(items: TItem[], itemToPush: TItem, getComparisonValue?: (item: TItem) => unknown): boolean;
 ```
 
 ## Parameters
@@ -22,7 +22,9 @@ export declare function arrayPushUnique<TItem>(items: TItem[], itemToPush: TItem
 
 <b>Returns:</b>
 
-void
+boolean
+
+true if an element was pushed.
 
 ## Remarks
 

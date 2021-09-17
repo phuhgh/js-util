@@ -4,7 +4,7 @@
 
 ## arrayBinaryLastIndexOf() function
 
-Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example `Array`<!-- -->. Custom data structure are also supported.
+Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example `Array`<!-- -->. Custom data structures are also supported.
 
 <b>Signature:</b>
 
@@ -41,6 +41,5 @@ See [arrayBinaryLastIndexOf()](./rc-js-util.arraybinarylastindexof.md)<!-- -->.
 // searching for the number 3 with start index 1 & length 2
  const index = arrayBinaryIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 2, 1);
  // index is 2
-
 ```
 

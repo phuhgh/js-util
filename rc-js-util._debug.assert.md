@@ -39,6 +39,5 @@ function foo(a1: number) {
     // not suitable for a production check, the programmer lied about the input type they supplied
     DEBUG_MODE && _Debug.assert(a1 != null, "a1 must be supplied");
 }
-
 ```
 

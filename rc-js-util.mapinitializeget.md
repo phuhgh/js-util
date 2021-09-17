@@ -9,20 +9,20 @@ Gets the value from a `Map` for a given key, where the value is `undefined` or h
 <b>Signature:</b>
 
 ```typescript
-export declare function mapInitializeGet<TKey, TValue>(map: Map<TKey, TValue>, key: TKey, getValue: (key: TKey) => TValue): TValue;
+export declare function mapInitializeGet<TMapKey, TKey extends TMapKey, TMapValue, TValue extends TMapValue>(map: Map<TMapKey, TMapValue>, key: TKey, getValue: (key: TKey) => TValue): TMapValue;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  map | Map&lt;TKey, TValue&gt; | The <code>Map</code> to search and modify. |
+|  map | Map&lt;TMapKey, TMapValue&gt; | The <code>Map</code> to search and modify. |
 |  key | TKey | The key to search for / set in <code>map</code>. |
 |  getValue | (key: TKey) =&gt; TValue | The function to call if a value is not found. |
 
 <b>Returns:</b>
 
-TValue
+TMapValue
 
 The value in `map`<!-- -->, otherwise the result of the `getValue`<!-- -->.
 

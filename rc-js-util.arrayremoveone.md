@@ -9,7 +9,7 @@ Removes either 0 or one item from items, even if itemToRemove appears more than 
 <b>Signature:</b>
 
 ```typescript
-export declare function arrayRemoveOne<TItem>(items: TItem[], itemToRemove: TItem): void;
+export declare function arrayRemoveOne<TItem>(items: TItem[], itemToRemove: TItem): boolean;
 ```
 
 ## Parameters
@@ -21,7 +21,9 @@ export declare function arrayRemoveOne<TItem>(items: TItem[], itemToRemove: TIte
 
 <b>Returns:</b>
 
-void
+boolean
+
+true if an item was removed.
 
 ## Remarks
 

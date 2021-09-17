@@ -9,7 +9,7 @@ Replaces the first match of itemToRemove with replaceWith.
 <b>Signature:</b>
 
 ```typescript
-export declare function arrayReplaceOne<TItem>(items: TItem[], itemToRemove: TItem, replaceWith: TItem): void;
+export declare function arrayReplaceOne<TItem>(items: TItem[], itemToRemove: TItem, replaceWith: TItem): boolean;
 ```
 
 ## Parameters
@@ -22,7 +22,9 @@ export declare function arrayReplaceOne<TItem>(items: TItem[], itemToRemove: TIt
 
 <b>Returns:</b>
 
-void
+boolean
+
+true if an element was replaced.
 
 ## Remarks
 

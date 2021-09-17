@@ -14,37 +14,76 @@
 |  [\_Fp](./rc-js-util._fp.md) | Utilities for functional programming. |
 |  [\_Map](./rc-js-util._map.md) | Utilities that apply to <code>Map</code>. |
 |  [\_Math](./rc-js-util._math.md) | Utilities relating to math. |
+|  [\_Number](./rc-js-util._number.md) | Utilities that apply to numbers. |
 |  [\_Path](./rc-js-util._path.md) | File path manipulation utilities. |
 |  [\_Production](./rc-js-util._production.md) | Utilities for production builds. |
 |  [\_RegExp](./rc-js-util._regexp.md) | Utilities that apply to <code>RegExp</code>. |
 |  [\_Set](./rc-js-util._set.md) | Utilities that apply to <code>Set</code>. |
 |  [\_String](./rc-js-util._string.md) | Utilities that apply to <code>string</code>. |
+|  [AOnDestroy](./rc-js-util.aondestroy.md) |  |
+|  [AReferenceCounted](./rc-js-util.areferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. NB The object is pre-claimed (ref count 1) on creation. |
+|  [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md) | Common methods of typed arrays, extend to make typed array tuples. |
+|  [BroadcastEvent](./rc-js-util.broadcastevent.md) | Strong reference implementation of [IBroadcastEvent](./rc-js-util.ibroadcastevent.md)<!-- -->. |
+|  [CircularBuffer](./rc-js-util.circularbuffer.md) | Presents an array as if it were circular, going past the end or start loops around. |
+|  [CircularFIFOStack](./rc-js-util.circularfifostack.md) | Circular first in first out stack. |
+|  [DebugProtectedView](./rc-js-util.debugprotectedview.md) |  |
+|  [DebugSharedObjectChecks](./rc-js-util.debugsharedobjectchecks.md) | Provides life cycle and access checks for shared objects. |
+|  [Margin2d](./rc-js-util.margin2d.md) | 2x2 matrix representing margins on a rectangle. |
+|  [Mat2](./rc-js-util.mat2.md) | Row major 2x2 matrix. |
+|  [Mat3](./rc-js-util.mat3.md) | Row major 3x3 matrix. |
+|  [Mat4](./rc-js-util.mat4.md) | Row major 4x4 matrix. |
+|  [NestableError](./rc-js-util.nestableerror.md) |  |
+|  [NormalizedDataViewProvider](./rc-js-util.normalizeddataviewprovider.md) | Provides [INormalizedDataView](./rc-js-util.inormalizeddataview.md)<!-- -->. |
+|  [Range1d](./rc-js-util.range1d.md) | Vec2 representing a 1d range. |
+|  [Range2d](./rc-js-util.range2d.md) | 2x2 matrix representing a 2d range. |
+|  [RawVoidPointer](./rc-js-util.rawvoidpointer.md) |  |
+|  [ReferenceCountedPtr](./rc-js-util.referencecountedptr.md) | Wrapper of wasm object. |
+|  [RgbaColorPacker](./rc-js-util.rgbacolorpacker.md) | Utility for packing and unpacking RGBA into int32 with one byte per channel. |
+|  [SharedArray](./rc-js-util.sharedarray.md) | Typed array shared between wasm and javascript. |
+|  [SharedStaticArray](./rc-js-util.sharedstaticarray.md) | Typed array representing static memory in wasm. |
+|  [TemporaryListener](./rc-js-util.temporarylistener.md) |  |
+|  [Vec2](./rc-js-util.vec2.md) | Vector 2. |
+|  [Vec3](./rc-js-util.vec3.md) | Vector 3. |
+|  [Vec4](./rc-js-util.vec4.md) | Vector 4. |
+
+## Enumerations
+
+|  Enumeration | Description |
+|  --- | --- |
+|  [ECircularStackOverflowMode](./rc-js-util.ecircularstackoverflowmode.md) | Sets the behavior of [CircularFIFOStack](./rc-js-util.circularfifostack.md) when a value is pushed which won't fit. |
+|  [ERgbaMasks](./rc-js-util.ergbamasks.md) | Bit mask for packed RGBA colors. |
+|  [ERgbaShift](./rc-js-util.ergbashift.md) | Bit offset for packed RGBA colors. |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [arrayBinaryIndexOf(indexable, comparisonValueToSearchFor, getComparisonValueAtIndex, length, start)](./rc-js-util.arraybinaryindexof.md) | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structure are also supported. |
-|  [arrayBinaryLastIndexOf(indexable, comparisonValueToSearchFor, getComparisonValueAtIndex, length, start)](./rc-js-util.arraybinarylastindexof.md) | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structure are also supported. |
+|  [arrayBinaryIndexOf(indexable, comparisonValueToSearchFor, getComparisonValueAtIndex, length, start)](./rc-js-util.arraybinaryindexof.md) | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
+|  [arrayBinaryLastIndexOf(indexable, comparisonValueToSearchFor, getComparisonValueAtIndex, length, start)](./rc-js-util.arraybinarylastindexof.md) | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
 |  [arrayCollect(items, collected, collect)](./rc-js-util.arraycollect.md) | Like <code>Array.reduce</code> but without the requirement to return the value in the callback. |
 |  [arrayCompact(items)](./rc-js-util.arraycompact.md) | Strips null and undefined items from arrays (non mutative). |
 |  [arrayCompactMap(items, map)](./rc-js-util.arraycompactmap.md) | Like \_Array.map but where the callback returns null it will be omitted from the result. |
-|  [arrayCopyInto(from, to)](./rc-js-util.arraycopyinto.md) | Make an array contain the same items as another. |
+|  [arrayContains(items, item)](./rc-js-util.arraycontains.md) | Returns true if the item is present in the list (=== equality test). |
+|  [arrayContains(items, item)](./rc-js-util.arraycontains_1.md) | Returns true if the item is present in the list (=== equality test). |
+|  [arrayCopyInto(from, to, startIndex, length)](./rc-js-util.arraycopyinto.md) | Make an array contain the same items as another. |
 |  [arrayFlatMap(items, mapCallback)](./rc-js-util.arrayflatmap.md) | Iterate over <code>ArrayLike</code> calling a callback against it, the callback returns <code>ArrayLike</code> which is concatenated into a single <code>Array</code>. |
 |  [arrayForEach(items, callback)](./rc-js-util.arrayforeach.md) | Like <code>Array.forEach</code>. |
 |  [arrayGenerateRange(from, to)](./rc-js-util.arraygeneraterange.md) | Generates a range of integers output in an <code>Array</code>. |
 |  [arrayIndex(items, getKey)](./rc-js-util.arrayindex.md) | Populates a <code>Map</code> given a key creating function and <code>ArrayLike</code>. |
+|  [arrayInsertAtIndex(items, itemToInsert, insertAtIndex)](./rc-js-util.arrayinsertatindex.md) | Modifies input array by inserting at given index. |
 |  [arrayIntersect(a, b, getComparisonValue)](./rc-js-util.arrayintersect.md) | Given two <code>ArrayLike</code>, provides the items common between them in an <code>Array</code>. |
 |  [arrayIsArray(obj)](./rc-js-util.arrayisarray.md) | Checks if the parameter is an instance of <code>Array</code> or is a view of <code>ArrayBuffer</code>. |
 |  [arrayLast(items)](./rc-js-util.arraylast.md) | Gets the last value in <code>ArrayLike</code>. |
 |  [arrayMap(items, callback)](./rc-js-util.arraymap.md) | Like <code>Array.map</code>. |
 |  [arrayMapRange(from, to, callback)](./rc-js-util.arraymaprange.md) | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |
 |  [arrayNormalizeEmptyToUndefined(array)](./rc-js-util.arraynormalizeemptytoundefined.md) | Replaces length 0 <code>ArrayLike</code> with <code>undefined</code>. |
-|  [arrayNormalizeNullUndefinedToEmpty(array)](./rc-js-util.arraynormalizenullundefinedtoempty.md) | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
+|  [arrayNormalizeNullishToEmpty(array)](./rc-js-util.arraynormalizenullishtoempty.md) | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
 |  [arrayPushUnique(items, itemToPush, getComparisonValue)](./rc-js-util.arraypushunique.md) | Like <code>Array.push</code> but checks if the value is unique first. |
 |  [arrayRemoveMany(items, itemsToRemove)](./rc-js-util.arrayremovemany.md) | Removes each item in <code>itemsToRemove</code> from <code>items</code> (including any repeated items). |
 |  [arrayRemoveOne(items, itemToRemove)](./rc-js-util.arrayremoveone.md) | Removes either 0 or one item from items, even if itemToRemove appears more than once. |
 |  [arrayReplaceOne(items, itemToRemove, replaceWith)](./rc-js-util.arrayreplaceone.md) | Replaces the first match of itemToRemove with replaceWith. |
+|  [arraySetDifference(a, b)](./rc-js-util.arraysetdifference.md) |  |
+|  [arraySymmetricDifference(a, b, aSet, bSet)](./rc-js-util.arraysymmetricdifference.md) |  |
 |  [arrayUnion(items, getComparisonValue)](./rc-js-util.arrayunion.md) | Given an <code>ArrayLike</code> of <code>ArrayLike</code>, provides all unique items in an <code>Array</code>. |
 |  [dictionaryCloneExtend(base, extension)](./rc-js-util.dictionarycloneextend.md) | Creates an object which is extended sequentially by two additional objects. |
 |  [dictionaryExtend(base, extension)](./rc-js-util.dictionaryextend.md) | Modifies an object to include the keys and values of another. |
@@ -52,26 +91,57 @@
 |  [dictionaryPairs(dictionary)](./rc-js-util.dictionarypairs.md) | converts objects into key value pair tuples. |
 |  [dictionaryPush(dict, key, value)](./rc-js-util.dictionarypush.md) | Used with dictionary that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
 |  [dictionaryValues(d)](./rc-js-util.dictionaryvalues.md) | Equivalent to Object.values. |
+|  [fpDebounce(wait, immediate, functionToProxy)](./rc-js-util.fpdebounce.md) | Creates a function that will proxy calls to <code>functionToProxy</code> when <code>wait</code> time has passed since the last call, using the most recent arguments. Where <code>immediate</code> is true, the function immediately proxies the call and will not proxy again until <code>wait</code> time passes since the last call. |
 |  [fpIdentity(arg)](./rc-js-util.fpidentity.md) | Returns the argument. |
+|  [fpMaybeNewValue(newValue, oldValue)](./rc-js-util.fpmaybenewvalue.md) | Returns the newValue if defined, else the old value. |
 |  [fpNoOp(\_args)](./rc-js-util.fpnoop.md) | Does nothing (intentionally...). |
 |  [fpNormalizeToNull(value)](./rc-js-util.fpnormalizetonull.md) | Normalizes <code>undefined</code> input to <code>null</code>. |
 |  [fpNormalizeToUndefined(value)](./rc-js-util.fpnormalizetoundefined.md) | Normalizes <code>null</code> input to <code>undefined</code>. |
 |  [fpOnce(initialize)](./rc-js-util.fponce.md) | Creates a function that can be called many times but will run at most once. |
-|  [fpRejectFalse(value, error)](./rc-js-util.fprejectfalse.md) | Returns a Promise of rejection with the supplied error if the <code>value</code> is falsy. |
-|  [fpRejectNull(value, error)](./rc-js-util.fprejectnull.md) | Returns a Promise of rejection with the supplied error if the value is <code>null</code> or <code>undefined</code>. |
+|  [fpValueOrNull(predicate, value)](./rc-js-util.fpvalueornull.md) | Returns the value if the predicate is true, else null. |
+|  [getEmscriptenWrapper(memory, emscriptenModuleFactory, extension)](./rc-js-util.getemscriptenwrapper.md) | Factory for creating wrapped emscripten module. |
+|  [mapAddToSet(map, key, value)](./rc-js-util.mapaddtoset.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
+|  [mapAddToSet(map, key, value)](./rc-js-util.mapaddtoset_1.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [mapArrayMap(map, callback)](./rc-js-util.maparraymap.md) | Like <code>Array.map</code> but with a <code>Map</code> input. Outputs an <code>Array</code>. |
+|  [mapConcat(map, key, values)](./rc-js-util.mapconcat.md) | Used with maps that store arrays. Where an array exists for a given key the values will be appended to that array, otherwise a copy of values array will be inserted. |
+|  [mapConcat(map, key, values)](./rc-js-util.mapconcat_1.md) | Used with maps that store arrays. Where an array exists for a given key the values will be appended to that array, otherwise a copy of values array will be inserted. |
+|  [mapDeleteFromSet(map, key, value)](./rc-js-util.mapdeletefromset.md) | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set. |
+|  [mapDeleteFromSet(map, key, value)](./rc-js-util.mapdeletefromset_1.md) | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set. |
+|  [mapDeleteGet(map, key)](./rc-js-util.mapdeleteget.md) | Get the stored value if present, then delete the key. |
+|  [mapDeleteGet(map, key)](./rc-js-util.mapdeleteget_1.md) | Get the stored value if present, then delete the key. |
+|  [mapEntriesToArray(map)](./rc-js-util.mapentriestoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its key value pairs. |
 |  [mapFirstKey(map)](./rc-js-util.mapfirstkey.md) | Gets the first inserted key in a <code>Map</code>. |
 |  [mapFirstValue(map)](./rc-js-util.mapfirstvalue.md) | Gets the first inserted value in a <code>Map</code>. |
 |  [mapInitializeGet(map, key, getValue)](./rc-js-util.mapinitializeget.md) | Gets the value from a <code>Map</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
+|  [mapInitializeGet(map, key, getValue)](./rc-js-util.mapinitializeget_1.md) | Gets the value from a <code>WeakMap</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
+|  [mapIntersect(a, b)](./rc-js-util.mapintersect.md) | Does not check value equality, only key. Takes items from A. |
 |  [mapKeysToArray(map)](./rc-js-util.mapkeystoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its keys. |
 |  [mapPush(map, key, value)](./rc-js-util.mappush.md) | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
+|  [mapPush(map, key, value)](./rc-js-util.mappush_1.md) | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
+|  [mapRemoveManyFromArray(map, key, itemsToRemove)](./rc-js-util.mapremovemanyfromarray.md) | Used with maps that store arrays. Where an array exists for a given key the values will be removed from that array. |
+|  [mapRemoveManyFromArray(map, key, itemsToRemove)](./rc-js-util.mapremovemanyfromarray_1.md) | Used with maps that store arrays. Where an array exists for a given key the values will be removed from that array. |
+|  [mapRemoveOneFromArray(map, key, value)](./rc-js-util.mapremoveonefromarray.md) | Used with maps that store arrays. Where an array exists for a given key the value will be removed from that array. |
+|  [mapRemoveOneFromArray(map, key, value)](./rc-js-util.mapremoveonefromarray_1.md) | Used with maps that store arrays. Where an array exists for a given key the value will be removed from that array. |
+|  [mapReportingAddToSet(map, key, value)](./rc-js-util.mapreportingaddtoset.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
+|  [mapReportingAddToSet(map, key, value)](./rc-js-util.mapreportingaddtoset_1.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
+|  [mapSetDifference(a, b)](./rc-js-util.mapsetdifference.md) |  |
+|  [mapSymmetricDifference(a, b)](./rc-js-util.mapsymmetricdifference.md) |  |
+|  [mapUnion(a, b)](./rc-js-util.mapunion.md) |  |
 |  [mapValuesToArray(map)](./rc-js-util.mapvaluestoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its values. |
 |  [mathBound(value, min, max)](./rc-js-util.mathbound.md) | Bound a value in to a range. |
 |  [mathBoundRandom(min, max)](./rc-js-util.mathboundrandom.md) | Create a random value between min and max. |
+|  [mathHypot2(a, b)](./rc-js-util.mathhypot2.md) | As per Math.hypot, expect with 2 args. |
 |  [mathMax(a, b)](./rc-js-util.mathmax.md) | Returns the larger of the two parameters <code>a</code> and <code>b</code>. |
 |  [mathMin(a, b)](./rc-js-util.mathmin.md) | Returns the smaller of the two parameters <code>a</code> and <code>b</code>. |
+|  [numberGetHexString(value)](./rc-js-util.numbergethexstring.md) | Returns the hex representation of the number. If it's not a number it returns "NaN". |
+|  [Once(target, key, descriptor)](./rc-js-util.once.md) | Method decorator. The target will be called only once, subsequent calls will return the first return. |
 |  [pathJoin(start, end, separator)](./rc-js-util.pathjoin.md) | Joins two strings <code>start</code> and <code>end</code> with a <code>separator</code>. |
+|  [promiseRejectFalsey(value, error)](./rc-js-util.promiserejectfalsey.md) | Returns a Promise of rejection with the supplied error if the <code>value</code> is falsy. |
+|  [promiseRejectNull(value, error)](./rc-js-util.promiserejectnull.md) | Returns a Promise of rejection with the supplied error if the value is <code>null</code> or <code>undefined</code>. |
 |  [regexEscapeRegex(value)](./rc-js-util.regexescaperegex.md) | Escapes RegExp special characters in strings. |
+|  [setIsSetEqual(a, b)](./rc-js-util.setissetequal.md) |  |
+|  [setSetDifference(a, b)](./rc-js-util.setsetdifference.md) |  |
+|  [setSymmetricDifference(a, b)](./rc-js-util.setsymmetricdifference.md) |  |
 |  [setValuesToArray(set)](./rc-js-util.setvaluestoarray.md) | Converts a set into an array of its values. |
 |  [stringNormalizeEmptyToUndefined(input)](./rc-js-util.stringnormalizeemptytoundefined.md) | Replaces length 0 strings with <code>undefined</code>. |
 |  [stringNormalizeNullUndefinedToEmpty(input)](./rc-js-util.stringnormalizenullundefinedtoempty.md) | Replaces <code>null</code> / <code>undefined</code> with an empty <code>string</code>. |
@@ -80,24 +150,118 @@
 
 |  Interface | Description |
 |  --- | --- |
+|  [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) | Simple one to many communication channel. Proxies the arguments of emit to each listener. |
+|  [IDebugBindings](./rc-js-util.idebugbindings.md) |  |
+|  [IDebugProtectedView](./rc-js-util.idebugprotectedview.md) | Factory for creating proxy objects that can be invalidated later. Once invalidated any property read that wasn't explicity marked safe will cause a debug error. Available in debug contexts only. |
+|  [IDebugSharedObject](./rc-js-util.idebugsharedobject.md) | See [ISharedObject](./rc-js-util.isharedobject.md)<!-- -->. |
+|  [IDebugSharedObjectLifeCycleChecks](./rc-js-util.idebugsharedobjectlifecyclechecks.md) | Wrapper of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) for shared objects, useful for checking if the shared object was properly disposed. Available in debug contexts only. |
+|  [IDebugWeakBroadcastEvent](./rc-js-util.idebugweakbroadcastevent.md) | Like [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) but without holding strong references. Available in debug contexts only. |
+|  [IDebugWeakStore](./rc-js-util.idebugweakstore.md) | A weakmap store available in debug contexts only. |
 |  [IDictionary](./rc-js-util.idictionary.md) |  |
+|  [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md) |  |
+|  [IFIFOStack](./rc-js-util.ififostack.md) | Circular first in first out stack. |
+|  [IJsUtilBindings](./rc-js-util.ijsutilbindings.md) |  |
+|  [IMargin2dCtor](./rc-js-util.imargin2dctor.md) | Constructor for [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
+|  [IMat2Ctor](./rc-js-util.imat2ctor.md) | Constructor for [Mat2](./rc-js-util.mat2.md)<!-- -->. |
+|  [IMat3Ctor](./rc-js-util.imat3ctor.md) | Constructor for [Mat3](./rc-js-util.mat3.md)<!-- -->. |
+|  [IMat4Ctor](./rc-js-util.imat4ctor.md) | Constructor for [Mat4](./rc-js-util.mat4.md)<!-- -->. |
+|  [IMemoryUtilBindings](./rc-js-util.imemoryutilbindings.md) |  |
+|  [INormalizedDataView](./rc-js-util.inormalizeddataview.md) | Provides a way to set a value on a <code>DataView</code> without needing to know the types at the point of setting. Use [NormalizedDataViewProvider](./rc-js-util.normalizeddataviewprovider.md) to get an instance. |
 |  [INumericKeyedDictionary](./rc-js-util.inumerickeyeddictionary.md) |  |
+|  [IOnDestroy](./rc-js-util.iondestroy.md) |  |
+|  [IOnFree](./rc-js-util.ionfree.md) |  |
+|  [IOnMemoryResize](./rc-js-util.ionmemoryresize.md) |  |
+|  [IRange1dCtor](./rc-js-util.irange1dctor.md) | Constructor for [Range1d](./rc-js-util.range1d.md)<!-- -->. |
+|  [IRange2dCtor](./rc-js-util.irange2dctor.md) | Constructor for [Range2d](./rc-js-util.range2d.md)<!-- -->. |
+|  [IRawVoidPointer](./rc-js-util.irawvoidpointer.md) | Provides a reference counted wrapper to a pointer <code>malloc</code>'d from JS and is <code>free</code>'d on reference count hitting 0. |
+|  [IReferenceCounted](./rc-js-util.ireferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. |
+|  [IReferenceCountedPtr](./rc-js-util.ireferencecountedptr.md) | Wrapper of wasm object. NB The object is pre-claimed (ref count 1) on creation. On free the pointer will be set to null. |
+|  [ISharedArray](./rc-js-util.isharedarray.md) | Typed array representing a contiguous block of memory in wasm. |
+|  [ISharedArrayBindings](./rc-js-util.isharedarraybindings.md) |  |
+|  [ISharedObject](./rc-js-util.isharedobject.md) | Holds a reference to wasm object. |
+|  [ITemporaryListener](./rc-js-util.itemporarylistener.md) |  |
+|  [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md) | Defines utility methods for creating typed array tuples. |
+|  [IVec2Ctor](./rc-js-util.ivec2ctor.md) | Constructor for [Vec2](./rc-js-util.vec2.md)<!-- -->. |
+|  [IVec3Ctor](./rc-js-util.ivec3ctor.md) | Constructor for [Vec3](./rc-js-util.vec3.md)<!-- -->. |
+|  [IVec4Ctor](./rc-js-util.ivec4ctor.md) | Constructor for [Vec4](./rc-js-util.vec4.md)<!-- -->. |
+|  [IWebAssemblyMemoryMemory](./rc-js-util.iwebassemblymemorymemory.md) | Copied from lib.dom.d.ts to avoid portability issues. |
+
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Emscripten](./rc-js-util.emscripten.md) | External lib. |
+|  [RcJsUtilDebugImpl](./rc-js-util.rcjsutildebugimpl.md) | Exposed as RcJsUtilDebug in the global namespace when DEBUG\_MODE is set to true. |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
 |  [arrayEmptyArray](./rc-js-util.arrayemptyarray.md) | An empty readonly array, useful to avoid GC pressure. |
-|  [debugFlags](./rc-js-util.debugflags.md) | Flags that can be stripped by dead code removal tools. Shouldn't be used in production. |
+|  [isLittleEndian](./rc-js-util.islittleendian.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [TDebouncedFn](./rc-js-util.tdebouncedfn.md) |  |
+|  [TDebugListener](./rc-js-util.tdebuglistener.md) |  |
+|  [TDecayedTypedArrayTuple](./rc-js-util.tdecayedtypedarraytuple.md) | Like ATypedArrayTuple but indexable with any number. |
+|  [TExtractIndexes](./rc-js-util.textractindexes.md) | Extract numerical indexes out of a type, if there aren't any fallback to number. |
+|  [TExtractTypeTypedArrayTuple](./rc-js-util.textracttypetypedarraytuple.md) |  |
+|  [TF32Margin2d](./rc-js-util.tf32margin2d.md) | Float32 [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
+|  [TF32Mat2](./rc-js-util.tf32mat2.md) | Float32 [Mat2](./rc-js-util.mat2.md)<!-- -->. |
+|  [TF32Mat3](./rc-js-util.tf32mat3.md) | Float32 [Mat3](./rc-js-util.mat3.md)<!-- -->. |
+|  [TF32Mat4](./rc-js-util.tf32mat4.md) | Float32 [Mat4](./rc-js-util.mat4.md)<!-- -->. |
+|  [TF32Range1d](./rc-js-util.tf32range1d.md) | Float32 [Range1d](./rc-js-util.range1d.md)<!-- -->. |
+|  [TF32Range2d](./rc-js-util.tf32range2d.md) | Float32 [Range2d](./rc-js-util.range2d.md)<!-- -->. |
+|  [TF32SharedArray](./rc-js-util.tf32sharedarray.md) | Float32 [ISharedArray](./rc-js-util.isharedarray.md)<!-- -->. |
+|  [TF32SharedStaticArray](./rc-js-util.tf32sharedstaticarray.md) | Float32 [ISharedArray](./rc-js-util.isharedarray.md) (static). |
+|  [TF32Vec2](./rc-js-util.tf32vec2.md) | Float32 [Vec2](./rc-js-util.vec2.md)<!-- -->. |
+|  [TF32Vec3](./rc-js-util.tf32vec3.md) | Float32 [Vec3](./rc-js-util.vec3.md)<!-- -->. |
+|  [TF32Vec4](./rc-js-util.tf32vec4.md) | Float32 [Vec4](./rc-js-util.vec4.md)<!-- -->. |
+|  [TF64Margin2d](./rc-js-util.tf64margin2d.md) | Float64 [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
+|  [TF64Mat2](./rc-js-util.tf64mat2.md) | Float64 [Mat2](./rc-js-util.mat2.md)<!-- -->. |
+|  [TF64Mat3](./rc-js-util.tf64mat3.md) | Float64 [Mat3](./rc-js-util.mat3.md)<!-- -->. |
+|  [TF64Mat4](./rc-js-util.tf64mat4.md) | Float64 [Mat4](./rc-js-util.mat4.md)<!-- -->. |
+|  [TF64Range1d](./rc-js-util.tf64range1d.md) | Float64 [Range1d](./rc-js-util.range1d.md)<!-- -->. |
+|  [TF64Range2d](./rc-js-util.tf64range2d.md) | Float64 [Range2d](./rc-js-util.range2d.md)<!-- -->. |
+|  [TF64SharedArray](./rc-js-util.tf64sharedarray.md) | Float64 [ISharedArray](./rc-js-util.isharedarray.md)<!-- -->. |
+|  [TF64SharedStaticArray](./rc-js-util.tf64sharedstaticarray.md) | Float64 [ISharedArray](./rc-js-util.isharedarray.md) (static). |
+|  [TF64Vec2](./rc-js-util.tf64vec2.md) | Float64 [Vec2](./rc-js-util.vec2.md)<!-- -->. |
+|  [TF64Vec3](./rc-js-util.tf64vec3.md) | Float64 [Vec3](./rc-js-util.vec3.md)<!-- -->. |
+|  [TF64Vec4](./rc-js-util.tf64vec4.md) | Float64 [Vec4](./rc-js-util.vec4.md)<!-- -->. |
 |  [TGetComparisonValueAtIndex](./rc-js-util.tgetcomparisonvalueatindex.md) |  |
+|  [TGetStringFromLocalization](./rc-js-util.tgetstringfromlocalization.md) |  |
+|  [TKeysOf](./rc-js-util.tkeysof.md) |  |
+|  [TListener](./rc-js-util.tlistener.md) |  |
+|  [TMargin2dCtorArgs](./rc-js-util.tmargin2dctorargs.md) |  |
+|  [TMat2CtorArgs](./rc-js-util.tmat2ctorargs.md) |  |
+|  [TMat3CtorArgs](./rc-js-util.tmat3ctorargs.md) |  |
+|  [TMat4CtorArgs](./rc-js-util.tmat4ctorargs.md) |  |
+|  [TNeverFallback](./rc-js-util.tneverfallback.md) | If the value is never, return the fallback instead. |
+|  [TNeverPredicate](./rc-js-util.tneverpredicate.md) | If TTest is never, return TTrue, else TFalse. |
+|  [TNextInt](./rc-js-util.tnextint.md) | Gives the next int between 0 - 16. |
 |  [TNullable](./rc-js-util.tnullable.md) |  |
 |  [TPickExcept](./rc-js-util.tpickexcept.md) |  |
+|  [TPickPartial](./rc-js-util.tpickpartial.md) | Like <code>Partial</code> but allows specification of optional properties. |
+|  [TPickRequired](./rc-js-util.tpickrequired.md) | Like <code>Required</code> but allows specification of required properties. |
+|  [TPredicate](./rc-js-util.tpredicate.md) |  |
+|  [TProperty](./rc-js-util.tproperty.md) |  |
+|  [TRange1dCtorArgs](./rc-js-util.trange1dctorargs.md) |  |
+|  [TRange2dCtorArgs](./rc-js-util.trange2dctorargs.md) |  |
+|  [TSharedArrayPrefix](./rc-js-util.tsharedarrayprefix.md) |  |
+|  [TTupleLike](./rc-js-util.ttuplelike.md) | Tuple version of ArrayLike. |
+|  [TTupleLikeOfLength](./rc-js-util.ttuplelikeoflength.md) | Useful for homogenous tuples of arbitrary length. |
+|  [TTypedArray](./rc-js-util.ttypedarray.md) |  |
+|  [TTypedArrayCast](./rc-js-util.ttypedarraycast.md) | Typed array tuples of the same dimension but different storage type (e.g. float32 vs int32) are not structurally compatible by design. Where an implicit conversion is desired you can cast between typed array tuples of the same dimension using this utility type as described in the example. |
+|  [TTypedArrayCtor](./rc-js-util.ttypedarrayctor.md) |  |
 |  [TUnionToIntersection](./rc-js-util.tuniontointersection.md) |  |
 |  [TUnpackArray](./rc-js-util.tunpackarray.md) |  |
 |  [TUnpackIfArray](./rc-js-util.tunpackifarray.md) |  |
+|  [TVec2CtorArgs](./rc-js-util.tvec2ctorargs.md) |  |
+|  [TVec3CtorArgs](./rc-js-util.tvec3ctorargs.md) |  |
+|  [TVec4CtorArgs](./rc-js-util.tvec4ctorargs.md) |  |
+|  [TWebAssemblyMemoryListenerArgs](./rc-js-util.twebassemblymemorylistenerargs.md) |  |
+|  [TWriteable](./rc-js-util.twriteable.md) | Removes readonly from an object. |
 
