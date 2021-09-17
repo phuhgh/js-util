@@ -22,3 +22,7 @@ export declare function dictionaryValues<T>(d: IDictionary<T>): T[];
 
 T\[\]
 
+## Remarks
+
+See [dictionaryValues()](./rc-js-util.dictionaryvalues.md)<!-- -->.
+

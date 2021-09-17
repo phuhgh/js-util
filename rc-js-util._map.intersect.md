@@ -6,6 +6,8 @@
 
 Does not check value equality, only key. Takes items from A.
 
+See [mapIntersect()](./rc-js-util.mapintersect.md)<!-- -->.
+
 <b>Signature:</b>
 
 ```typescript

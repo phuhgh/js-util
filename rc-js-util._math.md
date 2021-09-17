@@ -18,7 +18,7 @@ export declare class _Math
 |  --- | --- | --- | --- |
 |  [bound](./rc-js-util._math.bound.md) | <code>static</code> | typeof mathBound | Bound a value in to a range. |
 |  [boundRandom](./rc-js-util._math.boundrandom.md) | <code>static</code> | typeof mathBoundRandom | Create a random value between min and max. |
-|  [hypot2](./rc-js-util._math.hypot2.md) | <code>static</code> | typeof mathHypot2 | As per Math.hypot, expect with 2 args. |
+|  [hypot2](./rc-js-util._math.hypot2.md) | <code>static</code> | typeof mathHypot2 | As per Math.hypot, expect with 2 args.<!-- -->See [mathHypot2()](./rc-js-util.mathhypot2.md)<!-- -->. |
 |  [max](./rc-js-util._math.max.md) | <code>static</code> | typeof mathMax | Returns the larger of the two parameters <code>a</code> and <code>b</code>. |
 |  [min](./rc-js-util._math.min.md) | <code>static</code> | typeof mathMin | Returns the smaller of the two parameters <code>a</code> and <code>b</code>. |
 

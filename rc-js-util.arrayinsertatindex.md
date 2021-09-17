@@ -24,3 +24,7 @@ export declare function arrayInsertAtIndex<TItem>(items: TItem[], itemToInsert: 
 
 void
 
+## Remarks
+
+See [arrayInsertAtIndex()](./rc-js-util.arrayinsertatindex.md)<!-- -->.
+

@@ -4,7 +4,7 @@
 
 ## mapInitializeGet() function
 
-Gets the value from a `WeakMap` for a given key, where the value is `undefined` or hasn't been set, the callback's return will be inserted into the `Map` and returned.
+Gets the value from a `Map` for a given key, where the value is `undefined` or hasn't been set, the callback's return will be inserted into the `Map` and returned.
 
 <b>Signature:</b>
 
@@ -28,5 +28,5 @@ The value in `map`<!-- -->, otherwise the result of the `getValue`<!-- -->.
 
 ## Remarks
 
-See [mapInitializeGet()](./rc-js-util.mapinitializeget_1.md)<!-- -->.
+See [mapInitializeGet()](./rc-js-util.mapinitializeget.md)<!-- -->.
 

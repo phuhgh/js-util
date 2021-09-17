@@ -18,7 +18,7 @@ export declare function mapConcat<TKey extends object, TValue>(map: WeakMap<TKey
 |  --- | --- | --- |
 |  map | WeakMap&lt;TKey, TValue\[\]&gt; | The <code>Map</code> to check. May be modified. |
 |  key | TKey | The key to lookup in <code>map</code>. |
-|  values | readonly TValue\[\] | The values to mapConcat. |
+|  values | readonly TValue\[\] | The values to concat. |
 
 <b>Returns:</b>
 
@@ -26,5 +26,5 @@ void
 
 ## Remarks
 
-See [mapPush()](./rc-js-util.mappush_1.md)<!-- -->.
+See [mapConcat()](./rc-js-util.mapconcat.md)<!-- -->.
 

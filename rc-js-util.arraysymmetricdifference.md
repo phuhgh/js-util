@@ -4,7 +4,6 @@
 
 ## arraySymmetricDifference() function
 
-
 <b>Signature:</b>
 
 ```typescript
@@ -23,4 +22,8 @@ export declare function arraySymmetricDifference<TItem>(a: TItem[], b: TItem[], 
 <b>Returns:</b>
 
 Set&lt;TItem&gt;
+
+## Remarks
+
+See [arraySymmetricDifference()](./rc-js-util.arraysymmetricdifference.md)<!-- -->.
 

@@ -11,3 +11,8 @@ Returns the value if the predicate is true, else null.
 ```typescript
 static readonly valueOrNull: typeof fpValueOrNull;
 ```
+
+## Remarks
+
+See [fpValueOrNull()](./rc-js-util.fpvalueornull.md)<!-- -->.
+

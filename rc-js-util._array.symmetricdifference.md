@@ -9,3 +9,8 @@
 ```typescript
 static readonly symmetricDifference: typeof arraySymmetricDifference;
 ```
+
+## Remarks
+
+See [arraySymmetricDifference()](./rc-js-util.arraysymmetricdifference.md)<!-- -->.
+

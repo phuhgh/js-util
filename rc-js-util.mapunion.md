@@ -4,7 +4,6 @@
 
 ## mapUnion() function
 
-
 <b>Signature:</b>
 
 ```typescript
@@ -21,4 +20,8 @@ export declare function mapUnion<TKey, TIem>(a: ReadonlyMap<TKey, TIem>, b: Read
 <b>Returns:</b>
 
 Map&lt;TKey, TIem&gt;
+
+## Remarks
+
+See [mapUnion()](./rc-js-util.mapunion.md)<!-- -->.
 

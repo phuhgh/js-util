@@ -14,5 +14,5 @@ static readonly removeManyFromArray: typeof mapRemoveManyFromArray;
 
 ## Remarks
 
-See [mapAddToSet()](./rc-js-util.mapaddtoset.md)<!-- -->.
+See [mapReportingAddToSet()](./rc-js-util.mapreportingaddtoset.md)<!-- -->.
 

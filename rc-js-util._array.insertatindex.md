@@ -11,3 +11,8 @@ Modifies input array by inserting at given index.
 ```typescript
 static readonly insertAtIndex: typeof arrayInsertAtIndex;
 ```
+
+## Remarks
+
+See [arrayInsertAtIndex()](./rc-js-util.arrayinsertatindex.md)<!-- -->.
+

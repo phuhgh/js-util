@@ -9,3 +9,8 @@
 ```typescript
 static readonly isSetEqual: typeof setIsSetEqual;
 ```
+
+## Remarks
+
+See [setSetDifference()](./rc-js-util.setsetdifference.md)<!-- -->.
+

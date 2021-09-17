@@ -26,5 +26,5 @@ void
 
 ## Remarks
 
-See [mapPush()](./rc-js-util.mappush_1.md)<!-- -->.
+See [mapPush()](./rc-js-util.mappush.md)<!-- -->.
 

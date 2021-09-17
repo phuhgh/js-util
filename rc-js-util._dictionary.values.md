@@ -11,3 +11,8 @@ Equivalent to Object.values.
 ```typescript
 static readonly values: typeof dictionaryValues;
 ```
+
+## Remarks
+
+See [dictionaryValues()](./rc-js-util.dictionaryvalues.md)<!-- -->.
+

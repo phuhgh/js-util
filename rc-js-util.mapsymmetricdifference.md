@@ -4,7 +4,6 @@
 
 ## mapSymmetricDifference() function
 
-
 <b>Signature:</b>
 
 ```typescript
@@ -21,4 +20,8 @@ export declare function mapSymmetricDifference<TKey, TIem>(a: ReadonlyMap<TKey, 
 <b>Returns:</b>
 
 Map&lt;TKey, TIem&gt;
+
+## Remarks
+
+See [mapSymmetricDifference()](./rc-js-util.mapsymmetricdifference.md)<!-- -->.
 

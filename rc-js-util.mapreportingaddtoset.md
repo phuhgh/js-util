@@ -28,5 +28,5 @@ true - If the value was added.
 
 ## Remarks
 
-See [mapAddToSet()](./rc-js-util.mapaddtoset.md)<!-- -->.
+See [mapReportingAddToSet()](./rc-js-util.mapreportingaddtoset.md)<!-- -->.
 

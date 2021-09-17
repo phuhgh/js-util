@@ -4,7 +4,6 @@
 
 ## setIsSetEqual() function
 
-
 <b>Signature:</b>
 
 ```typescript
@@ -21,4 +20,8 @@ export declare function setIsSetEqual<TItem>(a: ReadonlySet<TItem>, b: ReadonlyS
 <b>Returns:</b>
 
 boolean
+
+## Remarks
+
+See [setIsSetEqual()](./rc-js-util.setissetequal.md)<!-- -->.
 

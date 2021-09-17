@@ -113,8 +113,8 @@
 |  [mapFirstKey(map)](./rc-js-util.mapfirstkey.md) | Gets the first inserted key in a <code>Map</code>. |
 |  [mapFirstValue(map)](./rc-js-util.mapfirstvalue.md) | Gets the first inserted value in a <code>Map</code>. |
 |  [mapInitializeGet(map, key, getValue)](./rc-js-util.mapinitializeget.md) | Gets the value from a <code>Map</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
-|  [mapInitializeGet(map, key, getValue)](./rc-js-util.mapinitializeget_1.md) | Gets the value from a <code>WeakMap</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
-|  [mapIntersect(a, b)](./rc-js-util.mapintersect.md) | Does not check value equality, only key. Takes items from A. |
+|  [mapInitializeGet(map, key, getValue)](./rc-js-util.mapinitializeget_1.md) | Gets the value from a <code>Map</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
+|  [mapIntersect(a, b)](./rc-js-util.mapintersect.md) | Does not check value equality, only key. Takes items from A.<!-- -->See [mapIntersect()](./rc-js-util.mapintersect.md)<!-- -->. |
 |  [mapKeysToArray(map)](./rc-js-util.mapkeystoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its keys. |
 |  [mapPush(map, key, value)](./rc-js-util.mappush.md) | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
 |  [mapPush(map, key, value)](./rc-js-util.mappush_1.md) | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
@@ -130,7 +130,7 @@
 |  [mapValuesToArray(map)](./rc-js-util.mapvaluestoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its values. |
 |  [mathBound(value, min, max)](./rc-js-util.mathbound.md) | Bound a value in to a range. |
 |  [mathBoundRandom(min, max)](./rc-js-util.mathboundrandom.md) | Create a random value between min and max. |
-|  [mathHypot2(a, b)](./rc-js-util.mathhypot2.md) | As per Math.hypot, expect with 2 args. |
+|  [mathHypot2(a, b)](./rc-js-util.mathhypot2.md) | As per Math.hypot, expect with 2 args.<!-- -->See [mathHypot2()](./rc-js-util.mathhypot2.md)<!-- -->. |
 |  [mathMax(a, b)](./rc-js-util.mathmax.md) | Returns the larger of the two parameters <code>a</code> and <code>b</code>. |
 |  [mathMin(a, b)](./rc-js-util.mathmin.md) | Returns the smaller of the two parameters <code>a</code> and <code>b</code>. |
 |  [numberGetHexString(value)](./rc-js-util.numbergethexstring.md) | Returns the hex representation of the number. If it's not a number it returns "NaN". |

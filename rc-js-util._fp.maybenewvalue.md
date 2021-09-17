@@ -11,3 +11,8 @@ Returns the newValue if defined, else the old value.
 ```typescript
 static readonly maybeNewValue: typeof fpMaybeNewValue;
 ```
+
+## Remarks
+
+See [fpMaybeNewValue()](./rc-js-util.fpmaybenewvalue.md)<!-- -->.
+

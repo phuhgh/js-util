@@ -23,3 +23,7 @@ Map&lt;TKey, TIem&gt;
 
 items in A not in B.
 
+## Remarks
+
+See [mapSetDifference()](./rc-js-util.mapsetdifference.md)<!-- -->.
+

@@ -25,5 +25,5 @@ TValue \| undefined
 
 ## Remarks
 
-See [mapDeleteGet()](./rc-js-util.mapdeleteget_1.md)<!-- -->.
+See [mapDeleteGet()](./rc-js-util.mapdeleteget.md)<!-- -->.
 

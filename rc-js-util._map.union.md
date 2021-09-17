@@ -9,3 +9,8 @@
 ```typescript
 static readonly union: typeof mapUnion;
 ```
+
+## Remarks
+
+See [mapUnion()](./rc-js-util.mapunion.md)<!-- -->.
+

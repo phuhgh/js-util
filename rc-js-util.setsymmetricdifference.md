@@ -4,7 +4,6 @@
 
 ## setSymmetricDifference() function
 
-
 <b>Signature:</b>
 
 ```typescript
@@ -21,4 +20,8 @@ export declare function setSymmetricDifference<TItem>(a: Set<TItem>, b: Set<TIte
 <b>Returns:</b>
 
 TItem\[\]
+
+## Remarks
+
+See [setSymmetricDifference()](./rc-js-util.setsymmetricdifference.md)<!-- -->.
 

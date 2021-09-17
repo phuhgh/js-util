@@ -23,3 +23,7 @@ TItem\[\]
 
 items in A not in B.
 
+## Remarks
+
+See [setSetDifference()](./rc-js-util.setsetdifference.md)<!-- -->.
+

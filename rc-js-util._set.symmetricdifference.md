@@ -9,3 +9,8 @@
 ```typescript
 static readonly symmetricDifference: typeof setSymmetricDifference;
 ```
+
+## Remarks
+
+See [setSymmetricDifference()](./rc-js-util.setsymmetricdifference.md)<!-- -->.
+

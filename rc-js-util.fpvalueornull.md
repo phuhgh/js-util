@@ -23,3 +23,7 @@ export declare function fpValueOrNull<TValue>(predicate: boolean, value: TValue)
 
 TValue \| null
 
+## Remarks
+
+See [fpValueOrNull()](./rc-js-util.fpvalueornull.md)<!-- -->.
+

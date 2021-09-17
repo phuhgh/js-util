@@ -9,3 +9,8 @@
 ```typescript
 static readonly symmetricDifference: typeof mapSymmetricDifference;
 ```
+
+## Remarks
+
+See [mapSymmetricDifference()](./rc-js-util.mapsymmetricdifference.md)<!-- -->.
+

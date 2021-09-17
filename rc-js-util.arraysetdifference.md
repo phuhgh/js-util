@@ -23,3 +23,7 @@ Set&lt;TItem&gt;
 
 items in A not in B.
 
+## Remarks
+
+See [arraySetDifference()](./rc-js-util.arraysetdifference.md)<!-- -->.
+

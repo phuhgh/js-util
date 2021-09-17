@@ -25,7 +25,7 @@ export declare class _Map
 |  [firstKey](./rc-js-util._map.firstkey.md) | <code>static</code> | typeof mapFirstKey | Gets the first inserted key in a <code>Map</code>. |
 |  [firstValue](./rc-js-util._map.firstvalue.md) | <code>static</code> | typeof mapFirstValue | Gets the first inserted value in a <code>Map</code>. |
 |  [initializeGet](./rc-js-util._map.initializeget.md) | <code>static</code> | typeof mapInitializeGet | Gets the value from a <code>Map</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
-|  [intersect](./rc-js-util._map.intersect.md) | <code>static</code> | typeof mapIntersect | Does not check value equality, only key. Takes items from A. |
+|  [intersect](./rc-js-util._map.intersect.md) | <code>static</code> | typeof mapIntersect | Does not check value equality, only key. Takes items from A.<!-- -->See [mapIntersect()](./rc-js-util.mapintersect.md)<!-- -->. |
 |  [keysToArray](./rc-js-util._map.keystoarray.md) | <code>static</code> | typeof mapKeysToArray | Converts a <code>Map</code> into an <code>Array</code> of its keys. |
 |  [push](./rc-js-util._map.push.md) | <code>static</code> | typeof mapPush | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
 |  [removeManyFromArray](./rc-js-util._map.removemanyfromarray.md) | <code>static</code> | typeof mapRemoveManyFromArray | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
