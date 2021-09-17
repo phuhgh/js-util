@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayCollect } from "./array-collect";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayCollect", () =>
+debugDescribe("=> arrayCollect", () =>
 {
     const values = ["a", "b", "c"] as const;
 

@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { mapFirstValue } from "./map-first-value";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> mapFirstValue", () =>
+debugDescribe("=> mapFirstValue", () =>
 {
     it("| returns the first key where available", () =>
     {

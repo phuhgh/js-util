@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { setValuesToArray } from "./set-values-to-array";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> setValuesToArray", () =>
+debugDescribe("=> setValuesToArray", () =>
 {
     const values = new Set([1, 2, 3] as const);
 

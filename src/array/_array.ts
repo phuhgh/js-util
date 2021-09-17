@@ -9,7 +9,7 @@ import { arrayIndex } from "./impl/array-index";
 import { arrayIntersect } from "./impl/array-intersect";
 import { arrayLast } from "./impl/array-last";
 import { arrayNormalizeEmptyToUndefined } from "./impl/array-normalize-empty-to-undefined";
-import { arrayNormalizeNullUndefinedToEmpty } from "./impl/array-normalize-null-undefined-to-empty";
+import { arrayNormalizeNullishToEmpty } from "./impl/array-normalize-nullish-to-empty";
 import { arrayCollect } from "./impl/array-collect";
 import { arrayRemoveMany } from "./impl/array-remove-many";
 import { arrayRemoveOne } from "./impl/array-remove-one";
@@ -21,12 +21,15 @@ import { arrayPushUnique } from "./impl/array-push-unique";
 import { arrayEmptyArray } from "./impl/array-empty-array";
 import { arrayGenerateRange } from "./impl/array-generate-range";
 import { arrayMapRange } from "./impl/array-map-range";
+import { arrayContains } from "./impl/array-contains";
+import { arrayInsertAtIndex } from "./impl/array-insert-at-index";
+import { arraySymmetricDifference } from "./impl/array-symmetric-difference";
+import { arraySetDifference } from "./impl/array-set-difference";
 
 /**
  * @public
  * Utilities that apply to `Array` and `ArrayLike`.
  */
-// tslint:disable-next-line:class-name
 export class _Array
 {
     /** {@inheritDoc arrayBinaryIndexOf} */
@@ -39,6 +42,8 @@ export class _Array
     public static readonly compact = arrayCompact;
     /** {@inheritDoc arrayCompactMap} */
     public static readonly compactMap = arrayCompactMap;
+    /** {@inheritDoc (arrayContains:2)} */
+    public static readonly contains = arrayContains;
     /** {@inheritDoc arrayCopyInto} */
     public static readonly copyInto = arrayCopyInto;
     /** {@inheritDoc arrayEmptyArray} */
@@ -51,6 +56,8 @@ export class _Array
     public static readonly generateRange = arrayGenerateRange;
     /** {@inheritDoc arrayIndex} */
     public static readonly index = arrayIndex;
+    /** {@inheritDoc arrayInsertAtIndex} */
+    public static readonly insertAtIndex = arrayInsertAtIndex;
     /** {@inheritDoc arrayIntersect} */
     public static readonly intersect = arrayIntersect;
     /** {@inheritDoc arrayIsArray} */
@@ -63,8 +70,8 @@ export class _Array
     public static readonly mapRange = arrayMapRange;
     /** {@inheritDoc arrayNormalizeEmptyToUndefined} */
     public static readonly normalizeEmptyToUndefined = arrayNormalizeEmptyToUndefined;
-    /** {@inheritDoc arrayNormalizeNullUndefinedToEmpty} */
-    public static readonly normalizeNullUndefinedToEmpty = arrayNormalizeNullUndefinedToEmpty;
+    /** {@inheritDoc arrayNormalizeNullishToEmpty} */
+    public static readonly normalizeNullishToEmpty = arrayNormalizeNullishToEmpty;
     /** {@inheritDoc arrayPushUnique} */
     public static readonly pushUnique = arrayPushUnique;
     /** {@inheritDoc arrayRemoveMany} */
@@ -73,6 +80,10 @@ export class _Array
     public static readonly removeOne = arrayRemoveOne;
     /** {@inheritDoc arrayReplaceOne} */
     public static readonly replaceOne = arrayReplaceOne;
+    /** {@inheritDoc arraySetDifference} */
+    public static readonly setDifference = arraySetDifference;
+    /** {@inheritDoc arraySymmetricDifference} */
+    public static readonly symmetricDifference = arraySymmetricDifference;
     /** {@inheritDoc arrayUnion} */
     public static readonly union = arrayUnion;
 

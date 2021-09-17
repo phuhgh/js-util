@@ -5,7 +5,6 @@ import { stringNormalizeNullUndefinedToEmpty } from "./impl/string-normalize-nul
  * @public
  * Utilities that apply to `string`.
  */
-// tslint:disable-next-line:class-name
 export class _String
 {
     /** {@inheritDoc stringNormalizeEmptyToUndefined} */

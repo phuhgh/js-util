@@ -1,8 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayCompactMap } from "./array-compact-map";
 import { _Production } from "../../production/_production";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayCompactMap", () =>
+debugDescribe("=> arrayCompactMap", () =>
 {
     const values = ["a", "b", "c"] as const;
 

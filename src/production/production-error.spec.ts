@@ -1,15 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
 import { _Production } from "./_production";
-import { _Debug } from "../debug/_debug";
+import { debugDescribe } from "../test-utils";
 
-describe("=> _Production.error", () =>
+debugDescribe("=> _Production.error", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     describe("=> compilation checks", () =>
     {
         it("| narrows types where used as a guard", () =>

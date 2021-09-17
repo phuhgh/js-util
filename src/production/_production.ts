@@ -1,21 +1,20 @@
 import { _Debug } from "../debug/_debug";
-import { debugFlags } from "../debug/debug-flags";
 
 /**
  * @public
  * Utilities for production builds.
  */
-// tslint:disable-next-line:class-name
 export class _Production
 {
     /**
      * Throws an `Error` with the given message. If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+     * Should not be used for "expected" errors (bad input etc).
      */
     public static error(message: string): never
     {
         if (DEBUG_MODE)
         {
-            if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
+            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
             {
                 _Debug.breakpoint();
             }
@@ -42,6 +41,6 @@ export class _Production
      */
     public static assertValueIsNever(_value: never): never
     {
-        _Production.error("unexpected code path executed");
+        _Production.error("unexpected code path executed.");
     }
 }

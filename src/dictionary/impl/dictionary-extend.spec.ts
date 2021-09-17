@@ -1,16 +1,8 @@
-import { itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
-import { _Debug } from "../../debug/_debug";
+import { debugDescribe, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { dictionaryExtend } from "./dictionary-extend";
 
-/* tslint:disable:newline-per-chained-call */
-describe("=> dictionaryExtend", () =>
+debugDescribe("=> dictionaryExtend", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     itShouldNotRunDebugWhenDebugIsFalse(() =>
     {
         dictionaryExtend({}, {});

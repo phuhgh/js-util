@@ -19,15 +19,17 @@ export function arrayMapRange<TMapped>(from: number, to: number, callback: (valu
 {
     DEBUG_MODE && _Debug.runBlock(() =>
     {
-        _Debug.assert(to >= from, "to must be greater than or equal to from");
         _Debug.assert(!isNaN(from) && !isNaN(to), "NaN range not supported");
     });
-    const length = to - from + 1;
+    const range = to - from;
+    const length = Math.abs(range) + 1;
+    const increment = Math.sign(range);
     const array = new Array<TMapped>(length);
 
     for (let i = 0; i < length; ++i)
     {
-        array[i] = callback(from++, i);
+        array[i] = callback(from, i);
+        from += increment;
     }
 
     return array;

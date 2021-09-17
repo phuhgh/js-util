@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { mapValuesToArray } from "./map-values-to-array";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> mapValuesToArray", () =>
+debugDescribe("=> mapValuesToArray", () =>
 {
     const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);
 

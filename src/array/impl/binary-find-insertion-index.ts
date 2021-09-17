@@ -28,12 +28,15 @@ export function binaryFindInsertionIndex<T>
         let prev = -Infinity;
         _Debug.assert(comparisonValueToSearchFor === comparisonValueToSearchFor, "NaN is not a permissible comparison value");
 
-        for (let i = startIndex; i < length; ++i)
+        if (!_Debug.isFlagSet("DEBUG_DISABLE_EXPENSIVE_CHECKS"))
         {
-            const current = getComparisonValueAtIndex(indexable, i);
-            _Debug.assert(current === current, "NaN is not a permissible comparison value");
-            _Debug.assert(current >= prev, "expected data to be sorted");
-            prev = current;
+            for (let i = startIndex; i < length; ++i)
+            {
+                const current = getComparisonValueAtIndex(indexable, i);
+                _Debug.assert(current === current, "NaN is not a permissible comparison value");
+                _Debug.assert(current >= prev, "expected data to be sorted");
+                prev = current;
+            }
         }
     });
 

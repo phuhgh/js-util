@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { pathJoin } from "./path-join";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> pathJoin", () =>
+debugDescribe("=> pathJoin", () =>
 {
     it("| joins as expected", () =>
     {

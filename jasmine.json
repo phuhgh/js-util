@@ -4,5 +4,7 @@
     "**/*[sS]pec.js"
   ],
   "helpers": [
+    "src/jasmine-env.js",
+    "src/debug/debug-namepace.js"
   ]
 }

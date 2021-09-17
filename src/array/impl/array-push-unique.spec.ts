@@ -1,19 +1,19 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayPushUnique } from "./array-push-unique";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayPushUnique", () =>
+debugDescribe("=> arrayPushUnique", () =>
 {
     it("| pushes if unique", () =>
     {
         const values = ["a", "b", "c"];
-        arrayPushUnique(values, "d", (value) => value);
+        expect(arrayPushUnique(values, "d", (value) => value)).toBeTrue();
         expect(values).toEqual(["a", "b", "c", "d"]);
     });
 
     it("| doesn't push if not unique", () =>
     {
         const values = ["a", "b", "c"];
-        arrayPushUnique(values, "c", (value) => value);
+        expect(arrayPushUnique(values, "c", (value) => value)).toBeFalse();
         expect(values).toEqual(["a", "b", "c"]);
     });
 

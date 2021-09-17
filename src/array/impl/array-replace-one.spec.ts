@@ -1,13 +1,13 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayReplaceOne } from "./array-replace-one";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayReplaceOne", () =>
+debugDescribe("=> arrayReplaceOne", () =>
 {
     const a = ["a", "b", "b", "c"];
 
     it("| replaces a single match from the first argument", () =>
     {
-        arrayReplaceOne(a, "b", "e");
+        expect(arrayReplaceOne(a, "b", "e")).toBeTrue();
         expect(a).toEqual(["a", "e", "b", "c"]);
     });
 });

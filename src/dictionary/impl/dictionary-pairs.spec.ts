@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { dictionaryPairs } from "./dictionary-pairs";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> dictionaryPairs", () =>
+debugDescribe("=> dictionaryPairs", () =>
 {
     const values = { a: 1, b: 2, c: 3 };
 

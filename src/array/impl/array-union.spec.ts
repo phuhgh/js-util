@@ -1,8 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayIntersect } from "./array-intersect";
 import { arrayUnion } from "./array-union";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayUnion", () =>
+debugDescribe("=> arrayUnion", () =>
 {
     const a = ["a", "b", "c"] as const;
     const b = ["a", "d", "e"] as const;

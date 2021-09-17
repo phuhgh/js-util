@@ -1,15 +1,8 @@
-import { _Debug } from "../../debug/_debug";
 import { dictionaryCloneExtend } from "./dictionary-clone-extend";
+import { debugDescribe } from "../../test-utils";
 
-/* tslint:disable:newline-per-chained-call */
-describe("=> dictionaryCloneExtend", () =>
+debugDescribe("=> dictionaryCloneExtend", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     it("| returns a new object, overwriting with the extension where common", () =>
     {
         const obj = { foo: true };

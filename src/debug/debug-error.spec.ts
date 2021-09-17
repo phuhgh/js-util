@@ -1,15 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
-
 import { _Debug } from "./_debug";
+import { debugDescribe } from "../test-utils";
 
-describe("=> _Debug.error", () =>
+debugDescribe("=> _Debug.error", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     describe("=> compilation checks", () =>
     {
         it("| has the right ergonomics", () =>

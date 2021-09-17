@@ -1,0 +1,12 @@
+﻿{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "types": []
+  },
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/test-utils.ts",
+    "src/jasmine-env.ts"
+  ]
+}

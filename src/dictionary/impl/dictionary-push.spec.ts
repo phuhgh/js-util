@@ -1,8 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
 import { dictionaryPush } from "./dictionary-push";
 import { IDictionary } from "../../typescript/i-dictionary";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> dictionaryPush", () =>
+debugDescribe("=> dictionaryPush", () =>
 {
     const values: IDictionary<number[]> = { a: [1] };
 

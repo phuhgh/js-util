@@ -1,16 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
-import { _Debug } from "../../debug/_debug";
+import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { mathMin } from "./math-min";
 
-describe("=> mathMin", () =>
+debugDescribe("=> mathMin", () =>
 {
-    beforeEach(() =>
-    {
-        _Debug.setFlag("DEBUG_MODE", true);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
-    });
-
     it("| returns the smaller value", () =>
     {
         expect(mathMin(1, 0)).toBe(0);

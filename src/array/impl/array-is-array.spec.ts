@@ -1,7 +1,7 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayIsArray } from "./array-is-array";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayIsArray", () =>
+debugDescribe("=> arrayIsArray", () =>
 {
     const normalArray = [1] as const;
     const typedArray = new Float32Array(0);

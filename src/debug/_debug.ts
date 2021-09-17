@@ -1,14 +1,21 @@
-import { debugFlags } from "./debug-flags";
-import { IDictionary } from "../typescript/i-dictionary";
-import "rc-js-util-globals/index";
+import { getGlobal } from "../runtime/get-global";
 
 /**
  * @public
  * Utilities for debug builds.
  */
-// tslint:disable-next-line:class-name
 export class _Debug
 {
+    public static get label(): string | undefined
+    {
+        return _Debug._label;
+    }
+
+    public static set label(label: string | undefined)
+    {
+        _Debug._label = label;
+    }
+
     /**
      * Most debuggers will ignore `debugger` statements in node_modules.
      * Skirt around this by letting the consumer set their own callback for this.
@@ -47,6 +54,37 @@ export class _Debug
     }
 
     /**
+     * Convenience method to run multiple asserts if flag set.
+     *
+     * @returns A boolean value to make linting happy...
+     *
+     * @remarks
+     * Must still be hidden behind DEBUG_MODE check for dead code removal.
+     *
+     * @example
+     * ```typescript
+     * DEBUG_MODE && _Debug.conditionalBlock("SOME_FLAG", () => {
+     *     _Debug.assert(someCondition, "someCondition was wrong");
+     *     // ...
+     * });
+     * ```
+     */
+    public static conditionalBlock<TKey extends keyof RcJsUtilDebugFlags>
+    (
+        flag: RcJsUtilDebugFlags[TKey],
+        cb: () => void,
+    )
+        : boolean
+    {
+        if (this.isFlagSet(flag))
+        {
+            cb();
+        }
+
+        return true;
+    }
+
+    /**
      * Throws an `Error` with the given message if the condition is false.
      *
      * @returns A boolean value to make linting happy...
@@ -69,7 +107,7 @@ export class _Debug
     {
         if (!condition)
         {
-            if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
+            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
             {
                 _Debug.breakpoint();
             }
@@ -95,11 +133,11 @@ export class _Debug
      * ```
      *
      * @remarks
-     * If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+     * If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT` is false or unset then a breakpoint will be hit first.
      */
     public static error(message: string): boolean
     {
-        if (!_Debug.isFlagSet(debugFlags.DEBUG_DISABLE_BREAKPOINT_FLAG))
+        if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
         {
             _Debug.breakpoint();
         }
@@ -115,6 +153,33 @@ export class _Debug
         _Debug.onBreakpoint();
 
         return true;
+    }
+
+    /**
+     * Logging which can be conditionally enabled by setting `DEBUG_VERBOSE` to true.
+     *
+     * @example
+     * ```typescript
+     * function foo(a1: number) {
+     *     DEBUG_MODE && _Debug.verboseLog(`got me a ${a1}`);
+     * }
+     * ```
+     */
+    public static verboseLog(message: string, ancillaryObject?: object): void
+    {
+        if (!_Debug.isFlagSet("DEBUG_VERBOSE"))
+        {
+            return;
+        }
+
+        if (ancillaryObject == null)
+        {
+            console.debug(message);
+        }
+        else
+        {
+            console.debug(message, ancillaryObject);
+        }
     }
 
     public static getStackTrace(): string
@@ -141,49 +206,32 @@ export class _Debug
     /**
      * Used to set debug flags in an environment independent way.
      */
-    public static setFlag<TKey extends keyof typeof debugFlags>
+    public static setFlag<TKey extends keyof RcJsUtilDebugFlags>
     (
-        flag: typeof debugFlags[TKey],
+        flag: RcJsUtilDebugFlags[TKey],
         value: boolean
     )
         : void
     {
-        _Debug.getGlobal()[flag] = value;
-    }
-
-    public static setCustomFlag(flag: string, value: boolean): void
-    {
-        _Debug.getGlobal()[flag] = value;
+        getGlobal()[flag] = value;
     }
 
     /**
      * Used to get debug flags in an environment independent way.
      */
-    public static isFlagSet<TKey extends keyof typeof debugFlags>(flag: typeof debugFlags[TKey]): boolean
+    public static isFlagSet<TKey extends keyof RcJsUtilDebugFlags>(flag: RcJsUtilDebugFlags[TKey]): boolean
     {
-        return Boolean(_Debug.getGlobal()[flag]);
+        return Boolean(getGlobal()[flag]);
     }
 
-    private static getGlobal(): IDictionary<unknown>
+    private static onBreakpoint = () =>
     {
-        if (typeof global !== "undefined")
-        {
-            return global;
-        }
-
-        if (typeof window !== "undefined")
-        {
-            return window;
-        }
-
-        throw new Error("unsupported environment");
-    }
-
-    private static onBreakpoint= () => {
         // eslint-disable-next-line no-debugger
         debugger;
     }
+
+    private static _label: string | undefined = undefined;
 }
 
-declare let global: IDictionary<unknown>;
-declare let window: IDictionary<unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const console: any;

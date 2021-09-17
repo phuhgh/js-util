@@ -1,8 +1,8 @@
-/* tslint:disable:newline-per-chained-call */
 import { arrayIndex } from "./array-index";
 import { _Production } from "../../production/_production";
+import { debugDescribe } from "../../test-utils";
 
-describe("=> arrayIndex", () =>
+debugDescribe("=> arrayIndex", () =>
 {
     const values = ["a", "b", "c"] as const;
 
