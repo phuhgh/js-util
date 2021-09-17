@@ -18,8 +18,8 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.13.46",
-    "@microsoft/api-extractor": "^7.18.7",
+    "@microsoft/api-documenter": "^7.13.49",
+    "@microsoft/api-extractor": "^7.18.9",
     "@types/jasmine": "^3.8.2",
     "jasmine": "^3.9.0",
     "jasmine-core": "^3.9.0",

@@ -259,9 +259,6 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    /**
-     * Ensure min is < max in both directions.
-     */
     public ensureAABB(): void
     {
         throw new Error();
