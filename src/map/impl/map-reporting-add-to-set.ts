@@ -5,14 +5,15 @@
  * @param key - The key to lookup in `map`.
  * @param value - The value to add.
  * @returns true - If the value was added.
+ *
  * @remarks
- * See {@link (mapAddToSet: 1)}.
+ * See {@link (mapReportingAddToSet: 1)}.
  */
 export function mapReportingAddToSet<TKey, TValue>(map: Map<TKey, Set<TValue>>, key: TKey, value: TValue): boolean;
 /**
  * @public
- * {@inheritDoc (mapAddToSet: 1)}
- * */
+ * {@inheritDoc (mapReportingAddToSet: 1)}
+ */
 export function mapReportingAddToSet<TKey extends object, TValue>(map: WeakMap<TKey, Set<TValue>>, key: TKey, value: TValue): boolean;
 export function mapReportingAddToSet<TKey extends object, TValue>
 (

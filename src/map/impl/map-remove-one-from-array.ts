@@ -7,6 +7,7 @@ import { arrayRemoveOne } from "../../array/impl/array-remove-one";
  * @param key - The key to lookup in `map`.
  * @param value - The value to remove.
  * @returns true - If value was removed.
+ *
  * @remarks
  * See {@link (mapRemoveOneFromArray: 1)}.
  */
@@ -14,7 +15,7 @@ export function mapRemoveOneFromArray<TKey, TValue>(map: Map<TKey, TValue[]>, ke
 /**
  * @public
  * {@inheritDoc (mapRemoveOneFromArray: 1)}
- * */
+ */
 export function mapRemoveOneFromArray<TKey extends object, TValue>(map: WeakMap<TKey, TValue[]>, key: TKey, value: TValue): boolean;
 export function mapRemoveOneFromArray<TKey extends object, TValue>
 (

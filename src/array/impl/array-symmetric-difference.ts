@@ -1,5 +1,8 @@
 /**
  * @public
+ *
+ * @remarks
+ * See {@link arraySymmetricDifference}.
  */
 export function arraySymmetricDifference<TItem>
 (

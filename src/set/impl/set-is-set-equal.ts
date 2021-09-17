@@ -1,5 +1,8 @@
 /**
  * @public
+ *
+ * @remarks
+ * See {@link setIsSetEqual}.
  */
 export function setIsSetEqual<TItem>
 (

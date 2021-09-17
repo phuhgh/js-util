@@ -2,6 +2,9 @@
  * @public
  *
  * @returns items in A not in B.
+ *
+ * @remarks
+ * See {@link arraySetDifference}.
  */
 export function arraySetDifference<TItem>
 (

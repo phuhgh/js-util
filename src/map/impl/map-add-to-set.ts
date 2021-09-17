@@ -4,6 +4,7 @@
  * @param map - The `Map` to check. May be modified.
  * @param key - The key to lookup in `map`.
  * @param value - The value to add.
+ *
  * @remarks
  * See {@link (mapAddToSet: 1)}.
  */
@@ -11,7 +12,7 @@ export function mapAddToSet<TKey, TValue>(map: Map<TKey, Set<TValue>>, key: TKey
 /**
  * @public
  * {@inheritDoc (mapAddToSet: 1)}
- * */
+ */
 export function mapAddToSet<TKey extends object, TValue>(map: WeakMap<TKey, Set<TValue>>, key: TKey, value: TValue): void;
 export function mapAddToSet<TKey extends object, TValue>
 (

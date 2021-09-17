@@ -5,6 +5,7 @@
  * @param key - The key to lookup in `map`.
  * @param value - The value to remove.
  * @returns true - If value was removed.
+ *
  * @remarks
  * See {@link (mapDeleteFromSet: 1)}.
  */
@@ -12,7 +13,7 @@ export function mapDeleteFromSet<TKey, TValue>(map: Map<TKey, Set<TValue>>, key:
 /**
  * @public
  * {@inheritDoc (mapDeleteFromSet: 1)}
- * */
+ */
 export function mapDeleteFromSet<TKey extends object, TValue>(map: WeakMap<TKey, Set<TValue>>, key: TKey, value: TValue): boolean;
 export function mapDeleteFromSet<TKey extends object, TValue>
 (
