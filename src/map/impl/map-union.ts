@@ -1,5 +1,8 @@
 /**
  * @public
+ *
+ * @remarks
+ * See {@link mapUnion}.
  */
 export function mapUnion<TKey, TIem>
 (

@@ -7,6 +7,7 @@ import { _Debug } from "../../debug/_debug";
  * @param to - The array to copy into and resize.
  * @param startIndex - The index to start with in the from array.
  * @param length - The index to end with in the from array.
+ *
  * @remarks
  * See {@link arrayCopyInto}.
  */

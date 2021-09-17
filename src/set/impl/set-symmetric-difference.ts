@@ -1,5 +1,8 @@
 /**
  * @public
+ *
+ * @remarks
+ * See {@link setSymmetricDifference}.
  */
 export function setSymmetricDifference<TItem>(a: Set<TItem>, b: Set<TItem>): TItem[]
 {

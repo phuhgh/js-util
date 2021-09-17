@@ -1,6 +1,7 @@
 /**
  * @public
  * Strips null and undefined items from arrays (non mutative).
+ *
  * @remarks
  * See {@link arrayCompact}.
  */

@@ -1,5 +1,8 @@
 /**
  * @public
+ *
+ * @remarks
+ * See {@link mapSymmetricDifference}.
  */
 export function mapSymmetricDifference<TKey, TIem>
 (

@@ -3,6 +3,9 @@ import { IDictionary } from "../../typescript/i-dictionary";
 /**
  * @public
  * Equivalent to Object.values.
+ *
+ * @remarks
+ * See {@link dictionaryValues}.
  */
 export function dictionaryValues<T>(d: IDictionary<T>): T[]
 {

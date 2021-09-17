@@ -7,6 +7,7 @@ import { arrayRemoveMany } from "../../array/impl/array-remove-many";
  * @param key - The key to lookup in `map`.
  * @param itemsToRemove - The values to remove.
  * @returns The number of items that were removed.
+ *
  * @remarks
  * See {@link (mapRemoveManyFromArray: 1)}.
  */
@@ -14,7 +15,7 @@ export function mapRemoveManyFromArray<TKey, TValue>(map: Map<TKey, TValue[]>, k
 /**
  * @public
  * {@inheritDoc (mapRemoveManyFromArray: 1)}
- * */
+ */
 export function mapRemoveManyFromArray<TKey extends object, TValue>(map: WeakMap<TKey, TValue[]>, key: TKey, itemsToRemove: TValue[]): number;
 export function mapRemoveManyFromArray<TKey extends object, TValue>
 (
