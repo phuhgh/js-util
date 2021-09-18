@@ -6,6 +6,7 @@ import { getVec2Ctor } from "./get-vec2-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
 import { Range2d } from "../2d/range2d/range2d";
+import { TPickExcept } from "../../../typescript/t-pick-except";
 
 /**
  * @public
@@ -25,6 +26,20 @@ export interface IVec2Ctor<TArray extends TTypedArray>
     readonly prototype: Vec2<TArray>;
     readonly factory: ITypedArrayTupleFactory<Vec2<TArray>, TVec2CtorArgs>;
     new(): Vec2<TArray>;
+}
+
+/**
+ * @public
+ * {@link Vec2}.
+ */
+export interface IReadonlyVec2<TArray extends TTypedArray>
+    extends TPickExcept<Readonly<Vec2<TArray>>,
+        | "update"
+        | "setX"
+        | "setY"
+        | "bound2d"
+        | "translate2d">
+{
 }
 
 /**

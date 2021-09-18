@@ -6,6 +6,7 @@ import { Vec2 } from "../../vec2/vec2";
 import { Mat3 } from "../../mat3/mat3";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
+import { TPickExcept } from "../../../../typescript/t-pick-except";
 
 /**
  * @public
@@ -25,6 +26,23 @@ export interface IRange2dCtor<TArray extends TTypedArray>
     readonly prototype: Range2d<TArray>;
     readonly factory: ITypedArrayTupleFactory<Range2d<TArray>, TRange2dCtorArgs>;
     new(): Range2d<TArray>;
+}
+
+/**
+ * @public
+ * {@link Range2d}.
+ */
+export interface IReadonlyRange2d<TArray extends TTypedArray>
+    extends TPickExcept<Readonly<Range2d<TArray>>,
+        | "setXMin"
+        | "setXMax"
+        | "setYMin"
+        | "setYMax"
+        | "update"
+        | "bound"
+        | "ensureAABB"
+        | "translateBy">
+{
 }
 
 /**

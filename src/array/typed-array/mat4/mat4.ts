@@ -5,6 +5,7 @@ import { getMat4Ctor } from "./get-mat4-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
 import { Vec4 } from "../vec4/vec4";
+import { TPickExcept } from "../../../typescript/t-pick-except";
 
 /**
  * @public
@@ -41,6 +42,17 @@ export interface IMat4Ctor<TArray extends TTypedArray>
     readonly prototype: Mat4<TArray>;
     readonly factory: ITypedArrayTupleFactory<Mat4<TArray>, TMat4CtorArgs>;
     new(): Mat4<TArray>;
+}
+
+/**
+ * @public
+ * {@link Mat4}.
+ */
+export interface IReadonlyMat4<TArray extends TTypedArray>
+    extends TPickExcept<Readonly<Mat4<TArray>>,
+        | "setValueAt"
+        | "setRow">
+{
 }
 
 /**

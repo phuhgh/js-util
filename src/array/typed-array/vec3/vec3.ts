@@ -4,6 +4,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec3Ctor } from "./get-vec3-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
+import { TPickExcept } from "../../../typescript/t-pick-except";
 
 /**
  * @public
@@ -23,6 +24,19 @@ export interface IVec3Ctor<TArray extends TTypedArray>
     readonly prototype: Vec3<TArray>;
     readonly factory: ITypedArrayTupleFactory<Vec3<TArray>, TVec3CtorArgs>;
     new(): Vec3<TArray>;
+}
+
+/**
+ * @public
+ * {@link Vec3}.
+ */
+export interface IReadonlyVec3<TArray extends TTypedArray>
+    extends TPickExcept<Readonly<Vec3<TArray>>,
+        | "update"
+        | "setX"
+        | "setY"
+        | "setZ">
+{
 }
 
 /**

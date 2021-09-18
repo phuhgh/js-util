@@ -6,6 +6,7 @@ import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 import { Mat2 } from "../../mat2/mat2";
 import { Mat3 } from "../../mat3/mat3";
+import { TPickExcept } from "../../../../typescript/t-pick-except";
 
 /**
  * @public
@@ -25,6 +26,20 @@ export interface IMargin2dCtor<TArray extends TTypedArray>
     readonly prototype: Margin2d<TArray>;
     readonly factory: ITypedArrayTupleFactory<Margin2d<TArray>, TMargin2dCtorArgs>;
     new(): Margin2d<TArray>;
+}
+
+/**
+ * @public
+ * {@link Margin2d}.
+ */
+export interface IReadonlyMargin2d<TArray extends TTypedArray>
+    extends TPickExcept<Readonly<Margin2d<TArray>>,
+        | "setLeft"
+        | "setRight"
+        | "setTop"
+        | "setBottom"
+        | "update">
+{
 }
 
 /**
