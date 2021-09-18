@@ -1,4 +1,4 @@
-import { IMat3Ctor, Mat3, TMat3CtorArgs } from "./mat3";
+import { IMat3Ctor, IReadonlyMat3, Mat3, TMat3CtorArgs } from "./mat3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat3Factory } from "./mat3-factory";
 import { _Debug } from "../../../debug/_debug";
@@ -6,7 +6,7 @@ import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat2 } from "../mat2/mat2";
-import { Vec3 } from "../vec3/vec3";
+import { IReadonlyVec3, Vec3 } from "../vec3/vec3";
 import { TTypedArray } from "../t-typed-array";
 
 /**
@@ -72,7 +72,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ct
         public override setRow
         (
             row: number,
-            writeFrom: Vec3<TTypedArray>,
+            writeFrom: IReadonlyVec3<TTypedArray>,
         )
             : void
         {
@@ -142,7 +142,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ct
 
         public override multiplyMat3<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat3<TTypedArray>>,
+            mat: IReadonlyMat3<TTypedArray>,
             result: Mat3<TResult> = this.constructor.factory.createOneEmpty() as Mat3<TResult>,
         )
             : Mat3<TResult>

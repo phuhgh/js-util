@@ -1,11 +1,11 @@
-import { Range2d } from "../range2d/range2d";
+import { IReadonlyRange2d, Range2d } from "../range2d/range2d";
 import { TTypedArray } from "../../t-typed-array";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getMargin2dCtor } from "./get-margin2d-ctor";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 import { Mat2 } from "../../mat2/mat2";
-import { Mat3 } from "../../mat3/mat3";
+import { IReadonlyMat3 } from "../../mat3/mat3";
 import { TPickExcept } from "../../../../typescript/t-pick-except";
 
 /**
@@ -144,7 +144,7 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
 
     public getInnerRange<TResult extends TTypedArray = TArray>
     (
-        _range: Readonly<Range2d<TTypedArray>>,
+        _range: IReadonlyRange2d<TTypedArray>,
         _result?: Range2d<TResult>,
     )
         : Range2d<TResult>
@@ -158,7 +158,7 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
      */
     public mat3TransformLength<TResult extends TTypedArray = TArray>
     (
-        _mat: Readonly<Mat3<TTypedArray>>,
+        _mat: IReadonlyMat3<TTypedArray>,
         _writeTo?: Margin2d<TResult>,
     )
         : Margin2d<TResult>

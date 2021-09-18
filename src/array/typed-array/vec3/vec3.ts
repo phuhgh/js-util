@@ -107,7 +107,7 @@ export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     public dotProduct
     (
-        _vec: Readonly<Vec3<TTypedArray>>,
+        _vec: IReadonlyVec3<TTypedArray>,
     )
         : number
     {

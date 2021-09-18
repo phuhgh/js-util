@@ -1,12 +1,12 @@
-import { IRange2dCtor, Range2d, TRange2dCtorArgs } from "./range2d";
+import { IRange2dCtor, IReadonlyRange2d, Range2d, TRange2dCtorArgs } from "./range2d";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
-import { Vec2 } from "../../vec2/vec2";
+import { IReadonlyVec2, Vec2 } from "../../vec2/vec2";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { _Debug } from "../../../../debug/_debug";
-import { Mat3 } from "../../mat3/mat3";
+import { IReadonlyMat3, Mat3 } from "../../mat3/mat3";
 import { TTypedArray } from "../../t-typed-array";
 
 /**
@@ -88,6 +88,22 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return this[3] - this[2];
         }
 
+        public getXMaxAbs(): number
+        {
+            const xMinAbs = Math.abs(this.getXMin());
+            const xMaxAbs = Math.abs(this.getXMax());
+
+            return xMinAbs > xMaxAbs ? xMinAbs : xMaxAbs;
+        }
+
+        public getYMaxAbs(): number
+        {
+            const yMinAbs = Math.abs(this.getYMin());
+            const yMaxAbs = Math.abs(this.getYMax());
+
+            return yMinAbs > yMaxAbs ? yMinAbs : yMaxAbs;
+        }
+
         public getCenter<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             result: Vec2<TResult> = this.constructor.vec2Ctor.factory.createOneEmpty() as Vec2<TResult>,
@@ -112,7 +128,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public mat3Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat3<TTypedArray>>,
+            mat: IReadonlyMat3<TTypedArray>,
             writeTo: Range2d<TResult> = this.constructor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
@@ -127,7 +143,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public unionRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            range: Readonly<Range2d<TTypedArray>>,
+            range: IReadonlyRange2d<TTypedArray>,
             writeTo: Range2d<TResult> = this.constructor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
@@ -158,7 +174,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public getRangeTransform<TArray extends TTypedArray = InstanceType<TCtor>>
         (
-            toRange: Readonly<Range2d<TTypedArray>>,
+            toRange: IReadonlyRange2d<TTypedArray>,
             result: Mat3<TArray> = this.constructor.mat3Ctor.factory.createOneEmpty() as Mat3<TArray>,
         )
             : Mat3<TArray>
@@ -185,7 +201,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return result;
         }
 
-        public isPointInRange(point: Vec2<TTypedArray>): boolean
+        public isPointInRange(point: IReadonlyVec2<TTypedArray>): boolean
         {
             const x = point.getX();
             const y = point.getY();
@@ -193,13 +209,13 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return x >= this.getXMin() && x <= this.getXMax() && y >= this.getYMin() && y <= this.getYMax();
         }
 
-        public doesRangeIntersect(range: Range2d<TTypedArray>): boolean
+        public doesRangeIntersect(range: IReadonlyRange2d<TTypedArray>): boolean
         {
             return (Math.abs((this[0] + this[1]) - (range[0] + range[1])) < (this.getXRange() + range.getXRange()))
                    && (Math.abs(((this[2] + this[3])) - (range[2] + range[3])) < (this.getYRange() + range.getYRange()));
         }
 
-        public containsRange(range: Range2d<TTypedArray>): boolean
+        public containsRange(range: IReadonlyRange2d<TTypedArray>): boolean
         {
             return this.getXMin() <= range.getXMin()
                    && this.getXMax() >= range.getXMax()
@@ -210,7 +226,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         public scaleRelativeTo<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             scalingFactor: number,
-            relativeTo: Vec2<TTypedArray>,
+            relativeTo: IReadonlyVec2<TTypedArray>,
             result: Range2d<TResult> = this.constructor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
@@ -243,7 +259,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             return result;
         }
 
-        public bound(boundTo: Range2d<TTypedArray>): void
+        public bound(boundTo: IReadonlyRange2d<TTypedArray>): void
         {
             if (this.getXRange() > boundTo.getXRange())
             {
@@ -296,6 +312,32 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
                 const tmp = this[2];
                 this[2] = this[3];
                 this[3] = tmp;
+            }
+        }
+
+        public ensureMinRange
+        (
+            xMinRange: number,
+            yMinRange: number,
+        )
+            : void
+        {
+            const xRange = this.getXRange();
+
+            if (xRange < xMinRange)
+            {
+                const diff = (xMinRange - xRange) * 0.5;
+                this.setXMin(this.getXMin() - diff);
+                this.setXMax(this.getXMax() + diff);
+            }
+
+            const yRange = this.getYRange();
+
+            if (yRange < yMinRange)
+            {
+                const diff = (yMinRange - yRange) * 0.5;
+                this.setYMin(this.getYMin() - diff);
+                this.setYMax(this.getYMax() + diff);
             }
         }
 

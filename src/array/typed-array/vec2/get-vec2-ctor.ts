@@ -1,11 +1,11 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IVec2Ctor, TVec2CtorArgs, Vec2 } from "./vec2";
+import { IReadonlyVec2, IVec2Ctor, TVec2CtorArgs, Vec2 } from "./vec2";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec2Factory } from "./vec2-factory";
-import { Mat3 } from "../mat3/mat3";
+import { IReadonlyMat3 } from "../mat3/mat3";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
-import { Range2d } from "../2d/range2d/range2d";
+import { IReadonlyRange2d } from "../2d/range2d/range2d";
 import { TTypedArray } from "../t-typed-array";
 
 /**
@@ -71,7 +71,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
 
         public override add<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            vec: Readonly<Vec2<TTypedArray>>,
+            vec: IReadonlyVec2<TTypedArray>,
             result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
@@ -84,7 +84,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
 
         public override subtract<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            vec: Readonly<Vec2<TTypedArray>>,
+            vec: IReadonlyVec2<TTypedArray>,
             result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
@@ -147,7 +147,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
 
         public override dotProduct
         (
-            vec: Readonly<Vec2<TTypedArray>>,
+            vec: IReadonlyVec2<TTypedArray>,
         )
             : number
         {
@@ -156,7 +156,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
 
         public override mat3Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat3<TTypedArray>>,
+            mat: IReadonlyMat3<TTypedArray>,
             result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
         )
             : Vec2<TResult>
@@ -167,7 +167,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return result;
         }
 
-        public override bound2d(range: Range2d<TTypedArray>): void
+        public override bound2d(range: IReadonlyRange2d<TTypedArray>): void
         {
             if (this[0] < range.getXMin())
             {

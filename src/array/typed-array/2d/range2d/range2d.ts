@@ -2,8 +2,8 @@ import { Mat2 } from "../../mat2/mat2";
 import { TTypedArray } from "../../t-typed-array";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { getRange2dCtor } from "./get-range2d-ctor";
-import { Vec2 } from "../../vec2/vec2";
-import { Mat3 } from "../../mat3/mat3";
+import { IReadonlyVec2, Vec2 } from "../../vec2/vec2";
+import { IReadonlyMat3, Mat3 } from "../../mat3/mat3";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 import { TPickExcept } from "../../../../typescript/t-pick-except";
@@ -41,6 +41,7 @@ export interface IReadonlyRange2d<TArray extends TTypedArray>
         | "update"
         | "bound"
         | "ensureAABB"
+        | "ensureMinRange"
         | "translateBy">
 {
 }
@@ -154,6 +155,16 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
+    public getXMaxAbs(): number
+    {
+        throw new Error();
+    }
+
+    public getYMaxAbs(): number
+    {
+        throw new Error();
+    }
+
     public getCenter<TResult extends TTypedArray = TArray>
     (
         _result?: Vec2<TResult>
@@ -175,7 +186,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
 
     public mat3Multiply<TResult extends TTypedArray = TArray>
     (
-        _mat: Readonly<Mat3<TTypedArray>>,
+        _mat: IReadonlyMat3<TTypedArray>,
         _writeTo?: Range2d<TResult>,
     )
         : Range2d<TResult>
@@ -185,7 +196,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
 
     public unionRange<TResult extends TTypedArray = TArray>
     (
-        _range: Readonly<Range2d<TTypedArray>>,
+        _range: IReadonlyRange2d<TTypedArray>,
         _writeTo?: Range2d<TResult>,
     )
         : Range2d<TResult>
@@ -209,25 +220,25 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
      */
     public getRangeTransform<TResult extends TTypedArray = TArray>
     (
-        _toRange: Readonly<Range2d<TTypedArray>>,
-        _result?: Mat3<TResult>,
+        _toRange: IReadonlyRange2d<TTypedArray>,
+        _result?: IReadonlyMat3<TResult>,
     )
         : Mat3<TResult>
     {
         throw new Error();
     }
 
-    public isPointInRange(_point: Vec2<TTypedArray>): boolean
+    public isPointInRange(_point: IReadonlyVec2<TTypedArray>): boolean
     {
         throw new Error();
     }
 
-    public doesRangeIntersect(_range: Range2d<TArray>): boolean
+    public doesRangeIntersect(_range: IReadonlyRange2d<TArray>): boolean
     {
         throw new Error();
     }
 
-    public containsRange(_range: Range2d<TArray>): boolean
+    public containsRange(_range: IReadonlyRange2d<TArray>): boolean
     {
         throw new Error();
     }
@@ -256,7 +267,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
     public scaleRelativeTo<TResult extends TTypedArray = TArray>
     (
         _scalingFactor: number,
-        _relativeTo: Vec2<TTypedArray>,
+        _relativeTo: IReadonlyVec2<TTypedArray>,
         _result?: Range2d<TResult>,
     )
         : Range2d<TResult>
@@ -272,12 +283,29 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
      * Where this range is smaller than the bounding range but not contained, it will be moved maintaining its size. It
      * Will be moved such that the the side furthest from the bounding range will be at the edge of the boundary.
      */
-    public bound(_boundTo: Range2d<TTypedArray>): void
+    public bound(_boundTo: IReadonlyRange2d<TTypedArray>): void
     {
         throw new Error();
     }
 
     public ensureAABB(): void
+    {
+        throw new Error();
+    }
+
+    /**
+     * Bound this range to be at least as large as the argument.
+     *
+     * @remarks
+     * Where this range is smaller than the bounding range, it will be resized to be the minimum. This is done by adding
+     * equally to both the min and max.
+     */
+    public ensureMinRange
+    (
+        _xMinRange: number,
+        _yMinRange: number,
+    )
+        : void
     {
         throw new Error();
     }

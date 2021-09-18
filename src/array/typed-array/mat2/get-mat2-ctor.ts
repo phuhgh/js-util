@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IMat2Ctor, Mat2, TMat2CtorArgs } from "./mat2";
+import { IMat2Ctor, IReadonlyMat2, Mat2, TMat2CtorArgs } from "./mat2";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat2Factory } from "./mat2-factory";
 import { _Debug } from "../../../debug/_debug";
@@ -86,7 +86,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
 
         public override multiplyMat2<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat2<TTypedArray>>,
+            mat: IReadonlyMat2<TTypedArray>,
             result: Mat2<TResult> = this.constructor.factory.createOneEmpty() as Mat2<TResult>,
         )
             : Mat2<TResult>

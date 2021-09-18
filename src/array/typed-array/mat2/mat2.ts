@@ -4,7 +4,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat2Ctor } from "./get-mat2-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
-import { Vec2 } from "../vec2/vec2";
+import { IReadonlyVec2, Vec2 } from "../vec2/vec2";
 import { TPickExcept } from "../../../typescript/t-pick-except";
 
 /**
@@ -116,7 +116,7 @@ export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     public multiplyMat2<TResult extends TTypedArray = TArray>
     (
-        _mat: Readonly<Mat2<TTypedArray>>,
+        _mat: IReadonlyMat2<TTypedArray>,
         _result?: Mat2<TResult>,
     )
         : Mat2<TResult>
@@ -139,7 +139,7 @@ export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public setRow(_row: number, _writeFrom: Vec2<TTypedArray>): void
+    public setRow(_row: number, _writeFrom: IReadonlyVec2<TTypedArray>): void
     {
         throw new Error();
     }

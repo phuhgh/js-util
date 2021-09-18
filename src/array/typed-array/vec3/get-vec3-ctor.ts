@@ -1,5 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IVec3Ctor, TVec3CtorArgs, Vec3 } from "./vec3";
+import { IReadonlyVec3, IVec3Ctor, TVec3CtorArgs, Vec3 } from "./vec3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Vec3Factory } from "./vec3-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
@@ -60,7 +60,7 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
 
         public override dotProduct
         (
-            vec: Readonly<Vec3<TTypedArray>>,
+            vec: IReadonlyVec3<TTypedArray>,
         )
             : number
         {

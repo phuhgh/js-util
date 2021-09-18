@@ -295,4 +295,43 @@ debugDescribe("=> F32Range2d", () =>
             expect(range).toEqual(Range2d.f32.factory.createOne(0, 1, 0, 1));
         });
     });
+
+    describe("=> ensureMinRange", () =>
+    {
+        it("| doesn't touch ranges larger than the min", () =>
+        {
+            const range = Range2d.f32.factory.createOne(-2, 2, -4, 4);
+            range.ensureMinRange(3, 7);
+            expect(range).toEqual(Range2d.f32.factory.createOne(-2, 2, -4, 4));
+        });
+
+        it("| expands ranges that are smaller than the min", () =>
+        {
+            const range = Range2d.f32.factory.createOne(-2, 2, -4, 4);
+            range.ensureMinRange(6, 10);
+            expect(range).toEqual(Range2d.f32.factory.createOne(-3, 3, -5, 5));
+        });
+    });
+
+    describe("=> getXMaxAbs", () =>
+    {
+        it("| returns the max", () =>
+        {
+            const range1 = Range2d.f32.factory.createOne(-2, 1, 0, 0);
+            expect(range1.getXMaxAbs()).toEqual(2);
+            const range2 = Range2d.f32.factory.createOne(-1, 2, 0, 0);
+            expect(range2.getXMaxAbs()).toEqual(2);
+        });
+    });
+
+    describe("=> getYMaxAbs", () =>
+    {
+        it("| returns the max", () =>
+        {
+            const range1 = Range2d.f32.factory.createOne(0, 0, -2, 1);
+            expect(range1.getYMaxAbs()).toEqual(2);
+            const range2 = Range2d.f32.factory.createOne(0, 0, 1, 2);
+            expect(range2.getYMaxAbs()).toEqual(2);
+        });
+    });
 });

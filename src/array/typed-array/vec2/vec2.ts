@@ -1,11 +1,11 @@
 import { ATypedArrayTuple } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
-import { Mat3 } from "../mat3/mat3";
+import { IReadonlyMat3 } from "../mat3/mat3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec2Ctor } from "./get-vec2-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
-import { Range2d } from "../2d/range2d/range2d";
+import { IReadonlyRange2d } from "../2d/range2d/range2d";
 import { TPickExcept } from "../../../typescript/t-pick-except";
 
 /**
@@ -116,7 +116,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     public add<TResult extends TTypedArray = TArray>
     (
-        _vec: Readonly<Vec2<TTypedArray>>,
+        _vec: IReadonlyVec2<TTypedArray>,
         _result?: Vec2<TResult>,
     )
         : Vec2<TResult>
@@ -126,7 +126,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     public subtract<TResult extends TTypedArray = TArray>
     (
-        _vec: Readonly<Vec2<TTypedArray>>,
+        _vec: IReadonlyVec2<TTypedArray>,
         _result?: Vec2<TResult>,
     )
         : Vec2<TResult>
@@ -181,7 +181,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     public dotProduct
     (
-        _vec: Readonly<Vec2<TTypedArray>>,
+        _vec: IReadonlyVec2<TTypedArray>,
     )
         : number
     {
@@ -190,7 +190,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     public mat3Multiply<TResult extends TTypedArray = TArray>
     (
-        _mat: Readonly<Mat3<TTypedArray>>,
+        _mat: IReadonlyMat3<TTypedArray>,
         _result?: Vec2<TResult>,
     )
         : Vec2<TResult>
@@ -202,7 +202,7 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
      * If this point is outside of the range, set that dimension to the extrema of the range.
      * @param _range - The range to be bound to, inclusive.
      */
-    public bound2d(_range: Range2d<TTypedArray>): void
+    public bound2d(_range: IReadonlyRange2d<TTypedArray>): void
     {
         throw new Error();
     }

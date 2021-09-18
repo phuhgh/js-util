@@ -5,7 +5,7 @@ import { Mat4Factory } from "./mat4-factory";
 import { _Debug } from "../../../debug/_debug";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { Vec4 } from "../vec4/vec4";
+import { IReadonlyVec4, Vec4 } from "../vec4/vec4";
 import { TTypedArray } from "../t-typed-array";
 
 /**
@@ -74,7 +74,7 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat4Ct
         public override setRow
         (
             row: number,
-            writeFrom: Vec4<TTypedArray>,
+            writeFrom: IReadonlyVec4<TTypedArray>,
         )
             : void
         {

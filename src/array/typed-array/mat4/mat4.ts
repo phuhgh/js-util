@@ -4,7 +4,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat4Ctor } from "./get-mat4-ctor";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
-import { Vec4 } from "../vec4/vec4";
+import { IReadonlyVec4, Vec4 } from "../vec4/vec4";
 import { TPickExcept } from "../../../typescript/t-pick-except";
 
 /**
@@ -173,7 +173,7 @@ export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
-    public setRow(_row: number, _writeFrom: Vec4<TTypedArray>): void
+    public setRow(_row: number, _writeFrom: IReadonlyVec4<TTypedArray>): void
     {
         throw new Error();
     }

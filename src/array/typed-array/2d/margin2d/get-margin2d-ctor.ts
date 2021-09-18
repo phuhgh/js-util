@@ -1,11 +1,11 @@
 import { IMargin2dCtor, Margin2d, TMargin2dCtorArgs } from "./margin2d";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
-import { Range2d } from "../range2d/range2d";
+import { IReadonlyRange2d, Range2d } from "../range2d/range2d";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
-import { Mat3 } from "../../mat3/mat3";
+import { IReadonlyMat3 } from "../../mat3/mat3";
 import { TTypedArray } from "../../t-typed-array";
 
 /**
@@ -76,7 +76,7 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
 
         public getInnerRange<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            range: Readonly<Range2d<TTypedArray>>,
+            range: IReadonlyRange2d<TTypedArray>,
             result: Range2d<TResult> = this.constructor.rangeCtor.factory.createOneEmpty() as Range2d<TResult>,
         )
             : Range2d<TResult>
@@ -91,7 +91,7 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
 
         public mat3TransformLength<TResult extends TTypedArray = InstanceType<TCtor>>
         (
-            mat: Readonly<Mat3<TTypedArray>>,
+            mat: IReadonlyMat3<TTypedArray>,
             writeTo: Margin2d<TResult> = this.constructor.factory.createOneEmpty() as Margin2d<TResult>,
         )
             : Margin2d<TResult>
