@@ -9,15 +9,15 @@ Creates a transform matrix that maps values in this range onto `_toRange`<!-- --
 <b>Signature:</b>
 
 ```typescript
-getRangeTransform<TResult extends TTypedArray = TArray>(_toRange: Readonly<Range2d<TTypedArray>>, _result?: Mat3<TResult>): Mat3<TResult>;
+getRangeTransform<TResult extends TTypedArray = TArray>(_toRange: IReadonlyRange2d<TTypedArray>, _result?: IReadonlyMat3<TResult>): Mat3<TResult>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_toRange | Readonly&lt;[Range2d](./rc-js-util.range2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt;&gt; |  |
-|  \_result | [Mat3](./rc-js-util.mat3.md)<!-- -->&lt;TResult&gt; |  |
+|  \_toRange | [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
+|  \_result | [IReadonlyMat3](./rc-js-util.ireadonlymat3.md)<!-- -->&lt;TResult&gt; |  |
 
 <b>Returns:</b>
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-dotProduct(_vec: Readonly<Vec2<TTypedArray>>): number;
+dotProduct(_vec: IReadonlyVec2<TTypedArray>): number;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_vec | Readonly&lt;[Vec2](./rc-js-util.vec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt;&gt; |  |
+|  \_vec | [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

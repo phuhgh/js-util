@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-add<TResult extends TTypedArray = TArray>(_vec: Readonly<Vec2<TTypedArray>>, _result?: Vec2<TResult>): Vec2<TResult>;
+add<TResult extends TTypedArray = TArray>(_vec: IReadonlyVec2<TTypedArray>, _result?: Vec2<TResult>): Vec2<TResult>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_vec | Readonly&lt;[Vec2](./rc-js-util.vec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt;&gt; |  |
+|  \_vec | [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 |  \_result | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TResult&gt; |  |
 
 <b>Returns:</b>

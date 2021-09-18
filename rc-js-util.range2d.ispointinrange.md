@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-isPointInRange(_point: Vec2<TTypedArray>): boolean;
+isPointInRange(_point: IReadonlyVec2<TTypedArray>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_point | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
+|  \_point | [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

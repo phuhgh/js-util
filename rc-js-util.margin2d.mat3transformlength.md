@@ -9,14 +9,14 @@ Applies `Mat3.getTransformedXLength` `Mat3.getTransformedYLength` with a minimum
 <b>Signature:</b>
 
 ```typescript
-mat3TransformLength<TResult extends TTypedArray = TArray>(_mat: Readonly<Mat3<TTypedArray>>, _writeTo?: Margin2d<TResult>): Margin2d<TResult>;
+mat3TransformLength<TResult extends TTypedArray = TArray>(_mat: IReadonlyMat3<TTypedArray>, _writeTo?: Margin2d<TResult>): Margin2d<TResult>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_mat | Readonly&lt;[Mat3](./rc-js-util.mat3.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt;&gt; |  |
+|  \_mat | [IReadonlyMat3](./rc-js-util.ireadonlymat3.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 |  \_writeTo | [Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TResult&gt; |  |
 
 <b>Returns:</b>

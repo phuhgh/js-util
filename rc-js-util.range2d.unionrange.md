@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-unionRange<TResult extends TTypedArray = TArray>(_range: Readonly<Range2d<TTypedArray>>, _writeTo?: Range2d<TResult>): Range2d<TResult>;
+unionRange<TResult extends TTypedArray = TArray>(_range: IReadonlyRange2d<TTypedArray>, _writeTo?: Range2d<TResult>): Range2d<TResult>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_range | Readonly&lt;[Range2d](./rc-js-util.range2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt;&gt; |  |
+|  \_range | [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 |  \_writeTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; |  |
 
 <b>Returns:</b>

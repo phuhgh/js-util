@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-setRow(_row: number, _writeFrom: Vec4<TTypedArray>): void;
+setRow(_row: number, _writeFrom: IReadonlyVec4<TTypedArray>): void;
 ```
 
 ## Parameters
@@ -15,7 +15,7 @@ setRow(_row: number, _writeFrom: Vec4<TTypedArray>): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_row | number |  |
-|  \_writeFrom | [Vec4](./rc-js-util.vec4.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
+|  \_writeFrom | [IReadonlyVec4](./rc-js-util.ireadonlyvec4.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

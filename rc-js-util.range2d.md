@@ -46,6 +46,7 @@ See static properties for constructors. Instances are not an extension of this c
 |  [containsRange(\_range)](./rc-js-util.range2d.containsrange.md) |  |  |
 |  [doesRangeIntersect(\_range)](./rc-js-util.range2d.doesrangeintersect.md) |  |  |
 |  [ensureAABB()](./rc-js-util.range2d.ensureaabb.md) |  |  |
+|  [ensureMinRange(\_xMinRange, \_yMinRange)](./rc-js-util.range2d.ensureminrange.md) |  | Bound this range to be at least as large as the argument. |
 |  [extendRange(\_x, \_y, \_writeTo)](./rc-js-util.range2d.extendrange.md) |  |  |
 |  [getCenter(\_result)](./rc-js-util.range2d.getcenter.md) |  |  |
 |  [getCtor(ctor)](./rc-js-util.range2d.getctor.md) | <code>static</code> |  |
@@ -53,10 +54,12 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getRangeTransform(\_toRange, \_result)](./rc-js-util.range2d.getrangetransform.md) |  | Creates a transform matrix that maps values in this range onto <code>_toRange</code>. |
 |  [getXCenter()](./rc-js-util.range2d.getxcenter.md) |  |  |
 |  [getXMax()](./rc-js-util.range2d.getxmax.md) |  |  |
+|  [getXMaxAbs()](./rc-js-util.range2d.getxmaxabs.md) |  |  |
 |  [getXMin()](./rc-js-util.range2d.getxmin.md) |  |  |
 |  [getXRange()](./rc-js-util.range2d.getxrange.md) |  |  |
 |  [getYCenter()](./rc-js-util.range2d.getycenter.md) |  |  |
 |  [getYMax()](./rc-js-util.range2d.getymax.md) |  |  |
+|  [getYMaxAbs()](./rc-js-util.range2d.getymaxabs.md) |  |  |
 |  [getYMin()](./rc-js-util.range2d.getymin.md) |  |  |
 |  [getYRange()](./rc-js-util.range2d.getyrange.md) |  |  |
 |  [isPointInRange(\_point)](./rc-js-util.range2d.ispointinrange.md) |  |  |

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-containsRange(_range: Range2d<TArray>): boolean;
+containsRange(_range: IReadonlyRange2d<TArray>): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_range | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TArray&gt; |  |
+|  \_range | [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md)<!-- -->&lt;TArray&gt; |  |
 
 <b>Returns:</b>
 

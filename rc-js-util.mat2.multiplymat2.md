@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-multiplyMat2<TResult extends TTypedArray = TArray>(_mat: Readonly<Mat2<TTypedArray>>, _result?: Mat2<TResult>): Mat2<TResult>;
+multiplyMat2<TResult extends TTypedArray = TArray>(_mat: IReadonlyMat2<TTypedArray>, _result?: Mat2<TResult>): Mat2<TResult>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_mat | Readonly&lt;[Mat2](./rc-js-util.mat2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt;&gt; |  |
+|  \_mat | [IReadonlyMat2](./rc-js-util.ireadonlymat2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 |  \_result | [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TResult&gt; |  |
 
 <b>Returns:</b>

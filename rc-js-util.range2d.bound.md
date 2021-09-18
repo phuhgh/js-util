@@ -9,14 +9,14 @@ Bound this range to the argument.
 <b>Signature:</b>
 
 ```typescript
-bound(_boundTo: Range2d<TTypedArray>): void;
+bound(_boundTo: IReadonlyRange2d<TTypedArray>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_boundTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
+|  \_boundTo | [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 
 <b>Returns:</b>
 

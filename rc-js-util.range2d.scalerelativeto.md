@@ -9,7 +9,7 @@ Scales the range relative to a point (may not be outside of the range).
 <b>Signature:</b>
 
 ```typescript
-scaleRelativeTo<TResult extends TTypedArray = TArray>(_scalingFactor: number, _relativeTo: Vec2<TTypedArray>, _result?: Range2d<TResult>): Range2d<TResult>;
+scaleRelativeTo<TResult extends TTypedArray = TArray>(_scalingFactor: number, _relativeTo: IReadonlyVec2<TTypedArray>, _result?: Range2d<TResult>): Range2d<TResult>;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ scaleRelativeTo<TResult extends TTypedArray = TArray>(_scalingFactor: number, _r
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_scalingFactor | number |  |
-|  \_relativeTo | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
+|  \_relativeTo | [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
 |  \_result | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; |  |
 
 <b>Returns:</b>

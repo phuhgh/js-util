@@ -9,14 +9,14 @@ If this point is outside of the range, set that dimension to the extrema of the 
 <b>Signature:</b>
 
 ```typescript
-bound2d(_range: Range2d<TTypedArray>): void;
+bound2d(_range: IReadonlyRange2d<TTypedArray>): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_range | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; | The range to be bound to, inclusive. |
+|  \_range | [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; | The range to be bound to, inclusive. |
 
 <b>Returns:</b>
 
