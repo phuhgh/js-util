@@ -174,6 +174,15 @@
 |  [IRange1dCtor](./rc-js-util.irange1dctor.md) | Constructor for [Range1d](./rc-js-util.range1d.md)<!-- -->. |
 |  [IRange2dCtor](./rc-js-util.irange2dctor.md) | Constructor for [Range2d](./rc-js-util.range2d.md)<!-- -->. |
 |  [IRawVoidPointer](./rc-js-util.irawvoidpointer.md) | Provides a reference counted wrapper to a pointer <code>malloc</code>'d from JS and is <code>free</code>'d on reference count hitting 0. |
+|  [IReadonlyMargin2d](./rc-js-util.ireadonlymargin2d.md) | [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
+|  [IReadonlyMat2](./rc-js-util.ireadonlymat2.md) | [Mat2](./rc-js-util.mat2.md)<!-- -->. |
+|  [IReadonlyMat3](./rc-js-util.ireadonlymat3.md) | [Mat3](./rc-js-util.mat3.md)<!-- -->. |
+|  [IReadonlyMat4](./rc-js-util.ireadonlymat4.md) | [Mat4](./rc-js-util.mat4.md)<!-- -->. |
+|  [IReadonlyRange1d](./rc-js-util.ireadonlyrange1d.md) | [Range1d](./rc-js-util.range1d.md)<!-- -->. |
+|  [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md) | [Range2d](./rc-js-util.range2d.md)<!-- -->. |
+|  [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md) | [Vec2](./rc-js-util.vec2.md)<!-- -->. |
+|  [IReadonlyVec3](./rc-js-util.ireadonlyvec3.md) | [Vec3](./rc-js-util.vec3.md)<!-- -->. |
+|  [IReadonlyVec4](./rc-js-util.ireadonlyvec4.md) | [Vec4](./rc-js-util.vec4.md)<!-- -->. |
 |  [IReferenceCounted](./rc-js-util.ireferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. |
 |  [IReferenceCountedPtr](./rc-js-util.ireferencecountedptr.md) | Wrapper of wasm object. NB The object is pre-claimed (ref count 1) on creation. On free the pointer will be set to null. |
 |  [ISharedArray](./rc-js-util.isharedarray.md) | Typed array representing a contiguous block of memory in wasm. |
