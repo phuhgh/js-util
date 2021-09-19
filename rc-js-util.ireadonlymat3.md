@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IReadonlyMat3<TArray extends TTypedArray> extends TPickExcept<Readonly<Mat3<TArray>>, "setValueAt" | "setRow"> 
+export interface IReadonlyMat3<TArray extends TTypedArray> extends TPickExcept<Readonly<Mat3<TArray>>, "setValueAt" | "setRow" | "copyFromBuffer"> 
 ```
-<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Mat3](./rc-js-util.mat3.md)<!-- -->&lt;TArray&gt;&gt;, "setValueAt" \| "setRow"&gt;
+<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Mat3](./rc-js-util.mat3.md)<!-- -->&lt;TArray&gt;&gt;, "setValueAt" \| "setRow" \| "copyFromBuffer"&gt;
 

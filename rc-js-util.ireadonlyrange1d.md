@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IReadonlyRange1d<TArray extends TTypedArray> extends TPickExcept<Readonly<Range1d<TArray>>, "setMin" | "setMax" | "bound1d" | "translate1d"> 
+export interface IReadonlyRange1d<TArray extends TTypedArray> extends TPickExcept<Readonly<Range1d<TArray>>, "setMin" | "setMax" | "bound1d" | "translate1d" | "copyFromBuffer"> 
 ```
-<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TArray&gt;&gt;, "setMin" \| "setMax" \| "bound1d" \| "translate1d"&gt;
+<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TArray&gt;&gt;, "setMin" \| "setMax" \| "bound1d" \| "translate1d" \| "copyFromBuffer"&gt;
 

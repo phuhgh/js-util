@@ -41,6 +41,9 @@ See static properties for constructors. Instances are not an extension of this c
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [castToBaseType()](./rc-js-util.vec3.casttobasetype.md) |  | Although the typed array tuples extend a typed array, they are not structurally compatible. This function returns the argument passed without modification but cast as the underlying storage type, e.g. Float32Array. |
+|  [copyFromBuffer(\_memoryDataView, \_pointer, \_littleEndian)](./rc-js-util.vec3.copyfrombuffer.md) |  | If endianness is not supplied the platform's endianness will be used. |
+|  [copyToBuffer(\_memoryDataView, \_pointer, \_littleEndian)](./rc-js-util.vec3.copytobuffer.md) |  | If endianness is not supplied the platform's endianness will be used. |
 |  [dotProduct(\_vec)](./rc-js-util.vec3.dotproduct.md) |  |  |
 |  [getCtor(ctor)](./rc-js-util.vec3.getctor.md) | <code>static</code> |  |
 |  [getLoggableValue()](./rc-js-util.vec3.getloggablevalue.md) |  |  |

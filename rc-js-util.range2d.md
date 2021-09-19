@@ -43,7 +43,10 @@ See static properties for constructors. Instances are not an extension of this c
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [bound(\_boundTo)](./rc-js-util.range2d.bound.md) |  | Bound this range to the argument. |
+|  [castToBaseType()](./rc-js-util.range2d.casttobasetype.md) |  | Although the typed array tuples extend a typed array, they are not structurally compatible. This function returns the argument passed without modification but cast as the underlying storage type, e.g. Float32Array. |
 |  [containsRange(\_range)](./rc-js-util.range2d.containsrange.md) |  |  |
+|  [copyFromBuffer(\_memoryDataView, \_pointer, \_littleEndian)](./rc-js-util.range2d.copyfrombuffer.md) |  | If endianness is not supplied the platform's endianness will be used. |
+|  [copyToBuffer(\_memoryDataView, \_pointer, \_littleEndian)](./rc-js-util.range2d.copytobuffer.md) |  | If endianness is not supplied the platform's endianness will be used. |
 |  [doesRangeIntersect(\_range)](./rc-js-util.range2d.doesrangeintersect.md) |  |  |
 |  [ensureAABB()](./rc-js-util.range2d.ensureaabb.md) |  |  |
 |  [ensureMinRange(\_xMinRange, \_yMinRange)](./rc-js-util.range2d.ensureminrange.md) |  | Bound this range to be at least as large as the argument. |

@@ -9,7 +9,7 @@ Useful for homogenous tuples of arbitrary length.
 <b>Signature:</b>
 
 ```typescript
-export declare type TTupleLikeOfLength<TItem, TLength extends number, TCounter extends number = 0, TKeys extends number = 0> = TCounter extends TLength ? TTupleLike<TKeys, TItem, TLength> : TCounter extends 17 ? TTupleLike<number, TItem, TLength> : TTupleLikeOfLength<TItem, TLength, TNextInt<TCounter>, TKeys | TCounter>;
+export declare type TTupleLikeOfLength<TItem, TLength extends number, TCounter extends number = 0, TIndexes extends number = never> = TCounter extends TLength ? TTupleLike<TIndexes, TItem, TLength> : TCounter extends 16 ? TTupleLike<number, TItem, number> : TTupleLikeOfLength<TItem, TLength, TNextInt<TCounter>, TIndexes | TCounter>;
 ```
 <b>References:</b> [TTupleLike](./rc-js-util.ttuplelike.md)<!-- -->, [TTupleLikeOfLength](./rc-js-util.ttuplelikeoflength.md)<!-- -->, [TNextInt](./rc-js-util.tnextint.md)
 

@@ -42,6 +42,9 @@ See static properties for constructors. Instances are not an extension of this c
 |  --- | --- | --- |
 |  [add(\_vec, \_result)](./rc-js-util.vec2.add.md) |  |  |
 |  [bound2d(\_range)](./rc-js-util.vec2.bound2d.md) |  | If this point is outside of the range, set that dimension to the extrema of the range. |
+|  [castToBaseType()](./rc-js-util.vec2.casttobasetype.md) |  | Although the typed array tuples extend a typed array, they are not structurally compatible. This function returns the argument passed without modification but cast as the underlying storage type, e.g. Float32Array. |
+|  [copyFromBuffer(\_memoryDataView, \_pointer, \_littleEndian)](./rc-js-util.vec2.copyfrombuffer.md) |  | If endianness is not supplied the platform's endianness will be used. |
+|  [copyToBuffer(\_memoryDataView, \_pointer, \_littleEndian)](./rc-js-util.vec2.copytobuffer.md) |  | If endianness is not supplied the platform's endianness will be used. |
 |  [dotProduct(\_vec)](./rc-js-util.vec2.dotproduct.md) |  |  |
 |  [getCtor(ctor)](./rc-js-util.vec2.getctor.md) | <code>static</code> |  |
 |  [getLoggableValue()](./rc-js-util.vec2.getloggablevalue.md) |  |  |

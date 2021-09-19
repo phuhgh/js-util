@@ -10,8 +10,10 @@ Tuple version of ArrayLike.
 
 ```typescript
 export declare type TTupleLike<TIndexes extends number, TValue, TLength extends number> = {
-    [I in TIndexes]: TValue;
+    [I in TNeverFallback<TIndexes, number>]: TValue;
 } & {
     length: TLength;
 };
 ```
+<b>References:</b> [TNeverFallback](./rc-js-util.tneverfallback.md)
+

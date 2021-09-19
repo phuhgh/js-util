@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IReadonlyVec3<TArray extends TTypedArray> extends TPickExcept<Readonly<Vec3<TArray>>, "update" | "setX" | "setY" | "setZ"> 
+export interface IReadonlyVec3<TArray extends TTypedArray> extends TPickExcept<Readonly<Vec3<TArray>>, "update" | "setX" | "setY" | "setZ" | "copyFromBuffer"> 
 ```
-<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Vec3](./rc-js-util.vec3.md)<!-- -->&lt;TArray&gt;&gt;, "update" \| "setX" \| "setY" \| "setZ"&gt;
+<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Vec3](./rc-js-util.vec3.md)<!-- -->&lt;TArray&gt;&gt;, "update" \| "setX" \| "setY" \| "setZ" \| "copyFromBuffer"&gt;
 

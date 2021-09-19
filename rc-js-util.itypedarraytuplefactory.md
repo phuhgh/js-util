@@ -16,9 +16,6 @@ export interface ITypedArrayTupleFactory<TArray extends ATypedArrayTuple<number,
 
 |  Method | Description |
 |  --- | --- |
-|  [castToBaseType(typedArrayTuple)](./rc-js-util.itypedarraytuplefactory.casttobasetype.md) | Although the typed array tuples extend a typed array, they are not considered structurally compatible by typescript. This function returns the argument passed without modification but cast as the underlying storage type, e.g. Float32Array. |
-|  [copyFromBuffer(memoryDataView, pointer, writeTo, littleEndian)](./rc-js-util.itypedarraytuplefactory.copyfrombuffer.md) | If endianness is not supplied the platform's endianness will be used. |
-|  [copyToBuffer(memoryDataView, writeFrom, pointer, littleEndian)](./rc-js-util.itypedarraytuplefactory.copytobuffer.md) |  |
 |  [createOne(args)](./rc-js-util.itypedarraytuplefactory.createone.md) |  |
 |  [createOneEmpty()](./rc-js-util.itypedarraytuplefactory.createoneempty.md) |  |
 
