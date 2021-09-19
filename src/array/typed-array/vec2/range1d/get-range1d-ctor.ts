@@ -17,7 +17,9 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
 )
     : IRange1dCtor<InstanceType<TCtor>>
 {
-    return class Range1dImpl extends getVec2Ctor(ctor) implements Range1d<InstanceType<TCtor>>
+    return class Range1dImpl
+        extends getVec2Ctor(ctor)
+        implements Range1d<InstanceType<TCtor>>
     {
         public static factory: ITypedArrayTupleFactory<Range1d<InstanceType<TCtor>>, TRange1dCtorArgs> = new Vec2Factory(Range1dImpl, NormalizedDataViewProvider.getView(ctor));
         protected static mat2Ctor = Mat2.getCtor(ctor);

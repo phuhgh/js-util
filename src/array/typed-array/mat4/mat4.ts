@@ -51,7 +51,8 @@ export interface IMat4Ctor<TArray extends TTypedArray>
 export interface IReadonlyMat4<TArray extends TTypedArray>
     extends TPickExcept<Readonly<Mat4<TArray>>,
         | "setValueAt"
-        | "setRow">
+        | "setRow"
+        | "copyFromBuffer">
 {
 }
 
@@ -179,6 +180,43 @@ export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<
     }
 
     public getLoggableValue(): number[][]
+    {
+        throw new Error();
+    }
+
+    /**
+     * If endianness is not supplied the platform's endianness will be used.
+     */
+    public copyFromBuffer
+    (
+        _memoryDataView: DataView,
+        _pointer: number,
+        _littleEndian?: boolean,
+    )
+        : void
+    {
+        throw new Error();
+    }
+
+    /**
+     * If endianness is not supplied the platform's endianness will be used.
+     */
+    public copyToBuffer
+    (
+        _memoryDataView: DataView,
+        _pointer: number,
+        _littleEndian?: boolean,
+    )
+        : void
+    {
+        throw new Error();
+    }
+
+    /**
+     * Although the typed array tuples extend a typed array, they are not structurally compatible.
+     * This function returns the argument passed without modification but cast as the underlying storage type, e.g. Float32Array.
+     */
+    public castToBaseType(): TArray
     {
         throw new Error();
     }

@@ -2,7 +2,6 @@ import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory";
 import { INormalizedDataView } from "./normalized-data-view/i-normalized-data-view";
 import { ATypedArrayTuple } from "./a-typed-array-tuple";
 import { TTypedArray } from "./t-typed-array";
-import { TExtractTypeTypedArrayTuple } from "../../typescript/t-extract-type-typed-array-tuple";
 import { isLittleEndian } from "../../web-assembly/is-little-endian";
 
 export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number, TTypedArray>, TCtorArgs extends number[]>
@@ -15,11 +14,6 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
         protected dataView: INormalizedDataView,
     )
     {
-    }
-
-    public castToBaseType(typedArrayTuple: Readonly<TArray>): TExtractTypeTypedArrayTuple<TArray>
-    {
-        return typedArrayTuple as unknown as TExtractTypeTypedArrayTuple<TArray>;
     }
 
     public abstract createOne(...args: TCtorArgs): TArray;

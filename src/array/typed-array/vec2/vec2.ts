@@ -38,7 +38,8 @@ export interface IReadonlyVec2<TArray extends TTypedArray>
         | "setX"
         | "setY"
         | "bound2d"
-        | "translate2d">
+        | "translate2d"
+        | "copyFromBuffer">
 {
 }
 
@@ -49,7 +50,8 @@ export interface IReadonlyVec2<TArray extends TTypedArray>
  * @remarks
  * See static properties for constructors. Instances are not an extension of this class, but of the static members.
  */
-export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<2, TArray>
+export abstract class Vec2<TArray extends TTypedArray>
+    extends ATypedArrayTuple<2, TArray>
 {
     public static f64: IVec2Ctor<Float64Array> = getVec2Ctor(Float64Array);
     public static f32: IVec2Ctor<Float32Array> = getVec2Ctor(Float32Array);
@@ -216,6 +218,43 @@ export abstract class Vec2<TArray extends TTypedArray> extends ATypedArrayTuple<
     }
 
     public getLoggableValue(): number[][]
+    {
+        throw new Error();
+    }
+
+    /**
+     * If endianness is not supplied the platform's endianness will be used.
+     */
+    public copyFromBuffer
+    (
+        _memoryDataView: DataView,
+        _pointer: number,
+        _littleEndian?: boolean,
+    )
+        : void
+    {
+        throw new Error();
+    }
+
+    /**
+     * If endianness is not supplied the platform's endianness will be used.
+     */
+    public copyToBuffer
+    (
+        _memoryDataView: DataView,
+        _pointer: number,
+        _littleEndian?: boolean,
+    )
+        : void
+    {
+        throw new Error();
+    }
+
+    /**
+     * Although the typed array tuples extend a typed array, they are not structurally compatible.
+     * This function returns the argument passed without modification but cast as the underlying storage type, e.g. Float32Array.
+     */
+    public castToBaseType(): TArray
     {
         throw new Error();
     }
