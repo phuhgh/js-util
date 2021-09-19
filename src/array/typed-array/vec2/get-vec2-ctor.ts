@@ -1,6 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IReadonlyVec2, IVec2Ctor, TVec2CtorArgs, Vec2 } from "./vec2";
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
+import { IReadonlyVec2, IVec2Ctor, Vec2 } from "./vec2";
 import { Vec2Factory } from "./vec2-factory";
 import { IReadonlyMat3 } from "../mat3/mat3";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
@@ -11,11 +10,16 @@ import { TTypedArray } from "../t-typed-array";
 /**
  * @internal
  */
-export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ctor<InstanceType<TCtor>>
+export function getVec2Ctor<TCtor extends TTypedArrayCtor>
+(
+    ctor: TCtor
+)
+    : IVec2Ctor<InstanceType<TCtor>>
 {
-    return class Vec2Impl extends (ctor as unknown as ITypedArrayCtor<Vec2<InstanceType<TCtor>>>)
+    return class Vec2Impl
+        extends (ctor as unknown as ITypedArrayCtor<Vec2<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Vec2<InstanceType<TCtor>>, TVec2CtorArgs> = new Vec2Factory(Vec2Impl, NormalizedDataViewProvider.getView(ctor));
+        public static factory: Vec2Factory<Vec2<InstanceType<TCtor>>> = new Vec2Factory(Vec2Impl, NormalizedDataViewProvider.getView(ctor));
 
         public ["constructor"]: typeof Vec2Impl;
 
@@ -199,6 +203,33 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec2Ct
             return [
                 [this[0], this[1]],
             ];
+        }
+
+        public copyFromBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyFromBuffer(memoryDataView, pointer, this, littleEndian);
+        }
+
+        public copyToBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyToBuffer(memoryDataView, this, pointer, littleEndian);
+        }
+
+        public castToBaseType(): InstanceType<TCtor>
+        {
+            return this as InstanceType<TCtor>;
         }
     };
 }

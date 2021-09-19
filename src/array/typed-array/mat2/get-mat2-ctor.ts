@@ -1,6 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { IMat2Ctor, IReadonlyMat2, Mat2, TMat2CtorArgs } from "./mat2";
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat2Factory } from "./mat2-factory";
 import { _Debug } from "../../../debug/_debug";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
@@ -19,7 +18,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
 {
     return class Mat2Impl extends (ctor as unknown as ITypedArrayCtor<Mat2<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Mat2<InstanceType<TCtor>>, TMat2CtorArgs> = new Mat2Factory(Mat2Impl, NormalizedDataViewProvider.getView(ctor));
+        public static factory: Mat2Factory<Mat2<InstanceType<TCtor>>> = new Mat2Factory(Mat2Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec2Ctor = Vec2.getCtor(ctor);
 
         public ["constructor"]: typeof Mat2Impl;
@@ -141,6 +140,33 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
                 [this[0], this[1]],
                 [this[2], this[3]],
             ];
+        }
+
+        public copyFromBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyFromBuffer(memoryDataView, pointer, this, littleEndian);
+        }
+
+        public copyToBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyToBuffer(memoryDataView, this, pointer, littleEndian);
+        }
+
+        public castToBaseType(): InstanceType<TCtor>
+        {
+            return this as InstanceType<TCtor>;
         }
     };
 }

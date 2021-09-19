@@ -1,6 +1,5 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IReadonlyVec3, IVec3Ctor, TVec3CtorArgs, Vec3 } from "./vec3";
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
+import { IReadonlyVec3, IVec3Ctor, Vec3 } from "./vec3";
 import { Vec3Factory } from "./vec3-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
@@ -13,7 +12,7 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
 {
     return class Vec3Impl extends (ctor as unknown as ITypedArrayCtor<Vec3<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Vec3<InstanceType<TCtor>>, TVec3CtorArgs> = new Vec3Factory(Vec3Impl, NormalizedDataViewProvider.getView(ctor));
+        public static factory: Vec3Factory<Vec3<InstanceType<TCtor>>> = new Vec3Factory(Vec3Impl, NormalizedDataViewProvider.getView(ctor));
 
         public ["constructor"]: typeof Vec3Impl;
 
@@ -94,6 +93,33 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
             return [
                 [this[0], this[1], this[2]],
             ];
+        }
+
+        public copyFromBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyFromBuffer(memoryDataView, pointer, this, littleEndian);
+        }
+
+        public copyToBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyToBuffer(memoryDataView, this, pointer, littleEndian);
+        }
+
+        public castToBaseType(): InstanceType<TCtor>
+        {
+            return this as InstanceType<TCtor>;
         }
     };
 }

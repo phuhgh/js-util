@@ -1,5 +1,4 @@
 import { IMat3Ctor, IReadonlyMat3, Mat3, TMat3CtorArgs } from "./mat3";
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { Mat3Factory } from "./mat3-factory";
 import { _Debug } from "../../../debug/_debug";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
@@ -12,11 +11,16 @@ import { TTypedArray } from "../t-typed-array";
 /**
  * @internal
  */
-export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ctor<InstanceType<TCtor>>
+export function getMat3Ctor<TCtor extends TTypedArrayCtor>
+(
+    ctor: TCtor
+)
+    : IMat3Ctor<InstanceType<TCtor>>
 {
-    return class Mat3Impl extends (ctor as unknown as ITypedArrayCtor<Mat3<InstanceType<TCtor>>>)
+    return class Mat3Impl
+        extends (ctor as unknown as ITypedArrayCtor<Mat3<InstanceType<TCtor>>>)
     {
-        public static factory: ITypedArrayTupleFactory<Mat3<InstanceType<TCtor>>, TMat3CtorArgs> = new Mat3Factory(Mat3Impl, NormalizedDataViewProvider.getView(ctor));
+        public static factory: Mat3Factory<Mat3<InstanceType<TCtor>>> = new Mat3Factory(Mat3Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec3Ctor = Vec3.getCtor(ctor);
 
         public ["constructor"]: typeof Mat3Impl;
@@ -190,6 +194,33 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IMat3Ct
                 [this[3], this[4], this[5]],
                 [this[6], this[7], this[8]],
             ];
+        }
+
+        public copyFromBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyFromBuffer(memoryDataView, pointer, this, littleEndian);
+        }
+
+        public copyToBuffer
+        (
+            memoryDataView: DataView,
+            pointer: number,
+            littleEndian?: boolean,
+        )
+            : void
+        {
+            this.constructor.factory.copyToBuffer(memoryDataView, this, pointer, littleEndian);
+        }
+
+        public castToBaseType(): InstanceType<TCtor>
+        {
+            return this as InstanceType<TCtor>;
         }
     };
 }
