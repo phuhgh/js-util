@@ -16,6 +16,8 @@ export declare class _F64
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [bounds](./rc-js-util._f64.bounds.md) | <code>static</code> | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;Float64Array&gt; |  |
+|  [mantissaBits](./rc-js-util._f64.mantissabits.md) | <code>static</code> | (not declared) |  |
+|  [mantissaPrecision](./rc-js-util._f64.mantissaprecision.md) | <code>static</code> | number |  |
 |  [MAX\_VALUE](./rc-js-util._f64.max_value.md) | <code>static</code> | number |  |
 |  [MIN\_POSITIVE\_VALUE](./rc-js-util._f64.min_positive_value.md) | <code>static</code> | number |  |
 
