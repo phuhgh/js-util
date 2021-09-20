@@ -10,6 +10,8 @@ export { _Production } from "./production/_production";
 export { _Fp } from "./fp/_fp";
 export { _Map } from "./map/_map";
 export { _Math } from "./math/_math";
+export { _F32 } from "./number/impl/_f32";
+export { _F64 } from "./number/impl/_f64";
 export { _Number } from "./number/_number";
 export { _Path } from "./path/_path";
 export { _RegExp } from "./reg-exp/_reg-exp";
