@@ -30,5 +30,6 @@ export class _F64
         return Math.abs(a - b) < delta;
     }
 
-    private static readonly mantissaPrecision = 1 / Math.pow(2, 52);
+    public static readonly mantissaBits = 52;
+    public static readonly mantissaPrecision = 1 / Math.pow(2, 52);
 }
