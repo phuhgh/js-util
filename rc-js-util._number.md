@@ -16,5 +16,7 @@ export declare class _Number
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [f32](./rc-js-util._number.f32.md) | <code>static</code> | typeof [\_F32](./rc-js-util._f32.md) |  |
+|  [f64](./rc-js-util._number.f64.md) | <code>static</code> | typeof [\_F64](./rc-js-util._f64.md) |  |
 |  [getHexString](./rc-js-util._number.gethexstring.md) | <code>static</code> | typeof numberGetHexString | Returns the hex representation of the number. If it's not a number it returns "NaN". |
 

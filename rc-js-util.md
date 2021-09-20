@@ -11,6 +11,8 @@
 |  [\_Array](./rc-js-util._array.md) | Utilities that apply to <code>Array</code> and <code>ArrayLike</code>. |
 |  [\_Debug](./rc-js-util._debug.md) | Utilities for debug builds. |
 |  [\_Dictionary](./rc-js-util._dictionary.md) | Utilities for 'dictionaries', i.e. { \[index: string\]: any }<!-- -->. |
+|  [\_F32](./rc-js-util._f32.md) |  |
+|  [\_F64](./rc-js-util._f64.md) |  |
 |  [\_Fp](./rc-js-util._fp.md) | Utilities for functional programming. |
 |  [\_Map](./rc-js-util._map.md) | Utilities that apply to <code>Map</code>. |
 |  [\_Math](./rc-js-util._math.md) | Utilities relating to math. |
