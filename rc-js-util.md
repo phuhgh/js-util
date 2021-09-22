@@ -14,6 +14,7 @@
 |  [\_F32](./rc-js-util._f32.md) |  |
 |  [\_F64](./rc-js-util._f64.md) |  |
 |  [\_Fp](./rc-js-util._fp.md) | Utilities for functional programming. |
+|  [\_Iterator](./rc-js-util._iterator.md) |  |
 |  [\_Map](./rc-js-util._map.md) | Utilities that apply to <code>Map</code>. |
 |  [\_Math](./rc-js-util._math.md) | Utilities relating to math. |
 |  [\_Number](./rc-js-util._number.md) | Utilities that apply to numbers. |
@@ -30,12 +31,17 @@
 |  [CircularFIFOStack](./rc-js-util.circularfifostack.md) | Circular first in first out stack. |
 |  [DebugProtectedView](./rc-js-util.debugprotectedview.md) |  |
 |  [DebugSharedObjectChecks](./rc-js-util.debugsharedobjectchecks.md) | Provides life cycle and access checks for shared objects. |
+|  [DirtyCheckedUniqueCollection](./rc-js-util.dirtycheckeduniquecollection.md) |  |
+|  [IncrementalUpdater](./rc-js-util.incrementalupdater.md) |  |
+|  [IncrementingIdentifierFactory](./rc-js-util.incrementingidentifierfactory.md) | Provides an incrementing integer identifier. |
 |  [Margin2d](./rc-js-util.margin2d.md) | 2x2 matrix representing margins on a rectangle. |
 |  [Mat2](./rc-js-util.mat2.md) | Row major 2x2 matrix. |
 |  [Mat3](./rc-js-util.mat3.md) | Row major 3x3 matrix. |
 |  [Mat4](./rc-js-util.mat4.md) | Row major 4x4 matrix. |
+|  [Mulberry32Generator](./rc-js-util.mulberry32generator.md) |  |
 |  [NestableError](./rc-js-util.nestableerror.md) |  |
 |  [NormalizedDataViewProvider](./rc-js-util.normalizeddataviewprovider.md) | Provides [INormalizedDataView](./rc-js-util.inormalizeddataview.md)<!-- -->. |
+|  [NotRandomGenerator](./rc-js-util.notrandomgenerator.md) | Instead of returning a random number, return the constant instead. |
 |  [Range1d](./rc-js-util.range1d.md) | Vec2 representing a 1d range. |
 |  [Range2d](./rc-js-util.range2d.md) | 2x2 matrix representing a 2d range. |
 |  [RawVoidPointer](./rc-js-util.rawvoidpointer.md) |  |
@@ -102,6 +108,7 @@
 |  [fpOnce(initialize)](./rc-js-util.fponce.md) | Creates a function that can be called many times but will run at most once. |
 |  [fpValueOrNull(predicate, value)](./rc-js-util.fpvalueornull.md) | Returns the value if the predicate is true, else null. |
 |  [getEmscriptenWrapper(memory, emscriptenModuleFactory, extension)](./rc-js-util.getemscriptenwrapper.md) | Factory for creating wrapped emscripten module. |
+|  [iteratorConsumeAll(iterator)](./rc-js-util.iteratorconsumeall.md) | Iterate over an iterator until it's done, discarding the results. |
 |  [mapAddToSet(map, key, value)](./rc-js-util.mapaddtoset.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [mapAddToSet(map, key, value)](./rc-js-util.mapaddtoset_1.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [mapArrayMap(map, callback)](./rc-js-util.maparraymap.md) | Like <code>Array.map</code> but with a <code>Map</code> input. Outputs an <code>Array</code>. |
@@ -160,8 +167,12 @@
 |  [IDebugWeakBroadcastEvent](./rc-js-util.idebugweakbroadcastevent.md) | Like [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) but without holding strong references. Available in debug contexts only. |
 |  [IDebugWeakStore](./rc-js-util.idebugweakstore.md) | A weakmap store available in debug contexts only. |
 |  [IDictionary](./rc-js-util.idictionary.md) |  |
+|  [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md) |  |
 |  [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md) |  |
 |  [IFIFOStack](./rc-js-util.ififostack.md) | Circular first in first out stack. |
+|  [IIdentifierFactory](./rc-js-util.iidentifierfactory.md) |  |
+|  [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) |  |
+|  [IIncrementalUpdater](./rc-js-util.iincrementalupdater.md) |  |
 |  [IJsUtilBindings](./rc-js-util.ijsutilbindings.md) |  |
 |  [IMargin2dCtor](./rc-js-util.imargin2dctor.md) | Constructor for [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
 |  [IMat2Ctor](./rc-js-util.imat2ctor.md) | Constructor for [Mat2](./rc-js-util.mat2.md)<!-- -->. |
@@ -173,6 +184,7 @@
 |  [IOnDestroy](./rc-js-util.iondestroy.md) |  |
 |  [IOnFree](./rc-js-util.ionfree.md) |  |
 |  [IOnMemoryResize](./rc-js-util.ionmemoryresize.md) |  |
+|  [IRandomNumberGenerator](./rc-js-util.irandomnumbergenerator.md) |  |
 |  [IRange1dCtor](./rc-js-util.irange1dctor.md) | Constructor for [Range1d](./rc-js-util.range1d.md)<!-- -->. |
 |  [IRange2dCtor](./rc-js-util.irange2dctor.md) | Constructor for [Range2d](./rc-js-util.range2d.md)<!-- -->. |
 |  [IRawVoidPointer](./rc-js-util.irawvoidpointer.md) | Provides a reference counted wrapper to a pointer <code>malloc</code>'d from JS and is <code>free</code>'d on reference count hitting 0. |
@@ -210,6 +222,7 @@
 |  --- | --- |
 |  [arrayEmptyArray](./rc-js-util.arrayemptyarray.md) | An empty readonly array, useful to avoid GC pressure. |
 |  [isLittleEndian](./rc-js-util.islittleendian.md) |  |
+|  [iteratorEmptyIterator](./rc-js-util.iteratoremptyiterator.md) | An iterator that is done. |
 
 ## Type Aliases
 
