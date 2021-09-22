@@ -7,3 +7,8 @@ PackageName:Microsoft GSL
 PackageVersion:b26f6d5ec7b043f9d459c1dfdd6da4d930d4e9b4
 PackageHomePage:https://github.com/microsoft/GSL
 CreatorComment: Bundled with cpp source.
+
+PackageName:mulberry32.c
+PackageVersion:rev2
+PackageHomePage:https://gist.github.com/tommyettinger/46a874533244883189143505d203312c
+CreatorComment: Basis for Mulberry32Generator implementation
