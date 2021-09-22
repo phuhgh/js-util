@@ -1,6 +1,6 @@
 {
   "name": "rc-js-test-util",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "scripts": {
     "build": "rimraf bin && tsc -d -p tsconfig.json"
