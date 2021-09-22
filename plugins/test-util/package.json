@@ -1,14 +1,15 @@
 {
   "name": "rc-js-test-util",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "scripts": {
     "build": "rimraf bin && tsc -d -p tsconfig.json"
   },
-  "dependencies": {
-    "rc-js-util": "^5.0.0-alpha.83"
+  "peerDependencies": {
+    "rc-js-util": "^6.5.0"
   },
   "devDependencies": {
+    "rc-js-util": "^6.5.0",
     "@types/jasmine": "^3.8.2",
     "jasmine": "^3.9.0",
     "jasmine-core": "^3.9.0",
