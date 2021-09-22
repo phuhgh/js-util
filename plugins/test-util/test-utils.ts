@@ -3,7 +3,6 @@
 import { _Debug, RcJsUtilDebugImpl } from "rc-js-util";
 import { setDefaultUnitTestFlags } from "rc-js-util/bin/src/debug/impl/set-default-unit-test-flags";
 
-
 export function itShouldCallAssert(times: number, runTest: () => void): void
 {
     it("| has the correct number of assert calls", () =>
@@ -28,10 +27,18 @@ export function itShouldNotRunDebugWhenDebugIsFalse(runTest: () => void): void
     });
 }
 
-
-export function expectValueToBeNearTo(value: number, expectation: number, variance: number = 10E-7): void
+export function expectValueToBeNearTo
+(
+    value: number,
+    expectation: number,
+    variance: number = 10E-7,
+    message?: string,
+)
+    : void
 {
-    expect(value).toBeLessThan(expectation + variance);
+    expect(value)
+        .withContext(message ?? "")
+        .toBeLessThan(expectation + variance);
     expect(value).toBeGreaterThan(expectation - variance);
 }
 
