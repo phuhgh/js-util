@@ -1,5 +1,6 @@
 /**
  * @public
+ * Provides a communication channel via callbacks which can be easily cleared & copied.
  */
 export interface ITemporaryListener<TArgs extends []>
 {
@@ -17,6 +18,7 @@ export interface ITemporaryListener<TArgs extends []>
 
 /**
  * @public
+ * {@inheritDoc ITemporaryListener}
  */
 export class TemporaryListener<TArgs extends []> implements ITemporaryListener<TArgs>
 {

@@ -4,6 +4,7 @@ import { iteratorEmptyIterator } from "./impl/iterator-empty-iterator";
 // noinspection JSUnusedLocalSymbols
 /**
  * @public
+ * Utilities relating to `IterableIterator` & generators.
  */
 export class _Iterator
 {
@@ -11,7 +12,7 @@ export class _Iterator
     public static emptyIterator = iteratorEmptyIterator;
 
     /** {@inheritDoc iteratorConsumeAll} */
-    public static consumeAll = iteratorConsumeAll;
+    public static readonly consumeAll = iteratorConsumeAll;
 
     private constructor()
     {

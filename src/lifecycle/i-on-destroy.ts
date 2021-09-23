@@ -2,6 +2,7 @@ import { ITemporaryListener, TemporaryListener } from "./temporary-listener";
 
 /**
  * @public
+ * Provides a {@link ITemporaryListener} that is cleared on `onDestroy`.
  */
 export interface IOnDestroy
 {
@@ -10,6 +11,7 @@ export interface IOnDestroy
 
 /**
  * @public
+ * {@inheritDoc ITemporaryListener}
  */
 export class AOnDestroy implements IOnDestroy
 {

@@ -3,6 +3,7 @@ import { TGetStringFromLocalization } from "../i18n/t-get-string-from-localizati
 
 /**
  * @public
+ * Composable error, useful for automatically generating user friendly localized error messages.
  */
 export class NestableError<TLocalization>
 {

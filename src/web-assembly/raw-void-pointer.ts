@@ -25,6 +25,7 @@ export interface IRawVoidPointer
 
 /**
  * @public
+ * {@inheritDoc IRawVoidPointer}
  */
 export class RawVoidPointer implements IRawVoidPointer
 {

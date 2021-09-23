@@ -2,6 +2,7 @@ import { IRandomNumberGenerator } from "./i-random-number-generator";
 
 /**
  * @public
+ * Random number generator.
  */
 export class Mulberry32Generator implements IRandomNumberGenerator
 {

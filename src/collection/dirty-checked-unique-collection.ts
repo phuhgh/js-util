@@ -1,5 +1,6 @@
 /**
  * @public
+ * Provides a unique array with O(1) add & remove, with dirty checking on `getArray`.
  */
 export interface IDirtyCheckedUniqueCollection<TItem>
 {
@@ -12,6 +13,7 @@ export interface IDirtyCheckedUniqueCollection<TItem>
 
 /**
  * @public
+ * {@inheritDoc IDirtyCheckedUniqueCollection}
  */
 export class DirtyCheckedUniqueCollection<TItem> implements IDirtyCheckedUniqueCollection<TItem>
 {

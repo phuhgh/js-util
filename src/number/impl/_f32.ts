@@ -2,6 +2,7 @@ import { Range2d } from "../../array/typed-array/2d/range2d/range2d";
 
 /**
  * @public
+ * Utilities relating to single precision floats.
  */
 export class _F32
 {

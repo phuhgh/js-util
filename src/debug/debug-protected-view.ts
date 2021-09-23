@@ -6,6 +6,10 @@ import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor";
 
 /**
  * @public
+ * Provides a view of an object that can be invalidated, causing attempts to access it to error in `DEBUG_MODE`.
+ *
+ * @remarks
+ * Allows the specification of `safeKeys`, accessing of these is not an error regardless of invalidation state.
  */
 export class DebugProtectedView<T extends object> implements IDebugProtectedView<T>
 {
