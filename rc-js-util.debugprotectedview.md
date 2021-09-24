@@ -4,6 +4,7 @@
 
 ## DebugProtectedView class
 
+Provides a view of an object that can be invalidated, causing attempts to access it to error in `DEBUG_MODE`<!-- -->.
 
 <b>Signature:</b>
 
@@ -11,6 +12,10 @@
 export declare class DebugProtectedView<T extends object> implements IDebugProtectedView<T> 
 ```
 <b>Implements:</b> [IDebugProtectedView](./rc-js-util.idebugprotectedview.md)<!-- -->&lt;T&gt;
+
+## Remarks
+
+Allows the specification of `safeKeys`<!-- -->, accessing of these is not an error regardless of invalidation state.
 
 ## Constructors
 

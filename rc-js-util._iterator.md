@@ -4,6 +4,7 @@
 
 ## \_Iterator class
 
+Utilities relating to `IterableIterator` &amp; generators.
 
 <b>Signature:</b>
 

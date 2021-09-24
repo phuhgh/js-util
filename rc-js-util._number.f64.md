@@ -4,6 +4,8 @@
 
 ## \_Number.f64 property
 
+Utilities relating to double precision floats.
+
 <b>Signature:</b>
 
 ```typescript

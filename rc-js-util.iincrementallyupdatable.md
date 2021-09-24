@@ -4,6 +4,7 @@
 
 ## IIncrementallyUpdatable interface
 
+A provider that should return an iterator that represents a sequence of update operations. Useful for breaking up operations that would block the UI for an unacceptably long time.
 
 <b>Signature:</b>
 

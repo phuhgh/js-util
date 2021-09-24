@@ -4,6 +4,8 @@
 
 ## IncrementalUpdater.cancel() method
 
+Cancel the update and clear the task.
+
 <b>Signature:</b>
 
 ```typescript

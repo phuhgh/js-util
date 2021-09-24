@@ -11,10 +11,10 @@
 |  [\_Array](./rc-js-util._array.md) | Utilities that apply to <code>Array</code> and <code>ArrayLike</code>. |
 |  [\_Debug](./rc-js-util._debug.md) | Utilities for debug builds. |
 |  [\_Dictionary](./rc-js-util._dictionary.md) | Utilities for 'dictionaries', i.e. { \[index: string\]: any }<!-- -->. |
-|  [\_F32](./rc-js-util._f32.md) |  |
-|  [\_F64](./rc-js-util._f64.md) |  |
+|  [\_F32](./rc-js-util._f32.md) | Utilities relating to single precision floats. |
+|  [\_F64](./rc-js-util._f64.md) | Utilities relating to double precision floats. |
 |  [\_Fp](./rc-js-util._fp.md) | Utilities for functional programming. |
-|  [\_Iterator](./rc-js-util._iterator.md) |  |
+|  [\_Iterator](./rc-js-util._iterator.md) | Utilities relating to <code>IterableIterator</code> &amp; generators. |
 |  [\_Map](./rc-js-util._map.md) | Utilities that apply to <code>Map</code>. |
 |  [\_Math](./rc-js-util._math.md) | Utilities relating to math. |
 |  [\_Number](./rc-js-util._number.md) | Utilities that apply to numbers. |
@@ -23,33 +23,33 @@
 |  [\_RegExp](./rc-js-util._regexp.md) | Utilities that apply to <code>RegExp</code>. |
 |  [\_Set](./rc-js-util._set.md) | Utilities that apply to <code>Set</code>. |
 |  [\_String](./rc-js-util._string.md) | Utilities that apply to <code>string</code>. |
-|  [AOnDestroy](./rc-js-util.aondestroy.md) |  |
+|  [AOnDestroy](./rc-js-util.aondestroy.md) | Provides a communication channel via callbacks which can be easily cleared &amp; copied. |
 |  [AReferenceCounted](./rc-js-util.areferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. NB The object is pre-claimed (ref count 1) on creation. |
 |  [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md) | Common methods of typed arrays, extend to make typed array tuples. |
 |  [BroadcastEvent](./rc-js-util.broadcastevent.md) | Strong reference implementation of [IBroadcastEvent](./rc-js-util.ibroadcastevent.md)<!-- -->. |
 |  [CircularBuffer](./rc-js-util.circularbuffer.md) | Presents an array as if it were circular, going past the end or start loops around. |
 |  [CircularFIFOStack](./rc-js-util.circularfifostack.md) | Circular first in first out stack. |
-|  [DebugProtectedView](./rc-js-util.debugprotectedview.md) |  |
+|  [DebugProtectedView](./rc-js-util.debugprotectedview.md) | Provides a view of an object that can be invalidated, causing attempts to access it to error in <code>DEBUG_MODE</code>. |
 |  [DebugSharedObjectChecks](./rc-js-util.debugsharedobjectchecks.md) | Provides life cycle and access checks for shared objects. |
-|  [DirtyCheckedUniqueCollection](./rc-js-util.dirtycheckeduniquecollection.md) |  |
-|  [IncrementalUpdater](./rc-js-util.incrementalupdater.md) |  |
+|  [DirtyCheckedUniqueCollection](./rc-js-util.dirtycheckeduniquecollection.md) | Provides a unique array with O(1) add &amp; remove, with dirty checking on <code>getArray</code>. |
+|  [IncrementalUpdater](./rc-js-util.incrementalupdater.md) | Performs update operations once every <code>waitPeriod</code> until the iterator returned by [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) is exhausted. |
 |  [IncrementingIdentifierFactory](./rc-js-util.incrementingidentifierfactory.md) | Provides an incrementing integer identifier. |
 |  [Margin2d](./rc-js-util.margin2d.md) | 2x2 matrix representing margins on a rectangle. |
 |  [Mat2](./rc-js-util.mat2.md) | Row major 2x2 matrix. |
 |  [Mat3](./rc-js-util.mat3.md) | Row major 3x3 matrix. |
 |  [Mat4](./rc-js-util.mat4.md) | Row major 4x4 matrix. |
-|  [Mulberry32Generator](./rc-js-util.mulberry32generator.md) |  |
-|  [NestableError](./rc-js-util.nestableerror.md) |  |
+|  [Mulberry32Generator](./rc-js-util.mulberry32generator.md) | Random number generator. |
+|  [NestableError](./rc-js-util.nestableerror.md) | Composable error, useful for automatically generating user friendly localized error messages. |
 |  [NormalizedDataViewProvider](./rc-js-util.normalizeddataviewprovider.md) | Provides [INormalizedDataView](./rc-js-util.inormalizeddataview.md)<!-- -->. |
 |  [NotRandomGenerator](./rc-js-util.notrandomgenerator.md) | Instead of returning a random number, return the constant instead. |
 |  [Range1d](./rc-js-util.range1d.md) | Vec2 representing a 1d range. |
 |  [Range2d](./rc-js-util.range2d.md) | 2x2 matrix representing a 2d range. |
-|  [RawVoidPointer](./rc-js-util.rawvoidpointer.md) |  |
+|  [RawVoidPointer](./rc-js-util.rawvoidpointer.md) | Provides a reference counted wrapper to a pointer <code>malloc</code>'d from JS and is <code>free</code>'d on reference count hitting 0. |
 |  [ReferenceCountedPtr](./rc-js-util.referencecountedptr.md) | Wrapper of wasm object. |
 |  [RgbaColorPacker](./rc-js-util.rgbacolorpacker.md) | Utility for packing and unpacking RGBA into int32 with one byte per channel. |
 |  [SharedArray](./rc-js-util.sharedarray.md) | Typed array shared between wasm and javascript. |
 |  [SharedStaticArray](./rc-js-util.sharedstaticarray.md) | Typed array representing static memory in wasm. |
-|  [TemporaryListener](./rc-js-util.temporarylistener.md) |  |
+|  [TemporaryListener](./rc-js-util.temporarylistener.md) | Provides a communication channel via callbacks which can be easily cleared &amp; copied. |
 |  [Vec2](./rc-js-util.vec2.md) | Vector 2. |
 |  [Vec3](./rc-js-util.vec3.md) | Vector 3. |
 |  [Vec4](./rc-js-util.vec4.md) | Vector 4. |
@@ -167,12 +167,12 @@
 |  [IDebugWeakBroadcastEvent](./rc-js-util.idebugweakbroadcastevent.md) | Like [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) but without holding strong references. Available in debug contexts only. |
 |  [IDebugWeakStore](./rc-js-util.idebugweakstore.md) | A weakmap store available in debug contexts only. |
 |  [IDictionary](./rc-js-util.idictionary.md) |  |
-|  [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md) |  |
+|  [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md) | Provides a unique array with O(1) add &amp; remove, with dirty checking on <code>getArray</code>. |
 |  [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md) |  |
 |  [IFIFOStack](./rc-js-util.ififostack.md) | Circular first in first out stack. |
 |  [IIdentifierFactory](./rc-js-util.iidentifierfactory.md) |  |
-|  [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) |  |
-|  [IIncrementalUpdater](./rc-js-util.iincrementalupdater.md) |  |
+|  [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) | A provider that should return an iterator that represents a sequence of update operations. Useful for breaking up operations that would block the UI for an unacceptably long time. |
+|  [IIncrementalUpdater](./rc-js-util.iincrementalupdater.md) | Performs update operations once every <code>waitPeriod</code> until the iterator returned by [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) is exhausted. |
 |  [IJsUtilBindings](./rc-js-util.ijsutilbindings.md) |  |
 |  [IMargin2dCtor](./rc-js-util.imargin2dctor.md) | Constructor for [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
 |  [IMat2Ctor](./rc-js-util.imat2ctor.md) | Constructor for [Mat2](./rc-js-util.mat2.md)<!-- -->. |
@@ -181,7 +181,7 @@
 |  [IMemoryUtilBindings](./rc-js-util.imemoryutilbindings.md) |  |
 |  [INormalizedDataView](./rc-js-util.inormalizeddataview.md) | Provides a way to set a value on a <code>DataView</code> without needing to know the types at the point of setting. Use [NormalizedDataViewProvider](./rc-js-util.normalizeddataviewprovider.md) to get an instance. |
 |  [INumericKeyedDictionary](./rc-js-util.inumerickeyeddictionary.md) |  |
-|  [IOnDestroy](./rc-js-util.iondestroy.md) |  |
+|  [IOnDestroy](./rc-js-util.iondestroy.md) | Provides a [ITemporaryListener](./rc-js-util.itemporarylistener.md) that is cleared on <code>onDestroy</code>. |
 |  [IOnFree](./rc-js-util.ionfree.md) |  |
 |  [IOnMemoryResize](./rc-js-util.ionmemoryresize.md) |  |
 |  [IRandomNumberGenerator](./rc-js-util.irandomnumbergenerator.md) |  |
@@ -202,7 +202,7 @@
 |  [ISharedArray](./rc-js-util.isharedarray.md) | Typed array representing a contiguous block of memory in wasm. |
 |  [ISharedArrayBindings](./rc-js-util.isharedarraybindings.md) |  |
 |  [ISharedObject](./rc-js-util.isharedobject.md) | Holds a reference to wasm object. |
-|  [ITemporaryListener](./rc-js-util.itemporarylistener.md) |  |
+|  [ITemporaryListener](./rc-js-util.itemporarylistener.md) | Provides a communication channel via callbacks which can be easily cleared &amp; copied. |
 |  [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md) | Defines utility methods for creating typed array tuples. |
 |  [IVec2Ctor](./rc-js-util.ivec2ctor.md) | Constructor for [Vec2](./rc-js-util.vec2.md)<!-- -->. |
 |  [IVec3Ctor](./rc-js-util.ivec3ctor.md) | Constructor for [Vec3](./rc-js-util.vec3.md)<!-- -->. |

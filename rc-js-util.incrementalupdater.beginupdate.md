@@ -4,6 +4,8 @@
 
 ## IncrementalUpdater.beginUpdate() method
 
+Start a new update cycle. If an update was already in progress it will be cancelled.
+
 <b>Signature:</b>
 
 ```typescript

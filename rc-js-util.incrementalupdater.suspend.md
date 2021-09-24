@@ -4,6 +4,8 @@
 
 ## IncrementalUpdater.suspend() method
 
+Suspends the current task if one is active.
+
 <b>Signature:</b>
 
 ```typescript

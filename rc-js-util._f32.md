@@ -4,6 +4,7 @@
 
 ## \_F32 class
 
+Utilities relating to single precision floats.
 
 <b>Signature:</b>
 

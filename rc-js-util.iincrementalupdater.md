@@ -4,6 +4,7 @@
 
 ## IIncrementalUpdater interface
 
+Performs update operations once every `waitPeriod` until the iterator returned by [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) is exhausted.
 
 <b>Signature:</b>
 
@@ -15,7 +16,7 @@ export interface IIncrementalUpdater
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [isUpdating](./rc-js-util.iincrementalupdater.isupdating.md) | boolean | Remains true while update is suspended. |
+|  [isUpdating](./rc-js-util.iincrementalupdater.isupdating.md) | boolean |  |
 
 ## Methods
 

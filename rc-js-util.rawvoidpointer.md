@@ -4,6 +4,7 @@
 
 ## RawVoidPointer class
 
+Provides a reference counted wrapper to a pointer `malloc`<!-- -->'d from JS and is `free`<!-- -->'d on reference count hitting 0.
 
 <b>Signature:</b>
 

@@ -4,6 +4,7 @@
 
 ## IOnDestroy interface
 
+Provides a [ITemporaryListener](./rc-js-util.itemporarylistener.md) that is cleared on `onDestroy`<!-- -->.
 
 <b>Signature:</b>
 

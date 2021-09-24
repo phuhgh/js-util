@@ -4,6 +4,7 @@
 
 ## NestableError class
 
+Composable error, useful for automatically generating user friendly localized error messages.
 
 <b>Signature:</b>
 

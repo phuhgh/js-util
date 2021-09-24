@@ -4,6 +4,7 @@
 
 ## IDirtyCheckedUniqueCollection interface
 
+Provides a unique array with O(1) add &amp; remove, with dirty checking on `getArray`<!-- -->.
 
 <b>Signature:</b>
 

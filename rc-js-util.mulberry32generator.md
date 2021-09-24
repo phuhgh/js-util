@@ -4,6 +4,7 @@
 
 ## Mulberry32Generator class
 
+Random number generator.
 
 <b>Signature:</b>
 

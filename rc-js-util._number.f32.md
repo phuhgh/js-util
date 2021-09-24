@@ -4,6 +4,8 @@
 
 ## \_Number.f32 property
 
+Utilities relating to single precision floats.
+
 <b>Signature:</b>
 
 ```typescript

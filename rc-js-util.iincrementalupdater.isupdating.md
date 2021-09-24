@@ -4,8 +4,6 @@
 
 ## IIncrementalUpdater.isUpdating property
 
-Remains true while update is suspended.
-
 <b>Signature:</b>
 
 ```typescript

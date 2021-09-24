@@ -9,5 +9,5 @@ Iterate over an iterator until it's done, discarding the results.
 <b>Signature:</b>
 
 ```typescript
-static consumeAll: typeof iteratorConsumeAll;
+static readonly consumeAll: typeof iteratorConsumeAll;
 ```

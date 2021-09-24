@@ -4,6 +4,7 @@
 
 ## AOnDestroy class
 
+Provides a communication channel via callbacks which can be easily cleared &amp; copied.
 
 <b>Signature:</b>
 

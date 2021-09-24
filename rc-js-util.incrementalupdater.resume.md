@@ -4,6 +4,8 @@
 
 ## IncrementalUpdater.resume() method
 
+Resumes the currently suspended task. It is an error to call this if there is not a currently suspended task.
+
 <b>Signature:</b>
 
 ```typescript

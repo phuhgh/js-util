@@ -4,6 +4,7 @@
 
 ## \_F64 class
 
+Utilities relating to double precision floats.
 
 <b>Signature:</b>
 

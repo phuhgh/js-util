@@ -4,6 +4,7 @@
 
 ## IncrementalUpdater class
 
+Performs update operations once every `waitPeriod` until the iterator returned by [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) is exhausted.
 
 <b>Signature:</b>
 
@@ -22,14 +23,14 @@ export declare class IncrementalUpdater implements IIncrementalUpdater
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isUpdating](./rc-js-util.incrementalupdater.isupdating.md) |  | boolean |  |
+|  [isUpdating](./rc-js-util.incrementalupdater.isupdating.md) |  | boolean | Remains true while the update is suspended. |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [beginUpdate()](./rc-js-util.incrementalupdater.beginupdate.md) |  |  |
-|  [cancel()](./rc-js-util.incrementalupdater.cancel.md) |  |  |
-|  [resume()](./rc-js-util.incrementalupdater.resume.md) |  |  |
-|  [suspend()](./rc-js-util.incrementalupdater.suspend.md) |  |  |
+|  [beginUpdate()](./rc-js-util.incrementalupdater.beginupdate.md) |  | Start a new update cycle. If an update was already in progress it will be cancelled. |
+|  [cancel()](./rc-js-util.incrementalupdater.cancel.md) |  | Cancel the update and clear the task. |
+|  [resume()](./rc-js-util.incrementalupdater.resume.md) |  | Resumes the currently suspended task. It is an error to call this if there is not a currently suspended task. |
+|  [suspend()](./rc-js-util.incrementalupdater.suspend.md) |  | Suspends the current task if one is active. |
 
