@@ -1,4 +1,4 @@
-import { ATypedArrayTuple } from "../a-typed-array-tuple";
+import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat2Ctor } from "./get-mat2-ctor";
@@ -36,7 +36,8 @@ export interface IReadonlyMat2<TArray extends TTypedArray>
         | "update"
         | "setValueAt"
         | "setRow"
-        | "copyFromBuffer">
+        | "copyFromBuffer"
+        | TTypedArrayTupleMutativeMethods>
 {
 }
 

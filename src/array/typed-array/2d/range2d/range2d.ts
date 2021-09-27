@@ -7,6 +7,7 @@ import { IReadonlyMat3, Mat3 } from "../../mat3/mat3";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
 import { TPickExcept } from "../../../../typescript/t-pick-except";
+import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple";
 
 /**
  * @public
@@ -43,7 +44,8 @@ export interface IReadonlyRange2d<TArray extends TTypedArray>
         | "ensureAABB"
         | "ensureMinRange"
         | "translateBy"
-        | "copyFromBuffer">
+        | "copyFromBuffer"
+        | TTypedArrayTupleMutativeMethods>
 {
 }
 

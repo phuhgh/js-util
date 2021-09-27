@@ -1,4 +1,4 @@
-import { ATypedArrayTuple } from "../a-typed-array-tuple";
+import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec3Ctor } from "./get-vec3-ctor";
@@ -36,7 +36,8 @@ export interface IReadonlyVec3<TArray extends TTypedArray>
         | "setX"
         | "setY"
         | "setZ"
-        | "copyFromBuffer">
+        | "copyFromBuffer"
+        | TTypedArrayTupleMutativeMethods>
 {
 }
 

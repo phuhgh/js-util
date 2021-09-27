@@ -21,7 +21,7 @@ export { _String } from "./string/_string";
 
 export { TGetComparisonValueAtIndex } from "./array/impl/binary-find-insertion-index";
 export { TTypedArrayCtor } from "./array/typed-array/t-typed-array-ctor";
-export { ATypedArrayTuple, TDecayedTypedArrayTuple, TExtractIndexes } from "./array/typed-array/a-typed-array-tuple";
+export { ATypedArrayTuple, TDecayedTypedArrayTuple, TExtractIndexes, TTypedArrayTupleMutativeMethods } from "./array/typed-array/a-typed-array-tuple";
 export { ITypedArrayTupleFactory } from "./array/typed-array/i-typed-array-tuple-factory";
 export { Margin2d, TF32Margin2d, TMargin2dCtorArgs, IMargin2dCtor, TF64Margin2d, IReadonlyMargin2d } from "./array/typed-array/2d/margin2d/margin2d";
 export { Range2d, TF32Range2d, TRange2dCtorArgs, IRange2dCtor, TF64Range2d, IReadonlyRange2d } from "./array/typed-array/2d/range2d/range2d";

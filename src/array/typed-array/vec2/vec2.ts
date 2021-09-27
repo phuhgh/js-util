@@ -1,4 +1,4 @@
-import { ATypedArrayTuple } from "../a-typed-array-tuple";
+import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
 import { IReadonlyMat3 } from "../mat3/mat3";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
@@ -39,7 +39,8 @@ export interface IReadonlyVec2<TArray extends TTypedArray>
         | "setY"
         | "bound2d"
         | "translate2d"
-        | "copyFromBuffer">
+        | "copyFromBuffer"
+        | TTypedArrayTupleMutativeMethods>
 {
 }
 

@@ -1,4 +1,4 @@
-import { ATypedArrayTuple } from "../a-typed-array-tuple";
+import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple";
 import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat4Ctor } from "./get-mat4-ctor";
@@ -52,7 +52,8 @@ export interface IReadonlyMat4<TArray extends TTypedArray>
     extends TPickExcept<Readonly<Mat4<TArray>>,
         | "setValueAt"
         | "setRow"
-        | "copyFromBuffer">
+        | "copyFromBuffer"
+        | TTypedArrayTupleMutativeMethods>
 {
 }
 

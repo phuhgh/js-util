@@ -6,6 +6,7 @@ import { populateTypedArrayConstructorMap } from "../../populate-typed-array-con
 import { Vec2 } from "../vec2";
 import { Mat2 } from "../../mat2/mat2";
 import { TPickExcept } from "../../../../typescript/t-pick-except";
+import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple";
 
 /**
  * @public
@@ -37,7 +38,8 @@ export interface IReadonlyRange1d<TArray extends TTypedArray>
         | "setMax"
         | "bound1d"
         | "translate1d"
-        | "copyFromBuffer">
+        | "copyFromBuffer"
+        | TTypedArrayTupleMutativeMethods>
 {
 }
 

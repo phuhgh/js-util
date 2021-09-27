@@ -5,6 +5,19 @@ import { TNeverFallback } from "../../typescript/t-never-fallback";
 
 /**
  * @public
+ * The method names of {@link ATypedArrayTuple} which mutate the array.
+ */
+export type TTypedArrayTupleMutativeMethods =
+    | "fill"
+    | "copyWithin"
+    | "reverse"
+    | "set"
+    | "sort"
+    | "subarray"
+    ;
+
+/**
+ * @public
  * Extract numerical indexes out of a type, if there aren't any fallback to number.
  */
 export type TExtractIndexes<T> = TNeverFallback<Extract<keyof T, number>, number>;
