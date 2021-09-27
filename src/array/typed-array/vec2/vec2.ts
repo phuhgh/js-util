@@ -147,9 +147,36 @@ export abstract class Vec2<TArray extends TTypedArray>
         throw new Error();
     }
 
+    /**
+     * Multiply `this` by `_value`.
+     */
+    public vec2Multiply<TResult extends TTypedArray = TArray>
+    (
+        _value: IReadonlyVec2<TTypedArray>,
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
+    {
+        throw new Error();
+    }
+
+
     public scalarDivide<TResult extends TTypedArray = TArray>
     (
         _value: number,
+        _result?: Vec2<TResult>,
+    )
+        : Vec2<TResult>
+    {
+        throw new Error();
+    }
+
+    /**
+     * Divide `this` by `_value`.
+     */
+    public vec2Divide<TResult extends TTypedArray = TArray>
+    (
+        _value: IReadonlyVec2<TTypedArray>,
         _result?: Vec2<TResult>,
     )
         : Vec2<TResult>

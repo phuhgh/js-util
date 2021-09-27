@@ -99,6 +99,19 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>
             return result;
         }
 
+        public vec2Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: IReadonlyVec2<TTypedArray>,
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
+        )
+            : Vec2<TResult>
+        {
+            result[0] = this[0] * value[0];
+            result[1] = this[1] * value[1];
+
+            return result;
+        }
+
         public override scalarMultiply<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             value: number,
@@ -108,6 +121,19 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>
         {
             result[0] = this[0] * value;
             result[1] = this[1] * value;
+
+            return result;
+        }
+
+        public vec2Divide<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: IReadonlyVec2<TTypedArray>,
+            result: Vec2<TResult> = this.constructor.factory.createOneEmpty() as Vec2<TResult>,
+        )
+            : Vec2<TResult>
+        {
+            result[0] = this[0] / value[0];
+            result[1] = this[1] / value[1];
 
             return result;
         }
