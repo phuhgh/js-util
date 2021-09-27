@@ -4,6 +4,7 @@
  */
 export interface IDirtyCheckedUniqueCollection<TItem>
 {
+    readonly isDirty: boolean;
     add(item: TItem): void;
     remove(item: TItem): void;
     clear(): void;
@@ -17,6 +18,8 @@ export interface IDirtyCheckedUniqueCollection<TItem>
  */
 export class DirtyCheckedUniqueCollection<TItem> implements IDirtyCheckedUniqueCollection<TItem>
 {
+    public isDirty = true;
+
     public constructor
     (
         itemsToCopy?: readonly TItem[] | ReadonlySet<TItem>,
@@ -66,5 +69,4 @@ export class DirtyCheckedUniqueCollection<TItem> implements IDirtyCheckedUniqueC
 
     private readonly itemsSet: Set<TItem>;
     private itemsArray: TItem[] = [];
-    private isDirty = true;
 }
