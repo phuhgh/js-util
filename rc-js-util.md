@@ -280,6 +280,7 @@
 |  [TTypedArray](./rc-js-util.ttypedarray.md) |  |
 |  [TTypedArrayCast](./rc-js-util.ttypedarraycast.md) | Typed array tuples of the same dimension but different storage type (e.g. float32 vs int32) are not structurally compatible by design. Where an implicit conversion is desired you can cast between typed array tuples of the same dimension using this utility type as described in the example. |
 |  [TTypedArrayCtor](./rc-js-util.ttypedarrayctor.md) |  |
+|  [TTypedArrayTupleMutativeMethods](./rc-js-util.ttypedarraytuplemutativemethods.md) | The method names of [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md) which mutate the array. |
 |  [TUnionToIntersection](./rc-js-util.tuniontointersection.md) |  |
 |  [TUnpackArray](./rc-js-util.tunpackarray.md) |  |
 |  [TUnpackIfArray](./rc-js-util.tunpackifarray.md) |  |

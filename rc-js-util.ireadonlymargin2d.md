@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IReadonlyMargin2d<TArray extends TTypedArray> extends TPickExcept<Readonly<Margin2d<TArray>>, "setLeft" | "setRight" | "setTop" | "setBottom" | "update" | "copyFromBuffer"> 
+export interface IReadonlyMargin2d<TArray extends TTypedArray> extends TPickExcept<Readonly<Margin2d<TArray>>, "setLeft" | "setRight" | "setTop" | "setBottom" | "update" | "copyFromBuffer" | TTypedArrayTupleMutativeMethods> 
 ```
-<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TArray&gt;&gt;, "setLeft" \| "setRight" \| "setTop" \| "setBottom" \| "update" \| "copyFromBuffer"&gt;
+<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TArray&gt;&gt;, "setLeft" \| "setRight" \| "setTop" \| "setBottom" \| "update" \| "copyFromBuffer" \| [TTypedArrayTupleMutativeMethods](./rc-js-util.ttypedarraytuplemutativemethods.md)<!-- -->&gt;
 

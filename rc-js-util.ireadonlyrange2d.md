@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IReadonlyRange2d<TArray extends TTypedArray> extends TPickExcept<Readonly<Range2d<TArray>>, "setXMin" | "setXMax" | "setYMin" | "setYMax" | "update" | "bound" | "ensureAABB" | "ensureMinRange" | "translateBy" | "copyFromBuffer"> 
+export interface IReadonlyRange2d<TArray extends TTypedArray> extends TPickExcept<Readonly<Range2d<TArray>>, "setXMin" | "setXMax" | "setYMin" | "setYMax" | "update" | "bound" | "ensureAABB" | "ensureMinRange" | "translateBy" | "copyFromBuffer" | TTypedArrayTupleMutativeMethods> 
 ```
-<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TArray&gt;&gt;, "setXMin" \| "setXMax" \| "setYMin" \| "setYMax" \| "update" \| "bound" \| "ensureAABB" \| "ensureMinRange" \| "translateBy" \| "copyFromBuffer"&gt;
+<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TArray&gt;&gt;, "setXMin" \| "setXMax" \| "setYMin" \| "setYMax" \| "update" \| "bound" \| "ensureAABB" \| "ensureMinRange" \| "translateBy" \| "copyFromBuffer" \| [TTypedArrayTupleMutativeMethods](./rc-js-util.ttypedarraytuplemutativemethods.md)<!-- -->&gt;
 
