@@ -19,6 +19,12 @@ export declare class DirtyCheckedUniqueCollection<TItem> implements IDirtyChecke
 |  --- | --- | --- |
 |  [(constructor)(itemsToCopy)](./rc-js-util.dirtycheckeduniquecollection._constructor_.md) |  | Constructs a new instance of the <code>DirtyCheckedUniqueCollection</code> class |
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [isDirty](./rc-js-util.dirtycheckeduniquecollection.isdirty.md) |  | boolean |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

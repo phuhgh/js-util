@@ -12,6 +12,12 @@ Provides a unique array with O(1) add &amp; remove, with dirty checking on `getA
 export interface IDirtyCheckedUniqueCollection<TItem> 
 ```
 
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [isDirty](./rc-js-util.idirtycheckeduniquecollection.isdirty.md) | boolean |  |
+
 ## Methods
 
 |  Method | Description |
