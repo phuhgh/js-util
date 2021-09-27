@@ -62,4 +62,6 @@ See static properties for constructors. Instances are not an extension of this c
 |  [subtract(\_vec, \_result)](./rc-js-util.vec2.subtract.md) |  |  |
 |  [translate2d(\_dx, \_dy)](./rc-js-util.vec2.translate2d.md) |  | Shifts this position by the arguments. |
 |  [update(\_x, \_y)](./rc-js-util.vec2.update.md) |  |  |
+|  [vec2Divide(\_value, \_result)](./rc-js-util.vec2.vec2divide.md) |  | Divide <code>this</code> by <code>_value</code>. |
+|  [vec2Multiply(\_value, \_result)](./rc-js-util.vec2.vec2multiply.md) |  | Multiply <code>this</code> by <code>_value</code>. |
 
