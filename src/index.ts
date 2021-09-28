@@ -43,7 +43,7 @@ export { ERgbaMasks, ERgbaShift } from "./colors/e-rgba-masks";
 export { RgbaColorPacker } from "./colors/rgba-color-packer";
 export { DebugProtectedView } from "./debug/debug-protected-view";
 export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localization";
-export { IncrementingIdentifierFactory} from "./identifiers/incrementing-identifier-factory";
+export { IncrementingIdentifierFactory } from "./identifiers/incrementing-identifier-factory";
 export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
 export { TListener } from "./eventing/t-listener";
@@ -53,6 +53,8 @@ export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-co
 export { TemporaryListener, ITemporaryListener } from "./lifecycle/temporary-listener";
 export { IDictionary } from "./typescript/i-dictionary";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary";
+export { IReadonlySetLike } from "./typescript/i-readonly-set-like";
+export { ISetLike} from "./typescript/i-set-like";
 export { TExtractTypeTypedArrayTuple } from "./typescript/t-extract-type-typed-array-tuple";
 export { TKeysOf } from "./typescript/t-keys-of";
 export { TNeverFallback } from "./typescript/t-never-fallback";

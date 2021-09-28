@@ -1,3 +1,5 @@
+import { ISetLike } from "../../typescript/i-set-like";
+
 /**
  * @public
  * Used with maps that store sets. Where a set exists for a given key the value will be removed from that set.
@@ -9,15 +11,15 @@
  * @remarks
  * See {@link (mapDeleteFromSet: 1)}.
  */
-export function mapDeleteFromSet<TKey, TValue>(map: Map<TKey, Set<TValue>>, key: TKey, value: TValue): boolean;
+export function mapDeleteFromSet<TKey, TValue>(map: Map<TKey, ISetLike<TValue>>, key: TKey, value: TValue): boolean;
 /**
  * @public
  * {@inheritDoc (mapDeleteFromSet: 1)}
  */
-export function mapDeleteFromSet<TKey extends object, TValue>(map: WeakMap<TKey, Set<TValue>>, key: TKey, value: TValue): boolean;
+export function mapDeleteFromSet<TKey extends object, TValue>(map: WeakMap<TKey, ISetLike<TValue>>, key: TKey, value: TValue): boolean;
 export function mapDeleteFromSet<TKey extends object, TValue>
 (
-    map: Map<TKey, Set<TValue>> | WeakMap<TKey, Set<TValue>>,
+    map: Map<TKey, ISetLike<TValue>> | WeakMap<TKey, ISetLike<TValue>>,
     key: TKey,
     value: TValue,
 )
