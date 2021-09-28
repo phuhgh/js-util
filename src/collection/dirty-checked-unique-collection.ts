@@ -22,6 +22,32 @@ export class DirtyCheckedUniqueCollection<TItem>
 {
     public isDirty = true;
 
+    public static mapInitializeAdd<TKey, TValue>(map: Map<TKey, IDirtyCheckedUniqueCollection<TValue>>, key: TKey, value: TValue): boolean;
+    public static mapInitializeAdd<TKey extends object, TValue>(map: WeakMap<TKey, IDirtyCheckedUniqueCollection<TValue>>, key: TKey, value: TValue): boolean;
+    public static mapInitializeAdd<TKey extends object, TValue>
+    (
+        map: Map<TKey, IDirtyCheckedUniqueCollection<TValue>> | WeakMap<TKey, IDirtyCheckedUniqueCollection<TValue>>,
+        key: TKey,
+        value: TValue,
+    )
+        : boolean
+    {
+        const collection = map.get(key);
+
+        if (collection == null)
+        {
+            const collection = new DirtyCheckedUniqueCollection<TValue>();
+            collection.add(value);
+            map.set(key, collection);
+
+            return true;
+        }
+        else
+        {
+            return collection.reportingAdd(value);
+        }
+    }
+
     public constructor
     (
         itemsToCopy?: readonly TItem[] | ReadonlySet<TItem>,
