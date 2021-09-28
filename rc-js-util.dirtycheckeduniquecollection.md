@@ -35,5 +35,7 @@ export declare class DirtyCheckedUniqueCollection<TItem> implements IDirtyChecke
 |  [getArray()](./rc-js-util.dirtycheckeduniquecollection.getarray.md) |  |  |
 |  [getSet()](./rc-js-util.dirtycheckeduniquecollection.getset.md) |  |  |
 |  [has(item)](./rc-js-util.dirtycheckeduniquecollection.has.md) |  |  |
+|  [mapInitializeAdd(map, key, value)](./rc-js-util.dirtycheckeduniquecollection.mapinitializeadd.md) | <code>static</code> |  |
+|  [mapInitializeAdd(map, key, value)](./rc-js-util.dirtycheckeduniquecollection.mapinitializeadd_1.md) | <code>static</code> |  |
 |  [reportingAdd(item)](./rc-js-util.dirtycheckeduniquecollection.reportingadd.md) |  |  |
 
