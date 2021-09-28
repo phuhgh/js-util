@@ -9,8 +9,9 @@ Provides a unique array with O(1) add &amp; remove, with dirty checking on `getA
 <b>Signature:</b>
 
 ```typescript
-export interface IDirtyCheckedUniqueCollection<TItem> 
+export interface IDirtyCheckedUniqueCollection<TItem> extends ISetLike<TItem> 
 ```
+<b>Extends:</b> [ISetLike](./rc-js-util.isetlike.md)<!-- -->&lt;TItem&gt;
 
 ## Properties
 
@@ -22,9 +23,6 @@ export interface IDirtyCheckedUniqueCollection<TItem>
 
 |  Method | Description |
 |  --- | --- |
-|  [add(item)](./rc-js-util.idirtycheckeduniquecollection.add.md) |  |
-|  [clear()](./rc-js-util.idirtycheckeduniquecollection.clear.md) |  |
-|  [delete(item)](./rc-js-util.idirtycheckeduniquecollection.delete.md) |  |
 |  [getArray()](./rc-js-util.idirtycheckeduniquecollection.getarray.md) |  |
 |  [getSet()](./rc-js-util.idirtycheckeduniquecollection.getset.md) |  |
 |  [reportingAdd(item)](./rc-js-util.idirtycheckeduniquecollection.reportingadd.md) |  |

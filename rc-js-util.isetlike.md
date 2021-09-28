@@ -17,5 +17,6 @@ export interface ISetLike<TItem> extends IReadonlySetLike<TItem>
 |  Method | Description |
 |  --- | --- |
 |  [add(item)](./rc-js-util.isetlike.add.md) |  |
+|  [clear()](./rc-js-util.isetlike.clear.md) |  |
 |  [delete(item)](./rc-js-util.isetlike.delete.md) |  |
 
