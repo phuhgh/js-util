@@ -4,13 +4,10 @@ import { ISetLike } from "../typescript/i-set-like";
  * @public
  * Provides a unique array with O(1) add & remove, with dirty checking on `getArray`.
  */
-export interface IDirtyCheckedUniqueCollection<TItem>
+export interface IDirtyCheckedUniqueCollection<TItem> extends ISetLike<TItem>
 {
     readonly isDirty: boolean;
-    add(item: TItem): void;
     reportingAdd(item: TItem): boolean;
-    delete(item: TItem): boolean;
-    clear(): void;
     getArray(): readonly TItem[];
     getSet(): ReadonlySet<TItem>;
 }
