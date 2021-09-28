@@ -194,11 +194,13 @@
 |  [IReadonlyMat4](./rc-js-util.ireadonlymat4.md) | [Mat4](./rc-js-util.mat4.md)<!-- -->. |
 |  [IReadonlyRange1d](./rc-js-util.ireadonlyrange1d.md) | [Range1d](./rc-js-util.range1d.md)<!-- -->. |
 |  [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md) | [Range2d](./rc-js-util.range2d.md)<!-- -->. |
+|  [IReadonlySetLike](./rc-js-util.ireadonlysetlike.md) |  |
 |  [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md) | [Vec2](./rc-js-util.vec2.md)<!-- -->. |
 |  [IReadonlyVec3](./rc-js-util.ireadonlyvec3.md) | [Vec3](./rc-js-util.vec3.md)<!-- -->. |
 |  [IReadonlyVec4](./rc-js-util.ireadonlyvec4.md) | [Vec4](./rc-js-util.vec4.md)<!-- -->. |
 |  [IReferenceCounted](./rc-js-util.ireferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. |
 |  [IReferenceCountedPtr](./rc-js-util.ireferencecountedptr.md) | Wrapper of wasm object. NB The object is pre-claimed (ref count 1) on creation. On free the pointer will be set to null. |
+|  [ISetLike](./rc-js-util.isetlike.md) |  |
 |  [ISharedArray](./rc-js-util.isharedarray.md) | Typed array representing a contiguous block of memory in wasm. |
 |  [ISharedArrayBindings](./rc-js-util.isharedarraybindings.md) |  |
 |  [ISharedObject](./rc-js-util.isharedobject.md) | Holds a reference to wasm object. |

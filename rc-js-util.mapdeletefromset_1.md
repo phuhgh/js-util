@@ -9,14 +9,14 @@ Used with maps that store sets. Where a set exists for a given key the value wil
 <b>Signature:</b>
 
 ```typescript
-export declare function mapDeleteFromSet<TKey extends object, TValue>(map: WeakMap<TKey, Set<TValue>>, key: TKey, value: TValue): boolean;
+export declare function mapDeleteFromSet<TKey extends object, TValue>(map: WeakMap<TKey, ISetLike<TValue>>, key: TKey, value: TValue): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  map | WeakMap&lt;TKey, Set&lt;TValue&gt;&gt; | The <code>Map</code> to check. May be modified. |
+|  map | WeakMap&lt;TKey, [ISetLike](./rc-js-util.isetlike.md)<!-- -->&lt;TValue&gt;&gt; | The <code>Map</code> to check. May be modified. |
 |  key | TKey | The key to lookup in <code>map</code>. |
 |  value | TValue | The value to remove. |
 

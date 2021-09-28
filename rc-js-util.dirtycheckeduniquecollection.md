@@ -9,9 +9,9 @@ Provides a unique array with O(1) add &amp; remove, with dirty checking on `getA
 <b>Signature:</b>
 
 ```typescript
-export declare class DirtyCheckedUniqueCollection<TItem> implements IDirtyCheckedUniqueCollection<TItem> 
+export declare class DirtyCheckedUniqueCollection<TItem> implements IDirtyCheckedUniqueCollection<TItem>, ISetLike<TItem> 
 ```
-<b>Implements:</b> [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md)<!-- -->&lt;TItem&gt;
+<b>Implements:</b> [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md)<!-- -->&lt;TItem&gt;, [ISetLike](./rc-js-util.isetlike.md)<!-- -->&lt;TItem&gt;
 
 ## Constructors
 
@@ -31,8 +31,9 @@ export declare class DirtyCheckedUniqueCollection<TItem> implements IDirtyChecke
 |  --- | --- | --- |
 |  [add(item)](./rc-js-util.dirtycheckeduniquecollection.add.md) |  |  |
 |  [clear()](./rc-js-util.dirtycheckeduniquecollection.clear.md) |  |  |
+|  [delete(item)](./rc-js-util.dirtycheckeduniquecollection.delete.md) |  |  |
 |  [getArray()](./rc-js-util.dirtycheckeduniquecollection.getarray.md) |  |  |
 |  [getSet()](./rc-js-util.dirtycheckeduniquecollection.getset.md) |  |  |
 |  [has(item)](./rc-js-util.dirtycheckeduniquecollection.has.md) |  |  |
-|  [remove(item)](./rc-js-util.dirtycheckeduniquecollection.remove.md) |  |  |
+|  [reportingAdd(item)](./rc-js-util.dirtycheckeduniquecollection.reportingadd.md) |  |  |
 

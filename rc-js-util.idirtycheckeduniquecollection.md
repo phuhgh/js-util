@@ -24,7 +24,8 @@ export interface IDirtyCheckedUniqueCollection<TItem>
 |  --- | --- |
 |  [add(item)](./rc-js-util.idirtycheckeduniquecollection.add.md) |  |
 |  [clear()](./rc-js-util.idirtycheckeduniquecollection.clear.md) |  |
+|  [delete(item)](./rc-js-util.idirtycheckeduniquecollection.delete.md) |  |
 |  [getArray()](./rc-js-util.idirtycheckeduniquecollection.getarray.md) |  |
 |  [getSet()](./rc-js-util.idirtycheckeduniquecollection.getset.md) |  |
-|  [remove(item)](./rc-js-util.idirtycheckeduniquecollection.remove.md) |  |
+|  [reportingAdd(item)](./rc-js-util.idirtycheckeduniquecollection.reportingadd.md) |  |
 
