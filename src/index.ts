@@ -136,6 +136,7 @@ export { iteratorConsumeAll } from "./iterators/impl/iterator-consume-all";
 export { IncrementalUpdater, IIncrementalUpdater, IIncrementallyUpdatable } from "./iterators/incremental-updater";
 export { mapAddToSet } from "./map/impl/map-add-to-set";
 export { mapArrayMap } from "./map/impl/map-array-map";
+export { mapClearingDeleteFromSet } from "./map/impl/map-clearing-delete-from-set";
 export { mapConcat } from "./map/impl/map-concat";
 export { mapDeleteFromSet } from "./map/impl/map-delete-from-set";
 export { mapDeleteGet } from "./map/impl/map-delete-get";

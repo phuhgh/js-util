@@ -17,6 +17,7 @@ import { mapSymmetricDifference } from "./impl/map-symmetric-difference";
 import { mapUnion } from "./impl/map-union";
 import { mapIntersect } from "./impl/map-intersect";
 import { mapConcat } from "./impl/map-concat";
+import { mapClearingDeleteFromSet } from "./impl/map-clearing-delete-from-set";
 
 /**
  * @public
@@ -38,6 +39,9 @@ export class _Map
 
     /** {@inheritDoc (mapDeleteGet: 1)} */
     public static readonly deleteGet = mapDeleteGet;
+
+    /** {@inheritDoc (mapClearingDeleteFromSet: 1)} */
+    public static readonly clearingDeleteFromSet = mapClearingDeleteFromSet;
 
     /** {@inheritDoc mapEntriesToArray} */
     public static readonly entriesToArray = mapEntriesToArray;

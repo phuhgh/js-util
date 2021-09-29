@@ -20,6 +20,11 @@ export class DirtyCheckedUniqueCollection<TItem>
     implements IDirtyCheckedUniqueCollection<TItem>,
                ISetLike<TItem>
 {
+    public get size(): number
+    {
+        return this.itemsSet.size;
+    }
+
     public isDirty = true;
 
     public static mapInitializeAdd<TKey, TValue>(map: Map<TKey, IDirtyCheckedUniqueCollection<TValue>>, key: TKey, value: TValue): boolean;
