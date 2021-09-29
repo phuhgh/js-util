@@ -24,6 +24,7 @@ export declare class DirtyCheckedUniqueCollection<TItem> implements IDirtyChecke
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [isDirty](./rc-js-util.dirtycheckeduniquecollection.isdirty.md) |  | boolean |  |
+|  [size](./rc-js-util.dirtycheckeduniquecollection.size.md) |  | number |  |
 
 ## Methods
 

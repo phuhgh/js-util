@@ -12,6 +12,12 @@ export interface ISetLike<TItem> extends IReadonlySetLike<TItem>
 ```
 <b>Extends:</b> [IReadonlySetLike](./rc-js-util.ireadonlysetlike.md)<!-- -->&lt;TItem&gt;
 
+## Properties
+
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [size](./rc-js-util.isetlike.size.md) | number |  |
+
 ## Methods
 
 |  Method | Description |

@@ -18,6 +18,7 @@ export declare class _Map
 |  --- | --- | --- | --- |
 |  [addToSet](./rc-js-util._map.addtoset.md) | <code>static</code> | typeof mapAddToSet | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [arrayMap](./rc-js-util._map.arraymap.md) | <code>static</code> | typeof mapArrayMap | Like <code>Array.map</code> but with a <code>Map</code> input. Outputs an <code>Array</code>. |
+|  [clearingDeleteFromSet](./rc-js-util._map.clearingdeletefromset.md) | <code>static</code> | typeof mapClearingDeleteFromSet | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set, if it is empty after removal, then the set is deleted. |
 |  [concat](./rc-js-util._map.concat.md) | <code>static</code> | typeof mapConcat | Used with maps that store arrays. Where an array exists for a given key the values will be appended to that array, otherwise a copy of values array will be inserted. |
 |  [deleteFromSet](./rc-js-util._map.deletefromset.md) | <code>static</code> | typeof mapDeleteFromSet | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set. |
 |  [deleteGet](./rc-js-util._map.deleteget.md) | <code>static</code> | typeof mapDeleteGet | Get the stored value if present, then delete the key. |

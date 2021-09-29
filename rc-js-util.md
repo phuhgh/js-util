@@ -112,6 +112,8 @@
 |  [mapAddToSet(map, key, value)](./rc-js-util.mapaddtoset.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [mapAddToSet(map, key, value)](./rc-js-util.mapaddtoset_1.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [mapArrayMap(map, callback)](./rc-js-util.maparraymap.md) | Like <code>Array.map</code> but with a <code>Map</code> input. Outputs an <code>Array</code>. |
+|  [mapClearingDeleteFromSet(map, key, value)](./rc-js-util.mapclearingdeletefromset.md) | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set, if it is empty after removal, then the set is deleted. |
+|  [mapClearingDeleteFromSet(map, key, value)](./rc-js-util.mapclearingdeletefromset_1.md) | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set. |
 |  [mapConcat(map, key, values)](./rc-js-util.mapconcat.md) | Used with maps that store arrays. Where an array exists for a given key the values will be appended to that array, otherwise a copy of values array will be inserted. |
 |  [mapConcat(map, key, values)](./rc-js-util.mapconcat_1.md) | Used with maps that store arrays. Where an array exists for a given key the values will be appended to that array, otherwise a copy of values array will be inserted. |
 |  [mapDeleteFromSet(map, key, value)](./rc-js-util.mapdeletefromset.md) | Used with maps that store sets. Where a set exists for a given key the value will be removed from that set. |
