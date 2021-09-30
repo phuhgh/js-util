@@ -3,6 +3,7 @@ import { _Debug } from "./_debug";
 import { arrayContains } from "../array/impl/array-contains";
 import { IDebugProtectedView } from "rc-js-util-globals";
 import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor";
+import { IDictionary } from "../typescript/i-dictionary";
 
 /**
  * @public
@@ -70,12 +71,6 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
 
     public static unwrapProtectedView<T extends object>(view: T): T
     {
-        // FIXME - when api extractor gets updated, make this the base one
-        interface IDictionary<T>
-        {
-            [index: string | symbol]: T;
-        }
-
         const hiddenView = (view as IDictionary<T | undefined>)[DebugProtectedView.originalViewKey];
 
         if (hiddenView == null)
@@ -84,7 +79,7 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
             return view;
         }
 
-        if(!(view as IDictionary<boolean>)[DebugProtectedView.isViewValidKey])
+        if (!(view as IDictionary<boolean>)[DebugProtectedView.isViewValidKey])
         {
             _Debug.error((view as IDictionary<string>)[DebugProtectedView.debugMessageKey]);
         }

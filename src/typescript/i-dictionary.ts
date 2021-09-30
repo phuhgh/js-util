@@ -3,5 +3,5 @@
  */
 export interface IDictionary<T>
 {
-    [index: string]: T;
+    [index: string | symbol]: T;
 }
