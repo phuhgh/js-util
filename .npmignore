@@ -7,3 +7,4 @@
 !cpp/CMakeLists.txt
 !README.md
 !components.spdx
+!docs/**/*

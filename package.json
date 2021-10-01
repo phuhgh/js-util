@@ -14,7 +14,7 @@
     "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },
   "dependencies": {
-    "rc-js-util-globals": "^5.0.0",
+    "rc-js-util-globals": "^6.0.1",
     "tslib": "^2.3.1"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-export { IDebugWeakStore, IDebugSharedObject, IDebugSharedObjectLifeCycleChecks, TDebugListener, IDebugProtectedView, IDebugWeakBroadcastEvent } from "rc-js-util-globals/index";
+export { IDebugWeakStore, IDebugSharedObject, IDebugSharedObjectLifeCycleChecks, TDebugListener, IDebugProtectedView, IDebugWeakBroadcastEvent, IStandardDebugFlags } from "rc-js-util-globals/index";
 
 export { RcJsUtilDebugImpl } from "./debug/debug-namepace";
 export { Emscripten } from "../external/emscripten";

@@ -91,7 +91,7 @@ export interface IStandardDebugFlags
     /**
      * Enable verbose logging of memory allocations, very chatty.
      */
-    DEBUG_VERBOSE_MEMORY_MANAGEMENT: boolean;
+    DEBUG_VERBOSE_MEMORY_MANAGEMENT: "DEBUG_VERBOSE_MEMORY_MANAGEMENT";
 }
 
 declare global
