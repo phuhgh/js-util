@@ -52,7 +52,7 @@ export interface IDebugSharedObjectLifeCycleChecks
 /**
  * @public
  * Factory for creating proxy objects that can be invalidated later. Once invalidated any property
- * read that wasn't explicity marked safe will cause a debug error. Available in debug contexts only.
+ * read that wasn't explicitly marked safe will cause a debug error. Available in debug contexts only.
  */
 export interface IDebugProtectedView<_T extends object>
 {
@@ -64,6 +64,34 @@ export interface IDebugProtectedView<_T extends object>
      * Create a proxy to the view, if invalidate called then access of non `safeKeys` will cause a debug error.
      */
     createProtectedView<T extends object>(view: T): T;
+}
+
+/**
+ * @public
+ * The debug flags included with rc-js-util
+ */
+export interface IStandardDebugFlags
+{
+    /**
+     * This can be set in dead code removal tools to trim debug code.
+     */
+    DEBUG_MODE: "DEBUG_MODE",
+    /**
+     * Prevents hitting assert / error breakpoints, useful when debugging tests.
+     */
+    DEBUG_DISABLE_BREAKPOINT: "DEBUG_DISABLE_BREAKPOINT";
+    /**
+     * Enable verbose logging.
+     */
+    DEBUG_VERBOSE: "DEBUG_VERBOSE";
+    /**
+     * Disable debug checks that do not run in constant time.
+     */
+    DEBUG_DISABLE_EXPENSIVE_CHECKS: "DEBUG_DISABLE_EXPENSIVE_CHECKS";
+    /**
+     * Enable verbose logging of memory allocations, very chatty.
+     */
+    DEBUG_VERBOSE_MEMORY_MANAGEMENT: boolean;
 }
 
 declare global
@@ -85,10 +113,6 @@ declare global
      */
     const DEBUG_DISABLE_EXPENSIVE_CHECKS: boolean;
     /**
-     * Checks that are a wee bit autistic.
-     */
-    const DEBUG_PEDANTIC: boolean;
-    /**
      * Enable verbose logging of memory allocations, very chatty.
      */
     const DEBUG_VERBOSE_MEMORY_MANAGEMENT: boolean;
@@ -105,13 +129,7 @@ declare global
         export const uniquePointers: Set<number>;
     }
 
-    interface RcJsUtilDebugFlags
+    interface RcJsUtilDebugFlags extends IStandardDebugFlags
     {
-        DEBUG_MODE: "DEBUG_MODE",
-        DEBUG_DISABLE_BREAKPOINT: "DEBUG_DISABLE_BREAKPOINT";
-        DEBUG_VERBOSE: "DEBUG_VERBOSE";
-        DEBUG_DISABLE_EXPENSIVE_CHECKS: "DEBUG_DISABLE_EXPENSIVE_CHECKS";
-        DEBUG_PEDANTIC: "DEBUG_PEDANTIC";
-        DEBUG_VERBOSE_MEMORY_MANAGEMENT: "DEBUG_VERBOSE_MEMORY_MANAGEMENT";
     }
 }
