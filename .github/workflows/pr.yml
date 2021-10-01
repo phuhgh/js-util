@@ -15,7 +15,7 @@ jobs:
         run: sudo apt-get install ninja-build
 
       - name: Install emsdk
-        uses: mymindstorm/setup-emsdk@v8
+        uses: mymindstorm/setup-emsdk@v10
         with:
           version: 'latest'
 

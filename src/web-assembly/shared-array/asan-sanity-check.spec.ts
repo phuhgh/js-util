@@ -1,6 +1,5 @@
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module";
-import { SharedArray, TF32SharedArray } from "./shared-array";
-import { applyLabel, debugIt } from "../../test-utils";
+import { debugIt } from "../../test-utils";
 import { Emscripten } from "../../../external/emscripten";
 import { IJsUtilBindings } from "../i-js-util-bindings";
 
@@ -11,24 +10,16 @@ const asanTestModule = require("../../../external/asan-test-module");
 describe("=> asan sanity check", () =>
 {
     const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
-    let leakedShared: TF32SharedArray;
 
     beforeAll(async () =>
     {
         await testModule.initialize();
-
-        applyLabel("asan sanity check beforeEach", () =>
-        {
-            leakedShared = SharedArray.createOneF32(testModule.wrapper, 8, true);
-            const shared = SharedArray.createOneF32(testModule.wrapper, 8, true);
-            shared.sharedObject.release();
-            // oh noes, we missed one
-        });
     });
 
     debugIt("| throws when the program ends and memory has not been released", async () =>
     {
-        expect(() => testModule.endEmscriptenProgram()).toThrow();
-        leakedShared.sharedObject.release();
+        const address = testModule.wrapper.instance._malloc(12);
+        testModule.wrapper.instance._free(address);
+        expect(() => testModule.wrapper.instance._free(address));
     });
 });
