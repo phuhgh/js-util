@@ -12,10 +12,6 @@ Wrapper of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/J
 export interface IDebugSharedObjectLifeCycleChecks
 ```
 
-## Remarks
-
-The FinalizationRegistry's behavior is very unpredictable (and where exceptions are concerned, seemingly prone to race conditions), by default suspected leaks are not reported. You can opt-in to these checks by enabling `DEBUG_PEDANTIC` (error on leak) or `DEBUG_VERBOSE` (log on error).
-
 ## Methods
 
 |  Method | Description |

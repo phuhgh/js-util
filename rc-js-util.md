@@ -163,7 +163,7 @@
 |  --- | --- |
 |  [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) | Simple one to many communication channel. Proxies the arguments of emit to each listener. |
 |  [IDebugBindings](./rc-js-util.idebugbindings.md) |  |
-|  [IDebugProtectedView](./rc-js-util.idebugprotectedview.md) | Factory for creating proxy objects that can be invalidated later. Once invalidated any property read that wasn't explicity marked safe will cause a debug error. Available in debug contexts only. |
+|  [IDebugProtectedView](./rc-js-util.idebugprotectedview.md) | Factory for creating proxy objects that can be invalidated later. Once invalidated any property read that wasn't explicitly marked safe will cause a debug error. Available in debug contexts only. |
 |  [IDebugSharedObject](./rc-js-util.idebugsharedobject.md) | See [ISharedObject](./rc-js-util.isharedobject.md)<!-- -->. |
 |  [IDebugSharedObjectLifeCycleChecks](./rc-js-util.idebugsharedobjectlifecyclechecks.md) | Wrapper of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) for shared objects, useful for checking if the shared object was properly disposed. Available in debug contexts only. |
 |  [IDebugWeakBroadcastEvent](./rc-js-util.idebugweakbroadcastevent.md) | Like [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) but without holding strong references. Available in debug contexts only. |
@@ -206,6 +206,7 @@
 |  [ISharedArray](./rc-js-util.isharedarray.md) | Typed array representing a contiguous block of memory in wasm. |
 |  [ISharedArrayBindings](./rc-js-util.isharedarraybindings.md) |  |
 |  [ISharedObject](./rc-js-util.isharedobject.md) | Holds a reference to wasm object. |
+|  [IStandardDebugFlags](./rc-js-util.istandarddebugflags.md) | The debug flags included with rc-js-util |
 |  [ITemporaryListener](./rc-js-util.itemporarylistener.md) | Provides a communication channel via callbacks which can be easily cleared &amp; copied. |
 |  [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md) | Defines utility methods for creating typed array tuples. |
 |  [IVec2Ctor](./rc-js-util.ivec2ctor.md) | Constructor for [Vec2](./rc-js-util.vec2.md)<!-- -->. |

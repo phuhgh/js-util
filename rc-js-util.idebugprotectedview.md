@@ -4,7 +4,7 @@
 
 ## IDebugProtectedView interface
 
-Factory for creating proxy objects that can be invalidated later. Once invalidated any property read that wasn't explicity marked safe will cause a debug error. Available in debug contexts only.
+Factory for creating proxy objects that can be invalidated later. Once invalidated any property read that wasn't explicitly marked safe will cause a debug error. Available in debug contexts only.
 
 <b>Signature:</b>
 
