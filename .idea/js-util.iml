@@ -12,6 +12,8 @@
       <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/cpp/lib" />
       <excludeFolder url="file://$MODULE_DIR$/cpp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/plugins/test-util/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/.vs" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

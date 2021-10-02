@@ -1,3 +1,4 @@
+env node scripts/extract-cpp-names.js bin/src/cpp.module.js > cpp/exported-names.txt || exit
 cd cpp || exit
 rm -rf build
 mkdir build
