@@ -34,10 +34,10 @@ void f32SharedArray_delete(JsUtil::SharedArray<float> * sharedArray);
 
 // float 64
 EMSCRIPTEN_KEEPALIVE
-JsUtil::SharedArray<double> * f64SharedArray_createOne(size_t size);
+JsUtil::SharedArray<double> * f64SharedArray_createOne(size_t size, bool clearMemory);
 
 EMSCRIPTEN_KEEPALIVE
-double const * f64SharedArray_getArrayAddress(JsUtil::SharedArray<double> * sharedArray, bool clearMemory);
+double const * f64SharedArray_getArrayAddress(JsUtil::SharedArray<double> * sharedArray);
 
 EMSCRIPTEN_KEEPALIVE
 void f64SharedArray_delete(JsUtil::SharedArray<double> * sharedArray);
