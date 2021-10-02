@@ -9,3 +9,4 @@
 !components.spdx
 !docs/**/*
 !scripts/extract-cpp-names.js
+!cpp/exported-names.txt

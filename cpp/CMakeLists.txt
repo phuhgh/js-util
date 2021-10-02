@@ -26,8 +26,8 @@ set(SOURCE_FILES
 if (${BUILD_JSUTIL_TEST})
     string(SUBSTRING "${RC_JS_EXPORTED_NAMES}" 1 -1 EXPORTED_NAMES)
     string(REPLACE ";"  "','" EXPORTED_NAMES "${EXPORTED_NAMES}")
-    set(CommonLinkFlags "-O0 -g -s EXPORTED_FUNCTIONS=['${EXPORTED_NAMES}'] -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=2 -s NODEJS_CATCH_REJECTION=0 -s NODEJS_CATCH_EXIT=0 -s IMPORTED_MEMORY -s MODULARIZE=1 -s LLD_REPORT_UNDEFINED --no-entry")
-    set(CommonCompileFlags "-O0 -g")
+    set(CommonLinkFlags "-O0 -g3 -s EXPORTED_FUNCTIONS=['${EXPORTED_NAMES}'] -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=2 -s NODEJS_CATCH_REJECTION=0 -s NODEJS_CATCH_EXIT=0 -s IMPORTED_MEMORY -s MODULARIZE=1 -s LLD_REPORT_UNDEFINED --no-entry")
+    set(CommonCompileFlags "-O0 -g3")
 
     add_executable(asan-test-module "${SOURCE_FILES}")
     set_target_properties(asan-test-module PROPERTIES
