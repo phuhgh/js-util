@@ -3,6 +3,84 @@
 import { _Debug, RcJsUtilDebugImpl } from "rc-js-util";
 import { setDefaultUnitTestFlags } from "rc-js-util/bin/src/debug/impl/set-default-unit-test-flags";
 
+export class ExpectColor
+{
+    public static reddish(color: Uint8Array, errorMessage: string): void
+    {
+        expect(color.length % 4)
+            .withContext("unexpected length")
+            .toBe(0);
+
+        for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
+        {
+            expectValueToBeNearTo(color[i], 255, 50, errorMessage + ` (index ${i})`);
+            expectValueToBeNearTo(color[i + 1], 0, 50, errorMessage + ` (index ${i})`);
+            expectValueToBeNearTo(color[i + 2], 0, 50, errorMessage + ` (index ${i})`);
+            expect(color[i + 3])
+                .withContext(errorMessage + ` (index ${i})`)
+                .toBe(255);
+        }
+    }
+
+    public static greenish(color: Uint8Array, errorMessage: string): void
+    {
+        expect(color.length % 4)
+            .withContext("unexpected length")
+            .toBe(0);
+
+        for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
+        {
+            expectValueToBeNearTo(color[i], 0, 50, errorMessage + ` (index ${i})`);
+            expectValueToBeNearTo(color[i + 1], 255, 50, errorMessage + ` (index ${i})`);
+            expectValueToBeNearTo(color[i + 2], 0, 50, errorMessage + ` (index ${i})`);
+            expect(color[i + 3])
+                .withContext(errorMessage + ` (index ${i})`)
+                .toBe(255);
+        }
+    }
+
+    public static blueish(color: Uint8Array, errorMessage: string): void
+    {
+        expect(color.length % 4)
+            .withContext("unexpected length")
+            .toBe(0);
+
+        for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
+        {
+            expectValueToBeNearTo(color[i], 0, 50, errorMessage + ` (index ${i})`);
+            expectValueToBeNearTo(color[i + 1], 0, 50, errorMessage + ` (index ${i})`);
+            expectValueToBeNearTo(color[i + 2], 255, 50, errorMessage + ` (index ${i})`);
+            expect(color[i + 3])
+                .withContext(errorMessage + ` (index ${i})`)
+                .toBe(255);
+        }
+    }
+
+    public static red(color: Uint8Array, errorMessage: string): void
+    {
+        expect(color.length % 4)
+            .withContext("unexpected length")
+            .toBe(0);
+
+        for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
+        {
+            expect(color.slice(i, i + 4)).toEqual(new Uint8Array([255, 0, 0, 255]), errorMessage);
+        }
+    }
+
+    public static transparentBlack(color: Uint8Array, errorMessage: string): void
+    {
+        expect(color.length % 4)
+            .withContext("unexpected length")
+            .toBe(0);
+
+        for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
+        {
+            expect(color.slice(i, i + 4)).toEqual(new Uint8Array([0, 0, 0, 0]), errorMessage);
+        }
+    }
+}
+
 export function itShouldCallAssert(times: number, runTest: () => void): void
 {
     it("| has the correct number of assert calls", () =>
