@@ -1,12 +1,12 @@
 {
   "name": "rc-js-test-util",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "license": "MIT",
   "scripts": {
     "build": "rimraf bin && tsc -d -p tsconfig.json"
   },
   "peerDependencies": {
-    "rc-js-util": "^6.5.0"
+    "rc-js-util": "^8.3.1"
   },
   "devDependencies": {
     "rc-js-util": "^6.5.0",
