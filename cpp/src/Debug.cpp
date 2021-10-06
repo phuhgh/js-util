@@ -9,7 +9,7 @@ EM_JS(void, Debug_error, (char const *message), {
 });
 
 EM_JS(void, Debug_log, (char const *message), {
-    RcJsUtilDebug.log(UTF8ToString(message));
+    RcJsUtilDebug.verboseLog(UTF8ToString(message));
 });
 
 void JsUtil::Debug::OnBeforeAllocate()
@@ -26,7 +26,7 @@ void JsUtil::Debug::Error(char const * message)
 #endif
 }
 
-void JsUtil::Debug::Log(const char * message)
+void JsUtil::Debug::VerboseLog(const char * message)
 {
 #ifdef DEBUG_MODE
     Debug_log(message);
