@@ -21,4 +21,5 @@ export declare namespace RcJsUtilDebugImpl
 |  [protectedViews](./rc-js-util.rcjsutildebugimpl.protectedviews.md) | Store for [IDebugProtectedView](./rc-js-util.idebugprotectedview.md)<!-- -->. |
 |  [sharedObjectLifeCycleChecks](./rc-js-util.rcjsutildebugimpl.sharedobjectlifecyclechecks.md) | [IDebugSharedObjectLifeCycleChecks](./rc-js-util.idebugsharedobjectlifecyclechecks.md)<!-- -->. |
 |  [uniquePointers](./rc-js-util.rcjsutildebugimpl.uniquepointers.md) |  |
+|  [verboseLog](./rc-js-util.rcjsutildebugimpl.verboselog.md) | Wrapper of <code>_Debug.verboseLog</code>. |
 
