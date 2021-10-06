@@ -10,5 +10,6 @@ namespace JsUtil
     public:
         static void OnBeforeAllocate();
         static void Error(char const * message);
+        static void Log(char const * message);
     };
 }

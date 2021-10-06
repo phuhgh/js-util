@@ -27,6 +27,10 @@ export namespace RcJsUtilDebugImpl
      */
     export let error: (message: string) => void;
     /**
+     * Wrapper of `_Debug.verboseLog`.
+     */
+    export let verboseLog: (message: string) => void;
+    /**
      * {@link IDebugSharedObjectLifeCycleChecks}.
      */
     export let sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecks;
@@ -41,6 +45,7 @@ DEBUG_MODE && _Debug.runBlock(() =>
     RcJsUtilDebugImpl.error = (message: string): void => fpNoOp(_Debug.error(message));
     RcJsUtilDebugImpl.sharedObjectLifeCycleChecks = new DebugSharedObjectLifeCycleChecks();
     RcJsUtilDebugImpl.uniquePointers = new Set<number>();
+    RcJsUtilDebugImpl.verboseLog = (message: string) => _Debug.verboseLog(message);
 
     getGlobal()["RcJsUtilDebug"] = RcJsUtilDebugImpl;
 });
