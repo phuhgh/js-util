@@ -16,6 +16,9 @@ namespace JsUtil
 
     private:
         explicit SharedArray(T * _arrayStart, size_t _size);
+        // disallow copy construction & assignment
+        SharedArray & operator=(SharedArray const &) = delete;
+        SharedArray(SharedArray const &) = delete;
         std::span<T> m_view;
     };
 }
