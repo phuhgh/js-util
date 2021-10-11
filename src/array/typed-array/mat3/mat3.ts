@@ -168,6 +168,26 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
         throw new Error();
     }
 
+    public scalarMultiply<TResult extends TTypedArray = TArray>
+    (
+        _value: number,
+        _result?: Mat3<TResult>,
+    )
+        : Mat3<TResult>
+    {
+        throw new Error();
+    }
+
+    public scalarAdd<TResult extends TTypedArray = TArray>
+    (
+        _value: number,
+        _result?: Mat3<TResult>,
+    )
+        : Mat3<TResult>
+    {
+        throw new Error();
+    }
+
     public multiplyMat3<TResult extends TTypedArray = TArray>
     (
         _mat: IReadonlyMat3<TTypedArray>,

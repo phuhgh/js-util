@@ -144,6 +144,46 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>
             return this;
         }
 
+        public scalarMultiply<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: number,
+            result: Mat3<TResult> = this.constructor.factory.createOneEmpty() as Mat3<TResult>,
+        )
+            : Mat3<TResult>
+        {
+            result[0] = this[0] * value;
+            result[1] = this[1] * value;
+            result[2] = this[2] * value;
+            result[3] = this[3] * value;
+            result[4] = this[4] * value;
+            result[5] = this[5] * value;
+            result[6] = this[6] * value;
+            result[7] = this[7] * value;
+            result[8] = this[8] * value;
+
+            return result;
+        }
+
+        public scalarAdd<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: number,
+            result: Mat3<TResult> = this.constructor.factory.createOneEmpty() as Mat3<TResult>,
+        )
+            : Mat3<TResult>
+        {
+            result[0] = this[0] + value;
+            result[1] = this[1] + value;
+            result[2] = this[2] + value;
+            result[3] = this[3] + value;
+            result[4] = this[4] + value;
+            result[5] = this[5] + value;
+            result[6] = this[6] + value;
+            result[7] = this[7] + value;
+            result[8] = this[8] + value;
+
+            return result;
+        }
+
         public override multiplyMat3<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             mat: IReadonlyMat3<TTypedArray>,

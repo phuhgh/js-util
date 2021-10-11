@@ -266,4 +266,22 @@ describe("=> Mat3", () =>
             expect(a.setIdentityMatrix).toBeDefined();
         });
     });
+
+    describe("=> scalarAdd", () =>
+    {
+        it("| adds", () =>
+        {
+            const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            expect(a.scalarAdd(1)).toEqual(a.map(x => x + 1));
+        });
+    });
+
+    describe("=> scalarMultiply", () =>
+    {
+        it("| multiplies", () =>
+        {
+            const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            expect(a.scalarMultiply(2)).toEqual(a.map(x => x * 2));
+        });
+    });
 });

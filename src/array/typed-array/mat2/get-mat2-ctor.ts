@@ -106,6 +106,36 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
             return this[0] * x + this[2];
         }
 
+        public scalarMultiply<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: number,
+            result: Mat2<TResult> = this.constructor.factory.createOneEmpty() as Mat2<TResult>,
+        )
+            : Mat2<TResult>
+        {
+            result[0] = this[0] * value;
+            result[1] = this[1] * value;
+            result[2] = this[2] * value;
+            result[3] = this[3] * value;
+
+            return result;
+        }
+
+        public scalarAdd<TResult extends TTypedArray = InstanceType<TCtor>>
+        (
+            value: number,
+            result: Mat2<TResult> = this.constructor.factory.createOneEmpty() as Mat2<TResult>,
+        )
+            : Mat2<TResult>
+        {
+            result[0] = this[0] + value;
+            result[1] = this[1] + value;
+            result[2] = this[2] + value;
+            result[3] = this[3] + value;
+
+            return result;
+        }
+
         public override getRow<TResult extends TTypedArray = InstanceType<TCtor>>
         (
             row: number,

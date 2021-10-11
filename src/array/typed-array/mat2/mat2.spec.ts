@@ -143,4 +143,23 @@ describe("=> Mat2", () =>
             expect(a.setIdentityMatrix).toBeDefined();
         });
     });
+
+
+    describe("=> scalarAdd", () =>
+    {
+        it("| adds", () =>
+        {
+            const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
+            expect(a.scalarAdd(1)).toEqual(a.map(x => x + 1));
+        });
+    });
+
+    describe("=> scalarMultiply", () =>
+    {
+        it("| multiplies", () =>
+        {
+            const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
+            expect(a.scalarMultiply(2)).toEqual(a.map(x => x * 2));
+        });
+    });
 });
