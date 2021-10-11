@@ -51,6 +51,8 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getValueAt(\_column, \_row)](./rc-js-util.mat2.getvalueat.md) |  |  |
 |  [getVec2MultiplyX(\_x)](./rc-js-util.mat2.getvec2multiplyx.md) |  |  |
 |  [multiplyMat2(\_mat, \_result)](./rc-js-util.mat2.multiplymat2.md) |  |  |
+|  [scalarAdd(\_value, \_result)](./rc-js-util.mat2.scalaradd.md) |  |  |
+|  [scalarMultiply(\_value, \_result)](./rc-js-util.mat2.scalarmultiply.md) |  |  |
 |  [setIdentityMatrix()](./rc-js-util.mat2.setidentitymatrix.md) |  |  |
 |  [setRow(\_row, \_writeFrom)](./rc-js-util.mat2.setrow.md) |  |  |
 |  [setScalingMatrix(\_scalingFactor)](./rc-js-util.mat2.setscalingmatrix.md) |  |  |

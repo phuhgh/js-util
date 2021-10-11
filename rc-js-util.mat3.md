@@ -59,6 +59,8 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getVec3MultiplyX(\_x)](./rc-js-util.mat3.getvec3multiplyx.md) |  |  |
 |  [getVec3MultiplyY(\_y)](./rc-js-util.mat3.getvec3multiplyy.md) |  |  |
 |  [multiplyMat3(\_mat, \_result)](./rc-js-util.mat3.multiplymat3.md) |  |  |
+|  [scalarAdd(\_value, \_result)](./rc-js-util.mat3.scalaradd.md) |  |  |
+|  [scalarMultiply(\_value, \_result)](./rc-js-util.mat3.scalarmultiply.md) |  |  |
 |  [setIdentityMatrix()](./rc-js-util.mat3.setidentitymatrix.md) |  |  |
 |  [setRotationMatrix(\_angle)](./rc-js-util.mat3.setrotationmatrix.md) |  | counter clockwise, in radians |
 |  [setRow(\_row, \_writeFrom)](./rc-js-util.mat3.setrow.md) |  |  |
