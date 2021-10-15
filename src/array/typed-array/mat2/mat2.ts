@@ -37,6 +37,8 @@ export interface IReadonlyMat2<TArray extends TTypedArray>
         | "setValueAt"
         | "setRow"
         | "copyFromBuffer"
+        | "scalarMultiply"
+        | "scalarAdd"
         | TTypedArrayTupleMutativeMethods>
 {
 }
