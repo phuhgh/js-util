@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface IReadonlyMat2<TArray extends TTypedArray> extends TPickExcept<Readonly<Mat2<TArray>>, "update" | "setValueAt" | "setRow" | "copyFromBuffer" | TTypedArrayTupleMutativeMethods> 
+export interface IReadonlyMat2<TArray extends TTypedArray> extends TPickExcept<Readonly<Mat2<TArray>>, "update" | "setValueAt" | "setRow" | "copyFromBuffer" | "scalarMultiply" | "scalarAdd" | TTypedArrayTupleMutativeMethods> 
 ```
-<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TArray&gt;&gt;, "update" \| "setValueAt" \| "setRow" \| "copyFromBuffer" \| [TTypedArrayTupleMutativeMethods](./rc-js-util.ttypedarraytuplemutativemethods.md)<!-- -->&gt;
+<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TArray&gt;&gt;, "update" \| "setValueAt" \| "setRow" \| "copyFromBuffer" \| "scalarMultiply" \| "scalarAdd" \| [TTypedArrayTupleMutativeMethods](./rc-js-util.ttypedarraytuplemutativemethods.md)<!-- -->&gt;
 
