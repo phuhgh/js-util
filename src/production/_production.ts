@@ -7,6 +7,7 @@ import { _Debug } from "../debug/_debug";
 export class _Production
 {
     /**
+     * @deprecated
      * Throws an `Error` with the given message. If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
      * Should not be used for "expected" errors (bad input etc).
      */
@@ -21,6 +22,23 @@ export class _Production
         }
 
         throw new Error(message);
+    }
+
+    /**
+     * Creates an `Error` with the given message. If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+     * Should not be used for "expected" errors (bad input etc).
+     */
+    public static createError(message: string): Error
+    {
+        if (DEBUG_MODE)
+        {
+            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
+            {
+                _Debug.breakpoint();
+            }
+        }
+
+        return new Error(message);
     }
 
     /**
@@ -42,5 +60,9 @@ export class _Production
     public static assertValueIsNever(_value: never): never
     {
         _Production.error("unexpected code path executed.");
+    }
+
+    private constructor()
+    {
     }
 }
