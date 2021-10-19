@@ -81,6 +81,7 @@
 |  [arrayInsertAtIndex(items, itemToInsert, insertAtIndex)](./rc-js-util.arrayinsertatindex.md) | Modifies input array by inserting at given index. |
 |  [arrayIntersect(a, b, getComparisonValue)](./rc-js-util.arrayintersect.md) | Given two <code>ArrayLike</code>, provides the items common between them in an <code>Array</code>. |
 |  [arrayIsArray(obj)](./rc-js-util.arrayisarray.md) | Checks if the parameter is an instance of <code>Array</code> or is a view of <code>ArrayBuffer</code>. |
+|  [arrayIsNotEmpty(items)](./rc-js-util.arrayisnotempty.md) | Returns true if the argument is not null, undefined or empty. Type narrows to <code>TArray</code> where true. |
 |  [arrayLast(items)](./rc-js-util.arraylast.md) | Gets the last value in <code>ArrayLike</code>. |
 |  [arrayMap(items, callback)](./rc-js-util.arraymap.md) | Like <code>Array.map</code>. |
 |  [arrayMapRange(from, to, callback)](./rc-js-util.arraymaprange.md) | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |

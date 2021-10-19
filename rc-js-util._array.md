@@ -31,6 +31,7 @@ export declare class _Array
 |  [insertAtIndex](./rc-js-util._array.insertatindex.md) | <code>static</code> | typeof arrayInsertAtIndex | Modifies input array by inserting at given index. |
 |  [intersect](./rc-js-util._array.intersect.md) | <code>static</code> | typeof arrayIntersect | Given two <code>ArrayLike</code>, provides the items common between them in an <code>Array</code>. |
 |  [isArray](./rc-js-util._array.isarray.md) | <code>static</code> | typeof arrayIsArray | Checks if the parameter is an instance of <code>Array</code> or is a view of <code>ArrayBuffer</code>. |
+|  [isNotEmpty](./rc-js-util._array.isnotempty.md) | <code>static</code> | typeof arrayIsNotEmpty | Returns true if the argument is not null, undefined or empty. Type narrows to <code>TArray</code> where true. |
 |  [last](./rc-js-util._array.last.md) | <code>static</code> | typeof arrayLast | Gets the last value in <code>ArrayLike</code>. |
 |  [map](./rc-js-util._array.map.md) | <code>static</code> | typeof arrayMap | Like <code>Array.map</code>. |
 |  [mapRange](./rc-js-util._array.maprange.md) | <code>static</code> | typeof arrayMapRange | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |
