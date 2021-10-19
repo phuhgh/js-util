@@ -25,6 +25,7 @@ import { arrayContains } from "./impl/array-contains";
 import { arrayInsertAtIndex } from "./impl/array-insert-at-index";
 import { arraySymmetricDifference } from "./impl/array-symmetric-difference";
 import { arraySetDifference } from "./impl/array-set-difference";
+import { arrayIsNotEmpty } from "./impl/array-is-not-empty";
 
 /**
  * @public
@@ -62,6 +63,8 @@ export class _Array
     public static readonly intersect = arrayIntersect;
     /** {@inheritDoc arrayIsArray} */
     public static readonly isArray = arrayIsArray;
+    /** {@inheritDoc arrayIsNotEmpty} */
+    public static readonly isNotEmpty = arrayIsNotEmpty;
     /** {@inheritDoc arrayLast} */
     public static readonly last = arrayLast;
     /** {@inheritDoc arrayMap} */

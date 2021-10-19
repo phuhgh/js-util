@@ -101,6 +101,7 @@ export { arrayIndex } from "./array/impl/array-index";
 export { arrayInsertAtIndex } from "./array/impl/array-insert-at-index";
 export { arrayIntersect } from "./array/impl/array-intersect";
 export { arrayIsArray } from "./array/impl/array-is-array";
+export { arrayIsNotEmpty } from "./array/impl/array-is-not-empty";
 export { arrayLast } from "./array/impl/array-last";
 export { arrayMapRange } from "./array/impl/array-map-range";
 export { arrayMap } from "./array/impl/array-map";
