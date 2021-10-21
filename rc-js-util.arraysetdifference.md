@@ -4,24 +4,24 @@
 
 ## arraySetDifference() function
 
+returns items in A not in B.
+
 <b>Signature:</b>
 
 ```typescript
-export declare function arraySetDifference<TItem>(a: TItem[], b: Set<TItem>): Set<TItem>;
+export declare function arraySetDifference<TItem>(a: ArrayLike<TItem>, b: Set<TItem>): Set<TItem>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | TItem\[\] |  |
+|  a | ArrayLike&lt;TItem&gt; |  |
 |  b | Set&lt;TItem&gt; |  |
 
 <b>Returns:</b>
 
 Set&lt;TItem&gt;
-
-items in A not in B.
 
 ## Remarks
 

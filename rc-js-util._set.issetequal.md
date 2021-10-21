@@ -4,6 +4,8 @@
 
 ## \_Set.isSetEqual property
 
+returns items in A not in B.
+
 <b>Signature:</b>
 
 ```typescript

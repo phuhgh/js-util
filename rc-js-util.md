@@ -92,8 +92,8 @@
 |  [arrayRemoveMany(items, itemsToRemove)](./rc-js-util.arrayremovemany.md) | Removes each item in <code>itemsToRemove</code> from <code>items</code> (including any repeated items). |
 |  [arrayRemoveOne(items, itemToRemove)](./rc-js-util.arrayremoveone.md) | Removes either 0 or one item from items, even if itemToRemove appears more than once. |
 |  [arrayReplaceOne(items, itemToRemove, replaceWith)](./rc-js-util.arrayreplaceone.md) | Replaces the first match of itemToRemove with replaceWith. |
-|  [arraySetDifference(a, b)](./rc-js-util.arraysetdifference.md) |  |
-|  [arraySymmetricDifference(a, b, aSet, bSet)](./rc-js-util.arraysymmetricdifference.md) |  |
+|  [arraySetDifference(a, b)](./rc-js-util.arraysetdifference.md) | returns items in A not in B. |
+|  [arraySymmetricDifference(a, b, aSet, bSet)](./rc-js-util.arraysymmetricdifference.md) | Returns those items in A not in B, and those items in B not in A. |
 |  [arrayUnion(items, getComparisonValue)](./rc-js-util.arrayunion.md) | Given an <code>ArrayLike</code> of <code>ArrayLike</code>, provides all unique items in an <code>Array</code>. |
 |  [arrayUnique(items)](./rc-js-util.arrayunique.md) | Creates a new array with no duplicates, using standard object equality. |
 |  [dictionaryCloneExtend(base, extension)](./rc-js-util.dictionarycloneextend.md) | Creates an object which is extended sequentially by two additional objects. |
@@ -138,9 +138,9 @@
 |  [mapRemoveOneFromArray(map, key, value)](./rc-js-util.mapremoveonefromarray_1.md) | Used with maps that store arrays. Where an array exists for a given key the value will be removed from that array. |
 |  [mapReportingAddToSet(map, key, value)](./rc-js-util.mapreportingaddtoset.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [mapReportingAddToSet(map, key, value)](./rc-js-util.mapreportingaddtoset_1.md) | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
-|  [mapSetDifference(a, b)](./rc-js-util.mapsetdifference.md) |  |
-|  [mapSymmetricDifference(a, b)](./rc-js-util.mapsymmetricdifference.md) |  |
-|  [mapUnion(a, b)](./rc-js-util.mapunion.md) |  |
+|  [mapSetDifference(a, b)](./rc-js-util.mapsetdifference.md) | returns items in A not in B. |
+|  [mapSymmetricDifference(a, b)](./rc-js-util.mapsymmetricdifference.md) | Returns a map with keys in A not in B, and keys in B not in A. |
+|  [mapUnion(a, b)](./rc-js-util.mapunion.md) | Returns a map with keys from both A and B. If both A and B have the same key the value from B will be used. |
 |  [mapValuesToArray(map)](./rc-js-util.mapvaluestoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its values. |
 |  [mathBound(value, min, max)](./rc-js-util.mathbound.md) | Bound a value in to a range. |
 |  [mathBoundRandom(min, max)](./rc-js-util.mathboundrandom.md) | Create a random value between min and max. |
@@ -153,9 +153,9 @@
 |  [promiseRejectFalsey(value, error)](./rc-js-util.promiserejectfalsey.md) | Returns a Promise of rejection with the supplied error if the <code>value</code> is falsy. |
 |  [promiseRejectNull(value, error)](./rc-js-util.promiserejectnull.md) | Returns a Promise of rejection with the supplied error if the value is <code>null</code> or <code>undefined</code>. |
 |  [regexEscapeRegex(value)](./rc-js-util.regexescaperegex.md) | Escapes RegExp special characters in strings. |
-|  [setIsSetEqual(a, b)](./rc-js-util.setissetequal.md) |  |
-|  [setSetDifference(a, b)](./rc-js-util.setsetdifference.md) |  |
-|  [setSymmetricDifference(a, b)](./rc-js-util.setsymmetricdifference.md) |  |
+|  [setIsSetEqual(a, b)](./rc-js-util.setissetequal.md) | Tests to see if all of the members of a set are the same. |
+|  [setSetDifference(a, b)](./rc-js-util.setsetdifference.md) | returns items in A not in B. |
+|  [setSymmetricDifference(a, b)](./rc-js-util.setsymmetricdifference.md) | Returns those items in A not in B, and those items in B not in A. |
 |  [setValuesToArray(set)](./rc-js-util.setvaluestoarray.md) | Converts a set into an array of its values. |
 |  [stringNormalizeEmptyToUndefined(input)](./rc-js-util.stringnormalizeemptytoundefined.md) | Replaces length 0 strings with <code>undefined</code>. |
 |  [stringNormalizeNullUndefinedToEmpty(input)](./rc-js-util.stringnormalizenullundefinedtoempty.md) | Replaces <code>null</code> / <code>undefined</code> with an empty <code>string</code>. |
@@ -165,7 +165,7 @@
 |  Interface | Description |
 |  --- | --- |
 |  [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) | Simple one to many communication channel. Proxies the arguments of emit to each listener. |
-|  [IDebugBindings](./rc-js-util.idebugbindings.md) |  |
+|  [IDebugBindings](./rc-js-util.idebugbindings.md) | Emscripten bindings for debugging. |
 |  [IDebugProtectedView](./rc-js-util.idebugprotectedview.md) | Factory for creating proxy objects that can be invalidated later. Once invalidated any property read that wasn't explicitly marked safe will cause a debug error. Available in debug contexts only. |
 |  [IDebugSharedObject](./rc-js-util.idebugsharedobject.md) | See [ISharedObject](./rc-js-util.isharedobject.md)<!-- -->. |
 |  [IDebugSharedObjectLifeCycleChecks](./rc-js-util.idebugsharedobjectlifecyclechecks.md) | Wrapper of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) for shared objects, useful for checking if the shared object was properly disposed. Available in debug contexts only. |
@@ -193,6 +193,7 @@
 |  [IRange1dCtor](./rc-js-util.irange1dctor.md) | Constructor for [Range1d](./rc-js-util.range1d.md)<!-- -->. |
 |  [IRange2dCtor](./rc-js-util.irange2dctor.md) | Constructor for [Range2d](./rc-js-util.range2d.md)<!-- -->. |
 |  [IRawVoidPointer](./rc-js-util.irawvoidpointer.md) | Provides a reference counted wrapper to a pointer <code>malloc</code>'d from JS and is <code>free</code>'d on reference count hitting 0. |
+|  [IReadonlyDictionary](./rc-js-util.ireadonlydictionary.md) |  |
 |  [IReadonlyMargin2d](./rc-js-util.ireadonlymargin2d.md) | [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
 |  [IReadonlyMat2](./rc-js-util.ireadonlymat2.md) | [Mat2](./rc-js-util.mat2.md)<!-- -->. |
 |  [IReadonlyMat3](./rc-js-util.ireadonlymat3.md) | [Mat3](./rc-js-util.mat3.md)<!-- -->. |

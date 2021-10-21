@@ -4,18 +4,20 @@
 
 ## arraySymmetricDifference() function
 
+Returns those items in A not in B, and those items in B not in A.
+
 <b>Signature:</b>
 
 ```typescript
-export declare function arraySymmetricDifference<TItem>(a: TItem[], b: TItem[], aSet?: Set<TItem>, bSet?: Set<TItem>): Set<TItem>;
+export declare function arraySymmetricDifference<TItem>(a: readonly TItem[], b: readonly TItem[], aSet?: Set<TItem>, bSet?: Set<TItem>): Set<TItem>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | TItem\[\] |  |
-|  b | TItem\[\] |  |
+|  a | readonly TItem\[\] |  |
+|  b | readonly TItem\[\] |  |
 |  aSet | Set&lt;TItem&gt; |  |
 |  bSet | Set&lt;TItem&gt; |  |
 

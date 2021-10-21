@@ -4,24 +4,24 @@
 
 ## setSetDifference() function
 
+returns items in A not in B.
+
 <b>Signature:</b>
 
 ```typescript
-export declare function setSetDifference<TItem>(a: Set<TItem>, b: Set<TItem>): TItem[];
+export declare function setSetDifference<TItem>(a: ReadonlySet<TItem>, b: ReadonlySet<TItem>): TItem[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | Set&lt;TItem&gt; |  |
-|  b | Set&lt;TItem&gt; |  |
+|  a | ReadonlySet&lt;TItem&gt; |  |
+|  b | ReadonlySet&lt;TItem&gt; |  |
 
 <b>Returns:</b>
 
 TItem\[\]
-
-items in A not in B.
 
 ## Remarks
 

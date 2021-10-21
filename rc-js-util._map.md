@@ -32,8 +32,8 @@ export declare class _Map
 |  [removeManyFromArray](./rc-js-util._map.removemanyfromarray.md) | <code>static</code> | typeof mapRemoveManyFromArray | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
 |  [removeOneFromArray](./rc-js-util._map.removeonefromarray.md) | <code>static</code> | typeof mapRemoveOneFromArray | Used with maps that store arrays. Where an array exists for a given key the value will be removed from that array. |
 |  [reportingAddToSet](./rc-js-util._map.reportingaddtoset.md) | <code>static</code> | typeof mapReportingAddToSet | Used with maps that store sets. Where a set exists for a given key the value will be added to that set, otherwise a new set will be created containing the value. |
-|  [setDifference](./rc-js-util._map.setdifference.md) | <code>static</code> | typeof mapSetDifference |  |
-|  [symmetricDifference](./rc-js-util._map.symmetricdifference.md) | <code>static</code> | typeof mapSymmetricDifference |  |
-|  [union](./rc-js-util._map.union.md) | <code>static</code> | typeof mapUnion |  |
+|  [setDifference](./rc-js-util._map.setdifference.md) | <code>static</code> | typeof mapSetDifference | returns items in A not in B. |
+|  [symmetricDifference](./rc-js-util._map.symmetricdifference.md) | <code>static</code> | typeof mapSymmetricDifference | Returns a map with keys in A not in B, and keys in B not in A. |
+|  [union](./rc-js-util._map.union.md) | <code>static</code> | typeof mapUnion | Returns a map with keys from both A and B. If both A and B have the same key the value from B will be used. |
 |  [valuesToArray](./rc-js-util._map.valuestoarray.md) | <code>static</code> | typeof mapValuesToArray | Converts a <code>Map</code> into an <code>Array</code> of its values. |
 

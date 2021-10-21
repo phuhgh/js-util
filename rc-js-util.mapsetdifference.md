@@ -4,6 +4,8 @@
 
 ## mapSetDifference() function
 
+returns items in A not in B.
+
 <b>Signature:</b>
 
 ```typescript
@@ -20,8 +22,6 @@ export declare function mapSetDifference<TKey, TIem>(a: ReadonlyMap<TKey, TIem>,
 <b>Returns:</b>
 
 Map&lt;TKey, TIem&gt;
-
-items in A not in B.
 
 ## Remarks
 

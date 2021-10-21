@@ -4,6 +4,8 @@
 
 ## \_Map.symmetricDifference property
 
+Returns a map with keys in A not in B, and keys in B not in A.
+
 <b>Signature:</b>
 
 ```typescript

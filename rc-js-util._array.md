@@ -42,8 +42,8 @@ export declare class _Array
 |  [removeMany](./rc-js-util._array.removemany.md) | <code>static</code> | typeof arrayRemoveMany | Removes each item in <code>itemsToRemove</code> from <code>items</code> (including any repeated items). |
 |  [removeOne](./rc-js-util._array.removeone.md) | <code>static</code> | typeof arrayRemoveOne | Removes either 0 or one item from items, even if itemToRemove appears more than once. |
 |  [replaceOne](./rc-js-util._array.replaceone.md) | <code>static</code> | typeof arrayReplaceOne | Replaces the first match of itemToRemove with replaceWith. |
-|  [setDifference](./rc-js-util._array.setdifference.md) | <code>static</code> | typeof arraySetDifference |  |
-|  [symmetricDifference](./rc-js-util._array.symmetricdifference.md) | <code>static</code> | typeof arraySymmetricDifference |  |
+|  [setDifference](./rc-js-util._array.setdifference.md) | <code>static</code> | typeof arraySetDifference | returns items in A not in B. |
+|  [symmetricDifference](./rc-js-util._array.symmetricdifference.md) | <code>static</code> | typeof arraySymmetricDifference | Returns those items in A not in B, and those items in B not in A. |
 |  [union](./rc-js-util._array.union.md) | <code>static</code> | typeof arrayUnion | Given an <code>ArrayLike</code> of <code>ArrayLike</code>, provides all unique items in an <code>Array</code>. |
 |  [unique](./rc-js-util._array.unique.md) | <code>static</code> | typeof arrayUnique | Creates a new array with no duplicates, using standard object equality. |
 

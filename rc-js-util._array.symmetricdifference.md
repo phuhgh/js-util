@@ -4,6 +4,8 @@
 
 ## \_Array.symmetricDifference property
 
+Returns those items in A not in B, and those items in B not in A.
+
 <b>Signature:</b>
 
 ```typescript

@@ -16,8 +16,8 @@ export declare class _Set
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isSetEqual](./rc-js-util._set.issetequal.md) | <code>static</code> | typeof setIsSetEqual |  |
-|  [setDifference](./rc-js-util._set.setdifference.md) | <code>static</code> | typeof setSetDifference |  |
-|  [symmetricDifference](./rc-js-util._set.symmetricdifference.md) | <code>static</code> | typeof setSymmetricDifference |  |
+|  [isSetEqual](./rc-js-util._set.issetequal.md) | <code>static</code> | typeof setIsSetEqual | returns items in A not in B. |
+|  [setDifference](./rc-js-util._set.setdifference.md) | <code>static</code> | typeof setSetDifference | returns items in A not in B. |
+|  [symmetricDifference](./rc-js-util._set.symmetricdifference.md) | <code>static</code> | typeof setSymmetricDifference | Returns those items in A not in B, and those items in B not in A. |
 |  [valuesToArray](./rc-js-util._set.valuestoarray.md) | <code>static</code> | typeof setValuesToArray | Converts a set into an array of its values. |
 

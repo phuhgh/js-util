@@ -4,6 +4,7 @@
 
 ## IDebugBindings interface
 
+Emscripten bindings for debugging.
 
 <b>Signature:</b>
 

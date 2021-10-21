@@ -4,6 +4,8 @@
 
 ## mapUnion() function
 
+Returns a map with keys from both A and B. If both A and B have the same key the value from B will be used.
+
 <b>Signature:</b>
 
 ```typescript
