@@ -66,6 +66,7 @@
 
 |  Function | Description |
 |  --- | --- |
+|  [arrayAddToSet(items, set)](./rc-js-util.arrayaddtoset.md) | Adds the items in an array to the set. |
 |  [arrayBinaryIndexOf(indexable, comparisonValueToSearchFor, getComparisonValueAtIndex, length, start)](./rc-js-util.arraybinaryindexof.md) | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
 |  [arrayBinaryLastIndexOf(indexable, comparisonValueToSearchFor, getComparisonValueAtIndex, length, start)](./rc-js-util.arraybinarylastindexof.md) | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
 |  [arrayCollect(items, collected, collect)](./rc-js-util.arraycollect.md) | Like <code>Array.reduce</code> but without the requirement to return the value in the callback. |

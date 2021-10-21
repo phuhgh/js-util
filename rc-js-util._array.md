@@ -16,6 +16,7 @@ export declare class _Array
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [addToSet](./rc-js-util._array.addtoset.md) | <code>static</code> | typeof arrayAddToSet | Adds the items in an array to the set. |
 |  [binaryIndexOf](./rc-js-util._array.binaryindexof.md) | <code>static</code> | typeof arrayBinaryIndexOf | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
 |  [binaryLastIndexOf](./rc-js-util._array.binarylastindexof.md) | <code>static</code> | typeof arrayBinaryLastIndexOf | Performs a bisection search of an 'indexable' object, i.e. can be accessed by index, for example <code>Array</code>. Custom data structures are also supported. |
 |  [collect](./rc-js-util._array.collect.md) | <code>static</code> | typeof arrayCollect | Like <code>Array.reduce</code> but without the requirement to return the value in the callback. |
