@@ -1,5 +1,6 @@
 /**
  * @public
+ * Tests to see if all of the members of a set are the same.
  *
  * @remarks
  * See {@link setIsSetEqual}.

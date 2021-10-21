@@ -1,15 +1,14 @@
 /**
  * @public
- *
- * @returns items in A not in B.
+ * returns items in A not in B.
  *
  * @remarks
  * See {@link setSetDifference}.
  */
 export function setSetDifference<TItem>
 (
-    a: Set<TItem>,
-    b: Set<TItem>,
+    a: ReadonlySet<TItem>,
+    b: ReadonlySet<TItem>,
 )
     : TItem[]
 {

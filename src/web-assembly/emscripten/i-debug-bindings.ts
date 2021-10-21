@@ -1,5 +1,6 @@
 /**
  * @public
+ * Emscripten bindings for debugging.
  */
 export interface IDebugBindings
 {

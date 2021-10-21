@@ -1,14 +1,13 @@
 /**
  * @public
- *
- * @returns items in A not in B.
+ * returns items in A not in B.
  *
  * @remarks
  * See {@link arraySetDifference}.
  */
 export function arraySetDifference<TItem>
 (
-    a: TItem[],
+    a: ArrayLike<TItem>,
     b: Set<TItem>,
 )
     : Set<TItem>

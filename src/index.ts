@@ -52,6 +52,7 @@ export { AOnDestroy, IOnDestroy } from "./lifecycle/i-on-destroy";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted";
 export { TemporaryListener, ITemporaryListener } from "./lifecycle/temporary-listener";
 export { IDictionary } from "./typescript/i-dictionary";
+export { IReadonlyDictionary } from "./typescript/i-readonly-dictionary";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary";
 export { IReadonlySetLike } from "./typescript/i-readonly-set-like";
 export { ISetLike} from "./typescript/i-set-like";

@@ -1,10 +1,15 @@
 /**
  * @public
- *
+ *  Returns those items in A not in B, and those items in B not in A.
  * @remarks
  * See {@link setSymmetricDifference}.
  */
-export function setSymmetricDifference<TItem>(a: Set<TItem>, b: Set<TItem>): TItem[]
+export function setSymmetricDifference<TItem>
+(
+    a: ReadonlySet<TItem>,
+    b: ReadonlySet<TItem>,
+)
+    : TItem[]
 {
     const result: TItem[] = [];
 
