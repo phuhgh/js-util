@@ -94,6 +94,7 @@
 |  [arraySetDifference(a, b)](./rc-js-util.arraysetdifference.md) |  |
 |  [arraySymmetricDifference(a, b, aSet, bSet)](./rc-js-util.arraysymmetricdifference.md) |  |
 |  [arrayUnion(items, getComparisonValue)](./rc-js-util.arrayunion.md) | Given an <code>ArrayLike</code> of <code>ArrayLike</code>, provides all unique items in an <code>Array</code>. |
+|  [arrayUnique(items)](./rc-js-util.arrayunique.md) | Creates a new array with no duplicates, using standard object equality. |
 |  [dictionaryCloneExtend(base, extension)](./rc-js-util.dictionarycloneextend.md) | Creates an object which is extended sequentially by two additional objects. |
 |  [dictionaryExtend(base, extension)](./rc-js-util.dictionaryextend.md) | Modifies an object to include the keys and values of another. |
 |  [dictionaryForEach(dictionary, callback)](./rc-js-util.dictionaryforeach.md) | Like <code>Array.forEach</code> but for arbitrary objects. |

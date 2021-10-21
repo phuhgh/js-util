@@ -44,4 +44,5 @@ export declare class _Array
 |  [setDifference](./rc-js-util._array.setdifference.md) | <code>static</code> | typeof arraySetDifference |  |
 |  [symmetricDifference](./rc-js-util._array.symmetricdifference.md) | <code>static</code> | typeof arraySymmetricDifference |  |
 |  [union](./rc-js-util._array.union.md) | <code>static</code> | typeof arrayUnion | Given an <code>ArrayLike</code> of <code>ArrayLike</code>, provides all unique items in an <code>Array</code>. |
+|  [unique](./rc-js-util._array.unique.md) | <code>static</code> | typeof arrayUnique | Creates a new array with no duplicates, using standard object equality. |
 
