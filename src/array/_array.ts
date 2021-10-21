@@ -27,6 +27,7 @@ import { arraySymmetricDifference } from "./impl/array-symmetric-difference";
 import { arraySetDifference } from "./impl/array-set-difference";
 import { arrayIsNotEmpty } from "./impl/array-is-not-empty";
 import { arrayUnique } from "./impl/array-unique";
+import { arrayAddToSet } from "./impl/array-add-to-set";
 
 /**
  * @public
@@ -34,6 +35,8 @@ import { arrayUnique } from "./impl/array-unique";
  */
 export class _Array
 {
+    /** {@inheritDoc arrayAddToSet} */
+    public static readonly addToSet = arrayAddToSet;
     /** {@inheritDoc arrayBinaryIndexOf} */
     public static readonly binaryIndexOf = arrayBinaryIndexOf;
     /** {@inheritDoc arrayBinaryLastIndexOf} */

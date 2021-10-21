@@ -87,6 +87,7 @@ export { DebugSharedObjectChecks } from "./web-assembly/debug-shared-object-chec
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings";
 
+export { arrayAddToSet } from "./array/impl/array-add-to-set";
 export { arrayBinaryIndexOf } from "./array/impl/array-binary-index-of";
 export { arrayBinaryLastIndexOf } from "./array/impl/array-binary-last-index-of";
 export { arrayCollect } from "./array/impl/array-collect";
