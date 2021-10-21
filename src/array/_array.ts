@@ -26,6 +26,7 @@ import { arrayInsertAtIndex } from "./impl/array-insert-at-index";
 import { arraySymmetricDifference } from "./impl/array-symmetric-difference";
 import { arraySetDifference } from "./impl/array-set-difference";
 import { arrayIsNotEmpty } from "./impl/array-is-not-empty";
+import { arrayUnique } from "./impl/array-unique";
 
 /**
  * @public
@@ -89,6 +90,8 @@ export class _Array
     public static readonly symmetricDifference = arraySymmetricDifference;
     /** {@inheritDoc arrayUnion} */
     public static readonly union = arrayUnion;
+    /** {@inheritDoc arrayUnique} */
+    public static readonly unique = arrayUnique;
 
     private constructor()
     {

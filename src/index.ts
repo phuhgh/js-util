@@ -115,6 +115,7 @@ export { arrayReplaceOne } from "./array/impl/array-replace-one";
 export { arraySetDifference } from "./array/impl/array-set-difference";
 export { arraySymmetricDifference } from "./array/impl/array-symmetric-difference";
 export { arrayUnion } from "./array/impl/array-union";
+export { arrayUnique } from "./array/impl/array-unique";
 export { dictionaryCloneExtend } from "./dictionary/impl/dictionary-clone-extend";
 export { dictionaryExtend } from "./dictionary/impl/dictionary-extend";
 export { dictionaryForEach } from "./dictionary/impl/dictionary-foreach";
