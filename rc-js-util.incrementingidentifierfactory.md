@@ -15,7 +15,7 @@ export declare class IncrementingIdentifierFactory implements IIdentifierFactory
 
 ## Remarks
 
-By default the first ID will be 0, this may be configured at construction.
+By default the first ID will be 1, this may be configured at construction.
 
 ## Constructors
 
