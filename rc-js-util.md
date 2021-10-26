@@ -14,6 +14,7 @@
 |  [\_F32](./rc-js-util._f32.md) | Utilities relating to single precision floats. |
 |  [\_F64](./rc-js-util._f64.md) | Utilities relating to double precision floats. |
 |  [\_Fp](./rc-js-util._fp.md) | Utilities for functional programming. |
+|  [\_Identifier](./rc-js-util._identifier.md) | Utilities for generating identifiers. |
 |  [\_Iterator](./rc-js-util._iterator.md) | Utilities relating to <code>IterableIterator</code> &amp; generators. |
 |  [\_Map](./rc-js-util._map.md) | Utilities that apply to <code>Map</code>. |
 |  [\_Math](./rc-js-util._math.md) | Utilities relating to math. |
