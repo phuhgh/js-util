@@ -11,6 +11,7 @@
 |  [\_Array](./rc-js-util._array.md) | Utilities that apply to <code>Array</code> and <code>ArrayLike</code>. |
 |  [\_Debug](./rc-js-util._debug.md) | Utilities for debug builds. |
 |  [\_Dictionary](./rc-js-util._dictionary.md) | Utilities for 'dictionaries', i.e. { \[index: string\]: any }<!-- -->. |
+|  [\_Equality](./rc-js-util._equality.md) | Non-standard equality tests. |
 |  [\_F32](./rc-js-util._f32.md) | Utilities relating to single precision floats. |
 |  [\_F64](./rc-js-util._f64.md) | Utilities relating to double precision floats. |
 |  [\_Fp](./rc-js-util._fp.md) | Utilities for functional programming. |
@@ -103,6 +104,7 @@
 |  [dictionaryPairs(dictionary)](./rc-js-util.dictionarypairs.md) | converts objects into key value pair tuples. |
 |  [dictionaryPush(dict, key, value)](./rc-js-util.dictionarypush.md) | Used with dictionary that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
 |  [dictionaryValues(d)](./rc-js-util.dictionaryvalues.md) | Equivalent to Object.values. |
+|  [equalityAreConsistentlyDefined(a, b)](./rc-js-util.equalityareconsistentlydefined.md) | Returns true if both <code>A</code> and <code>B</code> are both null, undefined or 'defined'. Defined is not null and not undefined. |
 |  [fpDebounce(wait, immediate, functionToProxy)](./rc-js-util.fpdebounce.md) | Creates a function that will proxy calls to <code>functionToProxy</code> when <code>wait</code> time has passed since the last call, using the most recent arguments. Where <code>immediate</code> is true, the function immediately proxies the call and will not proxy again until <code>wait</code> time passes since the last call. |
 |  [fpIdentity(arg)](./rc-js-util.fpidentity.md) | Returns the argument. |
 |  [fpMaybeNewValue(newValue, oldValue)](./rc-js-util.fpmaybenewvalue.md) | Returns the newValue if defined, else the old value. |
