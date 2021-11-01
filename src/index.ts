@@ -126,6 +126,7 @@ export { dictionaryForEach } from "./dictionary/impl/dictionary-foreach";
 export { dictionaryPairs } from "./dictionary/impl/dictionary-pairs";
 export { dictionaryPush } from "./dictionary/impl/dictionary-push";
 export { dictionaryValues } from "./dictionary/impl/dictionary-values";
+export { equalityAllEqual } from "./equality/impl/equality-all-equal";
 export { equalityAreConsistentlyDefined } from "./equality/impl/equality-are-consistently-defined";
 export { Once } from "./decorators/once";
 export { fpDebounce, TDebouncedFn } from "./fp/impl/fp-debounce";

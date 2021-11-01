@@ -19,6 +19,7 @@ export type TDebouncedFn<TArgs extends unknown[]> =
  *
  * @remarks
  * As per underscore's debounce, except that returns have been disallowed.
+ * See {@link fpDebounce}.
  */
 export function fpDebounce<TArgs extends unknown[]>
 (
