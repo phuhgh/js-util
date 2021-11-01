@@ -14,5 +14,5 @@ static readonly debounce: typeof fpDebounce;
 
 ## Remarks
 
-As per underscore's debounce, except that returns have been disallowed.
+As per underscore's debounce, except that returns have been disallowed. See [fpDebounce()](./rc-js-util.fpdebounce.md)<!-- -->.
 

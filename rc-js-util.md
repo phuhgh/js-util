@@ -104,6 +104,7 @@
 |  [dictionaryPairs(dictionary)](./rc-js-util.dictionarypairs.md) | converts objects into key value pair tuples. |
 |  [dictionaryPush(dict, key, value)](./rc-js-util.dictionarypush.md) | Used with dictionary that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
 |  [dictionaryValues(d)](./rc-js-util.dictionaryvalues.md) | Equivalent to Object.values. |
+|  [equalityAllEqual(items)](./rc-js-util.equalityallequal.md) | Returns true if all items are triple equal <code>===</code>. |
 |  [equalityAreConsistentlyDefined(a, b)](./rc-js-util.equalityareconsistentlydefined.md) | Returns true if both <code>A</code> and <code>B</code> are both null, undefined or 'defined'. Defined is not null and not undefined. |
 |  [fpDebounce(wait, immediate, functionToProxy)](./rc-js-util.fpdebounce.md) | Creates a function that will proxy calls to <code>functionToProxy</code> when <code>wait</code> time has passed since the last call, using the most recent arguments. Where <code>immediate</code> is true, the function immediately proxies the call and will not proxy again until <code>wait</code> time passes since the last call. |
 |  [fpIdentity(arg)](./rc-js-util.fpidentity.md) | Returns the argument. |

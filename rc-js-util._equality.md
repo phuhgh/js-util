@@ -16,5 +16,6 @@ export declare class _Equality
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [allEqual](./rc-js-util._equality.allequal.md) | <code>static</code> | typeof equalityAllEqual | Returns true if all items are triple equal <code>===</code>. |
 |  [areConsistentlyDefined](./rc-js-util._equality.areconsistentlydefined.md) | <code>static</code> | typeof equalityAreConsistentlyDefined | Returns true if both <code>A</code> and <code>B</code> are both null, undefined or 'defined'. Defined is not null and not undefined. |
 

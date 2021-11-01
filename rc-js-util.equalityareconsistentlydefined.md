@@ -23,3 +23,7 @@ export declare function equalityAreConsistentlyDefined<T>(a: T | undefined | nul
 
 boolean
 
+## Remarks
+
+See [equalityAreConsistentlyDefined()](./rc-js-util.equalityareconsistentlydefined.md)<!-- -->.
+

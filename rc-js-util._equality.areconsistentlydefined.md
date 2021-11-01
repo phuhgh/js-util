@@ -11,3 +11,8 @@ Returns true if both `A` and `B` are both null, undefined or 'defined'. Defined 
 ```typescript
 static areConsistentlyDefined: typeof equalityAreConsistentlyDefined;
 ```
+
+## Remarks
+
+See [equalityAreConsistentlyDefined()](./rc-js-util.equalityareconsistentlydefined.md)<!-- -->.
+
