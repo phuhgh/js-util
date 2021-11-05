@@ -154,6 +154,8 @@
 |  [numberGetHexString(value)](./rc-js-util.numbergethexstring.md) | Returns the hex representation of the number. If it's not a number it returns "NaN". |
 |  [Once(target, key, descriptor)](./rc-js-util.once.md) | Method decorator. The target will be called only once, subsequent calls will return the first return. |
 |  [pathJoin(start, end, separator)](./rc-js-util.pathjoin.md) | Joins two strings <code>start</code> and <code>end</code> with a <code>separator</code>. |
+|  [promiseDelay(resolveWith, delay)](./rc-js-util.promisedelay.md) | Returns a <code>Promise</code> which will resolve to <code>resolveWith</code> after a delay of <code>delay</code> (in milliseconds). |
+|  [promiseRejectFalse(value, error)](./rc-js-util.promiserejectfalse.md) | Returns a Promise of rejection with the supplied error if the <code>value</code> is false. |
 |  [promiseRejectFalsey(value, error)](./rc-js-util.promiserejectfalsey.md) | Returns a Promise of rejection with the supplied error if the <code>value</code> is falsy. |
 |  [promiseRejectNull(value, error)](./rc-js-util.promiserejectnull.md) | Returns a Promise of rejection with the supplied error if the value is <code>null</code> or <code>undefined</code>. |
 |  [regexEscapeRegex(value)](./rc-js-util.regexescaperegex.md) | Escapes RegExp special characters in strings. |
