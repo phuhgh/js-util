@@ -1,6 +1,7 @@
 import { promiseRejectFalsey } from "./impl/promise-reject-falsey";
 import { promiseRejectNull } from "./impl/promise-reject-null";
 import { promiseRejectFalse } from "./impl/promise-reject-false";
+import { promiseDelay } from "./impl/promise-delay";
 
 /**
  * @public
@@ -8,6 +9,9 @@ import { promiseRejectFalse } from "./impl/promise-reject-false";
  */
 export class _Promise
 {
+    /** {@inheritDoc promiseDelay} */
+    public static readonly delay = promiseDelay;
+
     /** {@inheritDoc promiseRejectFalse} */
     public static readonly rejectFalse = promiseRejectFalse;
 
