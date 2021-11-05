@@ -8,6 +8,7 @@ export { _Dictionary } from "./dictionary/_dictionary";
 export { _Equality } from "./equality/_equality";
 export { NestableError } from "./error-handling/nestable-error";
 export { _Production } from "./production/_production";
+export { _Promise } from "./promise/_promise";
 export { _Fp } from "./fp/_fp";
 export { _Identifier } from "./identifier/_identifier";
 export { _Iterator } from "./iterators/_iterator";
