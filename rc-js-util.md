@@ -22,6 +22,7 @@
 |  [\_Number](./rc-js-util._number.md) | Utilities that apply to numbers. |
 |  [\_Path](./rc-js-util._path.md) | File path manipulation utilities. |
 |  [\_Production](./rc-js-util._production.md) | Utilities for production builds. |
+|  [\_Promise](./rc-js-util._promise.md) | Utilities for handling promises. |
 |  [\_RegExp](./rc-js-util._regexp.md) | Utilities that apply to <code>RegExp</code>. |
 |  [\_Set](./rc-js-util._set.md) | Utilities that apply to <code>Set</code>. |
 |  [\_String](./rc-js-util._string.md) | Utilities that apply to <code>string</code>. |
