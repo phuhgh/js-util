@@ -27,6 +27,7 @@ export declare class _Array
 |  [emptyArray](./rc-js-util._array.emptyarray.md) | <code>static</code> | readonly \[\] | An empty readonly array, useful to avoid GC pressure. |
 |  [flatMap](./rc-js-util._array.flatmap.md) | <code>static</code> | typeof arrayFlatMap | Iterate over <code>ArrayLike</code> calling a callback against it, the callback returns <code>ArrayLike</code> which is concatenated into a single <code>Array</code>. |
 |  [forEach](./rc-js-util._array.foreach.md) | <code>static</code> | typeof arrayForEach | Like <code>Array.forEach</code>. |
+|  [forEachRange](./rc-js-util._array.foreachrange.md) | <code>static</code> | typeof arrayForEachRange | Like [arrayForEach()](./rc-js-util.arrayforeach.md) with integer range as input. |
 |  [generateRange](./rc-js-util._array.generaterange.md) | <code>static</code> | typeof arrayGenerateRange | Generates a range of integers output in an <code>Array</code>. |
 |  [index](./rc-js-util._array.index.md) | <code>static</code> | typeof arrayIndex | Populates a <code>Map</code> given a key creating function and <code>ArrayLike</code>. |
 |  [insertAtIndex](./rc-js-util._array.insertatindex.md) | <code>static</code> | typeof arrayInsertAtIndex | Modifies input array by inserting at given index. |

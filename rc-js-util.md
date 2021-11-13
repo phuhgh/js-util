@@ -81,6 +81,7 @@
 |  [arrayCopyInto(from, to, startIndex, length)](./rc-js-util.arraycopyinto.md) | Make an array contain the same items as another. |
 |  [arrayFlatMap(items, mapCallback)](./rc-js-util.arrayflatmap.md) | Iterate over <code>ArrayLike</code> calling a callback against it, the callback returns <code>ArrayLike</code> which is concatenated into a single <code>Array</code>. |
 |  [arrayForEach(items, callback)](./rc-js-util.arrayforeach.md) | Like <code>Array.forEach</code>. |
+|  [arrayForEachRange(from, to, callback)](./rc-js-util.arrayforeachrange.md) | Like [arrayForEach()](./rc-js-util.arrayforeach.md) with integer range as input. |
 |  [arrayGenerateRange(from, to)](./rc-js-util.arraygeneraterange.md) | Generates a range of integers output in an <code>Array</code>. |
 |  [arrayIndex(items, getKey)](./rc-js-util.arrayindex.md) | Populates a <code>Map</code> given a key creating function and <code>ArrayLike</code>. |
 |  [arrayInsertAtIndex(items, itemToInsert, insertAtIndex)](./rc-js-util.arrayinsertatindex.md) | Modifies input array by inserting at given index. |
