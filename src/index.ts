@@ -102,6 +102,7 @@ export { arrayCopyInto } from "./array/impl/array-copy-into";
 export { arrayEmptyArray } from "./array/impl/array-empty-array";
 export { arrayFlatMap } from "./array/impl/array-flat-map";
 export { arrayForEach } from "./array/impl/array-for-each";
+export { arrayForEachRange } from "./array/impl/array-for-each-range";
 export { arrayGenerateRange } from "./array/impl/array-generate-range";
 export { arrayIndex } from "./array/impl/array-index";
 export { arrayInsertAtIndex } from "./array/impl/array-insert-at-index";

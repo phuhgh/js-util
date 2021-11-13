@@ -28,6 +28,7 @@ import { arraySetDifference } from "./impl/array-set-difference";
 import { arrayIsNotEmpty } from "./impl/array-is-not-empty";
 import { arrayUnique } from "./impl/array-unique";
 import { arrayAddToSet } from "./impl/array-add-to-set";
+import { arrayForEachRange } from "./impl/array-for-each-range";
 
 /**
  * @public
@@ -57,6 +58,8 @@ export class _Array
     public static readonly flatMap = arrayFlatMap;
     /** {@inheritDoc arrayForEach} */
     public static readonly forEach = arrayForEach;
+    /** {@inheritDoc arrayForEachRange} */
+    public static readonly forEachRange = arrayForEachRange;
     /** {@inheritDoc arrayGenerateRange} */
     public static readonly generateRange = arrayGenerateRange;
     /** {@inheritDoc arrayIndex} */
