@@ -42,6 +42,7 @@ export { CircularBuffer } from "./collection/circular-buffer";
 export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circular-fifo-stack";
 export { DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "./collection/dirty-checked-unique-collection";
 export { IFIFOStack } from "./collection/i-fifo-stack";
+export { ReferenceCounter } from "./collection/reference-counter";
 export { ERgbaMasks, ERgbaShift } from "./colors/e-rgba-masks";
 export { RgbaColorPacker } from "./colors/rgba-color-packer";
 export { DebugProtectedView } from "./debug/debug-protected-view";
