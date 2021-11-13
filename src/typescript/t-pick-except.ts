@@ -1,4 +1,4 @@
 /**
  * @public
  */
-export type TPickExcept<TObj, TKey> = Pick<TObj, Exclude<keyof TObj, TKey>>;
+export type TPickExcept<TObj extends object, TKey extends keyof TObj> = Pick<TObj, Exclude<keyof TObj, TKey>>;
