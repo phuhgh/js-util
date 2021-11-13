@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type TPickExcept<TObj, TKey> = Pick<TObj, Exclude<keyof TObj, TKey>>;
+export declare type TPickExcept<TObj extends object, TKey extends keyof TObj> = Pick<TObj, Exclude<keyof TObj, TKey>>;
 ```
