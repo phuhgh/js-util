@@ -7,6 +7,9 @@ import { ISetLike } from "../typescript/i-set-like";
 export interface IDirtyCheckedUniqueCollection<TItem> extends ISetLike<TItem>
 {
     readonly isDirty: boolean;
+    /**
+     * @returns true if the item was added.
+     */
     reportingAdd(item: TItem): boolean;
     getArray(): readonly TItem[];
     getSet(): ReadonlySet<TItem>;
