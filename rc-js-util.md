@@ -49,6 +49,7 @@
 |  [Range2d](./rc-js-util.range2d.md) | 2x2 matrix representing a 2d range. |
 |  [RawVoidPointer](./rc-js-util.rawvoidpointer.md) | Provides a reference counted wrapper to a pointer <code>malloc</code>'d from JS and is <code>free</code>'d on reference count hitting 0. |
 |  [ReferenceCountedPtr](./rc-js-util.referencecountedptr.md) | Wrapper of wasm object. |
+|  [ReferenceCounter](./rc-js-util.referencecounter.md) | Weak reference counter. |
 |  [RgbaColorPacker](./rc-js-util.rgbacolorpacker.md) | Utility for packing and unpacking RGBA into int32 with one byte per channel. |
 |  [SharedArray](./rc-js-util.sharedarray.md) | Typed array shared between wasm and javascript. |
 |  [SharedStaticArray](./rc-js-util.sharedstaticarray.md) | Typed array representing static memory in wasm. |

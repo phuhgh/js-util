@@ -20,3 +20,5 @@ delete(item: TItem): boolean;
 
 boolean
 
+true if the item was deleted.
+
