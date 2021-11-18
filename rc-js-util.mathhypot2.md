@@ -6,8 +6,6 @@
 
 As per Math.hypot, expect with 2 args.
 
-See [mathHypot2()](./rc-js-util.mathhypot2.md)<!-- -->.
-
 <b>Signature:</b>
 
 ```typescript
@@ -24,4 +22,8 @@ export declare function mathHypot2(a: number, b: number): number;
 <b>Returns:</b>
 
 number
+
+## Remarks
+
+See [mathHypot2()](./rc-js-util.mathhypot2.md)<!-- -->.
 

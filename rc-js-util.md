@@ -151,7 +151,7 @@
 |  [mapValuesToArray(map)](./rc-js-util.mapvaluestoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its values. |
 |  [mathBound(value, min, max)](./rc-js-util.mathbound.md) | Bound a value in to a range. |
 |  [mathBoundRandom(min, max)](./rc-js-util.mathboundrandom.md) | Create a random value between min and max. |
-|  [mathHypot2(a, b)](./rc-js-util.mathhypot2.md) | As per Math.hypot, expect with 2 args.<!-- -->See [mathHypot2()](./rc-js-util.mathhypot2.md)<!-- -->. |
+|  [mathHypot2(a, b)](./rc-js-util.mathhypot2.md) | As per Math.hypot, expect with 2 args. |
 |  [mathMax(a, b)](./rc-js-util.mathmax.md) | Returns the larger of the two parameters <code>a</code> and <code>b</code>. |
 |  [mathMin(a, b)](./rc-js-util.mathmin.md) | Returns the smaller of the two parameters <code>a</code> and <code>b</code>. |
 |  [numberGetHexString(value)](./rc-js-util.numbergethexstring.md) | Returns the hex representation of the number. If it's not a number it returns "NaN". |
