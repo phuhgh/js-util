@@ -52,6 +52,7 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getX()](./rc-js-util.vec3.getx.md) |  |  |
 |  [getY()](./rc-js-util.vec3.gety.md) |  |  |
 |  [getZ()](./rc-js-util.vec3.getz.md) |  |  |
+|  [isEqualTo(\_other)](./rc-js-util.vec3.isequalto.md) |  | Component-wise equals. |
 |  [setX(\_x)](./rc-js-util.vec3.setx.md) |  |  |
 |  [setY(\_y)](./rc-js-util.vec3.sety.md) |  |  |
 |  [setZ(\_z)](./rc-js-util.vec3.setz.md) |  |  |

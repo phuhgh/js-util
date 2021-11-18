@@ -52,6 +52,7 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getX()](./rc-js-util.vec4.getx.md) |  |  |
 |  [getY()](./rc-js-util.vec4.gety.md) |  |  |
 |  [getZ()](./rc-js-util.vec4.getz.md) |  |  |
+|  [isEqualTo(\_other)](./rc-js-util.vec4.isequalto.md) |  | Component-wise equals. |
 |  [setRGBAColor(\_packedRGBA, \_normalize)](./rc-js-util.vec4.setrgbacolor.md) |  |  |
 |  [setW(\_w)](./rc-js-util.vec4.setw.md) |  |  |
 |  [setX(\_x)](./rc-js-util.vec4.setx.md) |  |  |

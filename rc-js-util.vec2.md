@@ -53,6 +53,7 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getNormal(\_result)](./rc-js-util.vec2.getnormal.md) |  | Returns the normal to this vector. |
 |  [getX()](./rc-js-util.vec2.getx.md) |  |  |
 |  [getY()](./rc-js-util.vec2.gety.md) |  |  |
+|  [isEqualTo(\_other)](./rc-js-util.vec2.isequalto.md) |  | Component-wise equals. |
 |  [mat3Multiply(\_mat, \_result)](./rc-js-util.vec2.mat3multiply.md) |  |  |
 |  [normalize(\_result)](./rc-js-util.vec2.normalize.md) |  | Returns a unit vector in the direction of this vector. |
 |  [scalarDivide(\_value, \_result)](./rc-js-util.vec2.scalardivide.md) |  |  |

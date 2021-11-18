@@ -61,6 +61,7 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getLoggableValue()](./rc-js-util.mat4.getloggablevalue.md) |  |  |
 |  [getRow(\_row, \_writeTo)](./rc-js-util.mat4.getrow.md) |  |  |
 |  [getValueAt(\_column, \_row)](./rc-js-util.mat4.getvalueat.md) |  |  |
+|  [isEqualTo(\_other)](./rc-js-util.mat4.isequalto.md) |  | Component-wise equals. |
 |  [setIdentityMatrix()](./rc-js-util.mat4.setidentitymatrix.md) |  |  |
 |  [setRow(\_row, \_writeFrom)](./rc-js-util.mat4.setrow.md) |  |  |
 |  [setValueAt(\_column, \_row, \_value)](./rc-js-util.mat4.setvalueat.md) |  |  |

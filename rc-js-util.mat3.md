@@ -58,6 +58,7 @@ See static properties for constructors. Instances are not an extension of this c
 |  [getValueAt(\_column, \_row)](./rc-js-util.mat3.getvalueat.md) |  |  |
 |  [getVec3MultiplyX(\_x)](./rc-js-util.mat3.getvec3multiplyx.md) |  |  |
 |  [getVec3MultiplyY(\_y)](./rc-js-util.mat3.getvec3multiplyy.md) |  |  |
+|  [isEqualTo(\_other)](./rc-js-util.mat3.isequalto.md) |  | Component-wise equals. |
 |  [multiplyMat3(\_mat, \_result)](./rc-js-util.mat3.multiplymat3.md) |  |  |
 |  [scalarAdd(\_value, \_result)](./rc-js-util.mat3.scalaradd.md) |  |  |
 |  [scalarMultiply(\_value, \_result)](./rc-js-util.mat3.scalarmultiply.md) |  |  |
