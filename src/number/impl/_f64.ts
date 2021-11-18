@@ -3,6 +3,9 @@ import { Range2d } from "../../array/typed-array/2d/range2d/range2d";
 /**
  * @public
  * Utilities relating to double precision floats.
+ *
+ * @remarks
+ * See {@link _F64}.
  */
 export class _F64
 {
