@@ -11,3 +11,8 @@ Utilities relating to double precision floats.
 ```typescript
 static f64: typeof _F64;
 ```
+
+## Remarks
+
+See [\_F64](./rc-js-util._f64.md)<!-- -->.
+

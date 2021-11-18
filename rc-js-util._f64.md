@@ -12,6 +12,10 @@ Utilities relating to double precision floats.
 export declare class _F64 
 ```
 
+## Remarks
+
+See [\_F64](./rc-js-util._f64.md)<!-- -->.
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |

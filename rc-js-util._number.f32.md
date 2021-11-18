@@ -11,3 +11,8 @@ Utilities relating to single precision floats.
 ```typescript
 static f32: typeof _F32;
 ```
+
+## Remarks
+
+See [\_F64](./rc-js-util._f64.md)<!-- -->.
+

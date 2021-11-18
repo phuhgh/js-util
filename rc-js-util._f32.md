@@ -12,6 +12,10 @@ Utilities relating to single precision floats.
 export declare class _F32 
 ```
 
+## Remarks
+
+See [\_F64](./rc-js-util._f64.md)<!-- -->.
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
