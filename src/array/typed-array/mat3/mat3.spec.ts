@@ -284,4 +284,26 @@ describe("=> Mat3", () =>
             expect(a.scalarMultiply(2)).toEqual(a.map(x => x * 2));
         });
     });
+
+    describe("=> isEqualTo", () =>
+    {
+        it("| returns true if all components are the same", () =>
+        {
+            const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            const b = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+            expect(a.isEqualTo(b)).toBe(true);
+        });
+
+        it("| returns false if any component is different", () =>
+        {
+            const a1 = Mat3.f32.factory.createOne(0, 2, 3, 4, 5, 6, 7, 8, 9);
+            const b1 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            expect(a1.isEqualTo(b1)).toBe(false);
+
+            const a2 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 0);
+            const b2 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            expect(a2.isEqualTo(b2)).toBe(false);
+        });
+    });
 });

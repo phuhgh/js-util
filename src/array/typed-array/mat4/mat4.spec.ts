@@ -96,4 +96,26 @@ describe("=> Mat4", () =>
             expect(a).toEqual(Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4));
         });
     });
+
+    describe("=> isEqualTo", () =>
+    {
+        it("| returns true if all components are the same", () =>
+        {
+            const a = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+            const b = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+
+            expect(a.isEqualTo(b)).toBe(true);
+        });
+
+        it("| returns false if any component is different", () =>
+        {
+            const a1 = Mat4.f32.factory.createOne(0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+            const b1 = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+            expect(a1.isEqualTo(b1)).toBe(false);
+
+            const a2 = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0);
+            const b2 = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+            expect(a2.isEqualTo(b2)).toBe(false);
+        });
+    });
 });

@@ -82,6 +82,14 @@ export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 2!: number;
 
+    /**
+     * Component-wise equals.
+     */
+    public isEqualTo(_other: Vec3<TTypedArray>): boolean
+    {
+        throw new Error();
+    }
+
     public getX(): number
     {
         throw new Error();

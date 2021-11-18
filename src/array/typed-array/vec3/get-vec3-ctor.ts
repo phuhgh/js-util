@@ -26,6 +26,11 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
+        public override isEqualTo(other: Vec3<TTypedArray>): boolean
+        {
+            return this[0] === other[0] && this[1] === other[1] && this[2] === other[2];
+        }
+
         public override getX(): number
         {
             return this[0];

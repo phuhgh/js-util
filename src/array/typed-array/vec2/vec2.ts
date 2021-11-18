@@ -82,6 +82,14 @@ export abstract class Vec2<TArray extends TTypedArray>
      */
     public 1!: number;
 
+    /**
+     * Component-wise equals.
+     */
+    public isEqualTo(_other: Vec2<TTypedArray>): boolean
+    {
+        throw new Error();
+    }
+
     public getX(): number
     {
         throw new Error();

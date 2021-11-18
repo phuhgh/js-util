@@ -150,6 +150,14 @@ export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 15!: number;
 
+    /**
+     * Component-wise equals.
+     */
+    public isEqualTo(_other: Mat4<TTypedArray>): boolean
+    {
+        throw new Error();
+    }
+
     public setIdentityMatrix(): Mat4<TArray>
     {
         throw new Error();

@@ -88,6 +88,14 @@ export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<
     public 3!: number;
 
     /**
+     * Component-wise equals.
+     */
+    public isEqualTo(_other: Vec4<TTypedArray>): boolean
+    {
+        throw new Error();
+    }
+
+    /**
      * @param _packedRGBA - The number to be unpacked.
      * @param _normalize - If true, normalize components between 0 - 1.
      */

@@ -88,6 +88,14 @@ export abstract class Mat2<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 3!: number;
 
+    /**
+     * Component-wise equals.
+     */
+    public isEqualTo(_other: Mat2<TTypedArray>): boolean
+    {
+        throw new Error();
+    }
+
     public update(..._args: TMat2CtorArgs): void
     {
         throw new Error();

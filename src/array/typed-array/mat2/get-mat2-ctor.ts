@@ -33,6 +33,11 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
+        public override isEqualTo(other: Mat2<TTypedArray>): boolean
+        {
+            return this[0] === other[0] && this[1] === other[1] && this[2] === other[2] && this[3] === other[3];
+        }
+
         public override update(a1: number, a2: number, a3: number, a4: number): void
         {
             this[0] = a1;

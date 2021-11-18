@@ -35,6 +35,18 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
+        public override isEqualTo(other: Mat3<TTypedArray>): boolean
+        {
+            let isEqual = true;
+
+            for (let i = 0; i < 9 && isEqual; ++i)
+            {
+                isEqual &&= this[i as 0] === other[i as 0];
+            }
+
+            return isEqual;
+        }
+
         public override setIdentityMatrix(): Mat3<InstanceType<TCtor>>
         {
             this.fill(0);

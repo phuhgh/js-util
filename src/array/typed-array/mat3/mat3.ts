@@ -115,6 +115,14 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
      */
     public 8!: number;
 
+    /**
+     * Component-wise equals.
+     */
+    public isEqualTo(_other: Mat3<TTypedArray>): boolean
+    {
+        throw new Error();
+    }
+
     public setIdentityMatrix(): Mat3<TArray>
     {
         throw new Error();

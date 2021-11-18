@@ -33,6 +33,11 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>
             super(bufferOrLength as ArrayBufferLike, offset, length);
         }
 
+        public override isEqualTo(other: Vec2<TTypedArray>): boolean
+        {
+            return this[0] === other[0] && this[1] === other[1];
+        }
+
         public override getX(): number
         {
             return this[0];

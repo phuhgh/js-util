@@ -4,6 +4,7 @@ import { Vec4Factory } from "./vec4-factory";
 import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { RgbaColorPacker } from "../../../colors/rgba-color-packer";
+import { TTypedArray } from "../t-typed-array";
 
 /**
  * @internal
@@ -29,6 +30,11 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>
         )
         {
             super(bufferOrLength as ArrayBufferLike, offset, length);
+        }
+
+        public override isEqualTo(other: Vec4<TTypedArray>): boolean
+        {
+            return this[0] === other[0] && this[1] === other[1] && this[2] === other[2] && this[3] === other[3];
         }
 
         public override setRGBAColor(packedRGBA: number, normalize: boolean = false): Vec4<InstanceType<TCtor>>
