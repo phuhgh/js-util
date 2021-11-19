@@ -18,5 +18,6 @@ export interface ILinkedReferenceCounter extends IReferenceCounted
 |  Method | Description |
 |  --- | --- |
 |  [linkRef(ref)](./rc-js-util.ilinkedreferencecounter.linkref.md) |  |
+|  [transferOwnership(ref)](./rc-js-util.ilinkedreferencecounter.transferownership.md) |  |
 |  [unlinkRef(ref)](./rc-js-util.ilinkedreferencecounter.unlinkref.md) |  |
 

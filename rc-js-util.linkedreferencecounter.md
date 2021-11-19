@@ -27,5 +27,6 @@ export declare class LinkedReferenceCounter extends AReferenceCounted implements
 |  --- | --- | --- |
 |  [linkRef(ref)](./rc-js-util.linkedreferencecounter.linkref.md) |  |  |
 |  [onFree()](./rc-js-util.linkedreferencecounter.onfree.md) |  |  |
+|  [transferOwnership(ref)](./rc-js-util.linkedreferencecounter.transferownership.md) |  |  |
 |  [unlinkRef(ref)](./rc-js-util.linkedreferencecounter.unlinkref.md) |  |  |
 
