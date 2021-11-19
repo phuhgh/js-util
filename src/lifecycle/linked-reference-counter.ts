@@ -7,8 +7,8 @@ import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
  */
 export interface ILinkedReferenceCounter extends IReferenceCounted
 {
-    linkRef(ref: AReferenceCounted): void;
-    unlinkRef(ref: AReferenceCounted): void;
+    linkRef(ref: IReferenceCounted): void;
+    unlinkRef(ref: IReferenceCounted): void;
 }
 
 /**
@@ -21,11 +21,11 @@ export class LinkedReferenceCounter
 {
     public constructor
     (
-        refs: AReferenceCounted[] = [],
+        refs: IReferenceCounted[] = [],
     )
     {
         super();
-        this.refs = new DirtyCheckedUniqueCollection<AReferenceCounted>(refs);
+        this.refs = new DirtyCheckedUniqueCollection<IReferenceCounted>(refs);
 
         for (let i = 0, iEnd = refs.length; i < iEnd; ++i)
         {
@@ -33,7 +33,7 @@ export class LinkedReferenceCounter
         }
     }
 
-    public linkRef(ref: AReferenceCounted): void
+    public linkRef(ref: IReferenceCounted): void
     {
         if (!this.refs.has(ref))
         {
@@ -42,7 +42,7 @@ export class LinkedReferenceCounter
         }
     }
 
-    public unlinkRef(ref: AReferenceCounted): void
+    public unlinkRef(ref: IReferenceCounted): void
     {
         const removed = this.refs.delete(ref);
 
@@ -64,5 +64,5 @@ export class LinkedReferenceCounter
         this.refs.clear();
     }
 
-    private refs: IDirtyCheckedUniqueCollection<AReferenceCounted>;
+    private refs: IDirtyCheckedUniqueCollection<IReferenceCounted>;
 }
