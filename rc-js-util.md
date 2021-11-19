@@ -37,6 +37,7 @@
 |  [DirtyCheckedUniqueCollection](./rc-js-util.dirtycheckeduniquecollection.md) | Provides a unique array with O(1) add &amp; remove, with dirty checking on <code>getArray</code>. |
 |  [IncrementalUpdater](./rc-js-util.incrementalupdater.md) | Performs update operations once every <code>waitPeriod</code> until the iterator returned by [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) is exhausted. |
 |  [IncrementingIdentifierFactory](./rc-js-util.incrementingidentifierfactory.md) | Provides an incrementing integer identifier. |
+|  [LinkedReferenceCounter](./rc-js-util.linkedreferencecounter.md) | A reference counted object that can be nested. |
 |  [Margin2d](./rc-js-util.margin2d.md) | 2x2 matrix representing margins on a rectangle. |
 |  [Mat2](./rc-js-util.mat2.md) | Row major 2x2 matrix. |
 |  [Mat3](./rc-js-util.mat3.md) | Row major 3x3 matrix. |
@@ -188,6 +189,7 @@
 |  [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) | A provider that should return an iterator that represents a sequence of update operations. Useful for breaking up operations that would block the UI for an unacceptably long time. |
 |  [IIncrementalUpdater](./rc-js-util.iincrementalupdater.md) | Performs update operations once every <code>waitPeriod</code> until the iterator returned by [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) is exhausted. |
 |  [IJsUtilBindings](./rc-js-util.ijsutilbindings.md) |  |
+|  [ILinkedReferenceCounter](./rc-js-util.ilinkedreferencecounter.md) | A reference counted object that can be nested. |
 |  [IMargin2dCtor](./rc-js-util.imargin2dctor.md) | Constructor for [Margin2d](./rc-js-util.margin2d.md)<!-- -->. |
 |  [IMat2Ctor](./rc-js-util.imat2ctor.md) | Constructor for [Mat2](./rc-js-util.mat2.md)<!-- -->. |
 |  [IMat3Ctor](./rc-js-util.imat3ctor.md) | Constructor for [Mat3](./rc-js-util.mat3.md)<!-- -->. |
@@ -213,6 +215,7 @@
 |  [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md) | [Vec2](./rc-js-util.vec2.md)<!-- -->. |
 |  [IReadonlyVec3](./rc-js-util.ireadonlyvec3.md) | [Vec3](./rc-js-util.vec3.md)<!-- -->. |
 |  [IReadonlyVec4](./rc-js-util.ireadonlyvec4.md) | [Vec4](./rc-js-util.vec4.md)<!-- -->. |
+|  [IRefCountedObject](./rc-js-util.irefcountedobject.md) | Holds references to resource(s) that must be life-cycle managed. |
 |  [IReferenceCounted](./rc-js-util.ireferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. |
 |  [IReferenceCountedPtr](./rc-js-util.ireferencecountedptr.md) | Wrapper of wasm object. NB The object is pre-claimed (ref count 1) on creation. On free the pointer will be set to null. |
 |  [ISetLike](./rc-js-util.isetlike.md) |  |
