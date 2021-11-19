@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-unlinkRef(ref: AReferenceCounted): void;
+unlinkRef(ref: IReferenceCounted): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  ref | [AReferenceCounted](./rc-js-util.areferencecounted.md) |  |
+|  ref | [IReferenceCounted](./rc-js-util.ireferencecounted.md) |  |
 
 <b>Returns:</b>
 

@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-linkRef(ref: AReferenceCounted): void;
+linkRef(ref: IReferenceCounted): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  ref | [AReferenceCounted](./rc-js-util.areferencecounted.md) |  |
+|  ref | [IReferenceCounted](./rc-js-util.ireferencecounted.md) |  |
 
 <b>Returns:</b>
 

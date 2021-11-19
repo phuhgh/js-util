@@ -9,12 +9,12 @@ Constructs a new instance of the `LinkedReferenceCounter` class
 <b>Signature:</b>
 
 ```typescript
-constructor(refs?: AReferenceCounted[]);
+constructor(refs?: IReferenceCounted[]);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refs | [AReferenceCounted](./rc-js-util.areferencecounted.md)<!-- -->\[\] |  |
+|  refs | [IReferenceCounted](./rc-js-util.ireferencecounted.md)<!-- -->\[\] |  |
 
