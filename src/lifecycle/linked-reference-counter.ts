@@ -1,5 +1,6 @@
 import { DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "../collection/dirty-checked-unique-collection";
 import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
+import { _Debug } from "../debug/_debug";
 
 /**
  * @public
@@ -8,6 +9,7 @@ import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
 export interface ILinkedReferenceCounter extends IReferenceCounted
 {
     linkRef(ref: IReferenceCounted): void;
+    transferOwnership(ref: IReferenceCounted): void;
     unlinkRef(ref: IReferenceCounted): void;
 }
 
@@ -31,6 +33,12 @@ export class LinkedReferenceCounter
         {
             refs[i].claim();
         }
+    }
+
+    public transferOwnership(ref: IReferenceCounted): void
+    {
+        DEBUG_MODE && _Debug.assert(!this.refs.has(ref), "ref already added");
+        this.refs.add(ref);
     }
 
     public linkRef(ref: IReferenceCounted): void
