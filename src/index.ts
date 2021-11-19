@@ -52,6 +52,7 @@ export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
 export { TListener } from "./eventing/t-listener";
 export { ReferenceCountedPtr, IReferenceCountedPtr } from "./lifecycle/reference-counted-ptr";
+export { ILinkedReferenceCounter, LinkedReferenceCounter } from "./lifecycle/linked-reference-counter";
 export { AOnDestroy, IOnDestroy } from "./lifecycle/i-on-destroy";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted";
 export { TemporaryListener, ITemporaryListener } from "./lifecycle/temporary-listener";
@@ -187,6 +188,7 @@ export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normal
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings";
 export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings";
 export { ISharedObject } from "./lifecycle/i-shared-object";
+export { IRefCountedObject } from "./lifecycle/i-ref-counted-object";
 export { IOnFree } from "./lifecycle/i-on-free";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize";
 export { IIdentifierFactory } from "./identifier/impl/i-identifier-factory";
