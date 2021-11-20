@@ -9,7 +9,7 @@ returns items in A not in B.
 <b>Signature:</b>
 
 ```typescript
-export declare function arraySetDifference<TItem>(a: ArrayLike<TItem>, b: Set<TItem>): Set<TItem>;
+export declare function arraySetDifference<TItem>(a: ArrayLike<TItem>, b: ReadonlySet<TItem>): Set<TItem>;
 ```
 
 ## Parameters
@@ -17,7 +17,7 @@ export declare function arraySetDifference<TItem>(a: ArrayLike<TItem>, b: Set<TI
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | ArrayLike&lt;TItem&gt; |  |
-|  b | Set&lt;TItem&gt; |  |
+|  b | ReadonlySet&lt;TItem&gt; |  |
 
 <b>Returns:</b>
 

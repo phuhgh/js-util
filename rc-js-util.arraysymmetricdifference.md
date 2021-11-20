@@ -9,7 +9,7 @@ Returns those items in A not in B, and those items in B not in A.
 <b>Signature:</b>
 
 ```typescript
-export declare function arraySymmetricDifference<TItem>(a: readonly TItem[], b: readonly TItem[], aSet?: Set<TItem>, bSet?: Set<TItem>): Set<TItem>;
+export declare function arraySymmetricDifference<TItem>(a: readonly TItem[], b: readonly TItem[], aSet?: ReadonlySet<TItem>, bSet?: ReadonlySet<TItem>): Set<TItem>;
 ```
 
 ## Parameters
@@ -18,8 +18,8 @@ export declare function arraySymmetricDifference<TItem>(a: readonly TItem[], b: 
 |  --- | --- | --- |
 |  a | readonly TItem\[\] |  |
 |  b | readonly TItem\[\] |  |
-|  aSet | Set&lt;TItem&gt; |  |
-|  bSet | Set&lt;TItem&gt; |  |
+|  aSet | ReadonlySet&lt;TItem&gt; |  |
+|  bSet | ReadonlySet&lt;TItem&gt; |  |
 
 <b>Returns:</b>
 
