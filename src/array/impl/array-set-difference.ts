@@ -8,7 +8,7 @@
 export function arraySetDifference<TItem>
 (
     a: ArrayLike<TItem>,
-    b: Set<TItem>,
+    b: ReadonlySet<TItem>,
 )
     : Set<TItem>
 {

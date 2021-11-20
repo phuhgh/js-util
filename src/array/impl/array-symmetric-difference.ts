@@ -9,8 +9,8 @@ export function arraySymmetricDifference<TItem>
 (
     a: readonly TItem[],
     b: readonly TItem[],
-    aSet: Set<TItem> = new Set(a),
-    bSet: Set<TItem> = new Set(b),
+    aSet: ReadonlySet<TItem> = new Set(a),
+    bSet: ReadonlySet<TItem> = new Set(b),
 )
     : Set<TItem>
 {
