@@ -29,6 +29,8 @@ import { arrayIsNotEmpty } from "./impl/array-is-not-empty";
 import { arrayUnique } from "./impl/array-unique";
 import { arrayAddToSet } from "./impl/array-add-to-set";
 import { arrayForEachRange } from "./impl/array-for-each-range";
+import { arrayMax} from "./impl/array-max";
+import { arrayMin } from "./impl/array-min";
 
 /**
  * @public
@@ -78,6 +80,10 @@ export class _Array
     public static readonly map = arrayMap;
     /** {@inheritDoc arrayMapRange} */
     public static readonly mapRange = arrayMapRange;
+    /** {@inheritDoc arrayMax} */
+    public static readonly max = arrayMax;
+    /** {@inheritDoc arrayMin} */
+    public static readonly min = arrayMin;
     /** {@inheritDoc arrayNormalizeEmptyToUndefined} */
     public static readonly normalizeEmptyToUndefined = arrayNormalizeEmptyToUndefined;
     /** {@inheritDoc arrayNormalizeNullishToEmpty} */
