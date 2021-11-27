@@ -92,6 +92,8 @@
 |  [arrayLast(items)](./rc-js-util.arraylast.md) | Gets the last value in <code>ArrayLike</code>. |
 |  [arrayMap(items, callback)](./rc-js-util.arraymap.md) | Like <code>Array.map</code>. |
 |  [arrayMapRange(from, to, callback)](./rc-js-util.arraymaprange.md) | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |
+|  [arrayMax(numbers)](./rc-js-util.arraymax.md) | Find the largest number in an array, if the array is empty the return is -Infinity. |
+|  [arrayMin(numbers)](./rc-js-util.arraymin.md) | Find the smallest number in an array, if the array is empty the return is Infinity. |
 |  [arrayNormalizeEmptyToUndefined(array)](./rc-js-util.arraynormalizeemptytoundefined.md) | Replaces length 0 <code>ArrayLike</code> with <code>undefined</code>. |
 |  [arrayNormalizeNullishToEmpty(array)](./rc-js-util.arraynormalizenullishtoempty.md) | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
 |  [arrayPushUnique(items, itemToPush, getComparisonValue)](./rc-js-util.arraypushunique.md) | Like <code>Array.push</code> but checks if the value is unique first. |

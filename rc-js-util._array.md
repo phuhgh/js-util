@@ -37,6 +37,8 @@ export declare class _Array
 |  [last](./rc-js-util._array.last.md) | <code>static</code> | typeof arrayLast | Gets the last value in <code>ArrayLike</code>. |
 |  [map](./rc-js-util._array.map.md) | <code>static</code> | typeof arrayMap | Like <code>Array.map</code>. |
 |  [mapRange](./rc-js-util._array.maprange.md) | <code>static</code> | typeof arrayMapRange | Like [arrayMap()](./rc-js-util.arraymap.md) with integer range as input. |
+|  [max](./rc-js-util._array.max.md) | <code>static</code> | typeof arrayMax | Find the largest number in an array, if the array is empty the return is -Infinity. |
+|  [min](./rc-js-util._array.min.md) | <code>static</code> | typeof arrayMin | Find the smallest number in an array, if the array is empty the return is Infinity. |
 |  [normalizeEmptyToUndefined](./rc-js-util._array.normalizeemptytoundefined.md) | <code>static</code> | typeof arrayNormalizeEmptyToUndefined | Replaces length 0 <code>ArrayLike</code> with <code>undefined</code>. |
 |  [normalizeNullishToEmpty](./rc-js-util._array.normalizenullishtoempty.md) | <code>static</code> | typeof arrayNormalizeNullishToEmpty | Replaces <code>null</code> / <code>undefined</code> with an empty <code>Array</code>. |
 |  [pushUnique](./rc-js-util._array.pushunique.md) | <code>static</code> | typeof arrayPushUnique | Like <code>Array.push</code> but checks if the value is unique first. |
