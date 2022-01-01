@@ -1,5 +1,4 @@
-import { TListener } from "../eventing/t-listener";
-import { IDebugWeakBroadcastEvent } from "rc-js-util-globals";
+import { IDebugWeakBroadcastEvent, TDebugListener } from "rc-js-util-globals";
 
 export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[]> implements IDebugWeakBroadcastEvent<TKey, TArgs>
 {
@@ -10,7 +9,7 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
     {
     }
 
-    public addListener(listener: TListener<TKey, TArgs>): void
+    public addListener(listener: TDebugListener<TKey, TArgs>): void
     {
         this.removeListener(listener);
 
@@ -19,22 +18,24 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
         this.listenersMap.set(listener, ref);
     }
 
-    public addTemporaryListener(listener: TListener<TKey, TArgs>): () => void
+    public addTemporaryListener(listener: TDebugListener<TKey, TArgs>): () => void
     {
         this.addListener(listener);
 
         return () => this.removeListener(listener);
     }
 
-    public addOneTimeListener(listener: TListener<TKey, TArgs>): () => void
+    public addOneTimeListener(listener: TDebugListener<TKey, TArgs>): () => void
     {
         const temporaryListener = {
             [this.key]: (...args: TArgs) =>
             {
                 this.removeListener(temporaryListener);
-                return listener[this.key](...args);
+
+                // todo jack...
+                return listener[this.key]!(...args);
             }
-        } as TListener<TKey, TArgs>;
+        } as TDebugListener<TKey, TArgs>;
 
         this.addListener(temporaryListener);
 
@@ -53,12 +54,13 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
             }
             else
             {
-                listener[this.key](...args);
+                // todo jack...
+                listener[this.key]!(...args);
             }
         });
     }
 
-    public removeListener(listener: TListener<TKey, TArgs>): void
+    public removeListener(listener: TDebugListener<TKey, TArgs>): void
     {
         const ref = this.listenersMap.get(listener);
 
@@ -69,9 +71,9 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
         }
     }
 
-    public getTargets(): readonly TListener<TKey, TArgs>[]
+    public getTargets(): readonly TDebugListener<TKey, TArgs>[]
     {
-        const targets: TListener<TKey, TArgs>[] = [];
+        const targets: TDebugListener<TKey, TArgs>[] = [];
 
         this.listenersSet.forEach(ref =>
         {
@@ -90,6 +92,6 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
         return targets;
     }
 
-    private readonly listenersSet = new Set<WeakRef<TListener<TKey, TArgs>>>();
-    private readonly listenersMap = new WeakMap<TListener<TKey, TArgs>, WeakRef<TListener<TKey, TArgs>>>();
+    private readonly listenersSet = new Set<WeakRef<TDebugListener<TKey, TArgs>>>();
+    private readonly listenersMap = new WeakMap<TDebugListener<TKey, TArgs>, WeakRef<TDebugListener<TKey, TArgs>>>();
 }

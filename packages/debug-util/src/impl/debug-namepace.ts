@@ -4,7 +4,6 @@ import { _Debug } from "./_debug";
 import { DebugWeakBroadcastEvent } from "./debug-weak-broadcast-event";
 import { DebugSharedObjectLifeCycleChecks } from "./debug-shared-object-life-cycle-checks";
 import { IDebugProtectedView, IDebugSharedObjectLifeCycleChecks, IDebugWeakBroadcastEvent, IDebugWeakStore } from "rc-js-util-globals";
-import { fpNoOp } from "../fp/impl/fp-no-op";
 import { runTimeGetGlobalObject } from "../../core/src/env/impl/run-time-get-global-object";
 
 /**
@@ -38,11 +37,16 @@ export namespace RcJsUtilDebugImpl
     export let uniquePointers: Set<number>;
 }
 
+export namespace RcJsUtilDebugImpl
+{
+
+}
+
 DEBUG_MODE && _Debug.runBlock(() =>
 {
     RcJsUtilDebugImpl.onAllocate = new DebugWeakBroadcastEvent<"debugOnAllocate", []>("debugOnAllocate");
     RcJsUtilDebugImpl.protectedViews = new DebugWeakValue<DebugProtectedView<object>>();
-    RcJsUtilDebugImpl.error = (message: string): void => fpNoOp(_Debug.error(message));
+    RcJsUtilDebugImpl.error = (message: string): void => _Debug.error(message);
     RcJsUtilDebugImpl.sharedObjectLifeCycleChecks = new DebugSharedObjectLifeCycleChecks();
     RcJsUtilDebugImpl.uniquePointers = new Set<number>();
     RcJsUtilDebugImpl.verboseLog = (message: string) => _Debug.verboseLog(message);

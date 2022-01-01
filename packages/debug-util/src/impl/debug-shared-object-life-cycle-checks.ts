@@ -1,6 +1,5 @@
 import { _Debug } from "./_debug";
 import { DebugPointer } from "./debug-pointer";
-import { _Production } from "../production/_production";
 import { IDebugSharedObject, IDebugSharedObjectLifeCycleChecks } from "rc-js-util-globals";
 
 /**
@@ -43,7 +42,7 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
 
         if (pointer == null)
         {
-            throw _Production.createError("expected to find pointer");
+            throw _Debug.error("expected to find pointer");
         }
 
         this.debugPointers.delete(pointer);
@@ -57,9 +56,8 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
 
             if (debugPointer.isStatic)
             {
-                // the wasm memory hasn't been cleaned up
-                // the js object may leak in production too (resize listener), but we don't know
-                // fixing one fixes the other
+                // wasm memory never gets cleaned up (static)
+                // the js object will leak in production (resize listener is a strong reference in that case)
                 const message = [
                     "Finalization registry found unreleased wasm object allocated by:",
                     debugPointer.toString(),
@@ -69,8 +67,9 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
             }
             else
             {
-                // wasm memory never gets cleaned up (static)
-                // the js object will leak in production (resize listener is a strong reference in that case)
+                // the wasm memory hasn't been cleaned up
+                // the js object may leak in production too (resize listener), but we don't know
+                // fixing one fixes the other
                 _Debug.error([
                     "Leaked shared static object on the JS side:",
                     debugPointer.toString(),

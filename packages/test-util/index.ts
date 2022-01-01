@@ -1,7 +1,4 @@
-// noinspection DuplicatedCode
-
-import { _Debug, RcJsUtilDebugImpl } from "rc-js-util";
-import { setDefaultUnitTestFlags } from "rc-js-util/bin/src/debug/impl/set-default-unit-test-flags";
+import { setDefaultUnitTestFlags } from "./impl/set-default-unit-test-flags";
 
 export class ExpectColor
 {
@@ -81,27 +78,40 @@ export class ExpectColor
     }
 }
 
-export function itShouldCallAssert(times: number, runTest: () => void): void
+export function itShouldCallAssert
+(
+    times: number,
+    runTest: () => void,
+)
+    : void
 {
     it("| has the correct number of assert calls", () =>
     {
+        const debugMode = _Debug.getFlag("DEBUG_MODE");
+        _Debug.setFlag("DEBUG_MODE", true);
         spyOn(_Debug, "assert");
         runTest();
         expect(_Debug.assert).toHaveBeenCalledTimes(times);
+        _Debug.setFlag("DEBUG_MODE", debugMode);
     });
 }
 
-export function itShouldNotRunDebugWhenDebugIsFalse(runTest: () => void): void
+export function itShouldNotRunDebugWhenDebugIsFalse
+(
+    runTest: () => void,
+)
+    : void
 {
     it("doesn't run asserts when DEBUG_MODE is false", () =>
     {
+        const debugMode = _Debug.getFlag("DEBUG_MODE");
         _Debug.setFlag("DEBUG_MODE", false);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
         spyOn(_Debug, "runBlock");
         spyOn(_Debug, "assert");
         runTest();
         expect(_Debug.runBlock).not.toHaveBeenCalled();
         expect(_Debug.assert).not.toHaveBeenCalled();
+        _Debug.setFlag("DEBUG_MODE", debugMode);
     });
 }
 
@@ -117,42 +127,16 @@ export function expectValueToBeNearTo
     expect(value)
         .withContext(message ?? "")
         .toBeLessThan(expectation + variance);
-    expect(value).toBeGreaterThan(expectation - variance);
+
+    expect(value)
+        .withContext(message ?? "")
+        .toBeGreaterThan(expectation - variance);
 }
 
-export function debugDescribe(label: string, callback: () => void): void
+export function resetDebugState()
 {
-    describe(label, () =>
-    {
-        beforeEach(() =>
-        {
-            setDefaultUnitTestFlags();
-            RcJsUtilDebugImpl.uniquePointers.clear();
-        });
-
-        callback();
-    });
-}
-
-export function fdebugDescribe(label: string, callback: () => void): void
-{
-    fdescribe(label, () =>
-    {
-        beforeEach(() =>
-        {
-            setDefaultUnitTestFlags();
-            RcJsUtilDebugImpl.uniquePointers.clear();
-        });
-
-        callback();
-    });
-}
-
-export function debugIt(label: string, callback: () => void): void
-{
-    _Debug.label = label;
-    it(label, callback);
-    _Debug.label = undefined;
+    DEBUG_MODE && setDefaultUnitTestFlags();
+    RcJsUtil_Debug.uniquePointers.clear();
 }
 
 export function applyLabel(label: string, callback: () => void): void

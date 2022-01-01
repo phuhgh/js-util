@@ -1,4 +1,4 @@
-import { _Debug } from "../_debug";
+import { _Debug } from "./_debug";
 
 export function setDefaultUnitTestFlags(): void
 {

@@ -1,4 +1,4 @@
-import { runTimeGetGlobalObject } from "../env/impl/run-time-get-global-object";
+import "rc-js-util-globals";
 
 /**
  * @public
@@ -209,11 +209,20 @@ export class _Debug
     public static setFlag<TKey extends keyof RcJsUtilDebugFlags>
     (
         flag: RcJsUtilDebugFlags[TKey],
-        value: boolean
+        value: boolean,
     )
         : void
     {
-        runTimeGetGlobalObject()[flag] = value;
+        getGlobalObject()[flag] = value;
+    }
+
+    public static getFlag<TKey extends keyof RcJsUtilDebugFlags>
+    (
+        flag: RcJsUtilDebugFlags[TKey],
+    )
+        : boolean
+    {
+        return Boolean(getGlobalObject()[flag]);
     }
 
     /**
@@ -221,7 +230,7 @@ export class _Debug
      */
     public static isFlagSet<TKey extends keyof RcJsUtilDebugFlags>(flag: RcJsUtilDebugFlags[TKey]): boolean
     {
-        return Boolean(runTimeGetGlobalObject()[flag]);
+        return Boolean(getGlobalObject()[flag]);
     }
 
     private static onBreakpoint = () =>
@@ -232,6 +241,24 @@ export class _Debug
 
     private static _label: string | undefined = undefined;
 }
+
+function getGlobalObject(): { [key: string]: unknown }
+{
+    if (typeof global !== "undefined")
+    {
+        return global;
+    }
+
+    if (typeof window !== "undefined")
+    {
+        return window;
+    }
+
+    throw new Error("unsupported environment");
+}
+
+declare let global: { [key: string]: unknown };
+declare let window: { [key: string]: unknown };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const console: any;

@@ -1,6 +1,4 @@
 import { _Debug } from "./_debug";
-import { numberGetHexString } from "../number/impl/number-get-hex-string";
-import { arrayInsertAtIndex } from "../array/impl/array-insert-at-index";
 
 export class DebugPointer
 {
@@ -20,7 +18,7 @@ export class DebugPointer
     public toString(): string
     {
         const lines = [
-            `WASM address: ${numberGetHexString(this.pointer)}`,
+            `WASM address: ${["0x", this.pointer.toString(16).toUpperCase()].join("")}`,
             `Js constructor name: ${this.objectConstructor.name}`,
             "\nCall site stack trace follows:",
             this.creationCallstack,
@@ -28,7 +26,7 @@ export class DebugPointer
 
         if (this.instanceLabel != null)
         {
-            arrayInsertAtIndex(lines, `Instance label : ${this.instanceLabel}`, 2);
+            lines.splice(2, 0, `Instance label : ${this.instanceLabel}`);
         }
 
         return lines.join("\n");
