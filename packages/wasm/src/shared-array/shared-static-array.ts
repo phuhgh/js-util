@@ -1,5 +1,5 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { _Debug } from "../../debug/_debug";
+import { _Debug } from "@rc-js-util/debug"
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { ISharedArray } from "./i-shared-array";

@@ -1,8 +1,10 @@
 import { mathBound } from "./math-bound";
-import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse, resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mathBound", () =>
+describe("=> mathBound", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| bounds the value", () =>
     {
         expect(mathBound(1, 0, 2)).toBe(1);

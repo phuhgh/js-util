@@ -3,8 +3,7 @@ import { DebugWeakValue } from "./debug-weak-value";
 import { _Debug } from "./_debug";
 import { DebugWeakBroadcastEvent } from "./debug-weak-broadcast-event";
 import { DebugSharedObjectLifeCycleChecks } from "./debug-shared-object-life-cycle-checks";
-import { IDebugProtectedView, IDebugSharedObjectLifeCycleChecks, IDebugWeakBroadcastEvent, IDebugWeakStore } from "rc-js-util-globals";
-import { runTimeGetGlobalObject } from "../../core/src/env/impl/run-time-get-global-object";
+import { IDebugProtectedView, IDebugSharedObjectLifeCycleChecks, IDebugWeakBroadcastEvent, IDebugWeakStore } from "@rc-js-util/globals";
 
 /**
  * @public
@@ -46,10 +45,12 @@ DEBUG_MODE && _Debug.runBlock(() =>
 {
     RcJsUtilDebugImpl.onAllocate = new DebugWeakBroadcastEvent<"debugOnAllocate", []>("debugOnAllocate");
     RcJsUtilDebugImpl.protectedViews = new DebugWeakValue<DebugProtectedView<object>>();
-    RcJsUtilDebugImpl.error = (message: string): void => _Debug.error(message);
+    RcJsUtilDebugImpl.error = (message: string): void =>
+    {
+        _Debug.error(message);
+    };
     RcJsUtilDebugImpl.sharedObjectLifeCycleChecks = new DebugSharedObjectLifeCycleChecks();
     RcJsUtilDebugImpl.uniquePointers = new Set<number>();
     RcJsUtilDebugImpl.verboseLog = (message: string) => _Debug.verboseLog(message);
-
-    runTimeGetGlobalObject()["RcJsUtilDebug"] = RcJsUtilDebugImpl;
+    _Debug.getGlobalObject()["RcJsUtilDebug"] = RcJsUtilDebugImpl;
 });

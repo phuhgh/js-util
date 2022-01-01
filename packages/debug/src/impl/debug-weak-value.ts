@@ -1,5 +1,5 @@
 import { _Debug } from "./_debug";
-import { IDebugWeakStore } from "rc-js-util-globals";
+import { IDebugWeakStore } from "@rc-js-util/globals";
 
 export class DebugWeakValue<T> implements IDebugWeakStore<T>
 {

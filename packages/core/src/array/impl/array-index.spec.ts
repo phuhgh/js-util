@@ -1,10 +1,12 @@
 import { arrayIndex } from "./array-index";
 import { _Production } from "../../production/_production";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayIndex", () =>
+describe("=> arrayIndex", () =>
 {
     const values = ["a", "b", "c"] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

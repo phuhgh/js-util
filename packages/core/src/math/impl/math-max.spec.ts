@@ -1,8 +1,10 @@
-import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { mathMax } from "./math-max";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse, resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mathMax", () =>
+describe("=> mathMax", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| returns the larger value", () =>
     {
         expect(mathMax(1, 0)).toBe(1);

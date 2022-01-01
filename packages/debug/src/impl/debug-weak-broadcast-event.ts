@@ -1,4 +1,4 @@
-import { IDebugWeakBroadcastEvent, TDebugListener } from "rc-js-util-globals";
+import { IDebugWeakBroadcastEvent, TDebugListener } from "@rc-js-util/globals";
 
 export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[]> implements IDebugWeakBroadcastEvent<TKey, TArgs>
 {

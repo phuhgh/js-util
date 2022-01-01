@@ -1,9 +1,5 @@
-import { TKeysOf } from "../typescript/t-keys-of";
 import { _Debug } from "./_debug";
-import { arrayContains } from "../array/impl/array-contains";
-import { IDebugProtectedView } from "rc-js-util-globals";
-import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor";
-import { IDictionary } from "../typescript/i-dictionary";
+import { IDebugProtectedView } from "@rc-js-util/globals";
 
 /**
  * @public
@@ -14,17 +10,18 @@ import { IDictionary } from "../typescript/i-dictionary";
  */
 export class DebugProtectedView<T extends object> implements IDebugProtectedView<T>
 {
-    public static createTypedArrayView = <TCtor extends TTypedArrayCtor>(): DebugProtectedView<InstanceType<TCtor>> =>
+    public static createTypedArrayView = <TArray extends ArrayBufferView>(): DebugProtectedView<TArray> =>
     {
-        return new DebugProtectedView<InstanceType<TCtor>>(["BYTES_PER_ELEMENT"], "Shared Array - memory resize danger, refresh instance with getInstance");
+        return new DebugProtectedView<Float32Array>(["BYTES_PER_ELEMENT"], "Shared Array - memory resize danger, refresh instance with getInstance");
     }
 
     public constructor
     (
-        private readonly safeKeys: TKeysOf<T>,
+        safeKeys: (keyof T)[],
         private readonly debugInfo: string,
     )
     {
+        this.safeKeys = new Set(safeKeys) as Set<string | symbol>;
     }
 
     public invalidate(): void
@@ -56,7 +53,7 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
 
                 if (!this.validViews.has(view))
                 {
-                    _Debug.assert(arrayContains(this.safeKeys as string[], property), `ProtectedView view invalidated - ${this.debugInfo}`);
+                    _Debug.assert(this.safeKeys.has(property), `ProtectedView view invalidated - ${this.debugInfo}`);
                 }
 
                 if (typeof view[property as keyof T] == "function")
@@ -88,7 +85,13 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
     }
 
     private validViews = new Set<object>();
+    private readonly safeKeys: Set<string | symbol>;
     private static isViewValidKey = Symbol("isViewValid");
     private static originalViewKey = Symbol("originalView");
     private static debugMessageKey = Symbol("debugMessage");
+}
+
+interface IDictionary<T>
+{
+    [index: string | symbol]: T;
 }

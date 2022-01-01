@@ -1,6 +1,6 @@
-import { ATypedArrayTuple } from "../array/typed-array/a-typed-array-tuple";
 import { TPickExcept } from "./t-pick-except";
-import { TTypedArray } from "../array/typed-array/t-typed-array";
+import { TTypedArray } from "./t-typed-array";
+import { ATypedArrayTuple } from "./a-typed-array-tuple";
 
 /**
  * @public

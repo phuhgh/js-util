@@ -21,6 +21,6 @@
     ]
   },
   "include": [
-    "index.ts"
+    "src"
   ]
 }

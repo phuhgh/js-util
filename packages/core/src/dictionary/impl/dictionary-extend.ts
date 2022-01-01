@@ -1,4 +1,4 @@
-import { _Debug } from "../../debug/_debug";
+import { _Debug } from "@rc-js-util/debug"
 import { arrayIsArray } from "../../array/impl/array-is-array";
 
 /**

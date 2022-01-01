@@ -1,7 +1,9 @@
-import { TTupleLike } from "../../typescript/t-tuple-like";
-import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length";
 import { TTypedArray } from "./t-typed-array";
-import { TNeverFallback } from "../../typescript/t-never-fallback";
+import { TNeverFallback } from "./t-never-fallback";
+import { TTupleLike } from "./t-tuple-like";
+import { TTupleLikeOfLength } from "./t-tuple-like-of-length";
+
+// todo jack: probably best that these form a package
 
 /**
  * @public

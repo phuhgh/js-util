@@ -1,8 +1,10 @@
 import { arrayPushUnique } from "./array-push-unique";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayPushUnique", () =>
+describe("=> arrayPushUnique", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| pushes if unique", () =>
     {
         const values = ["a", "b", "c"];

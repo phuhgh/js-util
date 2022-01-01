@@ -1,8 +1,10 @@
 import { dictionaryCloneExtend } from "./dictionary-clone-extend";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> dictionaryCloneExtend", () =>
+describe("=> dictionaryCloneExtend", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| returns a new object, overwriting with the extension where common", () =>
     {
         const obj = { foo: true };

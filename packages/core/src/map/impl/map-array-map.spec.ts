@@ -1,9 +1,11 @@
 import { mapArrayMap } from "./map-array-map";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapArrayMap", () =>
+describe("=> mapArrayMap", () =>
 {
     const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

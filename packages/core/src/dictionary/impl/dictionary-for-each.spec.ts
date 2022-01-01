@@ -1,9 +1,11 @@
 import { dictionaryForEach } from "./dictionary-foreach";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> dictionaryForEach", () =>
+describe("=> dictionaryForEach", () =>
 {
     const values = { a: 1, b: 2, c: 3 };
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

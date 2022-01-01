@@ -1,5 +1,8 @@
 {
   "name": "@rc-js-util/globals",
   "version": "1.0.0",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "echo skipping globals"
+  }
 }

@@ -1,7 +1,142 @@
 dependencies:
+  '@rush-temp/core': file:projects/core.tgz
+  '@rush-temp/debug': file:projects/debug.tgz
   '@rush-temp/globals': file:projects/globals.tgz
+  '@rush-temp/test': file:projects/test.tgz
+  '@rush-temp/types': file:projects/types.tgz
+  '@types/jasmine': 3.10.2
+  jasmine: 3.10.0
+  jasmine-core: 3.10.1
+  rimraf: 3.0.2
+  tslib: 2.3.1
+  typescript: 4.4.4
 lockfileVersion: 5.2
 packages:
+  /@types/jasmine/3.10.2:
+    dev: false
+    resolution:
+      integrity: sha512-qs4xjVm4V/XjM6owGm/x6TNmhGl5iKX8dkTdsgdgl9oFnqgzxLepnS7rN9Tdo7kDmnFD/VEqKrW57cGD2odbEg==
+  /balanced-match/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+  /brace-expansion/1.1.11:
+    dependencies:
+      balanced-match: 1.0.2
+      concat-map: 0.0.1
+    dev: false
+    resolution:
+      integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==
+  /concat-map/0.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
+  /fs.realpath/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
+  /glob/7.2.0:
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 3.0.4
+      once: 1.4.0
+      path-is-absolute: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
+  /inflight/1.0.6:
+    dependencies:
+      once: 1.4.0
+      wrappy: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk=
+  /inherits/2.0.4:
+    dev: false
+    resolution:
+      integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+  /jasmine-core/3.10.1:
+    dev: false
+    resolution:
+      integrity: sha512-ooZWSDVAdh79Rrj4/nnfklL3NQVra0BcuhcuWoAwwi+znLDoUeH87AFfeX8s+YeYi6xlv5nveRyaA1v7CintfA==
+  /jasmine/3.10.0:
+    dependencies:
+      glob: 7.2.0
+      jasmine-core: 3.10.1
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-2Y42VsC+3CQCTzTwJezOvji4qLORmKIE0kwowWC+934Krn6ZXNQYljiwK5st9V3PVx96BSiDYXSB60VVah3IlQ==
+  /minimatch/3.0.4:
+    dependencies:
+      brace-expansion: 1.1.11
+    dev: false
+    resolution:
+      integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
+  /once/1.4.0:
+    dependencies:
+      wrappy: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
+  /path-is-absolute/1.0.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
+  /rimraf/3.0.2:
+    dependencies:
+      glob: 7.2.0
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
+  /tslib/2.3.1:
+    dev: false
+    resolution:
+      integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
+  /typescript/4.4.4:
+    dev: false
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
+  /wrappy/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
+  file:projects/core.tgz:
+    dependencies:
+      '@types/jasmine': 3.10.2
+      jasmine: 3.10.0
+      jasmine-core: 3.10.1
+      rimraf: 3.0.2
+      tslib: 2.3.1
+      typescript: 4.4.4
+    dev: false
+    name: '@rush-temp/core'
+    resolution:
+      integrity: sha512-8VYSxh7pIf+IsBHm9te62/TTHYjUbtLDbQQMODGsWAWI5bOxvG9Mc5o13cEA2+ZTmPrwhp1tzLD22whXRwbtgw==
+      tarball: file:projects/core.tgz
+    version: 0.0.0
+  file:projects/debug.tgz:
+    dependencies:
+      '@types/jasmine': 3.10.2
+      jasmine: 3.10.0
+      jasmine-core: 3.10.1
+      rimraf: 3.0.2
+      tslib: 2.3.1
+      typescript: 4.4.4
+    dev: false
+    name: '@rush-temp/debug'
+    resolution:
+      integrity: sha512-9t4ouU4EhELlP/ElT3F/jvAuoTo7qij5dkYPc+XFKmQKKne8ywgBQRAIgWkeuZQ6IniRO5QFcxLJPeVWz05QKg==
+      tarball: file:projects/debug.tgz
+    version: 0.0.0
   file:projects/globals.tgz:
     dev: false
     name: '@rush-temp/globals'
@@ -9,5 +144,43 @@ packages:
       integrity: sha512-9xc3ytbad8joXl8R61S7dX0JHsbmQKynEhE6exPgC0JINxNA+cVnO4bya3bvrPXmr1Gup68CT8u0ZRG4vsHPGA==
       tarball: file:projects/globals.tgz
     version: 0.0.0
+  file:projects/test.tgz:
+    dependencies:
+      '@types/jasmine': 3.10.2
+      jasmine: 3.10.0
+      jasmine-core: 3.10.1
+      rimraf: 3.0.2
+      tslib: 2.3.1
+      typescript: 4.4.4
+    dev: false
+    name: '@rush-temp/test'
+    resolution:
+      integrity: sha512-qJlJ5rjxKThqpvGS8seznzxrIUOm/0sUC8d294+GOfIC+9tNoRZZyO5Gyp6jYjBAApKcRr1DtWDrblxjSnLl+A==
+      tarball: file:projects/test.tgz
+    version: 0.0.0
+  file:projects/types.tgz:
+    dependencies:
+      '@types/jasmine': 3.10.2
+      jasmine: 3.10.0
+      jasmine-core: 3.10.1
+      rimraf: 3.0.2
+      tslib: 2.3.1
+      typescript: 4.4.4
+    dev: false
+    name: '@rush-temp/types'
+    resolution:
+      integrity: sha512-JltUsiQQNqcfyLDZAIOkS2vpp9xjTRyJoNLBmizay/3s1TJTrugaeLZN01hb2qsRvhbVEKjGg2qBKKwqHM53SQ==
+      tarball: file:projects/types.tgz
+    version: 0.0.0
 specifiers:
+  '@rush-temp/core': file:./projects/core.tgz
+  '@rush-temp/debug': file:./projects/debug.tgz
   '@rush-temp/globals': file:./projects/globals.tgz
+  '@rush-temp/test': file:./projects/test.tgz
+  '@rush-temp/types': file:./projects/types.tgz
+  '@types/jasmine': ^3.8.2
+  jasmine: ^3.9.0
+  jasmine-core: ^3.9.0
+  rimraf: ^3.0.2
+  tslib: ^2.3.1
+  typescript: ~4.4.3

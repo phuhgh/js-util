@@ -1,8 +1,12 @@
 import { _Debug } from "./_debug";
-import { debugDescribe } from "../test-utils";
 
-debugDescribe("=> _Debug.error", () =>
+describe("=> _Debug.error", () =>
 {
+    beforeEach(() =>
+    {
+        _Debug.setFlag("DEBUG_MODE", true);
+    });
+
     describe("=> compilation checks", () =>
     {
         it("| has the right ergonomics", () =>

@@ -1,8 +1,10 @@
-import { debugDescribe, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { dictionaryExtend } from "./dictionary-extend";
+import { itShouldNotRunDebugWhenDebugIsFalse, resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> dictionaryExtend", () =>
+describe("=> dictionaryExtend", () =>
 {
+    beforeEach(() => resetDebugState());
+
     itShouldNotRunDebugWhenDebugIsFalse(() =>
     {
         dictionaryExtend({}, {});

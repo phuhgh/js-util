@@ -1,10 +1,12 @@
 import { arrayCompactMap } from "./array-compact-map";
 import { _Production } from "../../production/_production";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayCompactMap", () =>
+describe("=> arrayCompactMap", () =>
 {
     const values = ["a", "b", "c"] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

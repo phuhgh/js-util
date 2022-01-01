@@ -1,9 +1,11 @@
 import { mapKeysToArray } from "./map-keys-to-array";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapKeysToArray", () =>
+describe("=> mapKeysToArray", () =>
 {
     const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);
+
+    beforeEach(() => resetDebugState());
 
     it("| returns the map's keys", () =>
     {

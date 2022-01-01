@@ -1,8 +1,10 @@
 import { mapInitializeGet } from "./map-intialize-get";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapInitializeGet", () =>
+describe("=> mapInitializeGet", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| returns the value where available", () =>
     {
         const values: Map<"a" | "b" | "c" | "d", 1 | 2 | 3 | 4 | 5> = new Map([["a", 1], ["b", 2], ["c", 3]]);

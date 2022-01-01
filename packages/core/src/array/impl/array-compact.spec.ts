@@ -1,9 +1,11 @@
 import { arrayCompact } from "./array-compact";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayCompact", () =>
+describe("=> arrayCompact", () =>
 {
     const values = ["a", "b", null, undefined] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| returns an array minus null and undefined", () =>
     {

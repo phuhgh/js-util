@@ -1,14 +1,16 @@
 import { arrayRemoveMany } from "./array-remove-many";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayRemoveMany", () =>
+describe("=> arrayRemoveMany", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| removes matches from the first argument", () =>
     {
         const a = ["a", "b", "c"];
         const b = ["b", "d"];
 
-        expect(arrayRemoveMany(a, b)).toBe(1) ;
+        expect(arrayRemoveMany(a, b)).toBe(1);
         expect(a).toEqual(["a", "c"]);
         expect(b).toEqual(["b", "d"]);
     });

@@ -1,7 +1,7 @@
-import { debugDescribe } from "../test-utils";
 import { Once } from "./once";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> once decorator", () =>
+describe("=> once decorator", () =>
 {
     let argTestRan = false;
 
@@ -30,6 +30,8 @@ debugDescribe("=> once decorator", () =>
     }
 
     const t1 = new Test(0);
+
+    beforeEach(() => resetDebugState());
 
     it("| runs the method only once", () =>
     {

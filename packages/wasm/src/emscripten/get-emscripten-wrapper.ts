@@ -3,7 +3,7 @@ import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
 import { BroadcastEvent } from "../../eventing/broadcast-event";
 import { IWebAssemblyMemoryMemory } from "../../../packages/emscripten/i-web-assembly-memory";
 import { Emscripten } from "../../../packages/emscripten/emscripten";
-import { _Debug } from "../../debug/_debug";
+import { _Debug } from "@rc-js-util/debug"
 import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args";
 import { DebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event";
 

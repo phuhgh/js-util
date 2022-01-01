@@ -1,8 +1,9 @@
 import { mapFirstKey } from "./map-first-key";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapFirstKey", () =>
+describe("=> mapFirstKey", () =>
 {
+    beforeEach(() => resetDebugState());
 
     it("| returns the first key where available", () =>
     {

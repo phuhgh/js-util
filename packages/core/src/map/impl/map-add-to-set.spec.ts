@@ -1,10 +1,12 @@
-import { debugDescribe } from "../../test-utils";
 import { mapAddToSet } from "./map-add-to-set";
 import { _Set } from "../../set/_set";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapAddToSet", () =>
+describe("=> mapAddToSet", () =>
 {
     const values = new Map([["a", new Set([1])]]);
+
+    beforeEach(() => resetDebugState());
 
     it("| adds where set exists", () =>
     {

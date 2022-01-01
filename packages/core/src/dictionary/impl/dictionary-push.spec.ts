@@ -1,10 +1,12 @@
 import { dictionaryPush } from "./dictionary-push";
-import { IDictionary } from "../../typescript/i-dictionary";
-import { debugDescribe } from "../../test-utils";
+import { IDictionary } from "@rc-js-util/types";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> dictionaryPush", () =>
+describe("=> dictionaryPush", () =>
 {
     const values: IDictionary<number[]> = { a: [1] };
+
+    beforeEach(() => resetDebugState());
 
     it("| pushes to existing properties", () =>
     {

@@ -1,11 +1,13 @@
 import { arrayIsArray } from "./array-is-array";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayIsArray", () =>
+describe("=> arrayIsArray", () =>
 {
     const normalArray = [1] as const;
     const typedArray = new Float32Array(0);
     const arrayLike = { 0: 1, length: 1 };
+
+    beforeEach(() => resetDebugState());
 
     it("| returns true if normal Array", () =>
     {

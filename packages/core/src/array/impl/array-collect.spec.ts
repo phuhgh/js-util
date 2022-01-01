@@ -1,9 +1,11 @@
 import { arrayCollect } from "./array-collect";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayCollect", () =>
+describe("=> arrayCollect", () =>
 {
     const values = ["a", "b", "c"] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

@@ -1,10 +1,12 @@
-import { IDictionary } from "../../typescript/i-dictionary";
+import { IDictionary } from "@rc-js-util/types";
 import { dictionaryValues } from "./dictionary-values";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> dictionaryValues", () =>
+describe("=> dictionaryValues", () =>
 {
     const values: IDictionary<number> = { a: 1, b: 2 };
+
+    beforeEach(() => resetDebugState());
 
     it("| returns dictionary values", () =>
     {

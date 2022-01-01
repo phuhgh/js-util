@@ -1,8 +1,10 @@
 import { _Production } from "./_production";
-import { debugDescribe } from "../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> _Production.error", () =>
+describe("=> _Production.error", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> compilation checks", () =>
     {
         it("| narrows types where used as a guard", () =>

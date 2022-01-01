@@ -1,9 +1,11 @@
 import { dictionaryPairs } from "./dictionary-pairs";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> dictionaryPairs", () =>
+describe("=> dictionaryPairs", () =>
 {
     const values = { a: 1, b: 2, c: 3 };
+
+    beforeEach(() => resetDebugState());
 
     it("| returns an array of key value pairs", () =>
     {

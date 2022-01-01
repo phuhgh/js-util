@@ -1,10 +1,12 @@
 import { arrayFlatMap } from "./array-flat-map";
 import { _Production } from "../../production/_production";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayFlatMap", () =>
+describe("=> arrayFlatMap", () =>
 {
     const values = ["a", "b", "c", "d"] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

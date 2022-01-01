@@ -1,8 +1,10 @@
 import { pathJoin } from "./path-join";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> pathJoin", () =>
+describe("=> pathJoin", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| joins as expected", () =>
     {
         expect(pathJoin("a", "b")).toEqual("a/b");

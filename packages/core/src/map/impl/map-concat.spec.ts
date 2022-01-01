@@ -1,9 +1,11 @@
-import { debugDescribe } from "../../test-utils";
 import { mapConcat } from "./map-concat";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapConcat", () =>
+describe("=> mapConcat", () =>
 {
     const values = new Map([["a", [1]]]);
+
+    beforeEach(() => resetDebugState());
 
     it("| concats where array exists", () =>
     {

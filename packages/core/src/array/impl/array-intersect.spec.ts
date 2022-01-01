@@ -1,10 +1,12 @@
 import { arrayIntersect } from "./array-intersect";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayIntersect", () =>
+describe("=> arrayIntersect", () =>
 {
     const a = ["a", "b", "c"] as const;
     const b = ["a", "d", "e"] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

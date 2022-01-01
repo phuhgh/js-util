@@ -1,9 +1,11 @@
-import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { fpIdentity } from "../../fp/impl/fp-identity";
 import { arrayForEachRange } from "./array-for-each-range";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse, resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayForEachRange", () =>
+describe("=> arrayForEachRange", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> in debug mode", () =>
     {
         itShouldCallAssert(1, () =>

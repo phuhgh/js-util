@@ -1,4 +1,6 @@
 import { setDefaultUnitTestFlags } from "./impl/set-default-unit-test-flags";
+import { _Debug } from "@rc-js-util/debug";
+
 
 export class ExpectColor
 {
@@ -136,7 +138,7 @@ export function expectValueToBeNearTo
 export function resetDebugState()
 {
     DEBUG_MODE && setDefaultUnitTestFlags();
-    RcJsUtil_Debug.uniquePointers.clear();
+    RcJsUtilDebug.uniquePointers.clear();
 }
 
 export function applyLabel(label: string, callback: () => void): void

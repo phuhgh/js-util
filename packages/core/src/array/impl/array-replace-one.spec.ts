@@ -1,9 +1,11 @@
 import { arrayReplaceOne } from "./array-replace-one";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayReplaceOne", () =>
+describe("=> arrayReplaceOne", () =>
 {
     const a = ["a", "b", "b", "c"];
+
+    beforeEach(() => resetDebugState());
 
     it("| replaces a single match from the first argument", () =>
     {

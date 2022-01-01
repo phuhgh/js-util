@@ -1,9 +1,11 @@
-import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
 import { arrayBinaryIndexOf } from "./array-binary-index-of";
 import { arrayBinaryLastIndexOf } from "./array-binary-last-index-of";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse, resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> binary index of", () =>
+describe("=> binary index of", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> common behaviour", () =>
     {
         [
@@ -92,7 +94,7 @@ debugDescribe("=> binary index of", () =>
             it("| is respected", () =>
             {
                 expect(arrayBinaryIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
-                expect(arrayBinaryIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3,)).toBe(2);
+                expect(arrayBinaryIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3)).toBe(2);
             });
         });
     });
@@ -114,7 +116,7 @@ debugDescribe("=> binary index of", () =>
             it("| is respected", () =>
             {
                 expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
-                expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3,)).toBe(2);
+                expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3)).toBe(2);
             });
         });
     });

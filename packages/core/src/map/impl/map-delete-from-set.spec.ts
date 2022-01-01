@@ -1,10 +1,12 @@
-import { debugDescribe } from "../../test-utils";
 import { _Set } from "../../set/_set";
 import { mapDeleteFromSet } from "./map-delete-from-set";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapDeleteFromSet", () =>
+describe("=> mapDeleteFromSet", () =>
 {
     const values = new Map([["a", new Set([1])]]);
+
+    beforeEach(() => resetDebugState());
 
     it("| deletes where set exists and value is present", () =>
     {

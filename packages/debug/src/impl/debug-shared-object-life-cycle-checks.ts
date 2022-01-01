@@ -1,6 +1,6 @@
 import { _Debug } from "./_debug";
 import { DebugPointer } from "./debug-pointer";
-import { IDebugSharedObject, IDebugSharedObjectLifeCycleChecks } from "rc-js-util-globals";
+import { IDebugSharedObject, IDebugSharedObjectLifeCycleChecks } from "@rc-js-util/globals";
 
 /**
  * When a javascript object is garbage collected, check if the corresponding WASM object has been freed.

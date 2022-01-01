@@ -15,6 +15,30 @@
       "projectFolder": "packages/globals",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/types",
+      "projectFolder": "packages/types",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/debug",
+      "projectFolder": "packages/debug",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/test",
+      "projectFolder": "packages/test-util",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/core",
+      "projectFolder": "packages/core",
+      "reviewCategory": "production",
+      "shouldPublish": true
     }
   ]
 }

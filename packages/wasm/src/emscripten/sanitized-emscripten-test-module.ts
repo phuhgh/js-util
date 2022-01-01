@@ -3,7 +3,7 @@ import { getWasmTestMemory } from "../get-wasm-test-memory";
 import { getEmscriptenWrapper } from "./get-emscripten-wrapper";
 import { _Fp } from "../../fp/_fp";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
-import { _Debug } from "../../debug/_debug";
+import { _Debug } from "@rc-js-util/debug"
 import { IDebugBindings } from "./i-debug-bindings";
 
 export interface ISanitizedTestModuleOptions

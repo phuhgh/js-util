@@ -1,4 +1,4 @@
-import { IDictionary } from "../../typescript/i-dictionary";
+import { IDictionary } from "@rc-js-util/types";
 
 export function runTimeGetGlobalObject(): IDictionary<unknown>
 {

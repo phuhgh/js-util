@@ -1,4 +1,4 @@
-import "rc-js-util-globals";
+import "@rc-js-util/globals";
 
 /**
  * @public
@@ -213,7 +213,7 @@ export class _Debug
     )
         : void
     {
-        getGlobalObject()[flag] = value;
+        _Debug.getGlobalObject()[flag] = value;
     }
 
     public static getFlag<TKey extends keyof RcJsUtilDebugFlags>
@@ -222,7 +222,7 @@ export class _Debug
     )
         : boolean
     {
-        return Boolean(getGlobalObject()[flag]);
+        return Boolean(_Debug.getGlobalObject()[flag]);
     }
 
     /**
@@ -230,7 +230,7 @@ export class _Debug
      */
     public static isFlagSet<TKey extends keyof RcJsUtilDebugFlags>(flag: RcJsUtilDebugFlags[TKey]): boolean
     {
-        return Boolean(getGlobalObject()[flag]);
+        return Boolean(_Debug.getGlobalObject()[flag]);
     }
 
     private static onBreakpoint = () =>
@@ -239,22 +239,22 @@ export class _Debug
         debugger;
     }
 
+    public static getGlobalObject(): { [key: string]: unknown }
+    {
+        if (typeof global !== "undefined")
+        {
+            return global;
+        }
+
+        if (typeof window !== "undefined")
+        {
+            return window;
+        }
+
+        throw new Error("unsupported environment");
+    }
+
     private static _label: string | undefined = undefined;
-}
-
-function getGlobalObject(): { [key: string]: unknown }
-{
-    if (typeof global !== "undefined")
-    {
-        return global;
-    }
-
-    if (typeof window !== "undefined")
-    {
-        return window;
-    }
-
-    throw new Error("unsupported environment");
 }
 
 declare let global: { [key: string]: unknown };

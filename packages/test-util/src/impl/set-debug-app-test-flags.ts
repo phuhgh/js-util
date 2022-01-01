@@ -1,4 +1,4 @@
-import { _Debug } from "./_debug";
+import { _Debug } from "@rc-js-util/debug";
 
 export function setDefaultAppTestFlags(): void
 {

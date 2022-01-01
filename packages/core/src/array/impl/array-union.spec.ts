@@ -1,11 +1,13 @@
 import { arrayIntersect } from "./array-intersect";
 import { arrayUnion } from "./array-union";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayUnion", () =>
+describe("=> arrayUnion", () =>
 {
     const a = ["a", "b", "c"] as const;
     const b = ["a", "d", "e"] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

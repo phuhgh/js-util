@@ -1,4 +1,4 @@
-import { TTypedArray } from "../typed-array/t-typed-array";
+import { TTypedArray } from "@rc-js-util/types";
 
 /**
  * @public

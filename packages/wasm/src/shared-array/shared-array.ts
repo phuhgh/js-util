@@ -1,6 +1,6 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
 import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
-import { _Debug } from "../../debug/_debug";
+import { _Debug } from "@rc-js-util/debug"
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
 import { DebugProtectedView } from "../../debug/debug-protected-view";
 import { _Production } from "../../production/_production";

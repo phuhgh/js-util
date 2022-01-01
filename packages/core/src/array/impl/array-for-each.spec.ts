@@ -1,9 +1,11 @@
 import { arrayForEach } from "./array-for-each";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayForEach", () =>
+describe("=> arrayForEach", () =>
 {
     const values = ["a", "b", "c", "d"] as const;
+
+    beforeEach(() => resetDebugState());
 
     it("| calls the callback with the correct parameters", () =>
     {

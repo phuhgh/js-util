@@ -1,0 +1,29 @@
+﻿{
+  "compilerOptions": {
+    "importHelpers": true,
+    "module": "CommonJS",
+    "outDir": "bin/",
+    "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "removeComments": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true,
+    "target": "es6",
+    "sourceMap": true,
+    "lib": [
+      "es6",
+      "ES2015.Proxy",
+      "ESNext"
+      // WeakRef & FinalizationRegistry, not part of public sig
+    ],
+    "types": [
+      "jasmine"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}

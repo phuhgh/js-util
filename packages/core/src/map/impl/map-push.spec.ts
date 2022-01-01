@@ -1,9 +1,11 @@
 import { mapPush } from "./map-push";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapPush", () =>
+describe("=> mapPush", () =>
 {
     const values = new Map([["a", [1]]]);
+
+    beforeEach(() => resetDebugState());
 
     it("| pushes where array exists", () =>
     {

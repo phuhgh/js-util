@@ -1,9 +1,11 @@
 import { setValuesToArray } from "./set-values-to-array";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> setValuesToArray", () =>
+describe("=> setValuesToArray", () =>
 {
     const values = new Set([1, 2, 3] as const);
+
+    beforeEach(() => resetDebugState());
 
     it("| returns the map's values", () =>
     {

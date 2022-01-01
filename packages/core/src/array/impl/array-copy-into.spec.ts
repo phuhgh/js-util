@@ -1,8 +1,10 @@
 import { arrayCopyInto } from "./array-copy-into";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> arrayCopyInto", () =>
+describe("=> arrayCopyInto", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| writes the values of the first argument into the second", () =>
     {
         const a = ["d", "e"];

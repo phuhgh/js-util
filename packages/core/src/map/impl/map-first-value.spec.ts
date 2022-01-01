@@ -1,8 +1,10 @@
 import { mapFirstValue } from "./map-first-value";
-import { debugDescribe } from "../../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> mapFirstValue", () =>
+describe("=> mapFirstValue", () =>
 {
+    beforeEach(() => resetDebugState());
+
     it("| returns the first key where available", () =>
     {
         const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);
