@@ -10,4 +10,4 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(JsUtil PRIVATE /W4)
 endif ()
 
-add_subdirectory(cpp)
+add_subdirectory(packages/wasm/cpp)

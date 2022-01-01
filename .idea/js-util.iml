@@ -14,6 +14,16 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/test-util/bin" />
       <excludeFolder url="file://$MODULE_DIR$/packages/wasm/cpp/lib" />
       <excludeFolder url="file://$MODULE_DIR$/packages/wasm/cpp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/common/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/cmake-build-debug-mingw" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/globals/.rush" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/test-util/.rush" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/types/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/types/.rush" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/debug/.rush" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/debug/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/core/.rush" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/core/bin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
