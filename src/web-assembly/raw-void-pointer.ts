@@ -50,7 +50,7 @@ export class RawVoidPointer implements IRawVoidPointer
         {
             if (allocationFailThrows ?? false)
             {
-                _Production.error("Failed to allocate memory for raw pointer.");
+                throw _Production.createError("Failed to allocate memory for raw pointer.");
             }
         }
 

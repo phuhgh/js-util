@@ -67,7 +67,7 @@ export class CircularFIFOStack<TValue> implements IFIFOStack<TValue>
                     return;
 
                 case ECircularStackOverflowMode.Exception:
-                    _Production.error("Attempted to push to full stack.");
+                    throw _Production.createError("Attempted to push to full stack.");
                     break;
 
                 case ECircularStackOverflowMode.Overwrite:
@@ -98,7 +98,7 @@ export class CircularFIFOStack<TValue> implements IFIFOStack<TValue>
     {
         if (this.getIsEmpty())
         {
-            _Production.error("Attempted to pop empty stack.");
+            throw _Production.createError("Attempted to pop empty stack.");
         }
 
         // null out the value to avoid memory leaks

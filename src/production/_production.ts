@@ -59,7 +59,7 @@ export class _Production
      */
     public static assertValueIsNever(_value: never): never
     {
-        _Production.error("unexpected code path executed.");
+        throw _Production.createError("unexpected code path executed.");
     }
 
     private constructor()

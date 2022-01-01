@@ -43,7 +43,7 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
 
         if (pointer == null)
         {
-            _Production.error("expected to find pointer");
+            throw _Production.createError("expected to find pointer");
         }
 
         this.debugPointers.delete(pointer);

@@ -93,7 +93,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
         if (ptr === nullPointer && allocationFailThrows)
         {
-            _Production.error("Failed to allocate memory for shared array.");
+            throw _Production.createError("Failed to allocate memory for shared array.");
         }
 
         return ptr;

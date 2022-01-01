@@ -11,7 +11,7 @@ debugDescribe("=> _Production.error", () =>
 
             if (typeof r === "string")
             {
-                _Production.error("test");
+                throw _Production.createError("test");
             }
 
             ++r;
@@ -22,7 +22,10 @@ debugDescribe("=> _Production.error", () =>
 
     it("| throws an error with the expected message", () =>
     {
-        expect(() => _Production.error("test message")).toThrowError("test message");
+        expect(() =>
+        {
+            throw _Production.createError("test message");
+        }).toThrowError("test message");
     });
 });
 
