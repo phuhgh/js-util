@@ -4,7 +4,7 @@ import { _F64 } from "./impl/_f64";
 
 /**
  * @public
- * Utilities that apply to numbers.
+ * Utilities that apply to numeric types.
  */
 export class _Number
 {

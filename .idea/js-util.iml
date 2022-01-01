@@ -10,10 +10,10 @@
       <excludeFolder url="file://$MODULE_DIR$/docs" />
       <excludeFolder url="file://$MODULE_DIR$/.github" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
-      <excludeFolder url="file://$MODULE_DIR$/cpp/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/cpp/build" />
-      <excludeFolder url="file://$MODULE_DIR$/plugins/test-util/bin" />
       <excludeFolder url="file://$MODULE_DIR$/.vs" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/test-util/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/wasm/cpp/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/wasm/cpp/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
