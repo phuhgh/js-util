@@ -11,8 +11,8 @@
   "telemetryEnabled": false,
   "projects": [
     {
-      "packageName": "@visualization-tools/core",
-      "projectFolder": "packages/core",
+      "packageName": "@rc-js-util/globals",
+      "projectFolder": "packages/globals",
       "reviewCategory": "production",
       "shouldPublish": true
     }

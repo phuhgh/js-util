@@ -1,0 +1,13 @@
+dependencies:
+  '@rush-temp/globals': file:projects/globals.tgz
+lockfileVersion: 5.2
+packages:
+  file:projects/globals.tgz:
+    dev: false
+    name: '@rush-temp/globals'
+    resolution:
+      integrity: sha512-9xc3ytbad8joXl8R61S7dX0JHsbmQKynEhE6exPgC0JINxNA+cVnO4bya3bvrPXmr1Gup68CT8u0ZRG4vsHPGA==
+      tarball: file:projects/globals.tgz
+    version: 0.0.0
+specifiers:
+  '@rush-temp/globals': file:./projects/globals.tgz
