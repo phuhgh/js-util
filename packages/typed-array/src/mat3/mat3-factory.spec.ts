@@ -1,11 +1,13 @@
-import { debugDescribe } from "../../../test-utils";
 import { Mat3Factory } from "./mat3-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat3 } from "./mat3";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> Mat3Factory", () =>
+describe("=> Mat3Factory", () =>
 {
     const factory = new Mat3Factory(Mat3.f32, NormalizedDataViewProvider.getView(Float32Array));
+
+    beforeEach(() => resetDebugState());
 
     describe("=> create one", () =>
     {

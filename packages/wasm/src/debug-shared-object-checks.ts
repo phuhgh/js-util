@@ -1,8 +1,6 @@
-import { _Debug } from "../debug/_debug";
-import { numberGetHexString } from "../number/impl/number-get-hex-string";
-import { stringNormalizeNullUndefinedToEmpty } from "../string/impl/string-normalize-null-undefined-to-empty";
-import { IDebugProtectedView } from "@rc-js-util/globals";
-import { ISharedObject } from "../lifecycle/i-shared-object";
+import { ISharedObject } from "./lifecycle/i-shared-object";
+import { IDebugProtectedView, numberGetHexString, stringNormalizeNullUndefinedToEmpty } from "@rc-js-util/core";
+import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @public

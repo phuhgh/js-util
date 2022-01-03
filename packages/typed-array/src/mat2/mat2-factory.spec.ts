@@ -1,12 +1,14 @@
-import { debugDescribe } from "../../../test-utils";
 import { Mat2Factory } from "./mat2-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat2 } from "./mat2";
 import { Vec2 } from "../vec2/vec2";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> Mat2Factory", () =>
+describe("=> Mat2Factory", () =>
 {
     const factory = new Mat2Factory(Mat2.f64, NormalizedDataViewProvider.getView(Float64Array));
+
+    beforeEach(() => resetDebugState());
 
     describe("=> create one", () =>
     {
@@ -78,7 +80,7 @@ debugDescribe("=> Mat2Factory", () =>
         it("| modifies the array as expected", () =>
         {
             const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
-            a.setRow(1, Vec2.f32.factory.createOne(1, 2,));
+            a.setRow(1, Vec2.f32.factory.createOne(1, 2));
             expect(a).toEqual(Mat2.f32.factory.createOne(1, 2, 1, 2));
         });
     });

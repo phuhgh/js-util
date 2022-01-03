@@ -16,6 +16,7 @@ export interface ITemporaryListener<TArgs extends []>
     getTargets(): readonly ((...args: TArgs) => void)[];
 }
 
+// todo jack: move some of this stuff to core
 /**
  * @public
  * {@inheritDoc ITemporaryListener}

@@ -1,5 +1,3 @@
-import { Range2d } from "../../array/typed-array/2d/range2d/range2d";
-
 /**
  * @public
  * Utilities relating to single precision floats.
@@ -11,12 +9,6 @@ export class _F32
 {
     public static MAX_VALUE = (2 - Math.pow(2, -23)) * Math.pow(2, 127);
     public static MIN_POSITIVE_VALUE = Math.pow(2, -126);
-    public static bounds = Range2d.f32.factory.createOne(
-        -_F32.MAX_VALUE,
-        _F32.MAX_VALUE,
-        -_F32.MAX_VALUE,
-        _F32.MAX_VALUE,
-    );
 
     public static getPrecision(value: number): number
     {

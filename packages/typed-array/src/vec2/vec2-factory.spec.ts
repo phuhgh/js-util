@@ -1,11 +1,13 @@
-import { debugDescribe } from "../../../test-utils";
 import { Vec2Factory } from "./vec2-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Vec2 } from "./vec2";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> Vec2Factory", () =>
+describe("=> Vec2Factory", () =>
 {
     const factory = new Vec2Factory(Vec2.f32, NormalizedDataViewProvider.getView(Float32Array));
+
+    beforeEach(() => resetDebugState());
 
     describe("=> create one", () =>
     {

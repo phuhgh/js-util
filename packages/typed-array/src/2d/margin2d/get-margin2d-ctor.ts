@@ -2,11 +2,10 @@ import { IMargin2dCtor, Margin2d, TMargin2dCtorArgs } from "./margin2d";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { Mat2Factory } from "../../mat2/mat2-factory";
 import { IReadonlyRange2d, Range2d } from "../range2d/range2d";
-import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
 import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
 import { IReadonlyMat3 } from "../../mat3/mat3";
-import { TTypedArray } from "../../t-typed-array";
+import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
 
 /**
  * @internal

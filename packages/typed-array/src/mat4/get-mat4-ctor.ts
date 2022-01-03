@@ -1,11 +1,10 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { IMat4Ctor, Mat4 } from "./mat4";
 import { Mat4Factory } from "./mat4-factory";
-import { _Debug } from "../../../debug/_debug";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { IReadonlyVec4, Vec4 } from "../vec4/vec4";
-import { TTypedArray } from "../t-typed-array";
+import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
+import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @internal

@@ -1,11 +1,10 @@
 import { shimWebAssemblyMemory } from "../shim-web-assembly-memory";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
-import { BroadcastEvent } from "../../eventing/broadcast-event";
-import { IWebAssemblyMemoryMemory } from "../../../packages/emscripten/i-web-assembly-memory";
-import { Emscripten } from "../../../packages/emscripten/emscripten";
-import { _Debug } from "@rc-js-util/debug"
+import { _Debug, DebugWeakBroadcastEvent } from "@rc-js-util/debug";
 import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args";
-import { DebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event";
+import { BroadcastEvent } from "@rc-js-util/core";
+import { IWebAssemblyMemoryMemory } from "./i-web-assembly-memory";
+import { Emscripten } from "./emscripten";
 
 /**
  * @public

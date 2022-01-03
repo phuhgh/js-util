@@ -1,3 +1,5 @@
+export { ATypedArrayTuple, TTypedArrayTupleMutativeMethods, TDecayedTypedArrayTuple, TExtractIndexes } from "./impl/a-typed-array-tuple";
+export { TTypedArrayCtor } from "./impl/t-typed-array-ctor";
 export { IDictionary } from "./impl/i-dictionary";
 export { IReadonlyDictionary } from "./impl/i-readonly-dictionary";
 export { INumericKeyedDictionary } from "./impl/i-numeric-keyed-dictionary";

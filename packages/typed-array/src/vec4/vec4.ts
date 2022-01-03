@@ -1,10 +1,7 @@
-import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple";
-import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getVec4Ctor } from "./get-vec4-ctor";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
-import { TPickExcept } from "../../../typescript/t-pick-except";
+import { ATypedArrayTuple, TPickExcept, TTypedArray, TTypedArrayCtor, TTypedArrayTupleMutativeMethods } from "@rc-js-util/types";
 
 /**
  * @public

@@ -39,6 +39,18 @@
       "projectFolder": "packages/core",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/wasm",
+      "projectFolder": "packages/wasm",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/typed-array",
+      "projectFolder": "packages/typed-array",
+      "reviewCategory": "production",
+      "shouldPublish": true
     }
   ]
 }

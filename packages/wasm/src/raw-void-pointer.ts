@@ -1,14 +1,12 @@
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "./lifecycle/reference-counted-ptr";
 import { IEmscriptenWrapper } from "./emscripten/i-emscripten-wrapper";
 import { nullPointer } from "./emscripten/null-pointer";
-import { _Production } from "../production/_production";
-import { DebugProtectedView } from "../debug/debug-protected-view";
-import { _Debug } from "../debug/_debug";
 import { DebugSharedObjectChecks } from "./debug-shared-object-checks";
 import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings";
-import { ISharedObject } from "../lifecycle/i-shared-object";
+import { ISharedObject } from "./lifecycle/i-shared-object";
 import { IOnMemoryResize } from "./emscripten/i-on-memory-resize";
-import { numberGetHexString } from "../../../src/number/impl/number-get-hex-string";
+import { _Debug, DebugProtectedView } from "@rc-js-util/debug";
+import { _Production, numberGetHexString } from "@rc-js-util/core";
 
 /**
  * @public

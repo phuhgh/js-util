@@ -1,11 +1,8 @@
-import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple";
-import { TTypedArray } from "../t-typed-array";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { getMat2Ctor } from "./get-mat2-ctor";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
 import { IReadonlyVec2, Vec2 } from "../vec2/vec2";
-import { TPickExcept } from "../../../typescript/t-pick-except";
+import { ATypedArrayTuple, TPickExcept, TTypedArray, TTypedArrayCtor, TTypedArrayTupleMutativeMethods } from "@rc-js-util/types";
 
 /**
  * @public

@@ -1,4 +1,4 @@
-import { TListener } from "../../eventing/t-listener";
+import { TListener } from "@rc-js-util/core";
 
 /**
  * @public

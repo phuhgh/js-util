@@ -1,14 +1,13 @@
-import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
-import { _Debug } from "@rc-js-util/debug"
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
+import { _Debug, DebugProtectedView } from "@rc-js-util/debug";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
-import { DebugProtectedView } from "../../debug/debug-protected-view";
-import { _Production } from "../../production/_production";
 import { nullPointer } from "../emscripten/null-pointer";
 import { ISharedArray } from "./i-shared-array";
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize";
+import { TTypedArrayCtor } from "@rc-js-util/types/bin/impl/t-typed-array-ctor";
+import { _Production } from "@rc-js-util/core";
 
 /**
  * @public

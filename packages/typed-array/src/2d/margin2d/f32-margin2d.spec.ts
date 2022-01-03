@@ -1,10 +1,12 @@
-import { debugDescribe } from "../../../../test-utils";
 import { Range2d } from "../range2d/range2d";
 import { Margin2d } from "./margin2d";
 import { Mat3 } from "../../mat3/mat3";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> F32Margin2d", () =>
+describe("=> F32Margin2d", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> getInnerRange", () =>
     {
         it("| produces the expected range", () =>

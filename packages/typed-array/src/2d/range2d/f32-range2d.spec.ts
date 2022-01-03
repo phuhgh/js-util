@@ -1,10 +1,12 @@
-import { debugDescribe, expectValueToBeNearTo } from "../../../../test-utils";
 import { Range2d } from "./range2d";
 import { Vec2 } from "../../vec2/vec2";
 import { Mat3 } from "../../mat3/mat3";
+import { expectValueToBeNearTo, resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> F32Range2d", () =>
+describe("=> F32Range2d", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> isPointInRange", () =>
     {
         const range = Range2d.f32.factory.createOne(5, 10, 5, 10);

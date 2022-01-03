@@ -3,9 +3,8 @@ import { IReadonlyVec2, IVec2Ctor, Vec2 } from "./vec2";
 import { Vec2Factory } from "./vec2-factory";
 import { IReadonlyMat3 } from "../mat3/mat3";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { IReadonlyRange2d } from "../2d/range2d/range2d";
-import { TTypedArray } from "../t-typed-array";
+import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
 
 /**
  * @internal

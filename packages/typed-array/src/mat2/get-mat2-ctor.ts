@@ -1,11 +1,10 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { IMat2Ctor, IReadonlyMat2, Mat2, TMat2CtorArgs } from "./mat2";
 import { Mat2Factory } from "./mat2-factory";
-import { _Debug } from "../../../debug/_debug";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Vec2 } from "../vec2/vec2";
-import { TTypedArray } from "../t-typed-array";
+import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
+import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @internal

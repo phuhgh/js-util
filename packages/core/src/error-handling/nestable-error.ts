@@ -1,5 +1,5 @@
-import { _Debug } from "../debug/_debug";
 import { TGetStringFromLocalization } from "../i18n/t-get-string-from-localization";
+import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @public

@@ -1,10 +1,9 @@
 import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
-import { _Debug } from "../debug/_debug";
-import { nullPointer } from "../web-assembly/emscripten/null-pointer";
-import { _Array } from "../array/_array";
 import { IOnFree } from "./i-on-free";
 import { ITemporaryListener, TemporaryListener } from "./temporary-listener";
-import { RcJsUtilDebugImpl } from "../debug/debug-namepace";
+import { _Debug } from "@rc-js-util/debug";
+import { nullPointer } from "../emscripten/null-pointer";
+import { _Array } from "@rc-js-util/core";
 
 /**
  * @public
@@ -58,7 +57,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     {
         DEBUG_MODE && _Debug.runBlock(() =>
         {
-            RcJsUtilDebugImpl.uniquePointers.delete(this.wasmPtr);
+            RcJsUtilDebug.uniquePointers.delete(this.wasmPtr);
         });
 
         if (this.onFreeListener != null)
@@ -157,8 +156,8 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
 
             if (!this.isStatic)
             {
-                _Debug.assert(!RcJsUtilDebugImpl.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
-                RcJsUtilDebugImpl.uniquePointers.add(this.wasmPtr);
+                _Debug.assert(!RcJsUtilDebug.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
+                RcJsUtilDebug.uniquePointers.add(this.wasmPtr);
             }
         });
     }

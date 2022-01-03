@@ -1,12 +1,11 @@
 import { IRange1dCtor, Range1d, TRange1dCtorArgs } from "./range1d";
-import { TTypedArrayCtor } from "../../t-typed-array-ctor";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
 import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
-import { _Debug } from "../../../../debug/_debug";
-import { TTypedArray } from "../../t-typed-array";
 import { getVec2Ctor } from "../get-vec2-ctor";
 import { Vec2Factory } from "../vec2-factory";
 import { Mat2 } from "../../mat2/mat2";
+import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
+import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @internal

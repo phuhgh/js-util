@@ -1,5 +1,4 @@
-import { ATypedArrayTuple } from "./a-typed-array-tuple";
-import { TTypedArray } from "./t-typed-array";
+import { ATypedArrayTuple, TTypedArray } from "@rc-js-util/types";
 
 /**
  * @public

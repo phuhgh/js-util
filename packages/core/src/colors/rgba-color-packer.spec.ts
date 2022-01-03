@@ -1,13 +1,15 @@
-import { debugDescribe } from "../test-utils";
 import { RgbaColorPacker } from "./rgba-color-packer";
 import { ERgbaShift } from "./e-rgba-masks";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> RgbaColorPacker", () =>
+describe("=> RgbaColorPacker", () =>
 {
     const red = RgbaColorPacker.packColor(255, 0, 0, 0);
     const green = RgbaColorPacker.packColor(0, 255, 0, 0);
     const blue = RgbaColorPacker.packColor(0, 0, 255, 0);
     const alpha = RgbaColorPacker.packColor(0, 0, 0, 255);
+
+    beforeEach(() => resetDebugState());
 
     describe("packColor", () =>
     {

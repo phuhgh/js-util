@@ -3,7 +3,9 @@ dependencies:
   '@rush-temp/debug': file:projects/debug.tgz
   '@rush-temp/globals': file:projects/globals.tgz
   '@rush-temp/test': file:projects/test.tgz
+  '@rush-temp/typed-array': file:projects/typed-array.tgz
   '@rush-temp/types': file:projects/types.tgz
+  '@rush-temp/wasm': file:projects/wasm.tgz
   '@types/jasmine': 3.10.2
   jasmine: 3.10.0
   jasmine-core: 3.10.1
@@ -120,7 +122,7 @@ packages:
     dev: false
     name: '@rush-temp/core'
     resolution:
-      integrity: sha512-8VYSxh7pIf+IsBHm9te62/TTHYjUbtLDbQQMODGsWAWI5bOxvG9Mc5o13cEA2+ZTmPrwhp1tzLD22whXRwbtgw==
+      integrity: sha512-40z8hnNdeibjKOZcPkLaV7yBf1NIpBWM8QUzUCQ+eAidOdVW2OxjUXxvWTufEn29/sa+LEVeSKrgPnR3NpAINA==
       tarball: file:projects/core.tgz
     version: 0.0.0
   file:projects/debug.tgz:
@@ -158,6 +160,20 @@ packages:
       integrity: sha512-qJlJ5rjxKThqpvGS8seznzxrIUOm/0sUC8d294+GOfIC+9tNoRZZyO5Gyp6jYjBAApKcRr1DtWDrblxjSnLl+A==
       tarball: file:projects/test.tgz
     version: 0.0.0
+  file:projects/typed-array.tgz:
+    dependencies:
+      '@types/jasmine': 3.10.2
+      jasmine: 3.10.0
+      jasmine-core: 3.10.1
+      rimraf: 3.0.2
+      tslib: 2.3.1
+      typescript: 4.4.4
+    dev: false
+    name: '@rush-temp/typed-array'
+    resolution:
+      integrity: sha512-NMSXohS+/vJqnNBqOZa0kMmCJQ5LwPCIqUP4ZaMvPHcEQvLyNOdyBwsqymiX9hbtwlgRMyYjdH5sn5ZIXMu8oA==
+      tarball: file:projects/typed-array.tgz
+    version: 0.0.0
   file:projects/types.tgz:
     dependencies:
       '@types/jasmine': 3.10.2
@@ -172,12 +188,28 @@ packages:
       integrity: sha512-JltUsiQQNqcfyLDZAIOkS2vpp9xjTRyJoNLBmizay/3s1TJTrugaeLZN01hb2qsRvhbVEKjGg2qBKKwqHM53SQ==
       tarball: file:projects/types.tgz
     version: 0.0.0
+  file:projects/wasm.tgz:
+    dependencies:
+      '@types/jasmine': 3.10.2
+      jasmine: 3.10.0
+      jasmine-core: 3.10.1
+      rimraf: 3.0.2
+      tslib: 2.3.1
+      typescript: 4.4.4
+    dev: false
+    name: '@rush-temp/wasm'
+    resolution:
+      integrity: sha512-tEo6+gMn7574geaOTtohCzeBn36PLOnyP4cfaSjK9nihd6qgcHTtYJA81zOkyYxioytOq/EJc0en6xsnPo6Nig==
+      tarball: file:projects/wasm.tgz
+    version: 0.0.0
 specifiers:
   '@rush-temp/core': file:./projects/core.tgz
   '@rush-temp/debug': file:./projects/debug.tgz
   '@rush-temp/globals': file:./projects/globals.tgz
   '@rush-temp/test': file:./projects/test.tgz
+  '@rush-temp/typed-array': file:./projects/typed-array.tgz
   '@rush-temp/types': file:./projects/types.tgz
+  '@rush-temp/wasm': file:./projects/wasm.tgz
   '@types/jasmine': ^3.8.2
   jasmine: ^3.9.0
   jasmine-core: ^3.9.0

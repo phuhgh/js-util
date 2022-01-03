@@ -1,8 +1,8 @@
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
 import { ATypedTupleFactory } from "../a-typed-tuple-factory";
-import { TTypedArray } from "../t-typed-array";
 import { IVec4Ctor, TVec4CtorArgs, Vec4 } from "./vec4";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
+import { TTypedArray } from "@rc-js-util/types";
 
 export class Vec4Factory<T extends Vec4<TTypedArray>>
     extends ATypedTupleFactory<T, TVec4CtorArgs>

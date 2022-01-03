@@ -1,4 +1,4 @@
-import { IWebAssemblyMemoryMemory } from "../../packages/emscripten/i-web-assembly-memory";
+import { IWebAssemblyMemoryMemory } from "./emscripten/i-web-assembly-memory";
 
 export function shimWebAssemblyMemory
 (

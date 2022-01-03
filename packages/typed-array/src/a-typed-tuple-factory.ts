@@ -1,8 +1,7 @@
 import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory";
 import { INormalizedDataView } from "./normalized-data-view/i-normalized-data-view";
-import { ATypedArrayTuple } from "./a-typed-array-tuple";
-import { TTypedArray } from "./t-typed-array";
-import { isLittleEndian } from "../../web-assembly/is-little-endian";
+import { ATypedArrayTuple, TTypedArray } from "@rc-js-util/types";
+import { _RunTime } from "@rc-js-util/core/bin/run-time/_run-time";
 
 export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number, TTypedArray>, TCtorArgs extends number[]>
     implements ITypedArrayTupleFactory<TArray, TCtorArgs>
@@ -58,5 +57,5 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
         }
     }
 
-    protected static littleEndian = isLittleEndian;
+    protected static littleEndian = _RunTime.isLittleEndian;
 }

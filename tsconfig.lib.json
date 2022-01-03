@@ -7,6 +7,6 @@
   "exclude": [
     "src/**/*.spec.ts",
     "src/test-utils.ts",
-    "src/jasmine-env.ts"
+    "packages/test-util/src/jasmine-env.ts"
   ]
 }

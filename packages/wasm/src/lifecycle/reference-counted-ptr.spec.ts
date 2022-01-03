@@ -1,8 +1,10 @@
 import { ReferenceCountedPtr } from "./reference-counted-ptr";
-import { debugDescribe } from "../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> ReferenceCountedPtr", () =>
+describe("=> ReferenceCountedPtr", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> bindLifecycle", () =>
     {
         it("| ties the lifecycle", () =>

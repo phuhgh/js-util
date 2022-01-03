@@ -1,7 +1,7 @@
-import { IWebAssemblyMemoryMemory } from "../../../packages/emscripten/i-web-assembly-memory";
+import { IBroadcastEvent } from "@rc-js-util/core";
+import { IWebAssemblyMemoryMemory } from "./i-web-assembly-memory";
 import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args";
-import { IBroadcastEvent } from "../../eventing/i-broadcast-event";
-import { Emscripten } from "../../../packages/emscripten/emscripten";
+import { Emscripten } from "./emscripten";
 
 /**
  * @public

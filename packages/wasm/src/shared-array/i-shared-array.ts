@@ -1,5 +1,5 @@
-import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { ISharedObject } from "../../lifecycle/i-shared-object";
+import { ISharedObject } from "../lifecycle/i-shared-object";
+import { TTypedArrayCtor } from "@rc-js-util/types/bin/impl/t-typed-array-ctor";
 
 /**
  * @public

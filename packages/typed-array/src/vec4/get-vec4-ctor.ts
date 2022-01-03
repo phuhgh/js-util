@@ -1,17 +1,16 @@
 import { ITypedArrayCtor } from "../i-typed-array-ctor";
 import { IVec4Ctor, Vec4 } from "./vec4";
 import { Vec4Factory } from "./vec4-factory";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { RgbaColorPacker } from "../../../colors/rgba-color-packer";
-import { TTypedArray } from "../t-typed-array";
+import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
+import { RgbaColorPacker } from "@rc-js-util/core";
 
 /**
  * @internal
  */
 export function getVec4Ctor<TCtor extends TTypedArrayCtor>
 (
-    ctor: TCtor
+    ctor: TCtor,
 )
     : IVec4Ctor<InstanceType<TCtor>>
 {

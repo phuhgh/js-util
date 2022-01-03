@@ -1,0 +1,12 @@
+export { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory";
+export { Margin2d, TF32Margin2d, TMargin2dCtorArgs, IMargin2dCtor, TF64Margin2d, IReadonlyMargin2d } from "./2d/margin2d/margin2d";
+export { Range2d, TF32Range2d, TRange2dCtorArgs, IRange2dCtor, TF64Range2d, IReadonlyRange2d } from "./2d/range2d/range2d";
+export { Mat2, TF32Mat2, TMat2CtorArgs, IMat2Ctor, TF64Mat2, IReadonlyMat2 } from "./mat2/mat2";
+export { Mat3, TF32Mat3, TMat3CtorArgs, IMat3Ctor, TF64Mat3, IReadonlyMat3 } from "./mat3/mat3";
+export { Mat4, TF32Mat4, TMat4CtorArgs, IMat4Ctor, TF64Mat4, IReadonlyMat4 } from "./mat4/mat4";
+export { Vec2, TF32Vec2, TVec2CtorArgs, IVec2Ctor, TF64Vec2, IReadonlyVec2 } from "./vec2/vec2";
+export { Range1d, TF32Range1d, TF64Range1d, TRange1dCtorArgs, IRange1dCtor, IReadonlyRange1d } from "./vec2/range1d/range1d";
+export { Vec3, TF32Vec3, TVec3CtorArgs, IVec3Ctor, TF64Vec3, IReadonlyVec3 } from "./vec3/vec3";
+export { Vec4, TF32Vec4, TVec4CtorArgs, IVec4Ctor, TF64Vec4, IReadonlyVec4 } from "./vec4/vec4";
+export { NormalizedDataViewProvider } from "./normalized-data-view/normalized-data-view-provider";
+export { INormalizedDataView } from "./normalized-data-view/i-normalized-data-view";

@@ -1,5 +1,5 @@
 import { INormalizedDataView } from "./i-normalized-data-view";
-import { isLittleEndian } from "../../../web-assembly/is-little-endian";
+import { _RunTime } from "@rc-js-util/core/bin/run-time/_run-time";
 
 export class Uint32DataView implements INormalizedDataView
 {
@@ -13,5 +13,5 @@ export class Uint32DataView implements INormalizedDataView
         dataView.setUint32(ptr, value, littleEndian);
     }
 
-    private static littleEndian = isLittleEndian;
+    private static littleEndian = _RunTime.isLittleEndian;
 }

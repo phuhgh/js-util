@@ -1,5 +1,3 @@
-import { Range2d } from "../../array/typed-array/2d/range2d/range2d";
-
 /**
  * @public
  * Utilities relating to double precision floats.
@@ -11,12 +9,6 @@ export class _F64
 {
     public static MAX_VALUE = Number.MAX_VALUE;
     public static MIN_POSITIVE_VALUE = Number.MIN_VALUE;
-    public static bounds = Range2d.f64.factory.createOne(
-        -Number.MAX_VALUE,
-        Number.MAX_VALUE,
-        -Number.MAX_VALUE,
-        Number.MAX_VALUE,
-    );
 
     public static getPrecision(value: number): number
     {

@@ -1,9 +1,11 @@
-import { debugDescribe, expectValueToBeNearTo } from "../../../../test-utils";
 import { Range1d } from "./range1d";
 import { Mat2 } from "../../mat2/mat2";
+import { expectValueToBeNearTo, resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> Range1d", () =>
+describe("=> Range1d", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> isPointInRange", () =>
     {
         const range = Range1d.f32.factory.createOne(5, 10);
