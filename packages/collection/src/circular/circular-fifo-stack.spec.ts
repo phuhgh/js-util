@@ -1,8 +1,10 @@
 import { CircularFIFOStack, ECircularStackOverflowMode } from "./circular-fifo-stack";
-import { debugDescribe } from "../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> CircularFIFOStack", () =>
+describe("=> CircularFIFOStack", () =>
 {
+    beforeEach(() => resetDebugState());
+
     describe("=> getIsEmpty", () =>
     {
         it("| returns true if empty", () =>

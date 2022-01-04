@@ -1,3 +1,4 @@
+// todo jack test sideEffects - maybe it should be opt in: import a file to make the modification, that way it will treeshake...
 export { _Debug } from "./impl/_debug";
 export { RcJsUtilDebugImpl } from "./impl/debug-namepace";
 export { DebugPointer } from "./impl/debug-pointer";

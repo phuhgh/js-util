@@ -1,11 +1,10 @@
 import { ReferenceCounterStore } from "./reference-counter-store";
-import createSpy = jasmine.createSpy;
 
 describe("=> ReferenceCountedStore", () =>
 {
     it("| calls the callback when the reference count hits 0", () =>
     {
-        const spy = createSpy();
+        const spy = jasmine.createSpy();
         const refCount = new ReferenceCounterStore(spy);
         const o = {};
         refCount.add(o);
@@ -20,7 +19,7 @@ describe("=> ReferenceCountedStore", () =>
 
     it("| doesn't call the callback if there was no value", () =>
     {
-        const spy = createSpy();
+        const spy = jasmine.createSpy();
         const refCount = new ReferenceCounterStore(spy);
         const o = {};
         refCount.remove(o);

@@ -1,7 +1,7 @@
 ﻿{
   "compilerOptions": {
     "importHelpers": true,
-    "module": "CommonJS",
+    "module": "CommonJS", // todo jack: switch this to es if possible
     "outDir": "bin/",
     "experimentalDecorators": true,
     "noImplicitReturns": true,
@@ -11,10 +11,11 @@
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "strict": true,
-    "target": "es6",
+    "target": "es6", // todo jack: check that this isn't mangling generators
     "sourceMap": true,
     "lib": [
       "es6",
+      "ES2017.String"
     ],
     "types": [
       "jasmine"

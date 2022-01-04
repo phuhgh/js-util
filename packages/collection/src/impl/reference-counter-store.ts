@@ -1,5 +1,6 @@
-import { fpNoOp } from "../fp/impl/fp-no-op";
+import { fpNoOp } from "@rc-js-util/core";
 
+// todo jack: this isn't a collection
 /**
  * @public
  * Weak reference counter.

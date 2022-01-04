@@ -1,13 +1,15 @@
 import { CircularBuffer } from "./circular-buffer";
-import { debugDescribe } from "../test-utils";
+import { resetDebugState } from "@rc-js-util/test";
 
-debugDescribe("=> CircularBuffer", () =>
+describe("=> CircularBuffer", () =>
 {
     /**
      * i -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8
      * v  3   0   1   2   3  0  1  2  3  0  1  2  3  0
      */
     const buffer = CircularBuffer.createOne([0, 1, 2, 3]);
+
+    beforeEach(() => resetDebugState());
 
     describe("=> inside input range", () =>
     {

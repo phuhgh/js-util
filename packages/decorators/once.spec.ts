@@ -1,5 +1,5 @@
 import { Once } from "./once";
-import { resetDebugState } from "@rc-js-util/test";
+import { resetDebugState } from "packages/test-util";
 
 describe("=> once decorator", () =>
 {

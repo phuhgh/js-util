@@ -1,3 +1,7 @@
+// entry point to global types - versioned separately to allow running multiple versions of dependents in parallel
+export { IDebugProtectedView, IDebugSharedObject, IDebugSharedObjectLifeCycleChecks, IDebugWeakStore, IDebugWeakBroadcastEvent, IStandardDebugFlags, TDebugListener } from "@rc-js-util/globals";
+
+// todo jack: do we need core to export these symbols? will downstream need to install types directly?
 export { ATypedArrayTuple, TTypedArrayTupleMutativeMethods, TDecayedTypedArrayTuple, TExtractIndexes } from "./impl/a-typed-array-tuple";
 export { TTypedArrayCtor } from "./impl/t-typed-array-ctor";
 export { IDictionary } from "./impl/i-dictionary";

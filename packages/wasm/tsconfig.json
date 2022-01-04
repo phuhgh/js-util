@@ -15,9 +15,6 @@
     "sourceMap": true,
     "lib": [
       "es6",
-      "ES2015.Proxy",
-      "ESNext"
-      // WeakRef & FinalizationRegistry, not part of public sig
     ],
     "types": [
       "jasmine"

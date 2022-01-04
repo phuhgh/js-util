@@ -57,9 +57,6 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>
             return this;
         }
 
-        /**
-         * @param normalized - Is the data normalized (i.e. ranges from 0 - 1)? If so it will be multiplied up by 255.
-         */
         public override getPackedRGBAColor(normalized: boolean = false): number
         {
             if (normalized)

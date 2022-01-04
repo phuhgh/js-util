@@ -1,5 +1,5 @@
 import { CircularBuffer } from "./circular-buffer";
-import { _Production } from "../production/_production";
+import { _Production } from "@rc-js-util/core";
 import { IFIFOStack } from "./i-fifo-stack";
 
 /**
@@ -68,7 +68,6 @@ export class CircularFIFOStack<TValue> implements IFIFOStack<TValue>
 
                 case ECircularStackOverflowMode.Exception:
                     throw _Production.createError("Attempted to push to full stack.");
-                    break;
 
                 case ECircularStackOverflowMode.Overwrite:
                     this.pop();

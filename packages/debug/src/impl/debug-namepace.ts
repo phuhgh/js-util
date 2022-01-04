@@ -36,11 +36,6 @@ export namespace RcJsUtilDebugImpl
     export let uniquePointers: Set<number>;
 }
 
-export namespace RcJsUtilDebugImpl
-{
-
-}
-
 DEBUG_MODE && _Debug.runBlock(() =>
 {
     RcJsUtilDebugImpl.onAllocate = new DebugWeakBroadcastEvent<"debugOnAllocate", []>("debugOnAllocate");

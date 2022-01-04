@@ -51,6 +51,24 @@
       "projectFolder": "packages/typed-array",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/collection",
+      "projectFolder": "packages/collection",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/colors",
+      "projectFolder": "packages/colors",
+      "reviewCategory": "production",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/concurrency",
+      "projectFolder": "packages/concurrency",
+      "reviewCategory": "production",
+      "shouldPublish": true
     }
   ]
 }

@@ -3,10 +3,30 @@ import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @public
- * Composable error, useful for automatically generating user friendly localized error messages.
+ * Composable error, useful for automatically generating user-friendly localized error messages.
  */
 export class NestableError<TLocalization>
 {
+    public readonly stack: string;
+
+    public constructor
+    (
+        public readonly message: TLocalization,
+        public readonly causedBy: unknown,
+        private readonly stringifyMessage: TGetStringFromLocalization<TLocalization>,
+    )
+    {
+        this.stack = _Debug.getStackTrace();
+    }
+
+    public toString(): string
+    {
+        return [
+            this.stringifyMessage(this.message),
+            this.stack,
+        ].join("\n");
+    }
+
     /**
      * This should only be called by library extensions, not user code.
      */
@@ -23,6 +43,7 @@ export class NestableError<TLocalization>
         return error instanceof errorCtor && isLocalization(error.message);
     }
 
+    // todo jack: odd naming?
     /**
      * This should only be called by library extensions, not user code.
      */
@@ -63,25 +84,5 @@ export class NestableError<TLocalization>
         }
 
         return NestableError.getRootCauseImpl(normalizedError.causedBy, isLocalization, createNestableError);
-    }
-
-    public readonly stack: string;
-
-    public constructor
-    (
-        public readonly message: TLocalization,
-        public readonly causedBy: unknown,
-        private readonly stringifyMessage: TGetStringFromLocalization<TLocalization>,
-    )
-    {
-        this.stack = _Debug.getStackTrace();
-    }
-
-    public toString(): string
-    {
-        return [
-            this.stringifyMessage(this.message),
-            this.stack,
-        ].join("\n");
     }
 }

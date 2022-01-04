@@ -16,9 +16,10 @@ export { _Iterator } from "./iterators/_iterator";
 export { _F32 } from "./number/impl/_f32";
 export { _F64 } from "./number/impl/_f64";
 export { _Number } from "./number/_number";
-export { NestableError } from "./error-handling/nestable-error";
+export { NestableError } from "./production/nestable-error";
 
 export { TGetComparisonValueAtIndex } from "./array/impl/binary-find-insertion-index";
+export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localization";
 
 export { arrayMin } from "./array/impl/array-min";
 export { arrayAddToSet } from "./array/impl/array-add-to-set";
@@ -61,7 +62,6 @@ export { dictionaryPush } from "./dictionary/impl/dictionary-push";
 export { dictionaryValues } from "./dictionary/impl/dictionary-values";
 export { equalityAllEqual } from "./equality/impl/equality-all-equal";
 export { equalityAreConsistentlyDefined } from "./equality/impl/equality-are-consistently-defined";
-export { Once } from "./decorators/once";
 export { fpDebounce, TDebouncedFn } from "./fp/impl/fp-debounce";
 export { fpIdentity } from "./fp/impl/fp-identity";
 export { fpMaybeNewValue } from "./fp/impl/fp-maybe-new-value";
@@ -108,16 +108,12 @@ export { setValuesToArray } from "./set/impl/set-values-to-array";
 export { stringNormalizeEmptyToUndefined } from "./string/impl/string-normalize-empty-to-undefined";
 export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normalize-null-undefined-to-empty";
 
-export { ERgbaMasks, ERgbaShift } from "./colors/e-rgba-masks";
-export { RgbaColorPacker } from "./colors/rgba-color-packer";
-export { TGetStringFromLocalization } from "./i18n/t-get-string-from-localization";
 export { IncrementingIdentifierFactory } from "./identifier/impl/incrementing-identifier-factory";
 export { BroadcastEvent } from "./eventing/broadcast-event";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event";
 export { TListener } from "./eventing/t-listener";
 export { iteratorEmptyIterator } from "./iterators/impl/iterator-empty-iterator";
 export { iteratorConsumeAll } from "./iterators/impl/iterator-consume-all";
-export { IncrementalUpdater, IIncrementalUpdater, IIncrementallyUpdatable } from "./iterators/incremental-updater";
 export { numberGetHexString } from "./number/impl/number-get-hex-string";
 export { IRandomNumberGenerator } from "./number/random-numbers/i-random-number-generator";
 export { NotRandomGenerator } from "./number/random-numbers/not-random-generator";

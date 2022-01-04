@@ -94,7 +94,7 @@ export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     /**
      * @param _packedRGBA - The number to be unpacked.
-     * @param _normalize - If true, normalize components between 0 - 1.
+     * @param _normalize - If true, normalize components between 0 and 1.
      */
     public setRGBAColor(_packedRGBA: number, _normalize?: boolean): Vec4<TArray>
     {
@@ -102,7 +102,7 @@ export abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<
     }
 
     /**
-     * @param _normalized - Format of the color stored in the Vec4, if true 0 - 1, else 0 - 255.
+     * @param _normalized - Is the data normalized (i.e. ranges from 0 to 1)? If so it will be multiplied up by 255.
      */
     public getPackedRGBAColor(_normalized?: boolean): number
     {
