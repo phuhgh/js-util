@@ -9,7 +9,7 @@
 export function arrayMap<TItem, TMapped>
 (
     items: ArrayLike<TItem>,
-    callback: (item: TItem, index: number) => TMapped
+    callback: (item: TItem, index: number) => TMapped,
 )
     : TMapped[]
 {

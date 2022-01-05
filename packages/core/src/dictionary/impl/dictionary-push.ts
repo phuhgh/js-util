@@ -13,7 +13,7 @@ export function dictionaryPush<TItem>
 (
     dict: IDictionary<TItem[]>,
     key: keyof typeof dict,
-    value: TItem
+    value: TItem,
 )
     : void
 {

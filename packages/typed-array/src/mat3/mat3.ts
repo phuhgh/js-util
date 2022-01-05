@@ -138,7 +138,7 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
     public getRow<TResult extends TTypedArray = TArray>
     (
         _row: number,
-        _writeTo?: Vec3<TResult>
+        _writeTo?: Vec3<TResult>,
     )
         : Vec3<TResult>
     {
@@ -148,7 +148,7 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
     public setRow
     (
         _row: number,
-        _writeFrom: IReadonlyVec3<TTypedArray>
+        _writeFrom: IReadonlyVec3<TTypedArray>,
     )
         : void
     {

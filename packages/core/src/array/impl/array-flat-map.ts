@@ -13,7 +13,7 @@
 export function arrayFlatMap<TItem, TTransformed>
 (
     items: ArrayLike<TItem>,
-    mapCallback: (item: TItem, index: number) => ArrayLike<TTransformed> | null
+    mapCallback: (item: TItem, index: number) => ArrayLike<TTransformed> | null,
 )
     : TTransformed[]
 {

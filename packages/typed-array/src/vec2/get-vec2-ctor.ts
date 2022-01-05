@@ -11,7 +11,7 @@ import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
  */
 export function getVec2Ctor<TCtor extends TTypedArrayCtor>
 (
-    ctor: TCtor
+    ctor: TCtor,
 )
     : IVec2Ctor<InstanceType<TCtor>>
 {

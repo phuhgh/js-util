@@ -122,7 +122,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public onMemoryResize = (): void =>
     {
         this.instance = this.createLocalInstance();
-    }
+    };
 
     protected constructor
     (

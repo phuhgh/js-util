@@ -10,7 +10,7 @@
 export function arrayIndex<TKey, TItem>
 (
     items: ArrayLike<TItem>,
-    getKey: (item: TItem, index: number) => TKey | null
+    getKey: (item: TItem, index: number) => TKey | null,
 )
     : Map<Exclude<TKey, null>, TItem>
 {

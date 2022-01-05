@@ -37,7 +37,7 @@ export class BroadcastEvent<TKey extends string, TArgs extends unknown[]> implem
             {
                 this.removeListener(temporaryListener);
                 return listener[this.key](...args);
-            }
+            },
         } as TListener<TKey, TArgs>;
 
         this.addListener(temporaryListener);

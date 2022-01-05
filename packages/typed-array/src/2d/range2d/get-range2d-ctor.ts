@@ -13,7 +13,7 @@ import { _Debug } from "@rc-js-util/debug";
  */
 export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 (
-    ctor: TCtor
+    ctor: TCtor,
 )
     : IRange2dCtor<InstanceType<TCtor>>
 {

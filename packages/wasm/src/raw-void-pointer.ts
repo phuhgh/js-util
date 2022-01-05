@@ -78,7 +78,7 @@ export class RawVoidPointer implements IRawVoidPointer
         }
 
         this.dataView = this.recreateDataView();
-    }
+    };
 
     protected constructor
     (

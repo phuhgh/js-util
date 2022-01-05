@@ -8,7 +8,7 @@
 export function dictionaryForEach<TDict extends object, TKey extends keyof TDict>
 (
     dictionary: TDict,
-    callback: (item: TDict[TKey], key: TKey, dictionary: TDict) => void
+    callback: (item: TDict[TKey], key: TKey, dictionary: TDict) => void,
 )
     : void
 {

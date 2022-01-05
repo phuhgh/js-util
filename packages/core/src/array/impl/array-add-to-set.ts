@@ -8,7 +8,7 @@
 export function arrayAddToSet<TItem>
 (
     items: ArrayLike<TItem>,
-    set: Set<TItem>
+    set: Set<TItem>,
 )
     : void
 {

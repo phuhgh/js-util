@@ -91,7 +91,7 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
             {
                 this.listenersSet.delete(ref);
             }
-            else if(listener[this.key] != null)
+            else if (listener[this.key] != null)
             {
                 targets.push(listener as Required<TDebugListener<TKey, TArgs>>);
             }

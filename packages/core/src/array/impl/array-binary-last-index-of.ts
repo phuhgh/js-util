@@ -39,7 +39,7 @@ export function arrayBinaryLastIndexOf<T>
         isLowGetHighest,
         (v) => v - 1,
         length,
-        start
+        start,
     );
 
     if (getComparisonValueAtIndex(indexable, index) === comparisonValueToSearchFor)

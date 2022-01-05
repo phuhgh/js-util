@@ -1,6 +1,6 @@
 import { fpOnce } from "./fp-once";
-import createSpy = jasmine.createSpy;
 import { resetDebugState } from "@rc-js-util/test";
+import createSpy = jasmine.createSpy;
 
 describe("=> fpOnce", () =>
 {

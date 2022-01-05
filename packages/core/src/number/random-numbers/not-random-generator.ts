@@ -8,7 +8,7 @@ export class NotRandomGenerator implements IRandomNumberGenerator
 {
     public constructor
     (
-        private readonly value: number
+        private readonly value: number,
     )
     {
     }

@@ -3,5 +3,5 @@
  */
 export interface IOnFree
 {
-    onFree(): void
+    onFree(): void;
 }

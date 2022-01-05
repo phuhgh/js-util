@@ -8,7 +8,7 @@
 export function arrayCompactMap<TItem, TTransformed>
 (
     items: ArrayLike<TItem>,
-    map: (item: TItem, index: number) => TTransformed | null
+    map: (item: TItem, index: number) => TTransformed | null,
 )
     : TTransformed[]
 {

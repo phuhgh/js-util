@@ -11,7 +11,7 @@ import { _Debug } from "@rc-js-util/debug";
  */
 export function getMat4Ctor<TCtor extends TTypedArrayCtor>
 (
-    ctor: TCtor
+    ctor: TCtor,
 )
     : IMat4Ctor<InstanceType<TCtor>>
 {

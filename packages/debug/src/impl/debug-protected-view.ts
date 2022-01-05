@@ -13,7 +13,7 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
     public static createTypedArrayView = <TArray extends ArrayBufferView>(): DebugProtectedView<TArray> =>
     {
         return new DebugProtectedView<Float32Array>(["BYTES_PER_ELEMENT"], "Shared Array - memory resize danger, refresh instance with getInstance");
-    }
+    };
 
     public constructor
     (
@@ -62,7 +62,7 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
                 }
 
                 return view[property as keyof T];
-            }
+            },
         });
     }
 

@@ -9,7 +9,7 @@ export function arrayCollect<TRet, TItem>
 (
     items: ArrayLike<TItem>,
     collected: TRet,
-    collect: (collected: TRet, item: TItem, index: number) => void
+    collect: (collected: TRet, item: TItem, index: number) => void,
 )
     : TRet
 {

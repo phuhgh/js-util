@@ -12,7 +12,7 @@ import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
  */
 export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
 (
-    ctor: TCtor
+    ctor: TCtor,
 )
     : IMargin2dCtor<InstanceType<TCtor>>
 {

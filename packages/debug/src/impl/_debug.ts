@@ -237,7 +237,7 @@ export class _Debug
     {
         // eslint-disable-next-line no-debugger
         debugger;
-    }
+    };
 
     public static getGlobalObject(): { [key: string]: unknown }
     {

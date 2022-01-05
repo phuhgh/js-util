@@ -10,7 +10,7 @@ export namespace Emscripten
     /**
      * @public
      */
-    export type EnvironmentType = 'WEB' | 'NODE' | 'SHELL' | 'WORKER';
+    export type EnvironmentType = "WEB" | "NODE" | "SHELL" | "WORKER";
 
     /**
      * @public

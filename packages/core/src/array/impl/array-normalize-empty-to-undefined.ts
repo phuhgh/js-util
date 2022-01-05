@@ -8,7 +8,7 @@
  */
 export function arrayNormalizeEmptyToUndefined<TArray extends ArrayLike<unknown>>
 (
-    array: TArray | null | undefined
+    array: TArray | null | undefined,
 )
     : TArray | undefined
 {

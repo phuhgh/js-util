@@ -167,7 +167,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
 
     public getCenter<TResult extends TTypedArray = TArray>
     (
-        _result?: Vec2<TResult>
+        _result?: Vec2<TResult>,
     )
         : Vec2<TResult>
     {

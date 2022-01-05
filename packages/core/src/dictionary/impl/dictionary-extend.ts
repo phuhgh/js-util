@@ -1,4 +1,4 @@
-import { _Debug } from "@rc-js-util/debug"
+import { _Debug } from "@rc-js-util/debug";
 import { arrayIsArray } from "../../array/impl/array-is-array";
 
 /**
@@ -13,7 +13,7 @@ import { arrayIsArray } from "../../array/impl/array-is-array";
 export function dictionaryExtend<T extends object>
 (
     base: T,
-    extension: T
+    extension: T,
 )
     : void
 {

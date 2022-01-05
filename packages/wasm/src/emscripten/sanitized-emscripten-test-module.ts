@@ -1,7 +1,7 @@
 import { getWasmTestMemory } from "../get-wasm-test-memory";
 import { getEmscriptenWrapper } from "./get-emscripten-wrapper";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
-import { _Debug } from "@rc-js-util/debug"
+import { _Debug } from "@rc-js-util/debug";
 import { IDebugBindings } from "./i-debug-bindings";
 import { _Fp } from "@rc-js-util/core";
 import { Emscripten } from "./emscripten";

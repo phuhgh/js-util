@@ -1,4 +1,4 @@
-import { _Debug } from "@rc-js-util/debug"
+import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @public
@@ -22,7 +22,7 @@ export function arrayForEachRange(from: number, to: number, callback: (value: nu
     const range = to - from;
     const increment = Math.sign(range);
 
-    for (let i = 0; i <  Math.abs(range) + 1; ++i)
+    for (let i = 0; i < Math.abs(range) + 1; ++i)
     {
         callback(from, i);
         from += increment;

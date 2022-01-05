@@ -1,4 +1,4 @@
-import { _Debug } from "@rc-js-util/debug"
+import { _Debug } from "@rc-js-util/debug";
 
 /**
  * @public
@@ -16,7 +16,7 @@ export function arrayCopyInto<TItem>
     from: ArrayLike<TItem>,
     to: TItem[],
     startIndex: number = 0,
-    length: number = from.length
+    length: number = from.length,
 )
     : void
 {

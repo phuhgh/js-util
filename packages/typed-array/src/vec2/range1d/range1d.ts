@@ -130,7 +130,7 @@ export abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray>
     public extendRange<TResult extends TTypedArray = TArray>
     (
         _value: number,
-        _writeTo?: Range1d<TResult>
+        _writeTo?: Range1d<TResult>,
     )
         : Range1d<TResult>
     {
