@@ -6,7 +6,7 @@ describe("=> mapClearingDeleteFromSet", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| deletes where set exists and value is present", () =>
+    test("| deletes where set exists and value is present", () =>
     {
         const values = new Map([["a", new Set([1])]]);
         mapClearingDeleteFromSet(values, "a", 1);
@@ -14,7 +14,7 @@ describe("=> mapClearingDeleteFromSet", () =>
         expect(values.get("a")).toEqual(undefined);
     });
 
-    it("| returns the set", () =>
+    test("| returns the set", () =>
     {
         const values = new Map([["a", new Set([1, 2])]]);
         mapClearingDeleteFromSet(values, "a", 1);

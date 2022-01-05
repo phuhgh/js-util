@@ -8,22 +8,22 @@ describe("=> arrayIntersect", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| calls the callback with the correct parameters", () =>
+    test("| calls the callback with the correct parameters", () =>
     {
-        const spy = jasmine.createSpy();
-        spy.and.returnValue(null);
+        const spy = jest.fn();
+        spy.mockReturnValue(null);
         arrayIntersect(a, b, spy);
-        expect(spy.calls.count()).toBe(6);
+        expect(spy).toHaveBeenCalledTimes(6);
         // call order not important, only arguments
-        expect(spy.calls.argsFor(0)).toEqual(["a", 0]);
-        expect(spy.calls.argsFor(1)).toEqual(["d", 1]);
-        expect(spy.calls.argsFor(2)).toEqual(["e", 2]);
-        expect(spy.calls.argsFor(3)).toEqual(["a", 0]);
-        expect(spy.calls.argsFor(4)).toEqual(["b", 1]);
-        expect(spy.calls.argsFor(5)).toEqual(["c", 2]);
+        expect(spy).nthCalledWith(1, "a", 0);
+        expect(spy).nthCalledWith(2, "d", 1);
+        expect(spy).nthCalledWith(3, "e", 2);
+        expect(spy).nthCalledWith(4, "a", 0);
+        expect(spy).nthCalledWith(5, "b", 1);
+        expect(spy).nthCalledWith(6, "c", 2);
     });
 
-    it("| returns the intersection", () =>
+    test("| returns the intersection", () =>
     {
         const result: ("a" | "b" | "c" | "d" | "e")[] = arrayIntersect(a, b, (value) => value);
 

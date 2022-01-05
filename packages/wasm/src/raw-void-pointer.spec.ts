@@ -40,7 +40,7 @@ describe("=> RawVoidPointer", () =>
             expect(rvp.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 3, true)).toEqual(4);
 
             rvp.sharedObject.release();
-            expect(rvp.sharedObject.getIsDestroyed()).toBeTrue();
+            expect(rvp.sharedObject.getIsDestroyed()).toBe(true);
         });
     });
 

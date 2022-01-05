@@ -7,7 +7,7 @@ describe("=> dictionaryPairs", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| returns an array of key value pairs", () =>
+    test("| returns an array of key value pairs", () =>
     {
         expect(dictionaryPairs(values)).toEqual([["a", 1], ["b", 2], ["c", 3]]);
     });

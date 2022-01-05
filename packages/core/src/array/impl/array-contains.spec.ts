@@ -2,12 +2,12 @@ import { arrayContains } from "./array-contains";
 
 describe("=> arrayContains", () =>
 {
-    it("returns true if present", () =>
+    test("| returns true if present", () =>
     {
-        expect(arrayContains([1, 2, 3], 3)).toBeTrue();
+        expect(arrayContains([1, 2, 3], 3)).toBe(true);
     });
-    it("returns false if present", () =>
+    test("| returns false if present", () =>
     {
-        expect(arrayContains([1, 2, 3], 4)).toBeFalse();
+        expect(arrayContains([1, 2, 3], 4)).toBe(false);
     });
 });

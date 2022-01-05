@@ -7,7 +7,7 @@ describe("=> arrayCompact", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| returns an array minus null and undefined", () =>
+    test("| returns an array minus null and undefined", () =>
     {
         const result: ("a" | "b")[] = arrayCompact(values);
         expect(result).toEqual(["a", "b"]);

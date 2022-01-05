@@ -95,7 +95,7 @@ describe("=> F32SharedStaticArray", () =>
                 const sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray), 8);
                 const i1 = sharedStaticArray.getInstance();
                 const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 2097152, true);
-                expect(i1 === sharedStaticArray.getInstance()).toBeFalse();
+                expect(i1 === sharedStaticArray.getInstance()).toBe(false);
                 sharedStaticArray.sharedObject.release();
                 sharedArray2.sharedObject.release();
                 sharedArray.sharedObject.release();

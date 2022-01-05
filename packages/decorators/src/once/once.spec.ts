@@ -47,6 +47,6 @@ describe("=> once decorator", () =>
     it("| proxies arguments", () =>
     {
         t1.argumentTest(1, 2);
-        expect(argTestRan).toBeTrue();
+        expect(argTestRan).toBe(true);
     });
 });

@@ -13,7 +13,7 @@ describe("=> arrayForEachRange", () =>
             arrayForEachRange(0, 10, () => 1);
         });
 
-        it("| errors if inputs are NaN", () =>
+        test("| errors if inputs are NaN", () =>
         {
             expect(() => arrayForEachRange(NaN, 0, fpIdentity)).toThrow();
             expect(() => arrayForEachRange(10, NaN, fpIdentity)).toThrow();
@@ -30,7 +30,7 @@ describe("=> arrayForEachRange", () =>
 
     describe("=> positive range", () =>
     {
-        it("| generates an inclusive range", () =>
+        test("| generates an inclusive range", () =>
         {
             const results: number[] = [];
             arrayForEachRange(0, 10, collect(results));
@@ -40,7 +40,7 @@ describe("=> arrayForEachRange", () =>
 
     describe("=> no range", () =>
     {
-        it("| generates an inclusive range", () =>
+        test("| generates an inclusive range", () =>
         {
             const results: number[] = [];
             arrayForEachRange(0, 0, collect(results));
@@ -50,7 +50,7 @@ describe("=> arrayForEachRange", () =>
 
     describe("=> negative range", () =>
     {
-        it("| generates an inclusive range", () =>
+        test("| generates an inclusive range", () =>
         {
             const results: number[] = [];
             arrayForEachRange(-10, 0, collect(results));
@@ -60,7 +60,7 @@ describe("=> arrayForEachRange", () =>
 
     describe("=> reverse range", () =>
     {
-        it("| generates an inclusive range", () =>
+        test("| generates an inclusive range", () =>
         {
             const results: number[] = [];
             arrayForEachRange(10, 0, collect(results));

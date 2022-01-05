@@ -13,10 +13,10 @@ describe("=> ReferenceCountedPtr", () =>
             const child = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
             owner.bindLifecycle(child);
             child.release();
-            expect(child.getIsDestroyed()).toBeFalse();
+            expect(child.getIsDestroyed()).toBe(false);
             owner.release();
-            expect(child.getIsDestroyed()).toBeTrue();
-            expect(owner.getIsDestroyed()).toBeTrue();
+            expect(child.getIsDestroyed()).toBe(true);
+            expect(owner.getIsDestroyed()).toBe(true);
         });
 
         it("| errors if a cycle is detected", () =>
@@ -35,10 +35,10 @@ describe("=> ReferenceCountedPtr", () =>
             const owner = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             const child = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
             owner.takeOwnership(child);
-            expect(child.getIsDestroyed()).toBeFalse();
+            expect(child.getIsDestroyed()).toBe(false);
             owner.release();
-            expect(child.getIsDestroyed()).toBeTrue();
-            expect(owner.getIsDestroyed()).toBeTrue();
+            expect(child.getIsDestroyed()).toBe(true);
+            expect(owner.getIsDestroyed()).toBe(true);
         });
     });
 
@@ -53,9 +53,9 @@ describe("=> ReferenceCountedPtr", () =>
             a.takeOwnership(c);
             a.release();
 
-            expect(a.getIsDestroyed()).toBeTrue();
-            expect(b.getIsDestroyed()).toBeTrue();
-            expect(c.getIsDestroyed()).toBeTrue();
+            expect(a.getIsDestroyed()).toBe(true);
+            expect(b.getIsDestroyed()).toBe(true);
+            expect(c.getIsDestroyed()).toBe(true);
         });
     });
 });

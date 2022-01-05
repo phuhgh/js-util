@@ -7,7 +7,7 @@ describe("=> setValuesToArray", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| returns the map's values", () =>
+    test("| returns the map's values", () =>
     {
         const result: (1 | 2 | 3)[] = setValuesToArray(values);
         expect(result).toEqual([1, 2, 3]);

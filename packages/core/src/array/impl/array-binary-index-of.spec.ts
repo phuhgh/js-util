@@ -22,17 +22,17 @@ describe("=> binary index of", () =>
                         binaryIndexOf([1, 2, 3], 2, (a, i) => a[i], 3);
                     });
 
-                    it("| errors if data isn't sorted", () =>
+                    test("| errors if data isn't sorted", () =>
                     {
                         expect(() => binaryIndexOf([3, 2, 3], 2, (a, i) => a[i], 3)).toThrow();
                     });
 
-                    it("| errors if the comparison value to search for is NaN", () =>
+                    test("| errors if the comparison value to search for is NaN", () =>
                     {
                         expect(() => binaryIndexOf([1, 2, 3], NaN, (a, i) => a[i], 3)).toThrow();
                     });
 
-                    it("| errors if generated comparison value is NaN", () =>
+                    test("| errors if generated comparison value is NaN", () =>
                     {
                         expect(() => binaryIndexOf([1, NaN, 3], 2, (a, i) => a[i], 3)).toThrow();
                     });
@@ -45,7 +45,7 @@ describe("=> binary index of", () =>
 
                 describe("=> where the value doesn't exist", () =>
                 {
-                    it("| returns -1", () =>
+                    test("| returns -1", () =>
                     {
                         expect(binaryIndexOf([1, 2, 2, 3], 2.5, (a, i) => a[i], 4)).toBe(-1);
                     });
@@ -54,20 +54,20 @@ describe("=> binary index of", () =>
 
             describe("=> where the value exists", () =>
             {
-                it("| returns first element index", () =>
+                test("| returns first element index", () =>
                 {
                     expect(binaryIndexOf([1, 2, 2, 3], 1, (a, i) => a[i], 4)).toBe(0);
                     expect(binaryIndexOf([1], 1, (a, i) => a[i], 1)).toBe(0);
                 });
 
-                it("| returns last element index", () =>
+                test("| returns last element index", () =>
                 {
                     expect(binaryIndexOf([1, 2, 2, 3], 3, (a, i) => a[i], 4)).toBe(3);
                 });
 
                 describe("=> where min max specified", () =>
                 {
-                    it("| is respected", () =>
+                    test("| is respected", () =>
                     {
                         expect(binaryIndexOf([1, 2, 2, 3, 3], 1, (a, i) => a[i], 4, 1)).toBe(-1);
                         expect(binaryIndexOf([1, 2, 2, 3, 3], 3, (a, i) => a[i], 3)).toBe(-1);
@@ -81,7 +81,7 @@ describe("=> binary index of", () =>
     {
         describe("=> where multiple values exist", () =>
         {
-            it("| returns first index", () =>
+            test("| returns first index", () =>
             {
                 expect(arrayBinaryIndexOf([1, 2, 2, 3], 2, (a, i) => a[i], 4)).toBe(1);
                 expect(arrayBinaryIndexOf([1, 1, 2, 2, 3], 1, (a, i) => a[i], 5)).toBe(0);
@@ -91,7 +91,7 @@ describe("=> binary index of", () =>
 
         describe("=> where min max specified", () =>
         {
-            it("| is respected", () =>
+            test("| is respected", () =>
             {
                 expect(arrayBinaryIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
                 expect(arrayBinaryIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3)).toBe(2);
@@ -103,7 +103,7 @@ describe("=> binary index of", () =>
     {
         describe("=>  where multiple values exist", () =>
         {
-            it("| returns last index", () =>
+            test("| returns last index", () =>
             {
                 expect(arrayBinaryLastIndexOf([1, 2, 2, 3], 2, (a, i) => a[i], 4)).toBe(2);
                 expect(arrayBinaryLastIndexOf([1, 1, 2, 2, 3], 1, (a, i) => a[i], 5)).toBe(1);
@@ -113,7 +113,7 @@ describe("=> binary index of", () =>
 
         describe("=> where min max specified", () =>
         {
-            it("| is respected", () =>
+            test("| is respected", () =>
             {
                 expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 2, (a, i) => a[i], 3, 1)).toBe(1);
                 expect(arrayBinaryLastIndexOf([1, 2, 3, 4], 3, (a, i) => a[i], 3)).toBe(2);

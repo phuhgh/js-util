@@ -38,7 +38,7 @@ namespace RcJsUtilDebug
      */
     export let sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecks = new DebugSharedObjectLifeCycleChecks();
 
-    export let uniquePointers: Set<number>;
+    export let uniquePointers: Set<number> = new Set();
 }
 
 _Debug.getGlobalObject()["RcJsUtilDebug"] = RcJsUtilDebug;

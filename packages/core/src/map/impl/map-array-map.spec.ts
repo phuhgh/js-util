@@ -7,18 +7,18 @@ describe("=> mapArrayMap", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| calls the callback with the correct parameters", () =>
+    test("| calls the callback with the correct parameters", () =>
     {
-        const spy = jasmine.createSpy();
-        spy.and.returnValue(null);
+        const spy = jest.fn();
+        spy.mockReturnValue(null);
         mapArrayMap(values, spy);
-        expect(spy.calls.count()).toBe(3);
-        expect(spy.calls.argsFor(0)).toEqual([1, "a"]);
-        expect(spy.calls.argsFor(1)).toEqual([2, "b"]);
-        expect(spy.calls.argsFor(2)).toEqual([3, "c"]);
+        expect(spy).toHaveBeenCalledTimes(3);
+        expect(spy).nthCalledWith(1, 1, "a");
+        expect(spy).nthCalledWith(2, 2, "b");
+        expect(spy).nthCalledWith(3, 3, "c");
     });
 
-    it("| returns the mapped values", () =>
+    test("| returns the mapped values", () =>
     {
         const result: (1 | 2 | 3)[] = mapArrayMap(values, (value) => value);
         expect(result).toEqual([1, 2, 3]);

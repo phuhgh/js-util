@@ -5,7 +5,7 @@ describe("=> arrayCopyInto", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| writes the values of the first argument into the second", () =>
+    test("| writes the values of the first argument into the second", () =>
     {
         const a = ["d", "e"];
         const b = ["a", "b", "c"];
@@ -17,7 +17,7 @@ describe("=> arrayCopyInto", () =>
 
     describe("=> where bounds are provided", () =>
     {
-        it("| writes only those elements inside of the bounds", () =>
+        test("| writes only those elements inside of the bounds", () =>
         {
             const a = ["d", "e"];
             const b = ["a", "b", "c"];

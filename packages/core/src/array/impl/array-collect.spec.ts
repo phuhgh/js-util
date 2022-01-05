@@ -7,18 +7,18 @@ describe("=> arrayCollect", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| calls the callback with the correct parameters", () =>
+    test("| calls the callback with the correct parameters", () =>
     {
-        const spy = jasmine.createSpy();
+        const spy = jest.fn();
         const m = new Map();
         arrayCollect(values, m, spy);
-        expect(spy.calls.count()).toBe(3);
-        expect(spy.calls.argsFor(0)).toEqual([m, "a", 0]);
-        expect(spy.calls.argsFor(1)).toEqual([m, "b", 1]);
-        expect(spy.calls.argsFor(2)).toEqual([m, "c", 2]);
+        expect(spy).toHaveBeenCalledTimes(3);
+        expect(spy).nthCalledWith(1, m, "a", 0);
+        expect(spy).nthCalledWith(2, m, "b", 1);
+        expect(spy).nthCalledWith(3, m, "c", 2);
     });
 
-    it("| returns the collect value", () =>
+    test("| returns the collect value", () =>
     {
         const m = new Map();
         expect(arrayCollect(values, m, (value) => value)).toEqual(m);

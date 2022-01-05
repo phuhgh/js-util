@@ -4,7 +4,7 @@ describe("=> arrayIsNotEmpty", () =>
 {
     describe("=> compile checks", () =>
     {
-        it("| narrows the type where true", () =>
+        test("| narrows the type where true", () =>
         {
             const a: Float32Array | null | undefined = new Float32Array(1);
 
@@ -15,14 +15,14 @@ describe("=> arrayIsNotEmpty", () =>
         });
     });
 
-    it("| returns false if null or undefined", () =>
+    test("| returns false if null or undefined", () =>
     {
-        expect(arrayIsNotEmpty(new Float32Array(1))).toBeTrue();
+        expect(arrayIsNotEmpty(new Float32Array(1))).toBe(true);
     });
 
-    it("| returns false if empty", () =>
+    test("| returns false if empty", () =>
     {
-        expect(arrayIsNotEmpty(new Float32Array(0))).toBeFalse();
+        expect(arrayIsNotEmpty(new Float32Array(0))).toBe(false);
     });
 
     function isFloat32Array(_a: Float32Array)

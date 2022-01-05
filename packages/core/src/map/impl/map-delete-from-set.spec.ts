@@ -8,7 +8,7 @@ describe("=> mapDeleteFromSet", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| deletes where set exists and value is present", () =>
+    test("| deletes where set exists and value is present", () =>
     {
         mapDeleteFromSet(values, "a", 1);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

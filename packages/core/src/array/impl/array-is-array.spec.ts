@@ -9,17 +9,17 @@ describe("=> arrayIsArray", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| returns true if normal Array", () =>
+    test("| returns true if normal Array", () =>
     {
         expect(arrayIsArray(normalArray)).toBe(true);
     });
 
-    it("| returns true if typed array", () =>
+    test("| returns true if typed array", () =>
     {
         expect(arrayIsArray(typedArray)).toBe(true);
     });
 
-    it("| returns false if not typed array or regular Array", () =>
+    test("| returns false if not typed array or regular Array", () =>
     {
         expect(arrayIsArray(arrayLike)).toBe(false);
     });

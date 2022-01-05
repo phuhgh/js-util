@@ -7,7 +7,7 @@ describe("=> mapKeysToArray", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| returns the map's keys", () =>
+    test("| returns the map's keys", () =>
     {
         const result: ("a" | "b" | "c")[] = mapKeysToArray(values);
         expect(result).toEqual(["a", "b", "c"]);

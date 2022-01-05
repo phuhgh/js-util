@@ -5,14 +5,14 @@ describe("=> mapFirstValue", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| returns the first key where available", () =>
+    test("| returns the first key where available", () =>
     {
         const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);
         const result: 1 | 2 | 3 | undefined = mapFirstValue(values);
         expect(result).toEqual(1);
     });
 
-    it("| returns undefined if empty", () =>
+    test("| returns undefined if empty", () =>
     {
         const values = new Map();
         const result = mapFirstValue(values);

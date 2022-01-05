@@ -5,7 +5,7 @@ describe("=> dictionaryCloneExtend", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| returns a new object, overwriting with the extension where common", () =>
+    test("| returns a new object, overwriting with the extension where common", () =>
     {
         const obj = { foo: true };
         const ext = { foo: false, moo: false };

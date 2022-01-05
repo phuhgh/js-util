@@ -5,7 +5,7 @@ describe("=> mathBound", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| bounds the value", () =>
+    test("| bounds the value", () =>
     {
         expect(mathBound(1, 0, 2)).toBe(1);
         expect(mathBound(-1, 0, 2)).toBe(0);
@@ -21,7 +21,7 @@ describe("=> mathBound", () =>
     {
         itShouldCallAssert(4, () => mathBound(1, 0, 2));
 
-        it("| errors with NaN input", () =>
+        test("| errors with NaN input", () =>
         {
             expect(() => mathBound(NaN, 0, 1)).toThrow();
             expect(() => mathBound(1, NaN, 1)).toThrow();

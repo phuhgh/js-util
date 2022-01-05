@@ -5,7 +5,7 @@ describe("=> mathMin", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| returns the smaller value", () =>
+    test("| returns the smaller value", () =>
     {
         expect(mathMin(1, 0)).toBe(0);
         expect(mathMin(0, 1)).toBe(0);
@@ -20,7 +20,7 @@ describe("=> mathMin", () =>
     {
         itShouldCallAssert(2, () => mathMin(1, 0));
 
-        it("| errors with NaN input", () =>
+        test("| errors with NaN input", () =>
         {
             expect(() => mathMin(NaN, 0)).toThrow();
             expect(() => mathMin(1, NaN)).toThrow();

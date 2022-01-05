@@ -5,14 +5,14 @@ describe("=> pathJoin", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| joins as expected", () =>
+    test("| joins as expected", () =>
     {
         expect(pathJoin("a", "b")).toEqual("a/b");
         expect(pathJoin("a/", "b")).toEqual("a/b");
         expect(pathJoin("a", "/b")).toEqual("a/b");
     });
 
-    it("| ues the separator if provided", () =>
+    test("| ues the separator if provided", () =>
     {
         expect(pathJoin("a", "b", "MultiCharSep")).toEqual("aMultiCharSepb");
     });

@@ -8,17 +8,17 @@ describe("=> arrayCompactMap", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| calls the callback with the correct parameters", () =>
+    test("| calls the callback with the correct parameters", () =>
     {
-        const spy = jasmine.createSpy();
+        const spy = jest.fn();
         arrayCompactMap(values, spy);
-        expect(spy.calls.count()).toBe(3);
-        expect(spy.calls.argsFor(0)).toEqual(["a", 0]);
-        expect(spy.calls.argsFor(1)).toEqual(["b", 1]);
-        expect(spy.calls.argsFor(2)).toEqual(["c", 2]);
+        expect(spy).toHaveBeenCalledTimes(3);
+        expect(spy).nthCalledWith(1, "a", 0);
+        expect(spy).nthCalledWith(2, "b", 1);
+        expect(spy).nthCalledWith(3, "c", 2);
     });
 
-    it("| returns the mapped result", () =>
+    test("| returns the mapped result", () =>
     {
         const result = arrayCompactMap(values, (value) =>
         {

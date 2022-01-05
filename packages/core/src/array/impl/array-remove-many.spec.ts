@@ -5,7 +5,7 @@ describe("=> arrayRemoveMany", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| removes matches from the first argument", () =>
+    test("| removes matches from the first argument", () =>
     {
         const a = ["a", "b", "c"];
         const b = ["b", "d"];

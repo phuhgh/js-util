@@ -7,14 +7,14 @@ describe("=> dictionaryForEach", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| calls the callback with the correct parameters", () =>
+    test("| calls the callback with the correct parameters", () =>
     {
-        const spy = jasmine.createSpy();
-        spy.and.returnValue(null);
+        const spy = jest.fn();
+        spy.mockReturnValue(null);
         dictionaryForEach(values, spy);
-        expect(spy.calls.count()).toBe(3);
-        expect(spy.calls.argsFor(0)).toEqual([1, "a", values]);
-        expect(spy.calls.argsFor(1)).toEqual([2, "b", values]);
-        expect(spy.calls.argsFor(2)).toEqual([3, "c", values]);
+        expect(spy).toHaveBeenCalledTimes(3);
+        expect(spy).nthCalledWith(1, 1, "a", values);
+        expect(spy).nthCalledWith(2, 2, "b", values);
+        expect(spy).nthCalledWith(3, 3, "c", values);
     });
 });

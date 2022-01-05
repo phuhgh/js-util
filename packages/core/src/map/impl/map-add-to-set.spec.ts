@@ -8,14 +8,14 @@ describe("=> mapAddToSet", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| adds where set exists", () =>
+    test("| adds where set exists", () =>
     {
         mapAddToSet(values, "a", 2);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         expect(_Set.valuesToArray(values.get("a")!)).toEqual([1, 2]);
     });
 
-    it("| creates array where key not defined", () =>
+    test("| creates array where key not defined", () =>
     {
         mapAddToSet(values, "b", 3);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

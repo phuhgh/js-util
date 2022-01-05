@@ -1,24 +1,24 @@
 import { fpOnce } from "./fp-once";
 import { resetDebugState } from "@rc-js-util/test";
-import createSpy = jasmine.createSpy;
 
 describe("=> fpOnce", () =>
 {
     beforeEach(() => resetDebugState());
 
-    it("| calls the function once with the expected arguments", () =>
+    test("| calls the function once with the expected arguments", () =>
     {
-        const spy = createSpy<(a: number, b: number, c: number) => number>();
+        const spy = jest.fn() as jest.Mock<number, [a: number, b: number, c: number]>;
         const oncedSpy = fpOnce(spy);
 
         oncedSpy(1, 2, 3);
         // @ts-expect-error - should be a compile error, signature doesn't match
         oncedSpy(1, 2, 3, 4);
 
-        expect(spy).toHaveBeenCalledOnceWith(1, 2, 3);
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(1, 2, 3);
     });
 
-    it("| returns the callback's original return each time", () =>
+    test("| returns the callback's original return each time", () =>
     {
         let ret = 0;
         const oncedSpy = fpOnce(() => ++ret);

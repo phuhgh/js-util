@@ -2,80 +2,83 @@ import { setDefaultUnitTestFlags } from "./impl/set-default-unit-test-flags";
 import { _Debug } from "@rc-js-util/debug";
 
 
+/**
+ * @public
+ * Asserts for colors given an array of pixels in the format of RGBA.
+ */
 export class ExpectColor
 {
     public static reddish(color: Uint8Array, errorMessage: string): void
     {
-        expect(color.length % 4)
-            .withContext("unexpected length")
-            .toBe(0);
+        if (color.length % 4 !== 0)
+        {
+            return fail("unexpected length");
+        }
 
         for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
         {
             expectValueToBeNearTo(color[i], 255, 50, errorMessage + ` (index ${i})`);
             expectValueToBeNearTo(color[i + 1], 0, 50, errorMessage + ` (index ${i})`);
             expectValueToBeNearTo(color[i + 2], 0, 50, errorMessage + ` (index ${i})`);
-            expect(color[i + 3])
-                .withContext(errorMessage + ` (index ${i})`)
-                .toBe(255);
+            expect(color[i + 3]).toBe(255);
         }
     }
 
     public static greenish(color: Uint8Array, errorMessage: string): void
     {
-        expect(color.length % 4)
-            .withContext("unexpected length")
-            .toBe(0);
+        if (color.length % 4 !== 0)
+        {
+            return fail("unexpected length");
+        }
 
         for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
         {
             expectValueToBeNearTo(color[i], 0, 50, errorMessage + ` (index ${i})`);
             expectValueToBeNearTo(color[i + 1], 255, 50, errorMessage + ` (index ${i})`);
             expectValueToBeNearTo(color[i + 2], 0, 50, errorMessage + ` (index ${i})`);
-            expect(color[i + 3])
-                .withContext(errorMessage + ` (index ${i})`)
-                .toBe(255);
+            expect(color[i + 3]).toBe(255);
         }
     }
 
     public static blueish(color: Uint8Array, errorMessage: string): void
     {
-        expect(color.length % 4)
-            .withContext("unexpected length")
-            .toBe(0);
+        if (color.length % 4 !== 0)
+        {
+            return fail("unexpected length");
+        }
 
         for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
         {
             expectValueToBeNearTo(color[i], 0, 50, errorMessage + ` (index ${i})`);
             expectValueToBeNearTo(color[i + 1], 0, 50, errorMessage + ` (index ${i})`);
             expectValueToBeNearTo(color[i + 2], 255, 50, errorMessage + ` (index ${i})`);
-            expect(color[i + 3])
-                .withContext(errorMessage + ` (index ${i})`)
-                .toBe(255);
+            expect(color[i + 3]).toBe(255);
         }
     }
 
-    public static red(color: Uint8Array, errorMessage: string): void
+    public static red(color: Uint8Array): void
     {
-        expect(color.length % 4)
-            .withContext("unexpected length")
-            .toBe(0);
+        if (color.length % 4 !== 0)
+        {
+            return fail("unexpected length");
+        }
 
         for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
         {
-            expect(color.slice(i, i + 4)).toEqual(new Uint8Array([255, 0, 0, 255]), errorMessage);
+            expect(color.slice(i, i + 4)).toEqual(new Uint8Array([255, 0, 0, 255]));
         }
     }
 
-    public static transparentBlack(color: Uint8Array, errorMessage: string): void
+    public static transparentBlack(color: Uint8Array): void
     {
-        expect(color.length % 4)
-            .withContext("unexpected length")
-            .toBe(0);
+        if (color.length % 4 !== 0)
+        {
+            return fail("unexpected length");
+        }
 
         for (let i = 0, iEnd = color.length; i < iEnd; i += 4)
         {
-            expect(color.slice(i, i + 4)).toEqual(new Uint8Array([0, 0, 0, 0]), errorMessage);
+            expect(color.slice(i, i + 4)).toEqual(new Uint8Array([0, 0, 0, 0]));
         }
     }
 }
@@ -87,11 +90,11 @@ export function itShouldCallAssert
 )
     : void
 {
-    it("| has the correct number of assert calls", () =>
+    test("| has the correct number of assert calls", () =>
     {
         const debugMode = _Debug.getFlag("DEBUG_MODE");
         _Debug.setFlag("DEBUG_MODE", true);
-        spyOn(_Debug, "assert");
+        jest.spyOn(_Debug, "assert");
         runTest();
         expect(_Debug.assert).toHaveBeenCalledTimes(times);
         _Debug.setFlag("DEBUG_MODE", debugMode);
@@ -104,16 +107,18 @@ export function itShouldNotRunDebugWhenDebugIsFalse
 )
     : void
 {
-    it("doesn't run asserts when DEBUG_MODE is false", () =>
+    test("doesn't run asserts when DEBUG_MODE is false", () =>
     {
         const debugMode = _Debug.getFlag("DEBUG_MODE");
         _Debug.setFlag("DEBUG_MODE", false);
-        spyOn(_Debug, "runBlock");
-        spyOn(_Debug, "assert");
+        jest.spyOn(_Debug, "runBlock");
+        jest.spyOn(_Debug, "assert");
         runTest();
         expect(_Debug.runBlock).not.toHaveBeenCalled();
         expect(_Debug.assert).not.toHaveBeenCalled();
         _Debug.setFlag("DEBUG_MODE", debugMode);
+
+        jest.clearAllMocks();
     });
 }
 
@@ -126,13 +131,10 @@ export function expectValueToBeNearTo
 )
     : void
 {
-    expect(value)
-        .withContext(message ?? "")
-        .toBeLessThan(expectation + variance);
-
-    expect(value)
-        .withContext(message ?? "")
-        .toBeGreaterThan(expectation - variance);
+    if (value > expectation + variance || value < expectation - variance)
+    {
+        fail(message ?? `${value} is not within ${variance} of ${expectation}`);
+    }
 }
 
 export function resetDebugState()

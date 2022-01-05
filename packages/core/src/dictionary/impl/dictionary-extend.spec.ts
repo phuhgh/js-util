@@ -10,17 +10,17 @@ describe("=> dictionaryExtend", () =>
         dictionaryExtend({}, {});
     });
 
-    it("| errors if object is array", () =>
+    test("| errors if object is array", () =>
     {
         expect(() => dictionaryExtend([], {})).toThrow();
     });
 
-    it("| errors if extension is array", () =>
+    test("| errors if extension is array", () =>
     {
         expect(() => dictionaryExtend({}, [])).toThrow();
     });
 
-    it("| extends the object, overwriting with the extension where common", () =>
+    test("| extends the object, overwriting with the extension where common", () =>
     {
         const obj = { foo: true };
         const ext = { foo: false, moo: false };

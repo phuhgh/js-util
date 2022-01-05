@@ -8,7 +8,7 @@ describe("=> dictionaryValues", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| returns dictionary values", () =>
+    test("| returns dictionary values", () =>
     {
         expect(dictionaryValues(values)).toEqual([1, 2]);
     });
