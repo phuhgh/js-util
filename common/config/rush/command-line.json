@@ -26,6 +26,14 @@
       "ignoreDependencyOrder": true
     },
     {
+      "name": "test",
+      "commandKind": "bulk",
+      "summary": "Runs the tests.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": false,
+      "ignoreDependencyOrder": true
+    },
+    {
       "name": "rollup-docs",
       "shellCommand": "node common/scripts/copy-api-docs.js && api-documenter markdown --input-folder tmp --output-folder docs/api",
       "commandKind": "global",
