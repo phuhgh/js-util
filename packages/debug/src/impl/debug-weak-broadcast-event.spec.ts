@@ -9,7 +9,7 @@ describe("=> DebugWeakBroadcastEvent", () =>
         _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
     });
 
-    it("| does not return listeners that are missing the method", () =>
+    test("| does not return listeners that are missing the method", () =>
     {
         const emitter = new DebugWeakBroadcastEvent("m");
         emitter.addListener({});

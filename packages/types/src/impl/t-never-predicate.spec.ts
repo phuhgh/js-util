@@ -2,7 +2,7 @@ import { TNeverPredicate } from "./t-never-predicate";
 
 describe("=> TNeverPredicate compile checks", () =>
 {
-    it("| compiles", () =>
+    test("| compiles", () =>
     {
         // and if it compiles it runs ^^
         const foo: TNeverPredicate<never, true, "foo"> = true;

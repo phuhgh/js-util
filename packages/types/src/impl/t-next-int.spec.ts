@@ -6,7 +6,7 @@ describe("=> TNextInt", () =>
 {
     describe("=> lte 16", () =>
     {
-        it("| gives the next int", () =>
+        test("| gives the next int", () =>
         {
             // @ts-expect-error not next int
             let int: TNextInt<15> = 17;
@@ -17,7 +17,7 @@ describe("=> TNextInt", () =>
 
     describe("=> gte 17", () =>
     {
-        it("| gives number", () =>
+        test("| gives number", () =>
         {
             const int: TNextInt<17> = 1e6;
             int;

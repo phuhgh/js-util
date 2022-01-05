@@ -15,7 +15,7 @@ describe("=> asan sanity check", () =>
         await testModule.initialize();
     });
 
-    it("| throws when the program ends and memory has not been released", async () =>
+    test("| throws when the program ends and memory has not been released", async () =>
     {
         const address = testModule.wrapper.instance._malloc(12);
         testModule.wrapper.instance._free(address);

@@ -9,7 +9,7 @@ describe("=> F32Margin2d", () =>
 
     describe("=> getInnerRange", () =>
     {
-        it("| produces the expected range", () =>
+        test("| produces the expected range", () =>
         {
             const innerRange = Margin2d.f32.factory
                 .createOne(9, 8, 7, 6)
@@ -26,7 +26,7 @@ describe("=> F32Margin2d", () =>
 
     describe("=> mat3TransformLength", () =>
     {
-        it("| produces the expected range", () =>
+        test("| produces the expected range", () =>
         {
             const transform = Mat3.f32.factory
                 .createOneEmpty()
@@ -47,7 +47,7 @@ describe("=> F32Margin2d", () =>
 
     describe("=> slice", () =>
     {
-        it("| creates a copy", () =>
+        test("| creates a copy", () =>
         {
             const a = Margin2d.f32.factory.createOne(1, 2, 3, 4);
             const b = a.slice();

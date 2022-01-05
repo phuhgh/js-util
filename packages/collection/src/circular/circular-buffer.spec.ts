@@ -13,30 +13,30 @@ describe("=> CircularBuffer", () =>
 
     describe("=> inside input range", () =>
     {
-        it("| returns the expected values", () =>
+        test("| returns the expected values", () =>
         {
-            expect(buffer.getValue(0)).toBe(0, "index 0");
-            expect(buffer.getValue(3)).toBe(3, "index 3");
+            expect(buffer.getValue(0)).toBe(0);
+            expect(buffer.getValue(3)).toBe(3);
         });
     });
 
     describe("=> going forward past end", () =>
     {
-        it("| returns the expected values", () =>
+        test("| returns the expected values", () =>
         {
-            expect(buffer.getValue(4)).toBe(0, "index 4");
-            expect(buffer.getValue(7)).toBe(3, "index 7");
-            expect(buffer.getValue(8)).toBe(0, "index 8");
+            expect(buffer.getValue(4)).toBe(0);
+            expect(buffer.getValue(7)).toBe(3);
+            expect(buffer.getValue(8)).toBe(0);
         });
     });
 
     describe("=> going backward past start", () =>
     {
-        it("| returns the expected values", () =>
+        test("| returns the expected values", () =>
         {
-            expect(buffer.getValue(-1)).toBe(3, "index -1");
-            expect(buffer.getValue(-4)).toBe(0, "index -4");
-            expect(buffer.getValue(-5)).toBe(3, "index -5");
+            expect(buffer.getValue(-1)).toBe(3);
+            expect(buffer.getValue(-4)).toBe(0);
+            expect(buffer.getValue(-5)).toBe(3);
         });
     });
 });

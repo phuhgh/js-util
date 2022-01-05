@@ -6,7 +6,7 @@ describe("=> TTupleLike", () =>
 {
     describe("=> with length specified", () =>
     {
-        it("| it requires arrays of the correct length", () =>
+        test("| it requires arrays of the correct length", () =>
         {
             // @ts-expect-error incorrect length
             let t: TTupleLike<number, number, 2> = [];
@@ -17,7 +17,7 @@ describe("=> TTupleLike", () =>
 
     describe("=> with index number type", () =>
     {
-        it("| it allows number index", () =>
+        test("| it allows number index", () =>
         {
             const t: TTupleLike<number, number, number> = [];
             t[0] = 1;
@@ -29,7 +29,7 @@ describe("=> TTupleLike", () =>
 
     describe("=> with union index type", () =>
     {
-        it("| it doesn't allow number index", () =>
+        test("| it doesn't allow number index", () =>
         {
             const t: TTupleLike<0 | 1 | 2 | 3, number, number> = [0, 0, 0, 0];
             t[1] = 1;

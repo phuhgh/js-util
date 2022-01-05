@@ -12,7 +12,7 @@ describe("=> Mat4Factory", () =>
 
     describe("=> create one", () =>
     {
-        it("| produces the expected array", () =>
+        test("| produces the expected array", () =>
         {
             expect(a.length).toBe(16);
             // noinspection SuspiciousTypeOfGuard
@@ -38,7 +38,7 @@ describe("=> Mat4Factory", () =>
 
     describe("=> copyFromBuffer", () =>
     {
-        it("| produces the expected array", () =>
+        test("| produces the expected array", () =>
         {
             const memory = new Float32Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
             const a = factory.copyFromBuffer(new DataView(memory.buffer), Float32Array.BYTES_PER_ELEMENT);
@@ -50,7 +50,7 @@ describe("=> Mat4Factory", () =>
 
     describe("=> copyToBuffer", () =>
     {
-        it("| updates the buffer at the specified location", () =>
+        test("| updates the buffer at the specified location", () =>
         {
             const memory = new Float32Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);
             factory.copyToBuffer(new DataView(memory.buffer), a, Float32Array.BYTES_PER_ELEMENT);

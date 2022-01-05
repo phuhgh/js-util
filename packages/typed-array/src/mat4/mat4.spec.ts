@@ -5,7 +5,7 @@ describe("=> Mat4", () =>
 {
     describe("=> getValueAt", () =>
     {
-        it("| returns expected values", () =>
+        test("| returns expected values", () =>
         {
             const m4 = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             let counter = 1;
@@ -22,7 +22,7 @@ describe("=> Mat4", () =>
 
     describe("=> setValueAt", () =>
     {
-        it("| sets the expected element", () =>
+        test("| sets the expected element", () =>
         {
             const m4 = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             m4.setValueAt(0, 3, 99);
@@ -32,7 +32,7 @@ describe("=> Mat4", () =>
 
     describe("=> createIdentityMatrix", () =>
     {
-        it("| returns expected values", () =>
+        test("| returns expected values", () =>
         {
             const m4 = Mat4.f32.factory
                 .createOneEmpty()
@@ -50,7 +50,7 @@ describe("=> Mat4", () =>
 
     describe("=> set", () =>
     {
-        it("| sets the values after the index", () =>
+        test("| sets the values after the index", () =>
         {
             const m4 = Mat4.f32.factory
                 .createOneEmpty()
@@ -68,7 +68,7 @@ describe("=> Mat4", () =>
 
     describe("=> slice", () =>
     {
-        it("| creates a copy", () =>
+        test("| creates a copy", () =>
         {
             const a = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             const b: TF32Mat4 = a.slice();
@@ -80,7 +80,7 @@ describe("=> Mat4", () =>
 
     describe("=> getRow", () =>
     {
-        it("| returns rows as vec4", () =>
+        test("| returns rows as vec4", () =>
         {
             const a = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             expect(a.getRow(3)).toEqual(Vec4.f32.factory.createOne(13, 14, 15, 16));
@@ -89,7 +89,7 @@ describe("=> Mat4", () =>
 
     describe("=> setRow", () =>
     {
-        it("| modifies the array as expected", () =>
+        test("| modifies the array as expected", () =>
         {
             const a = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             a.setRow(3, Vec4.f32.factory.createOne(1, 2, 3, 4));
@@ -99,7 +99,7 @@ describe("=> Mat4", () =>
 
     describe("=> isEqualTo", () =>
     {
-        it("| returns true if all components are the same", () =>
+        test("| returns true if all components are the same", () =>
         {
             const a = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             const b = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
@@ -107,7 +107,7 @@ describe("=> Mat4", () =>
             expect(a.isEqualTo(b)).toBe(true);
         });
 
-        it("| returns false if any component is different", () =>
+        test("| returns false if any component is different", () =>
         {
             const a1 = Mat4.f32.factory.createOne(0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
             const b1 = Mat4.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);

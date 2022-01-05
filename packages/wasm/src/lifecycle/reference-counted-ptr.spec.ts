@@ -7,7 +7,7 @@ describe("=> ReferenceCountedPtr", () =>
 
     describe("=> bindLifecycle", () =>
     {
-        it("| ties the lifecycle", () =>
+        test("| ties the lifecycle", () =>
         {
             const owner = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             const child = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
@@ -19,7 +19,7 @@ describe("=> ReferenceCountedPtr", () =>
             expect(owner.getIsDestroyed()).toBe(true);
         });
 
-        it("| errors if a cycle is detected", () =>
+        test("| errors if a cycle is detected", () =>
         {
             const a = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             const b = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
@@ -30,7 +30,7 @@ describe("=> ReferenceCountedPtr", () =>
 
     describe("=> takeOwnership", () =>
     {
-        it("| ties the lifecycle", () =>
+        test("| ties the lifecycle", () =>
         {
             const owner = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             const child = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });
@@ -44,7 +44,7 @@ describe("=> ReferenceCountedPtr", () =>
 
     describe("=> unbindLifecycles", () =>
     {
-        it("| unbinds each shared ptr", () =>
+        test("| unbinds each shared ptr", () =>
         {
             const a = new ReferenceCountedPtr(false, 1, { onFree: () => undefined });
             const b = new ReferenceCountedPtr(false, 2, { onFree: () => undefined });

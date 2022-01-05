@@ -6,7 +6,7 @@ describe("=> TTupleLikeOfLength", () =>
 {
     describe("=> with a length of lte 17", () =>
     {
-        it("| creates a tuple of the expected length", () =>
+        test("| creates a tuple of the expected length", () =>
         {
             // @ts-expect-error incorrect length
             let t: TTupleLikeOfLength<number, 4> = [0, 0, 0];
@@ -32,7 +32,7 @@ describe("=> TTupleLikeOfLength", () =>
 
     describe("=> with a length of gt 17", () =>
     {
-        it("| it creates an array type", () =>
+        test("| it creates an array type", () =>
         {
             const a: number[] = new Array(1);
             const t: TTupleLikeOfLength<number, 18> = a;
@@ -51,7 +51,7 @@ describe("=> TTupleLikeOfLength", () =>
 
     describe("=> with a length of number", () =>
     {
-        it("| creates an array type", () =>
+        test("| creates an array type", () =>
         {
             const a: number[] = new Array(1);
             const t: TTupleLikeOfLength<number, number> = a;
@@ -70,7 +70,7 @@ describe("=> TTupleLikeOfLength", () =>
 
     describe("=> with a length of never", () =>
     {
-        it("| creates an array type", () =>
+        test("| creates an array type", () =>
         {
             const a: number[] = new Array(1);
             const t: TTupleLikeOfLength<number, never> = a;

@@ -50,7 +50,7 @@ describe("=> F32SharedStaticArray", () =>
                 sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray) + Float32Array.BYTES_PER_ELEMENT, 4);
             });
 
-            it("| returns the expected view", () =>
+            test("| returns the expected view", () =>
             {
                 const actualArray = sharedStaticArray.getInstance();
                 expect(actualArray.length).toBe(4);
@@ -64,7 +64,7 @@ describe("=> F32SharedStaticArray", () =>
 
             describe("=> debug mode", () =>
             {
-                it("| errors when array members are accessed and memory may have resized", () =>
+                test("| errors when array members are accessed and memory may have resized", () =>
                 {
                     const instance = sharedStaticArray.getInstance();
                     expect(instance[0]).toBe(2);
@@ -89,7 +89,7 @@ describe("=> F32SharedStaticArray", () =>
 
         describe("=> getInstance", () =>
         {
-            it("| returns new instance on memory growth", () =>
+            test("| returns new instance on memory growth", () =>
             {
                 const sharedArray = SharedArray.createOneF32(testModule.wrapper, 8, true);
                 const sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray), 8);

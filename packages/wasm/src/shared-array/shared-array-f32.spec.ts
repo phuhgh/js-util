@@ -40,7 +40,7 @@ describe("=> F32SharedArray", () =>
                 });
             });
 
-            it("| creates an array of the correct length", () =>
+            test("| creates an array of the correct length", () =>
             {
                 const actualArray = sharedArray.getInstance();
                 expect(actualArray.length).toBe(8);
@@ -48,7 +48,7 @@ describe("=> F32SharedArray", () =>
                 sharedArray.sharedObject.release();
             });
 
-            it("| throws an exception if there isn't enough memory", () =>
+            test("| throws an exception if there isn't enough memory", () =>
             {
                 sharedArray.sharedObject.release();
                 expect(() => SharedArray.createOneF32(testModule.wrapper, 0xffffffff)).toThrowError("Failed to allocate memory for shared array.");
@@ -56,19 +56,19 @@ describe("=> F32SharedArray", () =>
 
             describe("=> debug mode", () =>
             {
-                it("| errors when called after release", () =>
+                test("| errors when called after release", () =>
                 {
                     sharedArray.sharedObject.release();
                     expect(() => sharedArray.getInstance()).toThrow();
                 });
 
-                it("| errors when array members are accessed after release", () =>
+                test("| errors when array members are accessed after release", () =>
                 {
                     sharedArray.sharedObject.release();
                     expect(() => sharedArray.getInstance().length).toThrow();
                 });
 
-                it("| errors when array members are accessed and memory may have resized", () =>
+                test("| errors when array members are accessed and memory may have resized", () =>
                 {
                     const instance = sharedArray.getInstance();
                     expect(instance[0]).toBe(0);
@@ -92,7 +92,7 @@ describe("=> F32SharedArray", () =>
 
         describe("=> getInstance", () =>
         {
-            it("| returns new instance on memory growth", () =>
+            test("| returns new instance on memory growth", () =>
             {
                 const sharedArray = SharedArray.createOneF32(testModule.wrapper, 8);
                 const i1 = sharedArray.getInstance();

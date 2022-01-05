@@ -33,7 +33,7 @@ describe("=> once decorator", () =>
 
     beforeEach(() => resetDebugState());
 
-    it("| runs the method only once", () =>
+    test("| runs the method only once", () =>
     {
         expect(t1.increment()).toBe(1);
         expect(t1.increment()).toBe(1);
@@ -44,7 +44,7 @@ describe("=> once decorator", () =>
         expect(t2.increment()).toBe(11);
     });
 
-    it("| proxies arguments", () =>
+    test("| proxies arguments", () =>
     {
         t1.argumentTest(1, 2);
         expect(argTestRan).toBe(true);

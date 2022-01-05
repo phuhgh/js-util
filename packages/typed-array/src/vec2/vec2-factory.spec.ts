@@ -11,7 +11,7 @@ describe("=> Vec2Factory", () =>
 
     describe("=> create one", () =>
     {
-        it("| produces the expected array", () =>
+        test("| produces the expected array", () =>
         {
             const a = factory.createOne(1, 2);
             expect(a.length).toBe(2);
@@ -24,7 +24,7 @@ describe("=> Vec2Factory", () =>
 
     describe("=> copyFromBuffer", () =>
     {
-        it("| produces the expected array", () =>
+        test("| produces the expected array", () =>
         {
             const memory = new Float32Array([1, 2, 3, 4, 5, 6, 7, 8]);
             const a = factory.copyFromBuffer(new DataView(memory.buffer), Float32Array.BYTES_PER_ELEMENT);
@@ -36,7 +36,7 @@ describe("=> Vec2Factory", () =>
 
     describe("=> copyToBuffer", () =>
     {
-        it("| updates the buffer at the specified location", () =>
+        test("| updates the buffer at the specified location", () =>
         {
             const a = factory.createOne(1, 2);
             const memory = new Float32Array([1, 2, 3, 4, 5, 6, 7, 8]);

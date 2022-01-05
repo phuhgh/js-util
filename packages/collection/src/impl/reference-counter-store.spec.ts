@@ -2,9 +2,9 @@ import { ReferenceCounterStore } from "./reference-counter-store";
 
 describe("=> ReferenceCountedStore", () =>
 {
-    it("| calls the callback when the reference count hits 0", () =>
+    test("| calls the callback when the reference count hits 0", () =>
     {
-        const spy = jasmine.createSpy();
+        const spy = jest.fn();
         const refCount = new ReferenceCounterStore(spy);
         const o = {};
         refCount.add(o);
@@ -17,16 +17,16 @@ describe("=> ReferenceCountedStore", () =>
         expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    it("| doesn't call the callback if there was no value", () =>
+    test("| doesn't call the callback if there was no value", () =>
     {
-        const spy = jasmine.createSpy();
+        const spy = jest.fn();
         const refCount = new ReferenceCounterStore(spy);
         const o = {};
         refCount.remove(o);
-        expect(spy).not.toHaveBeenCalled();
+        expect(spy).not.toBeCalled();
     });
 
-    it("| returns the expected ref counts", () =>
+    test("| returns the expected ref counts", () =>
     {
         const refCount = new ReferenceCounterStore();
 

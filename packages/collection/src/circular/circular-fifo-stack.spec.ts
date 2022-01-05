@@ -7,7 +7,7 @@ describe("=> CircularFIFOStack", () =>
 
     describe("=> getIsEmpty", () =>
     {
-        it("| returns true if empty", () =>
+        test("| returns true if empty", () =>
         {
             const stack = new CircularFIFOStack(4, ECircularStackOverflowMode.Exception);
             expect(stack.getIsEmpty()).toBe(true);
@@ -20,7 +20,7 @@ describe("=> CircularFIFOStack", () =>
 
     describe("=> getRemainingCapacity", () =>
     {
-        it("| returns the number of pushes left", () =>
+        test("| returns the number of pushes left", () =>
         {
             const stack = new CircularFIFOStack(4, ECircularStackOverflowMode.Exception);
             expect(stack.getRemainingCapacity()).toBe(4);
@@ -35,13 +35,13 @@ describe("=> CircularFIFOStack", () =>
 
     describe("=> pop", () =>
     {
-        it("| errors if the stack is empty", () =>
+        test("| errors if the stack is empty", () =>
         {
             const stack = new CircularFIFOStack(4);
             expect(() => stack.pop()).toThrow();
         });
 
-        it("| returns the expected values", () =>
+        test("| returns the expected values", () =>
         {
             const stack = new CircularFIFOStack(4, ECircularStackOverflowMode.Exception);
             stack.push(1);
@@ -63,7 +63,7 @@ describe("=> CircularFIFOStack", () =>
     {
         describe("=> when overflow mode grow", () =>
         {
-            it("| grows the stack", () =>
+            test("| grows the stack", () =>
             {
                 const stack = new CircularFIFOStack(4, ECircularStackOverflowMode.Grow);
                 stack.push(1);
@@ -85,7 +85,7 @@ describe("=> CircularFIFOStack", () =>
 
         describe("=> when overflow mode no op", () =>
         {
-            it("| does nothing", () =>
+            test("| does nothing", () =>
             {
                 const stack = new CircularFIFOStack(4, ECircularStackOverflowMode.NoOp);
                 stack.push(1);
@@ -106,7 +106,7 @@ describe("=> CircularFIFOStack", () =>
 
         describe("=> when overflow mode exception", () =>
         {
-            it("| doesn't write and throws an exception", () =>
+            test("| doesn't write and throws an exception", () =>
             {
                 const stack = new CircularFIFOStack(4, ECircularStackOverflowMode.Exception);
                 stack.push(1);
@@ -127,7 +127,7 @@ describe("=> CircularFIFOStack", () =>
 
         describe("=> when overflow mode overwrite", () =>
         {
-            it("| overwrites the first in", () =>
+            test("| overwrites the first in", () =>
             {
                 const stack = new CircularFIFOStack(4, ECircularStackOverflowMode.Overwrite);
                 stack.push(1);

@@ -6,7 +6,7 @@ describe("=> Vec2", () =>
 {
     describe("=> getters", () =>
     {
-        it("| provides the expected values", () =>
+        test("| provides the expected values", () =>
         {
             const v = Vec2.f32.factory.createOne(1, 2);
             expect(v.getX()).toBe(1);
@@ -17,7 +17,7 @@ describe("=> Vec2", () =>
 
     describe("=> setters", () =>
     {
-        it("| sets the expected values", () =>
+        test("| sets the expected values", () =>
         {
             const v = Vec2.f32.factory.createOneEmpty();
             v.setX(1);
@@ -30,7 +30,7 @@ describe("=> Vec2", () =>
 
     describe("=> update", () =>
     {
-        it("| sets the expected values", () =>
+        test("| sets the expected values", () =>
         {
             const v = Vec2.f32.factory.createOneEmpty();
             v.update(1, 2);
@@ -42,7 +42,7 @@ describe("=> Vec2", () =>
 
     describe("=> dotProduct", () =>
     {
-        it("| returns expected value", () =>
+        test("| returns expected value", () =>
         {
             const a = Vec2.f32.factory.createOne(1, 2);
             const b = Vec2.f32.factory.createOne(3, 4);
@@ -54,7 +54,7 @@ describe("=> Vec2", () =>
 
     describe("=> mat3 multiply", () =>
     {
-        it("| returns the expected values", () =>
+        test("| returns the expected values", () =>
         {
             const v = Vec2.f32.factory.createOne(1, 2);
             const identityMatrix = Mat3.f32.factory
@@ -75,7 +75,7 @@ describe("=> Vec2", () =>
 
     describe("=> bound", () =>
     {
-        it("| bounds up", () =>
+        test("| bounds up", () =>
         {
             const v = Vec2.f32.factory.createOne(0, 0);
             const range = Range2d.f32.factory.createOne(2, 4, 2, 4);
@@ -83,7 +83,7 @@ describe("=> Vec2", () =>
             expect(v).toEqual(Vec2.f32.factory.createOne(2, 2));
         });
 
-        it("| bounds down", () =>
+        test("| bounds down", () =>
         {
             const v = Vec2.f32.factory.createOne(6, 6);
             const range = Range2d.f32.factory.createOne(2, 4, 2, 4);
@@ -91,7 +91,7 @@ describe("=> Vec2", () =>
             expect(v).toEqual(Vec2.f32.factory.createOne(4, 4));
         });
 
-        it("| leaves values that are bounded", () =>
+        test("| leaves values that are bounded", () =>
         {
             const v = Vec2.f32.factory.createOne(1, 1);
             const range = Range2d.f32.factory.createOne(0, 4, 0, 4);
@@ -102,7 +102,7 @@ describe("=> Vec2", () =>
 
     describe("=> slice", () =>
     {
-        it("| creates a copy", () =>
+        test("| creates a copy", () =>
         {
             const a = Vec2.f32.factory.createOne(1, 2);
             const b: TF32Vec2 = a.slice();
@@ -114,7 +114,7 @@ describe("=> Vec2", () =>
 
     describe("=> normalize", () =>
     {
-        it("| returns a unit vector in the same direction", () =>
+        test("| returns a unit vector in the same direction", () =>
         {
             const a = Vec2.f32.factory.createOne(10, 10);
             expect(a.normalize()).toEqual(Vec2.f32.factory.createOne(1 / Math.sqrt(2), 1 / Math.sqrt(2)));
@@ -123,7 +123,7 @@ describe("=> Vec2", () =>
 
     describe("=> getNormal", () =>
     {
-        it("| returns a normal to the vector", () =>
+        test("| returns a normal to the vector", () =>
         {
             const a = Vec2.f32.factory.createOne(1, 2);
             expect(a.getNormal()).toEqual(Vec2.f32.factory.createOne(2, -1));

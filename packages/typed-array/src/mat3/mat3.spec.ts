@@ -6,7 +6,7 @@ describe("=> Mat3", () =>
 {
     describe("=> getElement", () =>
     {
-        it("| returns expected values", () =>
+        test("| returns expected values", () =>
         {
             const m3 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             let counter = 1;
@@ -23,7 +23,7 @@ describe("=> Mat3", () =>
 
     describe("=> createIdentityMatrix", () =>
     {
-        it("| returns expected values", () =>
+        test("| returns expected values", () =>
         {
             const m3 = Mat3.f32.factory
                 .createOneEmpty()
@@ -41,7 +41,7 @@ describe("=> Mat3", () =>
 
     describe("=> createScalingMatrix", () =>
     {
-        it("| returns the expected matrix", () =>
+        test("| returns the expected matrix", () =>
         {
             const m3 = Mat3.f32.factory
                 .createOneEmpty()
@@ -63,7 +63,7 @@ describe("=> Mat3", () =>
             }
         });
 
-        it("| multiplies as expected", () =>
+        test("| multiplies as expected", () =>
         {
             const m3 = Mat3.f32.factory
                 .createOneEmpty()
@@ -77,7 +77,7 @@ describe("=> Mat3", () =>
 
     describe("=> createTranslationMatrix", () =>
     {
-        it("| returns the expected matrix", () =>
+        test("| returns the expected matrix", () =>
         {
             const m3 = Mat3.f32.factory
                 .createOneEmpty()
@@ -91,7 +91,7 @@ describe("=> Mat3", () =>
             expect(m3.filter((value) => value === 0).length).toBe(4);
         });
 
-        it("| multiplies as expected", () =>
+        test("| multiplies as expected", () =>
         {
             const m3 = Mat3.f32.factory
                 .createOneEmpty()
@@ -105,7 +105,7 @@ describe("=> Mat3", () =>
 
     describe("=> multiplyMat3", () =>
     {
-        it("| returns the expected matrix", () =>
+        test("| returns the expected matrix", () =>
         {
             const identityMatrix = Mat3.f32.factory
                 .createOneEmpty()
@@ -124,7 +124,7 @@ describe("=> Mat3", () =>
             }
         });
 
-        it("| multiplies as expected transform & scale", () =>
+        test("| multiplies as expected transform & scale", () =>
         {
             const m3t = Mat3.f32.factory
                 .createOneEmpty()
@@ -139,7 +139,7 @@ describe("=> Mat3", () =>
             expect(result.getY()).toBe(24);
         });
 
-        it("| multiplies as expected scale & transform", () =>
+        test("| multiplies as expected scale & transform", () =>
         {
             const m3t = Mat3.f32.factory
                 .createOneEmpty()
@@ -156,7 +156,7 @@ describe("=> Mat3", () =>
 
         describe("=> compile checks", () =>
         {
-            it("allows different input types", () =>
+            test("allows different input types", () =>
             {
                 const m3t = Mat3.f32.factory
                     .createOneEmpty()
@@ -168,7 +168,7 @@ describe("=> Mat3", () =>
                 expect(result).toBeInstanceOf(Mat3.u8);
             });
 
-            it("allows different output types", () =>
+            test("allows different output types", () =>
             {
                 const m3t = Mat3.f32.factory
                     .createOneEmpty()
@@ -187,7 +187,7 @@ describe("=> Mat3", () =>
     describe("=> slice", () =>
     {
 
-        it("| calls into the native method", () =>
+        test("| calls into the native method", () =>
         {
             const m3 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             const slice = m3.slice(1, 3);
@@ -199,7 +199,7 @@ describe("=> Mat3", () =>
 
     describe("=> subarray", () =>
     {
-        it("| calls into the native method", () =>
+        test("| calls into the native method", () =>
         {
             const m3 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             const slice = m3.subarray(1, 3);
@@ -211,7 +211,7 @@ describe("=> Mat3", () =>
 
     describe("=> mat3 multiply component wise", () =>
     {
-        it("| returns the expected values", () =>
+        test("| returns the expected values", () =>
         {
             const v = Vec3.f32.factory.createOne(1, 2, 0);
             const identityMatrix = Mat3.f32.factory
@@ -228,7 +228,7 @@ describe("=> Mat3", () =>
 
     describe("=> setValueAt", () =>
     {
-        it("| sets the expected element", () =>
+        test("| sets the expected element", () =>
         {
             const m4 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             m4.setValueAt(0, 2, 99);
@@ -238,7 +238,7 @@ describe("=> Mat3", () =>
 
     describe("=> getRow", () =>
     {
-        it("| returns rows as vec3", () =>
+        test("| returns rows as vec3", () =>
         {
             const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             expect(a.getRow(2)).toEqual(Vec3.f32.factory.createOne(7, 8, 9));
@@ -247,7 +247,7 @@ describe("=> Mat3", () =>
 
     describe("=> setRow", () =>
     {
-        it("| modifies the array as expected", () =>
+        test("| modifies the array as expected", () =>
         {
             const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             a.setRow(2, Vec3.f32.factory.createOne(1, 2, 3));
@@ -257,7 +257,7 @@ describe("=> Mat3", () =>
 
     describe("=> slice", () =>
     {
-        it("| creates a copy", () =>
+        test("| creates a copy", () =>
         {
             const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             const b: TF32Mat3 = a.slice();
@@ -269,7 +269,7 @@ describe("=> Mat3", () =>
 
     describe("=> scalarAdd", () =>
     {
-        it("| adds", () =>
+        test("| adds", () =>
         {
             const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             expect(a.scalarAdd(1)).toEqual(a.map(x => x + 1));
@@ -278,7 +278,7 @@ describe("=> Mat3", () =>
 
     describe("=> scalarMultiply", () =>
     {
-        it("| multiplies", () =>
+        test("| multiplies", () =>
         {
             const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             expect(a.scalarMultiply(2)).toEqual(a.map(x => x * 2));
@@ -287,7 +287,7 @@ describe("=> Mat3", () =>
 
     describe("=> isEqualTo", () =>
     {
-        it("| returns true if all components are the same", () =>
+        test("| returns true if all components are the same", () =>
         {
             const a = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
             const b = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -295,7 +295,7 @@ describe("=> Mat3", () =>
             expect(a.isEqualTo(b)).toBe(true);
         });
 
-        it("| returns false if any component is different", () =>
+        test("| returns false if any component is different", () =>
         {
             const a1 = Mat3.f32.factory.createOne(0, 2, 3, 4, 5, 6, 7, 8, 9);
             const b1 = Mat3.f32.factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9);

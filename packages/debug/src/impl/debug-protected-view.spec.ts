@@ -6,7 +6,7 @@ describe("=> DebugProtectedView", () =>
     {
         describe("=> when valid", () =>
         {
-            it("| returns the original object", () =>
+            test("| returns the original object", () =>
             {
                 const protectedView = new DebugProtectedView([], "");
                 const thingToBeProtected = { foo: true };
@@ -18,7 +18,7 @@ describe("=> DebugProtectedView", () =>
 
         describe("=> when the view has been invalidated", () =>
         {
-            it("| it errors", () =>
+            test("| it errors", () =>
             {
                 const protectedView = new DebugProtectedView([], "meep meep");
                 const thingToBeProtected = { foo: true };
@@ -30,7 +30,7 @@ describe("=> DebugProtectedView", () =>
 
         describe("=> when given not a proxy", () =>
         {
-            it("| it returns the thing", () =>
+            test("| it returns the thing", () =>
             {
                 const thing = { foo: true };
                 expect(DebugProtectedView.unwrapProtectedView(thing)).toBe(thing);

@@ -4,7 +4,7 @@ describe("=> Mat2", () =>
 {
     describe("=> getElement", () =>
     {
-        it("| returns expected values", () =>
+        test("| returns expected values", () =>
         {
             const m2 = Mat2.f32.factory.createOne(1, 2, 3, 4);
             let counter = 1;
@@ -21,7 +21,7 @@ describe("=> Mat2", () =>
 
     describe("=> createIdentityMatrix", () =>
     {
-        it("| returns expected values", () =>
+        test("| returns expected values", () =>
         {
             const m2 = Mat2.f32.factory
                 .createOneEmpty()
@@ -39,7 +39,7 @@ describe("=> Mat2", () =>
 
     describe("=> createScalingMatrix", () =>
     {
-        it("| returns the expected matrix", () =>
+        test("| returns the expected matrix", () =>
         {
             const m2 = Mat2.f32.factory
                 .createOneEmpty()
@@ -52,7 +52,7 @@ describe("=> Mat2", () =>
             expect(m2.getValueAt(1, 0)).toBe(0);
         });
 
-        it("| multiplies as expected", () =>
+        test("| multiplies as expected", () =>
         {
             const m2 = Mat2.f32.factory
                 .createOneEmpty()
@@ -64,7 +64,7 @@ describe("=> Mat2", () =>
 
     describe("=> createTranslationMatrix", () =>
     {
-        it("| returns the expected matrix", () =>
+        test("| returns the expected matrix", () =>
         {
             const m2 = Mat2.f32.factory
                 .createOneEmpty()
@@ -76,7 +76,7 @@ describe("=> Mat2", () =>
             expect(m2.getValueAt(1, 0)).toBe(0);
         });
 
-        it("| multiplies as expected", () =>
+        test("| multiplies as expected", () =>
         {
             const m2 = Mat2.f32.factory
                 .createOneEmpty()
@@ -88,7 +88,7 @@ describe("=> Mat2", () =>
 
     describe("=> multiplyMat2", () =>
     {
-        it("| returns the expected matrix", () =>
+        test("| returns the expected matrix", () =>
         {
             const identityMatrix = Mat2.f32.factory
                 .createOneEmpty()
@@ -107,7 +107,7 @@ describe("=> Mat2", () =>
             }
         });
 
-        it("| multiplies as expected transform & scale", () =>
+        test("| multiplies as expected transform & scale", () =>
         {
             const m2t = Mat2.f32.factory
                 .createOneEmpty()
@@ -119,7 +119,7 @@ describe("=> Mat2", () =>
             expect(m2.getVec2MultiplyX(1)).toBe(12);
         });
 
-        it("| multiplies as expected scale & transform", () =>
+        test("| multiplies as expected scale & transform", () =>
         {
             const m2t = Mat2.f32.factory
                 .createOneEmpty()
@@ -134,7 +134,7 @@ describe("=> Mat2", () =>
 
     describe("=> slice", () =>
     {
-        it("| creates a copy", () =>
+        test("| creates a copy", () =>
         {
             const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
             const b: TF32Mat2 = a.slice();
@@ -147,7 +147,7 @@ describe("=> Mat2", () =>
 
     describe("=> scalarAdd", () =>
     {
-        it("| adds", () =>
+        test("| adds", () =>
         {
             const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
             expect(a.scalarAdd(1)).toEqual(a.map(x => x + 1));
@@ -156,7 +156,7 @@ describe("=> Mat2", () =>
 
     describe("=> scalarMultiply", () =>
     {
-        it("| multiplies", () =>
+        test("| multiplies", () =>
         {
             const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
             expect(a.scalarMultiply(2)).toEqual(a.map(x => x * 2));
@@ -165,7 +165,7 @@ describe("=> Mat2", () =>
 
     describe("=> isEqualTo", () =>
     {
-        it("| returns true if all components are the same", () =>
+        test("| returns true if all components are the same", () =>
         {
             const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
             const b = Mat2.f32.factory.createOne(1, 2, 3, 4);
@@ -173,7 +173,7 @@ describe("=> Mat2", () =>
             expect(a.isEqualTo(b)).toBe(true);
         });
 
-        it("| returns false if any component is different", () =>
+        test("| returns false if any component is different", () =>
         {
             const a1 = Mat2.f32.factory.createOne(0, 2, 3, 4);
             const b1 = Mat2.f32.factory.createOne(1, 2, 3, 4);

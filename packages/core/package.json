@@ -8,7 +8,8 @@
     "lint": "eslint -c node_modules/rc-lint-rules/.eslintrc.js src/",
     "test": "jest ./src",
     "lib": "rimraf bin && tsc -d -p packages/collection/tsconfig.lib.json",
-    "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs"
+    "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
+    "ci-test": "jest --ci ./src"
   },
   "dependencies": {
     "@rc-js-util/debug": "^1.0.0",

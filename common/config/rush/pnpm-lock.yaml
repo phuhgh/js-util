@@ -3641,16 +3641,19 @@ packages:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/collection'
     resolution:
-      integrity: sha512-spX+uymm2Azo5i/99k0XX6LaM3DphRqnYBySixsqWOluowbP/T1E/zaJfRGLSIgs3VZ/FD2qqgLkyIenbKReow==
+      integrity: sha512-3RUikIue/tqfErsUjAe/0No+frod69b4C0pXKKnS4Q+AsemyQUi2gtNiC4pPvB3Ajk7nRQM7wEqjk9BSCLqSAA==
       tarball: file:projects/collection.tgz
     version: 0.0.0
   file:projects/colors.tgz:
@@ -3761,7 +3764,7 @@ packages:
     dev: false
     name: '@rush-temp/test'
     resolution:
-      integrity: sha512-x9AGlp+znYbcN1l2d9VonaLmqddWTWniMNTGn4jQ0/lIZH8uiolVCcBAJX7A3aRezlKXk8zaXZL7+MJgM71A6Q==
+      integrity: sha512-KN6RqBTVqXEjafNo3GAYKH5M+dPTOeSi/zJbpOlLePIsIDy/Z2pG+CF8feOLTW1gRnIPEcW1GaaTr6l7XXA2tA==
       tarball: file:projects/test.tgz
     version: 0.0.0
   file:projects/typed-array.tgz:

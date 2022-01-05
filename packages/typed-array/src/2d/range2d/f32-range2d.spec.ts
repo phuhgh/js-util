@@ -11,12 +11,12 @@ describe("=> F32Range2d", () =>
     {
         const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
 
-        it("| returns true if the point is in the range", () =>
+        test("| returns true if the point is in the range", () =>
         {
             expect(range.isPointInRange(Vec2.f32.factory.createOne(7, 7))).toBe(true);
         });
 
-        it("| returns false if the point is not in the range", () =>
+        test("| returns false if the point is not in the range", () =>
         {
             expect(range.isPointInRange(Vec2.f32.factory.createOne(4, 7))).toBe(false);
             expect(range.isPointInRange(Vec2.f32.factory.createOne(11, 7))).toBe(false);
@@ -29,7 +29,7 @@ describe("=> F32Range2d", () =>
     {
         const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
 
-        it("| returns true if the ranges overlap", () =>
+        test("| returns true if the ranges overlap", () =>
         {
             expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(6, 7, 6, 7))).toBe(true);
             expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(4, 7, 4, 7))).toBe(true);
@@ -37,7 +37,7 @@ describe("=> F32Range2d", () =>
             expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(7, 11, 7, 11))).toBe(true);
         });
 
-        it("| returns false if the ranges do not overlap", () =>
+        test("| returns false if the ranges do not overlap", () =>
         {
             expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(1, 4, 6, 7))).toBe(false);
             expect(range.doesRangeIntersect(Range2d.f32.factory.createOne(11, 14, 6, 7))).toBe(false);
@@ -50,12 +50,12 @@ describe("=> F32Range2d", () =>
     {
         const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
 
-        it("| returns true if the ranges is contained", () =>
+        test("| returns true if the ranges is contained", () =>
         {
             expect(range.containsRange(Range2d.f32.factory.createOne(6, 7, 6, 7))).toBe(true);
         });
 
-        it("| returns false if the ranges do not overlap", () =>
+        test("| returns false if the ranges do not overlap", () =>
         {
             expect(range.containsRange(Range2d.f32.factory.createOne(1, 4, 6, 7))).toBe(false);
             expect(range.containsRange(Range2d.f32.factory.createOne(11, 14, 6, 7))).toBe(false);
@@ -70,7 +70,7 @@ describe("=> F32Range2d", () =>
         {
             const range = Range2d.f32.factory.createOne(4, 10, 4, 10);
 
-            it("| retains boundaries when the point is at a boundary (min)", () =>
+            test("| retains boundaries when the point is at a boundary (min)", () =>
             {
                 const scaledRange = range.scaleRelativeTo(0.5, Vec2.f32.factory.createOne(4, 4));
                 expect(scaledRange.getXMin()).toBe(4);
@@ -79,7 +79,7 @@ describe("=> F32Range2d", () =>
                 expect(scaledRange.getYMax()).toBe(7);
             });
 
-            it("| retains boundaries when the point is at a boundary (max)", () =>
+            test("| retains boundaries when the point is at a boundary (max)", () =>
             {
                 const scaledRange = range.scaleRelativeTo(0.5, Vec2.f32.factory.createOne(10, 10));
                 expect(scaledRange.getXMin()).toBe(7);
@@ -88,7 +88,7 @@ describe("=> F32Range2d", () =>
                 expect(scaledRange.getYMax()).toBe(10);
             });
 
-            it("| scales proportionally where away from boundaries", () =>
+            test("| scales proportionally where away from boundaries", () =>
             {
                 const scaledRange = range.scaleRelativeTo(0.5, Vec2.f32.factory.createOne(7, 7));
                 expect(scaledRange.getXMin()).toBe(5.5);
@@ -102,7 +102,7 @@ describe("=> F32Range2d", () =>
         {
             const range = Range2d.f32.factory.createOne(4, 10, 4, 10);
 
-            it("| retains boundaries when the point is at a boundary (min)", () =>
+            test("| retains boundaries when the point is at a boundary (min)", () =>
             {
                 const scaledRange = range.scaleRelativeTo(2, Vec2.f32.factory.createOne(4, 4));
                 expect(scaledRange.getXMin()).toBe(4);
@@ -111,7 +111,7 @@ describe("=> F32Range2d", () =>
                 expect(scaledRange.getYMax()).toBe(16);
             });
 
-            it("| retains boundaries when the point is at a boundary (max)", () =>
+            test("| retains boundaries when the point is at a boundary (max)", () =>
             {
                 const scaledRange = range.scaleRelativeTo(2, Vec2.f32.factory.createOne(10, 10));
                 expect(scaledRange.getXMin()).toBe(-2);
@@ -120,7 +120,7 @@ describe("=> F32Range2d", () =>
                 expect(scaledRange.getYMax()).toBe(10);
             });
 
-            it("| scales proportionally where away from boundaries", () =>
+            test("| scales proportionally where away from boundaries", () =>
             {
                 const scaledRange = range.scaleRelativeTo(2, Vec2.f32.factory.createOne(7, 7));
                 expect(scaledRange.getXMin()).toBe(1);
@@ -133,7 +133,7 @@ describe("=> F32Range2d", () =>
 
     describe("=> bound", () =>
     {
-        it("| bounds ranges that are too large", () =>
+        test("| bounds ranges that are too large", () =>
         {
             const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
             range.bound(Range2d.f32.factory.createOne(2, 8, 2, 8));
@@ -143,7 +143,7 @@ describe("=> F32Range2d", () =>
             expect(range.getYMax()).toBe(8);
         });
 
-        it("| translates ranges that are out of bounds (neg)", () =>
+        test("| translates ranges that are out of bounds (neg)", () =>
         {
             const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
             range.bound(Range2d.f32.factory.createOne(-20, -5, -20, -5));
@@ -153,7 +153,7 @@ describe("=> F32Range2d", () =>
             expect(range.getYMax()).toBe(-5);
         });
 
-        it("| translates ranges that are out of bounds (pos)", () =>
+        test("| translates ranges that are out of bounds (pos)", () =>
         {
             const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
             range.bound(Range2d.f32.factory.createOne(15, 30, 15, 30));
@@ -166,7 +166,7 @@ describe("=> F32Range2d", () =>
 
     describe("=> mat3Multiply", () =>
     {
-        it("| moves the range as expected", () =>
+        test("| moves the range as expected", () =>
         {
             const range = Range2d.f32.factory.createOne(0, 10, 0, 10);
             const tm = Mat3.f32.factory
@@ -183,7 +183,7 @@ describe("=> F32Range2d", () =>
 
     describe("=> slice", () =>
     {
-        it("| creates a copy", () =>
+        test("| creates a copy", () =>
         {
             const a = Range2d.f32.factory.createOne(1, 2, 3, 4);
             const b = a.slice();
@@ -201,7 +201,7 @@ describe("=> F32Range2d", () =>
                 Range2d.f32.factory.createOne(-0.75, -0.5, -1, 1),
             );
 
-        it("| creates the expected matrix", () =>
+        test("| creates the expected matrix", () =>
         {
             // scaling factors
             expectValueToBeNearTo(transform.getValueAt(0, 0), 0.25 / 50);
@@ -211,7 +211,7 @@ describe("=> F32Range2d", () =>
             expectValueToBeNearTo(transform.getValueAt(1, 2), -1);
         });
 
-        it("maps vec2s as expected", () =>
+        test("maps vec2s as expected", () =>
         {
             const point = Vec2.f32.factory.createOne(-75, 50);
             const result = point.mat3Multiply(transform);
@@ -219,7 +219,7 @@ describe("=> F32Range2d", () =>
             expectValueToBeNearTo(result.getY(), 0);
         });
 
-        it("inverts ranges where ranges are backwards", () =>
+        test("inverts ranges where ranges are backwards", () =>
         {
             // backwards in that the min is the max and the max is the min
             const backwardsTransform = Range2d.f32.factory
@@ -239,7 +239,7 @@ describe("=> F32Range2d", () =>
     {
         const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
 
-        it("| extends the range down", () =>
+        test("| extends the range down", () =>
         {
             const extended = range.extendRange(4, 4);
             expect(extended.getXMin()).toBe(4);
@@ -248,7 +248,7 @@ describe("=> F32Range2d", () =>
             expect(extended.getYMax()).toBe(10);
         });
 
-        it("| extends the range up", () =>
+        test("| extends the range up", () =>
         {
             const extended = range.extendRange(12, 12);
             expect(extended.getXMin()).toBe(5);
@@ -262,7 +262,7 @@ describe("=> F32Range2d", () =>
     {
         const range = Range2d.f32.factory.createOne(5, 10, 5, 10);
 
-        it("| extends the range down", () =>
+        test("| extends the range down", () =>
         {
             const extended = range.unionRange(Range2d.f32.factory.createOne(4, 10, 4, 10));
             expect(extended.getXMin()).toBe(4);
@@ -271,7 +271,7 @@ describe("=> F32Range2d", () =>
             expect(extended.getYMax()).toBe(10);
         });
 
-        it("| extends the range up", () =>
+        test("| extends the range up", () =>
         {
             const extended = range.unionRange(Range2d.f32.factory.createOne(5, 12, 5, 12));
             expect(extended.getXMin()).toBe(5);
@@ -283,14 +283,14 @@ describe("=> F32Range2d", () =>
 
     describe("=> ensureAABB", () =>
     {
-        it("| corrects ranges in x", () =>
+        test("| corrects ranges in x", () =>
         {
             const range = Range2d.f32.factory.createOne(1, 0, 0, 1);
             range.ensureAABB();
             expect(range).toEqual(Range2d.f32.factory.createOne(0, 1, 0, 1));
         });
 
-        it("| corrects ranges in y", () =>
+        test("| corrects ranges in y", () =>
         {
             const range = Range2d.f32.factory.createOne(0, 1, 1, 0);
             range.ensureAABB();
@@ -300,14 +300,14 @@ describe("=> F32Range2d", () =>
 
     describe("=> ensureMinRange", () =>
     {
-        it("| doesn't touch ranges larger than the min", () =>
+        test("| doesn't touch ranges larger than the min", () =>
         {
             const range = Range2d.f32.factory.createOne(-2, 2, -4, 4);
             range.ensureMinRange(3, 7);
             expect(range).toEqual(Range2d.f32.factory.createOne(-2, 2, -4, 4));
         });
 
-        it("| expands ranges that are smaller than the min", () =>
+        test("| expands ranges that are smaller than the min", () =>
         {
             const range = Range2d.f32.factory.createOne(-2, 2, -4, 4);
             range.ensureMinRange(6, 10);
@@ -317,7 +317,7 @@ describe("=> F32Range2d", () =>
 
     describe("=> getXMaxAbs", () =>
     {
-        it("| returns the max", () =>
+        test("| returns the max", () =>
         {
             const range1 = Range2d.f32.factory.createOne(-2, 1, 0, 0);
             expect(range1.getXMaxAbs()).toEqual(2);
@@ -328,7 +328,7 @@ describe("=> F32Range2d", () =>
 
     describe("=> getYMaxAbs", () =>
     {
-        it("| returns the max", () =>
+        test("| returns the max", () =>
         {
             const range1 = Range2d.f32.factory.createOne(0, 0, -2, 1);
             expect(range1.getYMaxAbs()).toEqual(2);

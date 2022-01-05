@@ -12,7 +12,7 @@ describe("=> Mat2Factory", () =>
 
     describe("=> create one", () =>
     {
-        it("| produces the expected array", () =>
+        test("| produces the expected array", () =>
         {
             const a = factory.createOne(1, 2, 3, 4);
             expect(a.length).toBe(4);
@@ -27,7 +27,7 @@ describe("=> Mat2Factory", () =>
 
     describe("=> copyFromBuffer", () =>
     {
-        it("| produces the expected array", () =>
+        test("| produces the expected array", () =>
         {
             const memory = new Float64Array([1, 2, 3, 4, 5, 6, 7, 8]);
             const a = factory.copyFromBuffer(new DataView(memory.buffer), Float64Array.BYTES_PER_ELEMENT);
@@ -41,7 +41,7 @@ describe("=> Mat2Factory", () =>
 
     describe("=> copyToBuffer", () =>
     {
-        it("| updates the buffer at the specified location", () =>
+        test("| updates the buffer at the specified location", () =>
         {
             const a = factory.createOne(1, 2, 3, 4);
             const memory = new Float64Array([1, 2, 3, 4, 5, 6, 7, 8]);
@@ -58,7 +58,7 @@ describe("=> Mat2Factory", () =>
 
     describe("=> setValueAt", () =>
     {
-        it("| sets the expected element", () =>
+        test("| sets the expected element", () =>
         {
             const m4 = Mat2.f32.factory.createOne(1, 2, 3, 4);
             m4.setValueAt(0, 1, 99);
@@ -68,7 +68,7 @@ describe("=> Mat2Factory", () =>
 
     describe("=> getRow", () =>
     {
-        it("| returns rows as vec2", () =>
+        test("| returns rows as vec2", () =>
         {
             const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
             expect(a.getRow(1)).toEqual(Vec2.f32.factory.createOne(3, 4));
@@ -77,7 +77,7 @@ describe("=> Mat2Factory", () =>
 
     describe("=> setRow", () =>
     {
-        it("| modifies the array as expected", () =>
+        test("| modifies the array as expected", () =>
         {
             const a = Mat2.f32.factory.createOne(1, 2, 3, 4);
             a.setRow(1, Vec2.f32.factory.createOne(1, 2));

@@ -4,7 +4,7 @@ describe("=> Vec3", () =>
 {
     describe("=> getters", () =>
     {
-        it("| provides the expected values", () =>
+        test("| provides the expected values", () =>
         {
             const v = Vec3.f32.factory.createOne(1, 2, 3);
             expect(v.getX()).toBe(1);
@@ -16,7 +16,7 @@ describe("=> Vec3", () =>
 
     describe("=> setters", () =>
     {
-        it("| sets the expected values", () =>
+        test("| sets the expected values", () =>
         {
             const v = Vec3.f32.factory.createOneEmpty();
             v.setX(1);
@@ -31,7 +31,7 @@ describe("=> Vec3", () =>
 
     describe("=> update", () =>
     {
-        it("| sets the expected values", () =>
+        test("| sets the expected values", () =>
         {
             const v = Vec3.f32.factory.createOneEmpty();
             v.update(1, 2, 3);
@@ -44,7 +44,7 @@ describe("=> Vec3", () =>
 
     describe("=> slice", () =>
     {
-        it("| creates a copy", () =>
+        test("| creates a copy", () =>
         {
             const a = Vec3.f32.factory.createOne(1, 2, 3);
             const b: TF32Vec3 = a.slice();

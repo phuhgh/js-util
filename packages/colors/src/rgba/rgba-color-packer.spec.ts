@@ -13,22 +13,22 @@ describe("=> RgbaColorPacker", () =>
 
     describe("packColor", () =>
     {
-        it("| packs red", () =>
+        test("| packs red", () =>
         {
             expect(red).toEqual(0xFF << ERgbaShift.R);
         });
 
-        it("| packs green", () =>
+        test("| packs green", () =>
         {
             expect(green).toEqual(0xFF << ERgbaShift.G);
         });
 
-        it("| packs blue", () =>
+        test("| packs blue", () =>
         {
             expect(blue).toEqual(0xFF << ERgbaShift.B);
         });
 
-        it("| packs alpha", () =>
+        test("| packs alpha", () =>
         {
             expect(alpha).toEqual(0xFF << ERgbaShift.A);
         });
@@ -36,22 +36,22 @@ describe("=> RgbaColorPacker", () =>
 
     describe("unpack", () =>
     {
-        it("| unpacks red", () =>
+        test("| unpacks red", () =>
         {
             expect(RgbaColorPacker.unpackR(red)).toEqual(0xFF);
         });
 
-        it("| unpacks green", () =>
+        test("| unpacks green", () =>
         {
             expect(RgbaColorPacker.unpackG(green)).toEqual(0xFF);
         });
 
-        it("| unpacks blue", () =>
+        test("| unpacks blue", () =>
         {
             expect(RgbaColorPacker.unpackB(blue)).toEqual(0xFF);
         });
 
-        it("| unpacks alpha", () =>
+        test("| unpacks alpha", () =>
         {
             expect(RgbaColorPacker.unpackA(alpha)).toEqual(0xFF);
         });
@@ -59,17 +59,17 @@ describe("=> RgbaColorPacker", () =>
 
     describe("getHexColorString", () =>
     {
-        it("| packs red", () =>
+        test("| packs red", () =>
         {
             expect(RgbaColorPacker.getHexColorString(RgbaColorPacker.packColor(255, 0, 0, 255))).toEqual("#FF0000");
         });
 
-        it("| packs green", () =>
+        test("| packs green", () =>
         {
             expect(RgbaColorPacker.getHexColorString(RgbaColorPacker.packColor(0, 255, 0, 255))).toEqual("#00FF00");
         });
 
-        it("| packs blue", () =>
+        test("| packs blue", () =>
         {
             expect(RgbaColorPacker.getHexColorString(RgbaColorPacker.packColor(0, 0, 255, 255))).toEqual("#0000FF");
         });

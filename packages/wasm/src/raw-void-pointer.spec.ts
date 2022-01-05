@@ -28,7 +28,7 @@ describe("=> RawVoidPointer", () =>
             testModule.endEmscriptenProgram();
         });
 
-        it("| creates, writes, reads and destroys without triggering the asan", () =>
+        test("| creates, writes, reads and destroys without triggering the asan", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             expect(rvp.getDataView().byteLength).toEqual(128);
@@ -53,7 +53,7 @@ describe("=> RawVoidPointer", () =>
             await testModule.initialize();
         });
 
-        it("| invalidates dataView on memory resize", () =>
+        test("| invalidates dataView on memory resize", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             const dataView = rvp.getDataView();
@@ -64,14 +64,14 @@ describe("=> RawVoidPointer", () =>
             rvp2.sharedObject.release();
         });
 
-        it("| invalidates dataView on memory release", () =>
+        test("| invalidates dataView on memory release", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             rvp.sharedObject.release();
             expect(() => rvp.getDataView().getFloat32(0)).toThrow();
         });
 
-        it("| updates the dataView on resize", () =>
+        test("| updates the dataView on resize", () =>
         {
             const rvp = RawVoidPointer.createOne(testModule.wrapper, 128);
             const rvp2 = RawVoidPointer.createOne(testModule.wrapper, 8388608);
