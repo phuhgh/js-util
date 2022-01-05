@@ -32,9 +32,13 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
             {
                 this.removeListener(temporaryListener);
 
-                // todo jack...
-                return listener[this.key]!(...args);
-            }
+                const method = listener[this.key];
+
+                if (method != null)
+                {
+                    method.apply(listener, args);
+                }
+            },
         } as TDebugListener<TKey, TArgs>;
 
         this.addListener(temporaryListener);
@@ -54,8 +58,12 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
             }
             else
             {
-                // todo jack...
-                listener[this.key]!(...args);
+                const method = listener[this.key];
+
+                if (method != null)
+                {
+                    method.apply(listener, args);
+                }
             }
         });
     }
@@ -71,9 +79,9 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
         }
     }
 
-    public getTargets(): readonly TDebugListener<TKey, TArgs>[]
+    public getTargets(): readonly Required<TDebugListener<TKey, TArgs>>[]
     {
-        const targets: TDebugListener<TKey, TArgs>[] = [];
+        const targets: Required<TDebugListener<TKey, TArgs>>[] = [];
 
         this.listenersSet.forEach(ref =>
         {
@@ -83,9 +91,9 @@ export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[
             {
                 this.listenersSet.delete(ref);
             }
-            else
+            else if(listener[this.key] != null)
             {
-                targets.push(listener);
+                targets.push(listener as Required<TDebugListener<TKey, TArgs>>);
             }
         });
 

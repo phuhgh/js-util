@@ -1,8 +1,9 @@
-import { Emscripten } from "../../packages/emscripten/emscripten";
 import { IJsUtilBindings } from "./i-js-util-bindings";
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "./emscripten/sanitized-emscripten-test-module";
-import { _Debug } from "../debug/_debug";
 import { nullPointer } from "./emscripten/null-pointer";
+import { Emscripten } from "./emscripten/emscripten";
+import { _Debug } from "@rc-js-util/debug";
+import { resetDebugState } from "@rc-js-util/test";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -11,6 +12,8 @@ const asanTestModule = require("../../packages/emscripten/asan-test-module");
 describe("JsUtil::Debug", () =>
 {
     const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
+
+    beforeEach(() => resetDebugState());
 
     describe("::Log", () =>
     {

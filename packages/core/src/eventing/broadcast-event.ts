@@ -2,6 +2,7 @@ import { TListener } from "./t-listener";
 import { IBroadcastEvent } from "./i-broadcast-event";
 import { _Set } from "../set/_set";
 
+// todo jack: poorly named, it isn't the actual event, it does the emitting (normalize the debug one too...)
 /**
  * @public
  * Strong reference implementation of {@link IBroadcastEvent}.

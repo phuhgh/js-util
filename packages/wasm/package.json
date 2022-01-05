@@ -9,6 +9,7 @@
     "@rc-js-util/debug": "^1.0.0",
     "@rc-js-util/types": "^1.0.0",
     "@rc-js-util/core": "^1.0.0",
+    "@rc-js-util/collection": "^1.0.0",
     "tslib": "^2.3.1"
   },
   "devDependencies": {

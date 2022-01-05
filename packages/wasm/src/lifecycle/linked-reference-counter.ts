@@ -1,6 +1,6 @@
 import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
 import { _Debug } from "@rc-js-util/debug";
-import { DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "../../../collection/src/dirty-checked/dirty-checked-unique-collection";
+import { DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "@rc-js-util/collection";
 
 /**
  * @public

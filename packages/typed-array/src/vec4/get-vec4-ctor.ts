@@ -3,7 +3,7 @@ import { IVec4Ctor, Vec4 } from "./vec4";
 import { Vec4Factory } from "./vec4-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { TTypedArray, TTypedArrayCtor } from "@rc-js-util/types";
-import { RgbaColorPacker } from "@rc-js-util/core";
+import { RgbaColorPacker } from "@rc-js-util/colors";
 
 /**
  * @internal

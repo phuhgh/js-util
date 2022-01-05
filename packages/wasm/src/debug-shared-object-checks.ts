@@ -1,6 +1,7 @@
 import { ISharedObject } from "./lifecycle/i-shared-object";
-import { IDebugProtectedView, numberGetHexString, stringNormalizeNullUndefinedToEmpty } from "@rc-js-util/core";
+import { numberGetHexString, stringNormalizeNullUndefinedToEmpty } from "@rc-js-util/core";
 import { _Debug } from "@rc-js-util/debug";
+import { IDebugProtectedView } from "@rc-js-util/types";
 
 /**
  * @public
