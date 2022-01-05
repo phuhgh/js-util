@@ -3,6 +3,25 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "echo skipping globals"
-  }
+    "build": "echo skipping globals",
+    "generate-docs": "rimraf docs tmp && api-extractor run -c api-extractor.json",
+    "lint": "echo skipping globals",
+    "test": "echo skipping globals",
+    "lib": "echo skipping globals",
+    "ci-build": "npm run lib && npm run generate-docs"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.19.3"
+  },
+  "keywords": [
+    "Util",
+    "stdlib",
+    "Server",
+    "Client",
+    "Browser",
+    "Emscripten",
+    "WebAssembly"
+  ],
+  "repository": "https://github.com/phuhgh/js-util",
+  "homepage": "https://phuhgh.github.io/js-util/rc-js-util.html"
 }

@@ -18,6 +18,14 @@
       "ignoreDependencyOrder": true
     },
     {
+      "name": "lint",
+      "commandKind": "bulk",
+      "summary": "Runs ESLint.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": false,
+      "ignoreDependencyOrder": true
+    },
+    {
       "name": "rollup-docs",
       "shellCommand": "node common/scripts/copy-api-docs.js && api-documenter markdown --input-folder tmp --output-folder docs/api",
       "commandKind": "global",

@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf bin && tsc -d"
+    "build": "rimraf bin && tsc -d",
+    "generate-docs": "rimraf docs tmp && api-extractor run -c api-extractor.json",
+    "lint": "eslint -c node_modules/rc-lint-rules/.eslintrc.js src/",
+    "test": "jasmine --config=jasmine.json",
+    "lib": "rimraf bin && tsc -d -p packages/collection/tsconfig.lib.json",
+    "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs"
   },
   "dependencies": {
     "@rc-js-util/debug": "^1.0.0",
@@ -13,6 +18,8 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.19.3",
+    "rc-lint-rules": "^5.4.1",
     "@rc-js-util/test": "^1.0.0",
     "@types/jasmine": "^3.8.2",
     "jasmine": "^3.9.0",
@@ -21,5 +28,16 @@
     "rimraf": "^3.0.2"
   },
   "main": "bin/index.js",
-  "typings": "bin/index.d.ts"
+  "typings": "bin/index.d.ts",
+  "keywords": [
+    "Util",
+    "stdlib",
+    "Server",
+    "Client",
+    "Browser",
+    "Emscripten",
+    "WebAssembly"
+  ],
+  "repository": "https://github.com/phuhgh/js-util",
+  "homepage": "https://phuhgh.github.io/js-util/rc-js-util.html"
 }

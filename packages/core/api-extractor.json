@@ -2,7 +2,6 @@
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
   "projectFolder": ".",
   "mainEntryPointFilePath": "<projectFolder>/bin/src/index.d.ts",
-  "bundledPackages": ["rc-js-util-globals"],
   "compiler": {
     "tsconfigFilePath": "<projectFolder>/tsconfig.json"
   },

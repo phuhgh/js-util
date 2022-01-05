@@ -24,6 +24,17 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/debug/bin" />
       <excludeFolder url="file://$MODULE_DIR$/packages/core/.rush" />
       <excludeFolder url="file://$MODULE_DIR$/packages/core/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/collection/.rush/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/collection/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/colors/.rush/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/concurrency/.rush/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/concurrency/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/decorators/.rush/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/decorators/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/typed-array/.rush/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/typed-array/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/wasm/.rush/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/wasm/bin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
