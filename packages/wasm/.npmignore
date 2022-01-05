@@ -1,12 +1,13 @@
 *
 !bin/**/*
+!README.md
+!components.spdx
+!docs/**/*
+
+!scripts/extract-cpp-names.js
 !cpp/external/**/*
 !cpp/include/**/*
 !cpp/src/**/*
 !cpp/lib/**/*
 !cpp/CMakeLists.txt
-!README.md
-!components.spdx
-!docs/**/*
-!scripts/extract-cpp-names.js
 !cpp/exported-names.txt

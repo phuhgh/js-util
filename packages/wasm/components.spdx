@@ -1,0 +1,4 @@
+PackageName:Microsoft GSL
+PackageVersion:b26f6d5ec7b043f9d459c1dfdd6da4d930d4e9b4
+PackageHomePage:https://github.com/microsoft/GSL
+CreatorComment: Bundled with cpp source.

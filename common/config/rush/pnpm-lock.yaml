@@ -4,6 +4,7 @@ dependencies:
   '@rush-temp/concurrency': file:projects/concurrency.tgz
   '@rush-temp/core': file:projects/core.tgz
   '@rush-temp/debug': file:projects/debug.tgz
+  '@rush-temp/decorators': file:projects/decorators.tgz
   '@rush-temp/globals': file:projects/globals.tgz
   '@rush-temp/test': file:projects/test.tgz
   '@rush-temp/typed-array': file:projects/typed-array.tgz
@@ -139,7 +140,7 @@ packages:
     dev: false
     name: '@rush-temp/colors'
     resolution:
-      integrity: sha512-BcrweTLq/SVvta3MoXxeJoqu2Tb35REnkV91cR+/GjhJ61zejuOlw/fsa662kTEFv5KCsi7fjPH7DAVmVy3KzQ==
+      integrity: sha512-onLsGYbTpy7W7/qjSbv+FVL3pWULiFQ2uvFO3aJmbVr0X+bLzfDohtCiujWFBIKr9s9FULljYlzX1cpPcj0TBg==
       tarball: file:projects/colors.tgz
     version: 0.0.0
   file:projects/concurrency.tgz:
@@ -153,7 +154,7 @@ packages:
     dev: false
     name: '@rush-temp/concurrency'
     resolution:
-      integrity: sha512-dkjx4sa0zpaxWPrwB2bam8fZV+pmHqE5leFfH5DfsF+enb1cEG3geDiRdwGHz31ZB9a7pVTUEzXIj39puWRMsw==
+      integrity: sha512-uNmskBhr4YNtGG99vf9TeTd9Np19bBKROPeFU79/O/47XUAQPQ8XQr3/0ZNtB73IMVA6LIqFgIFxdIwYnughZw==
       tarball: file:projects/concurrency.tgz
     version: 0.0.0
   file:projects/core.tgz:
@@ -183,6 +184,20 @@ packages:
     resolution:
       integrity: sha512-9t4ouU4EhELlP/ElT3F/jvAuoTo7qij5dkYPc+XFKmQKKne8ywgBQRAIgWkeuZQ6IniRO5QFcxLJPeVWz05QKg==
       tarball: file:projects/debug.tgz
+    version: 0.0.0
+  file:projects/decorators.tgz:
+    dependencies:
+      '@types/jasmine': 3.10.2
+      jasmine: 3.10.0
+      jasmine-core: 3.10.1
+      rimraf: 3.0.2
+      tslib: 2.3.1
+      typescript: 4.4.4
+    dev: false
+    name: '@rush-temp/decorators'
+    resolution:
+      integrity: sha512-lZej6pe8rTOVKOL64+4+mRedrRcVtkNigmJGumU+ad1KKUz7vVGVWudlyQFv6SYrX2MTZirU/cjYOfM63KYLIA==
+      tarball: file:projects/decorators.tgz
     version: 0.0.0
   file:projects/globals.tgz:
     dev: false
@@ -216,7 +231,7 @@ packages:
     dev: false
     name: '@rush-temp/typed-array'
     resolution:
-      integrity: sha512-ICEcDI4I2Pp+7/yzbtXa7tcEpPYY/KDfQA5JMrx1sHjfo4ZCXrKGCAM+q/3E6WIVQ/po8QNSHUT37nExK6ZWFA==
+      integrity: sha512-saMhV8fRkqhkv0n1Ks4Cqnsvda3k9U16kDaDTlxvR6cxRiuiIZA8XhDxcUBx2qq8tJT1AukNZKQlhxMB6E+JHw==
       tarball: file:projects/typed-array.tgz
     version: 0.0.0
   file:projects/types.tgz:
@@ -244,7 +259,7 @@ packages:
     dev: false
     name: '@rush-temp/wasm'
     resolution:
-      integrity: sha512-tEo6+gMn7574geaOTtohCzeBn36PLOnyP4cfaSjK9nihd6qgcHTtYJA81zOkyYxioytOq/EJc0en6xsnPo6Nig==
+      integrity: sha512-kJV8TXxvoeNuI4FJR7kUGoxiNJm+yXGNSPy2+kSkiscrYCn6Mx6ak/bvGsCEjsUULv0ftlV5k/S5TzLD9Zeh5g==
       tarball: file:projects/wasm.tgz
     version: 0.0.0
 specifiers:
@@ -253,6 +268,7 @@ specifiers:
   '@rush-temp/concurrency': file:./projects/concurrency.tgz
   '@rush-temp/core': file:./projects/core.tgz
   '@rush-temp/debug': file:./projects/debug.tgz
+  '@rush-temp/decorators': file:./projects/decorators.tgz
   '@rush-temp/globals': file:./projects/globals.tgz
   '@rush-temp/test': file:./projects/test.tgz
   '@rush-temp/typed-array': file:./projects/typed-array.tgz

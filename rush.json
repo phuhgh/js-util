@@ -69,6 +69,12 @@
       "projectFolder": "packages/concurrency",
       "reviewCategory": "production",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@rc-js-util/decorators",
+      "projectFolder": "packages/decorators",
+      "reviewCategory": "production",
+      "shouldPublish": true
     }
   ]
 }
