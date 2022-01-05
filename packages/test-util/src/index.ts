@@ -117,8 +117,6 @@ export function itShouldNotRunDebugWhenDebugIsFalse
         expect(_Debug.runBlock).not.toHaveBeenCalled();
         expect(_Debug.assert).not.toHaveBeenCalled();
         _Debug.setFlag("DEBUG_MODE", debugMode);
-
-        jest.clearAllMocks();
     });
 }
 
