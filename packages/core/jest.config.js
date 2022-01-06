@@ -5,6 +5,5 @@ module.exports = {
     restoreMocks: true,
     setupFiles: [
         "@rc-js-util/test/bin/test-env.js",
-        "@rc-js-util/debug/bin/debug-namespace.js",
     ],
 };

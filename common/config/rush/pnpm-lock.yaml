@@ -11,9 +11,7 @@ dependencies:
   '@rush-temp/typed-array': file:projects/typed-array.tgz
   '@rush-temp/types': file:projects/types.tgz
   '@rush-temp/wasm': file:projects/wasm.tgz
-  '@types/jasmine': 3.10.3
   '@types/jest': 27.4.0
-  jasmine: 3.99.0
   jasmine-core: 3.99.0
   jest: 27.4.7
   rc-lint-rules: 5.4.1_typescript@4.4.4
@@ -3660,32 +3658,38 @@ packages:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/colors'
     resolution:
-      integrity: sha512-NUP3iYvxKLhrTolwykFNqlVS67nOP/7R1xWU31//Q4F1DzzdGmLQ0wo8hc+Wgir9zEFQ5CczAv2CtXj8RoLc7Q==
+      integrity: sha512-q07QztzZ87YlIhDzR14edYDlLCQgCUtrbYxpbnSszkmfeqO4dkr3sl/CKWd4ISdzK/l5+w/uay4qzU+3vRigzA==
       tarball: file:projects/colors.tgz
     version: 0.0.0
   file:projects/concurrency.tgz:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/concurrency'
     resolution:
-      integrity: sha512-XeSUP8lOEs2o+ZYfsfklQj4bQEnllA4b7TmwO+QaaV0TaroaMacpd9dvsDYk53MuYDj7QOWwRg27RAPC0XUwbw==
+      integrity: sha512-CrNrxOElR4woICfg9Gp8iH3M+Kfoj8qNG9a80vkycuO01EkhgR8+gVNcI7ZBMo5oHb4UVevn3kS0PS/hxZiFpw==
       tarball: file:projects/concurrency.tgz
     version: 0.0.0
   file:projects/core.tgz:
@@ -3711,32 +3715,38 @@ packages:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/debug'
     resolution:
-      integrity: sha512-E7K0aXU8O7RSPnqmxZfoUxLTApvMVRuDrQt9V45YLgyk8gxWwnAKda7/rVknAKod6i7zXFNW6/u0UTCbuCmMVA==
+      integrity: sha512-3Lg2YAy2b+LsD4pG7g2FT0oZr3FCncv8J9SVSeifqlzM7Y04c8loNaMwfZurqsGAu+FdR7pP/U1eRarS7bCKaQ==
       tarball: file:projects/debug.tgz
     version: 0.0.0
   file:projects/decorators.tgz:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/decorators'
     resolution:
-      integrity: sha512-H7PleYH9I/3Id+hbmCkKbdjvFvUKa5wPMHwM9ykQO/CNAHjN2lzWQiXaS92HhUkHOMT3VWUjIP8ikO7xElVuKg==
+      integrity: sha512-JMHyIKYS3XHtpa7Sy0f5E4zVgELiQgzOBQNF1tVN+ipgIvG71z5MVMos9kJJroX0JbIj49vRFWnqjr1/oBAE9g==
       tarball: file:projects/decorators.tgz
     version: 0.0.0
   file:projects/globals.tgz:
@@ -3771,48 +3781,57 @@ packages:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/typed-array'
     resolution:
-      integrity: sha512-/+tBMuw40HG/UX72BWgh6BCSqHbqofChIkitGBDX4KGQLJ89pwAzjRT8R/z+P4FDgx7Bx0WlunPcQnytJxtzGA==
+      integrity: sha512-rFVNUbJ4shpJSpp8zy64xkXNN3llqcGE0NJwqiLPDk+sqyymInJAtyfcH714QqmCivN+rAaVpKpJkofHJ4uuYQ==
       tarball: file:projects/typed-array.tgz
     version: 0.0.0
   file:projects/types.tgz:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/types'
     resolution:
-      integrity: sha512-FmymHbZS2kPwkc72/ywb7VQuR9jzethghyCJDZEK5O0vw4yH3UT4Jbxq9z7ez1AGEIa9mJnMhTsBjjY1dQsAhQ==
+      integrity: sha512-8LwwRCLvq0reJhxZzFrBAa4uSvbCYcNpkXeMHQAZRnlV6AgA1SNj+VMToWQGeaNL3QSgTHBilc8wI/8RuZuQ4g==
       tarball: file:projects/types.tgz
     version: 0.0.0
   file:projects/wasm.tgz:
     dependencies:
       '@microsoft/api-extractor': 7.19.3
       '@types/jasmine': 3.10.3
+      '@types/jest': 27.4.0
       jasmine: 3.99.0
       jasmine-core: 3.99.0
+      jest: 27.4.7
       rc-lint-rules: 5.4.1_typescript@4.4.4
       rimraf: 3.0.2
+      ts-jest: 27.1.2_66384c16d2d04e63ecb486a305451023
       tslib: 2.3.1
       typescript: 4.4.4
     dev: false
     name: '@rush-temp/wasm'
     resolution:
-      integrity: sha512-/aGzHFfBUi/pR7/HHI79cENM1v9/c4Fj5nTdWYTr/Q3ANlSpp7tCgvgw1OfWh1g9xjfU+jgqNORRg+9mLhHL5w==
+      integrity: sha512-jLaY8xOb2kMZDNdclAZdnljt0XraSw+v+2V3qMH7m1sE6FX661NIrdPjFe+q2nLhYO5CFYZiwIoMotKbFFnkew==
       tarball: file:projects/wasm.tgz
     version: 0.0.0
 specifiers:
@@ -3828,9 +3847,7 @@ specifiers:
   '@rush-temp/typed-array': file:./projects/typed-array.tgz
   '@rush-temp/types': file:./projects/types.tgz
   '@rush-temp/wasm': file:./projects/wasm.tgz
-  '@types/jasmine': ^3.8.2
   '@types/jest': ^27.4.0
-  jasmine: ^3.9.0
   jasmine-core: ^3.9.0
   jest: ^27.4.7
   rc-lint-rules: ^5.4.1

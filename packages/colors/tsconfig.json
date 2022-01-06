@@ -18,7 +18,7 @@
       "ES2017.String"
     ],
     "types": [
-      "jasmine"
+      "jest"
     ]
   },
   "include": [

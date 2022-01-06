@@ -17,7 +17,7 @@
       "es6",
     ],
     "types": [
-      "jasmine"
+      "jest"
     ]
   },
   "include": [

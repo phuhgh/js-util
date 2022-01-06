@@ -20,7 +20,7 @@
       // WeakRef & FinalizationRegistry, not part of public sig
     ],
     "types": [
-      "jasmine"
+      "jest"
     ]
   },
   "include": [
