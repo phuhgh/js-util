@@ -1,6 +1,5 @@
-import { setDefaultUnitTestFlags } from "./impl/set-default-unit-test-flags";
 import { _Debug } from "@rc-js-util/debug";
-
+import { setDefaultUnitTestFlags } from "@rc-js-util/debug"
 
 /**
  * @public

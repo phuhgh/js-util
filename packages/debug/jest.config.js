@@ -4,6 +4,6 @@ module.exports = {
     testEnvironment: "node",
     restoreMocks: true,
     setupFiles: [
-        "@rc-js-util/test/bin/test-env.js",
+        "./bin/env/test-env.js",
     ],
 };

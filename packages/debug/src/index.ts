@@ -4,3 +4,5 @@ export { DebugProtectedView } from "./impl/debug-protected-view";
 export { DebugSharedObjectLifeCycleChecks } from "./impl/debug-shared-object-life-cycle-checks";
 export { DebugWeakBroadcastEvent } from "./impl/debug-weak-broadcast-event";
 export { DebugWeakValue } from "./impl/debug-weak-value";
+export { setDefaultUnitTestFlags } from "./impl/set-default-unit-test-flags"
+export { setDefaultAppTestFlags } from "./impl/set-debug-app-test-flags"
