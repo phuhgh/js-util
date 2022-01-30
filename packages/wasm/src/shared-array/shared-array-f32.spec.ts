@@ -6,9 +6,9 @@ import { Emscripten } from "../emscripten/emscripten";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const asanTestModule = require("../../../packages/emscripten/asan-test-module");
+const asanTestModule = require("asan-test-module");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const safeHeapTestModule = require("../../../packages/emscripten/safe-heap-test-module");
+const safeHeapTestModule = require("safe-heap-test-module");
 
 describe("=> F32SharedArray", () =>
 {

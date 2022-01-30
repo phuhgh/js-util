@@ -7,7 +7,7 @@ import { resetDebugState } from "@rc-js-util/test";
 
 declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const asanTestModule = require("../../packages/emscripten/asan-test-module");
+const asanTestModule = require("asan-test-module");
 
 describe("JsUtil::Debug", () =>
 {
@@ -30,7 +30,7 @@ describe("JsUtil::Debug", () =>
 
         test("| logs if DEBUG_VERBOSE is true", () =>
         {
-            const debugSpy = spyOn(console, "debug");
+            const debugSpy = jest.spyOn(console, "debug");
             testModule.endEmscriptenProgram();
             expect(debugSpy).toHaveBeenCalledWith("exiting program...");
         });
@@ -38,7 +38,7 @@ describe("JsUtil::Debug", () =>
         test("| doesn't log if DEBUG_VERBOSE is false", () =>
         {
             _Debug.setFlag("DEBUG_VERBOSE", false);
-            const debugSpy = spyOn(console, "debug");
+            const debugSpy = jest.spyOn(console, "debug");
             testModule.endEmscriptenProgram();
             expect(debugSpy).not.toHaveBeenCalled();
         });

@@ -6,4 +6,7 @@ module.exports = {
     setupFiles: [
         "@rc-js-util/test/bin/test-env.js",
     ],
+    modulePaths: [
+        "cpp/build"
+    ]
 };

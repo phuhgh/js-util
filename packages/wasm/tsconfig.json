@@ -13,12 +13,17 @@
     "strict": true,
     "target": "es6",
     "sourceMap": true,
+    "baseUrl": ".",
     "lib": [
-      "es6",
+      "es6"
     ],
     "types": [
       "jest"
-    ]
+    ],
+    "paths": {
+      "asan-test-module": ["cpp/build/"],
+      "safe-heap-test-module": ["cpp/build/"]
+    }
   },
   "include": [
     "src"
