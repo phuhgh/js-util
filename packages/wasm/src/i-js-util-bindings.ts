@@ -11,3 +11,11 @@ export interface IJsUtilBindings
             IDebugBindings
 {
 }
+
+
+/**
+ * @internal
+ */
+declare global {
+    interface ITestModule extends IJsUtilBindings {}
+}

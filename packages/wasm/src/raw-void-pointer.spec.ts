@@ -1,14 +1,8 @@
 import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, SanitizedEmscriptenTestModule } from "./emscripten/sanitized-emscripten-test-module";
 import { RawVoidPointer } from "./raw-void-pointer";
-import { IJsUtilBindings } from "./i-js-util-bindings";
-import { Emscripten } from "./emscripten/emscripten";
 import { resetDebugState } from "@rc-js-util/test";
-
-declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const asanTestModule = require("asan-test-module");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const safeHeapTestModule = require("safe-heap-test-module");
+import asanTestModule from "asan-test-module";
+import safeHeapTestModule from "safe-heap-test-module";
 
 describe("=> RawVoidPointer", () =>
 {

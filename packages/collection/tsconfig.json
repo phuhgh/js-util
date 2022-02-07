@@ -1,7 +1,8 @@
 ﻿{
   "compilerOptions": {
     "importHelpers": true,
-    "module": "CommonJS", // todo jack: switch this to es if possible
+    "module": "NodeNext",
+    "moduleResolution": "Node",
     "outDir": "bin/",
     "experimentalDecorators": true,
     "noImplicitReturns": true,

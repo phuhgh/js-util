@@ -2,7 +2,7 @@ import { ISetLike } from "@rc-js-util/types";
 
 /**
  * @public
- * Provides a unique array with O(1) add & remove, with dirty checking on `getArray`.
+ * Provides a unique array with O(1) add & remove, with dirty checking on `toArray`.
  */
 export interface IDirtyCheckedUniqueCollection<TItem> extends ISetLike<TItem>
 {
@@ -11,7 +11,7 @@ export interface IDirtyCheckedUniqueCollection<TItem> extends ISetLike<TItem>
      * @returns true if the item was added.
      */
     reportingAdd(item: TItem): boolean;
-    getArray(): readonly TItem[];
+    toArray(): readonly TItem[];
     getSet(): ReadonlySet<TItem>;
 }
 
@@ -102,7 +102,7 @@ export class DirtyCheckedUniqueCollection<TItem>
         this.itemsSet.clear();
     }
 
-    public getArray(): readonly TItem[]
+    public toArray(): readonly TItem[]
     {
         if (this.isDirty)
         {

@@ -62,7 +62,7 @@ export class LinkedReferenceCounter
 
     public onFree(): void
     {
-        const refs = this.refs.getArray();
+        const refs = this.refs.toArray();
 
         for (let i = 0, iEnd = refs.length; i < iEnd; ++i)
         {

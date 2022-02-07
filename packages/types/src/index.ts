@@ -1,3 +1,4 @@
+// todo jack: pretty sure adding this to types ties us to this
 // entry point to global types - versioned separately to allow running multiple versions of dependents in parallel
 export { IDebugProtectedView, IDebugSharedObject, IDebugSharedObjectLifeCycleChecks, IDebugWeakStore, IDebugWeakBroadcastEvent, IStandardDebugFlags, TDebugListener } from "@rc-js-util/globals";
 

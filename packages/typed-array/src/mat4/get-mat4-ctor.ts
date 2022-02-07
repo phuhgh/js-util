@@ -21,7 +21,7 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>
         public static factory: Mat4Factory<Mat4<InstanceType<TCtor>>> = new Mat4Factory(Mat4Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec4Ctor = Vec4.getCtor(ctor);
 
-        public ["constructor"]: typeof Mat4Impl;
+        public ["constructor"]!: typeof Mat4Impl;
 
         public constructor
         (

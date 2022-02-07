@@ -35,6 +35,9 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/typed-array/bin" />
       <excludeFolder url="file://$MODULE_DIR$/packages/wasm/.rush/temp" />
       <excludeFolder url="file://$MODULE_DIR$/packages/wasm/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/all/.rush/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/all/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/colors/bin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

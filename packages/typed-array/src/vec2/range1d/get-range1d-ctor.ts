@@ -23,7 +23,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public static factory: ITypedArrayTupleFactory<Range1d<InstanceType<TCtor>>, TRange1dCtorArgs> = new Vec2Factory(Range1dImpl, NormalizedDataViewProvider.getView(ctor));
         protected static mat2Ctor = Mat2.getCtor(ctor);
 
-        public ["constructor"]: typeof Range1dImpl;
+        public ["constructor"]!: typeof Range1dImpl;
 
         public setMin(value: number): void
         {

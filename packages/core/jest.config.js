@@ -6,4 +6,9 @@ module.exports = {
     setupFiles: [
         "@rc-js-util/test/bin/test-env.js",
     ],
+    globals: {
+        "ts-jest": {
+            useESM: true,
+        },
+    },
 };

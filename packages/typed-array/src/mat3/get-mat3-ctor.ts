@@ -22,7 +22,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>
         public static factory: Mat3Factory<Mat3<InstanceType<TCtor>>> = new Mat3Factory(Mat3Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec3Ctor = Vec3.getCtor(ctor);
 
-        public ["constructor"]: typeof Mat3Impl;
+        public ["constructor"]!: typeof Mat3Impl;
 
         public constructor
         (

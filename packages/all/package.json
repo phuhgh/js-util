@@ -1,25 +1,31 @@
 {
-  "name": "@rc-js-util/types",
+  "name": "@rc-js-util/all",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "build": "rimraf bin && tsc -d",
-    "generate-docs": "rimraf docs tmp && api-extractor run -c api-extractor.json",
-    "lint": "eslint -c node_modules/rc-lint-rules/.eslintrc.js src/",
-    "test": "echo skipping types",
+    "generate-docs": "echo skipping all",
+    "lint": "echo skipping all",
+    "test": "echo skipping all",
     "lib": "rimraf bin && tsc -d -p tsconfig.lib.json",
     "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs"
   },
   "dependencies": {
+    "@rc-js-util/collection": "^1.0.0",
+    "@rc-js-util/colors": "^1.0.0",
+    "@rc-js-util/concurrency": "^1.0.0",
+    "@rc-js-util/core": "^1.0.0",
+    "@rc-js-util/debug": "^1.0.0",
+    "@rc-js-util/decorators": "^1.0.0",
     "@rc-js-util/globals": "^1.0.0",
+    "@rc-js-util/typed-array": "^1.0.0",
+    "@rc-js-util/types": "^1.0.0",
+    "@rc-js-util/wasm": "^1.0.0",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.24.2",
     "rc-lint-rules": "^6.0.1",
-    "@types/jest": "^28.1.1",
-    "ts-jest": "^28.0.4",
-    "jest": "^28.1.0",
     "typescript": "~4.7.3",
     "rimraf": "^3.0.2"
   },
@@ -32,7 +38,6 @@
       }
     }
   },
-  "sideEffects": false,
   "repository": "https://github.com/phuhgh/js-util",
   "homepage": "https://phuhgh.github.io/js-util/rc-js-util.html"
 }

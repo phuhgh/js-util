@@ -20,7 +20,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
         public static factory: Mat2Factory<Mat2<InstanceType<TCtor>>> = new Mat2Factory(Mat2Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec2Ctor = Vec2.getCtor(ctor);
 
-        public ["constructor"]: typeof Mat2Impl;
+        public ["constructor"]!: typeof Mat2Impl;
 
         public constructor
         (

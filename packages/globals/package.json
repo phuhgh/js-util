@@ -13,15 +13,16 @@
   "devDependencies": {
     "@microsoft/api-extractor": "^7.19.3"
   },
-  "keywords": [
-    "Util",
-    "stdlib",
-    "Server",
-    "Client",
-    "Browser",
-    "Emscripten",
-    "WebAssembly"
-  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./bin/index.d.ts",
+        "default": "./bin/index.js"
+      }
+    }
+  },
+  "sideEffects": false,
   "repository": "https://github.com/phuhgh/js-util",
   "homepage": "https://phuhgh.github.io/js-util/rc-js-util.html"
 }

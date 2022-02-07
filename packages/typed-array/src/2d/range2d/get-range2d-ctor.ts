@@ -23,7 +23,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         protected static vec2Ctor = Vec2.getCtor(ctor);
         protected static mat3Ctor = Mat3.getCtor(ctor);
 
-        public ["constructor"]: typeof Range2dImpl;
+        public ["constructor"]!: typeof Range2dImpl;
 
         public setXMin(value: number): void
         {

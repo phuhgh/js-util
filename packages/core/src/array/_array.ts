@@ -31,8 +31,8 @@ import { arrayAddToSet } from "./impl/array-add-to-set";
 import { arrayForEachRange } from "./impl/array-for-each-range";
 import { arrayMax } from "./impl/array-max";
 import { arrayMin } from "./impl/array-min";
+import { arrayIndexBy } from "./impl/array-index-by";
 
-// todo jack: can we split this up?
 /**
  * @public
  * Utilities that apply to `Array` and `ArrayLike`.
@@ -67,6 +67,8 @@ export class _Array
     public static readonly generateRange = arrayGenerateRange;
     /** {@inheritDoc arrayIndex} */
     public static readonly index = arrayIndex;
+    /** {@inheritDoc arrayIndexBy} */
+    public static readonly indexBy = arrayIndexBy;
     /** {@inheritDoc arrayInsertAtIndex} */
     public static readonly insertAtIndex = arrayInsertAtIndex;
     /** {@inheritDoc arrayIntersect} */

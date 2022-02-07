@@ -1,7 +1,8 @@
 ﻿{
   "compilerOptions": {
     "importHelpers": true,
-    "module": "CommonJS",
+    "module": "NodeNext",
+    "moduleResolution": "Node",
     "outDir": "bin/",
     "experimentalDecorators": true,
     "noImplicitReturns": true,
@@ -21,8 +22,8 @@
       "jest"
     ],
     "paths": {
-      "asan-test-module": ["cpp/build/"],
-      "safe-heap-test-module": ["cpp/build/"]
+      "asan-test-module": ["cpp/build/", "src"],
+      "safe-heap-test-module": ["cpp/build/", "src"]
     }
   },
   "include": [

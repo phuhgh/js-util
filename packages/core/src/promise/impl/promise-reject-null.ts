@@ -5,7 +5,7 @@
  * @remarks
  * See {@link promiseRejectNull}.
  */
-export async function promiseRejectNull<T>(value: Promise<T> | T, error: unknown): Promise<Exclude<T, null | undefined>>
+export async function promiseRejectNull<T>(value: T, error: unknown): Promise<Exclude<Awaited<T>, null | undefined>>
 {
     const result = await value;
 
@@ -14,5 +14,5 @@ export async function promiseRejectNull<T>(value: Promise<T> | T, error: unknown
         return Promise.reject(error);
     }
 
-    return result as Exclude<T, null | undefined>;
+    return result as Exclude<Awaited<T>, null | undefined>;
 }

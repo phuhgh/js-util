@@ -1,6 +1,6 @@
 import { fpNoOp } from "@rc-js-util/core";
 
-// todo jack: this isn't a collection
+// todo jack: this isn't a collection, it's for lifecycle (specifically cleanup)
 /**
  * @public
  * Weak reference counter.

@@ -97,3 +97,10 @@ export namespace Emscripten
      */
     export type EmscriptenModuleFactory<T extends object> = (moduleOverrides?: Partial<T & EmscriptenModule>) => Promise<EmscriptenModule & T>;
 }
+
+declare global {
+    /**
+     * @internal
+     */
+    type EmscriptenModuleFactory<T extends object> = Emscripten.EmscriptenModuleFactory<T>
+}
