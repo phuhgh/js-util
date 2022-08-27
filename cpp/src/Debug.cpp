@@ -1,15 +1,15 @@
 #include "Debug.h"
 
 EM_JS(void, Debug_onAllocate, (), {
-    RcJsUtilDebug.onAllocate.emit();
+    Module.RC_JS_MEMORY_DEBUG_UTIL.onAllocate.emit();
 });
 
 EM_JS(void, Debug_error, (char const *_message), {
-    RcJsUtilDebug.error(UTF8ToString(_message));
+    Module.RC_JS_MEMORY_DEBUG_UTIL.error(UTF8ToString(_message));
 });
 
 EM_JS(void, Debug_log, (char const *_message), {
-    RcJsUtilDebug.verboseLog(UTF8ToString(_message));
+    Module.RC_JS_MEMORY_DEBUG_UTIL.verboseLog(UTF8ToString(_message));
 });
 
 void JsUtil::Debug::OnBeforeAllocate()

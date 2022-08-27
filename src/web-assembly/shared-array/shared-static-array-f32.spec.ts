@@ -1,17 +1,13 @@
-import { Emscripten } from "../../../external/emscripten";
 import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module";
 import { SharedStaticArray, TF32SharedStaticArray } from "./shared-static-array";
 import { SharedArray, TF32SharedArray } from "./shared-array";
-import { applyLabel, debugDescribe, debugIt } from "../../test-utils";
 import { IJsUtilBindings } from "../i-js-util-bindings";
+import { _Debug } from "../../debug/_debug";
+import asanTestModule from "../../external/asan-test-module";
+import safeHeapTestModule from "../../external/safe-heap-test-module";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const asanTestModule = require("../../../external/asan-test-module");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const safeHeapTestModule = require("../../../external/safe-heap-test-module");
-
-debugDescribe("=> F32SharedStaticArray", () =>
+describe("=> F32SharedStaticArray", () =>
 {
     describe("=> asan tests", () =>
     {
@@ -20,12 +16,18 @@ debugDescribe("=> F32SharedStaticArray", () =>
 
         beforeAll(async () =>
         {
+            setDefaultUnitTestFlags();
             await testModule.initialize();
         });
 
         beforeEach(() =>
         {
-            applyLabel("F32SharedStaticArray asan beforeAll", () =>
+            testModule.reset();
+        });
+
+        beforeEach(() =>
+        {
+            _Debug.applyLabel("F32SharedStaticArray asan beforeAll", () =>
             {
                 // there isn't anything static exposed in util, avoid guessing...
                 sharedArray = SharedArray.createOneF32(testModule.wrapper, 8, true);
@@ -48,29 +50,35 @@ debugDescribe("=> F32SharedStaticArray", () =>
                 sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray) + Float32Array.BYTES_PER_ELEMENT, 4);
             });
 
-            debugIt("| returns the expected view", () =>
+            it("| returns the expected view", () =>
             {
-                const actualArray = sharedStaticArray.getInstance();
-                expect(actualArray.length).toBe(4);
-                expect(actualArray[0]).toBe(2);
-                expect(actualArray[1]).toBe(3);
-                expect(actualArray[2]).toBe(4);
-                expect(actualArray[3]).toBe(5);
-                sharedStaticArray.sharedObject.release();
-                sharedArray.sharedObject.release();
+                _Debug.applyLabel("instance test", () =>
+                {
+                    const actualArray = sharedStaticArray.getInstance();
+                    expect(actualArray.length).toBe(4);
+                    expect(actualArray[0]).toBe(2);
+                    expect(actualArray[1]).toBe(3);
+                    expect(actualArray[2]).toBe(4);
+                    expect(actualArray[3]).toBe(5);
+                    sharedStaticArray.sharedObject.release();
+                    sharedArray.sharedObject.release();
+                });
             });
 
             describe("=> debug mode", () =>
             {
-                debugIt("| errors when array members are accessed and memory may have resized", () =>
+                it("| errors when array members are accessed and memory may have resized", () =>
                 {
-                    const instance = sharedStaticArray.getInstance();
-                    expect(instance[0]).toBe(2);
-                    const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 8);
-                    expect(() => instance[0]).toThrow();
-                    sharedArray2.sharedObject.release();
-                    sharedStaticArray.sharedObject.release();
-                    sharedArray.sharedObject.release();
+                    _Debug.applyLabel("resize error test", () =>
+                    {
+                        const instance = sharedStaticArray.getInstance();
+                        expect(instance[0]).toBe(2);
+                        const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 8);
+                        expect(() => instance[0]).toThrow();
+                        sharedArray2.sharedObject.release();
+                        sharedStaticArray.sharedObject.release();
+                        sharedArray.sharedObject.release();
+                    });
                 });
             });
         });
@@ -82,21 +90,30 @@ debugDescribe("=> F32SharedStaticArray", () =>
 
         beforeAll(async () =>
         {
+            setDefaultUnitTestFlags();
             await testModule.initialize();
+        });
+
+        beforeEach(() =>
+        {
+            testModule.reset();
         });
 
         describe("=> getInstance", () =>
         {
-            debugIt("| returns new instance on memory growth", () =>
+            it("| returns new instance on memory growth", () =>
             {
-                const sharedArray = SharedArray.createOneF32(testModule.wrapper, 8, true);
-                const sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray), 8);
-                const i1 = sharedStaticArray.getInstance();
-                const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 2097152, true);
-                expect(i1 === sharedStaticArray.getInstance()).toBeFalse();
-                sharedStaticArray.sharedObject.release();
-                sharedArray2.sharedObject.release();
-                sharedArray.sharedObject.release();
+                _Debug.applyLabel("new instance on growth test", () =>
+                {
+                    const sharedArray = SharedArray.createOneF32(testModule.wrapper, 8, true);
+                    const sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray), 8);
+                    const i1 = sharedStaticArray.getInstance();
+                    const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 2097152, true);
+                    expect(i1 === sharedStaticArray.getInstance()).toBeFalse();
+                    sharedStaticArray.sharedObject.release();
+                    sharedArray2.sharedObject.release();
+                    sharedArray.sharedObject.release();
+                });
             });
         });
     });

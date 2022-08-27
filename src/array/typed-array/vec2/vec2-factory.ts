@@ -33,7 +33,7 @@ export class Vec2Factory<T extends Vec2<TTypedArray>>
         a[0] = x;
         a[1] = y;
 
-        return a as T;
+        return a;
     }
 
     public override copyFromBuffer

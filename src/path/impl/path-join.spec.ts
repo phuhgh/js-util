@@ -1,8 +1,13 @@
 import { pathJoin } from "./path-join";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> pathJoin", () =>
+describe("=> pathJoin", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| joins as expected", () =>
     {
         expect(pathJoin("a", "b")).toEqual("a/b");

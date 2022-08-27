@@ -1,10 +1,15 @@
-import { debugDescribe } from "../../../test-utils";
 import { Mat4Factory } from "./mat4-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat4 } from "./mat4";
+import { setDefaultUnitTestFlags } from "../../../test-utils";
 
-debugDescribe("=> Mat4Factory", () =>
+describe("=> Mat4Factory", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const factory = new Mat4Factory(Mat4.f32, NormalizedDataViewProvider.getView(Float32Array));
     const a = factory.createOne(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 

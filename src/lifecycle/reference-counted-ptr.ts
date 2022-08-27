@@ -4,7 +4,7 @@ import { nullPointer } from "../web-assembly/emscripten/null-pointer";
 import { _Array } from "../array/_array";
 import { IOnFree } from "./i-on-free";
 import { ITemporaryListener, TemporaryListener } from "./temporary-listener";
-import { RcJsUtilDebugImpl } from "../debug/debug-namepace";
+import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper";
 
 /**
  * @public
@@ -29,11 +29,11 @@ export interface IReferenceCountedPtr extends IReferenceCounted
      */
     takeOwnership(referenceCountedObject: IReferenceCountedPtr): void;
     /**
-     * Releases claim to the the `referenceCountedObject`.
+     * Releases claim on the `referenceCountedObject`.
      */
     unbindLifecycle(referenceCountedObject: IReferenceCountedPtr): void;
     /**
-     * Releases claims on the the `referenceCountedObjects`.
+     * Releases claims on the `referenceCountedObjects`.
      */
     unbindLifecycles(referenceCountedObjects: IReferenceCountedPtr[]): void;
 
@@ -56,9 +56,9 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
 
     public onFree(): void
     {
-        DEBUG_MODE && _Debug.runBlock(() =>
+        _BUILD.DEBUG && _Debug.runBlock(() =>
         {
-            RcJsUtilDebugImpl.uniquePointers.delete(this.wasmPtr);
+            this.owner.debug.uniquePointers.delete(this.wasmPtr);
         });
 
         if (this.onFreeListener != null)
@@ -95,7 +95,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     public takeOwnership(referenceCountedObject: IReferenceCountedPtr): void
     {
         const wrappedReferences = this.wrappedReferences = this.wrappedReferences ?? [];
-        DEBUG_MODE && _Debug.runBlock(() =>
+        _BUILD.DEBUG && _Debug.runBlock(() =>
         {
             _Debug.assert(!this.getIsDestroyed(), "attempted linkage to dead pointer");
             _Debug.assert(!getHasCycle(this, referenceCountedObject as ReferenceCountedPtr), "detected cycle between pointers");
@@ -147,18 +147,19 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     (
         public isStatic: boolean,
         protected wasmPtr: number,
+        protected owner: IEmscriptenWrapper<object>,
         public listenerObj?: IOnFree,
     )
     {
         super();
-        DEBUG_MODE && _Debug.runBlock(() =>
+        _BUILD.DEBUG && _Debug.runBlock(() =>
         {
             _Debug.assert(this.wasmPtr !== nullPointer && this.wasmPtr != null, "expected pointer to object but got null pointer");
 
             if (!this.isStatic)
             {
-                _Debug.assert(!RcJsUtilDebugImpl.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
-                RcJsUtilDebugImpl.uniquePointers.add(this.wasmPtr);
+                _Debug.assert(!this.owner.debug.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
+                this.owner.debug.uniquePointers.add(this.wasmPtr);
             }
         });
     }

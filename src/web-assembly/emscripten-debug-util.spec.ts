@@ -1,12 +1,8 @@
-import { Emscripten } from "../../external/emscripten";
-import { IJsUtilBindings } from "./i-js-util-bindings";
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "./emscripten/sanitized-emscripten-test-module";
 import { _Debug } from "../debug/_debug";
 import { nullPointer } from "./emscripten/null-pointer";
-
-declare const require: (path: string) => Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const asanTestModule = require("../../external/asan-test-module");
+import asanTestModule from "../external/asan-test-module";
+import { setDefaultUnitTestFlags } from "../test-utils";
 
 describe("JsUtil::Debug", () =>
 {
@@ -16,13 +12,14 @@ describe("JsUtil::Debug", () =>
     {
         beforeEach(async () =>
         {
+            setDefaultUnitTestFlags();
             await testModule.initialize();
-            _Debug.setFlag("DEBUG_VERBOSE", true);
+            _Debug.setFlag("VERBOSE", true);
         });
 
         afterEach(() =>
         {
-            _Debug.setFlag("DEBUG_VERBOSE", false);
+            _Debug.setFlag("VERBOSE", false);
         });
 
         it("| logs if DEBUG_VERBOSE is true", () =>
@@ -34,7 +31,7 @@ describe("JsUtil::Debug", () =>
 
         it("| doesn't log if DEBUG_VERBOSE is false", () =>
         {
-            _Debug.setFlag("DEBUG_VERBOSE", false);
+            _Debug.setFlag("VERBOSE", false);
             const debugSpy = spyOn(console, "debug");
             testModule.endEmscriptenProgram();
             expect(debugSpy).not.toHaveBeenCalled();
@@ -45,6 +42,7 @@ describe("JsUtil::Debug", () =>
     {
         beforeEach(async () =>
         {
+            setDefaultUnitTestFlags();
             await testModule.initialize();
         });
 

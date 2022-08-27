@@ -20,7 +20,7 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>
     {
         public static factory: Vec4Factory<Vec4<InstanceType<TCtor>>> = new Vec4Factory(Vec4Impl, NormalizedDataViewProvider.getView(ctor));
 
-        public ["constructor"]: typeof Vec4Impl;
+        public ["constructor"]!: typeof Vec4Impl;
 
         public constructor
         (

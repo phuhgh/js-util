@@ -67,7 +67,7 @@ export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     protected static constructors = populateTypedArrayConstructorMap(Vec3);
 
-    public ["constructor"]: IVec3Ctor<TArray>;
+    public ["constructor"]!: IVec3Ctor<TArray>;
 
     /**
      * x

@@ -1,9 +1,14 @@
-import { debugDescribe, expectValueToBeNearTo } from "../../../../test-utils";
+import { expectValueToBeNearTo, setDefaultUnitTestFlags } from "../../../../test-utils";
 import { Range1d } from "./range1d";
 import { Mat2 } from "../../mat2/mat2";
 
-debugDescribe("=> Range1d", () =>
+describe("=> Range1d", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> isPointInRange", () =>
     {
         const range = Range1d.f32.factory.createOne(5, 10);

@@ -1,7 +1,6 @@
 import { setValuesToArray } from "./set-values-to-array";
-import { debugDescribe } from "../../test-utils";
 
-debugDescribe("=> setValuesToArray", () =>
+describe("=> setValuesToArray", () =>
 {
     const values = new Set([1, 2, 3] as const);
 

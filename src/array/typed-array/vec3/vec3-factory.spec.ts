@@ -1,10 +1,15 @@
-import { debugDescribe } from "../../../test-utils";
 import { Vec3Factory } from "./vec3-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Vec3 } from "./vec3";
+import { setDefaultUnitTestFlags } from "../../../test-utils";
 
-debugDescribe("=> Vec3Factory", () =>
+describe("=> Vec3Factory", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const factory = new Vec3Factory(Vec3.f32, NormalizedDataViewProvider.getView(Float32Array));
 
     describe("=> create one", () =>

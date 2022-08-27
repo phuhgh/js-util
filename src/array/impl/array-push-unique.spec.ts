@@ -1,8 +1,13 @@
 import { arrayPushUnique } from "./array-push-unique";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayPushUnique", () =>
+describe("=> arrayPushUnique", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| pushes if unique", () =>
     {
         const values = ["a", "b", "c"];

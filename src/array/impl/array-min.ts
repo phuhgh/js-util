@@ -14,7 +14,7 @@ export function arrayMin(numbers: ArrayLike<number>): number
     for (let i = 0, iEnd = numbers.length; i < iEnd; ++i)
     {
         const value = numbers[i];
-        DEBUG_MODE && _Debug.assert(value === value, "NaN not supported");
+        _BUILD.DEBUG && _Debug.assert(value === value, "NaN not supported");
 
         if (value < min)
         {

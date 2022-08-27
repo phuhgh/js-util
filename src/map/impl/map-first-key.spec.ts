@@ -1,8 +1,12 @@
 import { mapFirstKey } from "./map-first-key";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> mapFirstKey", () =>
+describe("=> mapFirstKey", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
 
     it("| returns the first key where available", () =>
     {
@@ -13,8 +17,8 @@ debugDescribe("=> mapFirstKey", () =>
 
     it("| returns undefined if empty", () =>
     {
-        const values = new Map();
-        const result = mapFirstKey(values);
+        const values = new Map<string, number>();
+        const result: string | undefined = mapFirstKey(values);
         expect(result).toEqual(undefined);
     });
 });

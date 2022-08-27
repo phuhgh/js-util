@@ -1,15 +1,16 @@
 import { _Debug } from "../debug/_debug";
 import { numberGetHexString } from "../number/impl/number-get-hex-string";
 import { stringNormalizeNullUndefinedToEmpty } from "../string/impl/string-normalize-null-undefined-to-empty";
-import { IDebugProtectedView } from "rc-js-util-globals";
 import { ISharedObject } from "../lifecycle/i-shared-object";
+import { IDebugProtectedView } from "../debug/i-debug-protected-view";
+import { IDebugAllocateListener } from "../debug/i-debug-allocate-listener";
 
 /**
  * @public
  * Provides life cycle and access checks for shared objects.
  *
  * @remarks
- * `ProtectedViews` will be invalidated any time a memory resize might occur with standard `DEBUG_MODE` set.
+ * `ProtectedViews` will be invalidated any time a memory resize might occur with standard `_BUILD.DEBUG` set.
  *
  * On garbage collect of the javascript object, the associated WASM pointer is checked to see if it has been disposed of.
  */
@@ -18,36 +19,37 @@ export class DebugSharedObjectChecks
     /**
      * Calls register on the shared object but also registers the associated cleanup on release too.
      */
-    public static registerWithCleanup<T extends object>
+    public static registerWithCleanup
     (
-        instance: { debugOnAllocate?: () => void } & ISharedObject,
-        protectedView: IDebugProtectedView<T>,
+        instance: IDebugAllocateListener & ISharedObject,
+        protectedView: IDebugProtectedView,
         nameOfInstance: string,
     )
-        : IDebugProtectedView<T>
+        : IDebugProtectedView
     {
-        instance.sharedObject.registerOnFreeListener(() => DebugSharedObjectChecks.unregister(instance, nameOfInstance));
+        instance.sharedObject.registerOnFreeListener(() => DebugSharedObjectChecks.unregister(protectedView, instance, nameOfInstance));
         return DebugSharedObjectChecks.register(instance, protectedView, nameOfInstance);
     }
 
-    public static register<T extends object>
+    public static register
     (
-        instance: { debugOnAllocate?: () => void } & ISharedObject,
-        protectedView: IDebugProtectedView<T>,
+        instance: IDebugAllocateListener & ISharedObject,
+        protectedView: IDebugProtectedView,
         nameOfInstance: string,
     )
-        : IDebugProtectedView<T>
+        : IDebugProtectedView
     {
         if (instance.debugOnAllocate == null)
         {
             instance.debugOnAllocate = () => protectedView.invalidate();
         }
 
-        RcJsUtilDebug.protectedViews.setValue(instance, protectedView);
-        RcJsUtilDebug.sharedObjectLifeCycleChecks.registerFinalizationCheck(instance.sharedObject);
-        RcJsUtilDebug.onAllocate.addListener(instance);
+        const debug = protectedView.owningInstance.debug;
+        debug.protectedViews.setValue(instance, protectedView);
+        debug.sharedObjectLifeCycleChecks.registerFinalizationCheck(instance.sharedObject);
+        debug.onAllocate.addListener(instance);
 
-        if (!instance.sharedObject.isStatic && _Debug.isFlagSet("DEBUG_VERBOSE_MEMORY_MANAGEMENT"))
+        if (!instance.sharedObject.isStatic && _Debug.isFlagSet("VERBOSE_MEMORY_MANAGEMENT"))
         {
             // stringifying the stack would be far too verbose, most debuggers allow expansion of objects...
             const allocationStack = { stack: _Debug.getStackTrace() };
@@ -61,23 +63,27 @@ export class DebugSharedObjectChecks
 
     public static unregister
     (
+        protectedView: IDebugProtectedView,
         instance: { debugOnAllocate?: () => void } & ISharedObject,
         nameOfInstance: string,
     )
         : void
     {
-        RcJsUtilDebug.sharedObjectLifeCycleChecks.markReadyForFinalize(instance.sharedObject);
-        RcJsUtilDebug.protectedViews
+        const debug = protectedView.owningInstance.debug;
+        debug.sharedObjectLifeCycleChecks.markReadyForFinalize(instance.sharedObject);
+        debug.protectedViews
             .getValue(instance)
             .invalidate();
-        RcJsUtilDebug.protectedViews.deleteValue(instance);
+        debug.protectedViews.deleteValue(instance);
         instance.debugOnAllocate = () => undefined;
-        RcJsUtilDebug.onAllocate.removeListener(instance);
+        debug.onAllocate.removeListener(instance);
 
-        if (!instance.sharedObject.isStatic && _Debug.isFlagSet("DEBUG_VERBOSE_MEMORY_MANAGEMENT"))
+        if (!instance.sharedObject.isStatic && _Debug.isFlagSet("VERBOSE_MEMORY_MANAGEMENT"))
         {
             const type = instance.sharedObject.isStatic ? "static" : "instance";
-            _Debug.verboseLog(`released (${type}) ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`);
+            const address = numberGetHexString(instance.sharedObject.getPtr());
+            const label = stringNormalizeNullUndefinedToEmpty(_Debug.label);
+            _Debug.verboseLog(`released (${type}) ${nameOfInstance} ${address} - ${label}`);
         }
     }
 }

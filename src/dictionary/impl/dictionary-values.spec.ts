@@ -1,9 +1,14 @@
 import { IDictionary } from "../../typescript/i-dictionary";
 import { dictionaryValues } from "./dictionary-values";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> dictionaryValues", () =>
+describe("=> dictionaryValues", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values: IDictionary<number> = { a: 1, b: 2 };
 
     it("| returns dictionary values", () =>

@@ -1,7 +1,13 @@
 import { TF32Vec3, Vec3 } from "./vec3";
+import { setDefaultUnitTestFlags } from "../../../test-utils";
 
 describe("=> Vec3", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> getters", () =>
     {
         it("| provides the expected values", () =>

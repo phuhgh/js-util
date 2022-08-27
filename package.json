@@ -1,37 +1,49 @@
+
 {
   "name": "rc-js-util",
   "version": "8.19.0",
   "license": "MIT",
   "scripts": {
-    "build": "npm run build-ts && npm run build-cpp",
-    "build-ts": "rimraf bin && tsc -d",
-    "build-cpp": "sh build.sh",
-    "lib": "rimraf bin && tsc -d -p tsconfig.lib.json",
-    "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
-    "lint": "rc-ts-lint -c node_modules/rc-lint-rules/.eslintrc.js src/",
-    "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
     "test": "jasmine --config=jasmine.json",
+    "build": "rimraf bin && npm run build-ts && npm run build-cpp",
+    "build-ts": "tsc -d --outDir bin/cjs/ --module commonjs",
+    "build-cpp": "sh build.sh",
+    "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm",
+    "build-lib-cjs": "tsc -d -p tsconfig.lib.json --outDir bin/cjs/ --module commonjs",
+    "build-lib-esm": "tsc -d -p tsconfig.lib.json --outDir bin/esm/ --module esnext",
+    "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
+    "lint": "eslint -c node_modules/rc-lint-rules/.eslintrc.js src/",
+    "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
     "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },
   "dependencies": {
-    "rc-js-util-globals": "^6.0.1",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0",
+    "rc-js-util-globals": "^7.0.0"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.13.54",
-    "@microsoft/api-extractor": "^7.18.11",
-    "@types/jasmine": "^3.9.1",
-    "jasmine": "^3.9.0",
-    "jasmine-core": "^3.9.0",
-    "rc-lint-rules": "^5.4.1",
-    "typescript": "~4.4.3",
+    "@microsoft/api-documenter": "~7.19.9",
+    "@microsoft/api-extractor": "~7.20.1",
+    "@types/jasmine": "^4.3.0",
+    "jasmine": "^4.3.0",
+    "jasmine-core": "^4.3.0",
+    "rc-lint-rules": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint": "~8.22.0",
+    "typescript": "~4.5.5",
     "rimraf": "^3.0.2"
   },
   "bin": {
-    "rc-extract-cpp-names": "scripts/extract-cpp-names.js"
+    "rc-extract-cpp-names": "scripts/extract-cpp-names.cjs"
   },
-  "main": "bin/src/index.js",
-  "typings": "bin/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./bin/cjs/src/index.js",
+      "require": "./bin/esm/src/index.js"
+    }
+  },
+  "main": "bin/cjs/src/index.js",
+  "typings": "bin/cjs/src/index.d.ts",
   "private": false,
   "keywords": [
     "Util",

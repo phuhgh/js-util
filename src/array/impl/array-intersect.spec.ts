@@ -1,8 +1,13 @@
 import { arrayIntersect } from "./array-intersect";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayIntersect", () =>
+describe("=> arrayIntersect", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const a = ["a", "b", "c"] as const;
     const b = ["a", "d", "e"] as const;
 

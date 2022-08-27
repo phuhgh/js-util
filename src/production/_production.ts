@@ -8,14 +8,14 @@ export class _Production
 {
     /**
      * @deprecated
-     * Throws an `Error` with the given message. If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+     * Throws an `Error` with the given message. If `_BUILD.DEBUG` is true and `_BUILD.DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
      * Should not be used for "expected" errors (bad input etc).
      */
     public static error(message: string): never
     {
-        if (DEBUG_MODE)
+        if (_BUILD.DEBUG)
         {
-            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
+            if (!_Debug.isFlagSet("DISABLE_BREAKPOINT"))
             {
                 _Debug.breakpoint();
             }
@@ -25,14 +25,14 @@ export class _Production
     }
 
     /**
-     * Creates an `Error` with the given message. If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+     * Creates an `Error` with the given message. If `_BUILD.DEBUG` is true and `_BUILD.DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
      * Should not be used for "expected" errors (bad input etc).
      */
     public static createError(message: string): Error
     {
-        if (DEBUG_MODE)
+        if (_BUILD.DEBUG)
         {
-            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
+            if (!_Debug.isFlagSet("DISABLE_BREAKPOINT"))
             {
                 _Debug.breakpoint();
             }

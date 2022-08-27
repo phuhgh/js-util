@@ -7,6 +7,7 @@ import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/refer
 import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
 import { ISharedArrayBindings } from "./i-shared-array-bindings";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize";
+import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener";
 
 /**
  * @public
@@ -25,7 +26,8 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
  */
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>,
-               IOnMemoryResize
+               IOnMemoryResize,
+               IDebugAllocateListener
 {
     public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF32SharedStaticArray
     {
@@ -45,11 +47,10 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
 
     public getInstance(): InstanceType<TCtor>
     {
-        if (DEBUG_MODE)
+        if (_BUILD.DEBUG)
         {
             _Debug.assert(!this.sharedObject.getIsDestroyed(), "access violation - object has been destroyed");
-
-            return RcJsUtilDebug.protectedViews
+            return this.wrapper.debug.protectedViews
                 .getValue(this)
                 .createProtectedView(this.instance);
         }
@@ -62,7 +63,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     public onMemoryResize = (): void =>
     {
         this.instance = this.createLocalInstance();
-    }
+    };
 
     protected constructor
     (
@@ -72,15 +73,15 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         length: number,
     )
     {
-        this.sharedObject = new ReferenceCountedPtr(true, pointer);
+        this.sharedObject = new ReferenceCountedPtr(true, pointer, wrapper);
         this.length = length;
         this.ctor = ctor;
         this.wrapper = wrapper;
         this.elementByteSize = ctor.BYTES_PER_ELEMENT;
 
-        DEBUG_MODE && _Debug.runBlock(() =>
+        _BUILD.DEBUG && _Debug.runBlock(() =>
         {
-            DebugSharedObjectChecks.registerWithCleanup(this, DebugProtectedView.createTypedArrayView(), "");
+            DebugSharedObjectChecks.registerWithCleanup(this, DebugProtectedView.createTypedArrayView(this.wrapper), "");
         });
 
         this.sharedObject.registerOnFreeListener(wrapper.memoryResize.addTemporaryListener(this));

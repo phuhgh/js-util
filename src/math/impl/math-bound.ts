@@ -13,7 +13,7 @@ import { _Debug } from "../../debug/_debug";
  */
 export function mathBound(value: number, min: number, max: number): number
 {
-    DEBUG_MODE && _Debug.runBlock(() =>
+    _BUILD.DEBUG && _Debug.runBlock(() =>
     {
         _Debug.assert(!isNaN(value), "expected value to be a number");
         _Debug.assert(!isNaN(min), "expected min to be a number");

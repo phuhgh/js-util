@@ -1,7 +1,13 @@
 import { equalityAreConsistentlyDefined } from "./equality-are-consistently-defined";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
 describe("=> equalityAreConsistentlyDefined", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| returns true if both are null", () =>
     {
         expect(equalityAreConsistentlyDefined(null, null)).toBe(true);

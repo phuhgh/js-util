@@ -1,8 +1,13 @@
 import { arrayForEach } from "./array-for-each";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayForEach", () =>
+describe("=> arrayForEach", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = ["a", "b", "c", "d"] as const;
 
     it("| calls the callback with the correct parameters", () =>

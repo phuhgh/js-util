@@ -1,8 +1,13 @@
 import { dictionaryCloneExtend } from "./dictionary-clone-extend";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> dictionaryCloneExtend", () =>
+describe("=> dictionaryCloneExtend", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| returns a new object, overwriting with the extension where common", () =>
     {
         const obj = { foo: true };

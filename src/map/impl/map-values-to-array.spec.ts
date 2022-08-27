@@ -1,8 +1,13 @@
 import { mapValuesToArray } from "./map-values-to-array";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> mapValuesToArray", () =>
+describe("=> mapValuesToArray", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);
 
     it("| returns the map's values", () =>

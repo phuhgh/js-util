@@ -47,6 +47,6 @@ export class Mat3Factory<T extends Mat3<TTypedArray>>
         a[7] = c2r3;
         a[8] = c3r3;
 
-        return a as T;
+        return a;
     }
 }

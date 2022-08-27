@@ -9,6 +9,7 @@ import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings";
 import { _Number } from "../number/_number";
 import { ISharedObject } from "../lifecycle/i-shared-object";
 import { IOnMemoryResize } from "./emscripten/i-on-memory-resize";
+import { IDebugAllocateListener } from "../debug/i-debug-allocate-listener";
 
 /**
  * @public
@@ -27,7 +28,7 @@ export interface IRawVoidPointer
  * @public
  * {@inheritDoc IRawVoidPointer}
  */
-export class RawVoidPointer implements IRawVoidPointer
+export class RawVoidPointer implements IRawVoidPointer, IDebugAllocateListener
 {
     public readonly sharedObject: IReferenceCountedPtr;
     public readonly pointer: number;
@@ -43,7 +44,7 @@ export class RawVoidPointer implements IRawVoidPointer
     )
         : RawVoidPointer
     {
-        DEBUG_MODE && RcJsUtilDebug.onAllocate.emit();
+        _BUILD.DEBUG && wrapper.debug.onAllocate.emit();
         const pointer = wrapper.instance._jsUtilMalloc(byteSize);
 
         if (pointer == nullPointer)
@@ -59,9 +60,9 @@ export class RawVoidPointer implements IRawVoidPointer
 
     public getDataView(): DataView
     {
-        if (DEBUG_MODE)
+        if (_BUILD.DEBUG)
         {
-            return RcJsUtilDebug.protectedViews
+            return this.wrapper.debug.protectedViews
                 .getValue(this)
                 .createProtectedView(this.dataView);
         }
@@ -75,12 +76,12 @@ export class RawVoidPointer implements IRawVoidPointer
     {
         if (this.wrapper == null)
         {
-            DEBUG_MODE && _Debug.error("object has been destroyed");
+            _BUILD.DEBUG && _Debug.error("object has been destroyed");
             return;
         }
 
         this.dataView = this.recreateDataView();
-    }
+    };
 
     protected constructor
     (
@@ -91,13 +92,16 @@ export class RawVoidPointer implements IRawVoidPointer
     {
         this.pointer = pointer;
         this.byteSize = byteSize;
-        this.sharedObject = new ReferenceCountedPtr(false, pointer);
+        this.sharedObject = new ReferenceCountedPtr(false, pointer, wrapper);
         this.sharedObject.registerOnFreeListener(this.wrapper.memoryResize.addTemporaryListener(this));
         this.sharedObject.registerOnFreeListener(() => this.wrapper.instance._jsUtilFree(this.pointer));
 
-        DEBUG_MODE && _Debug.runBlock(() =>
+        _BUILD.DEBUG && _Debug.runBlock(() =>
         {
-            const protectedView = new DebugProtectedView([], `RVP - memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`);
+            const protectedView = new DebugProtectedView(
+                this.wrapper,
+                `RVP - memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`,
+            );
             DebugSharedObjectChecks.registerWithCleanup(this, protectedView, "RVP");
         });
 

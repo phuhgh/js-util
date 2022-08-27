@@ -29,7 +29,7 @@ import { arrayIsNotEmpty } from "./impl/array-is-not-empty";
 import { arrayUnique } from "./impl/array-unique";
 import { arrayAddToSet } from "./impl/array-add-to-set";
 import { arrayForEachRange } from "./impl/array-for-each-range";
-import { arrayMax} from "./impl/array-max";
+import { arrayMax } from "./impl/array-max";
 import { arrayMin } from "./impl/array-min";
 
 /**
@@ -105,6 +105,7 @@ export class _Array
     /** {@inheritDoc arrayUnique} */
     public static readonly unique = arrayUnique;
 
+    // noinspection JSUnusedLocalSymbols
     private constructor()
     {
     }

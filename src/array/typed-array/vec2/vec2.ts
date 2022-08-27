@@ -71,7 +71,7 @@ export abstract class Vec2<TArray extends TTypedArray>
 
     protected static constructors = populateTypedArrayConstructorMap(Vec2);
 
-    public ["constructor"]: IVec2Ctor<TArray>;
+    public ["constructor"]!: IVec2Ctor<TArray>;
 
     /**
      * x

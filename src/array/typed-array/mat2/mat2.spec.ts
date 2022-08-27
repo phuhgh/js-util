@@ -1,7 +1,13 @@
 import { Mat2, TF32Mat2 } from "./mat2";
+import { setDefaultUnitTestFlags } from "../../../test-utils";
 
 describe("=> Mat2", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> getElement", () =>
     {
         it("| returns expected values", () =>

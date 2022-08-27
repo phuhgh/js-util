@@ -21,14 +21,14 @@ export function binaryFindInsertionIndex<T>
 )
     : number
 {
-    DEBUG_MODE && _Debug.runBlock(() =>
+    _BUILD.DEBUG && _Debug.runBlock(() =>
     {
         _Debug.assert(startIndex < length, "start index must be within bounds");
 
         let prev = -Infinity;
         _Debug.assert(comparisonValueToSearchFor === comparisonValueToSearchFor, "NaN is not a permissible comparison value");
 
-        if (!_Debug.isFlagSet("DEBUG_DISABLE_EXPENSIVE_CHECKS"))
+        if (!_Debug.isFlagSet("DISABLE_EXPENSIVE_CHECKS"))
         {
             for (let i = startIndex; i < length; ++i)
             {

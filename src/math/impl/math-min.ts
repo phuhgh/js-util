@@ -12,7 +12,7 @@ import { _Debug } from "../../debug/_debug";
  */
 export function mathMin(a: number, b: number): number
 {
-    DEBUG_MODE && _Debug.runBlock(() =>
+    _BUILD.DEBUG && _Debug.runBlock(() =>
     {
         _Debug.assert(!isNaN(a), "expected a to be a number");
         _Debug.assert(!isNaN(b), "expected b to be a number");

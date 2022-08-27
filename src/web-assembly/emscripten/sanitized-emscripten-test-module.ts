@@ -1,10 +1,10 @@
-import { Emscripten } from "../../../external/emscripten";
+import { Emscripten } from "../../external/emscripten";
 import { getWasmTestMemory } from "../get-wasm-test-memory";
 import { getEmscriptenWrapper } from "./get-emscripten-wrapper";
 import { _Fp } from "../../fp/_fp";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
-import { _Debug } from "../../debug/_debug";
 import { IDebugBindings } from "./i-debug-bindings";
+import { _Production } from "../../production/_production";
 
 export interface ISanitizedTestModuleOptions
 {
@@ -75,7 +75,11 @@ export class SanitizedEmscriptenTestModule<T extends object, U extends object>
 
     public get wrapper(): IEmscriptenWrapper<T & U & IDebugBindings>
     {
-        DEBUG_MODE && _Debug.assert(this._wrapper != null, "initialize must be called first");
+        if (this._wrapper == null)
+        {
+            throw _Production.createError("initialize must be called first");
+        }
+
         return this._wrapper;
     }
 
@@ -99,5 +103,16 @@ export class SanitizedEmscriptenTestModule<T extends object, U extends object>
         }
     }
 
-    private _wrapper!: IEmscriptenWrapper<T & U & IDebugBindings>;
+    /**
+     * Call this before each test case.
+     */
+    public reset(): void
+    {
+        if (this._wrapper)
+        {
+            this._wrapper.debug.uniquePointers.clear();
+        }
+    }
+
+    private _wrapper: IEmscriptenWrapper<T & U & IDebugBindings> | undefined;
 }

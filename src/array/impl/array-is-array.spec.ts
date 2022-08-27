@@ -1,8 +1,13 @@
 import { arrayIsArray } from "./array-is-array";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayIsArray", () =>
+describe("=> arrayIsArray", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const normalArray = [1] as const;
     const typedArray = new Float32Array(0);
     const arrayLike = { 0: 1, length: 1 };

@@ -1,7 +1,20 @@
 import { TListener } from "../eventing/t-listener";
-import { IDebugWeakBroadcastEvent } from "rc-js-util-globals";
+import { TDebugListener } from "./t-debug-listener";
 
-export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[]> implements IDebugWeakBroadcastEvent<TKey, TArgs>
+/**
+ * @public
+ * Like {@link IBroadcastEvent} but without holding strong references. Available in debug contexts only.
+ */
+export interface IDebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]>
+{
+    addListener(listener: TDebugListener<K, TArgs>): void;
+    addTemporaryListener(listener: TDebugListener<K, TArgs>): () => void;
+    removeListener(listener: TDebugListener<K, TArgs>): void;
+    emit(...args: TArgs): void;
+}
+
+export class DebugWeakBroadcastEvent<TKey extends string, TArgs extends unknown[]>
+    implements IDebugWeakBroadcastEvent<TKey, TArgs>
 {
     public constructor
     (

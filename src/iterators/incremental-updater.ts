@@ -85,7 +85,7 @@ export class IncrementalUpdater implements IIncrementalUpdater
      */
     public resume(): void
     {
-        DEBUG_MODE && _Debug.assert(this.isUpdating && this.id == null, "nothing to resume");
+        _BUILD.DEBUG && _Debug.assert(this.isUpdating && this.id == null, "nothing to resume");
         this.update();
     }
 

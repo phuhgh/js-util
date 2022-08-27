@@ -1,8 +1,13 @@
-import { debugDescribe, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
+import { itShouldNotRunDebugWhenDebugIsFalse, setDefaultUnitTestFlags } from "../../test-utils";
 import { dictionaryExtend } from "./dictionary-extend";
 
-debugDescribe("=> dictionaryExtend", () =>
+describe("=> dictionaryExtend", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     itShouldNotRunDebugWhenDebugIsFalse(() =>
     {
         dictionaryExtend({}, {});

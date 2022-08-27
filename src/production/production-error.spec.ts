@@ -1,8 +1,13 @@
 import { _Production } from "./_production";
-import { debugDescribe } from "../test-utils";
+import { setDefaultUnitTestFlags } from "../test-utils";
 
-debugDescribe("=> _Production.error", () =>
+describe("=> _Production.error", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> compilation checks", () =>
     {
         it("| narrows types where used as a guard", () =>

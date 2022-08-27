@@ -1,7 +1,9 @@
-export { IDebugWeakStore, IDebugSharedObject, IDebugSharedObjectLifeCycleChecks, TDebugListener, IDebugProtectedView, IDebugWeakBroadcastEvent, IStandardDebugFlags } from "rc-js-util-globals/index";
+import "rc-js-util-globals";
+import { IDebugConstants } from "./debug/i-debug-constants";
 
-export { RcJsUtilDebugImpl } from "./debug/debug-namepace";
-export { Emscripten } from "../external/emscripten";
+export { IDebugAllocateListener } from "./debug/i-debug-allocate-listener";
+export { IDebugProtectedView } from "./debug/i-debug-protected-view";
+export { Emscripten } from "./external/emscripten";
 export { _Array } from "./array/_array";
 export { _Debug } from "./debug/_debug";
 export { _Dictionary } from "./dictionary/_dictionary";
@@ -79,11 +81,11 @@ export { TUnionToIntersection } from "./typescript/t-union-to-intersection";
 export { TUnpackArray } from "./typescript/t-unpack-array";
 export { TUnpackIfArray } from "./typescript/t-unpack-if-array";
 export { TWriteable } from "./typescript/t-writable";
-export { IEmscriptenWrapper } from "./web-assembly/emscripten/i-emscripten-wrapper";
+export { IEmscriptenWrapper, IEmscriptenDebug } from "./web-assembly/emscripten/i-emscripten-wrapper";
 export { getEmscriptenWrapper } from "./web-assembly/emscripten/get-emscripten-wrapper";
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/t-web-assembly-memory-listener-args";
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array";
-export { IWebAssemblyMemoryMemory } from "../external/i-web-assembly-memory";
+export { IWebAssemblyMemoryMemory } from "./external/i-web-assembly-memory";
 export { SharedArray, TF32SharedArray, TF64SharedArray } from "./web-assembly/shared-array/shared-array";
 export { SharedStaticArray, TF32SharedStaticArray, TF64SharedStaticArray } from "./web-assembly/shared-array/shared-static-array";
 export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bindings";
@@ -194,3 +196,15 @@ export { IOnFree } from "./lifecycle/i-on-free";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize";
 export { IIdentifierFactory } from "./identifier/impl/i-identifier-factory";
 export { arrayMin } from "./array/impl/array-min";
+export { IDebugWeakStore } from "./debug/i-debug-weak-store";
+export { IDebugSharedObject } from "./debug/i-debug-shared-object";
+export { IDebugWeakBroadcastEvent } from "./debug/debug-weak-broadcast-event";
+export { IDebugSharedObjectLifeCycleChecker } from "./debug/debug-shared-object-life-cycle-checker";
+export { TDebugListener } from "./debug/t-debug-listener";
+
+declare global
+{
+    interface IBuildConstants extends IDebugConstants
+    {
+    }
+}

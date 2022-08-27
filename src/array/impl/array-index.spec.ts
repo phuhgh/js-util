@@ -1,9 +1,14 @@
 import { arrayIndex } from "./array-index";
 import { _Production } from "../../production/_production";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayIndex", () =>
+describe("=> arrayIndex", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = ["a", "b", "c"] as const;
 
     it("| calls the callback with the correct parameters", () =>

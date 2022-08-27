@@ -17,7 +17,7 @@ import { _Debug } from "../../debug/_debug";
  */
 export function arrayMapRange<TMapped>(from: number, to: number, callback: (value: number, index: number) => TMapped): TMapped[]
 {
-    DEBUG_MODE && _Debug.runBlock(() =>
+    _BUILD.DEBUG && _Debug.runBlock(() =>
     {
         _Debug.assert(!isNaN(from) && !isNaN(to), "NaN range not supported");
     });

@@ -32,7 +32,7 @@ export class Mat2Factory<T extends Mat2<TTypedArray>>
         a[2] = c2r1;
         a[3] = c2r2;
 
-        return a as T;
+        return a;
     }
 
     public override createOneEmpty(): T

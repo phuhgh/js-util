@@ -24,7 +24,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         protected static vec2Ctor = Vec2.getCtor(ctor);
         protected static mat3Ctor = Mat3.getCtor(ctor);
 
-        public ["constructor"]: typeof Range2dImpl;
+        public ["constructor"]!: typeof Range2dImpl;
 
         public setXMin(value: number): void
         {
@@ -179,7 +179,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         )
             : Mat3<TArray>
         {
-            DEBUG_MODE && _Debug.runBlock(() =>
+            _BUILD.DEBUG && _Debug.runBlock(() =>
             {
                 _Debug.assert(this.getXRange() !== 0, "divide by 0");
                 _Debug.assert(this.getYRange() !== 0, "divide by 0");
@@ -231,7 +231,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         )
             : Range2d<TResult>
         {
-            DEBUG_MODE && _Debug.assert(this.isPointInRange(relativeTo), "relativeTo must be inside the range");
+            _BUILD.DEBUG && _Debug.assert(this.isPointInRange(relativeTo), "relativeTo must be inside the range");
 
             const difference = this
                 .getCenter(this.constructor.tmpVec)

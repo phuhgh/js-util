@@ -1,9 +1,14 @@
 import { dictionaryPush } from "./dictionary-push";
 import { IDictionary } from "../../typescript/i-dictionary";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> dictionaryPush", () =>
+describe("=> dictionaryPush", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values: IDictionary<number[]> = { a: [1] };
 
     it("| pushes to existing properties", () =>

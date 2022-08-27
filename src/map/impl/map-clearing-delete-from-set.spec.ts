@@ -1,9 +1,14 @@
-import { debugDescribe } from "../../test-utils";
 import { mapClearingDeleteFromSet } from "./map-clearing-delete-from-set";
 import { _Set } from "../../set/_set";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> mapClearingDeleteFromSet", () =>
+describe("=> mapClearingDeleteFromSet", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| deletes where set exists and value is present", () =>
     {
         const values = new Map([["a", new Set([1])]]);

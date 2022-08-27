@@ -1,7 +1,13 @@
 import { arrayIsNotEmpty } from "./array-is-not-empty";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
 describe("=> arrayIsNotEmpty", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> compile checks", () =>
     {
         it("| narrows the type where true", () =>

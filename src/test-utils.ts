@@ -1,6 +1,4 @@
 import { _Debug } from "./debug/_debug";
-import { setDefaultUnitTestFlags } from "./debug/impl/set-default-unit-test-flags";
-import { RcJsUtilDebugImpl } from "./debug/debug-namepace";
 
 export function itShouldCallAssert(times: number, runTest: () => void): void
 {
@@ -14,10 +12,10 @@ export function itShouldCallAssert(times: number, runTest: () => void): void
 
 export function itShouldNotRunDebugWhenDebugIsFalse(runTest: () => void): void
 {
-    it("doesn't run asserts when DEBUG_MODE is false", () =>
+    it("doesn't run asserts when _BUILD.DEBUG is false", () =>
     {
-        _Debug.setFlag("DEBUG_MODE", false);
-        _Debug.setFlag("DEBUG_DISABLE_BREAKPOINT", true);
+        _Debug.setFlag("DEBUG", false);
+        _Debug.setFlag("DISABLE_BREAKPOINT", true);
         spyOn(_Debug, "runBlock");
         spyOn(_Debug, "assert");
         runTest();
@@ -33,44 +31,8 @@ export function expectValueToBeNearTo(value: number, expectation: number, varian
     expect(value).toBeGreaterThan(expectation - variance);
 }
 
-export function debugDescribe(label: string, callback: () => void): void
+export function setDefaultUnitTestFlags(): void
 {
-    describe(label, () =>
-    {
-        beforeEach(() =>
-        {
-            setDefaultUnitTestFlags();
-            RcJsUtilDebugImpl.uniquePointers.clear();
-        });
-
-        callback();
-    });
-}
-
-export function fdebugDescribe(label: string, callback: () => void): void
-{
-    fdescribe(label, () =>
-    {
-        beforeEach(() =>
-        {
-            setDefaultUnitTestFlags();
-            RcJsUtilDebugImpl.uniquePointers.clear();
-        });
-
-        callback();
-    });
-}
-
-export function debugIt(label: string, callback: () => void): void
-{
-    _Debug.label = label;
-    it(label, callback);
-    _Debug.label = undefined;
-}
-
-export function applyLabel(label: string, callback: () => void): void
-{
-    _Debug.label = label;
-    callback();
-    _Debug.label = undefined;
+    _Debug.setFlag("DEBUG", true);
+    _Debug.setFlag("DISABLE_BREAKPOINT", true);
 }
