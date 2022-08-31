@@ -1,6 +1,6 @@
 import { arrayIntersect } from "./array-intersect";
 import { arrayUnion } from "./array-union";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> arrayUnion", () =>
 {

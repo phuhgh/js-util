@@ -1,4 +1,4 @@
-export interface IDebugConstants
+export interface IDebugFlags
 {
     /**
      * This can be set in dead code removal tools to trim debug code. Unlike other flags, this should always be defined.

@@ -1,5 +1,5 @@
 import { dictionaryCloneExtend } from "./dictionary-clone-extend";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> dictionaryCloneExtend", () =>
 {

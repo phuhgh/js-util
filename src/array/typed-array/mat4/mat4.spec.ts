@@ -1,6 +1,6 @@
 import { Mat4, TF32Mat4 } from "./mat4";
 import { Vec4 } from "../vec4/vec4";
-import { setDefaultUnitTestFlags } from "../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
 
 describe("=> Mat4", () =>
 {

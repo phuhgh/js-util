@@ -1,5 +1,5 @@
 import { mapKeysToArray } from "./map-keys-to-array";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> mapKeysToArray", () =>
 {

@@ -1,6 +1,6 @@
 import { _Set } from "../../set/_set";
 import { mapDeleteFromSet } from "./map-delete-from-set";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> mapDeleteFromSet", () =>
 {

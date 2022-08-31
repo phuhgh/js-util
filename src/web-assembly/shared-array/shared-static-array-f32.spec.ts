@@ -5,7 +5,7 @@ import { IJsUtilBindings } from "../i-js-util-bindings";
 import { _Debug } from "../../debug/_debug";
 import asanTestModule from "../../external/asan-test-module";
 import safeHeapTestModule from "../../external/safe-heap-test-module";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> F32SharedStaticArray", () =>
 {

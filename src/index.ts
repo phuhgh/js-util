@@ -1,6 +1,7 @@
 import "rc-js-util-globals";
-import { IDebugConstants } from "./debug/i-debug-constants";
+import { IDebugFlags } from "./debug/i-debug-flags";
 
+export { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule } from "./web-assembly/emscripten/sanitized-emscripten-test-module";
 export { IDebugAllocateListener } from "./debug/i-debug-allocate-listener";
 export { IDebugProtectedView } from "./debug/i-debug-protected-view";
 export { Emscripten } from "./external/emscripten";
@@ -204,7 +205,8 @@ export { TDebugListener } from "./debug/t-debug-listener";
 
 declare global
 {
-    interface IBuildConstants extends IDebugConstants
+    interface IBuildConstants extends IDebugFlags
     {
     }
 }
+export { setDefaultUnitTestFlags } from "./test-util/set-default-unit-test-flags";

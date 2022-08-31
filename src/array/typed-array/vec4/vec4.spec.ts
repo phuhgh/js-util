@@ -1,5 +1,5 @@
 import { TF32Vec4, Vec4 } from "./vec4";
-import { setDefaultUnitTestFlags } from "../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
 
 describe("=> Vec4", () =>
 {

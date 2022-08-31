@@ -1,5 +1,5 @@
 import { _Production } from "./_production";
-import { setDefaultUnitTestFlags } from "../test-utils";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
 
 describe("=> _Production.error", () =>
 {

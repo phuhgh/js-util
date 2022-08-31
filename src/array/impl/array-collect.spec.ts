@@ -1,5 +1,5 @@
 import { arrayCollect } from "./array-collect";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> arrayCollect", () =>
 {

@@ -1,7 +1,8 @@
-import { expectValueToBeNearTo, setDefaultUnitTestFlags } from "../../../../test-utils";
+import { expectValueToBeNearTo } from "../../../../test-util/test-utils";
 import { Range2d } from "./range2d";
 import { Vec2 } from "../../vec2/vec2";
 import { Mat3 } from "../../mat3/mat3";
+import { setDefaultUnitTestFlags } from "../../../../test-util/set-default-unit-test-flags";
 
 describe("=> F32Range2d", () =>
 {

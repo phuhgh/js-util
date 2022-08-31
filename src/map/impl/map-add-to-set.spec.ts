@@ -1,6 +1,6 @@
 import { mapAddToSet } from "./map-add-to-set";
 import { _Set } from "../../set/_set";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> mapAddToSet", () =>
 {

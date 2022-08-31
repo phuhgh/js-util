@@ -1,6 +1,6 @@
 import { IDictionary } from "../../typescript/i-dictionary";
 import { dictionaryValues } from "./dictionary-values";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> dictionaryValues", () =>
 {

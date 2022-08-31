@@ -2,7 +2,7 @@ import { Mat2Factory } from "./mat2-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat2 } from "./mat2";
 import { Vec2 } from "../vec2/vec2";
-import { setDefaultUnitTestFlags } from "../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
 
 describe("=> Mat2Factory", () =>
 {

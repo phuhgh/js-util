@@ -1,6 +1,7 @@
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse, setDefaultUnitTestFlags } from "../../test-utils";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils";
 import { arrayMapRange } from "./array-map-range";
 import { fpIdentity } from "../../fp/impl/fp-identity";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> arrayMapRange", () =>
 {

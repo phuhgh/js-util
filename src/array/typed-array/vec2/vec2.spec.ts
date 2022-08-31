@@ -1,7 +1,7 @@
 import { TF32Vec2, Vec2 } from "./vec2";
 import { Mat3 } from "../mat3/mat3";
 import { Range2d } from "../2d/range2d/range2d";
-import { setDefaultUnitTestFlags } from "../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
 
 describe("=> Vec2", () =>
 {

@@ -6,6 +6,9 @@ import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
 import { IDebugBindings } from "./i-debug-bindings";
 import { _Production } from "../../production/_production";
 
+/**
+ * @public
+ */
 export interface ISanitizedTestModuleOptions
 {
     disabledErrors: Set<string>;
@@ -20,6 +23,9 @@ export interface ISanitizedTestModuleOptions
     quitThrowsWith: object;
 }
 
+/**
+ * @public
+ */
 export const emscriptenAsanTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: new Set<string>(["==42==WARNING: AddressSanitizer failed to allocate 0xfffffffc bytes"]),
     initialMemoryPages: 8192,
@@ -27,6 +33,9 @@ export const emscriptenAsanTestModuleOptions: ISanitizedTestModuleOptions = {
     quitThrowsWith: {},
 };
 
+/**
+ * @public
+ */
 export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: new Set<string>(),
     initialMemoryPages: 128,
@@ -34,6 +43,9 @@ export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = 
     quitThrowsWith: {},
 };
 
+/**
+ * @public
+ */
 export class SanitizedEmscriptenTestModule<T extends object, U extends object>
 {
     public constructor

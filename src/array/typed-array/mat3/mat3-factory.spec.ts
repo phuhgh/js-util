@@ -1,7 +1,7 @@
 import { Mat3Factory } from "./mat3-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Mat3 } from "./mat3";
-import { setDefaultUnitTestFlags } from "../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
 
 describe("=> Mat3Factory", () =>
 {

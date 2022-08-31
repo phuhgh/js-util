@@ -2,7 +2,7 @@ import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, S
 import { RawVoidPointer } from "./raw-void-pointer";
 import asanTestModule from "../external/asan-test-module";
 import safeHeapTestModule from "../external/safe-heap-test-module";
-import { setDefaultUnitTestFlags } from "../test-utils";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
 
 describe("=> RawVoidPointer", () =>
 {

@@ -1,6 +1,6 @@
 import { dictionaryPush } from "./dictionary-push";
 import { IDictionary } from "../../typescript/i-dictionary";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> dictionaryPush", () =>
 {

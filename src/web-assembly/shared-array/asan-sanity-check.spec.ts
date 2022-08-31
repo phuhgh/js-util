@@ -1,7 +1,7 @@
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module";
 import { _Debug } from "../../debug/_debug";
 import asanTestModule from "../../external/asan-test-module";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 
 describe("=> asan sanity check", () =>

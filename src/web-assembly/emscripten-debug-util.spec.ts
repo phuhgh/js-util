@@ -2,7 +2,7 @@ import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "
 import { _Debug } from "../debug/_debug";
 import { nullPointer } from "./emscripten/null-pointer";
 import asanTestModule from "../external/asan-test-module";
-import { setDefaultUnitTestFlags } from "../test-utils";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
 
 describe("JsUtil::Debug", () =>
 {

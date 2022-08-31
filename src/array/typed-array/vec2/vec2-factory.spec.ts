@@ -1,7 +1,7 @@
 import { Vec2Factory } from "./vec2-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Vec2 } from "./vec2";
-import { setDefaultUnitTestFlags } from "../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
 
 describe("=> Vec2Factory", () =>
 {

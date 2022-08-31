@@ -1,6 +1,6 @@
 import { ReferenceCounter } from "./reference-counter";
 import createSpy = jasmine.createSpy;
-import { setDefaultUnitTestFlags } from "../test-utils";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
 
 describe("=> ReferenceCountedStore", () =>
 {

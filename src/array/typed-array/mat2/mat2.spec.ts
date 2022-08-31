@@ -1,5 +1,5 @@
 import { Mat2, TF32Mat2 } from "./mat2";
-import { setDefaultUnitTestFlags } from "../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
 
 describe("=> Mat2", () =>
 {

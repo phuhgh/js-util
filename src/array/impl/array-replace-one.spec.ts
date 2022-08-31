@@ -1,5 +1,5 @@
 import { arrayReplaceOne } from "./array-replace-one";
-import { setDefaultUnitTestFlags } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> arrayReplaceOne", () =>
 {

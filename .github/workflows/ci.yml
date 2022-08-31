@@ -28,9 +28,10 @@ jobs:
 
       - name: Install and Build
         run: |
+          node --version
+          npm --version
           npm ci
           npm run ci-build
-          npm run generate-docs
 
       - name: Deploy docs
         uses: JamesIves/github-pages-deploy-action@4.1.1

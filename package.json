@@ -37,12 +37,12 @@
   },
   "exports": {
     ".": {
-      "import": "./bin/cjs/src/index.js",
-      "require": "./bin/esm/src/index.js"
+      "import": "./bin/cjs/index.js",
+      "require": "./bin/esm/index.js"
     }
   },
-  "main": "bin/cjs/src/index.js",
-  "typings": "bin/cjs/src/index.d.ts",
+  "main": "bin/cjs/index.js",
+  "typings": "bin/cjs/index.d.ts",
   "private": false,
   "keywords": [
     "Util",

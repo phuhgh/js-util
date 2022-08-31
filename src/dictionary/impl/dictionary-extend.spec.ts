@@ -1,5 +1,6 @@
-import { itShouldNotRunDebugWhenDebugIsFalse, setDefaultUnitTestFlags } from "../../test-utils";
+import { itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils";
 import { dictionaryExtend } from "./dictionary-extend";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
 
 describe("=> dictionaryExtend", () =>
 {

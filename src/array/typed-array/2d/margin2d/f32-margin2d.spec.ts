@@ -1,7 +1,7 @@
 import { Range2d } from "../range2d/range2d";
 import { Margin2d } from "./margin2d";
 import { Mat3 } from "../../mat3/mat3";
-import { setDefaultUnitTestFlags } from "../../../../test-utils";
+import { setDefaultUnitTestFlags } from "../../../../test-util/set-default-unit-test-flags";
 
 describe("=> F32Margin2d", () =>
 {
