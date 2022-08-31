@@ -1,8 +1,13 @@
 import { dictionaryPairs } from "./dictionary-pairs";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> dictionaryPairs", () =>
+describe("=> dictionaryPairs", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = { a: 1, b: 2, c: 3 };
 
     it("| returns an array of key value pairs", () =>

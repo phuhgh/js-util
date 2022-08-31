@@ -1,8 +1,13 @@
 import { mapFirstValue } from "./map-first-value";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> mapFirstValue", () =>
+describe("=> mapFirstValue", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| returns the first key where available", () =>
     {
         const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);

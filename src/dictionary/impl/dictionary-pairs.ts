@@ -12,7 +12,7 @@ export function dictionaryPairs<TKey extends string | number | symbol, TValue>
     : [TKey, TValue][]
 {
     const keys = Object.keys(dictionary) as TKey[];
-    const pairs: [TKey, TValue][] = new Array(keys.length);
+    const pairs = new Array<[TKey, TValue]>(keys.length);
 
     for (let i = 0, iEnd = keys.length; i < iEnd; ++i)
     {

@@ -26,7 +26,7 @@ export abstract class AReferenceCounted implements IReferenceCounted, IOnFree
     {
         if (this.references === 0)
         {
-            DEBUG_MODE && _Debug.error("object has been released already");
+            _BUILD.DEBUG && _Debug.error("object has been released already");
             return;
         }
 

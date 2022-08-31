@@ -1,10 +1,15 @@
-import { debugDescribe } from "../../../../test-utils";
 import { Range2d } from "../range2d/range2d";
 import { Margin2d } from "./margin2d";
 import { Mat3 } from "../../mat3/mat3";
+import { setDefaultUnitTestFlags } from "../../../../test-utils";
 
-debugDescribe("=> F32Margin2d", () =>
+describe("=> F32Margin2d", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> getInnerRange", () =>
     {
         it("| produces the expected range", () =>

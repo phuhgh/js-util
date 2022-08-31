@@ -1,8 +1,13 @@
 import { CircularFIFOStack, ECircularStackOverflowMode } from "./circular-fifo-stack";
-import { debugDescribe } from "../test-utils";
+import { setDefaultUnitTestFlags } from "../test-utils";
 
-debugDescribe("=> CircularFIFOStack", () =>
+describe("=> CircularFIFOStack", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> getIsEmpty", () =>
     {
         it("| returns true if empty", () =>

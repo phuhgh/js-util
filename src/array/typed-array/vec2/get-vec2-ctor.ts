@@ -21,7 +21,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>
     {
         public static factory: Vec2Factory<Vec2<InstanceType<TCtor>>> = new Vec2Factory(Vec2Impl, NormalizedDataViewProvider.getView(ctor));
 
-        public ["constructor"]: typeof Vec2Impl;
+        public ["constructor"]!: typeof Vec2Impl;
 
         public constructor
         (

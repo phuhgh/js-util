@@ -1,9 +1,14 @@
 import { fpOnce } from "./fp-once";
-import { debugDescribe } from "../../test-utils";
 import createSpy = jasmine.createSpy;
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> fpOnce", () =>
+describe("=> fpOnce", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| calls the function once with the expected arguments", () =>
     {
         const spy = createSpy<(a: number, b: number, c: number) => number>();

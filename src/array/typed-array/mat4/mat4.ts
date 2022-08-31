@@ -83,7 +83,7 @@ export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<
 
     protected static constructors = populateTypedArrayConstructorMap(Mat4);
 
-    public ["constructor"]: IMat4Ctor<TArray>;
+    public ["constructor"]!: IMat4Ctor<TArray>;
 
     /**
      * c1r1

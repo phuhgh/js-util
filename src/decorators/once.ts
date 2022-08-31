@@ -20,7 +20,7 @@ export function Once<TInstance extends object, TKey extends keyof TInstance>
             return results.get(this);
         }
 
-        const result = original.apply(this, args);
+        const result = original.apply(this, args) as unknown;
         results.set(this, result);
 
         return result;

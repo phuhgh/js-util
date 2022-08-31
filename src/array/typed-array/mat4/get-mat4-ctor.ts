@@ -22,7 +22,7 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>
         public static factory: Mat4Factory<Mat4<InstanceType<TCtor>>> = new Mat4Factory(Mat4Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec4Ctor = Vec4.getCtor(ctor);
 
-        public ["constructor"]: typeof Mat4Impl;
+        public ["constructor"]!: typeof Mat4Impl;
 
         public constructor
         (
@@ -60,13 +60,13 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>
 
         public override getValueAt(column: number, row: number): number
         {
-            DEBUG_MODE && _Debug.assert(column >= 0 && column < 4 && row >= 0 && row < 4, "out of bounds");
+            _BUILD.DEBUG && _Debug.assert(column >= 0 && column < 4 && row >= 0 && row < 4, "out of bounds");
             return this[row * 4 + column as Extract<keyof Mat4<never>, number>];
         }
 
         public override setValueAt(column: number, row: number, value: number): void
         {
-            DEBUG_MODE && _Debug.assert(column >= 0 && column < 4 && row >= 0 && row < 4, "out of bounds");
+            _BUILD.DEBUG && _Debug.assert(column >= 0 && column < 4 && row >= 0 && row < 4, "out of bounds");
             this[row * 4 + column as Extract<keyof Mat4<never>, number>] = value;
         }
 
@@ -77,7 +77,7 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>
         )
             : Vec4<TResult>
         {
-            DEBUG_MODE && _Debug.assert(row >= 0 && row < 4, "index out of bounds");
+            _BUILD.DEBUG && _Debug.assert(row >= 0 && row < 4, "index out of bounds");
 
             writeTo[0] = this.getValueAt(0, row);
             writeTo[1] = this.getValueAt(1, row);
@@ -94,7 +94,7 @@ export function getMat4Ctor<TCtor extends TTypedArrayCtor>
         )
             : void
         {
-            DEBUG_MODE && _Debug.assert(row >= 0 && row < 4, "index out of bounds");
+            _BUILD.DEBUG && _Debug.assert(row >= 0 && row < 4, "index out of bounds");
 
             this.setValueAt(0, row, writeFrom[0]);
             this.setValueAt(1, row, writeFrom[1]);

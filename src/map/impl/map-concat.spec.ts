@@ -1,8 +1,13 @@
-import { debugDescribe } from "../../test-utils";
 import { mapConcat } from "./map-concat";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> mapConcat", () =>
+describe("=> mapConcat", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = new Map([["a", [1]]]);
 
     it("| concats where array exists", () =>

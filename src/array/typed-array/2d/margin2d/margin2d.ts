@@ -71,7 +71,7 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
 
     protected static constructors = populateTypedArrayConstructorMap(Margin2d);
 
-    public ["constructor"]: IMargin2dCtor<TArray>;
+    public ["constructor"]!: IMargin2dCtor<TArray>;
 
     /**
      * left

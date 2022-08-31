@@ -17,7 +17,7 @@ export function dictionaryExtend<T extends object>
 )
     : void
 {
-    DEBUG_MODE && _Debug.runBlock(() =>
+    _BUILD.DEBUG && _Debug.runBlock(() =>
     {
         _Debug.assert(!arrayIsArray(base) && !arrayIsArray(extension), "should not be used with arrays");
     });

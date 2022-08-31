@@ -1,9 +1,14 @@
 import { arrayFlatMap } from "./array-flat-map";
 import { _Production } from "../../production/_production";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayFlatMap", () =>
+describe("=> arrayFlatMap", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = ["a", "b", "c", "d"] as const;
 
     it("| calls the callback with the correct parameters", () =>

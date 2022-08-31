@@ -1,5 +1,5 @@
 import { _Debug } from "./_debug";
-import { IDebugWeakStore } from "rc-js-util-globals";
+import { IDebugWeakStore } from "./i-debug-weak-store";
 
 export class DebugWeakValue<T> implements IDebugWeakStore<T>
 {
@@ -22,7 +22,7 @@ export class DebugWeakValue<T> implements IDebugWeakStore<T>
 
     public getValue(listener: object): T
     {
-        DEBUG_MODE && _Debug.assert(this.values.has(listener), "expected to find value");
+        _BUILD.DEBUG && _Debug.assert(this.values.has(listener), "expected to find value");
         return this.values.get(listener) as T;
     }
 }

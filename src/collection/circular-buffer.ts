@@ -13,7 +13,7 @@ export class CircularBuffer<TValue>
 
     public static createEmpty<TValue>(size: number): CircularBuffer<TValue>
     {
-        return new CircularBuffer<TValue>(new Array(size));
+        return new CircularBuffer<TValue>(new Array<TValue>(size));
     }
 
     public static createOne<TValue>(initialValues: TValue[]): CircularBuffer<TValue>

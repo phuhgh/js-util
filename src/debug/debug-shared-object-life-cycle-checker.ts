@@ -1,12 +1,23 @@
 import { _Debug } from "./_debug";
 import { DebugPointer } from "./debug-pointer";
 import { _Production } from "../production/_production";
-import { IDebugSharedObject, IDebugSharedObjectLifeCycleChecks } from "rc-js-util-globals";
+import { IDebugSharedObject } from "./i-debug-shared-object";
+
+/**
+ * @public
+ * Wrapper of {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry|FinalizationRegistry} for shared objects,
+ * useful for checking if the shared object was properly disposed. Available in debug contexts only.
+ */
+export interface IDebugSharedObjectLifeCycleChecker
+{
+    registerFinalizationCheck(sharedObject: IDebugSharedObject): void;
+    markReadyForFinalize(sharedObject: IDebugSharedObject): void;
+}
 
 /**
  * When a javascript object is garbage collected, check if the corresponding WASM object has been freed.
  */
-export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeCycleChecks
+export class DebugSharedObjectLifeCycleChecker implements IDebugSharedObjectLifeCycleChecker
 {
     public registerFinalizationCheck(sharedObject: IDebugSharedObject): void
     {
@@ -43,7 +54,7 @@ export class DebugSharedObjectLifeCycleChecks implements IDebugSharedObjectLifeC
 
         if (pointer == null)
         {
-            _Production.error("expected to find pointer");
+            throw _Production.createError("expected to find pointer");
         }
 
         this.debugPointers.delete(pointer);

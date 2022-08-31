@@ -14,5 +14,6 @@ export async function promiseRejectNull<T>(value: Promise<T> | T, error: unknown
         return Promise.reject(error);
     }
 
-    return result as Exclude<T, null | undefined>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return
+    return result as any;
 }

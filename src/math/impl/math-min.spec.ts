@@ -1,8 +1,13 @@
-import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse, setDefaultUnitTestFlags } from "../../test-utils";
 import { mathMin } from "./math-min";
 
-debugDescribe("=> mathMin", () =>
+describe("=> mathMin", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| returns the smaller value", () =>
     {
         expect(mathMin(1, 0)).toBe(0);

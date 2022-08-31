@@ -14,7 +14,7 @@ export function getVec3Ctor<TCtor extends TTypedArrayCtor>(ctor: TCtor): IVec3Ct
     {
         public static factory: Vec3Factory<Vec3<InstanceType<TCtor>>> = new Vec3Factory(Vec3Impl, NormalizedDataViewProvider.getView(ctor));
 
-        public ["constructor"]: typeof Vec3Impl;
+        public ["constructor"]!: typeof Vec3Impl;
 
         public constructor
         (

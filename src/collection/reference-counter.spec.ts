@@ -1,8 +1,14 @@
 import { ReferenceCounter } from "./reference-counter";
 import createSpy = jasmine.createSpy;
+import { setDefaultUnitTestFlags } from "../test-utils";
 
 describe("=> ReferenceCountedStore", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| calls the callback when the reference count hits 0", () =>
     {
         const spy = createSpy();

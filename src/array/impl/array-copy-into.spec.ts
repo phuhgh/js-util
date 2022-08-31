@@ -1,8 +1,13 @@
 import { arrayCopyInto } from "./array-copy-into";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayCopyInto", () =>
+describe("=> arrayCopyInto", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| writes the values of the first argument into the second", () =>
     {
         const a = ["d", "e"];

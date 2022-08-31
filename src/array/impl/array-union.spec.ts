@@ -1,9 +1,14 @@
 import { arrayIntersect } from "./array-intersect";
 import { arrayUnion } from "./array-union";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayUnion", () =>
+describe("=> arrayUnion", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const a = ["a", "b", "c"] as const;
     const b = ["a", "d", "e"] as const;
 

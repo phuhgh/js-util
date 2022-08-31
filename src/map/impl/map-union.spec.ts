@@ -1,7 +1,13 @@
 import { mapUnion } from "./map-union";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
 describe("=> mapUnion", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| returns the union", () =>
     {
         expect(Array.from(mapUnion(new Map([["a", "b"], ["b", "c"]]), new Map([["d", "e"]]))))

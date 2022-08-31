@@ -1,10 +1,9 @@
 {
-  "spec_dir": "bin",
+  "spec_dir": "bin/cjs/",
   "spec_files": [
     "**/*[sS]pec.js"
   ],
   "helpers": [
-    "src/jasmine-env.js",
-    "src/debug/debug-namepace.js"
+    "../../jasmine-env.js"
   ]
 }

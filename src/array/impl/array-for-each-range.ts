@@ -15,14 +15,14 @@ import { _Debug } from "../../debug/_debug";
  */
 export function arrayForEachRange(from: number, to: number, callback: (value: number, index: number) => void): void
 {
-    DEBUG_MODE && _Debug.runBlock(() =>
+    _BUILD.DEBUG && _Debug.runBlock(() =>
     {
         _Debug.assert(!isNaN(from) && !isNaN(to), "NaN range not supported");
     });
     const range = to - from;
     const increment = Math.sign(range);
 
-    for (let i = 0; i <  Math.abs(range) + 1; ++i)
+    for (let i = 0; i < Math.abs(range) + 1; ++i)
     {
         callback(from, i);
         from += increment;

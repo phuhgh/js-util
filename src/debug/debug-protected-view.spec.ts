@@ -1,14 +1,26 @@
 import { DebugProtectedView } from "./debug-protected-view";
+import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module";
+import asanTestModule from "../external/asan-test-module";
+import { setDefaultUnitTestFlags } from "../test-utils";
 
 describe("=> DebugProtectedView", () =>
 {
+    const testModule = new SanitizedEmscriptenTestModule<object, object>(asanTestModule, emscriptenAsanTestModuleOptions);
+
+    beforeEach(async () =>
+    {
+        setDefaultUnitTestFlags();
+        await testModule.initialize();
+    });
+
+
     describe("unwrapProtectedView", () =>
     {
         describe("=> when valid", () =>
         {
             it("| returns the original object", () =>
             {
-                const protectedView = new DebugProtectedView([], "");
+                const protectedView = new DebugProtectedView(testModule.wrapper, "");
                 const thingToBeProtected = { foo: true };
                 const protectedThing = protectedView.createProtectedView(thingToBeProtected);
                 expect(protectedThing).not.toBe(thingToBeProtected);
@@ -20,7 +32,7 @@ describe("=> DebugProtectedView", () =>
         {
             it("| it errors", () =>
             {
-                const protectedView = new DebugProtectedView([], "meep meep");
+                const protectedView = new DebugProtectedView(testModule.wrapper, "meep meep");
                 const thingToBeProtected = { foo: true };
                 const protectedThing = protectedView.createProtectedView(thingToBeProtected);
                 protectedView.invalidate();

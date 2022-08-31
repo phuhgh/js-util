@@ -1,9 +1,14 @@
-import { debugDescribe, itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-utils";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse, setDefaultUnitTestFlags } from "../../test-utils";
 import { arrayBinaryIndexOf } from "./array-binary-index-of";
 import { arrayBinaryLastIndexOf } from "./array-binary-last-index-of";
 
-debugDescribe("=> binary index of", () =>
+describe("=> binary index of", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> common behaviour", () =>
     {
         [

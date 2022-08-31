@@ -24,7 +24,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         public static factory: ITypedArrayTupleFactory<Range1d<InstanceType<TCtor>>, TRange1dCtorArgs> = new Vec2Factory(Range1dImpl, NormalizedDataViewProvider.getView(ctor));
         protected static mat2Ctor = Mat2.getCtor(ctor);
 
-        public ["constructor"]: typeof Range1dImpl;
+        public ["constructor"]!: typeof Range1dImpl;
 
         public setMin(value: number): void
         {
@@ -102,7 +102,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         )
             : Mat2<TArray>
         {
-            DEBUG_MODE && _Debug.assert(this.getRange() !== 0, "divide by 0");
+            _BUILD.DEBUG && _Debug.assert(this.getRange() !== 0, "divide by 0");
 
             const sf = toRange.getRange() / this.getRange();
 
@@ -127,7 +127,7 @@ export function getRange1dCtor<TCtor extends TTypedArrayCtor>
         )
             : Range1d<TResult>
         {
-            DEBUG_MODE && _Debug.assert(this.isValueInRange1d(relativeTo), "relativeTo must be inside the range");
+            _BUILD.DEBUG && _Debug.assert(this.isValueInRange1d(relativeTo), "relativeTo must be inside the range");
 
             let difference = this.getCenter() - relativeTo;
 

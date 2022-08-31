@@ -1,7 +1,13 @@
 import { arrayInsertAtIndex } from "./array-insert-at-index";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
 describe("=> arrayInsertAtIndex", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| returns the expected index", () =>
     {
         const a = [1, 2, 3];

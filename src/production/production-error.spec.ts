@@ -1,8 +1,13 @@
 import { _Production } from "./_production";
-import { debugDescribe } from "../test-utils";
+import { setDefaultUnitTestFlags } from "../test-utils";
 
-debugDescribe("=> _Production.error", () =>
+describe("=> _Production.error", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> compilation checks", () =>
     {
         it("| narrows types where used as a guard", () =>
@@ -11,7 +16,7 @@ debugDescribe("=> _Production.error", () =>
 
             if (typeof r === "string")
             {
-                _Production.error("test");
+                throw _Production.createError("test");
             }
 
             ++r;
@@ -22,7 +27,10 @@ debugDescribe("=> _Production.error", () =>
 
     it("| throws an error with the expected message", () =>
     {
-        expect(() => _Production.error("test message")).toThrowError("test message");
+        expect(() =>
+        {
+            throw _Production.createError("test message");
+        }).toThrowError("test message");
     });
 });
 

@@ -37,7 +37,7 @@ export class LinkedReferenceCounter
 
     public transferOwnership(ref: IReferenceCounted): void
     {
-        DEBUG_MODE && _Debug.assert(!this.refs.has(ref), "ref already added");
+        _BUILD.DEBUG && _Debug.assert(!this.refs.has(ref), "ref already added");
         this.refs.add(ref);
     }
 

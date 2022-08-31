@@ -1,8 +1,13 @@
 import { mapArrayMap } from "./map-array-map";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> mapArrayMap", () =>
+describe("=> mapArrayMap", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);
 
     it("| calls the callback with the correct parameters", () =>

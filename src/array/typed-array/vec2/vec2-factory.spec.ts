@@ -1,10 +1,15 @@
-import { debugDescribe } from "../../../test-utils";
 import { Vec2Factory } from "./vec2-factory";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
 import { Vec2 } from "./vec2";
+import { setDefaultUnitTestFlags } from "../../../test-utils";
 
-debugDescribe("=> Vec2Factory", () =>
+describe("=> Vec2Factory", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const factory = new Vec2Factory(Vec2.f32, NormalizedDataViewProvider.getView(Float32Array));
 
     describe("=> create one", () =>

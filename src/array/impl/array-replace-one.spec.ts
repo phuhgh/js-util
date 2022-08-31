@@ -1,8 +1,13 @@
 import { arrayReplaceOne } from "./array-replace-one";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayReplaceOne", () =>
+describe("=> arrayReplaceOne", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const a = ["a", "b", "b", "c"];
 
     it("| replaces a single match from the first argument", () =>

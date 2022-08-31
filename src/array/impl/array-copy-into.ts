@@ -23,7 +23,7 @@ export function arrayCopyInto<TItem>
     const end = startIndex + length;
     to.length = length;
 
-    DEBUG_MODE && _Debug.runBlock(() =>
+    _BUILD.DEBUG && _Debug.runBlock(() =>
     {
         _Debug.assert(startIndex >= 0, "negative indexes are not supported");
         _Debug.assert(end <= from.length, "length would overflow array");

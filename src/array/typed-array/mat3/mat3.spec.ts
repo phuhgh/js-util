@@ -1,9 +1,15 @@
 import { Vec2 } from "../vec2/vec2";
 import { Mat3, TF32Mat3 } from "./mat3";
 import { Vec3 } from "../vec3/vec3";
+import { setDefaultUnitTestFlags } from "../../../test-utils";
 
 describe("=> Mat3", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     describe("=> getElement", () =>
     {
         it("| returns expected values", () =>

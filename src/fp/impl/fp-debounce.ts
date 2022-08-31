@@ -61,7 +61,6 @@ export function fpDebounce<TArgs extends unknown[]>
 
     const debounced: TDebouncedFn<TArgs> = function (this: unknown, ..._args: TArgs): number
     {
-        context = this;
         args = _args;
         previous = Date.now();
 
@@ -71,7 +70,7 @@ export function fpDebounce<TArgs extends unknown[]>
 
             if (immediate)
             {
-                functionToProxy.apply(context, args);
+                functionToProxy.apply(this, args);
             }
         }
 

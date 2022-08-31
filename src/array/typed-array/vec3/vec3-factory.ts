@@ -35,7 +35,7 @@ export class Vec3Factory<T extends Vec3<TTypedArray>>
         a[1] = y;
         a[2] = z;
 
-        return a as T;
+        return a;
     }
 
     public override copyFromBuffer

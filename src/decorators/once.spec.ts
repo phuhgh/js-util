@@ -1,8 +1,13 @@
-import { debugDescribe } from "../test-utils";
 import { Once } from "./once";
+import { setDefaultUnitTestFlags } from "../test-utils";
 
-debugDescribe("=> once decorator", () =>
+describe("=> once decorator", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     let argTestRan = false;
 
     class Test

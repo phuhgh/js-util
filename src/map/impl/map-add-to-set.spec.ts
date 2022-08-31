@@ -1,9 +1,14 @@
-import { debugDescribe } from "../../test-utils";
 import { mapAddToSet } from "./map-add-to-set";
 import { _Set } from "../../set/_set";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> mapAddToSet", () =>
+describe("=> mapAddToSet", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = new Map([["a", new Set([1])]]);
 
     it("| adds where set exists", () =>

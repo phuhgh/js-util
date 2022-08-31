@@ -1,7 +1,13 @@
 import { equalityAllEqual } from "./equality-all-equal";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
 describe("=> equalityAllEqual", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| returns false when items are different", () =>
     {
         expect(equalityAllEqual([[], 0, "", false])).toBeFalse();

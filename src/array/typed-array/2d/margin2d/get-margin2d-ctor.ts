@@ -22,7 +22,7 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
         public static factory: ITypedArrayTupleFactory<Margin2d<InstanceType<TCtor>>, TMargin2dCtorArgs> = new Mat2Factory(Margin2dImpl, NormalizedDataViewProvider.getView(ctor));
         private static rangeCtor = Range2d.getCtor(ctor);
 
-        public ["constructor"]: typeof Margin2dImpl;
+        public ["constructor"]!: typeof Margin2dImpl;
 
         public getLeft(): number
         {

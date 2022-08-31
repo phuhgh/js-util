@@ -1,8 +1,13 @@
 import { arrayCompact } from "./array-compact";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayCompact", () =>
+describe("=> arrayCompact", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     const values = ["a", "b", null, undefined] as const;
 
     it("| returns an array minus null and undefined", () =>

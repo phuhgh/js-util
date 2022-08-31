@@ -1,8 +1,13 @@
 import { arrayRemoveOne } from "./array-remove-one";
-import { debugDescribe } from "../../test-utils";
+import { setDefaultUnitTestFlags } from "../../test-utils";
 
-debugDescribe("=> arrayRemoveOne", () =>
+describe("=> arrayRemoveOne", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+    });
+
     it("| removes a single match from the first argument", () =>
     {
         const a = ["a", "b", "b", "c"];

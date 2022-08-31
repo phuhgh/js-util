@@ -16,6 +16,15 @@ export class _Debug
         _Debug._label = label;
     }
 
+    public static applyLabel<T>(this: void, label: string | undefined, callback: () => T): T
+    {
+        _Debug.label = label;
+        const ret = callback();
+        _Debug.label = undefined;
+
+        return ret;
+    }
+
     /**
      * Most debuggers will ignore `debugger` statements in node_modules.
      * Skirt around this by letting the consumer set their own callback for this.
@@ -28,7 +37,7 @@ export class _Debug
      * _Debug.configureBreakpoint(() => { debugger; })
      * ```
      */
-    public static configureBreakpoint(onBreakpoint: () => void): void
+    public static configureBreakpoint(this: void, onBreakpoint: () => void): void
     {
         _Debug.onBreakpoint = onBreakpoint;
     }
@@ -40,13 +49,13 @@ export class _Debug
      *
      * @example
      * ```typescript
-     * DEBUG_MODE && _Debug.runBlock(() => {
+     * _BUILD.DEBUG && _Debug.runBlock(() => {
      *     _Debug.assert(someCondition, "someCondition was wrong");
      *     // ...
      * });
      * ```
      */
-    public static runBlock(cb: () => void): boolean
+    public static runBlock(this: void, cb: () => void): boolean
     {
         cb();
 
@@ -59,19 +68,19 @@ export class _Debug
      * @returns A boolean value to make linting happy...
      *
      * @remarks
-     * Must still be hidden behind DEBUG_MODE check for dead code removal.
+     * Must still be hidden behind _BUILD.DEBUG check for dead code removal.
      *
      * @example
      * ```typescript
-     * DEBUG_MODE && _Debug.conditionalBlock("SOME_FLAG", () => {
+     * _BUILD.DEBUG && _Debug.conditionalBlock("SOME_FLAG", () => {
      *     _Debug.assert(someCondition, "someCondition was wrong");
      *     // ...
      * });
      * ```
      */
-    public static conditionalBlock<TKey extends keyof RcJsUtilDebugFlags>
+    public static conditionalBlock<TKey extends keyof IBuildConstants>
     (
-        flag: RcJsUtilDebugFlags[TKey],
+        flag: TKey,
         cb: () => void,
     )
         : boolean
@@ -93,21 +102,21 @@ export class _Debug
      * ```typescript
      * function foo(a1: number) {
      *     // not suitable for a production check, the programmer lied about the input type they supplied
-     *     DEBUG_MODE && _Debug.assert(a1 != null, "a1 must be supplied");
+     *     _BUILD.DEBUG && _Debug.assert(a1 != null, "a1 must be supplied");
      * }
      * ```
      *
      * @remarks
-     * If `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+     * If `_BUILD.DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
      *
      *
      * Debug asserts are useful for providing hints to the programmer that they aren't meeting the contract of the API.
      */
-    public static assert(condition: boolean, errorMessage: string): boolean
+    public static assert(this: void, condition: boolean, errorMessage: string): boolean
     {
         if (!condition)
         {
-            if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
+            if (!_Debug.isFlagSet("DISABLE_BREAKPOINT"))
             {
                 _Debug.breakpoint();
             }
@@ -126,18 +135,18 @@ export class _Debug
      * ```typescript
      * if (errorCondition) {
      *     // in debug mode we error
-     *     DEBUG_MODE && _Debug.error("oopsy");
+     *     _BUILD.DEBUG && _Debug.error("oopsy");
      *     // in production we fall back to some other behavior
      *     return errorConditionValue;
      * }
      * ```
      *
      * @remarks
-     * If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT` is false or unset then a breakpoint will be hit first.
+     * If `_BUILD.DEBUG` is true and `_BUILD.DISABLE_BREAKPOINT` is false or unset then a breakpoint will be hit first.
      */
-    public static error(message: string): boolean
+    public static error(this: void, message: string): boolean
     {
-        if (!_Debug.isFlagSet("DEBUG_DISABLE_BREAKPOINT"))
+        if (!_Debug.isFlagSet("DISABLE_BREAKPOINT"))
         {
             _Debug.breakpoint();
         }
@@ -148,7 +157,7 @@ export class _Debug
     /**
      * Used in place of `debugger` statements when writing libraries. Should generally not be used directly.
      */
-    public static breakpoint(): boolean
+    public static breakpoint(this: void): boolean
     {
         _Debug.onBreakpoint();
 
@@ -161,28 +170,30 @@ export class _Debug
      * @example
      * ```typescript
      * function foo(a1: number) {
-     *     DEBUG_MODE && _Debug.verboseLog(`got me a ${a1}`);
+     *     _BUILD.DEBUG && _Debug.verboseLog(`got me a ${a1}`);
      * }
      * ```
      */
-    public static verboseLog(message: string, ancillaryObject?: object): void
+    public static verboseLog(this: void, message: string, ancillaryObject?: object): void
     {
-        if (!_Debug.isFlagSet("DEBUG_VERBOSE"))
+        if (!_Debug.isFlagSet("VERBOSE"))
         {
             return;
         }
 
         if (ancillaryObject == null)
         {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
             console.debug(message);
         }
         else
         {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
             console.debug(message, ancillaryObject);
         }
     }
 
-    public static getStackTrace(): string
+    public static getStackTrace(this: void): string
     {
         const error = new Error();
         let stack = error.stack;
@@ -206,32 +217,41 @@ export class _Debug
     /**
      * Used to set debug flags in an environment independent way.
      */
-    public static setFlag<TKey extends keyof RcJsUtilDebugFlags>
+    public static setFlag<TKey extends keyof IBuildConstants>
     (
-        flag: RcJsUtilDebugFlags[TKey],
+        this: void,
+        flag: TKey,
         value: boolean
     )
         : void
     {
-        getGlobal()[flag] = value;
+        const build = (getGlobal()["_BUILD"] ??= {}) as IBuildConstants;
+        build[flag] = value;
     }
 
     /**
      * Used to get debug flags in an environment independent way.
      */
-    public static isFlagSet<TKey extends keyof RcJsUtilDebugFlags>(flag: RcJsUtilDebugFlags[TKey]): boolean
+    public static isFlagSet<TKey extends keyof IBuildConstants>
+    (
+        this: void,
+        flag: TKey,
+    )
+        : boolean
     {
-        return Boolean(getGlobal()[flag]);
+        const build = (getGlobal()["_BUILD"] ?? {}) as IBuildConstants;
+        return build[flag] ?? false;
     }
 
     private static onBreakpoint = () =>
     {
         // eslint-disable-next-line no-debugger
         debugger;
-    }
+    };
 
     private static _label: string | undefined = undefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const console: any;
+

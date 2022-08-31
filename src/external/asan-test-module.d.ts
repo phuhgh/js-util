@@ -1,5 +1,5 @@
 import { Emscripten } from "./emscripten";
-import { IJsUtilBindings } from "../src";
+import { IJsUtilBindings } from "../index";
 
 /**
  * @internal
@@ -8,4 +8,4 @@ declare const Module: Emscripten.EmscriptenModuleFactory<IJsUtilBindings>;
 /**
  * @internal
  */
-export default Module;
+export = Module;
