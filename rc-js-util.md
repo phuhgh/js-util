@@ -52,6 +52,7 @@
 |  [ReferenceCountedPtr](./rc-js-util.referencecountedptr.md) | Wrapper of wasm object. |
 |  [ReferenceCounter](./rc-js-util.referencecounter.md) | Weak reference counter. |
 |  [RgbaColorPacker](./rc-js-util.rgbacolorpacker.md) | Utility for packing and unpacking RGBA into int32 with one byte per channel. |
+|  [SanitizedEmscriptenTestModule](./rc-js-util.sanitizedemscriptentestmodule.md) |  |
 |  [SharedArray](./rc-js-util.sharedarray.md) | Typed array shared between wasm and javascript. |
 |  [SharedStaticArray](./rc-js-util.sharedstaticarray.md) | Typed array representing static memory in wasm. |
 |  [TemporaryListener](./rc-js-util.temporarylistener.md) | Provides a communication channel via callbacks which can be easily cleared &amp; copied. |
@@ -165,6 +166,7 @@
 |  [promiseRejectFalsey(value, error)](./rc-js-util.promiserejectfalsey.md) | Returns a Promise of rejection with the supplied error if the <code>value</code> is falsy. |
 |  [promiseRejectNull(value, error)](./rc-js-util.promiserejectnull.md) | Returns a Promise of rejection with the supplied error if the value is <code>null</code> or <code>undefined</code>. |
 |  [regexEscapeRegex(value)](./rc-js-util.regexescaperegex.md) | Escapes RegExp special characters in strings. |
+|  [setDefaultUnitTestFlags()](./rc-js-util.setdefaultunittestflags.md) |  |
 |  [setIsSetEqual(a, b)](./rc-js-util.setissetequal.md) | Tests to see if all of the members of a set are the same. |
 |  [setSetDifference(a, b)](./rc-js-util.setsetdifference.md) | returns items in A not in B. |
 |  [setSymmetricDifference(a, b)](./rc-js-util.setsymmetricdifference.md) | Returns those items in A not in B, and those items in B not in A. |
@@ -222,6 +224,7 @@
 |  [IRefCountedObject](./rc-js-util.irefcountedobject.md) | Holds references to resource(s) that must be life-cycle managed. |
 |  [IReferenceCounted](./rc-js-util.ireferencecounted.md) | Provides a way to handle cleanup of manually managed resources where there is not a single owner. |
 |  [IReferenceCountedPtr](./rc-js-util.ireferencecountedptr.md) | Wrapper of wasm object. NB The object is pre-claimed (ref count 1) on creation. On free the pointer will be set to null. |
+|  [ISanitizedTestModuleOptions](./rc-js-util.isanitizedtestmoduleoptions.md) |  |
 |  [ISetLike](./rc-js-util.isetlike.md) |  |
 |  [ISharedArray](./rc-js-util.isharedarray.md) | Typed array representing a contiguous block of memory in wasm. |
 |  [ISharedArrayBindings](./rc-js-util.isharedarraybindings.md) |  |
@@ -244,6 +247,8 @@
 |  Variable | Description |
 |  --- | --- |
 |  [arrayEmptyArray](./rc-js-util.arrayemptyarray.md) | An empty readonly array, useful to avoid GC pressure. |
+|  [emscriptenAsanTestModuleOptions](./rc-js-util.emscriptenasantestmoduleoptions.md) |  |
+|  [emscriptenSafeHeapTestModuleOptions](./rc-js-util.emscriptensafeheaptestmoduleoptions.md) |  |
 |  [isLittleEndian](./rc-js-util.islittleendian.md) |  |
 |  [iteratorEmptyIterator](./rc-js-util.iteratoremptyiterator.md) | An iterator that is done. |
 
