@@ -1,7 +1,6 @@
-
 {
   "name": "rc-js-util",
-  "version": "8.19.0",
+  "version": "9.0.0",
   "license": "MIT",
   "scripts": {
     "test": "jasmine --config=jasmine.json",
