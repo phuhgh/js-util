@@ -18,7 +18,7 @@ copyFromBuffer(_memoryDataView: DataView, _pointer: number, _littleEndian?: bool
 |  --- | --- | --- |
 |  \_memoryDataView | DataView |  |
 |  \_pointer | number |  |
-|  \_littleEndian | boolean |  |
+|  \_littleEndian | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

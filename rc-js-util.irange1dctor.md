@@ -14,11 +14,11 @@ export interface IRange1dCtor<TArray extends TTypedArray>
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [BYTES\_PER\_ELEMENT](./rc-js-util.irange1dctor.bytes_per_element.md) | number | The size in bytes of each element in the array. |
-|  [factory](./rc-js-util.irange1dctor.factory.md) | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TArray&gt;, [TRange1dCtorArgs](./rc-js-util.trange1dctorargs.md)<!-- -->&gt; |  |
-|  [prototype](./rc-js-util.irange1dctor.prototype.md) | [Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TArray&gt; |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [BYTES\_PER\_ELEMENT](./rc-js-util.irange1dctor.bytes_per_element.md) |  | number | The size in bytes of each element in the array. |
+|  [factory](./rc-js-util.irange1dctor.factory.md) |  | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TArray&gt;, [TRange1dCtorArgs](./rc-js-util.trange1dctorargs.md)<!-- -->&gt; |  |
+|  [prototype](./rc-js-util.irange1dctor.prototype.md) |  | [Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TArray&gt; |  |
 
 ## Methods
 

@@ -11,7 +11,7 @@ Strong reference implementation of [IBroadcastEvent](./rc-js-util.ibroadcasteven
 ```typescript
 export declare class BroadcastEvent<TKey extends string, TArgs extends unknown[]> implements IBroadcastEvent<TKey, TArgs> 
 ```
-<b>Implements:</b> [IBroadcastEvent](./rc-js-util.ibroadcastevent.md)<!-- -->&lt;TKey, TArgs&gt;
+<b>Implements:</b> [IBroadcastEvent](./rc-js-util.ibroadcastevent.md)
 
 ## Constructors
 

@@ -17,6 +17,6 @@ export declare class _Production
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [assertValueIsNever(\_value)](./rc-js-util._production.assertvalueisnever.md) | <code>static</code> | A function that will error if ever called. The parameter is asserted to be never, useful with switch statements, union types etc. |
-|  [createError(message)](./rc-js-util._production.createerror.md) | <code>static</code> | Creates an <code>Error</code> with the given message. If <code>DEBUG_MODE</code> is true and <code>DEBUG_DISABLE_BREAKPOINT_FLAG</code> is false or unset then a breakpoint will be hit first. Should not be used for "expected" errors (bad input etc). |
+|  [createError(message)](./rc-js-util._production.createerror.md) | <code>static</code> | Creates an <code>Error</code> with the given message. If <code>_BUILD.DEBUG</code> is true and <code>_BUILD.DISABLE_BREAKPOINT_FLAG</code> is false or unset then a breakpoint will be hit first. Should not be used for "expected" errors (bad input etc). |
 |  [error(message)](./rc-js-util._production.error.md) | <code>static</code> |  |
 

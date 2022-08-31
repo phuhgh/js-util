@@ -15,7 +15,7 @@ multiplyMat2<TResult extends TTypedArray = TArray>(_mat: IReadonlyMat2<TTypedArr
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_mat | [IReadonlyMat2](./rc-js-util.ireadonlymat2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
-|  \_result | [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TResult&gt; |  |
+|  \_result | [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

@@ -17,5 +17,5 @@ constructor(updatable: IIncrementallyUpdatable, waitPeriod?: number);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  updatable | [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) |  |
-|  waitPeriod | number |  |
+|  waitPeriod | number | <i>(Optional)</i> |
 

@@ -16,5 +16,5 @@ constructor(refs?: IReferenceCounted[]);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refs | [IReferenceCounted](./rc-js-util.ireferencecounted.md)<!-- -->\[\] |  |
+|  refs | [IReferenceCounted](./rc-js-util.ireferencecounted.md)<!-- -->\[\] | <i>(Optional)</i> |
 

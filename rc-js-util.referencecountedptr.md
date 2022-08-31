@@ -19,7 +19,7 @@ export declare class ReferenceCountedPtr extends AReferenceCounted implements IR
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(isStatic, wasmPtr, listenerObj)](./rc-js-util.referencecountedptr._constructor_.md) |  | Constructs a new instance of the <code>ReferenceCountedPtr</code> class |
+|  [(constructor)(isStatic, wasmPtr, owner, listenerObj)](./rc-js-util.referencecountedptr._constructor_.md) |  | Constructs a new instance of the <code>ReferenceCountedPtr</code> class |
 
 ## Properties
 
@@ -27,6 +27,7 @@ export declare class ReferenceCountedPtr extends AReferenceCounted implements IR
 |  --- | --- | --- | --- |
 |  [isStatic](./rc-js-util.referencecountedptr.isstatic.md) |  | boolean |  |
 |  [listenerObj?](./rc-js-util.referencecountedptr.listenerobj.md) |  | [IOnFree](./rc-js-util.ionfree.md) \| undefined | <i>(Optional)</i> |
+|  [owner](./rc-js-util.referencecountedptr.owner.md) |  | [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md)<!-- -->&lt;object&gt; |  |
 |  [wasmPtr](./rc-js-util.referencecountedptr.wasmptr.md) |  | number |  |
 
 ## Methods

@@ -9,7 +9,7 @@ Like [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) but without holding stro
 <b>Signature:</b>
 
 ```typescript
-export interface IDebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]>
+export interface IDebugWeakBroadcastEvent<K extends string, TArgs extends unknown[]> 
 ```
 
 ## Methods

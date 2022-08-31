@@ -17,7 +17,7 @@ setValue(dataView: DataView, ptr: number, value: number, littleEndian?: boolean)
 |  dataView | DataView |  |
 |  ptr | number |  |
 |  value | number |  |
-|  littleEndian | boolean |  |
+|  littleEndian | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

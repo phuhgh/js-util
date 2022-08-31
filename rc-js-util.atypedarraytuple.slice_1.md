@@ -14,8 +14,8 @@ slice(_start?: number, _end?: number): TDecayedTypedArrayTuple;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_start | number |  |
-|  \_end | number |  |
+|  \_start | number | <i>(Optional)</i> |
+|  \_end | number | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

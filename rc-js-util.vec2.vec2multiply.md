@@ -17,7 +17,7 @@ vec2Multiply<TResult extends TTypedArray = TArray>(_value: IReadonlyVec2<TTypedA
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_value | [IReadonlyVec2](./rc-js-util.ireadonlyvec2.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
-|  \_result | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TResult&gt; |  |
+|  \_result | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

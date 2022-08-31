@@ -16,7 +16,7 @@ join(_separator?: string): string;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_separator | string | A string used to separate one element of an array from the next in the resulting String. If omitted, the array elements are separated with a comma. |
+|  \_separator | string | <i>(Optional)</i> A string used to separate one element of an array from the next in the resulting String. If omitted, the array elements are separated with a comma. |
 
 <b>Returns:</b>
 

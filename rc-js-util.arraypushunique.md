@@ -18,7 +18,7 @@ export declare function arrayPushUnique<TItem>(items: TItem[], itemToPush: TItem
 |  --- | --- | --- |
 |  items | TItem\[\] |  |
 |  itemToPush | TItem |  |
-|  getComparisonValue | (item: TItem) =&gt; unknown |  |
+|  getComparisonValue | (item: TItem) =&gt; unknown | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

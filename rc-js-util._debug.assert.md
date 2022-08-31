@@ -9,13 +9,14 @@ Throws an `Error` with the given message if the condition is false.
 <b>Signature:</b>
 
 ```typescript
-static assert(condition: boolean, errorMessage: string): boolean;
+static assert(this: void, condition: boolean, errorMessage: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  this | void |  |
 |  condition | boolean |  |
 |  errorMessage | string |  |
 
@@ -27,7 +28,7 @@ A boolean value to make linting happy...
 
 ## Remarks
 
-If `DEBUG_DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
+If `_BUILD.DISABLE_BREAKPOINT_FLAG` is false or unset then a breakpoint will be hit first.
 
 Debug asserts are useful for providing hints to the programmer that they aren't meeting the contract of the API.
 
@@ -37,7 +38,7 @@ Debug asserts are useful for providing hints to the programmer that they aren't 
 ```typescript
 function foo(a1: number) {
     // not suitable for a production check, the programmer lied about the input type they supplied
-    DEBUG_MODE && _Debug.assert(a1 != null, "a1 must be supplied");
+    _BUILD.DEBUG && _Debug.assert(a1 != null, "a1 must be supplied");
 }
 ```
 

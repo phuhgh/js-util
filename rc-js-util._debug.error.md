@@ -9,13 +9,14 @@ Throws an `Error` with the given message.
 <b>Signature:</b>
 
 ```typescript
-static error(message: string): boolean;
+static error(this: void, message: string): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  this | void |  |
 |  message | string |  |
 
 <b>Returns:</b>
@@ -26,7 +27,7 @@ A boolean value to make linting happy... will never return.
 
 ## Remarks
 
-If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT` is false or unset then a breakpoint will be hit first.
+If `_BUILD.DEBUG` is true and `_BUILD.DISABLE_BREAKPOINT` is false or unset then a breakpoint will be hit first.
 
 ## Example
 
@@ -34,7 +35,7 @@ If `DEBUG_MODE` is true and `DEBUG_DISABLE_BREAKPOINT` is false or unset then a 
 ```typescript
 if (errorCondition) {
     // in debug mode we error
-    DEBUG_MODE && _Debug.error("oopsy");
+    _BUILD.DEBUG && _Debug.error("oopsy");
     // in production we fall back to some other behavior
     return errorConditionValue;
 }

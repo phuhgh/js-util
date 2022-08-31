@@ -17,7 +17,7 @@ subarray(_begin: number, _end?: number): TDecayedTypedArrayTuple;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_begin | number | The index of the beginning of the array. |
-|  \_end | number | The index of the end of the array. |
+|  \_end | number | <i>(Optional)</i> The index of the end of the array. |
 
 <b>Returns:</b>
 

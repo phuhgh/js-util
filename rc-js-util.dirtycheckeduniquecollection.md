@@ -11,7 +11,7 @@ Provides a unique array with O(1) add &amp; remove, with dirty checking on `getA
 ```typescript
 export declare class DirtyCheckedUniqueCollection<TItem> implements IDirtyCheckedUniqueCollection<TItem>, ISetLike<TItem> 
 ```
-<b>Implements:</b> [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md)<!-- -->&lt;TItem&gt;, [ISetLike](./rc-js-util.isetlike.md)<!-- -->&lt;TItem&gt;
+<b>Implements:</b> [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md)<!-- -->&lt;TItem&gt;, [ISetLike](./rc-js-util.isetlike.md)
 
 ## Constructors
 

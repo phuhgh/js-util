@@ -14,9 +14,9 @@ export interface IWebAssemblyMemoryMemory
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [buffer](./rc-js-util.iwebassemblymemorymemory.buffer.md) | ArrayBuffer |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [buffer](./rc-js-util.iwebassemblymemorymemory.buffer.md) |  | ArrayBuffer |  |
 
 ## Methods
 

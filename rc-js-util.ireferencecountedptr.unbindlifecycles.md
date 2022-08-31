@@ -4,7 +4,7 @@
 
 ## IReferenceCountedPtr.unbindLifecycles() method
 
-Releases claims on the the `referenceCountedObjects`<!-- -->.
+Releases claims on the `referenceCountedObjects`<!-- -->.
 
 <b>Signature:</b>
 

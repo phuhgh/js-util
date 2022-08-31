@@ -14,7 +14,7 @@ export interface IRefCountedObject
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [sharedObject](./rc-js-util.irefcountedobject.sharedobject.md) | [IReferenceCounted](./rc-js-util.ireferencecounted.md) |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [sharedObject](./rc-js-util.irefcountedobject.sharedobject.md) |  | [IReferenceCounted](./rc-js-util.ireferencecounted.md) |  |
 

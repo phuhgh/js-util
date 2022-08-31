@@ -16,5 +16,5 @@ constructor(id?: number);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  id | number |  |
+|  id | number | <i>(Optional)</i> |
 

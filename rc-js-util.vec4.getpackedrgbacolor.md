@@ -14,7 +14,7 @@ getPackedRGBAColor(_normalized?: boolean): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_normalized | boolean | Format of the color stored in the Vec4, if true 0 - 1, else 0 - 255. |
+|  \_normalized | boolean | <i>(Optional)</i> Format of the color stored in the Vec4, if true 0 - 1, else 0 - 255. |
 
 <b>Returns:</b>
 

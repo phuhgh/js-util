@@ -19,11 +19,11 @@ NB the pointer does not necessarily point to the start of the block (e.g. it may
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [ctor](./rc-js-util.isharedarray.ctor.md) | TCtor |  |
-|  [elementByteSize](./rc-js-util.isharedarray.elementbytesize.md) | number | Size of element in the array, length \* elementByteSize is not necessarily the size of the object. |
-|  [length](./rc-js-util.isharedarray.length.md) | number |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [ctor](./rc-js-util.isharedarray.ctor.md) |  | TCtor |  |
+|  [elementByteSize](./rc-js-util.isharedarray.elementbytesize.md) |  | number | Size of element in the array, length \* elementByteSize is not necessarily the size of the object. |
+|  [length](./rc-js-util.isharedarray.length.md) |  | number |  |
 
 ## Methods
 

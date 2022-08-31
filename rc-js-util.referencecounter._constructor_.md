@@ -16,5 +16,5 @@ constructor(onZeroReference?: (key: TKey) => void);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  onZeroReference | (key: TKey) =&gt; void |  |
+|  onZeroReference | (key: TKey) =&gt; void | <i>(Optional)</i> |
 

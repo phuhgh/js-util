@@ -17,8 +17,8 @@ fill(_value: number, _start?: number, _end?: number): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_value | number | value to fill array section with |
-|  \_start | number | index to start filling the array at. If start is negative, it is treated as length+start where length is the length of the array. |
-|  \_end | number | index to stop filling the array at. If end is negative, it is treated as length+end. |
+|  \_start | number | <i>(Optional)</i> index to start filling the array at. If start is negative, it is treated as length+start where length is the length of the array. |
+|  \_end | number | <i>(Optional)</i> index to stop filling the array at. If end is negative, it is treated as length+end. |
 
 <b>Returns:</b>
 

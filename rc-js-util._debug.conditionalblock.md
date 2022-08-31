@@ -9,14 +9,14 @@ Convenience method to run multiple asserts if flag set.
 <b>Signature:</b>
 
 ```typescript
-static conditionalBlock<TKey extends keyof RcJsUtilDebugFlags>(flag: RcJsUtilDebugFlags[TKey], cb: () => void): boolean;
+static conditionalBlock<TKey extends keyof IBuildConstants>(flag: TKey, cb: () => void): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  flag | RcJsUtilDebugFlags\[TKey\] |  |
+|  flag | TKey |  |
 |  cb | () =&gt; void |  |
 
 <b>Returns:</b>
@@ -27,13 +27,13 @@ A boolean value to make linting happy...
 
 ## Remarks
 
-Must still be hidden behind DEBUG\_MODE check for dead code removal.
+Must still be hidden behind \_BUILD.DEBUG check for dead code removal.
 
 ## Example
 
 
 ```typescript
-DEBUG_MODE && _Debug.conditionalBlock("SOME_FLAG", () => {
+_BUILD.DEBUG && _Debug.conditionalBlock("SOME_FLAG", () => {
     _Debug.assert(someCondition, "someCondition was wrong");
     // ...
 });

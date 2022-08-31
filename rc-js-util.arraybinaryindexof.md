@@ -20,7 +20,7 @@ export declare function arrayBinaryIndexOf<T>(indexable: T, comparisonValueToSea
 |  comparisonValueToSearchFor | number | The comparison value which is being searched for. |
 |  getComparisonValueAtIndex | [TGetComparisonValueAtIndex](./rc-js-util.tgetcomparisonvalueatindex.md)<!-- -->&lt;T&gt; | A function that provides the value for comparison at a given index. |
 |  length | number | The number of elements in the structure <code>indexable</code> to search. |
-|  start | number | The start index. |
+|  start | number | <i>(Optional)</i> The start index. |
 
 <b>Returns:</b>
 

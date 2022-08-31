@@ -18,7 +18,7 @@ scaleRelativeTo<TResult extends TTypedArray = TArray>(_scalingFactor: number, _r
 |  --- | --- | --- |
 |  \_scalingFactor | number |  |
 |  \_relativeTo | number |  |
-|  \_result | [Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TResult&gt; |  |
+|  \_result | [Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

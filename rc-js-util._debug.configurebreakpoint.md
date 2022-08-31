@@ -9,13 +9,14 @@ Most debuggers will ignore `debugger` statements in node\_modules. Skirt around 
 <b>Signature:</b>
 
 ```typescript
-static configureBreakpoint(onBreakpoint: () => void): void;
+static configureBreakpoint(this: void, onBreakpoint: () => void): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  this | void |  |
 |  onBreakpoint | () =&gt; void | called on debug assert etc, you should provide a function with a <code>debugger</code> statement. |
 
 <b>Returns:</b>

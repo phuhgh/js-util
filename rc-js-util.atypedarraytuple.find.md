@@ -17,7 +17,7 @@ find(_predicate: (value: number, index: TExtractIndexes<this>, obj: this) => boo
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_predicate | (value: number, index: [TExtractIndexes](./rc-js-util.textractindexes.md)<!-- -->&lt;this&gt;, obj: this) =&gt; boolean | find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined. |
-|  \_thisArg | unknown | If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead. |
+|  \_thisArg | unknown | <i>(Optional)</i> If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead. |
 
 <b>Returns:</b>
 

@@ -14,7 +14,7 @@ export declare class DebugSharedObjectChecks
 
 ## Remarks
 
-`ProtectedViews` will be invalidated any time a memory resize might occur with standard `DEBUG_MODE` set.
+`ProtectedViews` will be invalidated any time a memory resize might occur with standard `_BUILD.DEBUG` set.
 
 On garbage collect of the javascript object, the associated WASM pointer is checked to see if it has been disposed of.
 
@@ -24,5 +24,5 @@ On garbage collect of the javascript object, the associated WASM pointer is chec
 |  --- | --- | --- |
 |  [register(instance, protectedView, nameOfInstance)](./rc-js-util.debugsharedobjectchecks.register.md) | <code>static</code> |  |
 |  [registerWithCleanup(instance, protectedView, nameOfInstance)](./rc-js-util.debugsharedobjectchecks.registerwithcleanup.md) | <code>static</code> | Calls register on the shared object but also registers the associated cleanup on release too. |
-|  [unregister(instance, nameOfInstance)](./rc-js-util.debugsharedobjectchecks.unregister.md) | <code>static</code> |  |
+|  [unregister(protectedView, instance, nameOfInstance)](./rc-js-util.debugsharedobjectchecks.unregister.md) | <code>static</code> |  |
 

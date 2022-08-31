@@ -15,7 +15,7 @@ setRGBAColor(_packedRGBA: number, _normalize?: boolean): Vec4<TArray>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_packedRGBA | number | The number to be unpacked. |
-|  \_normalize | boolean | If true, normalize components between 0 - 1. |
+|  \_normalize | boolean | <i>(Optional)</i> If true, normalize components between 0 - 1. |
 
 <b>Returns:</b>
 

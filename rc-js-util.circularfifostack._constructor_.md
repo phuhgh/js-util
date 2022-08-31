@@ -17,5 +17,5 @@ constructor(capacity: number, mode?: ECircularStackOverflowMode);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  capacity | number |  |
-|  mode | [ECircularStackOverflowMode](./rc-js-util.ecircularstackoverflowmode.md) |  |
+|  mode | [ECircularStackOverflowMode](./rc-js-util.ecircularstackoverflowmode.md) | <i>(Optional)</i> |
 

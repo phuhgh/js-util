@@ -9,9 +9,9 @@ Typed array shared between wasm and javascript.
 <b>Signature:</b>
 
 ```typescript
-export declare class SharedArray<TCtor extends TTypedArrayCtor> implements ISharedArray<TCtor>, IOnMemoryResize 
+export declare class SharedArray<TCtor extends TTypedArrayCtor> implements ISharedArray<TCtor>, IOnMemoryResize, IDebugAllocateListener 
 ```
-<b>Implements:</b> [ISharedArray](./rc-js-util.isharedarray.md)<!-- -->&lt;TCtor&gt;, [IOnMemoryResize](./rc-js-util.ionmemoryresize.md)
+<b>Implements:</b> [ISharedArray](./rc-js-util.isharedarray.md)<!-- -->&lt;TCtor&gt;, [IOnMemoryResize](./rc-js-util.ionmemoryresize.md)<!-- -->, [IDebugAllocateListener](./rc-js-util.idebugallocatelistener.md)
 
 ## Constructors
 

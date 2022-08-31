@@ -17,7 +17,7 @@ every(_callbackfn: (value: number, index: TExtractIndexes<this>, array: this) =>
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_callbackfn | (value: number, index: [TExtractIndexes](./rc-js-util.textractindexes.md)<!-- -->&lt;this&gt;, array: this) =&gt; boolean | A function that accepts up to three arguments. The every method calls the \_callbackfn function for each element in array1 until the \_callbackfn returns false, or until the end of the array. |
-|  \_thisArg | unknown | An object to which the this keyword can refer in the \_callbackfn function. If \_thisArg is omitted, undefined is used as the this value. |
+|  \_thisArg | unknown | <i>(Optional)</i> An object to which the this keyword can refer in the \_callbackfn function. If \_thisArg is omitted, undefined is used as the this value. |
 
 <b>Returns:</b>
 

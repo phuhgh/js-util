@@ -14,11 +14,11 @@ export interface IMat4Ctor<TArray extends TTypedArray>
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [BYTES\_PER\_ELEMENT](./rc-js-util.imat4ctor.bytes_per_element.md) | number | The size in bytes of each element in the array. |
-|  [factory](./rc-js-util.imat4ctor.factory.md) | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Mat4](./rc-js-util.mat4.md)<!-- -->&lt;TArray&gt;, [TMat4CtorArgs](./rc-js-util.tmat4ctorargs.md)<!-- -->&gt; |  |
-|  [prototype](./rc-js-util.imat4ctor.prototype.md) | [Mat4](./rc-js-util.mat4.md)<!-- -->&lt;TArray&gt; |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [BYTES\_PER\_ELEMENT](./rc-js-util.imat4ctor.bytes_per_element.md) |  | number | The size in bytes of each element in the array. |
+|  [factory](./rc-js-util.imat4ctor.factory.md) |  | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Mat4](./rc-js-util.mat4.md)<!-- -->&lt;TArray&gt;, [TMat4CtorArgs](./rc-js-util.tmat4ctorargs.md)<!-- -->&gt; |  |
+|  [prototype](./rc-js-util.imat4ctor.prototype.md) |  | [Mat4](./rc-js-util.mat4.md)<!-- -->&lt;TArray&gt; |  |
 
 ## Methods
 

@@ -16,7 +16,7 @@ extendRange<TResult extends TTypedArray = TArray>(_x: number, _y: number, _write
 |  --- | --- | --- |
 |  \_x | number |  |
 |  \_y | number |  |
-|  \_writeTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; |  |
+|  \_writeTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

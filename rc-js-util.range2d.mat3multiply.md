@@ -15,7 +15,7 @@ mat3Multiply<TResult extends TTypedArray = TArray>(_mat: IReadonlyMat3<TTypedArr
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_mat | [IReadonlyMat3](./rc-js-util.ireadonlymat3.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
-|  \_writeTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; |  |
+|  \_writeTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

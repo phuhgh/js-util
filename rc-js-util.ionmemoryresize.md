@@ -10,5 +10,5 @@
 ```typescript
 export interface IOnMemoryResize extends TListener<"onMemoryResize", []> 
 ```
-<b>Extends:</b> [TListener](./rc-js-util.tlistener.md)<!-- -->&lt;"onMemoryResize", \[\]&gt;
+<b>Extends:</b> [TListener](./rc-js-util.tlistener.md)
 

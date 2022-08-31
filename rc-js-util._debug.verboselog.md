@@ -9,15 +9,16 @@ Logging which can be conditionally enabled by setting `DEBUG_VERBOSE` to true.
 <b>Signature:</b>
 
 ```typescript
-static verboseLog(message: string, ancillaryObject?: object): void;
+static verboseLog(this: void, message: string, ancillaryObject?: object): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  this | void |  |
 |  message | string |  |
-|  ancillaryObject | object |  |
+|  ancillaryObject | object | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
@@ -28,7 +29,7 @@ void
 
 ```typescript
 function foo(a1: number) {
-    DEBUG_MODE && _Debug.verboseLog(`got me a ${a1}`);
+    _BUILD.DEBUG && _Debug.verboseLog(`got me a ${a1}`);
 }
 ```
 

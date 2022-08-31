@@ -9,14 +9,14 @@ See [ISharedObject](./rc-js-util.isharedobject.md)<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-export interface IDebugSharedObject
+export interface IDebugSharedObject 
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [isStatic](./rc-js-util.idebugsharedobject.isstatic.md) | boolean |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [isStatic](./rc-js-util.idebugsharedobject.isstatic.md) |  | boolean |  |
 
 ## Methods
 

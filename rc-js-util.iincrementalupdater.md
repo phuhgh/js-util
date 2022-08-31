@@ -14,9 +14,9 @@ export interface IIncrementalUpdater
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [isUpdating](./rc-js-util.iincrementalupdater.isupdating.md) | boolean |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [isUpdating](./rc-js-util.iincrementalupdater.isupdating.md) |  | boolean |  |
 
 ## Methods
 

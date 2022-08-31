@@ -17,7 +17,7 @@ getRangeTransform<TResult extends TTypedArray = TArray>(_toRange: Readonly<Range
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_toRange | Readonly&lt;[Range1d](./rc-js-util.range1d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt;&gt; |  |
-|  \_result | [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TResult&gt; |  |
+|  \_result | [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

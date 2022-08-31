@@ -13,10 +13,11 @@ export interface IEmscriptenWrapper<T extends object>
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [dataView](./rc-js-util.iemscriptenwrapper.dataview.md) | DataView |  |
-|  [instance](./rc-js-util.iemscriptenwrapper.instance.md) | T &amp; [Emscripten.EmscriptenModule](./rc-js-util.emscripten.emscriptenmodule.md) |  |
-|  [memory](./rc-js-util.iemscriptenwrapper.memory.md) | [IWebAssemblyMemoryMemory](./rc-js-util.iwebassemblymemorymemory.md) |  |
-|  [memoryResize](./rc-js-util.iemscriptenwrapper.memoryresize.md) | [IBroadcastEvent](./rc-js-util.ibroadcastevent.md)<!-- -->&lt;"onMemoryResize", [TWebAssemblyMemoryListenerArgs](./rc-js-util.twebassemblymemorylistenerargs.md)<!-- -->&gt; |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [dataView](./rc-js-util.iemscriptenwrapper.dataview.md) |  | DataView |  |
+|  [debug](./rc-js-util.iemscriptenwrapper.debug.md) |  | [IEmscriptenDebug](./rc-js-util.iemscriptendebug.md) |  |
+|  [instance](./rc-js-util.iemscriptenwrapper.instance.md) |  | T &amp; [Emscripten.EmscriptenModule](./rc-js-util.emscripten.emscriptenmodule.md) |  |
+|  [memory](./rc-js-util.iemscriptenwrapper.memory.md) |  | [IWebAssemblyMemoryMemory](./rc-js-util.iwebassemblymemorymemory.md) |  |
+|  [memoryResize](./rc-js-util.iemscriptenwrapper.memoryresize.md) |  | [IBroadcastEvent](./rc-js-util.ibroadcastevent.md)<!-- -->&lt;"onMemoryResize", [TWebAssemblyMemoryListenerArgs](./rc-js-util.twebassemblymemorylistenerargs.md)<!-- -->&gt; |  |
 

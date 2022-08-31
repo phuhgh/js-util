@@ -17,7 +17,7 @@ mat3TransformLength<TResult extends TTypedArray = TArray>(_mat: IReadonlyMat3<TT
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_mat | [IReadonlyMat3](./rc-js-util.ireadonlymat3.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
-|  \_writeTo | [Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TResult&gt; |  |
+|  \_writeTo | [Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

@@ -11,7 +11,7 @@ Row major 3x3 matrix.
 ```typescript
 export declare abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<9, TArray> 
 ```
-<b>Extends:</b> [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md)<!-- -->&lt;9, TArray&gt;
+<b>Extends:</b> [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md)
 
 ## Remarks
 

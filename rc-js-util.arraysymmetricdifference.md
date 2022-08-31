@@ -18,8 +18,8 @@ export declare function arraySymmetricDifference<TItem>(a: readonly TItem[], b: 
 |  --- | --- | --- |
 |  a | readonly TItem\[\] |  |
 |  b | readonly TItem\[\] |  |
-|  aSet | ReadonlySet&lt;TItem&gt; |  |
-|  bSet | ReadonlySet&lt;TItem&gt; |  |
+|  aSet | ReadonlySet&lt;TItem&gt; | <i>(Optional)</i> |
+|  bSet | ReadonlySet&lt;TItem&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

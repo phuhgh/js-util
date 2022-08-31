@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-static createTypedArrayView: <TCtor extends TTypedArrayCtor>() => DebugProtectedView<InstanceType<TCtor>>;
+static createTypedArrayView: <TCtor extends TTypedArrayCtor>(owningInstance: IEmscriptenWrapper<object>) => DebugProtectedView<InstanceType<TCtor>>;
 ```

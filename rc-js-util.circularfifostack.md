@@ -11,7 +11,7 @@ Circular first in first out stack.
 ```typescript
 export declare class CircularFIFOStack<TValue> implements IFIFOStack<TValue> 
 ```
-<b>Implements:</b> [IFIFOStack](./rc-js-util.ififostack.md)<!-- -->&lt;TValue&gt;
+<b>Implements:</b> [IFIFOStack](./rc-js-util.ififostack.md)
 
 ## Remarks
 

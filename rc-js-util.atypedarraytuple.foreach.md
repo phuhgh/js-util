@@ -17,7 +17,7 @@ forEach(_callbackfn: (value: number, index: number, array: this) => void, _thisA
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_callbackfn | (value: number, index: number, array: this) =&gt; void | A function that accepts up to three arguments. forEach calls the \_callbackfn function one time for each element in the array. |
-|  \_thisArg | unknown | An object to which the this keyword can refer in the \_callbackfn function. If \_thisArg is omitted, undefined is used as the this value. |
+|  \_thisArg | unknown | <i>(Optional)</i> An object to which the this keyword can refer in the \_callbackfn function. If \_thisArg is omitted, undefined is used as the this value. |
 
 <b>Returns:</b>
 

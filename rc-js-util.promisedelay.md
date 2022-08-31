@@ -17,7 +17,7 @@ export declare function promiseDelay<T>(resolveWith: T, delay?: number): Promise
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  resolveWith | T |  |
-|  delay | number |  |
+|  delay | number | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

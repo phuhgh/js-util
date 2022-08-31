@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static unregister(instance: {
+static unregister(protectedView: IDebugProtectedView, instance: {
         debugOnAllocate?: () => void;
     } & ISharedObject, nameOfInstance: string): void;
 ```
@@ -16,6 +16,7 @@ static unregister(instance: {
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  protectedView | [IDebugProtectedView](./rc-js-util.idebugprotectedview.md) |  |
 |  instance | { debugOnAllocate?: () =&gt; void; } &amp; [ISharedObject](./rc-js-util.isharedobject.md) |  |
 |  nameOfInstance | string |  |
 

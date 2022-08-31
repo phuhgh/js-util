@@ -14,7 +14,7 @@ export interface ISharedObject
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [sharedObject](./rc-js-util.isharedobject.sharedobject.md) | [IReferenceCountedPtr](./rc-js-util.ireferencecountedptr.md) |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [sharedObject](./rc-js-util.isharedobject.sharedobject.md) |  | [IReferenceCountedPtr](./rc-js-util.ireferencecountedptr.md) |  |
 

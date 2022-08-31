@@ -18,7 +18,7 @@ export declare function pathJoin(start: string, end: string, separator?: string)
 |  --- | --- | --- |
 |  start | string |  |
 |  end | string |  |
-|  separator | string |  |
+|  separator | string | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

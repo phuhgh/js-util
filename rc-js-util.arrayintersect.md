@@ -18,7 +18,7 @@ export declare function arrayIntersect<TItem>(a: ArrayLike<TItem>, b: ArrayLike<
 |  --- | --- | --- |
 |  a | ArrayLike&lt;TItem&gt; |  |
 |  b | ArrayLike&lt;TItem&gt; |  |
-|  getComparisonValue | (item: TItem, index: number) =&gt; unknown |  |
+|  getComparisonValue | (item: TItem, index: number) =&gt; unknown | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

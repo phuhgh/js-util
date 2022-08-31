@@ -11,7 +11,7 @@ Vector 4.
 ```typescript
 export declare abstract class Vec4<TArray extends TTypedArray> extends ATypedArrayTuple<4, TArray> 
 ```
-<b>Extends:</b> [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md)<!-- -->&lt;4, TArray&gt;
+<b>Extends:</b> [ATypedArrayTuple](./rc-js-util.atypedarraytuple.md)
 
 ## Remarks
 

@@ -17,7 +17,7 @@ export declare function arrayUnion<TItem>(items: ArrayLike<ArrayLike<TItem>>, ge
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  items | ArrayLike&lt;ArrayLike&lt;TItem&gt;&gt; |  |
-|  getComparisonValue | (item: TItem, index: number) =&gt; unknown |  |
+|  getComparisonValue | (item: TItem, index: number) =&gt; unknown | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

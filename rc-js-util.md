@@ -32,7 +32,7 @@
 |  [BroadcastEvent](./rc-js-util.broadcastevent.md) | Strong reference implementation of [IBroadcastEvent](./rc-js-util.ibroadcastevent.md)<!-- -->. |
 |  [CircularBuffer](./rc-js-util.circularbuffer.md) | Presents an array as if it were circular, going past the end or start loops around. |
 |  [CircularFIFOStack](./rc-js-util.circularfifostack.md) | Circular first in first out stack. |
-|  [DebugProtectedView](./rc-js-util.debugprotectedview.md) | Provides a view of an object that can be invalidated, causing attempts to access it to error in <code>DEBUG_MODE</code>. |
+|  [DebugProtectedView](./rc-js-util.debugprotectedview.md) | Provides a view of an object that can be invalidated, causing attempts to access it to error in <code>_BUILD.DEBUG</code>. |
 |  [DebugSharedObjectChecks](./rc-js-util.debugsharedobjectchecks.md) | Provides life cycle and access checks for shared objects. |
 |  [DirtyCheckedUniqueCollection](./rc-js-util.dirtycheckeduniquecollection.md) | Provides a unique array with O(1) add &amp; remove, with dirty checking on <code>getArray</code>. |
 |  [IncrementalUpdater](./rc-js-util.incrementalupdater.md) | Performs update operations once every <code>waitPeriod</code> until the iterator returned by [IIncrementallyUpdatable](./rc-js-util.iincrementallyupdatable.md) is exhausted. |
@@ -138,7 +138,7 @@
 |  [mapFirstValue(map)](./rc-js-util.mapfirstvalue.md) | Gets the first inserted value in a <code>Map</code>. |
 |  [mapInitializeGet(map, key, getValue)](./rc-js-util.mapinitializeget.md) | Gets the value from a <code>Map</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
 |  [mapInitializeGet(map, key, getValue)](./rc-js-util.mapinitializeget_1.md) | Gets the value from a <code>Map</code> for a given key, where the value is <code>undefined</code> or hasn't been set, the callback's return will be inserted into the <code>Map</code> and returned. |
-|  [mapIntersect(a, b)](./rc-js-util.mapintersect.md) | Does not check value equality, only key. Takes items from A.<!-- -->See [mapIntersect()](./rc-js-util.mapintersect.md)<!-- -->. |
+|  [mapIntersect(a, b)](./rc-js-util.mapintersect.md) | <p>Does not check value equality, only key. Takes items from A.</p><p>See [mapIntersect()](./rc-js-util.mapintersect.md)<!-- -->.</p> |
 |  [mapKeysToArray(map)](./rc-js-util.mapkeystoarray.md) | Converts a <code>Map</code> into an <code>Array</code> of its keys. |
 |  [mapPush(map, key, value)](./rc-js-util.mappush.md) | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
 |  [mapPush(map, key, value)](./rc-js-util.mappush_1.md) | Used with maps that store arrays. Where an array exists for a given key the value will be appended to that array, otherwise a new array will be created containing the value. |
@@ -177,14 +177,16 @@
 |  Interface | Description |
 |  --- | --- |
 |  [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) | Simple one to many communication channel. Proxies the arguments of emit to each listener. |
+|  [IDebugAllocateListener](./rc-js-util.idebugallocatelistener.md) |  |
 |  [IDebugBindings](./rc-js-util.idebugbindings.md) | Emscripten bindings for debugging. |
 |  [IDebugProtectedView](./rc-js-util.idebugprotectedview.md) | Factory for creating proxy objects that can be invalidated later. Once invalidated any property read that wasn't explicitly marked safe will cause a debug error. Available in debug contexts only. |
 |  [IDebugSharedObject](./rc-js-util.idebugsharedobject.md) | See [ISharedObject](./rc-js-util.isharedobject.md)<!-- -->. |
-|  [IDebugSharedObjectLifeCycleChecks](./rc-js-util.idebugsharedobjectlifecyclechecks.md) | Wrapper of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) for shared objects, useful for checking if the shared object was properly disposed. Available in debug contexts only. |
+|  [IDebugSharedObjectLifeCycleChecker](./rc-js-util.idebugsharedobjectlifecyclechecker.md) | Wrapper of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) for shared objects, useful for checking if the shared object was properly disposed. Available in debug contexts only. |
 |  [IDebugWeakBroadcastEvent](./rc-js-util.idebugweakbroadcastevent.md) | Like [IBroadcastEvent](./rc-js-util.ibroadcastevent.md) but without holding strong references. Available in debug contexts only. |
 |  [IDebugWeakStore](./rc-js-util.idebugweakstore.md) | A weakmap store available in debug contexts only. |
 |  [IDictionary](./rc-js-util.idictionary.md) |  |
 |  [IDirtyCheckedUniqueCollection](./rc-js-util.idirtycheckeduniquecollection.md) | Provides a unique array with O(1) add &amp; remove, with dirty checking on <code>getArray</code>. |
+|  [IEmscriptenDebug](./rc-js-util.iemscriptendebug.md) |  |
 |  [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md) |  |
 |  [IFIFOStack](./rc-js-util.ififostack.md) | Circular first in first out stack. |
 |  [IIdentifierFactory](./rc-js-util.iidentifierfactory.md) |  |
@@ -224,7 +226,6 @@
 |  [ISharedArray](./rc-js-util.isharedarray.md) | Typed array representing a contiguous block of memory in wasm. |
 |  [ISharedArrayBindings](./rc-js-util.isharedarraybindings.md) |  |
 |  [ISharedObject](./rc-js-util.isharedobject.md) | Holds a reference to wasm object. |
-|  [IStandardDebugFlags](./rc-js-util.istandarddebugflags.md) | The debug flags included with rc-js-util |
 |  [ITemporaryListener](./rc-js-util.itemporarylistener.md) | Provides a communication channel via callbacks which can be easily cleared &amp; copied. |
 |  [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md) | Defines utility methods for creating typed array tuples. |
 |  [IVec2Ctor](./rc-js-util.ivec2ctor.md) | Constructor for [Vec2](./rc-js-util.vec2.md)<!-- -->. |
@@ -237,7 +238,6 @@
 |  Namespace | Description |
 |  --- | --- |
 |  [Emscripten](./rc-js-util.emscripten.md) | External lib. |
-|  [RcJsUtilDebugImpl](./rc-js-util.rcjsutildebugimpl.md) | Exposed as RcJsUtilDebug in the global namespace when DEBUG\_MODE is set to true. |
 
 ## Variables
 

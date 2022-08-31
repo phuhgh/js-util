@@ -16,7 +16,7 @@ sort(_compareFn?: (a: number, b: number) => number): this;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_compareFn | (a: number, b: number) =&gt; number | The name of the function used to determine the order of the elements. If omitted, the elements are sorted in ascending, ASCII character order. |
+|  \_compareFn | (a: number, b: number) =&gt; number | <i>(Optional)</i> The name of the function used to determine the order of the elements. If omitted, the elements are sorted in ascending, ASCII character order. |
 
 <b>Returns:</b>
 

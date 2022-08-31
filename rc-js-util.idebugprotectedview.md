@@ -9,8 +9,14 @@ Factory for creating proxy objects that can be invalidated later. Once invalidat
 <b>Signature:</b>
 
 ```typescript
-export interface IDebugProtectedView<_T extends object>
+export interface IDebugProtectedView 
 ```
+
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [owningInstance](./rc-js-util.idebugprotectedview.owninginstance.md) |  | [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md)<!-- -->&lt;object&gt; |  |
 
 ## Methods
 

@@ -14,11 +14,11 @@ export interface IVec3Ctor<TArray extends TTypedArray>
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [BYTES\_PER\_ELEMENT](./rc-js-util.ivec3ctor.bytes_per_element.md) | number | The size in bytes of each element in the array. |
-|  [factory](./rc-js-util.ivec3ctor.factory.md) | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Vec3](./rc-js-util.vec3.md)<!-- -->&lt;TArray&gt;, [TVec3CtorArgs](./rc-js-util.tvec3ctorargs.md)<!-- -->&gt; |  |
-|  [prototype](./rc-js-util.ivec3ctor.prototype.md) | [Vec3](./rc-js-util.vec3.md)<!-- -->&lt;TArray&gt; |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [BYTES\_PER\_ELEMENT](./rc-js-util.ivec3ctor.bytes_per_element.md) |  | number | The size in bytes of each element in the array. |
+|  [factory](./rc-js-util.ivec3ctor.factory.md) |  | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Vec3](./rc-js-util.vec3.md)<!-- -->&lt;TArray&gt;, [TVec3CtorArgs](./rc-js-util.tvec3ctorargs.md)<!-- -->&gt; |  |
+|  [prototype](./rc-js-util.ivec3ctor.prototype.md) |  | [Vec3](./rc-js-util.vec3.md)<!-- -->&lt;TArray&gt; |  |
 
 ## Methods
 

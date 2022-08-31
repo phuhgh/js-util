@@ -17,7 +17,7 @@ filter(_callbackfn: (value: number, index: TExtractIndexes<this>, array: this) =
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_callbackfn | (value: number, index: [TExtractIndexes](./rc-js-util.textractindexes.md)<!-- -->&lt;this&gt;, array: this) =&gt; unknown | A function that accepts up to three arguments. The filter method calls the \_callbackfn function one time for each element in the array. |
-|  \_thisArg | unknown | An object to which the this keyword can refer in the \_callbackfn function. If \_thisArg is omitted, undefined is used as the this value. |
+|  \_thisArg | unknown | <i>(Optional)</i> An object to which the this keyword can refer in the \_callbackfn function. If \_thisArg is omitted, undefined is used as the this value. |
 
 <b>Returns:</b>
 

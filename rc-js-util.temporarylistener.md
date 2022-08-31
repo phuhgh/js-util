@@ -11,7 +11,7 @@ Provides a communication channel via callbacks which can be easily cleared &amp;
 ```typescript
 export declare class TemporaryListener<TArgs extends []> implements ITemporaryListener<TArgs> 
 ```
-<b>Implements:</b> [ITemporaryListener](./rc-js-util.itemporarylistener.md)<!-- -->&lt;TArgs&gt;
+<b>Implements:</b> [ITemporaryListener](./rc-js-util.itemporarylistener.md)
 
 ## Methods
 

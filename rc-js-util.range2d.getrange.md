@@ -14,7 +14,7 @@ getRange<TResult extends TTypedArray = TArray>(_result?: Vec2<TResult>): Vec2<TR
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  \_result | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TResult&gt; |  |
+|  \_result | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

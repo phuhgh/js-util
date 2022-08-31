@@ -15,10 +15,10 @@ export interface IRawVoidPointer extends ISharedObject, IOnMemoryResize
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [byteSize](./rc-js-util.irawvoidpointer.bytesize.md) | number |  |
-|  [pointer](./rc-js-util.irawvoidpointer.pointer.md) | number |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [byteSize](./rc-js-util.irawvoidpointer.bytesize.md) |  | number |  |
+|  [pointer](./rc-js-util.irawvoidpointer.pointer.md) |  | number |  |
 
 ## Methods
 

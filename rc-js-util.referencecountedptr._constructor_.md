@@ -9,7 +9,7 @@ Constructs a new instance of the `ReferenceCountedPtr` class
 <b>Signature:</b>
 
 ```typescript
-constructor(isStatic: boolean, wasmPtr: number, listenerObj?: IOnFree | undefined);
+constructor(isStatic: boolean, wasmPtr: number, owner: IEmscriptenWrapper<object>, listenerObj?: IOnFree | undefined);
 ```
 
 ## Parameters
@@ -18,5 +18,6 @@ constructor(isStatic: boolean, wasmPtr: number, listenerObj?: IOnFree | undefine
 |  --- | --- | --- |
 |  isStatic | boolean |  |
 |  wasmPtr | number |  |
-|  listenerObj | [IOnFree](./rc-js-util.ionfree.md) \| undefined |  |
+|  owner | [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md)<!-- -->&lt;object&gt; |  |
+|  listenerObj | [IOnFree](./rc-js-util.ionfree.md) \| undefined | <i>(Optional)</i> |
 

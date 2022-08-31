@@ -11,5 +11,5 @@
 ```typescript
 export interface IReadonlyVec2<TArray extends TTypedArray> extends TPickExcept<Readonly<Vec2<TArray>>, "update" | "setX" | "setY" | "bound2d" | "translate2d" | "copyFromBuffer" | TTypedArrayTupleMutativeMethods> 
 ```
-<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TArray&gt;&gt;, "update" \| "setX" \| "setY" \| "bound2d" \| "translate2d" \| "copyFromBuffer" \| [TTypedArrayTupleMutativeMethods](./rc-js-util.ttypedarraytuplemutativemethods.md)<!-- -->&gt;
+<b>Extends:</b> [TPickExcept](./rc-js-util.tpickexcept.md)<!-- -->&lt;Readonly&lt;[Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TArray&gt;&gt;, "update" \| "setX" \| "setY" \| "bound2d" \| "translate2d" \| "copyFromBuffer" \| [TTypedArrayTupleMutativeMethods](./rc-js-util.ttypedarraytuplemutativemethods.md)
 

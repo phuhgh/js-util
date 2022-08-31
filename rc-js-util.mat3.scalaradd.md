@@ -15,7 +15,7 @@ scalarAdd<TResult extends TTypedArray = TArray>(_value: number, _result?: Mat3<T
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_value | number |  |
-|  \_result | [Mat3](./rc-js-util.mat3.md)<!-- -->&lt;TResult&gt; |  |
+|  \_result | [Mat3](./rc-js-util.mat3.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

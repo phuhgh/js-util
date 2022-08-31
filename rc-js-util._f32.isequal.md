@@ -16,7 +16,7 @@ static isEqual(a: number, b: number, delta?: number): boolean;
 |  --- | --- | --- |
 |  a | number |  |
 |  b | number |  |
-|  delta | number |  |
+|  delta | number | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

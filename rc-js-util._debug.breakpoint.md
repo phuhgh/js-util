@@ -9,8 +9,15 @@ Used in place of `debugger` statements when writing libraries. Should generally 
 <b>Signature:</b>
 
 ```typescript
-static breakpoint(): boolean;
+static breakpoint(this: void): boolean;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  this | void |  |
+
 <b>Returns:</b>
 
 boolean

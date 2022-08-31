@@ -11,7 +11,7 @@
 ```typescript
 export declare abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray> 
 ```
-<b>Extends:</b> [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TArray&gt;
+<b>Extends:</b> [Mat2](./rc-js-util.mat2.md)
 
 ## Remarks
 

@@ -9,13 +9,14 @@ Convenience method to run multiple asserts.
 <b>Signature:</b>
 
 ```typescript
-static runBlock(cb: () => void): boolean;
+static runBlock(this: void, cb: () => void): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  this | void |  |
 |  cb | () =&gt; void |  |
 
 <b>Returns:</b>
@@ -28,7 +29,7 @@ A boolean value to make linting happy...
 
 
 ```typescript
-DEBUG_MODE && _Debug.runBlock(() => {
+_BUILD.DEBUG && _Debug.runBlock(() => {
     _Debug.assert(someCondition, "someCondition was wrong");
     // ...
 });

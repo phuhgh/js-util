@@ -11,13 +11,13 @@ Provides a unique array with O(1) add &amp; remove, with dirty checking on `getA
 ```typescript
 export interface IDirtyCheckedUniqueCollection<TItem> extends ISetLike<TItem> 
 ```
-<b>Extends:</b> [ISetLike](./rc-js-util.isetlike.md)<!-- -->&lt;TItem&gt;
+<b>Extends:</b> [ISetLike](./rc-js-util.isetlike.md)
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [isDirty](./rc-js-util.idirtycheckeduniquecollection.isdirty.md) | boolean |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [isDirty](./rc-js-util.idirtycheckeduniquecollection.isdirty.md) |  | boolean |  |
 
 ## Methods
 

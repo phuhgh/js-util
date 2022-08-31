@@ -9,14 +9,15 @@ Used to get debug flags in an environment independent way.
 <b>Signature:</b>
 
 ```typescript
-static isFlagSet<TKey extends keyof RcJsUtilDebugFlags>(flag: RcJsUtilDebugFlags[TKey]): boolean;
+static isFlagSet<TKey extends keyof IBuildConstants>(this: void, flag: TKey): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  flag | RcJsUtilDebugFlags\[TKey\] |  |
+|  this | void |  |
+|  flag | TKey |  |
 
 <b>Returns:</b>
 

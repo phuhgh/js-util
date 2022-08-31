@@ -14,11 +14,11 @@ export interface IMargin2dCtor<TArray extends TTypedArray>
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [BYTES\_PER\_ELEMENT](./rc-js-util.imargin2dctor.bytes_per_element.md) | number | The size in bytes of each element in the array. |
-|  [factory](./rc-js-util.imargin2dctor.factory.md) | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TArray&gt;, [TMargin2dCtorArgs](./rc-js-util.tmargin2dctorargs.md)<!-- -->&gt; |  |
-|  [prototype](./rc-js-util.imargin2dctor.prototype.md) | [Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TArray&gt; |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [BYTES\_PER\_ELEMENT](./rc-js-util.imargin2dctor.bytes_per_element.md) |  | number | The size in bytes of each element in the array. |
+|  [factory](./rc-js-util.imargin2dctor.factory.md) |  | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TArray&gt;, [TMargin2dCtorArgs](./rc-js-util.tmargin2dctorargs.md)<!-- -->&gt; |  |
+|  [prototype](./rc-js-util.imargin2dctor.prototype.md) |  | [Margin2d](./rc-js-util.margin2d.md)<!-- -->&lt;TArray&gt; |  |
 
 ## Methods
 

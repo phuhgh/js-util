@@ -9,7 +9,7 @@ A weakmap store available in debug contexts only.
 <b>Signature:</b>
 
 ```typescript
-export interface IDebugWeakStore<T>
+export interface IDebugWeakStore<T> 
 ```
 
 ## Methods

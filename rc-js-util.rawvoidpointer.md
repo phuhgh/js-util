@@ -9,9 +9,9 @@ Provides a reference counted wrapper to a pointer `malloc`<!-- -->'d from JS and
 <b>Signature:</b>
 
 ```typescript
-export declare class RawVoidPointer implements IRawVoidPointer 
+export declare class RawVoidPointer implements IRawVoidPointer, IDebugAllocateListener 
 ```
-<b>Implements:</b> [IRawVoidPointer](./rc-js-util.irawvoidpointer.md)
+<b>Implements:</b> [IRawVoidPointer](./rc-js-util.irawvoidpointer.md)<!-- -->, [IDebugAllocateListener](./rc-js-util.idebugallocatelistener.md)
 
 ## Constructors
 

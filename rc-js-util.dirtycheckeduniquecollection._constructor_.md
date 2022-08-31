@@ -16,5 +16,5 @@ constructor(itemsToCopy?: readonly TItem[] | ReadonlySet<TItem>);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  itemsToCopy | readonly TItem\[\] \| ReadonlySet&lt;TItem&gt; |  |
+|  itemsToCopy | readonly TItem\[\] \| ReadonlySet&lt;TItem&gt; | <i>(Optional)</i> |
 

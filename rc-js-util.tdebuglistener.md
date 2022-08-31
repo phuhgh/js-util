@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export type TDebugListener<K extends string, TArgs extends unknown[]> = {
+export declare type TDebugListener<K extends string, TArgs extends unknown[]> = {
     [P in K]?: (...args: TArgs) => void;
 };
 ```

@@ -7,8 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-static getStackTrace(): string;
+static getStackTrace(this: void): string;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  this | void |  |
+
 <b>Returns:</b>
 
 string

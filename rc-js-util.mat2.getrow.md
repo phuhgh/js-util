@@ -15,7 +15,7 @@ getRow<TResult extends TTypedArray = TArray>(_row: number, _writeTo?: Vec2<TResu
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_row | number |  |
-|  \_writeTo | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TResult&gt; |  |
+|  \_writeTo | [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

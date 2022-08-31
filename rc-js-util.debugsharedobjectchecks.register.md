@@ -7,20 +7,18 @@
 <b>Signature:</b>
 
 ```typescript
-static register<T extends object>(instance: {
-        debugOnAllocate?: () => void;
-    } & ISharedObject, protectedView: IDebugProtectedView<T>, nameOfInstance: string): IDebugProtectedView<T>;
+static register(instance: IDebugAllocateListener & ISharedObject, protectedView: IDebugProtectedView, nameOfInstance: string): IDebugProtectedView;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  instance | { debugOnAllocate?: () =&gt; void; } &amp; [ISharedObject](./rc-js-util.isharedobject.md) |  |
-|  protectedView | [IDebugProtectedView](./rc-js-util.idebugprotectedview.md)<!-- -->&lt;T&gt; |  |
+|  instance | [IDebugAllocateListener](./rc-js-util.idebugallocatelistener.md) &amp; [ISharedObject](./rc-js-util.isharedobject.md) |  |
+|  protectedView | [IDebugProtectedView](./rc-js-util.idebugprotectedview.md) |  |
 |  nameOfInstance | string |  |
 
 <b>Returns:</b>
 
-[IDebugProtectedView](./rc-js-util.idebugprotectedview.md)<!-- -->&lt;T&gt;
+[IDebugProtectedView](./rc-js-util.idebugprotectedview.md)
 

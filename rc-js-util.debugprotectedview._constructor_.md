@@ -9,13 +9,14 @@ Constructs a new instance of the `DebugProtectedView` class
 <b>Signature:</b>
 
 ```typescript
-constructor(safeKeys: TKeysOf<T>, debugInfo: string);
+constructor(owningInstance: IEmscriptenWrapper<object>, debugInfo: string, safeKeys?: TKeysOf<T>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  safeKeys | [TKeysOf](./rc-js-util.tkeysof.md)<!-- -->&lt;T&gt; |  |
+|  owningInstance | [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md)<!-- -->&lt;object&gt; |  |
 |  debugInfo | string |  |
+|  safeKeys | [TKeysOf](./rc-js-util.tkeysof.md)<!-- -->&lt;T&gt; | <i>(Optional)</i> |
 

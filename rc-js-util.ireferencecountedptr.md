@@ -15,9 +15,9 @@ export interface IReferenceCountedPtr extends IReferenceCounted
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [isStatic](./rc-js-util.ireferencecountedptr.isstatic.md) | boolean |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [isStatic](./rc-js-util.ireferencecountedptr.isstatic.md) |  | boolean |  |
 
 ## Methods
 
@@ -27,6 +27,6 @@ export interface IReferenceCountedPtr extends IReferenceCounted
 |  [getPtr()](./rc-js-util.ireferencecountedptr.getptr.md) |  |
 |  [registerOnFreeListener(callback)](./rc-js-util.ireferencecountedptr.registeronfreelistener.md) | Callback will be called when the reference count hits 0. Useful for cleanup. |
 |  [takeOwnership(referenceCountedObject)](./rc-js-util.ireferencecountedptr.takeownership.md) | Releases the <code>referenceCountedObject</code> when this object is released. |
-|  [unbindLifecycle(referenceCountedObject)](./rc-js-util.ireferencecountedptr.unbindlifecycle.md) | Releases claim to the the <code>referenceCountedObject</code>. |
-|  [unbindLifecycles(referenceCountedObjects)](./rc-js-util.ireferencecountedptr.unbindlifecycles.md) | Releases claims on the the <code>referenceCountedObjects</code>. |
+|  [unbindLifecycle(referenceCountedObject)](./rc-js-util.ireferencecountedptr.unbindlifecycle.md) | Releases claim on the <code>referenceCountedObject</code>. |
+|  [unbindLifecycles(referenceCountedObjects)](./rc-js-util.ireferencecountedptr.unbindlifecycles.md) | Releases claims on the <code>referenceCountedObjects</code>. |
 

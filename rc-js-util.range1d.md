@@ -11,7 +11,7 @@ Vec2 representing a 1d range.
 ```typescript
 export declare abstract class Range1d<TArray extends TTypedArray> extends Vec2<TArray> 
 ```
-<b>Extends:</b> [Vec2](./rc-js-util.vec2.md)<!-- -->&lt;TArray&gt;
+<b>Extends:</b> [Vec2](./rc-js-util.vec2.md)
 
 ## Remarks
 

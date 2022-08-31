@@ -13,36 +13,36 @@ interface EmscriptenModule
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [arguments](./rc-js-util.emscripten.emscriptenmodule.arguments.md) | string\[\] |  |
-|  [ASAN\_OPTIONS?](./rc-js-util.emscripten.emscriptenmodule.asan_options.md) | string | <i>(Optional)</i> |
-|  [environment](./rc-js-util.emscripten.emscriptenmodule.environment.md) | [EnvironmentType](./rc-js-util.emscripten.environmenttype.md) |  |
-|  [FAST\_MEMORY](./rc-js-util.emscripten.emscriptenmodule.fast_memory.md) | number |  |
-|  [FHEAP](./rc-js-util.emscripten.emscriptenmodule.fheap.md) | Float64Array |  |
-|  [filePackagePrefixURL](./rc-js-util.emscripten.emscriptenmodule.filepackageprefixurl.md) | string |  |
-|  [HEAP](./rc-js-util.emscripten.emscriptenmodule.heap.md) | Int32Array |  |
-|  [HEAP16](./rc-js-util.emscripten.emscriptenmodule.heap16.md) | Int16Array |  |
-|  [HEAP32](./rc-js-util.emscripten.emscriptenmodule.heap32.md) | Int32Array |  |
-|  [HEAP8](./rc-js-util.emscripten.emscriptenmodule.heap8.md) | Int8Array |  |
-|  [HEAPF32](./rc-js-util.emscripten.emscriptenmodule.heapf32.md) | Float32Array |  |
-|  [HEAPF64](./rc-js-util.emscripten.emscriptenmodule.heapf64.md) | Float64Array |  |
-|  [HEAPU16](./rc-js-util.emscripten.emscriptenmodule.heapu16.md) | Uint16Array |  |
-|  [HEAPU32](./rc-js-util.emscripten.emscriptenmodule.heapu32.md) | Uint32Array |  |
-|  [HEAPU8](./rc-js-util.emscripten.emscriptenmodule.heapu8.md) | Uint8Array |  |
-|  [IHEAP](./rc-js-util.emscripten.emscriptenmodule.iheap.md) | Int32Array |  |
-|  [logReadFiles](./rc-js-util.emscripten.emscriptenmodule.logreadfiles.md) | boolean |  |
-|  [noExitRuntime](./rc-js-util.emscripten.emscriptenmodule.noexitruntime.md) | boolean |  |
-|  [noInitialRun](./rc-js-util.emscripten.emscriptenmodule.noinitialrun.md) | boolean |  |
-|  [onAbort](./rc-js-util.emscripten.emscriptenmodule.onabort.md) | { (what: any): void; } |  |
-|  [onRuntimeInitialized](./rc-js-util.emscripten.emscriptenmodule.onruntimeinitialized.md) | { (): void; } |  |
-|  [postRun](./rc-js-util.emscripten.emscriptenmodule.postrun.md) | Array&lt;{ (): void; }&gt; |  |
-|  [preInit](./rc-js-util.emscripten.emscriptenmodule.preinit.md) | Array&lt;{ (): void; }&gt; |  |
-|  [preRun](./rc-js-util.emscripten.emscriptenmodule.prerun.md) | Array&lt;{ (): void; }&gt; |  |
-|  [TOTAL\_MEMORY](./rc-js-util.emscripten.emscriptenmodule.total_memory.md) | number |  |
-|  [TOTAL\_STACK](./rc-js-util.emscripten.emscriptenmodule.total_stack.md) | number |  |
-|  [wasmBinary](./rc-js-util.emscripten.emscriptenmodule.wasmbinary.md) | ArrayBuffer |  |
-|  [wasmMemory](./rc-js-util.emscripten.emscriptenmodule.wasmmemory.md) | [IWebAssemblyMemoryMemory](./rc-js-util.iwebassemblymemorymemory.md) |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [arguments](./rc-js-util.emscripten.emscriptenmodule.arguments.md) |  | string\[\] |  |
+|  [ASAN\_OPTIONS?](./rc-js-util.emscripten.emscriptenmodule.asan_options.md) |  | string | <i>(Optional)</i> |
+|  [environment](./rc-js-util.emscripten.emscriptenmodule.environment.md) |  | [EnvironmentType](./rc-js-util.emscripten.environmenttype.md) |  |
+|  [FAST\_MEMORY](./rc-js-util.emscripten.emscriptenmodule.fast_memory.md) |  | number |  |
+|  [FHEAP](./rc-js-util.emscripten.emscriptenmodule.fheap.md) |  | Float64Array |  |
+|  [filePackagePrefixURL](./rc-js-util.emscripten.emscriptenmodule.filepackageprefixurl.md) |  | string |  |
+|  [HEAP](./rc-js-util.emscripten.emscriptenmodule.heap.md) |  | Int32Array |  |
+|  [HEAP16](./rc-js-util.emscripten.emscriptenmodule.heap16.md) |  | Int16Array |  |
+|  [HEAP32](./rc-js-util.emscripten.emscriptenmodule.heap32.md) |  | Int32Array |  |
+|  [HEAP8](./rc-js-util.emscripten.emscriptenmodule.heap8.md) |  | Int8Array |  |
+|  [HEAPF32](./rc-js-util.emscripten.emscriptenmodule.heapf32.md) |  | Float32Array |  |
+|  [HEAPF64](./rc-js-util.emscripten.emscriptenmodule.heapf64.md) |  | Float64Array |  |
+|  [HEAPU16](./rc-js-util.emscripten.emscriptenmodule.heapu16.md) |  | Uint16Array |  |
+|  [HEAPU32](./rc-js-util.emscripten.emscriptenmodule.heapu32.md) |  | Uint32Array |  |
+|  [HEAPU8](./rc-js-util.emscripten.emscriptenmodule.heapu8.md) |  | Uint8Array |  |
+|  [IHEAP](./rc-js-util.emscripten.emscriptenmodule.iheap.md) |  | Int32Array |  |
+|  [logReadFiles](./rc-js-util.emscripten.emscriptenmodule.logreadfiles.md) |  | boolean |  |
+|  [noExitRuntime](./rc-js-util.emscripten.emscriptenmodule.noexitruntime.md) |  | boolean |  |
+|  [noInitialRun](./rc-js-util.emscripten.emscriptenmodule.noinitialrun.md) |  | boolean |  |
+|  [onAbort](./rc-js-util.emscripten.emscriptenmodule.onabort.md) |  | { (what: any): void; } |  |
+|  [onRuntimeInitialized](./rc-js-util.emscripten.emscriptenmodule.onruntimeinitialized.md) |  | { (): void; } |  |
+|  [postRun](./rc-js-util.emscripten.emscriptenmodule.postrun.md) |  | Array&lt;{ (): void; }&gt; |  |
+|  [preInit](./rc-js-util.emscripten.emscriptenmodule.preinit.md) |  | Array&lt;{ (): void; }&gt; |  |
+|  [preRun](./rc-js-util.emscripten.emscriptenmodule.prerun.md) |  | Array&lt;{ (): void; }&gt; |  |
+|  [TOTAL\_MEMORY](./rc-js-util.emscripten.emscriptenmodule.total_memory.md) |  | number |  |
+|  [TOTAL\_STACK](./rc-js-util.emscripten.emscriptenmodule.total_stack.md) |  | number |  |
+|  [wasmBinary](./rc-js-util.emscripten.emscriptenmodule.wasmbinary.md) |  | ArrayBuffer |  |
+|  [wasmMemory](./rc-js-util.emscripten.emscriptenmodule.wasmmemory.md) |  | [IWebAssemblyMemoryMemory](./rc-js-util.iwebassemblymemorymemory.md) |  |
 
 ## Methods
 

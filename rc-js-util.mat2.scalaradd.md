@@ -15,7 +15,7 @@ scalarAdd<TResult extends TTypedArray = TArray>(_value: number, _result?: Mat2<T
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_value | number |  |
-|  \_result | [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TResult&gt; |  |
+|  \_result | [Mat2](./rc-js-util.mat2.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

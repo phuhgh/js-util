@@ -14,11 +14,11 @@ export interface IRange2dCtor<TArray extends TTypedArray>
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [BYTES\_PER\_ELEMENT](./rc-js-util.irange2dctor.bytes_per_element.md) | number | The size in bytes of each element in the array. |
-|  [factory](./rc-js-util.irange2dctor.factory.md) | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TArray&gt;, [TRange2dCtorArgs](./rc-js-util.trange2dctorargs.md)<!-- -->&gt; |  |
-|  [prototype](./rc-js-util.irange2dctor.prototype.md) | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TArray&gt; |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [BYTES\_PER\_ELEMENT](./rc-js-util.irange2dctor.bytes_per_element.md) |  | number | The size in bytes of each element in the array. |
+|  [factory](./rc-js-util.irange2dctor.factory.md) |  | [ITypedArrayTupleFactory](./rc-js-util.itypedarraytuplefactory.md)<!-- -->&lt;[Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TArray&gt;, [TRange2dCtorArgs](./rc-js-util.trange2dctorargs.md)<!-- -->&gt; |  |
+|  [prototype](./rc-js-util.irange2dctor.prototype.md) |  | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TArray&gt; |  |
 
 ## Methods
 

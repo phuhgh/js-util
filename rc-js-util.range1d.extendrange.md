@@ -15,7 +15,7 @@ extendRange<TResult extends TTypedArray = TArray>(_value: number, _writeTo?: Ran
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_value | number |  |
-|  \_writeTo | [Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TResult&gt; |  |
+|  \_writeTo | [Range1d](./rc-js-util.range1d.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

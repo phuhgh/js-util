@@ -4,14 +4,14 @@
 
 ## DebugProtectedView class
 
-Provides a view of an object that can be invalidated, causing attempts to access it to error in `DEBUG_MODE`<!-- -->.
+Provides a view of an object that can be invalidated, causing attempts to access it to error in `_BUILD.DEBUG`<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
-export declare class DebugProtectedView<T extends object> implements IDebugProtectedView<T> 
+export declare class DebugProtectedView<T extends object> implements IDebugProtectedView 
 ```
-<b>Implements:</b> [IDebugProtectedView](./rc-js-util.idebugprotectedview.md)<!-- -->&lt;T&gt;
+<b>Implements:</b> [IDebugProtectedView](./rc-js-util.idebugprotectedview.md)
 
 ## Remarks
 
@@ -21,13 +21,14 @@ Allows the specification of `safeKeys`<!-- -->, accessing of these is not an err
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(safeKeys, debugInfo)](./rc-js-util.debugprotectedview._constructor_.md) |  | Constructs a new instance of the <code>DebugProtectedView</code> class |
+|  [(constructor)(owningInstance, debugInfo, safeKeys)](./rc-js-util.debugprotectedview._constructor_.md) |  | Constructs a new instance of the <code>DebugProtectedView</code> class |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [createTypedArrayView](./rc-js-util.debugprotectedview.createtypedarrayview.md) | <code>static</code> | &lt;TCtor extends [TTypedArrayCtor](./rc-js-util.ttypedarrayctor.md)<!-- -->&gt;() =&gt; [DebugProtectedView](./rc-js-util.debugprotectedview.md)<!-- -->&lt;InstanceType&lt;TCtor&gt;&gt; |  |
+|  [createTypedArrayView](./rc-js-util.debugprotectedview.createtypedarrayview.md) | <code>static</code> | &lt;TCtor extends [TTypedArrayCtor](./rc-js-util.ttypedarrayctor.md)<!-- -->&gt;(owningInstance: [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md)<!-- -->&lt;object&gt;) =&gt; [DebugProtectedView](./rc-js-util.debugprotectedview.md)<!-- -->&lt;InstanceType&lt;TCtor&gt;&gt; |  |
+|  [owningInstance](./rc-js-util.debugprotectedview.owninginstance.md) |  | [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md)<!-- -->&lt;object&gt; |  |
 
 ## Methods
 

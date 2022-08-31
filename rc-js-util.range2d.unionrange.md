@@ -15,7 +15,7 @@ unionRange<TResult extends TTypedArray = TArray>(_range: IReadonlyRange2d<TTyped
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_range | [IReadonlyRange2d](./rc-js-util.ireadonlyrange2d.md)<!-- -->&lt;[TTypedArray](./rc-js-util.ttypedarray.md)<!-- -->&gt; |  |
-|  \_writeTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; |  |
+|  \_writeTo | [Range2d](./rc-js-util.range2d.md)<!-- -->&lt;TResult&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

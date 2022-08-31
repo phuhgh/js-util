@@ -17,7 +17,7 @@ lastIndexOf(_searchElement: number, _fromIndex?: number): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_searchElement | number | The value to locate in the array. |
-|  \_fromIndex | number | The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0. |
+|  \_fromIndex | number | <i>(Optional)</i> The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0. |
 
 <b>Returns:</b>
 

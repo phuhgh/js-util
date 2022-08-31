@@ -17,7 +17,7 @@ reduce(_callbackfn: (previousValue: number, currentValue: number, currentIndex: 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  \_callbackfn | (previousValue: number, currentValue: number, currentIndex: [TExtractIndexes](./rc-js-util.textractindexes.md)<!-- -->&lt;this&gt;, array: this) =&gt; number | A function that accepts up to four arguments. The reduce method calls the \_callbackfn function one time for each element in the array. |
-|  initialValue | number | If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the \_callbackfn function provides this value as an argument instead of an array value. |
+|  initialValue | number | <i>(Optional)</i> If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the \_callbackfn function provides this value as an argument instead of an array value. |
 
 <b>Returns:</b>
 

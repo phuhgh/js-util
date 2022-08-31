@@ -18,7 +18,7 @@ export declare function getEmscriptenWrapper<TExt extends object, TMod extends o
 |  --- | --- | --- |
 |  memory | [IWebAssemblyMemoryMemory](./rc-js-util.iwebassemblymemorymemory.md) |  |
 |  emscriptenModuleFactory | [Emscripten.EmscriptenModuleFactory](./rc-js-util.emscripten.emscriptenmodulefactory.md)<!-- -->&lt;TMod&gt; |  |
-|  extension | Partial&lt;TExt&gt; |  |
+|  extension | Partial&lt;TExt&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

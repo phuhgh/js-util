@@ -16,7 +16,7 @@ static createOneF64(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: n
 |  --- | --- | --- |
 |  wrapper | [IEmscriptenWrapper](./rc-js-util.iemscriptenwrapper.md)<!-- -->&lt;[ISharedArrayBindings](./rc-js-util.isharedarraybindings.md)<!-- -->&gt; |  |
 |  length | number |  |
-|  clearMemory | boolean |  |
+|  clearMemory | boolean | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

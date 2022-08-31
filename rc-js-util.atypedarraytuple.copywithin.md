@@ -18,7 +18,7 @@ copyWithin(_target: number, _start: number, _end?: number): this;
 |  --- | --- | --- |
 |  \_target | number | If target is negative, it is treated as length+target where length is the length of the array. |
 |  \_start | number | If start is negative, it is treated as length+start. If end is negative, it is treated as length+end. |
-|  \_end | number | If not specified, length of the this object is used as its default value. |
+|  \_end | number | <i>(Optional)</i> If not specified, length of the this object is used as its default value. |
 
 <b>Returns:</b>
 

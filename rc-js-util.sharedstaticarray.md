@@ -9,9 +9,9 @@ Typed array representing static memory in wasm.
 <b>Signature:</b>
 
 ```typescript
-export declare class SharedStaticArray<TCtor extends TTypedArrayCtor> implements ISharedArray<TCtor>, IOnMemoryResize 
+export declare class SharedStaticArray<TCtor extends TTypedArrayCtor> implements ISharedArray<TCtor>, IOnMemoryResize, IDebugAllocateListener 
 ```
-<b>Implements:</b> [ISharedArray](./rc-js-util.isharedarray.md)<!-- -->&lt;TCtor&gt;, [IOnMemoryResize](./rc-js-util.ionmemoryresize.md)
+<b>Implements:</b> [ISharedArray](./rc-js-util.isharedarray.md)<!-- -->&lt;TCtor&gt;, [IOnMemoryResize](./rc-js-util.ionmemoryresize.md)<!-- -->, [IDebugAllocateListener](./rc-js-util.idebugallocatelistener.md)
 
 ## Constructors
 
