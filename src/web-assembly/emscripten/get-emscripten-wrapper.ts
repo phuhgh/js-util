@@ -29,7 +29,7 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
 (
     memory: IWebAssemblyMemoryMemory,
     emscriptenModuleFactory: Emscripten.EmscriptenModuleFactory<TMod>,
-    extension?: Partial<TExt>,
+    extension: Partial<TExt> = {},
 )
     : Promise<IEmscriptenWrapper<TExt & TMod>>
 {
@@ -40,7 +40,7 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
 
     if (_BUILD.DEBUG)
     {
-        const debugInstance = (extension ?? {}) as never as IEmscriptenDebugInstance;
+        const debugInstance = extension as never as IEmscriptenDebugInstance;
         debugInstance.RC_JS_MEMORY_DEBUG_UTIL = debug;
     }
 
