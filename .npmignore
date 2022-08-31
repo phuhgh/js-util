@@ -8,5 +8,5 @@
 !README.md
 !components.spdx
 !docs/**/*
-!scripts/extract-cpp-names.js
+!scripts/**/*
 !cpp/exported-names.txt
