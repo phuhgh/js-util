@@ -1,5 +1,5 @@
-import { Mat2, TF32Mat2 } from "./mat2";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
+import { Mat2, TF32Mat2 } from "./mat2.js";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
 
 describe("=> Mat2", () =>
 {

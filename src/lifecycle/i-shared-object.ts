@@ -1,4 +1,4 @@
-import { IReferenceCountedPtr } from "./reference-counted-ptr";
+import { IReferenceCountedPtr } from "./reference-counted-ptr.js";
 
 /**
  * @public

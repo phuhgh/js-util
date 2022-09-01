@@ -1,5 +1,5 @@
-import { arrayIsArray } from "./array-is-array";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayIsArray } from "./array-is-array.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayIsArray", () =>
 {

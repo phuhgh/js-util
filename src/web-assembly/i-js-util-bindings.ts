@@ -1,6 +1,6 @@
-import { ISharedArrayBindings } from "./shared-array/i-shared-array-bindings";
-import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings";
-import { IDebugBindings } from "./emscripten/i-debug-bindings";
+import { ISharedArrayBindings } from "./shared-array/i-shared-array-bindings.js";
+import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings.js";
+import { IDebugBindings } from "./emscripten/i-debug-bindings.js";
 
 /**
  * @public

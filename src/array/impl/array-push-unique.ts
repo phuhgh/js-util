@@ -1,4 +1,4 @@
-import { fpIdentity } from "../../fp/impl/fp-identity";
+import { fpIdentity } from "../../fp/impl/fp-identity.js";
 
 /**
  * @public

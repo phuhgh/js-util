@@ -1,5 +1,5 @@
-import { arraySetDifference } from "./array-set-difference";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arraySetDifference } from "./array-set-difference.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arraySetDifference", () =>
 {

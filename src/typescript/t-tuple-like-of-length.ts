@@ -1,5 +1,5 @@
-import { TTupleLike } from "./t-tuple-like";
-import { TNextInt } from "./t-next-int";
+import { TTupleLike } from "./t-tuple-like.js";
+import { TNextInt } from "./t-next-int.js";
 
 /**
  * @public

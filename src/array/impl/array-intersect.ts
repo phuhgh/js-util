@@ -1,5 +1,5 @@
-import { arrayIndex } from "./array-index";
-import { fpIdentity } from "../../fp/impl/fp-identity";
+import { arrayIndex } from "./array-index.js";
+import { fpIdentity } from "../../fp/impl/fp-identity.js";
 
 /**
  * @public

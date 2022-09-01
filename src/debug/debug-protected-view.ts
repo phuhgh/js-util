@@ -1,10 +1,10 @@
-import { TKeysOf } from "../typescript/t-keys-of";
-import { _Debug } from "./_debug";
-import { arrayContains } from "../array/impl/array-contains";
-import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor";
-import { IDictionary } from "../typescript/i-dictionary";
-import { IDebugProtectedView } from "./i-debug-protected-view";
-import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper";
+import { TKeysOf } from "../typescript/t-keys-of.js";
+import { _Debug } from "./_debug.js";
+import { arrayContains } from "../array/impl/array-contains.js";
+import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor.js";
+import { IDictionary } from "../typescript/i-dictionary.js";
+import { IDebugProtectedView } from "./i-debug-protected-view.js";
+import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper.js";
 
 /**
  * @public

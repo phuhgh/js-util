@@ -1,8 +1,8 @@
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { ATypedTupleFactory } from "../a-typed-tuple-factory";
-import { TTypedArray } from "../t-typed-array";
-import { IMat3Ctor, Mat3, TMat3CtorArgs } from "./mat3";
-import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view";
+import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory.js";
+import { ATypedTupleFactory } from "../a-typed-tuple-factory.js";
+import { TTypedArray } from "../t-typed-array.js";
+import { IMat3Ctor, Mat3, TMat3CtorArgs } from "./mat3.js";
+import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view.js";
 
 export class Mat3Factory<T extends Mat3<TTypedArray>>
     extends ATypedTupleFactory<T, TMat3CtorArgs>

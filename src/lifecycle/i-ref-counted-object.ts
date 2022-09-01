@@ -1,4 +1,4 @@
-import { IReferenceCounted } from "./a-reference-counted";
+import { IReferenceCounted } from "./a-reference-counted.js";
 
 /**
  * @public

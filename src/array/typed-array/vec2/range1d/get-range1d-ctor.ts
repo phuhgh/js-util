@@ -1,12 +1,12 @@
-import { IRange1dCtor, Range1d, TRange1dCtorArgs } from "./range1d";
-import { TTypedArrayCtor } from "../../t-typed-array-ctor";
-import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
-import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
-import { _Debug } from "../../../../debug/_debug";
-import { TTypedArray } from "../../t-typed-array";
-import { getVec2Ctor } from "../get-vec2-ctor";
-import { Vec2Factory } from "../vec2-factory";
-import { Mat2 } from "../../mat2/mat2";
+import { IRange1dCtor, Range1d, TRange1dCtorArgs } from "./range1d.js";
+import { TTypedArrayCtor } from "../../t-typed-array-ctor.js";
+import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory.js";
+import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider.js";
+import { _Debug } from "../../../../debug/_debug.js";
+import { TTypedArray } from "../../t-typed-array.js";
+import { getVec2Ctor } from "../get-vec2-ctor.js";
+import { Vec2Factory } from "../vec2-factory.js";
+import { Mat2 } from "../../mat2/mat2.js";
 
 /**
  * @internal

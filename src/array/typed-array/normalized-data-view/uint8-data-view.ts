@@ -1,4 +1,4 @@
-import { INormalizedDataView } from "./i-normalized-data-view";
+import { INormalizedDataView } from "./i-normalized-data-view.js";
 
 export class Uint8DataView implements INormalizedDataView
 {

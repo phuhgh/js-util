@@ -1,4 +1,4 @@
-import { TListener } from "./t-listener";
+import { TListener } from "./t-listener.js";
 
 /**
  * @public

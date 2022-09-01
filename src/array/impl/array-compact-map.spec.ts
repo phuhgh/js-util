@@ -1,6 +1,6 @@
-import { arrayCompactMap } from "./array-compact-map";
-import { _Production } from "../../production/_production";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayCompactMap } from "./array-compact-map.js";
+import { _Production } from "../../production/_production.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayCompactMap", () =>
 {

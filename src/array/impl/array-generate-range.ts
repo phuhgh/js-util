@@ -1,5 +1,5 @@
-import { arrayMapRange } from "./array-map-range";
-import { fpIdentity } from "../../fp/impl/fp-identity";
+import { arrayMapRange } from "./array-map-range.js";
+import { fpIdentity } from "../../fp/impl/fp-identity.js";
 
 /**
  * @public

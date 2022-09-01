@@ -1,5 +1,5 @@
-import { arrayForEach } from "./array-for-each";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayForEach } from "./array-for-each.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayForEach", () =>
 {

@@ -1,6 +1,6 @@
 // noinspection JSUnusedAssignment
 
-import { TTupleLike } from "./t-tuple-like";
+import { TTupleLike } from "./t-tuple-like.js";
 
 describe("=> TTupleLike", () =>
 {

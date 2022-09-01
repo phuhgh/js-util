@@ -1,4 +1,4 @@
-import { IncrementingIdentifierFactory } from "./impl/incrementing-identifier-factory";
+import { IncrementingIdentifierFactory } from "./impl/incrementing-identifier-factory.js";
 
 /**
  * @public

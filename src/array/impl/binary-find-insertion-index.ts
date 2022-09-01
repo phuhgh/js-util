@@ -1,5 +1,5 @@
-import { _Debug } from "../../debug/_debug";
-import { mathBound } from "../../math/impl/math-bound";
+import { _Debug } from "../../debug/_debug.js";
+import { mathBound } from "../../math/impl/math-bound.js";
 
 /**
  * @public

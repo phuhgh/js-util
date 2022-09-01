@@ -1,7 +1,7 @@
-import { promiseRejectFalsey } from "./impl/promise-reject-falsey";
-import { promiseRejectNull } from "./impl/promise-reject-null";
-import { promiseRejectFalse } from "./impl/promise-reject-false";
-import { promiseDelay } from "./impl/promise-delay";
+import { promiseRejectFalsey } from "./impl/promise-reject-falsey.js";
+import { promiseRejectNull } from "./impl/promise-reject-null.js";
+import { promiseRejectFalse } from "./impl/promise-reject-false.js";
+import { promiseDelay } from "./impl/promise-delay.js";
 
 /**
  * @public

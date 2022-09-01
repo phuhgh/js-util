@@ -1,5 +1,5 @@
 {
-  "spec_dir": "bin/cjs/",
+  "spec_dir": "bin/esm/",
   "spec_files": [
     "**/*[sS]pec.js"
   ],

@@ -1,10 +1,10 @@
-import { Emscripten } from "../../external/emscripten";
-import { getWasmTestMemory } from "../get-wasm-test-memory";
-import { getEmscriptenWrapper } from "./get-emscripten-wrapper";
-import { _Fp } from "../../fp/_fp";
-import { IEmscriptenWrapper } from "./i-emscripten-wrapper";
-import { IDebugBindings } from "./i-debug-bindings";
-import { _Production } from "../../production/_production";
+import { Emscripten } from "../../external/emscripten.js";
+import { getWasmTestMemory } from "../get-wasm-test-memory.js";
+import { getEmscriptenWrapper } from "./get-emscripten-wrapper.js";
+import { _Fp } from "../../fp/_fp.js";
+import { IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
+import { IDebugBindings } from "./i-debug-bindings.js";
+import { _Production } from "../../production/_production.js";
 
 /**
  * @public

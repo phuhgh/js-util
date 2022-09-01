@@ -1,5 +1,5 @@
-import { pathJoin } from "./path-join";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { pathJoin } from "./path-join.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> pathJoin", () =>
 {

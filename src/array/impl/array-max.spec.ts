@@ -1,5 +1,5 @@
-import { arrayMax } from "./array-max";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayMax } from "./array-max.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayMax", () =>
 {

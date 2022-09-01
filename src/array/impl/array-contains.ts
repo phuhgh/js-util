@@ -1,4 +1,4 @@
-import { TTypedArray } from "../typed-array/t-typed-array";
+import { TTypedArray } from "../typed-array/t-typed-array.js";
 
 /**
  * @public

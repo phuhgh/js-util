@@ -1,5 +1,5 @@
-import { equalityAreConsistentlyDefined } from "./impl/equality-are-consistently-defined";
-import { equalityAllEqual } from "./impl/equality-all-equal";
+import { equalityAreConsistentlyDefined } from "./impl/equality-are-consistently-defined.js";
+import { equalityAllEqual } from "./impl/equality-all-equal.js";
 
 /**
  * @public

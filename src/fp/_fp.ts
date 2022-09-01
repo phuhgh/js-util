@@ -1,11 +1,11 @@
-import { fpIdentity } from "./impl/fp-identity";
-import { fpNormalizeToNull } from "./impl/fp-normalize-to-null";
-import { fpNormalizeToUndefined } from "./impl/fp-normalize-to-undefined";
-import { fpOnce } from "./impl/fp-once";
-import { fpNoOp } from "./impl/fp-no-op";
-import { fpValueOrNull } from "./impl/fp-value-or-null";
-import { fpMaybeNewValue } from "./impl/fp-maybe-new-value";
-import { fpDebounce } from "./impl/fp-debounce";
+import { fpIdentity } from "./impl/fp-identity.js";
+import { fpNormalizeToNull } from "./impl/fp-normalize-to-null.js";
+import { fpNormalizeToUndefined } from "./impl/fp-normalize-to-undefined.js";
+import { fpOnce } from "./impl/fp-once.js";
+import { fpNoOp } from "./impl/fp-no-op.js";
+import { fpValueOrNull } from "./impl/fp-value-or-null.js";
+import { fpMaybeNewValue } from "./impl/fp-maybe-new-value.js";
+import { fpDebounce } from "./impl/fp-debounce.js";
 
 /**
  * @public

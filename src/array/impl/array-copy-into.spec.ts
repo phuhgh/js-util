@@ -1,5 +1,5 @@
-import { arrayCopyInto } from "./array-copy-into";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayCopyInto } from "./array-copy-into.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayCopyInto", () =>
 {

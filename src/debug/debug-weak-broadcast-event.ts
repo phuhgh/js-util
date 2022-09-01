@@ -1,5 +1,5 @@
-import { TListener } from "../eventing/t-listener";
-import { TDebugListener } from "./t-debug-listener";
+import { TListener } from "../eventing/t-listener.js";
+import { TDebugListener } from "./t-debug-listener.js";
 
 /**
  * @public

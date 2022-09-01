@@ -1,5 +1,5 @@
-import { dictionaryPairs } from "./dictionary-pairs";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { dictionaryPairs } from "./dictionary-pairs.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> dictionaryPairs", () =>
 {

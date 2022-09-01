@@ -1,4 +1,4 @@
-import { TTypedArrayCtor } from "./t-typed-array-ctor";
+import { TTypedArrayCtor } from "./t-typed-array-ctor.js";
 
 /**
  * @internal

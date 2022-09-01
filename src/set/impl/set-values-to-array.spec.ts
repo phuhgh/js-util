@@ -1,4 +1,4 @@
-import { setValuesToArray } from "./set-values-to-array";
+import { setValuesToArray } from "./set-values-to-array.js";
 
 describe("=> setValuesToArray", () =>
 {

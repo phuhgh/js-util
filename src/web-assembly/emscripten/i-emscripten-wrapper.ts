@@ -1,11 +1,11 @@
-import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory";
-import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args";
-import { IBroadcastEvent } from "../../eventing/i-broadcast-event";
-import { Emscripten } from "../../external/emscripten";
-import { IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event";
-import { IDebugWeakStore } from "../../debug/i-debug-weak-store";
-import { IDebugProtectedView } from "../../debug/i-debug-protected-view";
-import { IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker";
+import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory.js";
+import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args.js";
+import { IBroadcastEvent } from "../../eventing/i-broadcast-event.js";
+import { Emscripten } from "../../external/emscripten.js";
+import { IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event.js";
+import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
+import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
+import { IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
 
 /**
  * @public

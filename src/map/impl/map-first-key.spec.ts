@@ -1,5 +1,5 @@
-import { mapFirstKey } from "./map-first-key";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapFirstKey } from "./map-first-key.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapFirstKey", () =>
 {

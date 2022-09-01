@@ -1,6 +1,6 @@
 // noinspection BadExpressionStatementJS
 
-import { TNextInt } from "./t-next-int";
+import { TNextInt } from "./t-next-int.js";
 
 describe("=> TNextInt", () =>
 {

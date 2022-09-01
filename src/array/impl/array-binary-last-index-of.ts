@@ -1,4 +1,4 @@
-import { binaryFindInsertionIndex, TGetComparisonValueAtIndex } from "./binary-find-insertion-index";
+import { binaryFindInsertionIndex, TGetComparisonValueAtIndex } from "./binary-find-insertion-index.js";
 
 /**
  * @public

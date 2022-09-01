@@ -1,7 +1,7 @@
-import { Vec4Factory } from "./vec4-factory";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { Vec4 } from "./vec4";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
+import { Vec4Factory } from "./vec4-factory.js";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
+import { Vec4 } from "./vec4.js";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
 
 describe("=> Vec4Factory", () =>
 {

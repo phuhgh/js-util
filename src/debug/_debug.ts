@@ -1,4 +1,4 @@
-import { getGlobal } from "../runtime/get-global";
+import { getGlobal } from "../runtime/get-global.js";
 
 /**
  * @public

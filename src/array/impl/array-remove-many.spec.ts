@@ -1,5 +1,5 @@
-import { arrayRemoveMany } from "./array-remove-many";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayRemoveMany } from "./array-remove-many.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayRemoveMany", () =>
 {

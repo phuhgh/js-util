@@ -1,6 +1,6 @@
 // noinspection JSUnusedAssignment,BadExpressionStatementJS
 
-import { TTupleLikeOfLength } from "./t-tuple-like-of-length";
+import { TTupleLikeOfLength } from "./t-tuple-like-of-length.js";
 
 describe("=> TTupleLikeOfLength", () =>
 {

@@ -1,5 +1,5 @@
-import { mapValuesToArray } from "./map-values-to-array";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapValuesToArray } from "./map-values-to-array.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapValuesToArray", () =>
 {

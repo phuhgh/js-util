@@ -1,5 +1,5 @@
-import { arrayContains } from "./array-contains";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayContains } from "./array-contains.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayContains", () =>
 {

@@ -1,6 +1,6 @@
-import { arrayFlatMap } from "./array-flat-map";
-import { _Production } from "../../production/_production";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayFlatMap } from "./array-flat-map.js";
+import { _Production } from "../../production/_production.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayFlatMap", () =>
 {

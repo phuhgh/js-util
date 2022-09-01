@@ -1,7 +1,7 @@
-import { setValuesToArray } from "./impl/set-values-to-array";
-import { setSymmetricDifference } from "./impl/set-symmetric-difference";
-import { setSetDifference } from "./impl/set-set-difference";
-import { setIsSetEqual } from "./impl/set-is-set-equal";
+import { setValuesToArray } from "./impl/set-values-to-array.js";
+import { setSymmetricDifference } from "./impl/set-symmetric-difference.js";
+import { setSetDifference } from "./impl/set-set-difference.js";
+import { setIsSetEqual } from "./impl/set-is-set-equal.js";
 
 /**
  * @public

@@ -1,6 +1,6 @@
-import { _Debug } from "./_debug";
-import { numberGetHexString } from "../number/impl/number-get-hex-string";
-import { arrayInsertAtIndex } from "../array/impl/array-insert-at-index";
+import { _Debug } from "./_debug.js";
+import { numberGetHexString } from "../number/impl/number-get-hex-string.js";
+import { arrayInsertAtIndex } from "../array/impl/array-insert-at-index.js";
 
 export class DebugPointer
 {

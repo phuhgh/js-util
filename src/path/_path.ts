@@ -1,4 +1,4 @@
-import { pathJoin } from "./impl/path-join";
+import { pathJoin } from "./impl/path-join.js";
 
 /**
  * @public

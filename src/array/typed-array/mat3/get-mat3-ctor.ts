@@ -1,12 +1,12 @@
-import { IMat3Ctor, IReadonlyMat3, Mat3, TMat3CtorArgs } from "./mat3";
-import { Mat3Factory } from "./mat3-factory";
-import { _Debug } from "../../../debug/_debug";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
-import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { Mat2 } from "../mat2/mat2";
-import { IReadonlyVec3, Vec3 } from "../vec3/vec3";
-import { TTypedArray } from "../t-typed-array";
+import { IMat3Ctor, IReadonlyMat3, Mat3, TMat3CtorArgs } from "./mat3.js";
+import { Mat3Factory } from "./mat3-factory.js";
+import { _Debug } from "../../../debug/_debug.js";
+import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
+import { ITypedArrayCtor } from "../i-typed-array-ctor.js";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
+import { Mat2 } from "../mat2/mat2.js";
+import { IReadonlyVec3, Vec3 } from "../vec3/vec3.js";
+import { TTypedArray } from "../t-typed-array.js";
 
 /**
  * @internal

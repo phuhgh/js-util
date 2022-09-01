@@ -1,6 +1,6 @@
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils";
-import { mathMax } from "./math-max";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
+import { mathMax } from "./math-max.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mathMax", () =>
 {

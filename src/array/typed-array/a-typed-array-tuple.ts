@@ -1,7 +1,7 @@
-import { TTupleLike } from "../../typescript/t-tuple-like";
-import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length";
-import { TTypedArray } from "./t-typed-array";
-import { TNeverFallback } from "../../typescript/t-never-fallback";
+import { TTupleLike } from "../../typescript/t-tuple-like.js";
+import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length.js";
+import { TTypedArray } from "./t-typed-array.js";
+import { TNeverFallback } from "../../typescript/t-never-fallback.js";
 
 /**
  * @public

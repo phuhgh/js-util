@@ -1,7 +1,7 @@
-import { DebugProtectedView } from "./debug-protected-view";
-import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module";
-import asanTestModule from "../external/asan-test-module";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
+import { DebugProtectedView } from "./debug-protected-view.js";
+import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
+import asanTestModule from "../external/asan-test-module.cjs";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
 
 describe("=> DebugProtectedView", () =>
 {

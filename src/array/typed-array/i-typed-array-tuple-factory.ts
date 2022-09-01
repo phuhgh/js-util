@@ -1,5 +1,5 @@
-import { ATypedArrayTuple } from "./a-typed-array-tuple";
-import { TTypedArray } from "./t-typed-array";
+import { ATypedArrayTuple } from "./a-typed-array-tuple.js";
+import { TTypedArray } from "./t-typed-array.js";
 
 /**
  * @public

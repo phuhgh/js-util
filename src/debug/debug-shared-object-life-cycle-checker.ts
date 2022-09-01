@@ -1,7 +1,7 @@
-import { _Debug } from "./_debug";
-import { DebugPointer } from "./debug-pointer";
-import { _Production } from "../production/_production";
-import { IDebugSharedObject } from "./i-debug-shared-object";
+import { _Debug } from "./_debug.js";
+import { DebugPointer } from "./debug-pointer.js";
+import { _Production } from "../production/_production.js";
+import { IDebugSharedObject } from "./i-debug-shared-object.js";
 
 /**
  * @public

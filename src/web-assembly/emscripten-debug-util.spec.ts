@@ -1,8 +1,8 @@
-import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "./emscripten/sanitized-emscripten-test-module";
-import { _Debug } from "../debug/_debug";
-import { nullPointer } from "./emscripten/null-pointer";
-import asanTestModule from "../external/asan-test-module";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
+import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "./emscripten/sanitized-emscripten-test-module.js";
+import { _Debug } from "../debug/_debug.js";
+import { nullPointer } from "./emscripten/null-pointer.js";
+import asanTestModule from "../external/asan-test-module.cjs";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
 
 describe("JsUtil::Debug", () =>
 {

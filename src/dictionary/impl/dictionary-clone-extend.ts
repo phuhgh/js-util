@@ -1,4 +1,4 @@
-import { dictionaryExtend } from "./dictionary-extend";
+import { dictionaryExtend } from "./dictionary-extend.js";
 
 /**
  * @public

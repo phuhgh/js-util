@@ -1,4 +1,4 @@
-import { arrayRemoveMany } from "../../array/impl/array-remove-many";
+import { arrayRemoveMany } from "../../array/impl/array-remove-many.js";
 
 /**
  * @public

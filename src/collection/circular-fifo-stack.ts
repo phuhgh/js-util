@@ -1,6 +1,6 @@
-import { CircularBuffer } from "./circular-buffer";
-import { _Production } from "../production/_production";
-import { IFIFOStack } from "./i-fifo-stack";
+import { CircularBuffer } from "./circular-buffer.js";
+import { _Production } from "../production/_production.js";
+import { IFIFOStack } from "./i-fifo-stack.js";
 
 /**
  * @public

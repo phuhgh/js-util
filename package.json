@@ -1,15 +1,16 @@
 {
   "name": "rc-js-util",
+  "sideEffects": false,
   "version": "9.0.5",
   "license": "MIT",
   "scripts": {
     "test": "jasmine --config=jasmine.json",
     "build": "rimraf bin && npm run build-ts && npm run build-cpp",
-    "build-ts": "tsc -d --outDir bin/cjs/ --module commonjs",
+    "build-ts": "tsc -p tsconfig.json",
     "build-cpp": "sh build.sh",
     "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm",
-    "build-lib-cjs": "tsc -d -p tsconfig.lib.json --outDir bin/cjs/ --module commonjs",
-    "build-lib-esm": "tsc -d -p tsconfig.lib.json --outDir bin/esm/ --module esnext",
+    "build-lib-cjs": "tsc -d -p tsconfig-cjs.lib.json",
+    "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "eslint -c node_modules/rc-lint-rules/.eslintrc.js src/",
     "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
@@ -29,21 +30,21 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint": "~8.22.0",
-    "typescript": "~4.5.5",
+    "typescript": "~4.8.2",
     "rimraf": "^3.0.2"
   },
   "bin": {
     "rc-extract-cpp-names": "scripts/extract-cpp-names.cjs"
   },
-  "exports": {
-    ".": {
-      "import": "./bin/cjs/index.js",
-      "require": "./bin/esm/index.js"
-    }
-  },
+  "type": "module",
   "main": "bin/cjs/index.js",
   "typings": "bin/cjs/index.d.ts",
-  "private": false,
+  "exports": {
+    ".": {
+      "import": "./bin/esm/index.js",
+      "require": "./bin/cjs/index.js"
+    }
+  },
   "keywords": [
     "Util",
     "stdlib",

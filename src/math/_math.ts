@@ -1,8 +1,8 @@
-import { mathMin } from "./impl/math-min";
-import { mathMax } from "./impl/math-max";
-import { mathBound } from "./impl/math-bound";
-import { mathBoundRandom } from "./impl/math-bound-random";
-import { mathHypot2 } from "./impl/math-hypot";
+import { mathMin } from "./impl/math-min.js";
+import { mathMax } from "./impl/math-max.js";
+import { mathBound } from "./impl/math-bound.js";
+import { mathBoundRandom } from "./impl/math-bound-random.js";
+import { mathHypot2 } from "./impl/math-hypot.js";
 
 /**
  * @public

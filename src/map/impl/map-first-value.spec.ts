@@ -1,5 +1,5 @@
-import { mapFirstValue } from "./map-first-value";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapFirstValue } from "./map-first-value.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapFirstValue", () =>
 {

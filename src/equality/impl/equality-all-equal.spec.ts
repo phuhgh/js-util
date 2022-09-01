@@ -1,5 +1,5 @@
-import { equalityAllEqual } from "./equality-all-equal";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { equalityAllEqual } from "./equality-all-equal.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> equalityAllEqual", () =>
 {

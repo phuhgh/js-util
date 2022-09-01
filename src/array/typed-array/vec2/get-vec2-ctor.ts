@@ -1,11 +1,11 @@
-import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IReadonlyVec2, IVec2Ctor, Vec2 } from "./vec2";
-import { Vec2Factory } from "./vec2-factory";
-import { IReadonlyMat3 } from "../mat3/mat3";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
-import { IReadonlyRange2d } from "../2d/range2d/range2d";
-import { TTypedArray } from "../t-typed-array";
+import { ITypedArrayCtor } from "../i-typed-array-ctor.js";
+import { IReadonlyVec2, IVec2Ctor, Vec2 } from "./vec2.js";
+import { Vec2Factory } from "./vec2-factory.js";
+import { IReadonlyMat3 } from "../mat3/mat3.js";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
+import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
+import { IReadonlyRange2d } from "../2d/range2d/range2d.js";
+import { TTypedArray } from "../t-typed-array.js";
 
 /**
  * @internal

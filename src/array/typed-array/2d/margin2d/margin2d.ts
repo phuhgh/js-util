@@ -1,13 +1,13 @@
-import { IReadonlyRange2d, Range2d } from "../range2d/range2d";
-import { TTypedArray } from "../../t-typed-array";
-import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
-import { getMargin2dCtor } from "./get-margin2d-ctor";
-import { TTypedArrayCtor } from "../../t-typed-array-ctor";
-import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map";
-import { Mat2 } from "../../mat2/mat2";
-import { IReadonlyMat3 } from "../../mat3/mat3";
-import { TPickExcept } from "../../../../typescript/t-pick-except";
-import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple";
+import { IReadonlyRange2d, Range2d } from "../range2d/range2d.js";
+import { TTypedArray } from "../../t-typed-array.js";
+import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory.js";
+import { getMargin2dCtor } from "./get-margin2d-ctor.js";
+import { TTypedArrayCtor } from "../../t-typed-array-ctor.js";
+import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map.js";
+import { Mat2 } from "../../mat2/mat2.js";
+import { IReadonlyMat3 } from "../../mat3/mat3.js";
+import { TPickExcept } from "../../../../typescript/t-pick-except.js";
+import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple.js";
 
 /**
  * @public

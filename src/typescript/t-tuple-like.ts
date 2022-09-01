@@ -1,4 +1,4 @@
-import { TNeverFallback } from "./t-never-fallback";
+import { TNeverFallback } from "./t-never-fallback.js";
 
 /**
  * @public

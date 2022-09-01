@@ -1,4 +1,4 @@
-import { IIdentifierFactory } from "./i-identifier-factory";
+import { IIdentifierFactory } from "./i-identifier-factory.js";
 
 /**
  * @public

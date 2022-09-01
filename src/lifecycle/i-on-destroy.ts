@@ -1,4 +1,4 @@
-import { ITemporaryListener, TemporaryListener } from "./temporary-listener";
+import { ITemporaryListener, TemporaryListener } from "./temporary-listener.js";
 
 /**
  * @public

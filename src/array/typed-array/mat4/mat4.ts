@@ -1,11 +1,11 @@
-import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple";
-import { TTypedArray } from "../t-typed-array";
-import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory";
-import { getMat4Ctor } from "./get-mat4-ctor";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
-import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map";
-import { IReadonlyVec4, Vec4 } from "../vec4/vec4";
-import { TPickExcept } from "../../../typescript/t-pick-except";
+import { ATypedArrayTuple, TTypedArrayTupleMutativeMethods } from "../a-typed-array-tuple.js";
+import { TTypedArray } from "../t-typed-array.js";
+import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory.js";
+import { getMat4Ctor } from "./get-mat4-ctor.js";
+import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
+import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map.js";
+import { IReadonlyVec4, Vec4 } from "../vec4/vec4.js";
+import { TPickExcept } from "../../../typescript/t-pick-except.js";
 
 /**
  * @public

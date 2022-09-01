@@ -1,4 +1,4 @@
-import { IWebAssemblyMemoryMemory } from "./i-web-assembly-memory";
+import { IWebAssemblyMemoryMemory } from "./i-web-assembly-memory.js";
 
 /* eslint-disable */
 /**

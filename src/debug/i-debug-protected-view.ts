@@ -1,4 +1,4 @@
-import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper";
+import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper.js";
 
 /**
  * @public

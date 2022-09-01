@@ -1,6 +1,6 @@
-import { mapAddToSet } from "./map-add-to-set";
-import { _Set } from "../../set/_set";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapAddToSet } from "./map-add-to-set.js";
+import { _Set } from "../../set/_set.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapAddToSet", () =>
 {

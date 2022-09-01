@@ -1,5 +1,5 @@
-import { mapInitializeGet } from "./map-intialize-get";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapInitializeGet } from "./map-intialize-get.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapInitializeGet", () =>
 {

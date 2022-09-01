@@ -1,6 +1,6 @@
-import { arrayIndex } from "./array-index";
-import { _Production } from "../../production/_production";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayIndex } from "./array-index.js";
+import { _Production } from "../../production/_production.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayIndex", () =>
 {

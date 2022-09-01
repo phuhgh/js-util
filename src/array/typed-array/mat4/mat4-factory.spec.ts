@@ -1,7 +1,7 @@
-import { Mat4Factory } from "./mat4-factory";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { Mat4 } from "./mat4";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
+import { Mat4Factory } from "./mat4-factory.js";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
+import { Mat4 } from "./mat4.js";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
 
 describe("=> Mat4Factory", () =>
 {

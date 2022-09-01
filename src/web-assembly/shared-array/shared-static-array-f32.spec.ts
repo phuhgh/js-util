@@ -1,11 +1,11 @@
-import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module";
-import { SharedStaticArray, TF32SharedStaticArray } from "./shared-static-array";
-import { SharedArray, TF32SharedArray } from "./shared-array";
-import { IJsUtilBindings } from "../i-js-util-bindings";
-import { _Debug } from "../../debug/_debug";
-import asanTestModule from "../../external/asan-test-module";
-import safeHeapTestModule from "../../external/safe-heap-test-module";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
+import { SharedStaticArray, TF32SharedStaticArray } from "./shared-static-array.js";
+import { SharedArray, TF32SharedArray } from "./shared-array.js";
+import { IJsUtilBindings } from "../i-js-util-bindings.js";
+import { _Debug } from "../../debug/_debug.js";
+import asanTestModule from "../../external/asan-test-module.cjs";
+import safeHeapTestModule from "../../external/safe-heap-test-module.cjs";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> F32SharedStaticArray", () =>
 {

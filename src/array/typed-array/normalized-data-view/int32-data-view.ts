@@ -1,5 +1,5 @@
-import { INormalizedDataView } from "./i-normalized-data-view";
-import { isLittleEndian } from "../../../web-assembly/is-little-endian";
+import { INormalizedDataView } from "./i-normalized-data-view.js";
+import { isLittleEndian } from "../../../web-assembly/is-little-endian.js";
 
 export class Int32DataView implements INormalizedDataView
 {

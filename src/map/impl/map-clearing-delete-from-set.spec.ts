@@ -1,6 +1,6 @@
-import { mapClearingDeleteFromSet } from "./map-clearing-delete-from-set";
-import { _Set } from "../../set/_set";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapClearingDeleteFromSet } from "./map-clearing-delete-from-set.js";
+import { _Set } from "../../set/_set.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapClearingDeleteFromSet", () =>
 {

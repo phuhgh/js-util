@@ -1,5 +1,5 @@
-import { mapIntersect } from "./map-intersect";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapIntersect } from "./map-intersect.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapIntersect", () =>
 {

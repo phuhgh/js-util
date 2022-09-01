@@ -1,5 +1,5 @@
-import { arrayCompact } from "./array-compact";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayCompact } from "./array-compact.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayCompact", () =>
 {

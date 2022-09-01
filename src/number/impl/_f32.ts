@@ -1,4 +1,4 @@
-import { Range2d } from "../../array/typed-array/2d/range2d/range2d";
+import { Range2d } from "../../array/typed-array/2d/range2d/range2d.js";
 
 /**
  * @public

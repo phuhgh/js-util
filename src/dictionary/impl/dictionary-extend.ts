@@ -1,5 +1,5 @@
-import { _Debug } from "../../debug/_debug";
-import { arrayIsArray } from "../../array/impl/array-is-array";
+import { _Debug } from "../../debug/_debug.js";
+import { arrayIsArray } from "../../array/impl/array-is-array.js";
 
 /**
  * @public

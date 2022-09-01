@@ -1,10 +1,10 @@
-import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted";
-import { _Debug } from "../debug/_debug";
-import { nullPointer } from "../web-assembly/emscripten/null-pointer";
-import { _Array } from "../array/_array";
-import { IOnFree } from "./i-on-free";
-import { ITemporaryListener, TemporaryListener } from "./temporary-listener";
-import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper";
+import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted.js";
+import { _Debug } from "../debug/_debug.js";
+import { nullPointer } from "../web-assembly/emscripten/null-pointer.js";
+import { _Array } from "../array/_array.js";
+import { IOnFree } from "./i-on-free.js";
+import { ITemporaryListener, TemporaryListener } from "./temporary-listener.js";
+import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper.js";
 
 /**
  * @public

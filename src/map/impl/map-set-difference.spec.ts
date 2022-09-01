@@ -1,5 +1,5 @@
-import { mapSetDifference } from "./map-set-difference";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapSetDifference } from "./map-set-difference.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapSetDifference", () =>
 {

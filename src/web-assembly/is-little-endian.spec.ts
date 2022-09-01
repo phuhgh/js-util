@@ -1,4 +1,4 @@
-import { isLittleEndian } from "./is-little-endian";
+import { isLittleEndian } from "./is-little-endian.js";
 
 describe("=> isLittleEndian", () =>
 {

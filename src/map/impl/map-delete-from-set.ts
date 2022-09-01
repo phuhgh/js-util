@@ -1,4 +1,4 @@
-import { ISetLike } from "../../typescript/i-set-like";
+import { ISetLike } from "../../typescript/i-set-like.js";
 
 /**
  * @public

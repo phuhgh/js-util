@@ -1,15 +1,15 @@
-import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor";
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr";
-import { _Debug } from "../../debug/_debug";
-import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper";
-import { DebugProtectedView } from "../../debug/debug-protected-view";
-import { _Production } from "../../production/_production";
-import { nullPointer } from "../emscripten/null-pointer";
-import { ISharedArray } from "./i-shared-array";
-import { DebugSharedObjectChecks } from "../debug-shared-object-checks";
-import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings";
-import { IOnMemoryResize } from "../emscripten/i-on-memory-resize";
-import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener";
+import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr.js";
+import { _Debug } from "../../debug/_debug.js";
+import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
+import { DebugProtectedView } from "../../debug/debug-protected-view.js";
+import { _Production } from "../../production/_production.js";
+import { nullPointer } from "../emscripten/null-pointer.js";
+import { ISharedArray } from "./i-shared-array.js";
+import { DebugSharedObjectChecks } from "../debug-shared-object-checks.js";
+import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings.js";
+import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
+import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
 
 /**
  * @public

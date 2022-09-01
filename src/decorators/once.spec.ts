@@ -1,5 +1,5 @@
-import { Once } from "./once";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
+import { Once } from "./once.js";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
 
 describe("=> once decorator", () =>
 {

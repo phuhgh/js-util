@@ -1,9 +1,9 @@
-import { _Debug } from "../debug/_debug";
-import { numberGetHexString } from "../number/impl/number-get-hex-string";
-import { stringNormalizeNullUndefinedToEmpty } from "../string/impl/string-normalize-null-undefined-to-empty";
-import { ISharedObject } from "../lifecycle/i-shared-object";
-import { IDebugProtectedView } from "../debug/i-debug-protected-view";
-import { IDebugAllocateListener } from "../debug/i-debug-allocate-listener";
+import { _Debug } from "../debug/_debug.js";
+import { numberGetHexString } from "../number/impl/number-get-hex-string.js";
+import { stringNormalizeNullUndefinedToEmpty } from "../string/impl/string-normalize-null-undefined-to-empty.js";
+import { ISharedObject } from "../lifecycle/i-shared-object.js";
+import { IDebugProtectedView } from "../debug/i-debug-protected-view.js";
+import { IDebugAllocateListener } from "../debug/i-debug-allocate-listener.js";
 
 /**
  * @public

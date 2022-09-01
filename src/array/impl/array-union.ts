@@ -1,5 +1,5 @@
-import { fpIdentity } from "../../fp/impl/fp-identity";
-import { mapValuesToArray } from "../../map/impl/map-values-to-array";
+import { fpIdentity } from "../../fp/impl/fp-identity.js";
+import { mapValuesToArray } from "../../map/impl/map-values-to-array.js";
 
 /**
  * @public

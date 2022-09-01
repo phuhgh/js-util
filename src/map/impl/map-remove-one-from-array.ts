@@ -1,4 +1,4 @@
-import { arrayRemoveOne } from "../../array/impl/array-remove-one";
+import { arrayRemoveOne } from "../../array/impl/array-remove-one.js";
 
 /**
  * @public

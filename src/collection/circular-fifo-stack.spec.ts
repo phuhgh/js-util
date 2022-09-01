@@ -1,5 +1,5 @@
-import { CircularFIFOStack, ECircularStackOverflowMode } from "./circular-fifo-stack";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
+import { CircularFIFOStack, ECircularStackOverflowMode } from "./circular-fifo-stack.js";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
 
 describe("=> CircularFIFOStack", () =>
 {

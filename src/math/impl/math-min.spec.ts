@@ -1,6 +1,6 @@
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils";
-import { mathMin } from "./math-min";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
+import { mathMin } from "./math-min.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mathMin", () =>
 {

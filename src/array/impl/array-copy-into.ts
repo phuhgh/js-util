@@ -1,4 +1,4 @@
-import { _Debug } from "../../debug/_debug";
+import { _Debug } from "../../debug/_debug.js";
 
 /**
  * @public

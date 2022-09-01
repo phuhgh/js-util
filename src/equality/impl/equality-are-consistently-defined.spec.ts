@@ -1,5 +1,5 @@
-import { equalityAreConsistentlyDefined } from "./equality-are-consistently-defined";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { equalityAreConsistentlyDefined } from "./equality-are-consistently-defined.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> equalityAreConsistentlyDefined", () =>
 {

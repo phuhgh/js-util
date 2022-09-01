@@ -1,5 +1,5 @@
-import { iteratorConsumeAll } from "./impl/iterator-consume-all";
-import { iteratorEmptyIterator } from "./impl/iterator-empty-iterator";
+import { iteratorConsumeAll } from "./impl/iterator-consume-all.js";
+import { iteratorEmptyIterator } from "./impl/iterator-empty-iterator.js";
 
 // noinspection JSUnusedLocalSymbols
 /**

@@ -1,5 +1,5 @@
-import { mapSymmetricDifference } from "./map-symmetric-difference";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapSymmetricDifference } from "./map-symmetric-difference.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapSymmetricDifference", () =>
 {

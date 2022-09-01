@@ -1,4 +1,4 @@
-import { fpNoOp } from "../fp/impl/fp-no-op";
+import { fpNoOp } from "../fp/impl/fp-no-op.js";
 
 /**
  * @public

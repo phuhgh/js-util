@@ -1,4 +1,4 @@
-import { IDictionary } from "../../typescript/i-dictionary";
+import { IDictionary } from "../../typescript/i-dictionary.js";
 
 /**
  * @public

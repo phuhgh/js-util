@@ -1,5 +1,5 @@
-import { mapConcat } from "./map-concat";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapConcat } from "./map-concat.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapConcat", () =>
 {

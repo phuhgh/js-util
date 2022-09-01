@@ -1,4 +1,4 @@
-import { arrayCopyInto } from "../array/impl/array-copy-into";
+import { arrayCopyInto } from "../array/impl/array-copy-into.js";
 
 /**
  * @public

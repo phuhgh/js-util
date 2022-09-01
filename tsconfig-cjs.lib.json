@@ -1,0 +1,12 @@
+﻿{
+  "extends": "./tsconfig-esm.lib.json",
+  "compilerOptions": {
+    "outDir": "bin/cjs",
+    "module": "CommonJS",
+    "moduleResolution": "Node"
+  },
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/test-util/test-utils.ts"
+  ]
+}

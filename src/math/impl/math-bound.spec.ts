@@ -1,6 +1,6 @@
-import { mathBound } from "./math-bound";
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mathBound } from "./math-bound.js";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mathBound", () =>
 {

@@ -1,5 +1,5 @@
-import { TF32Vec4, Vec4 } from "./vec4";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
+import { TF32Vec4, Vec4 } from "./vec4.js";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
 
 describe("=> Vec4", () =>
 {

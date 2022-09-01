@@ -1,5 +1,5 @@
-import { arrayIsNotEmpty } from "./array-is-not-empty";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayIsNotEmpty } from "./array-is-not-empty.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayIsNotEmpty", () =>
 {

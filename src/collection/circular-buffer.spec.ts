@@ -1,5 +1,5 @@
-import { CircularBuffer } from "./circular-buffer";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
+import { CircularBuffer } from "./circular-buffer.js";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
 
 describe("=> CircularBuffer", () =>
 {

@@ -1,16 +1,16 @@
-import { shimWebAssemblyMemory } from "../shim-web-assembly-memory";
-import { IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper";
-import { BroadcastEvent } from "../../eventing/broadcast-event";
-import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory";
-import { Emscripten } from "../../external/emscripten";
-import { _Debug } from "../../debug/_debug";
-import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args";
-import { DebugWeakBroadcastEvent, IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event";
-import { IBroadcastEvent } from "../../eventing/i-broadcast-event";
-import { IDebugProtectedView } from "../../debug/i-debug-protected-view";
-import { IDebugWeakStore } from "../../debug/i-debug-weak-store";
-import { DebugSharedObjectLifeCycleChecker, IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker";
-import { DebugWeakValue } from "../../debug/debug-weak-value";
+import { shimWebAssemblyMemory } from "../shim-web-assembly-memory.js";
+import { IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
+import { BroadcastEvent } from "../../eventing/broadcast-event.js";
+import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory.js";
+import { Emscripten } from "../../external/emscripten.js";
+import { _Debug } from "../../debug/_debug.js";
+import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args.js";
+import { DebugWeakBroadcastEvent, IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event.js";
+import { IBroadcastEvent } from "../../eventing/i-broadcast-event.js";
+import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
+import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
+import { DebugSharedObjectLifeCycleChecker, IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
+import { DebugWeakValue } from "../../debug/debug-weak-value.js";
 
 /**
  * @public

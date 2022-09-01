@@ -1,4 +1,4 @@
-import type { IJsUtilBindings } from "./web-assembly/i-js-util-bindings";
+import type { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
 
 export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } = {
     _jsUtilEndProgram: true,

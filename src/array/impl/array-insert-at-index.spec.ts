@@ -1,5 +1,5 @@
-import { arrayInsertAtIndex } from "./array-insert-at-index";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayInsertAtIndex } from "./array-insert-at-index.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayInsertAtIndex", () =>
 {

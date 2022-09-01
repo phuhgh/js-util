@@ -1,5 +1,5 @@
-import { setIsSetEqual } from "./set-is-set-equal";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { setIsSetEqual } from "./set-is-set-equal.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> setIsSetEqual", () =>
 {

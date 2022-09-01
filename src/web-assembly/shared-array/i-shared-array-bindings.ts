@@ -1,4 +1,4 @@
-import { TProperty } from "../../typescript/t-property";
+import { TProperty } from "../../typescript/t-property.js";
 
 /**
  * @public

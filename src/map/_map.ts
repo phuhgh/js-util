@@ -1,23 +1,23 @@
-import { mapArrayMap } from "./impl/map-array-map";
-import { mapFirstKey } from "./impl/map-first-key";
-import { mapFirstValue } from "./impl/map-first-value";
-import { mapInitializeGet } from "./impl/map-intialize-get";
-import { mapKeysToArray } from "./impl/map-keys-to-array";
-import { mapPush } from "./impl/map-push";
-import { mapValuesToArray } from "./impl/map-values-to-array";
-import { mapEntriesToArray } from "./impl/map-entries-to-array";
-import { mapDeleteGet } from "./impl/map-delete-get";
-import { mapAddToSet } from "./impl/map-add-to-set";
-import { mapDeleteFromSet } from "./impl/map-delete-from-set";
-import { mapReportingAddToSet } from "./impl/map-reporting-add-to-set";
-import { mapRemoveManyFromArray } from "./impl/map-remove-many-from-array";
-import { mapRemoveOneFromArray } from "./impl/map-remove-one-from-array";
-import { mapSetDifference } from "./impl/map-set-difference";
-import { mapSymmetricDifference } from "./impl/map-symmetric-difference";
-import { mapUnion } from "./impl/map-union";
-import { mapIntersect } from "./impl/map-intersect";
-import { mapConcat } from "./impl/map-concat";
-import { mapClearingDeleteFromSet } from "./impl/map-clearing-delete-from-set";
+import { mapArrayMap } from "./impl/map-array-map.js";
+import { mapFirstKey } from "./impl/map-first-key.js";
+import { mapFirstValue } from "./impl/map-first-value.js";
+import { mapInitializeGet } from "./impl/map-intialize-get.js";
+import { mapKeysToArray } from "./impl/map-keys-to-array.js";
+import { mapPush } from "./impl/map-push.js";
+import { mapValuesToArray } from "./impl/map-values-to-array.js";
+import { mapEntriesToArray } from "./impl/map-entries-to-array.js";
+import { mapDeleteGet } from "./impl/map-delete-get.js";
+import { mapAddToSet } from "./impl/map-add-to-set.js";
+import { mapDeleteFromSet } from "./impl/map-delete-from-set.js";
+import { mapReportingAddToSet } from "./impl/map-reporting-add-to-set.js";
+import { mapRemoveManyFromArray } from "./impl/map-remove-many-from-array.js";
+import { mapRemoveOneFromArray } from "./impl/map-remove-one-from-array.js";
+import { mapSetDifference } from "./impl/map-set-difference.js";
+import { mapSymmetricDifference } from "./impl/map-symmetric-difference.js";
+import { mapUnion } from "./impl/map-union.js";
+import { mapIntersect } from "./impl/map-intersect.js";
+import { mapConcat } from "./impl/map-concat.js";
+import { mapClearingDeleteFromSet } from "./impl/map-clearing-delete-from-set.js";
 
 /**
  * @public

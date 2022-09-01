@@ -1,5 +1,5 @@
-import { Emscripten } from "./emscripten";
-import { IJsUtilBindings } from "../index";
+import { Emscripten } from "./emscripten.js";
+import { IJsUtilBindings } from "../index.js";
 
 /**
  * @internal

@@ -1,5 +1,5 @@
-import { arrayMin } from "./array-min";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayMin } from "./array-min.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayMin", () =>
 {

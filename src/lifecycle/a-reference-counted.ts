@@ -1,5 +1,5 @@
-import { _Debug } from "../debug/_debug";
-import { IOnFree } from "./i-on-free";
+import { _Debug } from "../debug/_debug.js";
+import { IOnFree } from "./i-on-free.js";
 
 /**
  * @public

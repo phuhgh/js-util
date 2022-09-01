@@ -1,5 +1,5 @@
-import { _Debug } from "./_debug";
-import { IDebugWeakStore } from "./i-debug-weak-store";
+import { _Debug } from "./_debug.js";
+import { IDebugWeakStore } from "./i-debug-weak-store.js";
 
 export class DebugWeakValue<T> implements IDebugWeakStore<T>
 {

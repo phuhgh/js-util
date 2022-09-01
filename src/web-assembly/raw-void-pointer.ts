@@ -1,15 +1,15 @@
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr";
-import { IEmscriptenWrapper } from "./emscripten/i-emscripten-wrapper";
-import { nullPointer } from "./emscripten/null-pointer";
-import { _Production } from "../production/_production";
-import { DebugProtectedView } from "../debug/debug-protected-view";
-import { _Debug } from "../debug/_debug";
-import { DebugSharedObjectChecks } from "./debug-shared-object-checks";
-import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings";
-import { _Number } from "../number/_number";
-import { ISharedObject } from "../lifecycle/i-shared-object";
-import { IOnMemoryResize } from "./emscripten/i-on-memory-resize";
-import { IDebugAllocateListener } from "../debug/i-debug-allocate-listener";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../lifecycle/reference-counted-ptr.js";
+import { IEmscriptenWrapper } from "./emscripten/i-emscripten-wrapper.js";
+import { nullPointer } from "./emscripten/null-pointer.js";
+import { _Production } from "../production/_production.js";
+import { DebugProtectedView } from "../debug/debug-protected-view.js";
+import { _Debug } from "../debug/_debug.js";
+import { DebugSharedObjectChecks } from "./debug-shared-object-checks.js";
+import { IMemoryUtilBindings } from "./emscripten/i-memory-util-bindings.js";
+import { _Number } from "../number/_number.js";
+import { ISharedObject } from "../lifecycle/i-shared-object.js";
+import { IOnMemoryResize } from "./emscripten/i-on-memory-resize.js";
+import { IDebugAllocateListener } from "../debug/i-debug-allocate-listener.js";
 
 /**
  * @public

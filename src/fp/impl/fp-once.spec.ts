@@ -1,6 +1,6 @@
-import { fpOnce } from "./fp-once";
+import { fpOnce } from "./fp-once.js";
 import createSpy = jasmine.createSpy;
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> fpOnce", () =>
 {

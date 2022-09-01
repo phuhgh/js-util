@@ -1,4 +1,4 @@
-import { IReadonlySetLike } from "./i-readonly-set-like";
+import { IReadonlySetLike } from "./i-readonly-set-like.js";
 
 /**
  * @public

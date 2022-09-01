@@ -1,13 +1,13 @@
-import { IRange2dCtor, IReadonlyRange2d, Range2d, TRange2dCtorArgs } from "./range2d";
-import { getMat2Ctor } from "../../mat2/get-mat2-ctor";
-import { IReadonlyVec2, Vec2 } from "../../vec2/vec2";
-import { TTypedArrayCtor } from "../../t-typed-array-ctor";
-import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory";
-import { Mat2Factory } from "../../mat2/mat2-factory";
-import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider";
-import { _Debug } from "../../../../debug/_debug";
-import { IReadonlyMat3, Mat3 } from "../../mat3/mat3";
-import { TTypedArray } from "../../t-typed-array";
+import { IRange2dCtor, IReadonlyRange2d, Range2d, TRange2dCtorArgs } from "./range2d.js";
+import { getMat2Ctor } from "../../mat2/get-mat2-ctor.js";
+import { IReadonlyVec2, Vec2 } from "../../vec2/vec2.js";
+import { TTypedArrayCtor } from "../../t-typed-array-ctor.js";
+import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory.js";
+import { Mat2Factory } from "../../mat2/mat2-factory.js";
+import { NormalizedDataViewProvider } from "../../normalized-data-view/normalized-data-view-provider.js";
+import { _Debug } from "../../../../debug/_debug.js";
+import { IReadonlyMat3, Mat3 } from "../../mat3/mat3.js";
+import { TTypedArray } from "../../t-typed-array.js";
 
 /**
  * @internal

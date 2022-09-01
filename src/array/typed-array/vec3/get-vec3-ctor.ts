@@ -1,9 +1,9 @@
-import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IReadonlyVec3, IVec3Ctor, Vec3 } from "./vec3";
-import { Vec3Factory } from "./vec3-factory";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
-import { TTypedArray } from "../t-typed-array";
+import { ITypedArrayCtor } from "../i-typed-array-ctor.js";
+import { IReadonlyVec3, IVec3Ctor, Vec3 } from "./vec3.js";
+import { Vec3Factory } from "./vec3-factory.js";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
+import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
+import { TTypedArray } from "../t-typed-array.js";
 
 /**
  * @internal

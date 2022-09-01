@@ -1,5 +1,5 @@
-import { _Production } from "./_production";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
+import { _Production } from "./_production.js";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
 
 describe("=> _Production.error", () =>
 {

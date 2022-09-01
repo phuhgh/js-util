@@ -1,7 +1,8 @@
 ﻿{
   "compilerOptions": {
-    "outDir": "bin/cjs",
-    "moduleResolution": "node",
+    "outDir": "bin/esm",
+    "moduleResolution": "Node",
+    "module": "ES2020",
     "importHelpers": true,
     "experimentalDecorators": true,
     "noImplicitReturns": true,
@@ -11,9 +12,10 @@
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "strict": true,
-    "target": "es6",
+    "target": "ES6",
     "sourceMap": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "es5",
       "ES2015.Proxy",

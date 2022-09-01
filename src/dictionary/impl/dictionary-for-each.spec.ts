@@ -1,5 +1,5 @@
-import { dictionaryForEach } from "./dictionary-foreach";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { dictionaryForEach } from "./dictionary-foreach.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> dictionaryForEach", () =>
 {

@@ -1,7 +1,7 @@
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils";
-import { fpIdentity } from "../../fp/impl/fp-identity";
-import { arrayForEachRange } from "./array-for-each-range";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
+import { fpIdentity } from "../../fp/impl/fp-identity.js";
+import { arrayForEachRange } from "./array-for-each-range.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayForEachRange", () =>
 {

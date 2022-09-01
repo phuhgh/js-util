@@ -1,5 +1,5 @@
-import { mapUnion } from "./map-union";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { mapUnion } from "./map-union.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> mapUnion", () =>
 {

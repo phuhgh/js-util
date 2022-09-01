@@ -1,9 +1,9 @@
-import { dictionaryValues } from "./impl/dictionary-values";
-import { dictionaryExtend } from "./impl/dictionary-extend";
-import { dictionaryCloneExtend } from "./impl/dictionary-clone-extend";
-import { dictionaryForEach } from "./impl/dictionary-foreach";
-import { dictionaryPairs } from "./impl/dictionary-pairs";
-import { dictionaryPush } from "./impl/dictionary-push";
+import { dictionaryValues } from "./impl/dictionary-values.js";
+import { dictionaryExtend } from "./impl/dictionary-extend.js";
+import { dictionaryCloneExtend } from "./impl/dictionary-clone-extend.js";
+import { dictionaryForEach } from "./impl/dictionary-foreach.js";
+import { dictionaryPairs } from "./impl/dictionary-pairs.js";
+import { dictionaryPush } from "./impl/dictionary-push.js";
 
 /**
  * @public

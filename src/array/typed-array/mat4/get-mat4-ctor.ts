@@ -1,11 +1,11 @@
-import { ITypedArrayCtor } from "../i-typed-array-ctor";
-import { IMat4Ctor, Mat4 } from "./mat4";
-import { Mat4Factory } from "./mat4-factory";
-import { _Debug } from "../../../debug/_debug";
-import { TTypedArrayCtor } from "../t-typed-array-ctor";
-import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider";
-import { IReadonlyVec4, Vec4 } from "../vec4/vec4";
-import { TTypedArray } from "../t-typed-array";
+import { ITypedArrayCtor } from "../i-typed-array-ctor.js";
+import { IMat4Ctor, Mat4 } from "./mat4.js";
+import { Mat4Factory } from "./mat4-factory.js";
+import { _Debug } from "../../../debug/_debug.js";
+import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
+import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
+import { IReadonlyVec4, Vec4 } from "../vec4/vec4.js";
+import { TTypedArray } from "../t-typed-array.js";
 
 /**
  * @internal

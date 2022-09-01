@@ -1,6 +1,6 @@
-import { RgbaColorPacker } from "./rgba-color-packer";
-import { ERgbaShift } from "./e-rgba-masks";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags";
+import { RgbaColorPacker } from "./rgba-color-packer.js";
+import { ERgbaShift } from "./e-rgba-masks.js";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
 
 describe("=> RgbaColorPacker", () =>
 {

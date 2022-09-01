@@ -1,6 +1,6 @@
-import { numberGetHexString } from "./impl/number-get-hex-string";
-import { _F32 } from "./impl/_f32";
-import { _F64 } from "./impl/_f64";
+import { numberGetHexString } from "./impl/number-get-hex-string.js";
+import { _F32 } from "./impl/_f32.js";
+import { _F64 } from "./impl/_f64.js";
 
 /**
  * @public

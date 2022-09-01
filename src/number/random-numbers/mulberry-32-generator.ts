@@ -1,4 +1,4 @@
-import { IRandomNumberGenerator } from "./i-random-number-generator";
+import { IRandomNumberGenerator } from "./i-random-number-generator.js";
 
 /**
  * @public

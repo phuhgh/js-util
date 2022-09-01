@@ -1,4 +1,4 @@
-import { regexEscapeRegex } from "./impl/regex-escape-regex";
+import { regexEscapeRegex } from "./impl/regex-escape-regex.js";
 
 /**
  * @public

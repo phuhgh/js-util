@@ -1,7 +1,7 @@
-import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils";
-import { arrayBinaryIndexOf } from "./array-binary-index-of";
-import { arrayBinaryLastIndexOf } from "./array-binary-last-index-of";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
+import { arrayBinaryIndexOf } from "./array-binary-index-of.js";
+import { arrayBinaryLastIndexOf } from "./array-binary-last-index-of.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> binary index of", () =>
 {

@@ -1,5 +1,5 @@
-import { arrayMap } from "./array-map";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayMap } from "./array-map.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayMap", () =>
 {

@@ -1,4 +1,4 @@
-import { ERgbaMasks, ERgbaShift } from "./e-rgba-masks";
+import { ERgbaMasks, ERgbaShift } from "./e-rgba-masks.js";
 
 /**
  * @public

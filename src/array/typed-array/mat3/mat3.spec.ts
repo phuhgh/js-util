@@ -1,7 +1,7 @@
-import { Vec2 } from "../vec2/vec2";
-import { Mat3, TF32Mat3 } from "./mat3";
-import { Vec3 } from "../vec3/vec3";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags";
+import { Vec2 } from "../vec2/vec2.js";
+import { Mat3, TF32Mat3 } from "./mat3.js";
+import { Vec3 } from "../vec3/vec3.js";
+import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
 
 describe("=> Mat3", () =>
 {

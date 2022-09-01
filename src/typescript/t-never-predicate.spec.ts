@@ -1,4 +1,4 @@
-import { TNeverPredicate } from "./t-never-predicate";
+import { TNeverPredicate } from "./t-never-predicate.js";
 
 describe("=> TNeverPredicate compile checks", () =>
 {

@@ -1,5 +1,5 @@
-import { setSetDifference } from "./set-set-difference";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { setSetDifference } from "./set-set-difference.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> setSetDifference", () =>
 {

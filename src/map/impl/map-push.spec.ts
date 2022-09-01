@@ -1,4 +1,4 @@
-import { mapPush } from "./map-push";
+import { mapPush } from "./map-push.js";
 
 describe("=> mapPush", () =>
 {

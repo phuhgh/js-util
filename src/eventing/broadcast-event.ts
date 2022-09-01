@@ -1,6 +1,6 @@
-import { TListener } from "./t-listener";
-import { IBroadcastEvent } from "./i-broadcast-event";
-import { _Set } from "../set/_set";
+import { TListener } from "./t-listener.js";
+import { IBroadcastEvent } from "./i-broadcast-event.js";
+import { _Set } from "../set/_set.js";
 
 /**
  * @public

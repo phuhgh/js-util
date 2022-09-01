@@ -1,5 +1,5 @@
-import { stringNormalizeEmptyToUndefined } from "./impl/string-normalize-empty-to-undefined";
-import { stringNormalizeNullUndefinedToEmpty } from "./impl/string-normalize-null-undefined-to-empty";
+import { stringNormalizeEmptyToUndefined } from "./impl/string-normalize-empty-to-undefined.js";
+import { stringNormalizeNullUndefinedToEmpty } from "./impl/string-normalize-null-undefined-to-empty.js";
 
 /**
  * @public

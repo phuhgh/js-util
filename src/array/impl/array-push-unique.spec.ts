@@ -1,5 +1,5 @@
-import { arrayPushUnique } from "./array-push-unique";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags";
+import { arrayPushUnique } from "./array-push-unique.js";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> arrayPushUnique", () =>
 {
