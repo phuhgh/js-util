@@ -8,7 +8,7 @@
     "build": "rimraf bin && npm run build-ts && npm run build-cpp",
     "build-ts": "tsc -p tsconfig.json",
     "build-cpp": "sh build.sh",
-    "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm",
+    "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm && cp -r assets/release/* bin/",
     "build-lib-cjs": "tsc -d -p tsconfig-cjs.lib.json",
     "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
@@ -36,7 +36,6 @@
   "bin": {
     "rc-extract-cpp-names": "scripts/extract-cpp-names.cjs"
   },
-  "type": "module",
   "main": "bin/cjs/index.js",
   "typings": "bin/cjs/index.d.ts",
   "exports": {

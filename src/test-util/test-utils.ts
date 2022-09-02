@@ -1,5 +1,8 @@
 import { _Debug } from "../debug/_debug.js";
 
+/**
+ * @internal
+ */
 export function itShouldCallAssert(times: number, runTest: () => void): void
 {
     it("| has the correct number of assert calls", () =>
@@ -10,6 +13,9 @@ export function itShouldCallAssert(times: number, runTest: () => void): void
     });
 }
 
+/**
+ * @internal
+ */
 export function itShouldNotRunDebugWhenDebugIsFalse(runTest: () => void): void
 {
     it("doesn't run asserts when _BUILD.DEBUG is false", () =>
@@ -24,10 +30,11 @@ export function itShouldNotRunDebugWhenDebugIsFalse(runTest: () => void): void
     });
 }
 
-
+/**
+ * @internal
+ */
 export function expectValueToBeNearTo(value: number, expectation: number, variance: number = 10E-7): void
 {
     expect(value).toBeLessThan(expectation + variance);
     expect(value).toBeGreaterThan(expectation - variance);
 }
-
