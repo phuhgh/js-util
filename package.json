@@ -1,14 +1,15 @@
 {
   "name": "rc-js-util",
   "sideEffects": false,
-  "version": "9.0.6",
+  "version": "9.0.7",
   "license": "MIT",
   "scripts": {
     "test": "jasmine --config=jasmine.json",
+    "copy-assets": " cp -r assets/release/* bin/",
     "build": "rimraf bin && npm run build-ts && npm run build-cpp",
-    "build-ts": "tsc -p tsconfig.json",
+    "build-ts": "tsc -p tsconfig.json && npm run copy-assets",
     "build-cpp": "sh build.sh",
-    "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm && cp -r assets/release/* bin/",
+    "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm && npm run copy-assets",
     "build-lib-cjs": "tsc -d -p tsconfig-cjs.lib.json",
     "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
