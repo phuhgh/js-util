@@ -1,6 +1,7 @@
 import { DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "../collection/dirty-checked-unique-collection.js";
 import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted.js";
 import { _Debug } from "../debug/_debug.js";
+import { arrayEmptyArray } from "../array/impl/array-empty-array";
 
 /**
  * @public
@@ -23,7 +24,7 @@ export class LinkedReferenceCounter
 {
     public constructor
     (
-        refs: IReferenceCounted[] = [],
+        refs: readonly IReferenceCounted[] = arrayEmptyArray,
     )
     {
         super();
@@ -60,7 +61,7 @@ export class LinkedReferenceCounter
         }
     }
 
-    public onFree(): void
+    protected onFree(): void
     {
         const refs = this.refs.getArray();
 

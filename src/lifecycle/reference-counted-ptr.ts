@@ -47,14 +47,17 @@ export interface IReferenceCountedPtr extends IReferenceCounted
  * @public
  * Wrapper of wasm object.
  */
-export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr, IOnFree
+export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr
 {
     public getPtr(): number
     {
         return this.wasmPtr;
     }
 
-    public onFree(): void
+    /**
+     * DO NOT CALL THIS DIRECTLY, CALL RELEASE.
+     */
+    protected onFree(): void
     {
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
