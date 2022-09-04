@@ -13,7 +13,7 @@
     "build-lib-cjs": "tsc -d -p tsconfig-cjs.lib.json",
     "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
-    "lint": "eslint -c node_modules/rc-lint-rules/.eslintrc.js src/",
+    "lint": "eslint -c .eslintrc.cjs src/",
     "ci-build": "npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
     "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },
@@ -27,7 +27,7 @@
     "@types/jasmine": "^4.3.0",
     "jasmine": "^4.3.0",
     "jasmine-core": "^4.3.0",
-    "rc-lint-rules": "^7.1.0",
+    "rc-lint-rules": "^8.0.1",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint": "~8.22.0",

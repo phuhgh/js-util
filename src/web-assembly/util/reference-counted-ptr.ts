@@ -1,10 +1,10 @@
-import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted.js";
-import { _Debug } from "../debug/_debug.js";
-import { nullPointer } from "../web-assembly/emscripten/null-pointer.js";
-import { _Array } from "../array/_array.js";
-import { IOnFree } from "./i-on-free.js";
-import { ITemporaryListener, TemporaryListener } from "./temporary-listener.js";
-import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper.js";
+import { AReferenceCounted, IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
+import { _Debug } from "../../debug/_debug.js";
+import { nullPointer } from "../emscripten/null-pointer.js";
+import { _Array } from "../../array/_array.js";
+import { IOnFree } from "../../lifecycle/i-on-free.js";
+import { ITemporaryListener, TemporaryListener } from "../../lifecycle/temporary-listener.js";
+import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 
 /**
  * @public
@@ -47,14 +47,17 @@ export interface IReferenceCountedPtr extends IReferenceCounted
  * @public
  * Wrapper of wasm object.
  */
-export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr, IOnFree
+export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr
 {
     public getPtr(): number
     {
         return this.wasmPtr;
     }
 
-    public onFree(): void
+    /**
+     * DO NOT CALL THIS DIRECTLY, CALL RELEASE.
+     */
+    protected onFree(): void
     {
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
@@ -152,6 +155,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     )
     {
         super();
+
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
             _Debug.assert(this.wasmPtr !== nullPointer && this.wasmPtr != null, "expected pointer to object but got null pointer");

@@ -1,4 +1,4 @@
-import { IWebAssemblyMemoryMemory } from "../external/i-web-assembly-memory.js";
+import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory.js";
 
 /**
  * @internal

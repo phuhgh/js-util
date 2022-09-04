@@ -1,5 +1,5 @@
 import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory.js";
-import { TWebAssemblyMemoryListenerArgs } from "../t-web-assembly-memory-listener-args.js";
+import { TWebAssemblyMemoryListenerArgs } from "../util/t-web-assembly-memory-listener-args.js";
 import { IBroadcastEvent } from "../../eventing/i-broadcast-event.js";
 import { Emscripten } from "../../external/emscripten.js";
 import { IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event.js";
@@ -48,5 +48,5 @@ export interface IEmscriptenWrapper<T extends object>
     instance: T & Emscripten.EmscriptenModule;
     memory: IWebAssemblyMemoryMemory;
     dataView: DataView;
-    debug: IEmscriptenDebug
+    debug: IEmscriptenDebug;
 }
