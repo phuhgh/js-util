@@ -1,12 +1,12 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../../lifecycle/reference-counted-ptr.js";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../util/reference-counted-ptr.js";
 import { _Debug } from "../../debug/_debug.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Production } from "../../production/_production.js";
 import { nullPointer } from "../emscripten/null-pointer.js";
 import { ISharedArray } from "./i-shared-array.js";
-import { DebugSharedObjectChecks } from "../debug-shared-object-checks.js";
+import { DebugSharedObjectChecks } from "../util/debug-shared-object-checks.js";
 import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";

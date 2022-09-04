@@ -1,7 +1,8 @@
 import { DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "../collection/dirty-checked-unique-collection.js";
 import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted.js";
 import { _Debug } from "../debug/_debug.js";
-import { arrayEmptyArray } from "../array/impl/array-empty-array";
+import { arrayEmptyArray } from "../array/impl/array-empty-array.js";
+import { blockScopedLifecycle } from "../web-assembly/util/block-scoped-lifecycle.js";
 
 /**
  * @public
@@ -12,6 +13,7 @@ export interface ILinkedReferenceCounter extends IReferenceCounted
     linkRef(ref: IReferenceCounted): void;
     transferOwnership(ref: IReferenceCounted): void;
     unlinkRef(ref: IReferenceCounted): void;
+    bindBlockScope(callback: () => void): void;
 }
 
 /**
@@ -34,6 +36,11 @@ export class LinkedReferenceCounter
         {
             refs[i].claim();
         }
+    }
+
+    public bindBlockScope(callback: () => void): void
+    {
+        blockScopedLifecycle(callback, this);
     }
 
     public transferOwnership(ref: IReferenceCounted): void

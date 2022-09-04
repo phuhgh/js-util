@@ -1,11 +1,12 @@
-import { _Debug } from "../debug/_debug.js";
-import { numberGetHexString } from "../number/impl/number-get-hex-string.js";
-import { stringNormalizeNullUndefinedToEmpty } from "../string/impl/string-normalize-null-undefined-to-empty.js";
-import { ISharedObject } from "../lifecycle/i-shared-object.js";
-import { IDebugProtectedView } from "../debug/i-debug-protected-view.js";
-import { IDebugAllocateListener } from "../debug/i-debug-allocate-listener.js";
+import { _Debug } from "../../debug/_debug.js";
+import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
+import { stringNormalizeNullUndefinedToEmpty } from "../../string/impl/string-normalize-null-undefined-to-empty.js";
+import { ISharedObject } from "../../lifecycle/i-shared-object.js";
+import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
+import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
 
 /**
+ * todo jack: problem, we have non emscripten shared objects. It's confusing that these are bound and those aren't
  * @public
  * Provides life cycle and access checks for shared objects.
  *

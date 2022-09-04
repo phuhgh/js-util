@@ -1,4 +1,5 @@
 import { _Debug } from "../debug/_debug.js";
+import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
 
 /**
  * @public
@@ -43,14 +44,19 @@ export abstract class AReferenceCounted implements IReferenceCounted
         }
     }
 
+    public getIsDestroyed(): boolean
+    {
+        return this.references <= 0;
+    }
+
     /**
      * DO NOT CALL THIS DIRECTLY, CALL RELEASE.
      */
     protected abstract onFree(): void;
 
-    public getIsDestroyed(): boolean
+    protected constructor()
     {
-        return this.references <= 0;
+        lifecycleStack.register(this);
     }
 
     private references = 1;

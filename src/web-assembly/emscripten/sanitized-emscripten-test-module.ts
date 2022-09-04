@@ -1,5 +1,5 @@
 import { Emscripten } from "../../external/emscripten.js";
-import { getWasmTestMemory } from "../get-wasm-test-memory.js";
+import { getWasmTestMemory } from "../util/get-wasm-test-memory.js";
 import { getEmscriptenWrapper } from "./get-emscripten-wrapper.js";
 import { _Fp } from "../../fp/_fp.js";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper.js";

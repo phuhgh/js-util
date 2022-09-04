@@ -2,7 +2,7 @@ import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory.js";
 import { INormalizedDataView } from "./normalized-data-view/i-normalized-data-view.js";
 import { ATypedArrayTuple } from "./a-typed-array-tuple.js";
 import { TTypedArray } from "./t-typed-array.js";
-import { isLittleEndian } from "../../web-assembly/is-little-endian.js";
+import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
 
 export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number, TTypedArray>, TCtorArgs extends number[]>
     implements ITypedArrayTupleFactory<TArray, TCtorArgs>

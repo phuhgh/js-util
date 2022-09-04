@@ -1,4 +1,4 @@
-import { IReferenceCountedPtr } from "./reference-counted-ptr.js";
+import { IReferenceCountedPtr } from "../web-assembly/util/reference-counted-ptr.js";
 
 /**
  * @public

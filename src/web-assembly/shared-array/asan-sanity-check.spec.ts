@@ -3,7 +3,6 @@ import { _Debug } from "../../debug/_debug.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
 import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
-
 describe("=> asan sanity check", () =>
 {
     const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
@@ -14,7 +13,7 @@ describe("=> asan sanity check", () =>
         await testModule.initialize();
     });
 
-    it("| throws when the program ends and memory has not been released", async () =>
+    it("| throws when the program ends and memory has not been released", () =>
     {
         _Debug.applyLabel("sanity check - end program", () =>
         {

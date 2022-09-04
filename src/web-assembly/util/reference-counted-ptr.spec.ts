@@ -1,7 +1,7 @@
 import { ReferenceCountedPtr } from "./reference-counted-ptr.js";
-import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
-import asanTestModule from "../external/asan-test-module.cjs";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
+import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
+import asanTestModule from "../../external/asan-test-module.cjs";
+import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
 
 describe("=> ReferenceCountedPtr", () =>
 {
