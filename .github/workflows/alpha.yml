@@ -1,12 +1,12 @@
-name: CI
+name: alpha CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ alpha ]
   workflow_dispatch: # manual run
 
 jobs:
-  build-and-deploy:
+  build-and-alpha-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,14 +33,11 @@ jobs:
           npm ci
           npm run ci-build
 
-      - name: Deploy docs
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: documentation
-          folder: docs
-
       - name: Publish to the npm registry
         uses: "primer/publish@3.0.0"
+        with:
+          release_tag: "alpha"
+          default_branch: "alpha"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
