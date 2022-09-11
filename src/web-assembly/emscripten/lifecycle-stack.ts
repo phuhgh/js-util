@@ -35,6 +35,11 @@ export class LifecycleStack
         top.push(ref);
     }
 
+    public getSize(): number
+    {
+        return this.allocationStack.length;
+    }
+
     private readonly allocationStack = allocationStack as IReferenceCounted[][];
 }
 

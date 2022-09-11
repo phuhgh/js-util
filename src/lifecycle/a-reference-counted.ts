@@ -20,7 +20,11 @@ export interface IReferenceCounted
 export abstract class AReferenceCounted implements IReferenceCounted
 {
     /**
-     * Call when the object is received.
+     * Take a claim on the object, preventing it from being destroyed. Once you're done with the object you should
+     * call `release`.
+     *
+     * Typically, these should not be called directly, make use of `{@link blockScopedLifecycle}` or
+     * {@link ILinkedReferenceCounter.bindBlockScope} instead.
      */
     public claim(): void
     {
@@ -34,7 +38,8 @@ export abstract class AReferenceCounted implements IReferenceCounted
     }
 
     /**
-     * Call when done with the object.
+     * Release claim on the object, objects start with a reference count of 1 (the creator); if you didn't create the
+     * object, you shouldn't release it if you didn't call `claim` first.
      */
     public release(): void
     {

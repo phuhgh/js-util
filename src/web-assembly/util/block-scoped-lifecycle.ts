@@ -10,18 +10,19 @@ import { IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
  *
  * Error handling can be disabled by setting the build flag `WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH`.
  */
-export function blockScopedLifecycle
+export function blockScopedLifecycle<TRet>
 (
-    callback: () => void,
+    callback: () => TRet,
     linkTo?: ILinkedReferenceCounter,
 )
-    : void
+    : TRet
 {
     const refs = lifecycleStack.push();
+    let ret: TRet | undefined;
 
     if (_BUILD.WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH === true)
     {
-        callback();
+        ret = callback();
         link(refs, linkTo);
         lifecycleStack.pop();
     }
@@ -29,7 +30,7 @@ export function blockScopedLifecycle
     {
         try
         {
-            callback();
+            ret = callback();
             link(refs, linkTo);
         }
         finally
@@ -37,6 +38,8 @@ export function blockScopedLifecycle
             lifecycleStack.pop();
         }
     }
+
+    return ret;
 }
 
 function link

@@ -10,9 +10,27 @@ import { blockScopedLifecycle } from "../web-assembly/util/block-scoped-lifecycl
  */
 export interface ILinkedReferenceCounter extends IReferenceCounted
 {
+    /**
+     * Link the ref, incrementing their reference counter.
+     */
     linkRef(ref: IReferenceCounted): void;
+    /**
+     * Link the ref, do not increment their reference counter.
+     */
     transferOwnership(ref: IReferenceCounted): void;
+    /**
+     * Unlink the ref, decrement their reference counter.
+     */
     unlinkRef(ref: IReferenceCounted): void;
+    /**
+     * Unlink all refs, decrement their reference counters.
+     */
+    unlinkAllRefs(): void;
+
+    /**
+     * Call `transferOwnership` on any object allocated during the call. May be nested / combined with {@link blockScopedLifecycle},
+     * objects are always bound to the top of the stack.
+     */
     bindBlockScope(callback: () => void): void;
 }
 
@@ -38,9 +56,9 @@ export class LinkedReferenceCounter
         }
     }
 
-    public bindBlockScope(callback: () => void): void
+    public bindBlockScope<TRet>(callback: () => TRet): TRet
     {
-        blockScopedLifecycle(callback, this);
+        return blockScopedLifecycle(callback, this);
     }
 
     public transferOwnership(ref: IReferenceCounted): void
@@ -68,7 +86,17 @@ export class LinkedReferenceCounter
         }
     }
 
+    public unlinkAllRefs(): void
+    {
+        this.clearRefs();
+    }
+
     protected onFree(): void
+    {
+        this.clearRefs();
+    }
+
+    private clearRefs(): void
     {
         const refs = this.refs.getArray();
 
