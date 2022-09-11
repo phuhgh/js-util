@@ -3,6 +3,7 @@ import { AReferenceCounted, IReferenceCounted } from "./a-reference-counted.js";
 import { _Debug } from "../debug/_debug.js";
 import { arrayEmptyArray } from "../array/impl/array-empty-array.js";
 import { blockScopedLifecycle } from "../web-assembly/util/block-scoped-lifecycle.js";
+import { ITemporaryListener, TemporaryListener } from "./temporary-listener.js";
 
 /**
  * @public
@@ -32,6 +33,10 @@ export interface ILinkedReferenceCounter extends IReferenceCounted
      * objects are always bound to the top of the stack.
      */
     bindBlockScope(callback: () => void): void;
+    /**
+     * Callback will be called when the reference count hits 0. Useful for cleanup.
+     */
+    registerOnFreeListener(callback: () => void): void;
 }
 
 /**
@@ -54,6 +59,12 @@ export class LinkedReferenceCounter
         {
             refs[i].claim();
         }
+    }
+
+    public registerOnFreeListener(callback: () => void): void
+    {
+        this.onFreeListener = this.onFreeListener ?? new TemporaryListener();
+        this.onFreeListener.addListener(callback);
     }
 
     public bindBlockScope<TRet>(callback: () => TRet): TRet
@@ -94,6 +105,7 @@ export class LinkedReferenceCounter
     protected onFree(): void
     {
         this.clearRefs();
+        this.onFreeListener?.emit();
     }
 
     private clearRefs(): void
@@ -109,4 +121,5 @@ export class LinkedReferenceCounter
     }
 
     private refs: IDirtyCheckedUniqueCollection<IReferenceCounted>;
+    private onFreeListener: ITemporaryListener<[]> | null = null;
 }

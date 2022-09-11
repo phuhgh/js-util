@@ -71,4 +71,20 @@ describe("=> LinkedReferenceCounter", () =>
             expect(owner.getIsDestroyed()).toBe(false);
         });
     });
+
+    describe("=> on free listener", () =>
+    {
+        it("| is called on free", () =>
+        {
+            const owner = new LinkedReferenceCounter();
+            const spy = jasmine.createSpy();
+            owner.registerOnFreeListener(spy);
+
+            owner.unlinkAllRefs();
+            expect(spy).not.toHaveBeenCalled();
+
+            owner.release();
+            expect(spy).toHaveBeenCalled();
+        });
+    });
 });
