@@ -29,6 +29,7 @@ jobs:
           npm --version
 
       - name: Install and Build
+        shell: bash
         run: |
           npm ci
           npm run ci-build
