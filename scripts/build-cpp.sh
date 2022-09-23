@@ -4,20 +4,56 @@ set -e
 
 print_instructions() {
   echo "================================="
-  echo "usage: build-cpp.sh {path/to/cpp-bindings.js} {path/to/cpp/cmake/dir} {mjs|cjs} {debug|release} {-cmake_build_flags} {clean|}"
   echo "builds the c++ given the js binding descriptor and cmake project"
+  echo "options:"
+  echo "--help"
+  echo "--bindings - the javascript file that describes the c interface"
+  echo "--cmake-dir - the thing to build"
+  echo "--module-loader - the module loader for the javascript {mjs/cjs}"
+  echo "--build-mode - {debug/release}"
+  echo "--cmake-flags - optionally provide additional build flags to cmake (start with hyphen)"
+  echo "--clean - delete the build dir"
   echo "================================="
   exit 1
 }
 
 SCRIPTS_DIR="$( dirname -- "$0"; )"
-JS_BINDINGS_FILE="$1"
-CMAKE_PROJ_DIR="$2"
-MODULE_LOADER="$3"
-BUILD_MODE="$4"
-BUILD_FLAGS="$5"
-BUILD_CLEAN="$6"
 
+while [ "$1" != "" ]; do
+    PARAM="$(printf "%s\n" "$1" | awk -F= '{print $1}')"
+    VALUE="$(printf "%s\n" "$1" | sed 's/^[^=]*=//g')"
+
+    case $PARAM in
+        -h | --help)
+            print_instructions
+            exit
+            ;;
+        --bindings)
+            JS_BINDINGS_FILE=$VALUE
+            ;;
+        --cmake-dir)
+            CMAKE_PROJ_DIR=$VALUE
+            ;;
+        --module-loader)
+            MODULE_LOADER=$VALUE
+            ;;
+        --build-mode)
+            BUILD_MODE=$VALUE
+            ;;
+        --cmake-flags)
+            BUILD_FLAGS=$VALUE
+            ;;
+        --clean)
+            BUILD_CLEAN="true"
+            ;;
+        *)
+            echo "ERROR: unknown parameter \"$PARAM\""
+            print_instructions
+            exit 1
+            ;;
+    esac
+    shift
+done
 
 if [ -z "$JS_BINDINGS_FILE" ] || [ -z "$CMAKE_PROJ_DIR" ]; then
   print_instructions

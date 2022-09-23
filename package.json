@@ -1,14 +1,14 @@
 {
   "name": "rc-js-util",
   "sideEffects": false,
-  "version": "9.0.9-alpha.5",
+  "version": "9.0.9-alpha.6",
   "license": "MIT",
   "scripts": {
     "test": "jasmine --config=jasmine.json",
     "copy-assets": " cp -r assets/release/* bin/",
     "build": "rimraf bin && npm run build-ts && npm run build-cpp",
     "build-ts": "tsc -p tsconfig.json && npm run copy-assets",
-    "build-cpp": "sh scripts/build-cpp.sh ./bin/esm/cpp.module.js cpp mjs debug -DBUILD_JSUTIL_TEST=1 clean && sh scripts/copy-test-modules.sh",
+    "build-cpp": "sh scripts/build-cpp.sh --bindings=bin/esm/cpp.module.js --cmake-dir=cpp --module-loader=mjs --build-mode=debug --cmake-flags=\"-DBUILD_JSUTIL_TEST=1\" && sh scripts/copy-test-modules.sh",
     "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm && npm run copy-assets",
     "build-lib-cjs": "tsc -d -p tsconfig-cjs.lib.json",
     "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",
