@@ -2,26 +2,22 @@
 
 set -e
 
-SCRIPTS_DIR="${BASH_SOURCE%/*}"
-
-if [ ! -d "$DIR" ]; then
-  SCRIPTS_DIR="$PWD"
-fi
-
 print_instructions() {
   echo "================================="
-  echo "usage: build-cpp.sh {path/to/cpp-bindings.js} {path/to/cpp/cmake/dir} {mjs|cjs} {debug|release} {cmake_build_flags} {clean|}"
+  echo "usage: build-cpp.sh {path/to/cpp-bindings.js} {path/to/cpp/cmake/dir} {mjs|cjs} {debug|release} {-cmake_build_flags} {clean|}"
   echo "builds the c++ given the js binding descriptor and cmake project"
   echo "================================="
   exit 1
 }
 
+SCRIPTS_DIR="$( dirname -- "$0"; )"
 JS_BINDINGS_FILE="$1"
 CMAKE_PROJ_DIR="$2"
 MODULE_LOADER="$3"
 BUILD_MODE="$4"
 BUILD_FLAGS="$5"
 BUILD_CLEAN="$6"
+
 
 if [ -z "$JS_BINDINGS_FILE" ] || [ -z "$CMAKE_PROJ_DIR" ]; then
   print_instructions
@@ -42,9 +38,9 @@ if [ ! -d "$CMAKE_PROJ_DIR" ]; then
 fi
 
 if [ "$MODULE_LOADER" = "cjs" ]; then
-  node "$SCRIPTS_DIR/scripts/extract-cpp-names.cjs" "$JS_BINDINGS_FILE" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
+  node "$SCRIPTS_DIR/extract-cpp-names.cjs" "$JS_BINDINGS_FILE" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
 elif [ "$MODULE_LOADER" = "mjs" ]; then
-  node "$SCRIPTS_DIR/scripts/extract-cpp-names.mjs" "$JS_BINDINGS_FILE" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
+  node "$SCRIPTS_DIR/extract-cpp-names.mjs" "$JS_BINDINGS_FILE" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
 else
   print_instructions
 fi
