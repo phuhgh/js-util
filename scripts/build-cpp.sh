@@ -83,7 +83,7 @@ fi
 
 cd "$CMAKE_PROJ_DIR" || exit
 
-if [ "$BUILD_CLEAN" = "clean" ]; then
+if [ "$BUILD_CLEAN" = "true" ]; then
   echo "Deleting build dir"
   rm -rf build
 fi
