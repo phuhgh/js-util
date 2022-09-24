@@ -9,7 +9,7 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
 {
     protected constructor
     (
-        protected readonly length: number,
+        public readonly elementCount: number,
         protected readonly bytesPerElement: number,
         protected dataView: INormalizedDataView,
     )
@@ -31,7 +31,7 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
     {
         const bytesPerElement = this.bytesPerElement;
 
-        for (let i = 0, iEnd = this.length; i < iEnd; ++i)
+        for (let i = 0, iEnd = this.elementCount; i < iEnd; ++i)
         {
             (writeTo as unknown as number[])[i] = this.dataView.getValue(memoryDataView, pointer, littleEndian);
             pointer += bytesPerElement;
@@ -51,7 +51,7 @@ export abstract class ATypedTupleFactory<TArray extends ATypedArrayTuple<number,
     {
         const bytesPerElement = this.bytesPerElement;
 
-        for (let i = 0, iEnd = this.length; i < iEnd; ++i)
+        for (let i = 0, iEnd = this.elementCount; i < iEnd; ++i)
         {
             this.dataView.setValue(memoryDataView, pointer, (writeFrom as unknown as number[])[i], littleEndian);
             pointer += bytesPerElement;

@@ -42,6 +42,7 @@ export { Vec4, TF32Vec4, TVec4CtorArgs, IVec4Ctor, TF64Vec4, IReadonlyVec4 } fro
 export { NormalizedDataViewProvider } from "./array/typed-array/normalized-data-view/normalized-data-view-provider.js";
 export { INormalizedDataView } from "./array/typed-array/normalized-data-view/i-normalized-data-view.js";
 export { TTypedArray } from "./array/typed-array/t-typed-array.js";
+export { ISharedTypedArrayTuple, SharedTypedArrayTuple, TExtendedTypedArrayCtor } from "./array/typed-array/shared-typed-array-tuple.js";
 export { CircularBuffer } from "./collection/circular-buffer.js";
 export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circular-fifo-stack.js";
 export { DirtyCheckedUniqueCollection, IDirtyCheckedUniqueCollection } from "./collection/dirty-checked-unique-collection.js";
@@ -92,7 +93,7 @@ export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bin
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/util/t-web-assembly-memory-listener-args.js";
 export { ReferenceCountedPtr, IReferenceCountedPtr } from "./web-assembly/util/reference-counted-ptr.js";
 export { isLittleEndian } from "./web-assembly/util/is-little-endian.js";
-export { RawVoidPointer, IRawVoidPointer } from "./web-assembly/util/raw-void-pointer.js";
+export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/util/shared-memory-block.js";
 export { DebugSharedObjectChecks } from "./web-assembly/util/debug-shared-object-checks.js";
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";

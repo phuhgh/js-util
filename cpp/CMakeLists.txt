@@ -21,6 +21,12 @@ set(SOURCE_FILES
         src/SharedArray.cpp
         src/JsUtil.cpp
         src/Debug.cpp
+        src/Mat2.cpp
+        src/Mat3.cpp
+        src/Mat4.cpp
+        src/Vec2.cpp
+        src/Vec3.cpp
+        src/Vec4.cpp
         )
 
 if (${BUILD_JSUTIL_TEST})

@@ -7,6 +7,7 @@ import { TTypedArray } from "./t-typed-array.js";
  */
 export interface ITypedArrayTupleFactory<TArray extends ATypedArrayTuple<number, TTypedArray>, TCtorArgs extends number[]>
 {
+    readonly elementCount: number;
     createOne(...args: TCtorArgs): TArray;
 
     createOneEmpty(): TArray;

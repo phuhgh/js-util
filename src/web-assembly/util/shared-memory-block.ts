@@ -15,7 +15,7 @@ import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js
  * @public
  * Provides a reference counted wrapper to a pointer `malloc`'d from JS and is `free`'d on reference count hitting 0.
  */
-export interface IRawVoidPointer
+export interface ISharedMemoryBlock
     extends ISharedObject,
             IOnMemoryResize
 {
@@ -26,36 +26,40 @@ export interface IRawVoidPointer
 
 /**
  * @public
- * {@inheritDoc IRawVoidPointer}
+ * {@inheritDoc ISharedMemoryBlock}
  */
-export class RawVoidPointer implements IRawVoidPointer, IDebugAllocateListener
+export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateListener
 {
     public readonly sharedObject: IReferenceCountedPtr;
     public readonly pointer: number;
     public readonly byteSize: number;
 
-    public static createOne(wrapper: IEmscriptenWrapper<IMemoryUtilBindings>, byteSize: number): RawVoidPointer
-    public static createOne(wrapper: IEmscriptenWrapper<IMemoryUtilBindings>, byteSize: number, allocationFailThrows: boolean): RawVoidPointer;
+    public static createOne(wrapper: IEmscriptenWrapper<IMemoryUtilBindings>, byteSize: number): SharedMemoryBlock
+    public static createOne(wrapper: IEmscriptenWrapper<IMemoryUtilBindings>, byteSize: number, allocationFailThrows: boolean): SharedMemoryBlock | null;
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
         byteSize: number,
         allocationFailThrows?: boolean,
     )
-        : RawVoidPointer
+        : SharedMemoryBlock | null
     {
         _BUILD.DEBUG && wrapper.debug.onAllocate.emit();
         const pointer = wrapper.instance._jsUtilMalloc(byteSize);
 
         if (pointer == nullPointer)
         {
-            if (allocationFailThrows ?? false)
+            if (allocationFailThrows ?? true)
             {
-                throw _Production.createError("Failed to allocate memory for raw pointer.");
+                throw _Production.createError("Failed to allocate memory for shared memory block.");
+            }
+            else
+            {
+                return null;
             }
         }
 
-        return new RawVoidPointer(wrapper, pointer, byteSize);
+        return new SharedMemoryBlock(wrapper, pointer, byteSize);
     }
 
     public getDataView(): DataView
@@ -100,9 +104,9 @@ export class RawVoidPointer implements IRawVoidPointer, IDebugAllocateListener
         {
             const protectedView = new DebugProtectedView(
                 this.wrapper,
-                `RVP - memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`,
+                `SharedMemoryBlock - memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`,
             );
-            DebugSharedObjectChecks.registerWithCleanup(this, protectedView, "RVP");
+            DebugSharedObjectChecks.registerWithCleanup(this, protectedView, "SharedMemoryBlock");
         });
 
         this.dataView = this.recreateDataView();
