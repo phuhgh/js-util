@@ -32,7 +32,7 @@ export interface ILinkedReferenceCounter extends IReferenceCounted
      * Call `transferOwnership` on any object allocated during the call. May be nested / combined with {@link blockScopedLifecycle},
      * objects are always bound to the top of the stack.
      */
-    bindBlockScope(callback: () => void): void;
+    bindBlockScope<TRet>(callback: () => TRet): TRet;
     /**
      * Callback will be called when the reference count hits 0. Useful for cleanup.
      */
