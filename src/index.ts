@@ -42,6 +42,8 @@ export { Vec4, TF32Vec4, TVec4CtorArgs, IVec4Ctor, TF64Vec4, IReadonlyVec4 } fro
 export { NormalizedDataViewProvider } from "./array/typed-array/normalized-data-view/normalized-data-view-provider.js";
 export { INormalizedDataView } from "./array/typed-array/normalized-data-view/i-normalized-data-view.js";
 export { TTypedArray } from "./array/typed-array/t-typed-array.js";
+export { ITypedArrayExtensions } from "./array/typed-array/i-typed-array-extensions.js";
+export { ITypedArrayCtor } from "./array/typed-array/i-typed-array-ctor.js";
 export { ISharedTypedArrayTuple, SharedTypedArrayTuple, TExtendedTypedArrayCtor } from "./array/typed-array/shared-typed-array-tuple.js";
 export { CircularBuffer } from "./collection/circular-buffer.js";
 export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circular-fifo-stack.js";

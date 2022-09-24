@@ -1,5 +1,5 @@
 /**
- * @internal
+ * @public
  */
 export interface ITypedArrayCtor<T>
 {
