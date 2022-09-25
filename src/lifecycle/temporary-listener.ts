@@ -1,3 +1,5 @@
+import { DirtyCheckedUniqueCollection } from "../collection/dirty-checked-unique-collection.js";
+
 /**
  * @public
  * Provides a communication channel via callbacks which can be easily cleared & copied.
@@ -10,6 +12,7 @@ export interface ITemporaryListener<TArgs extends []>
     clearingEmit(...args: TArgs): void;
     emit(...args: TArgs): void;
     clearListeners(): void;
+    removeListener(listener: (...args: TArgs) => void): void;
 
     initializeListener(callback: () => ((...args: TArgs) => void)): void;
     addListener(listener: (...args: TArgs) => void): void;
@@ -30,7 +33,7 @@ export class TemporaryListener<TArgs extends []> implements ITemporaryListener<T
 
     public emit(...args: TArgs): void
     {
-        const listenerCallback = this.listeners;
+        const listenerCallback = this.listeners.getArray();
 
         for (let i = 0, iEnd = listenerCallback.length; i < iEnd; ++i)
         {
@@ -40,23 +43,28 @@ export class TemporaryListener<TArgs extends []> implements ITemporaryListener<T
 
     public clearListeners(): void
     {
-        this.listeners.length = 0;
+        this.listeners.clear();
     }
 
     public initializeListener(callback: () => ((...args: TArgs) => void)): void
     {
-        this.listeners.push(callback());
+        this.listeners.add(callback());
     }
 
     public addListener(listener: (...args: TArgs) => void): void
     {
-        this.listeners.push(listener);
+        this.listeners.add(listener);
+    }
+
+    public removeListener(listener: (...args: TArgs) => void): void
+    {
+        this.listeners.delete(listener);
     }
 
     public getTargets(): readonly ((...args: TArgs) => void)[]
     {
-        return this.listeners;
+        return this.listeners.getArray();
     }
 
-    private listeners: ((...args: TArgs) => void)[] = [];
+    private listeners = new DirtyCheckedUniqueCollection<(...args: TArgs) => void>();
 }

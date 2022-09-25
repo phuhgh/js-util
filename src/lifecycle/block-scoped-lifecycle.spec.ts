@@ -1,16 +1,25 @@
 import { blockScopedLifecycle } from "./block-scoped-lifecycle.js";
-import { ILinkedReferenceCounter, LinkedReferenceCounter } from "../../lifecycle/linked-reference-counter.js";
-import { lifecycleStack } from "../emscripten/lifecycle-stack.js";
+import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
+import { ReferenceCountedOwner } from "./reference-counted-owner.js";
+import { ILinkedReferences } from "./linked-references.js";
+import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
+import { resetLifeCycle } from "../test-util/reset-life-cycle.js";
 
-describe("=>  blockScopedLifecycle", () =>
+describe("=> blockScopedLifecycle", () =>
 {
+    beforeEach(() =>
+    {
+        setDefaultUnitTestFlags();
+        resetLifeCycle();
+    });
+
     it("| releases on callback return", () =>
     {
-        let ptr!: ILinkedReferenceCounter;
+        let ptr!: ReferenceCountedOwner;
 
         blockScopedLifecycle(() =>
         {
-            ptr = new LinkedReferenceCounter();
+            ptr = new ReferenceCountedOwner();
             expect(ptr.getIsDestroyed()).toBe(false);
         });
 
@@ -19,17 +28,17 @@ describe("=>  blockScopedLifecycle", () =>
 
     it("| handles nested calls", () =>
     {
-        let outer!: ILinkedReferenceCounter;
+        let outer!: ReferenceCountedOwner;
 
         blockScopedLifecycle(() =>
         {
-            let inner!: ILinkedReferenceCounter;
-            outer = new LinkedReferenceCounter();
+            let inner!: ReferenceCountedOwner;
+            outer = new ReferenceCountedOwner();
             expect(outer.getIsDestroyed()).toBe(false);
 
             blockScopedLifecycle(() =>
             {
-                inner = new LinkedReferenceCounter();
+                inner = new ReferenceCountedOwner();
                 expect(inner.getIsDestroyed()).toBe(false);
             });
 
@@ -37,6 +46,26 @@ describe("=>  blockScopedLifecycle", () =>
         });
 
         expect(outer.getIsDestroyed()).toBe(true);
+    });
+
+    it("| handles manual claim calls", () =>
+    {
+        let owner!: ReferenceCountedOwner;
+        let child!: ReferenceCountedOwner;
+        const thirdParty = new ReferenceCountedOwner(false);
+
+        blockScopedLifecycle(() =>
+        {
+            [owner, child] = testFactory(thirdParty.getLinkedReferences());
+            expect(owner.getIsDestroyed()).toBe(false);
+            expect(child.getIsDestroyed()).toBe(false);
+        });
+
+        expect(owner.getIsDestroyed()).toBe(false);
+        expect(child.getIsDestroyed()).toBe(false);
+        thirdParty.release();
+        expect(owner.getIsDestroyed()).toBe(true);
+        expect(child.getIsDestroyed()).toBe(true);
     });
 
     describe("=> error handling", () =>
@@ -76,3 +105,12 @@ describe("=>  blockScopedLifecycle", () =>
         });
     });
 });
+
+function testFactory(bindToReference: ILinkedReferences)
+{
+    const owner = new ReferenceCountedOwner();
+    const someComponent = new ReferenceCountedOwner();
+    owner.getLinkedReferences().linkRef(someComponent);
+    bindToReference.linkRef(owner);
+    return [owner, someComponent] as const;
+}

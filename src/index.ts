@@ -27,6 +27,7 @@ export { _Set } from "./set/_set.js";
 export { _String } from "./string/_string.js";
 
 export { TGetComparisonValueAtIndex } from "./array/impl/binary-find-insertion-index.js";
+export { arrayBinaryFindInsertionIndex } from "./array/impl/array-binary-find-insertion-index.js";
 export { TTypedArrayCtor } from "./array/typed-array/t-typed-array-ctor.js";
 export { ATypedArrayTuple, TDecayedTypedArrayTuple, TExtractIndexes, TTypedArrayTupleMutativeMethods } from "./array/typed-array/a-typed-array-tuple.js";
 export { ITypedArrayTupleFactory } from "./array/typed-array/i-typed-array-tuple-factory.js";
@@ -58,7 +59,7 @@ export { IncrementingIdentifierFactory } from "./identifier/impl/incrementing-id
 export { BroadcastEvent } from "./eventing/broadcast-event.js";
 export { IBroadcastEvent } from "./eventing/i-broadcast-event.js";
 export { TListener } from "./eventing/t-listener.js";
-export { ILinkedReferenceCounter, LinkedReferenceCounter } from "./lifecycle/linked-reference-counter.js";
+export { ILinkedReferences, LinkedReferences } from "./lifecycle/linked-references.js";
 export { AOnDestroy, IOnDestroy } from "./lifecycle/i-on-destroy.js";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted.js";
 export { TemporaryListener, ITemporaryListener } from "./lifecycle/temporary-listener.js";
@@ -95,13 +96,13 @@ export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bin
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/util/t-web-assembly-memory-listener-args.js";
 export { ReferenceCountedPtr, IReferenceCountedPtr } from "./web-assembly/util/reference-counted-ptr.js";
 export { isLittleEndian } from "./web-assembly/util/is-little-endian.js";
-export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/util/shared-memory-block.js";
+export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/shared-memory/shared-memory-block.js";
 export { DebugSharedObjectChecks } from "./web-assembly/util/debug-shared-object-checks.js";
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
 export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings.js";
-export { blockScopedLifecycle } from "./web-assembly/util/block-scoped-lifecycle.js";
+export { blockScopedLifecycle } from "./lifecycle/block-scoped-lifecycle.js";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize.js";
 
 export { arrayAddToSet } from "./array/impl/array-add-to-set.js";
@@ -200,6 +201,7 @@ export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normal
 export { ISharedObject } from "./lifecycle/i-shared-object.js";
 export { IRefCountedObject } from "./lifecycle/i-ref-counted-object.js";
 export { IOnFree } from "./lifecycle/i-on-free.js";
+export { ReferenceCountedOwner } from "./lifecycle/reference-counted-owner.js";
 export { IIdentifierFactory } from "./identifier/impl/i-identifier-factory.js";
 export { arrayMin } from "./array/impl/array-min.js";
 export { IDebugWeakStore } from "./debug/i-debug-weak-store.js";
@@ -208,8 +210,6 @@ export { IDebugWeakBroadcastEvent } from "./debug/debug-weak-broadcast-event.js"
 export { IDebugSharedObjectLifeCycleChecker } from "./debug/debug-shared-object-life-cycle-checker.js";
 export { TDebugListener } from "./debug/t-debug-listener.js";
 export { setDefaultUnitTestFlags } from "./test-util/set-default-unit-test-flags.js";
-
-
 
 declare global
 {

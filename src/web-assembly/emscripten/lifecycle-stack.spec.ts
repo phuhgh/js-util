@@ -1,13 +1,14 @@
 import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
-import { allocationStack, LifecycleStack } from "./lifecycle-stack.js";
-import { LinkedReferenceCounter } from "../../lifecycle/linked-reference-counter.js";
+import { LifecycleStack } from "./lifecycle-stack.js";
+import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
+import { resetLifeCycle } from "../../test-util/reset-life-cycle.js";
 
 describe("=> LifecycleStack", () =>
 {
     beforeEach(() =>
     {
         setDefaultUnitTestFlags();
-        allocationStack.length = 0;
+        resetLifeCycle();
     });
 
     it("| returns consistently from push and pop", () =>
@@ -23,16 +24,16 @@ describe("=> LifecycleStack", () =>
         expect(() => stack.pop()).toThrow();
     });
 
-    it("| does nothing if there is no stack", () =>
+    it("| throws if there is no stack", () =>
     {
         const stack = new LifecycleStack();
-        stack.register(new LinkedReferenceCounter());
+        expect(() => stack.register(new ReferenceCountedOwner())).toThrow();
     });
 
     it("| adds the ref if the stack is populated", () =>
     {
         const stack = new LifecycleStack();
-        const ref = new LinkedReferenceCounter();
+        const ref = new ReferenceCountedOwner(false);
         const top = stack.push();
         expect(top.length).toBe(0);
         stack.register(ref);

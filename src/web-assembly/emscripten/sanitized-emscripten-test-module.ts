@@ -5,6 +5,7 @@ import { _Fp } from "../../fp/_fp.js";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
 import { IDebugBindings } from "./i-debug-bindings.js";
 import { _Production } from "../../production/_production.js";
+import { resetLifeCycle } from "../../test-util/reset-life-cycle.js";
 
 /**
  * @public
@@ -120,6 +121,8 @@ export class SanitizedEmscriptenTestModule<T extends object, U extends object>
      */
     public reset(): void
     {
+        resetLifeCycle();
+
         if (this._wrapper)
         {
             this._wrapper.debug.uniquePointers.clear();

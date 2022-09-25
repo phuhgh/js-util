@@ -8,6 +8,7 @@ import { DebugSharedObjectChecks } from "../util/debug-shared-object-checks.js";
 import { ISharedArrayBindings } from "./i-shared-array-bindings.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
+import { ILinkedReferences } from "../../lifecycle/linked-references.js";
 
 /**
  * @public
@@ -29,14 +30,32 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
                IOnMemoryResize,
                IDebugAllocateListener
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF32SharedStaticArray
+    public static createOneF32
+    (
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
+        pointer: number,
+        length: number
+    )
+        : TF32SharedStaticArray
     {
-        return new SharedStaticArray(Float32Array, wrapper, pointer, length);
+        const sta = new SharedStaticArray(Float32Array, wrapper, pointer, length);
+        bindToReference.linkRef(sta.sharedObject);
+        return sta;
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, pointer: number, length: number): TF64SharedStaticArray
+    public static createOneF64
+    (
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
+        pointer: number,
+        length: number
+    )
+        : TF64SharedStaticArray
     {
-        return new SharedStaticArray(Float64Array, wrapper, pointer, length);
+        const sta = new SharedStaticArray(Float64Array, wrapper, pointer, length);
+        bindToReference.linkRef(sta.sharedObject);
+        return sta;
     }
 
     public readonly ctor: TCtor;

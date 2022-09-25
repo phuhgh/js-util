@@ -4,9 +4,16 @@ import { _Debug } from "../../debug/_debug.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
 import safeHeapTestModule from "../../external/safe-heap-test-module.cjs";
 import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
+import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
 
 describe("=> F32SharedArray", () =>
 {
+    let testOwner: ReferenceCountedOwner;
+
+    beforeEach(() => testOwner = new ReferenceCountedOwner(false));
+    afterEach(() => testOwner.release());
+
     describe("=> asan tests", () =>
     {
         const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
@@ -35,7 +42,10 @@ describe("=> F32SharedArray", () =>
             {
                 _Debug.applyLabel("asan getInstance beforeEach", () =>
                 {
-                    sharedArray = SharedArray.createOneF32(testModule.wrapper, 8, true);
+                    blockScopedLifecycle(() =>
+                    {
+                        sharedArray = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 8, true);
+                    });
                 });
             });
 
@@ -55,7 +65,13 @@ describe("=> F32SharedArray", () =>
                 _Debug.applyLabel("OOM exception", () =>
                 {
                     sharedArray.sharedObject.release();
-                    expect(() => SharedArray.createOneF32(testModule.wrapper, 0xffffffff)).toThrowError("Failed to allocate memory for shared array.");
+                    expect(() =>
+                    {
+                        blockScopedLifecycle(() =>
+                        {
+                            SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 0xffffffff);
+                        });
+                    }).toThrowError("Failed to allocate memory for shared array.");
                 });
             });
 
@@ -83,12 +99,15 @@ describe("=> F32SharedArray", () =>
                 {
                     _Debug.applyLabel("error invalidated view member access", () =>
                     {
-                        const instance = sharedArray.getInstance();
-                        expect(instance[0]).toBe(0);
-                        const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 8);
-                        expect(() => instance[0]).toThrow();
-                        sharedArray2.sharedObject.release();
-                        sharedArray.sharedObject.release();
+                        blockScopedLifecycle(() =>
+                        {
+                            const instance = sharedArray.getInstance();
+                            expect(instance[0]).toBe(0);
+                            const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 8);
+                            expect(() => instance[0]).toThrow();
+                            sharedArray2.sharedObject.release();
+                            sharedArray.sharedObject.release();
+                        });
                     });
                 });
             });
@@ -111,12 +130,15 @@ describe("=> F32SharedArray", () =>
             {
                 _Debug.applyLabel("new instance on resize", () =>
                 {
-                    const sharedArray = SharedArray.createOneF32(testModule.wrapper, 8);
-                    const i1 = sharedArray.getInstance();
-                    const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 2097152);
-                    expect(i1 === sharedArray.getInstance()).toBeFalse();
-                    sharedArray.sharedObject.release();
-                    sharedArray2.sharedObject.release();
+                    blockScopedLifecycle(() =>
+                    {
+                        const sharedArray = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 8);
+                        const i1 = sharedArray.getInstance();
+                        const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 2097152);
+                        expect(i1 === sharedArray.getInstance()).toBeFalse();
+                        sharedArray.sharedObject.release();
+                        sharedArray2.sharedObject.release();
+                    });
                 });
             });
         });

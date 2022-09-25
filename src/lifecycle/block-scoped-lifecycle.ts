@@ -1,9 +1,7 @@
-import { lifecycleStack } from "../emscripten/lifecycle-stack.js";
-import { ILinkedReferenceCounter } from "../../lifecycle/linked-reference-counter.js";
-import { IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
+import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
+import { IReferenceCounted } from "./a-reference-counted.js";
 
 /**
- * todo jack: tests
  * @public
  * Any shared objects allocated in the callback will be released on return. By default, these will be released on throw too.
  * In such event the error will be rethrown after releasing any shared objects.
@@ -13,7 +11,6 @@ import { IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
 export function blockScopedLifecycle<TRet>
 (
     callback: () => TRet,
-    linkTo?: ILinkedReferenceCounter,
 )
     : TRet
 {
@@ -23,7 +20,7 @@ export function blockScopedLifecycle<TRet>
     if (_BUILD.WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH === true)
     {
         ret = callback();
-        link(refs, linkTo);
+        releaseRefs(refs);
         lifecycleStack.pop();
     }
     else
@@ -31,7 +28,7 @@ export function blockScopedLifecycle<TRet>
         try
         {
             ret = callback();
-            link(refs, linkTo);
+            releaseRefs(refs);
         }
         finally
         {
@@ -42,25 +39,14 @@ export function blockScopedLifecycle<TRet>
     return ret;
 }
 
-function link
+function releaseRefs
 (
     refs: IReferenceCounted[],
-    linkedRef: ILinkedReferenceCounter | undefined,
 )
     : void
 {
-    if (linkedRef == null)
+    for (let i = 0, iEnd = refs.length; i < iEnd; ++i)
     {
-        for (let i = 0, iEnd = refs.length; i < iEnd; ++i)
-        {
-            refs[i].release();
-        }
-    }
-    else
-    {
-        for (let i = 0, iEnd = refs.length; i < iEnd; ++i)
-        {
-            linkedRef.transferOwnership(refs[i]);
-        }
+        refs[i].release();
     }
 }

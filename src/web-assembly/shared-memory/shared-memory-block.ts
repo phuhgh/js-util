@@ -1,15 +1,16 @@
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "./reference-counted-ptr.js";
+import { IReferenceCountedPtr, ReferenceCountedPtr } from "../util/reference-counted-ptr.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { nullPointer } from "../emscripten/null-pointer.js";
 import { _Production } from "../../production/_production.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
-import { DebugSharedObjectChecks } from "./debug-shared-object-checks.js";
+import { DebugSharedObjectChecks } from "../util/debug-shared-object-checks.js";
 import { IMemoryUtilBindings } from "../emscripten/i-memory-util-bindings.js";
 import { _Number } from "../../number/_number.js";
 import { ISharedObject } from "../../lifecycle/i-shared-object.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
+import { ILinkedReferences } from "../../lifecycle/linked-references.js";
 
 /**
  * @public
@@ -34,13 +35,30 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
     public readonly pointer: number;
     public readonly byteSize: number;
 
-    public static createOne(wrapper: IEmscriptenWrapper<IMemoryUtilBindings>, byteSize: number): SharedMemoryBlock
-    public static createOne(wrapper: IEmscriptenWrapper<IMemoryUtilBindings>, byteSize: number, allocationFailThrows: boolean): SharedMemoryBlock | null;
+    /**
+     * @throws exception if allocation cannot be performed.
+     */
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        bindToReference: ILinkedReferences,
         byteSize: number,
-        allocationFailThrows?: boolean,
+    )
+        : SharedMemoryBlock
+    public static createOne
+    (
+        wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        bindToReference: ILinkedReferences,
+        byteSize: number,
+        allocationFailThrows: boolean,
+    )
+        : SharedMemoryBlock | null
+    public static createOne
+    (
+        wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        bindToReference: ILinkedReferences,
+        byteSize: number,
+        allocationFailThrows: boolean = true,
     )
         : SharedMemoryBlock | null
     {
@@ -49,7 +67,7 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
 
         if (pointer == nullPointer)
         {
-            if (allocationFailThrows ?? true)
+            if (allocationFailThrows)
             {
                 throw _Production.createError("Failed to allocate memory for shared memory block.");
             }
@@ -59,7 +77,9 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
             }
         }
 
-        return new SharedMemoryBlock(wrapper, pointer, byteSize);
+        const smb = new SharedMemoryBlock(wrapper, pointer, byteSize);
+        bindToReference.linkRef(smb.sharedObject);
+        return smb;
     }
 
     public getDataView(): DataView

@@ -6,7 +6,6 @@ import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
 
 /**
- * todo jack: problem, we have non emscripten shared objects. It's confusing that these are bound and those aren't
  * @public
  * Provides life cycle and access checks for shared objects.
  *

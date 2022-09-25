@@ -1,54 +1,15 @@
-import { ILinkedReferenceCounter, LinkedReferenceCounter } from "./linked-reference-counter.js";
+import { ReferenceCountedOwner } from "./reference-counted-owner.js";
 
 describe("=> LinkedReferenceCounter", () =>
 {
-    describe("=> bindBlockScope", () =>
+    describe("linkRef", () =>
     {
-        it("| binds objects created in scope", () =>
+        it("| errors if a cycle is detected", () =>
         {
-            const owner = new LinkedReferenceCounter();
-            let ptr!: ILinkedReferenceCounter;
-
-            owner.bindBlockScope(() =>
-            {
-                ptr = new LinkedReferenceCounter();
-                expect(ptr.getIsDestroyed()).toBe(false);
-            });
-
-            expect(ptr.getIsDestroyed()).toBe(false);
-            owner.release();
-            expect(ptr.getIsDestroyed()).toBe(true);
-        });
-
-        it("| binds to the top of the stack where nested", () =>
-        {
-            const owner = new LinkedReferenceCounter();
-            let c1!: ILinkedReferenceCounter;
-            let c2!: ILinkedReferenceCounter;
-
-            owner.bindBlockScope(() =>
-            {
-                c1 = new LinkedReferenceCounter();
-                c1.bindBlockScope(() =>
-                {
-                    c2 = new LinkedReferenceCounter();
-                });
-            });
-
-            expect(owner.getIsDestroyed()).toBe(false);
-            expect(c1.getIsDestroyed()).toBe(false);
-            expect(c2.getIsDestroyed()).toBe(false);
-
-            c1.unlinkRef(c2);
-
-            expect(owner.getIsDestroyed()).toBe(false);
-            expect(c1.getIsDestroyed()).toBe(false);
-            expect(c2.getIsDestroyed()).toBe(true);
-
-            owner.release();
-            expect(owner.getIsDestroyed()).toBe(true);
-            expect(c1.getIsDestroyed()).toBe(true);
-            expect(c2.getIsDestroyed()).toBe(true);
+            const a = new ReferenceCountedOwner(false);
+            const b = new ReferenceCountedOwner(false);
+            a.getLinkedReferences().linkRef(b);
+            expect(() => b.getLinkedReferences().linkRef(a)).toThrow();
         });
     });
 
@@ -56,17 +17,15 @@ describe("=> LinkedReferenceCounter", () =>
     {
         it("| drops all ref claims, but leaves the object alive", () =>
         {
-            const owner = new LinkedReferenceCounter();
-            let ptr!: ILinkedReferenceCounter;
+            const owner = new ReferenceCountedOwner(false);
+            const ptr = new ReferenceCountedOwner(false);
 
-            owner.bindBlockScope(() =>
-            {
-                ptr = new LinkedReferenceCounter();
-            });
+            owner.getLinkedReferences().linkRef(ptr);
+            ptr.release();
             expect(ptr.getIsDestroyed()).toBe(false);
             expect(owner.getIsDestroyed()).toBe(false);
 
-            owner.unlinkAllRefs();
+            owner.getLinkedReferences().unlinkAllRefs();
             expect(ptr.getIsDestroyed()).toBe(true);
             expect(owner.getIsDestroyed()).toBe(false);
         });
@@ -76,11 +35,11 @@ describe("=> LinkedReferenceCounter", () =>
     {
         it("| is called on free", () =>
         {
-            const owner = new LinkedReferenceCounter();
+            const owner = new ReferenceCountedOwner(false);
             const spy = jasmine.createSpy();
             owner.registerOnFreeListener(spy);
 
-            owner.unlinkAllRefs();
+            owner.getLinkedReferences().unlinkAllRefs();
             expect(spy).not.toHaveBeenCalled();
 
             owner.release();

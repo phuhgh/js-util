@@ -6,9 +6,19 @@ import { _Debug } from "../../debug/_debug.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
 import safeHeapTestModule from "../../external/safe-heap-test-module.cjs";
 import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
+import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
 
 describe("=> F32SharedStaticArray", () =>
 {
+    let testOwner: ReferenceCountedOwner;
+
+    beforeEach(() =>
+    {
+        testOwner = new ReferenceCountedOwner(false);
+    });
+    afterEach(() => testOwner.release());
+
     describe("=> asan tests", () =>
     {
         const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
@@ -23,16 +33,16 @@ describe("=> F32SharedStaticArray", () =>
         beforeEach(() =>
         {
             testModule.reset();
-        });
 
-        beforeEach(() =>
-        {
             _Debug.applyLabel("F32SharedStaticArray asan beforeAll", () =>
             {
-                // there isn't anything static exposed in util, avoid guessing...
-                sharedArray = SharedArray.createOneF32(testModule.wrapper, 8, true);
-                const i = sharedArray.getInstance();
-                i.set([1, 2, 3, 4, 5, 6, 7, 8]);
+                blockScopedLifecycle(() =>
+                {
+                    // there isn't anything static exposed in util, avoid guessing...
+                    sharedArray = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 8, true);
+                    const i = sharedArray.getInstance();
+                    i.set([1, 2, 3, 4, 5, 6, 7, 8]);
+                });
             });
         });
 
@@ -47,7 +57,10 @@ describe("=> F32SharedStaticArray", () =>
 
             beforeEach(() =>
             {
-                sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray) + Float32Array.BYTES_PER_ELEMENT, 4);
+                blockScopedLifecycle(() =>
+                {
+                    sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), getCArrayPtr(testModule, sharedArray) + Float32Array.BYTES_PER_ELEMENT, 4);
+                });
             });
 
             it("| returns the expected view", () =>
@@ -71,13 +84,16 @@ describe("=> F32SharedStaticArray", () =>
                 {
                     _Debug.applyLabel("resize error test", () =>
                     {
-                        const instance = sharedStaticArray.getInstance();
-                        expect(instance[0]).toBe(2);
-                        const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 8);
-                        expect(() => instance[0]).toThrow();
-                        sharedArray2.sharedObject.release();
-                        sharedStaticArray.sharedObject.release();
-                        sharedArray.sharedObject.release();
+                        blockScopedLifecycle(() =>
+                        {
+                            const instance = sharedStaticArray.getInstance();
+                            expect(instance[0]).toBe(2);
+                            const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 8);
+                            expect(() => instance[0]).toThrow();
+                            sharedArray2.sharedObject.release();
+                            sharedStaticArray.sharedObject.release();
+                            sharedArray.sharedObject.release();
+                        });
                     });
                 });
             });
@@ -105,14 +121,17 @@ describe("=> F32SharedStaticArray", () =>
             {
                 _Debug.applyLabel("new instance on growth test", () =>
                 {
-                    const sharedArray = SharedArray.createOneF32(testModule.wrapper, 8, true);
-                    const sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, getCArrayPtr(testModule, sharedArray), 8);
-                    const i1 = sharedStaticArray.getInstance();
-                    const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, 2097152, true);
-                    expect(i1 === sharedStaticArray.getInstance()).toBeFalse();
-                    sharedStaticArray.sharedObject.release();
-                    sharedArray2.sharedObject.release();
-                    sharedArray.sharedObject.release();
+                    blockScopedLifecycle(() =>
+                    {
+                        const sharedArray = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 8, true);
+                        const sharedStaticArray = SharedStaticArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), getCArrayPtr(testModule, sharedArray), 8);
+                        const i1 = sharedStaticArray.getInstance();
+                        const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 2097152, true);
+                        expect(i1 === sharedStaticArray.getInstance()).toBeFalse();
+                        sharedStaticArray.sharedObject.release();
+                        sharedArray2.sharedObject.release();
+                        sharedArray.sharedObject.release();
+                    });
                 });
             });
         });

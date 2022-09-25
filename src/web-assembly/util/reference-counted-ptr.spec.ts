@@ -1,7 +1,9 @@
-import { ReferenceCountedPtr } from "./reference-counted-ptr.js";
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
 import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { ReferenceCountedPtr } from "./reference-counted-ptr.js";
+import { nullPointer } from "../emscripten/null-pointer.js";
+import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
 
 describe("=> ReferenceCountedPtr", () =>
 {
@@ -18,57 +20,42 @@ describe("=> ReferenceCountedPtr", () =>
         testModule.reset();
     });
 
-    describe("=> bindLifecycle", () =>
+    it("| sets the pointer to null on free", () =>
     {
-        it("| ties the lifecycle", () =>
+        blockScopedLifecycle(() =>
         {
-            const owner = new ReferenceCountedPtr(false, 1, testModule.wrapper, { onFree: () => undefined });
-            const child = new ReferenceCountedPtr(false, 2, testModule.wrapper, { onFree: () => undefined });
-            owner.bindLifecycle(child);
-            child.release();
-            expect(child.getIsDestroyed()).toBeFalse();
-            owner.release();
-            expect(child.getIsDestroyed()).toBeTrue();
-            expect(owner.getIsDestroyed()).toBeTrue();
-        });
-
-        it("| errors if a cycle is detected", () =>
-        {
-            const a = new ReferenceCountedPtr(false, 1, testModule.wrapper, { onFree: () => undefined });
-            const b = new ReferenceCountedPtr(false, 2, testModule.wrapper, { onFree: () => undefined });
-            a.bindLifecycle(b);
-            expect(() => b.bindLifecycle(a)).toThrow();
+            const ptr = new ReferenceCountedPtr(false, 1, testModule.wrapper);
+            expect(ptr.getPtr()).toBe(1);
+            ptr.release();
+            expect(ptr.getPtr()).toBe(nullPointer);
         });
     });
 
-    describe("=> takeOwnership", () =>
+    it("| calls onFree callbacks on free", () =>
     {
-        it("| ties the lifecycle", () =>
+        blockScopedLifecycle(() =>
         {
-            const owner = new ReferenceCountedPtr(false, 1, testModule.wrapper, { onFree: () => undefined });
-            const child = new ReferenceCountedPtr(false, 2, testModule.wrapper, { onFree: () => undefined });
-            owner.takeOwnership(child);
-            expect(child.getIsDestroyed()).toBeFalse();
-            owner.release();
-            expect(child.getIsDestroyed()).toBeTrue();
-            expect(owner.getIsDestroyed()).toBeTrue();
+            const ref = new ReferenceCountedPtr(false, 1, testModule.wrapper);
+            const spy = jasmine.createSpy();
+            ref.registerOnFreeListener(spy);
+            ref.release();
+            expect(spy).toHaveBeenCalledOnceWith();
         });
     });
 
-    describe("=> unbindLifecycles", () =>
+    it("| clears all linked refs on free", () =>
     {
-        it("| unbinds each shared ptr", () =>
+        blockScopedLifecycle(() =>
         {
-            const a = new ReferenceCountedPtr(false, 1, testModule.wrapper, { onFree: () => undefined });
-            const b = new ReferenceCountedPtr(false, 2, testModule.wrapper, { onFree: () => undefined });
-            const c = new ReferenceCountedPtr(false, 3, testModule.wrapper, { onFree: () => undefined });
-            a.takeOwnership(b);
-            a.takeOwnership(c);
-            a.release();
+            const ref = new ReferenceCountedPtr(false, 1, testModule.wrapper);
+            const linkedRef = new ReferenceCountedPtr(false, 2, testModule.wrapper);
+            ref.getLinkedReferences().linkRef(linkedRef);
+            linkedRef.release();
 
-            expect(a.getIsDestroyed()).toBeTrue();
-            expect(b.getIsDestroyed()).toBeTrue();
-            expect(c.getIsDestroyed()).toBeTrue();
+            expect(linkedRef.getIsDestroyed()).toBe(false);
+
+            ref.release();
+            expect(linkedRef.getIsDestroyed()).toBe(true);
         });
     });
 });

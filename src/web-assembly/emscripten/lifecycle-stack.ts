@@ -1,5 +1,6 @@
 import { _Debug } from "../../debug/_debug.js";
 import { IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
+import { _Production } from "../../production/_production.js";
 
 // todo jack: export const in globals
 export const allocationStack: unknown[][] = [];
@@ -29,7 +30,8 @@ export class LifecycleStack
 
         if (top == null)
         {
-            return;
+            throw _Production.createError("attempted to create shared lifecycle object outside of allocation scope.");
+
         }
 
         top.push(ref);

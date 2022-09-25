@@ -37,7 +37,7 @@ export function arrayBinaryLastIndexOf<T>
         comparisonValueToSearchFor,
         getComparisonValueAtIndex,
         isLowGetHighest,
-        (v) => v - 1,
+        adjustValue,
         length,
         start
     );
@@ -52,6 +52,9 @@ export function arrayBinaryLastIndexOf<T>
     }
 }
 
+function adjustValue(v: number) {
+    return v - 1;
+}
 
 function isLowGetHighest(comparisonValueToSearchFor: number, currentComparisonValue: number): boolean
 {

@@ -10,6 +10,7 @@ import { DebugSharedObjectChecks } from "../util/debug-shared-object-checks.js";
 import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
+import { ILinkedReferences } from "../../lifecycle/linked-references.js";
 
 /**
  * @public
@@ -32,38 +33,77 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
                IOnMemoryResize,
                IDebugAllocateListener
 {
-    public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory?: boolean): TF32SharedArray
-    public static createOneF32(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF32SharedArray | null
+    /**
+     * @throws exception if allocation cannot be performed.
+     */
     public static createOneF32
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
+        length: number,
+        clearMemory?: boolean,
+    )
+        : TF32SharedArray
+    public static createOneF32
+    (
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
+        length: number,
+        clearMemory?: boolean,
+        allocationFailThrows?: boolean,
+    )
+        : TF32SharedArray | null
+    public static createOneF32
+    (
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
         length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
         : TF32SharedArray | null
     {
-        return SharedArray.createOne("f32SharedArray", wrapper, Float32Array, length, clearMemory, allocationFailThrows);
+        return SharedArray.createOne("f32SharedArray", wrapper, bindToReference, Float32Array, length, clearMemory, allocationFailThrows);
     }
 
-    public static createOneF64(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory?: boolean): TF64SharedArray
-    public static createOneF64(wrapper: IEmscriptenWrapper<ISharedArrayBindings>, length: number, clearMemory: boolean, allocationFailThrows: boolean): TF64SharedArray | null
+    /**
+     * @throws exception if allocation cannot be performed.
+     */
     public static createOneF64
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
+        length: number,
+        clearMemory?: boolean,
+    )
+        : TF64SharedArray
+    public static createOneF64
+    (
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
+        length: number,
+        clearMemory?: boolean,
+        allocationFailThrows?: boolean,
+    )
+        : TF64SharedArray | null
+    public static createOneF64
+    (
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
         length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
     )
         : TF64SharedArray | null
     {
-        return SharedArray.createOne("f64SharedArray", wrapper, Float64Array, length, clearMemory, allocationFailThrows);
+        return SharedArray.createOne("f64SharedArray", wrapper, bindToReference, Float64Array, length, clearMemory, allocationFailThrows);
     }
 
     private static createOne<TCtor extends TTypedArrayCtor>
     (
         prefix: TSharedArrayPrefix,
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
+        bindToReference: ILinkedReferences,
         ctor: TCtor,
         length: number,
         clearMemory: boolean = false,
@@ -75,7 +115,9 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
         if (ptr !== nullPointer)
         {
-            return new SharedArray(prefix, ctor, wrapper, length, ptr);
+            const sa = new SharedArray(prefix, ctor, wrapper, length, ptr);
+            bindToReference.linkRef(sa.sharedObject);
+            return sa;
         }
 
         return null;

@@ -1,5 +1,6 @@
 import { _Debug } from "../debug/_debug.js";
-import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
+import { ILinkedReferences, LinkedReferences } from "./linked-references.js";
+import { ITemporaryListener, TemporaryListener } from "./temporary-listener.js";
 
 /**
  * @public
@@ -10,6 +11,15 @@ export interface IReferenceCounted
     claim(): void;
     release(): void;
     getIsDestroyed(): boolean;
+    getLinkedReferences(): ILinkedReferences;
+    /**
+     * Callback will be called when the reference count hits 0. Useful for cleanup.
+     */
+    registerOnFreeListener(callback: () => void): void;
+    /**
+     * Remove the listener set by "registerOnFreeListener".
+     */
+    unregisterOnFreeListener(callback: () => void): void;
 }
 
 /**
@@ -22,9 +32,6 @@ export abstract class AReferenceCounted implements IReferenceCounted
     /**
      * Take a claim on the object, preventing it from being destroyed. Once you're done with the object you should
      * call `release`.
-     *
-     * Typically, these should not be called directly, make use of `{@link blockScopedLifecycle}` or
-     * {@link ILinkedReferenceCounter.bindBlockScope} instead.
      */
     public claim(): void
     {
@@ -54,15 +61,42 @@ export abstract class AReferenceCounted implements IReferenceCounted
         return this.references <= 0;
     }
 
+    public getLinkedReferences(): ILinkedReferences
+    {
+        if (this.linkedReferences == null)
+        {
+            return this.linkedReferences = new LinkedReferences(this);
+        }
+
+        return this.linkedReferences;
+    }
+
+
+    public registerOnFreeListener(callback: () => void): void
+    {
+        this.onFreeListener = this.onFreeListener ?? new TemporaryListener();
+        this.onFreeListener.addListener(callback);
+    }
+
+    public unregisterOnFreeListener(callback: () => void): void
+    {
+        if (this.onFreeListener)
+        {
+            this.onFreeListener.removeListener(callback);
+        }
+    }
+
     /**
      * DO NOT CALL THIS DIRECTLY, CALL RELEASE.
      */
-    protected abstract onFree(): void;
-
-    protected constructor()
+    protected onFree(): void
     {
-        lifecycleStack.register(this);
+        this.linkedReferences?.unlinkAllRefs();
+        this.onFreeListener?.clearingEmit();
     }
 
     private references = 1;
+    private linkedReferences: ILinkedReferences | null = null;
+    private onFreeListener: ITemporaryListener<[]> | null = null;
 }
+

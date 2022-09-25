@@ -105,7 +105,7 @@ describe("=> binary index of", () =>
 
     describe("=> binaryLastIndexOf", () =>
     {
-        describe("=>  where multiple values exist", () =>
+        describe("=> where multiple values exist", () =>
         {
             it("| returns last index", () =>
             {

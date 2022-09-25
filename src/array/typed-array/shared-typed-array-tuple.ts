@@ -3,12 +3,13 @@ import { TTypedArray } from "./t-typed-array.js";
 import { ITypedArrayExtensions } from "./i-typed-array-extensions.js";
 import { ITypedArrayCtor } from "./i-typed-array-ctor.js";
 import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory.js";
-import { ISharedMemoryBlock, SharedMemoryBlock } from "../../web-assembly/util/shared-memory-block.js";
+import { ISharedMemoryBlock, SharedMemoryBlock } from "../../web-assembly/shared-memory/shared-memory-block.js";
 import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
 import { IEmscriptenWrapper } from "../../web-assembly/emscripten/i-emscripten-wrapper.js";
 import { IMemoryUtilBindings } from "../../web-assembly/emscripten/i-memory-util-bindings.js";
 import { IReferenceCountedPtr } from "../../web-assembly/util/reference-counted-ptr.js";
 import { ATypedArrayTuple } from "./a-typed-array-tuple.js";
+import { ILinkedReferences } from "../../lifecycle/linked-references.js";
 
 /**
  * @public
@@ -38,12 +39,13 @@ export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTyp
     public static createOne<TArray extends (ATypedArrayTuple<number, TTypedArray> & ITypedArrayExtensions)>
     (
         typedArrayCtor: TExtendedTypedArrayCtor<TArray>,
+        bindToReference: ILinkedReferences,
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
     )
         : ISharedTypedArrayTuple<TArray>
     {
         const byteSize = typedArrayCtor.BYTES_PER_ELEMENT * typedArrayCtor.factory.elementCount;
-        const block = SharedMemoryBlock.createOne(wrapper, byteSize);
+        const block = SharedMemoryBlock.createOne(wrapper,bindToReference, byteSize);
 
         return new SharedTypedArrayTuple<TArray>(block);
     }

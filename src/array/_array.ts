@@ -31,6 +31,7 @@ import { arrayAddToSet } from "./impl/array-add-to-set.js";
 import { arrayForEachRange } from "./impl/array-for-each-range.js";
 import { arrayMax } from "./impl/array-max.js";
 import { arrayMin } from "./impl/array-min.js";
+import { arrayBinaryFindInsertionIndex } from "./impl/array-binary-find-insertion-index.js";
 
 /**
  * @public
@@ -40,6 +41,8 @@ export class _Array
 {
     /** {@inheritDoc arrayAddToSet} */
     public static readonly addToSet = arrayAddToSet;
+    /** {@inheritDoc arrayBinaryFindInsertionIndex} */
+    public static readonly binaryFindInsertionIndex = arrayBinaryFindInsertionIndex;
     /** {@inheritDoc arrayBinaryIndexOf} */
     public static readonly binaryIndexOf = arrayBinaryIndexOf;
     /** {@inheritDoc arrayBinaryLastIndexOf} */
