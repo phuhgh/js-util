@@ -1,13 +1,13 @@
 import { Vec4Factory } from "./vec4-factory.js";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
 import { Vec4 } from "./vec4.js";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
 
 describe("=> Vec4Factory", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const factory = new Vec4Factory(Vec4.f32, NormalizedDataViewProvider.getView(Float32Array));

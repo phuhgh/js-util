@@ -1,12 +1,12 @@
 import { Mat4, TF32Mat4 } from "./mat4.js";
 import { Vec4 } from "../vec4/vec4.js";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
 
 describe("=> Mat4", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> getValueAt", () =>

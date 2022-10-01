@@ -1,11 +1,11 @@
 import { arrayRemoveOne } from "./array-remove-one.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> arrayRemoveOne", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     it("| removes a single match from the first argument", () =>

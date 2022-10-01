@@ -1,11 +1,11 @@
 import { dictionaryPairs } from "./dictionary-pairs.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> dictionaryPairs", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const values = { a: 1, b: 2, c: 3 };

@@ -1,11 +1,11 @@
 import { arrayIsNotEmpty } from "./array-is-not-empty.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> arrayIsNotEmpty", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> compile checks", () =>

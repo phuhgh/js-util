@@ -1,13 +1,13 @@
 import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
 import { fpIdentity } from "../../fp/impl/fp-identity.js";
 import { arrayForEachRange } from "./array-for-each-range.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> arrayForEachRange", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> in debug mode", () =>

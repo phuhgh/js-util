@@ -2,7 +2,7 @@ import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "
 import { _Debug } from "../../debug/_debug.js";
 import { nullPointer } from "./null-pointer.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("JsUtil::Debug", () =>
 {
@@ -12,7 +12,7 @@ describe("JsUtil::Debug", () =>
     {
         beforeEach(async () =>
         {
-            setDefaultUnitTestFlags();
+            Test_setDefaultFlags();
             await testModule.initialize();
             _Debug.setFlag("VERBOSE", true);
         });
@@ -42,7 +42,7 @@ describe("JsUtil::Debug", () =>
     {
         beforeEach(async () =>
         {
-            setDefaultUnitTestFlags();
+            Test_setDefaultFlags();
             await testModule.initialize();
         });
 

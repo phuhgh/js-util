@@ -1,13 +1,13 @@
 import { Mat4Factory } from "./mat4-factory.js";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
 import { Mat4 } from "./mat4.js";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
 
 describe("=> Mat4Factory", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const factory = new Mat4Factory(Mat4.f32, NormalizedDataViewProvider.getView(Float32Array));

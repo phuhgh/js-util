@@ -1,11 +1,11 @@
 import { TF32Vec4, Vec4 } from "./vec4.js";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
 
 describe("=> Vec4", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> getters", () =>

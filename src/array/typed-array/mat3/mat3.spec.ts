@@ -1,13 +1,13 @@
 import { Vec2 } from "../vec2/vec2.js";
 import { Mat3, TF32Mat3 } from "./mat3.js";
 import { Vec3 } from "../vec3/vec3.js";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
 
 describe("=> Mat3", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> getElement", () =>

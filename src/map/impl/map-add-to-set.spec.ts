@@ -1,12 +1,12 @@
 import { mapAddToSet } from "./map-add-to-set.js";
 import { _Set } from "../../set/_set.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> mapAddToSet", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const values = new Map([["a", new Set([1])]]);

@@ -1,13 +1,13 @@
 import { expectValueToBeNearTo } from "../../../../test-util/test-utils.js";
 import { Range1d } from "./range1d.js";
 import { Mat2 } from "../../mat2/mat2.js";
-import { setDefaultUnitTestFlags } from "../../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../../test-util/test_set-default-flags.js";
 
 describe("=> Range1d", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> isPointInRange", () =>

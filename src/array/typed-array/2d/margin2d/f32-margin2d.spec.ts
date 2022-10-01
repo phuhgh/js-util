@@ -1,13 +1,13 @@
 import { Range2d } from "../range2d/range2d.js";
 import { Margin2d } from "./margin2d.js";
 import { Mat3 } from "../../mat3/mat3.js";
-import { setDefaultUnitTestFlags } from "../../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../../test-util/test_set-default-flags.js";
 
 describe("=> F32Margin2d", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> getInnerRange", () =>

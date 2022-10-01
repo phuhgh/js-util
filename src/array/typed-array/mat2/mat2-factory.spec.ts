@@ -2,13 +2,13 @@ import { Mat2Factory } from "./mat2-factory.js";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
 import { Mat2 } from "./mat2.js";
 import { Vec2 } from "../vec2/vec2.js";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
 
 describe("=> Mat2Factory", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const factory = new Mat2Factory(Mat2.f64, NormalizedDataViewProvider.getView(Float64Array));

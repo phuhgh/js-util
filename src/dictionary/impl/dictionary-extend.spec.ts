@@ -1,12 +1,12 @@
 import { itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
 import { dictionaryExtend } from "./dictionary-extend.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> dictionaryExtend", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     itShouldNotRunDebugWhenDebugIsFalse(() =>

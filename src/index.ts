@@ -209,7 +209,8 @@ export { IDebugSharedObject } from "./debug/i-debug-shared-object.js";
 export { IDebugWeakBroadcastEvent } from "./debug/debug-weak-broadcast-event.js";
 export { IDebugSharedObjectLifeCycleChecker } from "./debug/debug-shared-object-life-cycle-checker.js";
 export { TDebugListener } from "./debug/t-debug-listener.js";
-export { setDefaultUnitTestFlags } from "./test-util/set-default-unit-test-flags.js";
+export { Test_setDefaultFlags } from "./test-util/test_set-default-flags.js";
+export { Test_resetLifeCycle } from "./test-util/test_reset-life-cycle.js";
 
 declare global
 {

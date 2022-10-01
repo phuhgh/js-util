@@ -1,7 +1,7 @@
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import { _Debug } from "../../debug/_debug.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> asan sanity check", () =>
 {
@@ -9,7 +9,7 @@ describe("=> asan sanity check", () =>
 
     beforeAll(async () =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
         await testModule.initialize();
     });
 

@@ -1,11 +1,11 @@
 import { _Production } from "./_production.js";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 
 describe("=> _Production.error", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> compilation checks", () =>

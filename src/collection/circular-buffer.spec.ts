@@ -1,11 +1,11 @@
 import { CircularBuffer } from "./circular-buffer.js";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 
 describe("=> CircularBuffer", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     /**

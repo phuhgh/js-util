@@ -2,13 +2,13 @@ import { expectValueToBeNearTo } from "../../../../test-util/test-utils.js";
 import { Range2d } from "./range2d.js";
 import { Vec2 } from "../../vec2/vec2.js";
 import { Mat3 } from "../../mat3/mat3.js";
-import { setDefaultUnitTestFlags } from "../../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../../test-util/test_set-default-flags.js";
 
 describe("=> F32Range2d", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> isPointInRange", () =>

@@ -1,13 +1,13 @@
 import { itShouldCallAssert, itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
 import { arrayBinaryIndexOf } from "./array-binary-index-of.js";
 import { arrayBinaryLastIndexOf } from "./array-binary-last-index-of.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> binary index of", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> common behaviour", () =>

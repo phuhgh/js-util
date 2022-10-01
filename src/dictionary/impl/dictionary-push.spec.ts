@@ -1,12 +1,12 @@
 import { dictionaryPush } from "./dictionary-push.js";
 import { IDictionary } from "../../typescript/i-dictionary.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> dictionaryPush", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const values: IDictionary<number[]> = { a: [1] };

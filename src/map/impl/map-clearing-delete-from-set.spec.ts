@@ -1,12 +1,12 @@
 import { mapClearingDeleteFromSet } from "./map-clearing-delete-from-set.js";
 import { _Set } from "../../set/_set.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> mapClearingDeleteFromSet", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     it("| deletes where set exists and value is present", () =>

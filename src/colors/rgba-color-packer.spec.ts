@@ -1,12 +1,12 @@
 import { RgbaColorPacker } from "./rgba-color-packer.js";
 import { ERgbaShift } from "./e-rgba-masks.js";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 
 describe("=> RgbaColorPacker", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const red = RgbaColorPacker.packColor(255, 0, 0, 0);

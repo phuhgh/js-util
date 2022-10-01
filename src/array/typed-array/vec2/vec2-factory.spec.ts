@@ -1,13 +1,13 @@
 import { Vec2Factory } from "./vec2-factory.js";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
 import { Vec2 } from "./vec2.js";
-import { setDefaultUnitTestFlags } from "../../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
 
 describe("=> Vec2Factory", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const factory = new Vec2Factory(Vec2.f32, NormalizedDataViewProvider.getView(Float32Array));

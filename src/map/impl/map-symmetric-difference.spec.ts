@@ -1,11 +1,11 @@
 import { mapSymmetricDifference } from "./map-symmetric-difference.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> mapSymmetricDifference", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     it("| returns items not in the intersection", () =>

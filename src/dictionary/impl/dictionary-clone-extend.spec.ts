@@ -1,11 +1,11 @@
 import { dictionaryCloneExtend } from "./dictionary-clone-extend.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> dictionaryCloneExtend", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     it("| returns a new object, overwriting with the extension where common", () =>

@@ -1,12 +1,12 @@
 import { fpOnce } from "./fp-once.js";
 import createSpy = jasmine.createSpy;
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> fpOnce", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     it("| calls the function once with the expected arguments", () =>

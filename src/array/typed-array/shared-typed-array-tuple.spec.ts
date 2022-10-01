@@ -1,12 +1,12 @@
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../../web-assembly/emscripten/sanitized-emscripten-test-module.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
 import { SharedTypedArrayTuple } from "./shared-typed-array-tuple.js";
 import { Range2d } from "./2d/range2d/range2d.js";
 import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
 import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
-import { resetLifeCycle } from "../../test-util/reset-life-cycle.js";
+import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
 
 describe("=> SharedTypedArrayTuple", () =>
 {
@@ -15,7 +15,7 @@ describe("=> SharedTypedArrayTuple", () =>
     beforeEach(() =>
     {
         testOwner = new ReferenceCountedOwner(false);
-        resetLifeCycle();
+        Test_resetLifeCycle();
     });
 
     afterEach(() => testOwner.release());
@@ -23,7 +23,7 @@ describe("=> SharedTypedArrayTuple", () =>
 
     beforeAll(async () =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
         await testModule.initialize();
     });
 

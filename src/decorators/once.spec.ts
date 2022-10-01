@@ -1,11 +1,11 @@
 import { Once } from "./once.js";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 
 describe("=> once decorator", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     let argTestRan = false;

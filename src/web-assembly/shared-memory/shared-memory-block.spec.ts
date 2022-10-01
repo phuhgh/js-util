@@ -2,7 +2,7 @@ import { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, S
 import { SharedMemoryBlock } from "./shared-memory-block.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
 import safeHeapTestModule from "../../external/safe-heap-test-module.cjs";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
 
@@ -23,7 +23,7 @@ describe("=> SharedMemoryBlock", () =>
 
         beforeAll(async () =>
         {
-            setDefaultUnitTestFlags();
+            Test_setDefaultFlags();
             await testModule.initialize();
         });
 
@@ -60,7 +60,7 @@ describe("=> SharedMemoryBlock", () =>
 
         beforeAll(async () =>
         {
-            setDefaultUnitTestFlags();
+            Test_setDefaultFlags();
             await testModule.initialize();
         });
 

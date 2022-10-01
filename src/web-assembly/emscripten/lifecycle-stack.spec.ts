@@ -1,14 +1,14 @@
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { LifecycleStack } from "./lifecycle-stack.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
-import { resetLifeCycle } from "../../test-util/reset-life-cycle.js";
+import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
 
 describe("=> LifecycleStack", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
-        resetLifeCycle();
+        Test_setDefaultFlags();
+        Test_resetLifeCycle();
     });
 
     it("| returns consistently from push and pop", () =>

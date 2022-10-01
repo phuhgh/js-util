@@ -1,6 +1,6 @@
 import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import asanTestModule from "../../external/asan-test-module.cjs";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { ReferenceCountedPtr } from "./reference-counted-ptr.js";
 import { nullPointer } from "../emscripten/null-pointer.js";
 import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
@@ -12,7 +12,7 @@ describe("=> ReferenceCountedPtr", () =>
 
     beforeAll(async () =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
         await testModule.initialize();
     });
 

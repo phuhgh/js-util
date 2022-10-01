@@ -1,12 +1,12 @@
 import { _Set } from "../../set/_set.js";
 import { mapDeleteFromSet } from "./map-delete-from-set.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> mapDeleteFromSet", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const values = new Map([["a", new Set([1])]]);

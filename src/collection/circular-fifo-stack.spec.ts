@@ -1,11 +1,11 @@
 import { CircularFIFOStack, ECircularStackOverflowMode } from "./circular-fifo-stack.js";
-import { setDefaultUnitTestFlags } from "../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 
 describe("=> CircularFIFOStack", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     describe("=> getIsEmpty", () =>

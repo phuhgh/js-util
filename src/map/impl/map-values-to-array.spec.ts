@@ -1,11 +1,11 @@
 import { mapValuesToArray } from "./map-values-to-array.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> mapValuesToArray", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const values = new Map([["a", 1], ["b", 2], ["c", 3]] as const);

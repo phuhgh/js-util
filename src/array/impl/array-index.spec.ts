@@ -1,12 +1,12 @@
 import { arrayIndex } from "./array-index.js";
 import { _Production } from "../../production/_production.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> arrayIndex", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     const values = ["a", "b", "c"] as const;

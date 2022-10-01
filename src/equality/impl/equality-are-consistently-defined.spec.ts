@@ -1,11 +1,11 @@
 import { equalityAreConsistentlyDefined } from "./equality-are-consistently-defined.js";
-import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-flags.js";
+import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> equalityAreConsistentlyDefined", () =>
 {
     beforeEach(() =>
     {
-        setDefaultUnitTestFlags();
+        Test_setDefaultFlags();
     });
 
     it("| returns true if both are null", () =>
