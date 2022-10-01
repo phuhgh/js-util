@@ -24,7 +24,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
 {
     public static createOneBound
     (
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         isStatic: boolean,
         wasmPtr: number,
         wrapper: IEmscriptenWrapper<object>,
@@ -32,11 +32,11 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
         : IReferenceCountedPtr
     {
         const ptr = new ReferenceCountedPtr(isStatic, wasmPtr, wrapper);
-        bindToReference.linkRef(ptr);
+        bindToReference?.linkRef(ptr);
         return ptr;
     }
 
-    public getPtr(    )        : number
+    public getPtr(): number
     {
         return this.wasmPtr;
     }

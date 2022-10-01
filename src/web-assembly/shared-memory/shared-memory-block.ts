@@ -41,14 +41,14 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         byteSize: number,
     )
         : SharedMemoryBlock
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         byteSize: number,
         allocationFailThrows: boolean,
     )
@@ -56,7 +56,7 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         byteSize: number,
         allocationFailThrows: boolean = true,
     )
@@ -78,7 +78,8 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
         }
 
         const smb = new SharedMemoryBlock(wrapper, pointer, byteSize);
-        bindToReference.linkRef(smb.sharedObject);
+        bindToReference?.linkRef(smb.sharedObject);
+
         return smb;
     }
 

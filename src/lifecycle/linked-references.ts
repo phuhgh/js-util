@@ -11,11 +11,11 @@ export interface ILinkedReferences
     /**
      * Link the ref, incrementing their reference counter.
      */
-    linkRef(ref: IReferenceCounted): void;
+    linkRef(ref: IReferenceCounted): ILinkedReferences;
     /**
      * Unlink the ref, decrement their reference counter.
      */
-    unlinkRef(ref: IReferenceCounted): void;
+    unlinkRef(ref: IReferenceCounted): ILinkedReferences;
     /**
      * Unlink all refs, decrement their reference counters.
      */
@@ -43,7 +43,7 @@ export class LinkedReferences
         this.refs = new DirtyCheckedUniqueCollection<IReferenceCounted>();
     }
 
-    public linkRef(ref: IReferenceCounted): void
+    public linkRef(ref: IReferenceCounted): ILinkedReferences
     {
         if (!this.refs.has(ref))
         {
@@ -56,9 +56,11 @@ export class LinkedReferences
             this.refs.add(ref);
             ref.claim();
         }
+
+        return this;
     }
 
-    public unlinkRef(ref: IReferenceCounted): void
+    public unlinkRef(ref: IReferenceCounted): ILinkedReferences
     {
         const removed = this.refs.delete(ref);
 
@@ -66,6 +68,8 @@ export class LinkedReferences
         {
             ref.release();
         }
+
+        return this;
     }
 
     public unlinkAllRefs(): void

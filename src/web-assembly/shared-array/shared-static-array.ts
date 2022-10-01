@@ -33,28 +33,28 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     public static createOneF32
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         pointer: number,
         length: number
     )
         : TF32SharedStaticArray
     {
         const sta = new SharedStaticArray(Float32Array, wrapper, pointer, length);
-        bindToReference.linkRef(sta.sharedObject);
+        bindToReference?.linkRef(sta.sharedObject);
         return sta;
     }
 
     public static createOneF64
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         pointer: number,
         length: number
     )
         : TF64SharedStaticArray
     {
         const sta = new SharedStaticArray(Float64Array, wrapper, pointer, length);
-        bindToReference.linkRef(sta.sharedObject);
+        bindToReference?.linkRef(sta.sharedObject);
         return sta;
     }
 

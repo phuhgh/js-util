@@ -52,7 +52,8 @@ export function arrayBinaryLastIndexOf<T>
     }
 }
 
-function adjustValue(v: number) {
+function adjustValue(v: number)
+{
     return v - 1;
 }
 

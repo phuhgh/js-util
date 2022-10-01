@@ -36,8 +36,10 @@ describe("=> ReferenceCountedOwner", () =>
         expect(linkedRef.getIsDestroyed()).toBe(true);
     });
 
-    describe("=> createOneBound", () => {
-        it("binds to the ref and releases with blockScoped blockScoped false", () => {
+    describe("=> createOneBound", () =>
+    {
+        it("binds to the ref and releases with blockScoped blockScoped false", () =>
+        {
             const owner = new ReferenceCountedOwner(false);
             const ref = ReferenceCountedOwner.createOneBound(owner.getLinkedReferences(), false);
             expect(ref.getIsDestroyed()).toBe(false);
@@ -45,7 +47,8 @@ describe("=> ReferenceCountedOwner", () =>
             expect(ref.getIsDestroyed()).toBe(true);
         });
 
-        it("binds to the ref and does not release with blockScoped true", () => {
+        it("binds to the ref and does not release with blockScoped true", () =>
+        {
             blockScopedLifecycle(() =>
             {
                 const owner = new ReferenceCountedOwner();

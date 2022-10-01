@@ -27,8 +27,10 @@ export interface ISharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number,
 /**
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TExtendedTypedArrayCtor<TArray extends ATypedArrayTuple<number, TTypedArray>> = ITypedArrayCtor<TArray> & { factory: ITypedArrayTupleFactory<any, any> }
+export type TExtendedTypedArrayCtor<TArray extends ATypedArrayTuple<number, TTypedArray>> =
+    ITypedArrayCtor<TArray>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    & { factory: ITypedArrayTupleFactory<any, any> }
 
 /**
  @public
@@ -39,13 +41,13 @@ export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTyp
     public static createOne<TArray extends (ATypedArrayTuple<number, TTypedArray> & ITypedArrayExtensions)>
     (
         typedArrayCtor: TExtendedTypedArrayCtor<TArray>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
     )
         : ISharedTypedArrayTuple<TArray>
     {
         const byteSize = typedArrayCtor.BYTES_PER_ELEMENT * typedArrayCtor.factory.elementCount;
-        const block = SharedMemoryBlock.createOne(wrapper,bindToReference, byteSize);
+        const block = SharedMemoryBlock.createOne(wrapper, bindToReference, byteSize);
 
         return new SharedTypedArrayTuple<TArray>(block);
     }

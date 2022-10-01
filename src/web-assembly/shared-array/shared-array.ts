@@ -39,7 +39,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public static createOneF32
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         length: number,
         clearMemory?: boolean,
     )
@@ -47,7 +47,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public static createOneF32
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         length: number,
         clearMemory?: boolean,
         allocationFailThrows?: boolean,
@@ -56,7 +56,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public static createOneF32
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
@@ -72,7 +72,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public static createOneF64
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         length: number,
         clearMemory?: boolean,
     )
@@ -80,7 +80,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public static createOneF64
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         length: number,
         clearMemory?: boolean,
         allocationFailThrows?: boolean,
@@ -89,7 +89,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public static createOneF64
     (
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         length: number,
         clearMemory: boolean = false,
         allocationFailThrows: boolean = true,
@@ -103,7 +103,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     (
         prefix: TSharedArrayPrefix,
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        bindToReference: ILinkedReferences,
+        bindToReference: ILinkedReferences | null,
         ctor: TCtor,
         length: number,
         clearMemory: boolean = false,
@@ -116,7 +116,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         if (ptr !== nullPointer)
         {
             const sa = new SharedArray(prefix, ctor, wrapper, length, ptr);
-            bindToReference.linkRef(sa.sharedObject);
+            bindToReference?.linkRef(sa.sharedObject);
             return sa;
         }
 
