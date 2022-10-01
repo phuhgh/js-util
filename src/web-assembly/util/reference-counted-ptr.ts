@@ -3,6 +3,7 @@ import { _Debug } from "../../debug/_debug.js";
 import { nullPointer } from "../emscripten/null-pointer.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { lifecycleStack } from "../emscripten/lifecycle-stack.js";
+import { ILinkedReferences } from "../../lifecycle/linked-references.js";
 
 /**
  * @public
@@ -21,7 +22,21 @@ export interface IReferenceCountedPtr extends IReferenceCounted
  */
 export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr
 {
-    public getPtr(): number
+    public static createOneBound
+    (
+        bindToReference: ILinkedReferences,
+        isStatic: boolean,
+        wasmPtr: number,
+        wrapper: IEmscriptenWrapper<object>,
+    )
+        : IReferenceCountedPtr
+    {
+        const ptr = new ReferenceCountedPtr(isStatic, wasmPtr, wrapper);
+        bindToReference.linkRef(ptr);
+        return ptr;
+    }
+
+    public getPtr(    )        : number
     {
         return this.wasmPtr;
     }
@@ -33,7 +48,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     {
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
-            this.owner.debug.uniquePointers.delete(this.wasmPtr);
+            this.wrapper.debug.uniquePointers.delete(this.wasmPtr);
         });
 
         super.onFree();
@@ -44,7 +59,7 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
     (
         public readonly isStatic: boolean,
         protected wasmPtr: number,
-        protected readonly owner: IEmscriptenWrapper<object>,
+        protected readonly wrapper: IEmscriptenWrapper<object>,
     )
     {
         super();
@@ -56,8 +71,8 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
 
             if (!this.isStatic)
             {
-                _Debug.assert(!this.owner.debug.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
-                this.owner.debug.uniquePointers.add(this.wasmPtr);
+                _Debug.assert(!this.wrapper.debug.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
+                this.wrapper.debug.uniquePointers.add(this.wasmPtr);
             }
         });
     }

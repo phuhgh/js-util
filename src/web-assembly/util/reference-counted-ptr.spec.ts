@@ -4,6 +4,7 @@ import { setDefaultUnitTestFlags } from "../../test-util/set-default-unit-test-f
 import { ReferenceCountedPtr } from "./reference-counted-ptr.js";
 import { nullPointer } from "../emscripten/null-pointer.js";
 import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
+import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
 
 describe("=> ReferenceCountedPtr", () =>
 {
@@ -56,6 +57,22 @@ describe("=> ReferenceCountedPtr", () =>
 
             ref.release();
             expect(linkedRef.getIsDestroyed()).toBe(true);
+        });
+    });
+
+    describe("=> createOneBound", () =>
+    {
+        it("binds to the ref", () =>
+        {
+            blockScopedLifecycle(() =>
+            {
+                const owner = new ReferenceCountedOwner();
+                const ptr = ReferenceCountedPtr.createOneBound(owner.getLinkedReferences(), false, 1, testModule.wrapper);
+                ptr.release();
+                expect(ptr.getIsDestroyed()).toBe(false);
+                owner.release();
+                expect(ptr.getIsDestroyed()).toBe(true);
+            });
         });
     });
 });
