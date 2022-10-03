@@ -1,9 +1,7 @@
 import { _Debug } from "../../debug/_debug.js";
 import { IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
 import { _Production } from "../../production/_production.js";
-
-// todo jack: export const in globals
-export const allocationStack: unknown[][] = [];
+import { getGlobal } from "../../runtime/get-global.js";
 
 /**
  * @public
@@ -42,7 +40,8 @@ export class LifecycleStack
         return this.allocationStack.length;
     }
 
-    private readonly allocationStack = allocationStack as IReferenceCounted[][];
+    // todo jack: hack
+    private readonly allocationStack = getGlobal()["RC_ALLOCATION_STACK"] = [] as IReferenceCounted[][];
 }
 
 /**

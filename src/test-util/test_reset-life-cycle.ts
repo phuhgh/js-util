@@ -1,9 +1,11 @@
-import { allocationStack } from "../web-assembly/emscripten/lifecycle-stack.js";
+import { getGlobal } from "../runtime/get-global.js";
+import { IReferenceCounted } from "../lifecycle/a-reference-counted.js";
 
 /**
  * @public
  */
 export function Test_resetLifeCycle(): void
 {
-    allocationStack.length = 0;
+    // todo jack: hack
+    (getGlobal()["RC_ALLOCATION_STACK"] as IReferenceCounted[][] ?? []).length = 0;
 }
