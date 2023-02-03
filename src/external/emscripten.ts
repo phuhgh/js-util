@@ -1,4 +1,5 @@
 import { IWebAssemblyMemoryMemory } from "./i-web-assembly-memory.js";
+import { IEmscriptenBindings } from "../web-assembly/emscripten/i-emscripten-bindings.js";
 
 /* eslint-disable */
 /**
@@ -32,7 +33,7 @@ export namespace Emscripten
     /**
      * @public
      */
-    export interface EmscriptenModule
+    export interface EmscriptenModule extends IEmscriptenBindings
     {
         wasmMemory: IWebAssemblyMemoryMemory;
         print(str: string): void;
@@ -85,9 +86,6 @@ export namespace Emscripten
         addOnExit(cb: () => any): void;
         addOnPostRun(cb: () => any): void;
         quit(status: number, error: unknown): void;
-
-        _malloc(size: number): number;
-        _free(ptr: number): void;
 
         ASAN_OPTIONS?: string;
     }

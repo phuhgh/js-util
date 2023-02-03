@@ -101,6 +101,7 @@ export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/shared-mem
 export { DebugSharedObjectChecks } from "./web-assembly/util/debug-shared-object-checks.js";
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";
+export { IEmscriptenBindings } from "./web-assembly/emscripten/i-emscripten-bindings.js";
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
 export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings.js";
 export { blockScopedLifecycle } from "./lifecycle/block-scoped-lifecycle.js";

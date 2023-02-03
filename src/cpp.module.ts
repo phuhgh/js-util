@@ -10,5 +10,7 @@ export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } =
     _f32SharedArray_getArrayAddress: true,
     _f64SharedArray_createOne: true,
     _f64SharedArray_delete: true,
-    _f64SharedArray_getArrayAddress: true
+    _f64SharedArray_getArrayAddress: true,
+    _malloc: true,
+    _free: true,
 };
