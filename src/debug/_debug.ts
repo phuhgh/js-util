@@ -1,4 +1,6 @@
 import { getGlobal } from "../runtime/get-global.js";
+import { arrayAddToSet } from "../array/impl/array-add-to-set.js";
+import { _Set } from "../set/_set.js";
 
 /**
  * @public
@@ -165,7 +167,8 @@ export class _Debug
     }
 
     /**
-     * Logging which can be conditionally enabled by setting `DEBUG_VERBOSE` to true.
+     * Logging which can be conditionally enabled by setting either `VERBOSE` to true on build options (enabling everything),
+     * or by calling setLoggingTags and specifying which tags you'd like enabled.
      *
      * @example
      * ```typescript
@@ -174,22 +177,31 @@ export class _Debug
      * }
      * ```
      */
-    public static verboseLog(this: void, message: string, ancillaryObject?: object): void
+    public static verboseLog(this: void, tags: readonly string[], message: string, ancillaryObject?: object): void
     {
+        arrayAddToSet(tags, _Debug._seenTags);
+
         if (!_Debug.isFlagSet("VERBOSE"))
         {
-            return;
+            if (!tags.some(tag => _Debug._enabledTags.has(tag)))
+            {
+                return;
+            }
         }
+
+        const prefixedMessage = tags.length > 0
+            ? ["[", tags.join(", "), "] ", message].join("")
+            : message;
 
         if (ancillaryObject == null)
         {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            console.debug(message);
+            console.debug(prefixedMessage);
         }
         else
         {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            console.debug(message, ancillaryObject);
+            console.debug(prefixedMessage, ancillaryObject);
         }
     }
 
@@ -243,6 +255,19 @@ export class _Debug
         return build[flag] ?? false;
     }
 
+    public static setLoggingTags(this: void, tags: string[]): void
+    {
+        _Debug._enabledTags = new Set(tags);
+    }
+
+    /**
+     * @returns The tags that have been seen so far. Tags will be added as `verboseLog` is called....
+     */
+    public static getTags(): string[]
+    {
+        return _Set.valuesToArray(this._seenTags);
+    }
+
     private static onBreakpoint = () =>
     {
         // eslint-disable-next-line no-debugger
@@ -250,6 +275,8 @@ export class _Debug
     };
 
     private static _label: string | undefined = undefined;
+    private static _enabledTags = new Set<string>();
+    private static _seenTags = new Set<string>();
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

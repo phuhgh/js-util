@@ -11,6 +11,7 @@ import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
 import { DebugSharedObjectLifeCycleChecker, IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
 import { DebugWeakValue } from "../../debug/debug-weak-value.js";
+import { arrayEmptyArray } from "../../array/impl/array-empty-array.js";
 
 /**
  * @public
@@ -73,7 +74,7 @@ class EmscriptenWrapper<T extends object> implements IEmscriptenWrapper<T>
 
         shimWebAssemblyMemory(memory, (buffer, previous, delta) =>
         {
-            _BUILD.DEBUG && _Debug.verboseLog(`WebAssembly memory grew from ${previous} to ${previous + delta} pages.`);
+            _BUILD.DEBUG && _Debug.verboseLog(["WASM", "MEMORY"], `WebAssembly memory grew from ${previous} to ${previous + delta} pages.`);
             this.dataView = new DataView(this.memory.buffer);
             this.memoryResize.emit(buffer, previous, delta);
         });
@@ -87,9 +88,9 @@ class EmscriptenDebug implements IEmscriptenDebug
         _Debug.error(message);
     }
 
-    public verboseLog(message: string): void
+    public verboseLog(message: string, tags: readonly string[] = arrayEmptyArray): void
     {
-        _Debug.verboseLog(message);
+        _Debug.verboseLog(tags, message);
     }
 
     public onAllocate: IDebugWeakBroadcastEvent<"debugOnAllocate", []> = new DebugWeakBroadcastEvent("debugOnAllocate");

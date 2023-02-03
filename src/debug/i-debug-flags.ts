@@ -16,8 +16,4 @@ export interface IDebugFlags
      * Disable debug checks that do not run in constant time.
      */
     DISABLE_EXPENSIVE_CHECKS?: boolean;
-    /**
-     * Enable verbose logging of memory allocations, very chatty.
-     */
-    VERBOSE_MEMORY_MANAGEMENT?: boolean;
 }

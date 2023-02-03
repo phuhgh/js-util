@@ -40,7 +40,6 @@ export class LifecycleStack
         return this.allocationStack.length;
     }
 
-    // todo jack: hack - so the problem is esm vs cjs...
     private readonly allocationStack = (getGlobal()["RC_ALLOCATION_STACK"] ??= []) as IReferenceCounted[][];
 }
 

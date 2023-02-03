@@ -49,13 +49,13 @@ export class DebugSharedObjectChecks
         debug.sharedObjectLifeCycleChecks.registerFinalizationCheck(instance.sharedObject);
         debug.onAllocate.addListener(instance);
 
-        if (!instance.sharedObject.isStatic && _Debug.isFlagSet("VERBOSE_MEMORY_MANAGEMENT"))
+        if (!instance.sharedObject.isStatic)
         {
             // stringifying the stack would be far too verbose, most debuggers allow expansion of objects...
             const allocationStack = { stack: _Debug.getStackTrace() };
             const type = instance.sharedObject.isStatic ? "static" : "instance";
             const message = `claimed (${type}) ${nameOfInstance} ${numberGetHexString(instance.sharedObject.getPtr())} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`;
-            _Debug.verboseLog(message, allocationStack);
+            _Debug.verboseLog(["WASM", "MEMORY"], message, allocationStack);
         }
 
         return protectedView;
@@ -78,12 +78,12 @@ export class DebugSharedObjectChecks
         instance.debugOnAllocate = () => undefined;
         debug.onAllocate.removeListener(instance);
 
-        if (!instance.sharedObject.isStatic && _Debug.isFlagSet("VERBOSE_MEMORY_MANAGEMENT"))
+        if (!instance.sharedObject.isStatic)
         {
             const type = instance.sharedObject.isStatic ? "static" : "instance";
             const address = numberGetHexString(instance.sharedObject.getPtr());
             const label = stringNormalizeNullUndefinedToEmpty(_Debug.label);
-            _Debug.verboseLog(`released (${type}) ${nameOfInstance} ${address} - ${label}`);
+            _Debug.verboseLog(["WASM", "MEMORY"], `released (${type}) ${nameOfInstance} ${address} - ${label}`);
         }
     }
 }

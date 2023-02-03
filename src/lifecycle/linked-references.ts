@@ -12,10 +12,12 @@ export interface ILinkedReferences
      * Link the ref, incrementing their reference counter.
      */
     linkRef(ref: IReferenceCounted): ILinkedReferences;
+
     /**
      * Unlink the ref, decrement their reference counter.
      */
     unlinkRef(ref: IReferenceCounted): ILinkedReferences;
+
     /**
      * Unlink all refs, decrement their reference counters.
      */
