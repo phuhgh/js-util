@@ -15,8 +15,6 @@ if (NOT "JsUtil" IN_LIST RC_JS_BUILD_LIST)
     set(RC_JS_BUILD_LIST "${RC_JS_BUILD_LIST}" "JsUtil" CACHE INTERNAL "")
 endif()
 
-add_subdirectory(external)
-
 set(SOURCE_FILES
         src/SharedArray.cpp
         src/JsUtil.cpp
@@ -41,7 +39,6 @@ if (${BUILD_JSUTIL_TEST})
             LINK_FLAGS "${CommonLinkFlags} -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1"
             COMPILE_FLAGS "${CommonCompileFlags} -fsanitize=address -fsanitize=undefined"
             )
-    target_link_libraries(asan-test-module PUBLIC GSL)
     target_include_directories(asan-test-module PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
 
     add_executable(safe-heap-test-module "${SOURCE_FILES}")
@@ -49,13 +46,11 @@ if (${BUILD_JSUTIL_TEST})
             LINK_FLAGS "${CommonLinkFlags} -s INITIAL_MEMORY=8192kb -s SAFE_HEAP -fsanitize=undefined"
             COMPILE_FLAGS "${CommonCompileFlags} -fsanitize=undefined"
             )
-    target_link_libraries(safe-heap-test-module PUBLIC GSL)
     target_include_directories(safe-heap-test-module PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
 endif ()
 
 # create library
 add_library(JsUtil STATIC "${SOURCE_FILES}")
-target_link_libraries(JsUtil PUBLIC GSL)
 target_include_directories(JsUtil
         PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
