@@ -1,4 +1,4 @@
-#include "Debug.h"
+#include "JsUtil/Debug.h"
 
 EM_JS(void, Debug_onAllocate, (), {
     Module.RC_JS_MEMORY_DEBUG_UTIL.onAllocate.emit();

@@ -1,4 +1,4 @@
-#include "Vec3.h"
+#include "JsUtil/Vec3.h"
 
 template
 struct JsUtil::Vec3<float>;

@@ -1,4 +1,4 @@
-#include "SharedArray.h"
+#include "JsUtil/SharedArray.h"
 
 template<typename T>
 JsUtil::SharedArray<T>::SharedArray(T * _arrayStart, size_t _size)

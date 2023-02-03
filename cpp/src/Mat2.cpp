@@ -1,4 +1,4 @@
-#include "Mat2.h"
+#include "JsUtil/Mat2.h"
 
 template<typename T>
 T JsUtil::Mat2<T>::GetVec2MultiplyX(T x)

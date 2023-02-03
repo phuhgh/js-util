@@ -1,4 +1,4 @@
-#include "Vec2.h"
+#include "JsUtil/Vec2.h"
 
 template<typename T>
 void JsUtil::Vec2<T>::Mat3Multiply(Mat3<T> & _mat, Vec2<T> & o_result)

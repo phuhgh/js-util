@@ -1,4 +1,4 @@
-#include "Mat3.h"
+#include "JsUtil/Mat3.h"
 
 template
 struct JsUtil::Mat3<float>;
