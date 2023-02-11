@@ -1,58 +1,22 @@
-cmake_minimum_required(VERSION 3.17)
-project(JsUtil)
+project(JsUtilImpl)
 
-set(CMAKE_CXX_STANDARD 20)
+# todo jack: good for util
+message(STATUS "compiler ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
 
-if (${BUILD_JSUTIL_TEST})
-    # nuke the caches
-    set(RC_JS_EXPORTED_NAMES "" CACHE INTERNAL "")
-    set(RC_JS_BUILD_LIST "" CACHE INTERNAL "")
-endif ()
+jsu_initializeModule(JsUtil)
 
-if (NOT "JsUtil" IN_LIST RC_JS_BUILD_LIST)
-    file(READ exported-names.txt LOCAL_NAMES)
-    set(RC_JS_EXPORTED_NAMES "${RC_JS_EXPORTED_NAMES}" "${LOCAL_NAMES}" CACHE INTERNAL "")
-    set(RC_JS_BUILD_LIST "${RC_JS_BUILD_LIST}" "JsUtil" CACHE INTERNAL "")
-endif()
-
-set(SOURCE_FILES
-        src/SharedArray.cpp
-        src/JsUtil.cpp
-        src/Debug.cpp
-        src/Mat2.cpp
-        src/Mat3.cpp
-        src/Mat4.cpp
-        src/Vec2.cpp
-        src/Vec3.cpp
-        src/Vec4.cpp
+jsu_create_libray(JsUtil
+        SOURCE_FILES src/*.cpp
+        PUBLIC_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include"
+        COMPILE_OPTIONS $<$<CONFIG:Debug>:-Werror -Wall -Wextra -pedantic>
         )
 
 if (${BUILD_JSUTIL_TEST})
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_MODE")
-    string(SUBSTRING "${RC_JS_EXPORTED_NAMES}" 1 -1 EXPORTED_NAMES)
-    string(REPLACE ";"  "','" EXPORTED_NAMES "${EXPORTED_NAMES}")
-    set(CommonLinkFlags "-O0 -g3 -s EXPORTED_FUNCTIONS=['${EXPORTED_NAMES}'] -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=2 -s NODEJS_CATCH_REJECTION=0 -s NODEJS_CATCH_EXIT=0 -s IMPORTED_MEMORY -s MODULARIZE=1 -s LLD_REPORT_UNDEFINED --no-entry")
-    set(CommonCompileFlags "-O0 -g3")
+    jsu_create_asan_executable(asan-test-module
+            SOURCE_FILES src/*.cpp
+            INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include")
 
-    add_executable(asan-test-module "${SOURCE_FILES}")
-    set_target_properties(asan-test-module PROPERTIES
-            LINK_FLAGS "${CommonLinkFlags} -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1"
-            COMPILE_FLAGS "${CommonCompileFlags} -fsanitize=address -fsanitize=undefined"
-            )
-    target_include_directories(asan-test-module PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
-
-    add_executable(safe-heap-test-module "${SOURCE_FILES}")
-    set_target_properties(safe-heap-test-module PROPERTIES
-            LINK_FLAGS "${CommonLinkFlags} -s INITIAL_MEMORY=8192kb -s SAFE_HEAP -fsanitize=undefined"
-            COMPILE_FLAGS "${CommonCompileFlags} -fsanitize=undefined"
-            )
-    target_include_directories(safe-heap-test-module PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+    jsu_create_safe_heap_executable(safe-heap-test-module
+            SOURCE_FILES src/*.cpp
+            INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include")
 endif ()
-
-# create library
-add_library(JsUtil STATIC "${SOURCE_FILES}")
-target_include_directories(JsUtil
-        PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-        "$<INSTALL_INTERFACE:include>"
-        )

@@ -2,12 +2,8 @@ cmake_minimum_required(VERSION 3.17)
 project(JsUtil)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "CLANG")
-    target_compile_options(JsUtil PRIVATE -Werror -Wall -Wextra -pedantic)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(JsUtil PRIVATE /W4)
-endif ()
-
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(util)
 add_subdirectory(cpp)

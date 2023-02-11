@@ -1,15 +1,17 @@
 #include "JsUtil/SharedArray.h"
 
+namespace JsUtil
+{
 template<typename T>
-JsUtil::SharedArray<T>::SharedArray(T * _arrayStart, size_t _size)
+SharedArray<T>::SharedArray(T * _arrayStart, size_t _size)
         : m_view(_arrayStart, _size)
 {
 }
 
 template<typename T>
-JsUtil::SharedArray<T> * JsUtil::SharedArray<T>::CreateOne(size_t _size, bool clearMemory)
+SharedArray<T> * SharedArray<T>::CreateOne(size_t _size, bool clearMemory)
 {
-    JsUtil::Debug::OnBeforeAllocate();
+    Debug::OnBeforeAllocate();
     T * arrayPtr = clearMemory
                    ? static_cast<T *> (calloc(_size, sizeof(T)))
                    : static_cast<T *> (malloc(_size * sizeof(T)));
@@ -24,24 +26,24 @@ JsUtil::SharedArray<T> * JsUtil::SharedArray<T>::CreateOne(size_t _size, bool cl
 }
 
 template<typename T>
-std::span<T> const & JsUtil::SharedArray<T>::GetArray() const
+std::span<T> const & SharedArray<T>::GetArray() const
 {
     return m_view;
 }
 
 template<typename T>
-JsUtil::SharedArray<T>::~SharedArray()
+SharedArray<T>::~SharedArray()
 {
     free(m_view.data());
 }
 
 // generic impl
 template<typename T>
-T const * sharedArray_getArrayAddress(JsUtil::SharedArray<T> * sharedArray)
+T const * sharedArray_getArrayAddress(SharedArray<T> * sharedArray)
 {
     if (!sharedArray)
     {
-        JsUtil::Debug::Error("expected shared array, got null ptr");
+        Debug::Error("expected shared array, got null ptr");
         return nullptr;
     }
 
@@ -49,8 +51,12 @@ T const * sharedArray_getArrayAddress(JsUtil::SharedArray<T> * sharedArray)
                       .data();
 }
 
-template class JsUtil::SharedArray<float>;
-template class JsUtil::SharedArray<double>;
+template
+class SharedArray<float>;
+
+template
+class SharedArray<double>;
+} // namespace JsUtil
 
 // float 32 impl
 [[maybe_unused]]

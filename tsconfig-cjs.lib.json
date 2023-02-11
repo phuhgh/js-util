@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "bin/cjs",
     "module": "CommonJS",
-    "moduleResolution": "Node"
+    "types": []
   },
   "exclude": [
     "src/**/*.spec.ts",

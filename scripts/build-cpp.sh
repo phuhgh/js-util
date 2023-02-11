@@ -59,7 +59,7 @@ if [ -z "$JS_BINDINGS_FILE" ] || [ -z "$CMAKE_PROJ_DIR" ]; then
   print_instructions
 fi
 
-if [ "$BUILD_MODE" != "debug" ] && [ "$BUILD_MODE" != "release" ]; then
+if [ "$BUILD_MODE" != "Debug" ] && [ "$BUILD_MODE" != "Release" ]; then
   print_instructions
 fi
 
@@ -91,6 +91,7 @@ fi
 mkdir -p build || exit
 cd build || exit
 
+# todo jack: really want to be able to pass verbose from the cli to this
 # these are defined if we're running on windows, we otherwise don't care...
 # shellcheck disable=SC2039
 if [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ]; then

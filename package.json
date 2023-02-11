@@ -4,17 +4,18 @@
   "version": "9.0.9-alpha.18",
   "license": "MIT",
   "scripts": {
+    "clean": "rimraf bin build",
     "test": "jasmine --config=jasmine.json",
     "copy-assets": " cp -r assets/release/* bin/",
-    "build": "npm run build-ts && npm run build-cpp",
-    "build-ts": "tsc -p tsconfig.json --incremental && npm run copy-assets",
-    "build-cpp": "sh scripts/build-cpp.sh --bindings=bin/esm/cpp.module.js --cmake-dir=cpp --module-loader=mjs --build-mode=debug --cmake-flags=\"-DBUILD_JSUTIL_TEST=1\" && sh scripts/copy-test-modules.sh",
-    "lib": "rimraf bin && npm run build-lib-cjs && npm run build-lib-esm && npm run copy-assets",
+    "build": "npm run build-ts && npm run copy-assets && npm run build-cpp",
+    "build-ts": "tsc -p tsconfig.json --incremental",
+    "build-cpp": "sh scripts/build-cpp.sh --bindings=bin/esm/cpp.module.js --cmake-dir=. --module-loader=mjs --build-mode=Debug --cmake-flags=\"-DBUILD_JSUTIL_TEST=1\" && sh scripts/copy-test-modules.sh",
+    "lib": "npm run clean && npm run build-lib-cjs && npm run build-lib-esm && npm run copy-assets",
     "build-lib-cjs": "tsc -d -p tsconfig-cjs.lib.json",
     "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "eslint -c .eslintrc.cjs src/",
-    "ci-build": "rimraf bin build && npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
+    "build:ci": "npm run clean && npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
     "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },
   "dependencies": {
@@ -22,17 +23,17 @@
     "rc-js-util-globals": "^7.0.1"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "~7.19.9",
-    "@microsoft/api-extractor": "~7.20.1",
-    "@types/jasmine": "^4.3.0",
-    "jasmine": "^4.3.0",
-    "jasmine-core": "^4.3.0",
-    "rc-lint-rules": "^8.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.35.1",
-    "@typescript-eslint/parser": "^5.35.1",
-    "eslint": "~8.22.0",
-    "typescript": "~4.8.2",
-    "rimraf": "^3.0.2"
+    "@microsoft/api-documenter": "~7.21.5",
+    "@microsoft/api-extractor": "~7.34.4",
+    "@types/jasmine": "^4.3.1",
+    "jasmine": "^4.5.0",
+    "jasmine-core": "^4.5.0",
+    "rc-lint-rules": "^8.1.0",
+    "@typescript-eslint/eslint-plugin": "~5.51.0",
+    "@typescript-eslint/parser": "~5.51.0",
+    "eslint": "~8.34.0",
+    "typescript": "~4.9.5",
+    "rimraf": "^4.1.2"
   },
   "bin": {
     "rc-build-cpp": "scripts/build-cpp.sh"

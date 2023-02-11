@@ -32,7 +32,7 @@ jobs:
         shell: bash
         run: |
           npm ci
-          npm run ci-build
+          npm run build:ci
 
       - name: Publish to the npm registry
         uses: "primer/publish@3.0.0"

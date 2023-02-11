@@ -28,4 +28,4 @@ jobs:
       - name: Install and Build
         run: |
           npm ci
-          npm run ci-build
+          npm run build:ci

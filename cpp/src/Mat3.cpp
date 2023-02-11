@@ -1,8 +1,11 @@
 #include "JsUtil/Mat3.h"
 
+namespace JsUtil
+{
 template
-struct JsUtil::Mat3<float>;
-static_assert(std::is_pod<JsUtil::Mat3<float>>::value, "POD-ness broken...");
+struct Mat3<float>;
+static_assert(std::is_pod<Mat3<float>>::value, "POD-ness broken...");
 
 template
-struct JsUtil::Mat3<double>;
+struct Mat3<double>;
+} // namespace JsUtil

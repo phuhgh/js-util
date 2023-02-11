@@ -200,7 +200,7 @@ export { setSymmetricDifference } from "./set/impl/set-symmetric-difference.js";
 export { setValuesToArray } from "./set/impl/set-values-to-array.js";
 export { stringNormalizeEmptyToUndefined } from "./string/impl/string-normalize-empty-to-undefined.js";
 export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normalize-null-undefined-to-empty.js";
-export { ISharedObject } from "./lifecycle/i-shared-object.js";
+export { ISharedObject, ISharedObjectOwner } from "./lifecycle/i-shared-object.js";
 export { IRefCountedObject } from "./lifecycle/i-ref-counted-object.js";
 export { IOnFree } from "./lifecycle/i-on-free.js";
 export { ReferenceCountedOwner } from "./lifecycle/reference-counted-owner.js";

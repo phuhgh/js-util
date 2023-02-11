@@ -12,23 +12,25 @@ EM_JS(void, Debug_log, (char const *_message), {
     Module.RC_JS_MEMORY_DEBUG_UTIL.verboseLog(UTF8ToString(_message));
 });
 
-void JsUtil::Debug::OnBeforeAllocate()
+namespace JsUtil
 {
-#ifdef DEBUG_MODE
+void Debug::OnBeforeAllocate()
+{
+#ifndef NDEBUG
     Debug_onAllocate();
 #endif
 }
 
-void JsUtil::Debug::Error(char const * _message)
+void Debug::Error(char const * _message)
 {
-#ifdef DEBUG_MODE
+#ifndef NDEBUG
     Debug_error(_message);
 #endif
 }
 
-void JsUtil::Debug::Assert(bool condition, char const * _message)
+void Debug::Assert(bool condition, char const * _message)
 {
-#ifdef DEBUG_MODE
+#ifndef NDEBUG
     if (!condition)
     {
         Debug_error(_message);
@@ -36,16 +38,17 @@ void JsUtil::Debug::Assert(bool condition, char const * _message)
 #endif
 }
 
-void JsUtil::Debug::VerboseLog(const char * _message)
+void Debug::VerboseLog(const char * _message)
 {
-#ifdef DEBUG_MODE
+#ifndef NDEBUG
     Debug_log(_message);
 #endif
 }
 
-void JsUtil::Debug::RunBlock(T_RunBlock * _callback)
+void Debug::RunBlock(T_RunBlock * _callback)
 {
-#ifdef DEBUG_MODE
+#ifndef NDEBUG
     (*_callback)();
 #endif
 }
+} // namespace JsUtil

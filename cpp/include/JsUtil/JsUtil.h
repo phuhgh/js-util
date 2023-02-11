@@ -11,7 +11,7 @@ extern "C"
 EMSCRIPTEN_KEEPALIVE
 void jsUtilEndProgram(int _statusCode)
 {
-#ifdef DEBUG_MODE
+#ifndef NDEBUG
     JsUtil::Debug::VerboseLog("exiting program...");
     std::exit(_statusCode);
 #endif
