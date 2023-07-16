@@ -12,8 +12,6 @@ if (NOT TARGET JsUtil)
         set(pedantic_flags "")
     endif ()
 
-    message(STATUS "todo jack: ${CMAKE_CURRENT_LIST_DIR}")
-
     jsu_create_libray(JsUtil
             SOURCE_FILES src/*.cpp
             PUBLIC_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include"
