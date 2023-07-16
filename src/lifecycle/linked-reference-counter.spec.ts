@@ -1,7 +1,13 @@
 import { ReferenceCountedOwner } from "./reference-counted-owner.js";
+import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 
 describe("=> LinkedReferenceCounter", () =>
 {
+    beforeEach(() =>
+    {
+        Test_setDefaultFlags();
+    });
+
     describe("linkRef", () =>
     {
         it("| errors if a cycle is detected", () =>
