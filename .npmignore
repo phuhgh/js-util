@@ -1,9 +1,10 @@
 *
 !bin/**/*
-!cmake/util.cmake
 !cpp/include/**/*
 !cpp/src/**/*
-!cpp/CMakeLists.txt
+!cpp/dummy.cpp
+!cpp/FindJsUtil.cmake
+!cpp/JsUtilFunctions.cmake
 !README.md
 !components.spdx
 !docs/**/*

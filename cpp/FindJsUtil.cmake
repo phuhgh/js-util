@@ -7,7 +7,6 @@ if (NOT TARGET JsUtil)
 
     if (${BUILD_JSUTIL_TEST})
         set(pedantic_flags "-Werror -Wall -Wextra -pedantic")
-        set(pedantic_flags "")
     else ()
         set(pedantic_flags "")
     endif ()
