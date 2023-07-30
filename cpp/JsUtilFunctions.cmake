@@ -225,3 +225,23 @@ function(jsu_create_safe_heap_executable targetName)
             LINK_OPTIONS "${CommonTestLinkFlags}"
             )
 endfunction()
+
+function(jsu_find_node_module PACKAGE_NAME PACKAGE_DIR ROOT_DIR RESULT_LIST)
+    set(SEARCH_DIRS)
+    get_filename_component(PACKAGE_DIR_REALPATH ${PACKAGE_DIR} REALPATH)
+    get_filename_component(ROOT_DIR_REALPATH ${ROOT_DIR} REALPATH)
+
+    while (NOT "${PACKAGE_DIR_REALPATH}" STREQUAL "${ROOT_DIR_REALPATH}")
+        list(APPEND SEARCH_DIRS "${PACKAGE_DIR_REALPATH}/node_modules/${PACKAGE_NAME}")
+        get_filename_component(PACKAGE_DIR_REALPATH ${PACKAGE_DIR_REALPATH}/.. REALPATH)
+    endwhile ()
+
+    # hacky way of avoid double slash for the last one
+    if (NOT ROOT_DIR_REALPATH MATCHES "/$")
+        string(APPEND ROOT_DIR_REALPATH "/")
+    endif ()
+    list(APPEND SEARCH_DIRS "${ROOT_DIR_REALPATH}node_modules/${PACKAGE_NAME}")
+
+    set(${RESULT_LIST} ${SEARCH_DIRS} PARENT_SCOPE)
+endfunction()
+
