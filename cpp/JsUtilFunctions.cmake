@@ -198,8 +198,8 @@ function(jsu_create_asan_executable targetName)
             SOURCE_FILES "${ARG_SOURCE_FILES}"
             INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
-            COMPILE_OPTIONS "-O0 -fsanitize=address -fsanitize=undefined"
-            LINK_OPTIONS "${CommonTestLinkFlags}"
+            COMPILE_OPTIONS "-O0 -fsanitize=address -fsanitize=undefined ${ARG_COMPILE_OPTIONS}"
+            LINK_OPTIONS "${CommonTestLinkFlags} ${ARG_LINK_OPTIONS}"
             )
 endfunction()
 
@@ -221,8 +221,8 @@ function(jsu_create_safe_heap_executable targetName)
             SOURCE_FILES "${ARG_SOURCE_FILES}"
             INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
-            COMPILE_OPTIONS "-O0 -g3"
-            LINK_OPTIONS "${CommonTestLinkFlags}"
+            COMPILE_OPTIONS "-O0 -g3 ${ARG_COMPILE_OPTIONS}"
+            LINK_OPTIONS "${CommonTestLinkFlags} ${ARG_LINK_OPTIONS}"
             )
 endfunction()
 

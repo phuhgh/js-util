@@ -28,6 +28,7 @@ exported-names.txt
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.idea/**/*.iml
 
 # Gradle
 .idea/**/gradle.xml
