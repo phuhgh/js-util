@@ -1,3 +1,16 @@
+function(get_common_path_prefix paths result)
+    set(prefix_list "${paths}")
+    list(GET prefix_list 0 _prefix)
+
+    foreach (path IN LISTS prefix_list)
+        while (NOT "${path}" MATCHES "^${_prefix}")
+            get_filename_component(_prefix "${_prefix}" DIRECTORY)
+        endwhile ()
+    endforeach ()
+
+    set(${result} ${_prefix} PARENT_SCOPE)
+endfunction()
+
 macro(jsu_log_message_wrap message)
     string(PREPEND message "\n==========================================================\n")
     string(APPEND message "\n==========================================================\n")
@@ -88,7 +101,11 @@ function(jsu_create_libray targetName)
 
     # it's only possible to statically link
     add_library("${targetName}" STATIC "${_resolvedSourceFiles}")
-    set(_message "")
+    get_common_path_prefix("${_resolvedSourceFiles}" commonPrefix)
+    string(REPLACE "${commonPrefix}/" "" _resolvedSourceFiles "${_resolvedSourceFiles}")
+
+    string(REPLACE ";" " " _resolvedSourceFiles "${_resolvedSourceFiles}")
+    list(APPEND _message "SOURCE_FILES: ${_resolvedSourceFiles}")
 
     if (ARG_PRIVATE_LINK_LIBRARIES)
         list(REMOVE_DUPLICATES ARG_PRIVATE_LINK_LIBRARIES)
@@ -116,10 +133,14 @@ function(jsu_create_libray targetName)
 
     if (ARG_PUBLIC_INCLUDE_DIRS)
         target_include_directories("${targetName}" PUBLIC "${ARG_PUBLIC_INCLUDE_DIRS}")
+        string(REPLACE ";" " " ARG_PUBLIC_INCLUDE_DIRS "${ARG_PUBLIC_INCLUDE_DIRS}")
+        list(APPEND _message "PUBLIC_INCLUDE_DIRS: ${ARG_PUBLIC_INCLUDE_DIRS}")
     endif ()
 
     if (ARG_PRIVATE_INCLUDE_DIRS)
         target_include_directories("${targetName}" PRIVATE "${ARG_PRIVATE_INCLUDE_DIRS}")
+        string(REPLACE ";" " " ARG_PRIVATE_INCLUDE_DIRS "${ARG_PRIVATE_INCLUDE_DIRS}")
+        list(APPEND _message "PRIVATE_INCLUDE_DIRS: ${ARG_PRIVATE_INCLUDE_DIRS}")
     endif ()
 
     if (ARG_COMPILE_OPTIONS)
