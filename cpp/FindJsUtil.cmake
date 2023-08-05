@@ -15,8 +15,8 @@ if (NOT TARGET JsUtil)
             SOURCE_FILES src/*.cpp
             PUBLIC_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include"
             COMPILE_OPTIONS "${pedantic_flags}"
+            PRIVATE_COMPILE_FEATURES "cxx_std_20"
     )
-    target_compile_features(JsUtil PRIVATE cxx_std_20)
 endif ()
 
 include(FindPackageHandleStandardArgs)

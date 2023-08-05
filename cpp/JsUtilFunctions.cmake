@@ -72,7 +72,8 @@ function(jsu_create_libray targetName)
             SOURCE_FILES
             COMPILE_OPTIONS
             PUBLIC_INCLUDE_DIRS PRIVATE_INCLUDE_DIRS
-            PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES INTERFACE_LINK_LIBRARIES)
+            PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES INTERFACE_LINK_LIBRARIES
+            PUBLIC_COMPILE_FEATURES PRIVATE_COMPILE_FEATURES)
     cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
     unset(_multiParamArgs)
 
@@ -128,6 +129,24 @@ function(jsu_create_libray targetName)
 
         string(REPLACE ";" " " _compileOptions "${_compileOptions}")
         list(APPEND _message "COMPILE_OPTIONS: ${_compileOptions}")
+    endif ()
+
+    if (ARG_PUBLIC_COMPILE_FEATURES)
+        set(_publicCompileFeatures ${ARG_PUBLIC_COMPILE_FEATURES})
+        separate_arguments(_publicCompileFeatures)
+        target_compile_features("${targetName}" PRIVATE "${_publicCompileFeatures}")
+
+        string(REPLACE ";" " " _publicCompileFeatures "${_publicCompileFeatures}")
+        list(APPEND _message "PUBLIC_COMPILE_FEATURES: ${_publicCompileFeatures}")
+    endif ()
+
+    if (ARG_PRIVATE_COMPILE_FEATURES)
+        set(_privateCompileFeatures ${ARG_PRIVATE_COMPILE_FEATURES})
+        separate_arguments(_privateCompileFeatures)
+        target_compile_features("${targetName}" PRIVATE "${_privateCompileFeatures}")
+
+        string(REPLACE ";" " " _privateCompileFeatures "${_privateCompileFeatures}")
+        list(APPEND _message "PRIVATE_COMPILE_FEATURES: ${_privateCompileFeatures}")
     endif ()
 
     string(REPLACE ";" "\n" _message "${_message}")
@@ -200,7 +219,7 @@ function(jsu_create_asan_executable targetName)
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
             COMPILE_OPTIONS "-O0 -fsanitize=address -fsanitize=undefined ${ARG_COMPILE_OPTIONS}"
             LINK_OPTIONS "${CommonTestLinkFlags} ${ARG_LINK_OPTIONS}"
-            )
+    )
 endfunction()
 
 function(jsu_create_safe_heap_executable targetName)
@@ -223,7 +242,7 @@ function(jsu_create_safe_heap_executable targetName)
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
             COMPILE_OPTIONS "-O0 -g3 ${ARG_COMPILE_OPTIONS}"
             LINK_OPTIONS "${CommonTestLinkFlags} ${ARG_LINK_OPTIONS}"
-            )
+    )
 endfunction()
 
 function(jsu_find_node_module PACKAGE_NAME PACKAGE_DIR ROOT_DIR RESULT_LIST)
