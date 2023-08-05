@@ -3,7 +3,7 @@
 set -e
 
 # rename for module loader
-mv build/cpp/asan-test-module.js build/cpp/asan-test-module.cjs || exit
-mv build/cpp/safe-heap-test-module.js build/cpp/safe-heap-test-module.cjs || exit
+mv cpp/build/asan-test-module.js cpp/build/asan-test-module.cjs || exit
+mv cpp/build/safe-heap-test-module.js cpp/build/safe-heap-test-module.cjs || exit
 # copy into typescript output
-cp build/cpp/*-test-module* bin/esm/external/ || exit
+cp cpp/build/*-test-module* bin/esm/external/ || exit

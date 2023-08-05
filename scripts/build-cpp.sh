@@ -91,7 +91,6 @@ fi
 mkdir -p build || exit
 cd build || exit
 
-# todo jack: really want to be able to pass verbose from the cli to this
 # these are defined if we're running on windows, we otherwise don't care...
 # shellcheck disable=SC2039
 if [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ]; then
