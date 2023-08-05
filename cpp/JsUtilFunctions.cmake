@@ -21,7 +21,7 @@ endfunction()
 
 function(jsu_initializeModule moduleName)
     if (NOT "${moduleName}" IN_LIST RC_JS_TARGET_LIST)
-        file(READ "${CMAKE_SOURCE_DIR}/exported-names.txt" LOCAL_NAMES)
+        file(READ "${CMAKE_CURRENT_LIST_DIR}/exported-names.txt" LOCAL_NAMES)
         set(RC_JS_EXPORTED_NAMES "${RC_JS_EXPORTED_NAMES}" "${LOCAL_NAMES}" CACHE INTERNAL "")
         set(RC_JS_TARGET_LIST "${RC_JS_TARGET_LIST}" "${moduleName}" CACHE INTERNAL "")
     endif ()
