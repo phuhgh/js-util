@@ -41,7 +41,7 @@ describe("=> NestableError", () =>
         {
             const error = new Error("test");
             const normalized = NestedError.normalizeError(error);
-            expect(normalized.message).toBe("An unknown error occurred.");
+            expect(normalized.getMessage()).toBe("An unknown error occurred.");
             expect(normalized.causedBy).toBe(error);
         });
     });
@@ -51,14 +51,14 @@ describe("=> NestableError", () =>
         it("| returns the inner-most exception", () =>
         {
             const nested = new NestedError("outer", new NestedError("inner", null));
-            expect(NestedError.getRootCause(nested).message).toBe("inner");
+            expect(NestedError.getRootCause(nested).getMessage()).toBe("inner");
         });
 
         it("| returns the default error if the error is not related", () =>
         {
             const error = new Error("test");
             const normalized = NestedError.getRootCause(error);
-            expect(normalized.message).toBe("An unknown error occurred.");
+            expect(normalized.getMessage()).toBe("An unknown error occurred.");
             expect(normalized.causedBy).toBe(error);
         });
     });

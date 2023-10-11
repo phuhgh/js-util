@@ -7,7 +7,7 @@ import { _Debug } from "../debug/_debug.js";
 export interface INestedError<TLocalization>
 {
     readonly stack: string;
-    readonly message: TLocalization;
+    getMessage(): TLocalization;
     readonly causedBy: unknown;
 }
 
@@ -86,11 +86,16 @@ export function getNestedErrorCtor<TLocalization>
 
         public constructor
         (
-            public readonly message: TLocalization,
+            protected readonly message: TLocalization,
             public readonly causedBy: unknown,
         )
         {
             this.stack = _Debug.getStackTrace();
+        }
+
+        public getMessage(): TLocalization
+        {
+            return this.message;
         }
 
         public toString(): string
