@@ -42,7 +42,8 @@ export interface INestedErrorCtorConfig<ILocalization>
 
 /**
  * @public
- * Factory for creating a localized `NestedError` class, see {@link INestedError}.
+ * Factory for creating a localized `NestedError` class, see {@link INestedError}. This should be used
+ * to create a base class, from which you can create extensions to represent specific error cases.
  */
 export function getNestedErrorCtor<TLocalization>
 (

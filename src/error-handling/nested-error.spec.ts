@@ -1,5 +1,6 @@
 import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 import { NestedError } from "./nested-error.js";
+import { getNestedErrorCtor } from "./nested-error-factory.js";
 
 describe("=> NestableError", () =>
 {
@@ -14,6 +15,17 @@ describe("=> NestableError", () =>
         {
             expect(NestedError.isError(1)).toBe(false);
             expect(NestedError.isError(new NestedError("test", null))).toBe(true);
+        });
+
+        it("| returns false for different error bases", () =>
+        {
+            const TestNestedError = getNestedErrorCtor({
+                defaultError: 1,
+                getTxFallback: (e) => e.toString(),
+            });
+
+            const e2 = new NestedError("", null);
+            expect(TestNestedError.isError(e2)).toBe(false);
         });
     });
 
