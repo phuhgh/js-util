@@ -46,14 +46,17 @@ export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = 
 
 /**
  * @public
+ * A wrapper for running emscripten modules built with ASAN. To see the full report, you must call `endEmscriptenProgram`.
+ * @typeParam TEmscriptenBindings - The generated WASM bindings.
+ * @typeParam TWrapperExtensions - Extensions to the test wrapper itself, i.e. overwrite the module with test specific logic.
  */
-export class SanitizedEmscriptenTestModule<T extends object, U extends object>
+export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, TWrapperExtensions extends object>
 {
     public constructor
     (
-        private readonly testModule: Emscripten.EmscriptenModuleFactory<T>,
+        private readonly testModule: Emscripten.EmscriptenModuleFactory<TEmscriptenBindings>,
         private readonly options: ISanitizedTestModuleOptions,
-        private readonly extension?: U,
+        private readonly extension?: TWrapperExtensions,
     )
     {
     }
@@ -83,10 +86,10 @@ export class SanitizedEmscriptenTestModule<T extends object, U extends object>
                 throw this.options.quitThrowsWith;
             },
             ...this.extension,
-        } as T) as IEmscriptenWrapper<T & U & IDebugBindings>;
+        } as TEmscriptenBindings) as IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings>;
     }
 
-    public get wrapper(): IEmscriptenWrapper<T & U & IDebugBindings>
+    public get wrapper(): IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings>
     {
         if (this._wrapper == null)
         {
@@ -129,5 +132,5 @@ export class SanitizedEmscriptenTestModule<T extends object, U extends object>
         }
     }
 
-    private _wrapper: IEmscriptenWrapper<T & U & IDebugBindings> | undefined;
+    private _wrapper: IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings> | undefined;
 }

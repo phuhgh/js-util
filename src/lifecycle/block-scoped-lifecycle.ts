@@ -17,7 +17,8 @@ export function blockScopedLifecycle<TRet>
     const refs = lifecycleStack.push();
     let ret: TRet | undefined;
 
-    if (_BUILD.WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH === true)
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (_BUILD.WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH)
     {
         ret = callback();
         releaseRefs(refs);
