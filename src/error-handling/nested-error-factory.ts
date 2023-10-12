@@ -16,7 +16,7 @@ export interface INestedError<TLocalization>
      * Create a localized error message that describes what went wrong, and includes some minimal
      * technical detail that's likely to describe the root cause.
      */
-    composeErrorMessages(): IErrorMessage<TLocalization>;
+    composeErrorMessages(): IErrorSummary<TLocalization>;
 
     /**
      * Attempt to serialize `causedBy`, where this is not possible, undefined is returned.
@@ -42,7 +42,11 @@ export interface INestedErrorCtor<TLocalization, TInstance extends INestedError<
     normalizeError(error: unknown): TInstance;
 }
 
-export interface IErrorMessage<TLocalization>
+/**
+ * @public
+ * A flattened {@link INestedError}, ready to be localized and shown to the user.
+ */
+export interface IErrorSummary<TLocalization>
 {
     /**
      * A user-friendly description of what went wrong. The stringified localization can be joined to form a sentence.
@@ -130,7 +134,7 @@ export function getNestedErrorCtor<TLocalization>
             return this.message;
         }
 
-        public composeErrorMessages(): IErrorMessage<TLocalization>
+        public composeErrorMessages(): IErrorSummary<TLocalization>
         {
             const messages: TLocalization[] = [this.message];
             // we're only ever interested in the innermost exception for stack traces etc.

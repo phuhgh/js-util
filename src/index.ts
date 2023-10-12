@@ -10,7 +10,7 @@ export { _Array } from "./array/_array.js";
 export { _Debug } from "./debug/_debug.js";
 export { _Dictionary } from "./dictionary/_dictionary.js";
 export { _Equality } from "./equality/_equality.js";
-export { INestedError, INestedErrorCtor, INestedErrorCtorConfig, getNestedErrorCtor, IErrorMessage } from "./error-handling/nested-error-factory.js";
+export { INestedError, INestedErrorCtor, INestedErrorCtorConfig, getNestedErrorCtor, IErrorSummary } from "./error-handling/nested-error-factory.js";
 export { NestedError } from "./error-handling/nested-error.js";
 export { _Production } from "./production/_production.js";
 export { _Promise } from "./promise/_promise.js";
