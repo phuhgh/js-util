@@ -9,7 +9,7 @@ export interface INestedError<TLocalization>
     readonly stack: string;
     readonly causedBy: unknown;
     /**
-     * @return The localized error message for the user.
+     * @returns The localized error message for the user.
      */
     getMessage(): TLocalization;
     /**
