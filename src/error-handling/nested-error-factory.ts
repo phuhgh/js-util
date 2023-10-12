@@ -136,7 +136,7 @@ export function getNestedErrorCtor<TLocalization>
 
         public composeErrorMessages(): IErrorSummary<TLocalization>
         {
-            const messages: TLocalization[] = [this.message];
+            const messages: TLocalization[] = [this.getMessage()];
             // we're only ever interested in the innermost exception for stack traces etc.
             let exceptionDetail: string = this.stack;
             // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -234,14 +234,14 @@ export function getNestedErrorCtor<TLocalization>
             if (cause == null)
             {
                 return [
-                    NestedError.ctorConfig.getTxFallback(this.message),
+                    NestedError.ctorConfig.getTxFallback(this.getMessage()),
                     this.stack,
                 ].join("\n");
             }
             else
             {
                 return [
-                    NestedError.ctorConfig.getTxFallback(this.message),
+                    NestedError.ctorConfig.getTxFallback(this.getMessage()),
                     this.stack + "\n",
                     `=======================CAUSE FOLLOWS=======================`,
                     cause
