@@ -4,6 +4,10 @@
     <HTMLCodeStyleSettings>
       <option name="HTML_ATTRIBUTE_WRAP" value="0" />
     </HTMLCodeStyleSettings>
+    <JSCodeStyleSettings version="0">
+      <option name="FORCE_SEMICOLON_STYLE" value="true" />
+      <option name="FORCE_QUOTE_STYlE" value="true" />
+    </JSCodeStyleSettings>
     <Objective-C>
       <option name="INDENT_NAMESPACE_MEMBERS" value="0" />
       <option name="KEEP_STRUCTURES_IN_ONE_LINE" value="true" />
@@ -18,11 +22,13 @@
       <option name="SPACE_AFTER_REFERENCE_IN_DECLARATION" value="true" />
     </Objective-C>
     <TypeScriptCodeStyleSettings version="0">
+      <option name="FORCE_SEMICOLON_STYLE" value="true" />
       <option name="FIELD_PREFIX" value="" />
       <option name="FILE_NAME_STYLE" value="LISP_CASE" />
       <option name="REFORMAT_C_STYLE_COMMENTS" value="true" />
       <option name="USE_PUBLIC_MODIFIER" value="true" />
       <option name="PREFER_AS_TYPE_CAST" value="true" />
+      <option name="FORCE_QUOTE_STYlE" value="true" />
       <option name="USE_EXPLICIT_JS_EXTENSION" value="TRUE" />
       <option name="OBJECT_LITERAL_WRAP" value="0" />
       <option name="IMPORTS_WRAP" value="0" />

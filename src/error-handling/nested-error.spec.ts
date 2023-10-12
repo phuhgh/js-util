@@ -62,4 +62,24 @@ describe("=> NestableError", () =>
             expect(normalized.causedBy).toBe(error);
         });
     });
+
+    describe("=> toString", () =>
+    {
+        it("| flattens errors", () =>
+        {
+            const err = new NestedError("outer", new NestedError("inner", "detail"));
+            const message = err.toString();
+            // check that the key parts of the message are in the order that we expect
+            expect(message).toMatch(/outer.*CAUSE FOLLOWS.*inner.*CAUSE FOLLOWS.*detail/s);
+        });
+    });
+
+    describe("=> composeErrorMessages", () => {
+        it("| flattens the localized messages, and includes the innermost exception detail", () => {
+            const err = new NestedError("outer", new NestedError("inner", "detail"));
+            const localizedError = err.composeErrorMessages();
+            expect(localizedError.detail).toEqual("detail");
+            expect(localizedError.messages).toEqual(["outer", "inner"]);
+        });
+    });
 });
