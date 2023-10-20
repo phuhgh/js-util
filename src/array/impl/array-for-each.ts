@@ -2,7 +2,7 @@
  * @public
  * Like `Array.forEach`.
  * @remarks
- * Has more consistent performance characteristics cross platform than the built in `Array.forEach`.
+ * Has more consistent performance characteristics cross-platform than the built-in `Array.forEach`.
  *
  * See {@link arrayForEach}.
  */

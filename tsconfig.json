@@ -1,6 +1,7 @@
 ﻿{
   "compilerOptions": {
     "outDir": "bin/esm",
+    "stripInternal": true,
     "moduleResolution": "Node",
     "module": "ES2020",
     "importHelpers": true,
