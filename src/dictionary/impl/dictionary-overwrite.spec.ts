@@ -1,8 +1,8 @@
 import { itShouldNotRunDebugWhenDebugIsFalse } from "../../test-util/test-utils.js";
-import { dictionaryExtend } from "./dictionary-extend.js";
+import { dictionaryOverwrite } from "./dictionary-overwrite.js";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
-describe("=> dictionaryExtend", () =>
+describe("=> dictionaryOverwrite", () =>
 {
     beforeEach(() =>
     {
@@ -11,24 +11,31 @@ describe("=> dictionaryExtend", () =>
 
     itShouldNotRunDebugWhenDebugIsFalse(() =>
     {
-        dictionaryExtend({}, {});
+        dictionaryOverwrite({}, {});
     });
 
     it("| errors if object is array", () =>
     {
-        expect(() => dictionaryExtend([], {})).toThrow();
+        expect(() => dictionaryOverwrite([], {})).toThrow();
     });
 
     it("| errors if extension is array", () =>
     {
-        expect(() => dictionaryExtend({}, [])).toThrow();
+        // @ts-expect-error - not permissible
+        expect(() => dictionaryOverwrite({}, [])).toThrow();
     });
 
     it("| extends the object, overwriting with the extension where common", () =>
     {
-        const obj = { foo: true };
+        interface ITest
+        {
+            foo: boolean;
+            moo: boolean;
+        }
+
+        const obj: ITest = { foo: true, moo: true };
         const ext = { foo: false, moo: false };
-        dictionaryExtend(obj, ext);
+        dictionaryOverwrite(obj, ext);
 
         const expectation = {
             foo: false,

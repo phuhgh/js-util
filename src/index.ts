@@ -69,6 +69,7 @@ export { IReadonlyDictionary } from "./typescript/i-readonly-dictionary.js";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary.js";
 export { IReadonlySetLike } from "./typescript/i-readonly-set-like.js";
 export { ISetLike } from "./typescript/i-set-like.js";
+export { TDictionaryValue } from "./typescript/t-dictionary-value.js";
 export { TExtractTypeTypedArrayTuple } from "./typescript/t-extract-type-typed-array-tuple.js";
 export { TKeysOf } from "./typescript/t-keys-of.js";
 export { TNeverFallback } from "./typescript/t-never-fallback.js";
@@ -140,7 +141,7 @@ export { arraySymmetricDifference } from "./array/impl/array-symmetric-differenc
 export { arrayUnion } from "./array/impl/array-union.js";
 export { arrayUnique } from "./array/impl/array-unique.js";
 export { dictionaryCloneExtend } from "./dictionary/impl/dictionary-clone-extend.js";
-export { dictionaryExtend } from "./dictionary/impl/dictionary-extend.js";
+export { dictionaryOverwrite } from "./dictionary/impl/dictionary-overwrite.js";
 export { dictionaryForEach } from "./dictionary/impl/dictionary-foreach.js";
 export { dictionaryPairs } from "./dictionary/impl/dictionary-pairs.js";
 export { dictionaryPush } from "./dictionary/impl/dictionary-push.js";

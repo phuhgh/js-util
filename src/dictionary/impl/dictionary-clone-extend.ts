@@ -1,4 +1,4 @@
-import { dictionaryExtend } from "./dictionary-extend.js";
+import { dictionaryOverwrite } from "./dictionary-overwrite.js";
 
 /**
  * @public
@@ -17,8 +17,8 @@ export function dictionaryCloneExtend<T extends object, U extends object>
     : T & U
 {
     const extended = {} as T & U;
-    dictionaryExtend(extended, base);
-    dictionaryExtend(extended, extension);
+    dictionaryOverwrite(extended, base);
+    dictionaryOverwrite(extended, extension);
 
     return extended;
 }

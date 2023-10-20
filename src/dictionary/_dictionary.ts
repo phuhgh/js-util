@@ -1,5 +1,5 @@
 import { dictionaryValues } from "./impl/dictionary-values.js";
-import { dictionaryExtend } from "./impl/dictionary-extend.js";
+import { dictionaryOverwrite } from "./impl/dictionary-overwrite.js";
 import { dictionaryCloneExtend } from "./impl/dictionary-clone-extend.js";
 import { dictionaryForEach } from "./impl/dictionary-foreach.js";
 import { dictionaryPairs } from "./impl/dictionary-pairs.js";
@@ -14,8 +14,8 @@ export class _Dictionary
     /** {@inheritDoc dictionaryCloneExtend} */
     public static readonly cloneExtend = dictionaryCloneExtend;
 
-    /** {@inheritDoc dictionaryExtend} */
-    public static readonly extend = dictionaryExtend;
+    /** {@inheritDoc dictionaryOverwrite} */
+    public static readonly overwrite = dictionaryOverwrite;
 
     /** {@inheritDoc dictionaryForEach} */
     public static readonly forEach = dictionaryForEach;
