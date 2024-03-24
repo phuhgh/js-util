@@ -45,8 +45,7 @@ export abstract class AReferenceCounted implements IReferenceCounted
     }
 
     /**
-     * Release claim on the object, objects start with a reference count of 1 (the creator); if you didn't create the
-     * object, you shouldn't release it if you didn't call `claim` first.
+     * You should only call `release` if you called `claim` first, except for the object creator, who automatically stakes a claim.
      */
     public release(): void
     {
