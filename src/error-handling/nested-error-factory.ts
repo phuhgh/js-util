@@ -169,7 +169,7 @@ export function getNestedErrorCtor<TLocalization>
 
         public causeToString(): string | undefined
         {
-            if (typeof this.causedBy == null)
+            if (this.causedBy == null)
             {
                 return undefined;
             }
@@ -261,6 +261,7 @@ function guardedToString(object: object): string | undefined
     {
         return undefined;
     }
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     const result = object.toString() as unknown;
     return typeof result === "string" ? result : undefined;
 }
