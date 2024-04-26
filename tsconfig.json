@@ -1,5 +1,7 @@
 ﻿{
   "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
     "outDir": "bin/esm",
     "stripInternal": true,
     "moduleResolution": "Node",

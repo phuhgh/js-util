@@ -4,7 +4,7 @@
   "mainEntryPointFilePath": "<projectFolder>/bin/cjs/index.d.ts",
   "bundledPackages": ["rc-js-util-globals"],
   "compiler": {
-    "tsconfigFilePath": "<projectFolder>/tsconfig.json"
+    "tsconfigFilePath": "<projectFolder>/tsconfig-cjs.lib.json"
   },
   "apiReport": {
     "enabled": false,

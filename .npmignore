@@ -1,7 +1,8 @@
 *
 !bin/**/*
+!bin/**/*
 !cpp/include/**/*
-!cpp/src/**/*
+!src/**/*
 !cpp/dummy.cpp
 !cpp/FindJsUtil.cmake
 !cpp/JsUtilFunctions.cmake

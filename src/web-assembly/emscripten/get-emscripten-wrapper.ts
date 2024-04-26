@@ -1,8 +1,7 @@
 import { shimWebAssemblyMemory } from "../util/shim-web-assembly-memory.js";
 import { IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
 import { BroadcastEvent } from "../../eventing/broadcast-event.js";
-import { IWebAssemblyMemoryMemory } from "../../external/i-web-assembly-memory.js";
-import { Emscripten } from "../../external/emscripten.js";
+import { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
 import { _Debug } from "../../debug/_debug.js";
 import { TWebAssemblyMemoryListenerArgs } from "../util/t-web-assembly-memory-listener-args.js";
 import { DebugWeakBroadcastEvent, IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event.js";

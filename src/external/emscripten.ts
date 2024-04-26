@@ -1,5 +1,12 @@
-import { IWebAssemblyMemoryMemory } from "./i-web-assembly-memory.js";
-import { IEmscriptenBindings } from "../web-assembly/emscripten/i-emscripten-bindings.js";
+/**
+ * @public
+ * Copied from lib.dom.d.ts to avoid portability issues.
+ */
+export interface IWebAssemblyMemoryMemory
+{
+    readonly buffer: ArrayBuffer;
+    grow(delta: number): number;
+}
 
 /* eslint-disable */
 /**
@@ -11,7 +18,7 @@ export namespace Emscripten
     /**
      * @public
      */
-    export type EnvironmentType = 'WEB' | 'NODE' | 'SHELL' | 'WORKER';
+    export type EnvironmentType = "WEB" | "NODE" | "SHELL" | "WORKER";
 
     /**
      * @public
@@ -33,7 +40,7 @@ export namespace Emscripten
     /**
      * @public
      */
-    export interface EmscriptenModule extends IEmscriptenBindings
+    export interface EmscriptenModule
     {
         wasmMemory: IWebAssemblyMemoryMemory;
         print(str: string): void;
