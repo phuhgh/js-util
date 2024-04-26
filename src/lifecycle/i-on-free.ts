@@ -7,5 +7,5 @@ export interface IOnFree
     /**
      * Called once the resource is ready to be freed.
      */
-    onFree(): void
+    onFree(): void;
 }

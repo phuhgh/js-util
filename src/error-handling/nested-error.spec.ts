@@ -74,8 +74,10 @@ describe("=> NestableError", () =>
         });
     });
 
-    describe("=> composeErrorMessages", () => {
-        it("| flattens the localized messages, and includes the innermost exception detail", () => {
+    describe("=> composeErrorMessages", () =>
+    {
+        it("| flattens the localized messages, and includes the innermost exception detail", () =>
+        {
             const err = new NestedError("outer", new NestedError("inner", "detail"));
             const localizedError = err.composeErrorMessages();
             expect(localizedError.detail).toEqual("detail");

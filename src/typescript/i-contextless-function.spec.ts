@@ -14,7 +14,7 @@ describe("=> IContextlessFn compile checks", () =>
         {
             public fun()
             {
-                takesContextless(function()
+                takesContextless(function ()
                 {
                     // @ts-expect-error - this should not compile
                     return ++this.foo;

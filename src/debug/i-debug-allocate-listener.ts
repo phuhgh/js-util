@@ -3,5 +3,5 @@
  */
 export interface IDebugAllocateListener
 {
-    debugOnAllocate?: () => void
+    debugOnAllocate?: () => void;
 }
