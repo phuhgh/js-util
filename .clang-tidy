@@ -1,0 +1,6 @@
+---
+Checks: '-*, clang-diagnostic-*,clang-analyzer-*,-*,bugprone-*,performance-*,readability-*, cppcoreguidelines-*, google-explicit-constructor, google-default-arguments, misc-const-correctness, misc-confusable-identifiers, misc-definitions-in-headers, misc-unused-parameters, modernize-avoid-bind, modernize-deprecated-headers, modernize-pass-by-value, modernize-use-auto, modernize-use-nullptr, modernize-use-override'
+WarningsAsErrors: '*'
+FormatStyle: google
+CheckOptions:
+  cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor: true

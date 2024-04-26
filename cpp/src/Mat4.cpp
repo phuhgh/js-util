@@ -2,10 +2,8 @@
 
 namespace JsUtil
 {
-template
-struct Mat4<float>;
+template struct Mat4<float>;
 static_assert(std::is_pod<Mat4<float>>::value, "POD-ness broken...");
 
-template
-struct Mat4<double>;
+template struct Mat4<double>;
 } // namespace JsUtil
