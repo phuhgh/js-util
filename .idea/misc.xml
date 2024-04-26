@@ -10,6 +10,7 @@
       <file path="$PROJECT_DIR$/cpp/build" />
       <file path="$PROJECT_DIR$/dist" />
       <file path="$PROJECT_DIR$/docs" />
+      <file path="$PROJECT_DIR$/tmp" />
     </excludeRoots>
   </component>
   <component name="JavaScriptSettings">

@@ -1,13 +1,13 @@
 *
 !bin/**/*
-!bin/**/*
 !cpp/include/**/*
-!src/**/*
+!cpp/src/**/*
 !cpp/dummy.cpp
 !cpp/FindJsUtil.cmake
 !cpp/JsUtilFunctions.cmake
+!cpp/exported-names.txt
+!src/**/*
+!docs/**/*
 !README.md
 !components.spdx
-!docs/**/*
 !scripts/**/*
-!cpp/exported-names.txt
