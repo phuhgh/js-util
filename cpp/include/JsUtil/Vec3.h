@@ -7,8 +7,8 @@ namespace JsUtil
 template <typename T> struct Vec3
 {
   public:
-    T m_x;
-    T m_y;
-    T m_z;
+    T x;
+    T y;
+    T z;
 };
 } // namespace JsUtil
