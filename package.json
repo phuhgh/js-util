@@ -1,7 +1,7 @@
 {
   "name": "rc-js-util",
   "sideEffects": false,
-  "version": "9.0.9-alpha.36",
+  "version": "9.0.9-alpha.37",
   "license": "MIT",
   "scripts": {
     "clean": "rimraf bin build",
