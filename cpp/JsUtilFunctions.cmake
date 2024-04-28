@@ -220,6 +220,22 @@ function(jsu_create_executable targetName)
     jsu_log_status(${_message})
 endfunction(jsu_create_executable)
 
+function(jsu_create_test targetName)
+    set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
+    cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
+    unset(_multiParamArgs)
+
+    jsu_create_executable("${targetName}"
+            SOURCE_FILES "${ARG_SOURCE_FILES}"
+            COMPILE_OPTIONS "${ARG_COMPILE_OPTIONS}"
+            INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
+            LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
+            LINK_OPTIONS "${ARG_LINK_OPTIONS}")
+
+    add_test(NAME "${targetName}"
+            COMMAND node "${CMAKE_CURRENT_BINARY_DIR}/${targetName}.js")
+endfunction(jsu_create_test)
+
 function(jsu_create_asan_executable targetName)
     set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
     cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")

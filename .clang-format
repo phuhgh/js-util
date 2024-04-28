@@ -11,3 +11,7 @@ BreakInheritanceList: BeforeComma
 EmptyLineBeforeAccessModifier: LogicalBlock
 FixNamespaceComments: true
 QualifierAlignment: Right
+AllowShortFunctionsOnASingleLine: InlineOnly
+AlignConsecutiveDeclarations: Consecutive
+PointerAlignment: Left
+ReferenceAlignment: Left

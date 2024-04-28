@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf bin build",
-    "test": "jasmine --config=jasmine.json",
+    "test:js": "jasmine --config=jasmine.json",
+    "test:cpp": "cd cpp/build && ctest -j 4 --output-on-failure --timeout 60",
     "copy-assets": " cp -r assets/release/* bin/",
     "build": "npm run build-ts && npm run copy-assets && npm run build-cpp",
     "build-ts": "tsc -p tsconfig.json --incremental",
@@ -15,7 +16,7 @@
     "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "eslint -c .eslintrc.cjs src/",
-    "build:ci": "npm run clean && npm run build && npm run lint && npm run test && npm run lib && npm run generate-docs",
+    "build:ci": "npm run clean && npm run build && npm run lint && npm run test:js && npm run test:cpp && npm run lib && npm run generate-docs",
     "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
   },
   "dependencies": {

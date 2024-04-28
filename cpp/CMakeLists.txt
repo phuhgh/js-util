@@ -18,4 +18,11 @@ if (${BUILD_JSUTIL_TEST})
     jsu_create_safe_heap_executable(safe-heap-test-module
             SOURCE_FILES dummy.cpp
             LINK_LIBRARIES JsUtil)
+
+    include(CTest)
+    find_package(GoogleTest REQUIRED)
+    # c++ tests
+    jsu_create_test(TestVector
+            SOURCE_FILES test/TestVector.cpp
+            LINK_LIBRARIES JsUtil GTest::gtest_main)
 endif ()
