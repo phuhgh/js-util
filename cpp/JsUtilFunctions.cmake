@@ -40,7 +40,7 @@ function(jsu_initializeModule moduleName)
     endif ()
 endfunction()
 
-macro(jsu_get_common_test_link_flags writeTo)
+macro(jsu_get_common_link_flags writeTo preset)
     LIST(LENGTH RC_JS_EXPORTED_NAMES __length)
 
     if (__length EQUAL 0)
@@ -51,9 +51,33 @@ macro(jsu_get_common_test_link_flags writeTo)
     string(SUBSTRING "${RC_JS_EXPORTED_NAMES}" 1 -1 __EXPORTED_NAMES)
     string(REPLACE ";" "','" __EXPORTED_NAMES "${__EXPORTED_NAMES}")
 
-    # -s -Wno-limited-postlink-optimizations
-    set(${writeTo} "-O0 -g3  -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=2 -s NODEJS_CATCH_REJECTION=0 -s NODEJS_CATCH_EXIT=0 -s IMPORTED_MEMORY -s MODULARIZE=1 -s LLD_REPORT_UNDEFINED --no-entry -s -Wno-limited-postlink-optimizations -s EXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
+    set(__DEFAULT_LINK_FLAGS "")
+    string(CONCAT __DEFAULT_LINK_FLAGS
+            "-s ALLOW_MEMORY_GROWTH "
+            "-s NODEJS_CATCH_REJECTION=0 "
+            "-s NODEJS_CATCH_EXIT=0 "
+            "-s IMPORTED_MEMORY "
+            "-s MODULARIZE=1 "
+            "-s LLD_REPORT_UNDEFINED "
+            "--no-entry "
+            "-s EXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
+
+    if (${preset} STREQUAL "debug")
+        string(CONCAT ${writeTo}
+                "-O0 -g3 "
+                "-s ASSERTIONS=2 "
+                "-Wno-limited-postlink-optimizations " # suppress warnings related to limited opts because of DWARF
+                "${__DEFAULT_LINK_FLAGS}")
+    elseif (${preset} STREQUAL "release")
+        string(CONCAT ${writeTo}
+                "-O3 "
+                "-s ASSERTIONS=0 "
+                "${__DEFAULT_LINK_FLAGS}")
+    else ()
+        message(SEND_ERROR "Unsupported preset name. Please select either 'debug' or 'release'.")
+    endif ()
     unset(__EXPORTED_NAMES)
+    unset(__DEFAULT_LINK_FLAGS)
 endmacro()
 
 macro(jsu_resolve_files writeTo sourceVar)
@@ -246,16 +270,16 @@ function(jsu_create_asan_executable targetName)
     endif ()
 
     # this needs to be a string
-    set(CommonTestLinkFlags "")
-    jsu_get_common_test_link_flags(CommonTestLinkFlags)
-    STRING(APPEND CommonTestLinkFlags " -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1")
+    set(TestLinkFlags "")
+    jsu_get_common_link_flags(TestLinkFlags "debug")
+    STRING(APPEND TestLinkFlags " -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1")
 
     jsu_create_executable("${targetName}"
             SOURCE_FILES "${ARG_SOURCE_FILES}"
             INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
             COMPILE_OPTIONS "-O0 -fsanitize=address -fsanitize=undefined ${ARG_COMPILE_OPTIONS}"
-            LINK_OPTIONS "${CommonTestLinkFlags} ${ARG_LINK_OPTIONS}"
+            LINK_OPTIONS "${TestLinkFlags} ${ARG_LINK_OPTIONS}"
     )
 endfunction()
 
@@ -269,16 +293,16 @@ function(jsu_create_safe_heap_executable targetName)
     endif ()
 
     # this needs to be a string
-    set(CommonTestLinkFlags "")
-    jsu_get_common_test_link_flags(CommonTestLinkFlags)
-    STRING(APPEND CommonTestLinkFlags " -s INITIAL_MEMORY=8192kb -s SAFE_HEAP")
+    set(TestLinkFlags "")
+    jsu_get_common_link_flags(TestLinkFlags "debug")
+    STRING(APPEND TestLinkFlags " -s INITIAL_MEMORY=8192kb -s SAFE_HEAP")
 
     jsu_create_executable("${targetName}"
             SOURCE_FILES "${ARG_SOURCE_FILES}"
             INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
             COMPILE_OPTIONS "-O0 -g3 ${ARG_COMPILE_OPTIONS}"
-            LINK_OPTIONS "${CommonTestLinkFlags} ${ARG_LINK_OPTIONS}"
+            LINK_OPTIONS "${TestLinkFlags} ${ARG_LINK_OPTIONS}"
     )
 endfunction()
 
