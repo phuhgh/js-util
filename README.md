@@ -22,5 +22,8 @@ All debug checks should be hidden behind a `DEBUG_MODE` predicate.
 
 Where an assertion is required in production code these should make use of `_Production`.
 
+## Debugging
+To Debug the C++ in the browser, you will need to [install DevTools DWARF support](https://chromewebstore.google.com/detail/cc++-devtools-support-dwa/pdcpmagijalfljmkmjngeonclgbbannb?pli=1).
+
 ## Documentation
 See [API reference](https://phuhgh.github.io/js-util/rc-js-util.html) for the latest API docs, for previous versions consult the documentation bundled in the package.
