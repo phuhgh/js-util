@@ -8,7 +8,6 @@
   "exclude": [
     "src/**/*.spec.ts",
     "src/test-util/test-utils.ts",
-    "src/external/asan-test-module.d.cts",
-    "src/external/safe-heap-test-module.d.cts"
+    "src/external/util-test-module.d.cts"
   ]
 }

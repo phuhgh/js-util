@@ -20,33 +20,36 @@ class Debug
         Impl::Debug_onAllocate();
 #endif
     }
-    static void error(char const* _message)
-    {
+
 #ifndef NDEBUG
-        Impl::Debug_error(_message);
+    static void error(char const* _message) { Impl::Debug_error(_message); }
+#else
+    static void error(char const*) {}
 #endif
-    }
+
+#ifndef NDEBUG
     static void assert(bool _condition, char const* _message)
     {
-#ifndef NDEBUG
         if (!_condition)
         {
             Impl::Debug_error(_message);
         }
-#endif
     }
-    static void verboseLog(char const* _message)
-    {
+#else
+    static void assert(bool, char const*) {}
+#endif
+
 #ifndef NDEBUG
-        Impl::Debug_log(_message);
+    static void verboseLog(char const* _message) { Impl::Debug_log(_message); }
+#else
+    static void verboseLog(char const*) {}
 #endif
-    }
-    static void runBlock(T_RunBlock* _callback)
-    {
+
 #ifndef NDEBUG
-        (*_callback)();
+    static void runBlock(T_RunBlock* _callback) { (*_callback)(); }
+#else
+    static void runBlock(T_RunBlock*) {}
 #endif
-    }
 };
 
 } // namespace JsUtil

@@ -2,7 +2,7 @@ import "rc-js-util-globals";
 import { IDebugFlags } from "./debug/i-debug-flags.js";
 import { IWasmBuildFlags } from "./web-assembly/i-wasm-build-flags.js";
 
-export { emscriptenAsanTestModuleOptions, emscriptenSafeHeapTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule } from "./web-assembly/emscripten/sanitized-emscripten-test-module.js";
+export { emscriptenTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule } from "./web-assembly/emscripten/sanitized-emscripten-test-module.js";
 export { IDebugAllocateListener } from "./debug/i-debug-allocate-listener.js";
 export { IDebugProtectedView } from "./debug/i-debug-protected-view.js";
 export { Emscripten, IWebAssemblyMemoryMemory } from "./external/emscripten.js";

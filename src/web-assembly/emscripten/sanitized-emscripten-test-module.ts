@@ -27,18 +27,8 @@ export interface ISanitizedTestModuleOptions
 /**
  * @public
  */
-export const emscriptenAsanTestModuleOptions: ISanitizedTestModuleOptions = {
+export const emscriptenTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: new Set<string>(["==42==WARNING: AddressSanitizer failed to allocate 0xfffffffc bytes"]),
-    initialMemoryPages: 8192,
-    maxMemoryPages: 8192,
-    quitThrowsWith: {},
-};
-
-/**
- * @public
- */
-export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = {
-    disabledErrors: new Set<string>(),
     initialMemoryPages: 8192,
     maxMemoryPages: 8192,
     quitThrowsWith: {},
@@ -112,7 +102,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
         }
         catch (error)
         {
-            if (error !== emscriptenAsanTestModuleOptions.quitThrowsWith)
+            if (error !== emscriptenTestModuleOptions.quitThrowsWith)
             {
                 throw error;
             }

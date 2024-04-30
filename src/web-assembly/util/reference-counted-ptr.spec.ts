@@ -1,5 +1,5 @@
-import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
-import asanTestModule from "../../external/asan-test-module.cjs";
+import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
+import utilTestModule from "../../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { ReferenceCountedPtr } from "./reference-counted-ptr.js";
 import { nullPointer } from "../emscripten/null-pointer.js";
@@ -8,7 +8,7 @@ import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.j
 
 describe("=> ReferenceCountedPtr", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule<object, object>(asanTestModule, emscriptenAsanTestModuleOptions);
+    const testModule = new SanitizedEmscriptenTestModule<object, object>(utilTestModule, emscriptenTestModuleOptions);
 
     beforeAll(async () =>
     {

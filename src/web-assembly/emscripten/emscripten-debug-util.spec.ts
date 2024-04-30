@@ -1,12 +1,12 @@
-import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
+import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
 import { _Debug } from "../../debug/_debug.js";
 import { nullPointer } from "./null-pointer.js";
-import asanTestModule from "../../external/asan-test-module.cjs";
+import utilTestModule from "../../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("JsUtil::Debug", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
+    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, emscriptenTestModuleOptions);
 
     describe("::Log", () =>
     {

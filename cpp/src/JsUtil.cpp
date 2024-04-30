@@ -12,8 +12,8 @@ extern "C"
     {
 #ifndef NDEBUG
         JsUtil::Debug::verboseLog("exiting program...");
-        std::exit(_statusCode);
 #endif
+        std::exit(_statusCode);
     }
 
     // emscripten provides malloc / free but these may be elided without setting them required in compiler args

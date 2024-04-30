@@ -1,11 +1,11 @@
-import { emscriptenAsanTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
+import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import { _Debug } from "../../debug/_debug.js";
-import asanTestModule from "../../external/asan-test-module.cjs";
+import utilTestModule from "../../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 
 describe("=> asan sanity check", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule(asanTestModule, emscriptenAsanTestModuleOptions);
+    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, emscriptenTestModuleOptions);
 
     beforeAll(async () =>
     {

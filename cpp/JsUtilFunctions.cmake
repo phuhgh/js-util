@@ -1,3 +1,6 @@
+cmake_policy(SET CMP0069 NEW)
+set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
+
 function(get_common_path_prefix paths result)
     set(prefix_list "${paths}")
     list(GET prefix_list 0 _prefix)
@@ -35,23 +38,60 @@ endfunction()
 function(jsu_initializeModule moduleName)
     if (NOT "${moduleName}" IN_LIST RC_JS_TARGET_LIST)
         file(READ "${CMAKE_CURRENT_LIST_DIR}/exported-names.txt" LOCAL_NAMES)
+
+        if (NOT LOCAL_NAMES)
+            # probably the IDE running before the names were generated
+            message(SEND_ERROR "No names were found, run the build script.")
+        endif ()
+
         set(RC_JS_EXPORTED_NAMES "${RC_JS_EXPORTED_NAMES}" "${LOCAL_NAMES}" CACHE INTERNAL "")
         set(RC_JS_TARGET_LIST "${RC_JS_TARGET_LIST}" "${moduleName}" CACHE INTERNAL "")
     endif ()
 endfunction()
 
-# todo jack: usage n such
-# provides some "sensible" compile flags to try for a release build
-macro(jsu_get_common_compile_flags writeTo preset)
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        string(CONCAT ${writeTo}
-                "-O0 -g3 ")
-    elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
-        string(CONCAT ${writeTo}
-                "-O3 -msimd128")
-    else ()
-        message(SEND_ERROR "Unsupported build type. Please select either 'Debug' or 'Release'.")
+# sets some "sensible" compile / link flags for release and debug - YMMV
+# note: call this before creating any targets
+# note: enables LTO for all targets in release...
+# mode {ASAN/SAFE_HEAP} - optional
+macro(jsu_set_build_flags mode)
+    set(JSU_CXX_FLAGS "")
+    set(JSU_EXE_LINKER_FLAGS "")
+    set(JSU_STATIC_LINKER_FLAGS "")
+
+    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+        list(APPEND JSU_CXX_FLAGS -O0 -g3)
+        # suppress warnings related to limited opts because of DWARF
+        list(APPEND JSU_EXE_LINKER_FLAGS -O0 -g3 -sASSERTIONS=2 -Wno-limited-postlink-optimizations)
+        list(APPEND JSU_STATIC_LINKER_FLAGS -O0 -g3 -sASSERTIONS=2 -Wno-limited-postlink-optimizations)
+    elseif (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+        list(APPEND JSU_CXX_FLAGS -O3 -msimd128)
+        list(APPEND JSU_EXE_LINKER_FLAGS -O3 -msimd128)
+        list(APPEND JSU_STATIC_LINKER_FLAGS -O3 -msimd128)
     endif ()
+
+    if (NOT mode)
+        # it's an error to try to use mode
+    elseif (${mode} STREQUAL "ASAN")
+        message(STATUS "Applying address sanitized build flags")
+        list(APPEND JSU_CXX_FLAGS -fsanitize=address -fsanitize=undefined)
+        list(APPEND JSU_EXE_LINKER_FLAGS -fsanitize=address -fsanitize=undefined)
+        list(APPEND JSU_STATIC_LINKER_FLAGS -fsanitize=address -fsanitize=undefined)
+    elseif (${mode} STREQUAL "SAFE_HEAP")
+        message(STATUS "Applying safe heap build flags")
+        list(APPEND JSU_EXE_LINKER_FLAGS "-sSAFE_HEAP")
+        list(APPEND JSU_STATIC_LINKER_FLAGS "-sSAFE_HEAP")
+    else (${mode} STREQUAL "")
+        message(SEND_ERROR "Unknown mode option '${mode}'. The options are: ASAN, SAFE_HEAP.")
+    endif ()
+
+    set_property(GLOBAL PROPERTY JSU_CXX_FLAGS "${JSU_CXX_FLAGS}")
+    set_property(GLOBAL PROPERTY JSU_STATIC_LINKER_FLAGS "${JSU_STATIC_LINKER_FLAGS}")
+    set_property(GLOBAL PROPERTY JSU_EXE_LINKER_FLAGS "${JSU_EXE_LINKER_FLAGS}")
+    UNSET(JSU_CXX_FLAGS)
+    UNSET(JSU_STATIC_LINKER_FLAGS)
+    UNSET(JSU_EXE_LINKER_FLAGS)
 endmacro()
 
 macro(internal_jsu_get_common_link_flags writeTo)
@@ -76,21 +116,6 @@ macro(internal_jsu_get_common_link_flags writeTo)
             "-sEXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
     string(CONCAT ${writeTo} "${__DEFAULT_LINK_FLAGS}")
 
-    # todo jack: rework
-    #    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    #        string(CONCAT ${writeTo}
-    #                "-O0 -g3 "
-    #                "-sASSERTIONS=2 "
-    #                "-Wno-limited-postlink-optimizations " # suppress warnings related to limited opts because of DWARF
-    #                "${__DEFAULT_LINK_FLAGS}")
-    #    elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
-    #        string(CONCAT ${writeTo}
-    #                "-O3 "
-    #                "-sASSERTIONS=0 "
-    #                "${__DEFAULT_LINK_FLAGS}")
-    #    else ()
-    #        message(SEND_ERROR "Unsupported build type. Please select either 'Debug' or 'Release'.")
-    #    endif ()
     unset(__EXPORTED_NAMES)
     unset(__DEFAULT_LINK_FLAGS)
 endmacro()
@@ -124,6 +149,7 @@ function(jsu_create_libray targetName)
     set(_multiParamArgs
             SOURCE_FILES
             COMPILE_OPTIONS
+            LINK_OPTIONS
             PUBLIC_INCLUDE_DIRS PRIVATE_INCLUDE_DIRS
             PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES INTERFACE_LINK_LIBRARIES
             PUBLIC_COMPILE_FEATURES PRIVATE_COMPILE_FEATURES)
@@ -183,14 +209,8 @@ function(jsu_create_libray targetName)
         list(APPEND _message "PRIVATE_INCLUDE_DIRS: ${ARG_PRIVATE_INCLUDE_DIRS}")
     endif ()
 
-    if (ARG_COMPILE_OPTIONS)
-        set(_compileOptions ${ARG_COMPILE_OPTIONS})
-        separate_arguments(_compileOptions)
-        target_compile_options("${targetName}" PRIVATE "${_compileOptions}")
-
-        string(REPLACE ";" " " _compileOptions "${_compileOptions}")
-        list(APPEND _message "COMPILE_OPTIONS: ${_compileOptions}")
-    endif ()
+    internal_jsu_set_compile_options()
+    internal_jsu_set_link_options(false)
 
     if (ARG_PUBLIC_COMPILE_FEATURES)
         set(_publicCompileFeatures ${ARG_PUBLIC_COMPILE_FEATURES})
@@ -214,6 +234,61 @@ function(jsu_create_libray targetName)
     string(PREPEND _message "Creating static library: \"${targetName}\"\n")
     jsu_log_status(${_message})
 endfunction(jsu_create_libray)
+
+macro(internal_jsu_set_compile_options)
+    set(CompileFlags "")
+    if (ARG_COMPILE_OPTIONS)
+        set(_compileOptions ${ARG_COMPILE_OPTIONS})
+        separate_arguments(_compileOptions)
+        set(CompileFlags ${_compileOptions})
+    endif ()
+
+    get_property(JSU_CXX_FLAGS GLOBAL PROPERTY JSU_CXX_FLAGS)
+    if (JSU_CXX_FLAGS)
+        list(PREPEND CompileFlags "${JSU_CXX_FLAGS}")
+    endif ()
+    unset(JSU_CXX_FLAGS)
+
+    target_compile_options("${targetName}" PRIVATE "${CompileFlags}")
+
+    if (CompileFlags)
+        string(REPLACE ";" " " CompileFlags "${CompileFlags}")
+        list(APPEND _message "COMPILE_OPTIONS: ${CompileFlags}")
+    endif ()
+    unset(CompileFlags)
+endmacro()
+
+macro(internal_jsu_set_link_options isExe)
+    set(LinkFlags "")
+    if (${isExe})
+        # prepend the mandatory flags (required symbols etc)
+        internal_jsu_get_common_link_flags(LinkFlags)
+    endif ()
+
+    if (ARG_LINK_OPTIONS)
+        list(APPEND LinkFlags " ${ARG_LINK_OPTIONS}")
+    endif ()
+
+    get_property(JSU_STATIC_LINKER_FLAGS GLOBAL PROPERTY JSU_STATIC_LINKER_FLAGS)
+    get_property(JSU_EXE_LINKER_FLAGS GLOBAL PROPERTY JSU_EXE_LINKER_FLAGS)
+    if (${isExe} AND JSU_EXE_LINKER_FLAGS)
+        # explicitly merge flags so that they are output in the message
+        list(PREPEND LinkFlags "${JSU_EXE_LINKER_FLAGS}")
+    elseif (JSU_STATIC_LINKER_FLAGS)
+        list(PREPEND LinkFlags "${JSU_STATIC_LINKER_FLAGS}")
+    endif ()
+    unset(JSU_STATIC_LINKER_FLAGS)
+    unset(JSU_EXE_LINKER_FLAGS)
+
+    string(REPLACE ";" " " LinkFlags "${LinkFlags}")
+    set_target_properties("${targetName}" PROPERTIES LINK_FLAGS "${LinkFlags}")
+
+    if (LinkFlags)
+        string(REPLACE ";" " " LinkFlags "${LinkFlags}")
+        list(APPEND _message "LINK_FLAGS: ${LinkFlags}")
+    endif ()
+    unset(LinkFlags)
+endmacro()
 
 # creates an executable
 function(jsu_create_executable targetName)
@@ -244,22 +319,8 @@ function(jsu_create_executable targetName)
         list(APPEND _message "LINK_LIBRARIES: ${ARG_LINK_LIBRARIES}")
     endif ()
 
-    if (ARG_COMPILE_OPTIONS)
-        set(_compileOptions ${ARG_COMPILE_OPTIONS})
-        separate_arguments(_compileOptions)
-        target_compile_options("${targetName}" PRIVATE "${_compileOptions}")
-        list(APPEND _message "COMPILE_FLAGS: ${ARG_COMPILE_OPTIONS}")
-    endif ()
-
-    # prepend the mandatory flags (required symbols etc)
-    set(ExeLinkFlags "")
-    internal_jsu_get_common_link_flags(ExeLinkFlags)
-    if (ARG_LINK_OPTIONS)
-        # the space before ARG_LINK_OPTIONS is required
-        string(APPEND ExeLinkFlags " ${ARG_LINK_OPTIONS}")
-    endif ()
-    set_target_properties("${targetName}" PROPERTIES LINK_FLAGS "${ExeLinkFlags}")
-    list(APPEND _message "LINK_FLAGS: ${ExeLinkFlags}")
+    internal_jsu_set_compile_options()
+    internal_jsu_set_link_options(true)
 
     string(REPLACE ";" "\n" _message "${_message}")
     string(PREPEND _message "Creating executable: \"${targetName}\"\n")

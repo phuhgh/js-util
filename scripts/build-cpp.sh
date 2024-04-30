@@ -10,56 +10,52 @@ print_instructions() {
   echo "--bindings - the javascript file that describes the c interface"
   echo "--cmake-dir - the thing to build"
   echo "--module-loader - the module loader for the javascript {mjs/cjs}"
-  echo "--build-mode - {debug/release}"
-  echo "--cmake-flags - optionally provide additional build flags to cmake (start with hyphen)"
+  echo "--cmake-preset - {string} see CMakePresets.json for options"
   echo "--clean - delete the build dir"
   echo "================================="
   exit 1
 }
 
-SCRIPTS_DIR="$( dirname -- "$0"; )"
+SCRIPTS_DIR="$(dirname -- "$0")"
 
 while [ "$1" != "" ]; do
-    PARAM="$(printf "%s\n" "$1" | awk -F= '{print $1}')"
-    VALUE="$(printf "%s\n" "$1" | sed 's/^[^=]*=//g')"
+  PARAM="$(printf "%s\n" "$1" | awk -F= '{print $1}')"
+  VALUE="$(printf "%s\n" "$1" | sed 's/^[^=]*=//g')"
 
-    case $PARAM in
-        -h | --help)
-            print_instructions
-            exit
-            ;;
-        --bindings)
-            JS_BINDINGS_FILE=$VALUE
-            ;;
-        --cmake-dir)
-            CMAKE_PROJ_DIR=$VALUE
-            ;;
-        --module-loader)
-            MODULE_LOADER=$VALUE
-            ;;
-        --build-mode)
-            BUILD_MODE=$VALUE
-            ;;
-        --cmake-flags)
-            BUILD_FLAGS=$VALUE
-            ;;
-        --clean)
-            BUILD_CLEAN="true"
-            ;;
-        *)
-            echo "ERROR: unknown parameter \"$PARAM\""
-            print_instructions
-            exit 1
-            ;;
-    esac
-    shift
+  case $PARAM in
+  -h | --help)
+    print_instructions
+    exit
+    ;;
+  --bindings)
+    JS_BINDINGS_FILE=$VALUE
+    ;;
+  --cmake-dir)
+    CMAKE_PROJ_DIR=$VALUE
+    ;;
+  --module-loader)
+    MODULE_LOADER=$VALUE
+    ;;
+  --cmake-preset)
+    CMAKE_PRESETS=$VALUE
+    ;;
+  --clean)
+    BUILD_CLEAN="true"
+    ;;
+  *)
+    echo "ERROR: unknown parameter \"$PARAM\""
+    print_instructions
+    exit 1
+    ;;
+  esac
+  shift
 done
 
 if [ -z "$JS_BINDINGS_FILE" ] || [ -z "$CMAKE_PROJ_DIR" ]; then
   print_instructions
 fi
 
-if [ "$BUILD_MODE" != "Debug" ] && [ "$BUILD_MODE" != "Release" ]; then
+if [ ! "$CMAKE_PRESETS" ]; then
   print_instructions
 fi
 
@@ -88,15 +84,14 @@ if [ "$BUILD_CLEAN" = "true" ]; then
   rm -rf build
 fi
 
-mkdir -p build || exit
-cd build || exit
+for CMAKE_PRESET in $CMAKE_PRESETS; do
+  # these are defined if we're running on windows, we otherwise don't care...
+  # shellcheck disable=SC2039
+  if [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ]; then
+    emcmake.bat cmake --preset="$CMAKE_PRESET" || exit
+  else
+    emcmake cmake --preset="$CMAKE_PRESET" || exit
+  fi
 
-# these are defined if we're running on windows, we otherwise don't care...
-# shellcheck disable=SC2039
-if [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ]; then
-  emcmake.bat cmake -G Ninja .. -DCMAKE_BUILD_TYPE="$BUILD_MODE" "$BUILD_FLAGS" || exit
-else
-  emcmake cmake -G Ninja .. -DCMAKE_BUILD_TYPE="$BUILD_MODE" "$BUILD_FLAGS" || exit
-fi
-
-cmake --build . || exit
+  cmake --build ./build/"$CMAKE_PRESET" || exit
+done

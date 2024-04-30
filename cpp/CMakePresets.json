@@ -7,10 +7,10 @@
   },
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default",
+      "name": "debug",
+      "displayName": "Debug",
       "generator": "Ninja",
-      "binaryDir": "build",
+      "binaryDir": "build/${presetName}",
       "toolchainFile": "$env{EMSDK_ROOT}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -19,24 +19,35 @@
       }
     },
     {
+      "name": "release",
+      "displayName": "Release",
+      "inherits": "debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
       "name": "asan",
       "displayName": "Address sanitized",
-      "inherits": "default",
+      "inherits": "debug",
       "cacheVariables": {
-
+        "JSU_BUILD_MODE": "ASAN"
+      }
+    },
+    {
+      "name": "safe-heap",
+      "displayName": "Safe heap",
+      "inherits": "debug",
+      "cacheVariables": {
+        "JSU_BUILD_MODE": "SAFE_HEAP"
       }
     }
   ],
   "buildPresets": [
     {
       "name": "Debug",
-      "configurePreset": "default",
+      "configurePreset": "debug",
       "configuration": "Debug"
-    },
-    {
-      "name": "Release",
-      "configurePreset": "default",
-      "configuration": "Release"
     }
   ]
 }
