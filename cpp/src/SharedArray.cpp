@@ -15,7 +15,7 @@ template <typename T> SharedArray<T>* SharedArray<T>::createOne(size_t _size, bo
         return nullptr;
     }
 
-    auto shared_array = new SharedArray<T>(arrayPtr, _size);
+    auto shared_array = new(std::nothrow) SharedArray<T>(arrayPtr, _size);
 
     if (shared_array == nullptr)
     {
