@@ -40,7 +40,21 @@ function(jsu_initializeModule moduleName)
     endif ()
 endfunction()
 
-macro(jsu_get_common_link_flags writeTo preset)
+# todo jack: usage n such
+# provides some "sensible" compile flags to try for a release build
+macro(jsu_get_common_compile_flags writeTo preset)
+    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+        string(CONCAT ${writeTo}
+                "-O0 -g3 ")
+    elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
+        string(CONCAT ${writeTo}
+                "-O3 -msimd128")
+    else ()
+        message(SEND_ERROR "Unsupported build type. Please select either 'Debug' or 'Release'.")
+    endif ()
+endmacro()
+
+macro(internal_jsu_get_common_link_flags writeTo)
     LIST(LENGTH RC_JS_EXPORTED_NAMES __length)
 
     if (__length EQUAL 0)
@@ -53,7 +67,6 @@ macro(jsu_get_common_link_flags writeTo preset)
 
     set(__DEFAULT_LINK_FLAGS "")
     string(CONCAT __DEFAULT_LINK_FLAGS
-            "-s ALLOW_MEMORY_GROWTH "
             "-s NODEJS_CATCH_REJECTION=0 "
             "-s NODEJS_CATCH_EXIT=0 "
             "-s IMPORTED_MEMORY "
@@ -61,21 +74,23 @@ macro(jsu_get_common_link_flags writeTo preset)
             "-s LLD_REPORT_UNDEFINED "
             "--no-entry "
             "-s EXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
+    string(CONCAT ${writeTo} "${__DEFAULT_LINK_FLAGS}")
 
-    if (${preset} STREQUAL "debug")
-        string(CONCAT ${writeTo}
-                "-O0 -g3 "
-                "-s ASSERTIONS=2 "
-                "-Wno-limited-postlink-optimizations " # suppress warnings related to limited opts because of DWARF
-                "${__DEFAULT_LINK_FLAGS}")
-    elseif (${preset} STREQUAL "release")
-        string(CONCAT ${writeTo}
-                "-O3 "
-                "-s ASSERTIONS=0 "
-                "${__DEFAULT_LINK_FLAGS}")
-    else ()
-        message(SEND_ERROR "Unsupported preset name. Please select either 'debug' or 'release'.")
-    endif ()
+    # todo jack: rework
+    #    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    #        string(CONCAT ${writeTo}
+    #                "-O0 -g3 "
+    #                "-s ASSERTIONS=2 "
+    #                "-Wno-limited-postlink-optimizations " # suppress warnings related to limited opts because of DWARF
+    #                "${__DEFAULT_LINK_FLAGS}")
+    #    elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
+    #        string(CONCAT ${writeTo}
+    #                "-O3 "
+    #                "-s ASSERTIONS=0 "
+    #                "${__DEFAULT_LINK_FLAGS}")
+    #    else ()
+    #        message(SEND_ERROR "Unsupported build type. Please select either 'Debug' or 'Release'.")
+    #    endif ()
     unset(__EXPORTED_NAMES)
     unset(__DEFAULT_LINK_FLAGS)
 endmacro()
@@ -104,6 +119,7 @@ macro(jsu_resolve_files writeTo sourceVar)
     set(${writeTo} ${_sources})
 endmacro()
 
+# creates a static library
 function(jsu_create_libray targetName)
     set(_multiParamArgs
             SOURCE_FILES
@@ -199,6 +215,7 @@ function(jsu_create_libray targetName)
     jsu_log_status(${_message})
 endfunction(jsu_create_libray)
 
+# creates an executable
 function(jsu_create_executable targetName)
     set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
     cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
@@ -234,16 +251,22 @@ function(jsu_create_executable targetName)
         list(APPEND _message "COMPILE_FLAGS: ${ARG_COMPILE_OPTIONS}")
     endif ()
 
+    # prepend the mandatory flags (required symbols etc)
+    set(ExeLinkFlags "")
+    internal_jsu_get_common_link_flags(ExeLinkFlags)
     if (ARG_LINK_OPTIONS)
-        set_target_properties("${targetName}" PROPERTIES LINK_FLAGS "${ARG_LINK_OPTIONS}")
-        list(APPEND _message "LINK_FLAGS: ${ARG_LINK_OPTIONS}")
+        # the space before ARG_LINK_OPTIONS is required
+        string(APPEND ExeLinkFlags " ${ARG_LINK_OPTIONS}")
     endif ()
+    set_target_properties("${targetName}" PROPERTIES LINK_FLAGS "${ExeLinkFlags}")
+    list(APPEND _message "LINK_FLAGS: ${ExeLinkFlags}")
 
     string(REPLACE ";" "\n" _message "${_message}")
     string(PREPEND _message "Creating executable: \"${targetName}\"\n")
     jsu_log_status(${_message})
 endfunction(jsu_create_executable)
 
+# creates a ctest - built & linked with ASAN
 function(jsu_create_test targetName)
     set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
     cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
@@ -260,52 +283,7 @@ function(jsu_create_test targetName)
             COMMAND node "${CMAKE_CURRENT_BINARY_DIR}/${targetName}.js")
 endfunction(jsu_create_test)
 
-function(jsu_create_asan_executable targetName)
-    set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
-    cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
-    unset(_multiParamArgs)
-
-    if (DEFINED ARG_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "Extra argument found adding \"${targetName}\": ${ARG_UNPARSED_ARGUMENTS}.")
-    endif ()
-
-    # this needs to be a string
-    set(TestLinkFlags "")
-    jsu_get_common_link_flags(TestLinkFlags "debug")
-    STRING(APPEND TestLinkFlags " -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1")
-
-    jsu_create_executable("${targetName}"
-            SOURCE_FILES "${ARG_SOURCE_FILES}"
-            INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
-            LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
-            COMPILE_OPTIONS "-O0 -fsanitize=address -fsanitize=undefined ${ARG_COMPILE_OPTIONS}"
-            LINK_OPTIONS "${TestLinkFlags} ${ARG_LINK_OPTIONS}"
-    )
-endfunction()
-
-function(jsu_create_safe_heap_executable targetName)
-    set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
-    cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
-    unset(_multiParamArgs)
-
-    if (DEFINED ARG_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "Extra argument found adding \"${targetName}\": ${ARG_UNPARSED_ARGUMENTS}.")
-    endif ()
-
-    # this needs to be a string
-    set(TestLinkFlags "")
-    jsu_get_common_link_flags(TestLinkFlags "debug")
-    STRING(APPEND TestLinkFlags " -s INITIAL_MEMORY=8192kb -s SAFE_HEAP")
-
-    jsu_create_executable("${targetName}"
-            SOURCE_FILES "${ARG_SOURCE_FILES}"
-            INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
-            LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
-            COMPILE_OPTIONS "-O0 -g3 ${ARG_COMPILE_OPTIONS}"
-            LINK_OPTIONS "${TestLinkFlags} ${ARG_LINK_OPTIONS}"
-    )
-endfunction()
-
+# todo jack: test if this can handle the case where there is no node_modules dir
 function(jsu_find_node_module PACKAGE_NAME PACKAGE_DIR ROOT_DIR RESULT_LIST)
     set(SEARCH_DIRS)
     get_filename_component(PACKAGE_DIR_REALPATH ${PACKAGE_DIR} REALPATH)

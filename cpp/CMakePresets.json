@@ -17,6 +17,14 @@
         "CMAKE_CROSSCOMPILING_EMULATOR": "$env{EMSDK_ROOT}/node/14.18.2_64bit/bin/node.exe",
         "BUILD_JSUTIL_TEST": true
       }
+    },
+    {
+      "name": "asan",
+      "displayName": "Address sanitized",
+      "inherits": "default",
+      "cacheVariables": {
+
+      }
     }
   ],
   "buildPresets": [
@@ -24,6 +32,11 @@
       "name": "Debug",
       "configurePreset": "default",
       "configuration": "Debug"
+    },
+    {
+      "name": "Release",
+      "configurePreset": "default",
+      "configuration": "Release"
     }
   ]
 }

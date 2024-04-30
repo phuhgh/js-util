@@ -9,15 +9,19 @@ find_package(JsUtil 9.0 REQUIRED)
 
 if (${BUILD_JSUTIL_TEST})
     # not strictly required to supply env, but do so to test LINK_OPTIONS
-    jsu_create_asan_executable(asan-test-module
+    jsu_create_executable(asan-test-module
             SOURCE_FILES dummy.cpp
             LINK_LIBRARIES JsUtil
-            LINK_OPTIONS "-s ENVIRONMENT=node")
+            COMPILE_OPTIONS "-O0 -g3 -fsanitize=address -fsanitize=undefined"
+            LINK_OPTIONS "-s ALLOW_MEMORY_GROWTH -s ENVIRONMENT=node -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1")
 
+    # todo jack: try removing -s ENVIRONMENT=node
     # use default link options, should work either way
-    jsu_create_safe_heap_executable(safe-heap-test-module
+    jsu_create_executable(safe-heap-test-module
             SOURCE_FILES dummy.cpp
-            LINK_LIBRARIES JsUtil)
+            LINK_LIBRARIES JsUtil
+            COMPILE_OPTIONS "-O0 -g3"
+            LINK_OPTIONS "-s ALLOW_MEMORY_GROWTH -s ENVIRONMENT=node -s INITIAL_MEMORY=8192kb -s SAFE_HEAP")
 
     include(CTest)
     find_package(GoogleTest REQUIRED)

@@ -114,7 +114,7 @@ describe("=> F32SharedArray", () =>
         });
     });
 
-    describe("=> safe stack tests", () =>
+    describe("=> safe heap tests", () =>
     {
         const testModule = new SanitizedEmscriptenTestModule(safeHeapTestModule, emscriptenSafeHeapTestModuleOptions);
 

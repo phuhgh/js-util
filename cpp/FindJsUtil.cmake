@@ -1,5 +1,5 @@
 set(JsUtil_LIBRARIES "JsUtil")
-set(JsUtilVersion "9.0")
+set(JsUtilVersion "10.0")
 
 if (NOT TARGET JsUtil)
     include(JsUtilFunctions)
