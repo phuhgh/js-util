@@ -13,15 +13,18 @@ if (${BUILD_JSUTIL_TEST})
             SOURCE_FILES dummy.cpp
             LINK_LIBRARIES JsUtil
             COMPILE_OPTIONS "-O0 -g3 -fsanitize=address -fsanitize=undefined"
-            LINK_OPTIONS "-s ALLOW_MEMORY_GROWTH -s ENVIRONMENT=node -fsanitize=address -fsanitize=undefined -s EXIT_RUNTIME=1")
+            LINK_OPTIONS "-sALLOW_MEMORY_GROWTH -sENVIRONMENT=node -fsanitize=address -fsanitize=undefined -sEXIT_RUNTIME=1")
 
-    # todo jack: try removing -s ENVIRONMENT=node
+    # todo jack: try removing -sENVIRONMENT=node
     # use default link options, should work either way
     jsu_create_executable(safe-heap-test-module
             SOURCE_FILES dummy.cpp
             LINK_LIBRARIES JsUtil
-            COMPILE_OPTIONS "-O0 -g3"
-            LINK_OPTIONS "-s ALLOW_MEMORY_GROWTH -s ENVIRONMENT=node -s INITIAL_MEMORY=8192kb -s SAFE_HEAP")
+#            COMPILE_OPTIONS "-O0 -g3"
+#            LINK_OPTIONS "-sALLOW_MEMORY_GROWTH -sENVIRONMENT=node -sINITIAL_MEMORY=8192kb"
+            COMPILE_OPTIONS "-O0 -g3 -fsanitize=address -fsanitize=undefined"
+            LINK_OPTIONS "-sINITIAL_MEMORY=8192kb -sALLOW_MEMORY_GROWTH -sENVIRONMENT=node -fsanitize=address -fsanitize=undefined -sEXIT_RUNTIME=1"
+    )
 
     include(CTest)
     find_package(GoogleTest REQUIRED)

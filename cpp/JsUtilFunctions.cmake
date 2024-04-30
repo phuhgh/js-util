@@ -67,26 +67,26 @@ macro(internal_jsu_get_common_link_flags writeTo)
 
     set(__DEFAULT_LINK_FLAGS "")
     string(CONCAT __DEFAULT_LINK_FLAGS
-            "-s NODEJS_CATCH_REJECTION=0 "
-            "-s NODEJS_CATCH_EXIT=0 "
-            "-s IMPORTED_MEMORY "
-            "-s MODULARIZE=1 "
-            "-s LLD_REPORT_UNDEFINED "
+            "-sNODEJS_CATCH_REJECTION=0 "
+            "-sNODEJS_CATCH_EXIT=0 "
+            "-sIMPORTED_MEMORY "
+            "-sMODULARIZE=1 "
+            "-sLLD_REPORT_UNDEFINED "
             "--no-entry "
-            "-s EXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
+            "-sEXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
     string(CONCAT ${writeTo} "${__DEFAULT_LINK_FLAGS}")
 
     # todo jack: rework
     #    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     #        string(CONCAT ${writeTo}
     #                "-O0 -g3 "
-    #                "-s ASSERTIONS=2 "
+    #                "-sASSERTIONS=2 "
     #                "-Wno-limited-postlink-optimizations " # suppress warnings related to limited opts because of DWARF
     #                "${__DEFAULT_LINK_FLAGS}")
     #    elseif (CMAKE_BUILD_TYPE STREQUAL "Release")
     #        string(CONCAT ${writeTo}
     #                "-O3 "
-    #                "-s ASSERTIONS=0 "
+    #                "-sASSERTIONS=0 "
     #                "${__DEFAULT_LINK_FLAGS}")
     #    else ()
     #        message(SEND_ERROR "Unsupported build type. Please select either 'Debug' or 'Release'.")

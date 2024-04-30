@@ -46,6 +46,7 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
 
     const instance = await emscriptenModuleFactory({
         wasmMemory: memory,
+        INITIAL_MEMORY: memory.buffer.byteLength,
         ...extension,
     } as TExt) as TExt & TMod & Emscripten.EmscriptenModule;
 

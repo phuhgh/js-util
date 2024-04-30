@@ -20,7 +20,7 @@ export interface ISanitizedTestModuleOptions
     /**
      * 64 kb per page
      */
-    maxMemoryPages?: number;
+    maxMemoryPages: number;
     quitThrowsWith: object;
 }
 
@@ -39,8 +39,8 @@ export const emscriptenAsanTestModuleOptions: ISanitizedTestModuleOptions = {
  */
 export const emscriptenSafeHeapTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: new Set<string>(),
-    initialMemoryPages: 128,
-    maxMemoryPages: 512,
+    initialMemoryPages: 8192,
+    maxMemoryPages: 8192,
     quitThrowsWith: {},
 };
 

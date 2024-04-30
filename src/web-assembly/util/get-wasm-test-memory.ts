@@ -3,7 +3,7 @@ import { IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
 /**
  * @internal
  */
-export function getWasmTestMemory(options: { initial: number, maximum?: number }): IWebAssemblyMemoryMemory
+export function getWasmTestMemory(options: { initial: number, maximum: number }): IWebAssemblyMemoryMemory
 {
     return new WebAssembly.Memory(options);
 }
