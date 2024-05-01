@@ -94,7 +94,7 @@ macro(jsu_set_build_flags mode)
     UNSET(JSU_EXE_LINKER_FLAGS)
 endmacro()
 
-macro(internal_jsu_get_common_link_flags writeTo)
+macro(internal_jsu_get_common_link_flags writeTo hasMain)
     LIST(LENGTH RC_JS_EXPORTED_NAMES __length)
 
     if (__length EQUAL 0)
@@ -103,16 +103,21 @@ macro(internal_jsu_get_common_link_flags writeTo)
     unset(__length)
 
     string(SUBSTRING "${RC_JS_EXPORTED_NAMES}" 1 -1 __EXPORTED_NAMES)
+    if (${hasMain})
+        list(APPEND __EXPORTED_NAMES _main)
+    endif ()
     string(REPLACE ";" "','" __EXPORTED_NAMES "${__EXPORTED_NAMES}")
 
     set(__DEFAULT_LINK_FLAGS "")
+    if (NOT ${hasMain})
+        string(CONCAT __DEFAULT_LINK_FLAGS "--no-entry ")
+    endif ()
     string(CONCAT __DEFAULT_LINK_FLAGS
             "-sNODEJS_CATCH_REJECTION=0 "
             "-sNODEJS_CATCH_EXIT=0 "
             "-sIMPORTED_MEMORY "
             "-sMODULARIZE=1 "
             "-sLLD_REPORT_UNDEFINED "
-            "--no-entry "
             "-sEXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
     string(CONCAT ${writeTo} "${__DEFAULT_LINK_FLAGS}")
 
@@ -210,7 +215,7 @@ function(jsu_create_libray targetName)
     endif ()
 
     internal_jsu_set_compile_options()
-    internal_jsu_set_link_options(false)
+    internal_jsu_set_link_options(false false)
 
     if (ARG_PUBLIC_COMPILE_FEATURES)
         set(_publicCompileFeatures ${ARG_PUBLIC_COMPILE_FEATURES})
@@ -258,11 +263,11 @@ macro(internal_jsu_set_compile_options)
     unset(CompileFlags)
 endmacro()
 
-macro(internal_jsu_set_link_options isExe)
+macro(internal_jsu_set_link_options isExe hasMain)
     set(LinkFlags "")
     if (${isExe})
         # prepend the mandatory flags (required symbols etc)
-        internal_jsu_get_common_link_flags(LinkFlags)
+        internal_jsu_get_common_link_flags(LinkFlags hasMain)
     endif ()
 
     if (ARG_LINK_OPTIONS)
@@ -292,7 +297,7 @@ endmacro()
 
 # creates an executable
 function(jsu_create_executable targetName)
-    set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
+    set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS HAS_MAIN)
     cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
     unset(_multiParamArgs)
 
@@ -319,8 +324,13 @@ function(jsu_create_executable targetName)
         list(APPEND _message "LINK_LIBRARIES: ${ARG_LINK_LIBRARIES}")
     endif ()
 
+    if (NOT ARG_HAS_MAIN)
+        # ensure there is always a boolean, makes it easier to consume...
+        set(ARG_HAS_MAIN false)
+    endif ()
+
     internal_jsu_set_compile_options()
-    internal_jsu_set_link_options(true)
+    internal_jsu_set_link_options(true ARG_HAS_MAIN)
 
     string(REPLACE ";" "\n" _message "${_message}")
     string(PREPEND _message "Creating executable: \"${targetName}\"\n")
@@ -338,7 +348,8 @@ function(jsu_create_test targetName)
             COMPILE_OPTIONS "${ARG_COMPILE_OPTIONS}"
             INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
-            LINK_OPTIONS "${ARG_LINK_OPTIONS}")
+            LINK_OPTIONS "${ARG_LINK_OPTIONS}"
+            HAS_MAIN true)
 
     add_test(NAME "${targetName}"
             COMMAND node "${CMAKE_CURRENT_BINARY_DIR}/${targetName}.js")
