@@ -108,18 +108,18 @@ macro(internal_jsu_get_common_link_flags writeTo hasMain)
     endif ()
     string(REPLACE ";" "','" __EXPORTED_NAMES "${__EXPORTED_NAMES}")
 
-    set(__DEFAULT_LINK_FLAGS "")
-    if (NOT ${hasMain})
-        string(CONCAT __DEFAULT_LINK_FLAGS "--no-entry ")
-    endif ()
     string(CONCAT __DEFAULT_LINK_FLAGS
             "-sNODEJS_CATCH_REJECTION=0 "
             "-sNODEJS_CATCH_EXIT=0 "
             "-sIMPORTED_MEMORY "
-            "-sMODULARIZE=1 "
             "-sLLD_REPORT_UNDEFINED "
             "-sEXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
-    string(CONCAT ${writeTo} "${__DEFAULT_LINK_FLAGS}")
+    if (${hasMain})
+        string(PREPEND __DEFAULT_LINK_FLAGS "-sINVOKE_RUN=1 ")
+    else()
+        string(PREPEND __DEFAULT_LINK_FLAGS "--no-entry -sMODULARIZE=1 ")
+    endif ()
+    string(APPEND ${writeTo} "${__DEFAULT_LINK_FLAGS}")
 
     unset(__EXPORTED_NAMES)
     unset(__DEFAULT_LINK_FLAGS)
@@ -267,7 +267,7 @@ macro(internal_jsu_set_link_options isExe hasMain)
     set(LinkFlags "")
     if (${isExe})
         # prepend the mandatory flags (required symbols etc)
-        internal_jsu_get_common_link_flags(LinkFlags hasMain)
+        internal_jsu_get_common_link_flags(LinkFlags ${hasMain})
     endif ()
 
     if (ARG_LINK_OPTIONS)
@@ -330,7 +330,7 @@ function(jsu_create_executable targetName)
     endif ()
 
     internal_jsu_set_compile_options()
-    internal_jsu_set_link_options(true ARG_HAS_MAIN)
+    internal_jsu_set_link_options(true ${ARG_HAS_MAIN})
 
     string(REPLACE ";" "\n" _message "${_message}")
     string(PREPEND _message "Creating executable: \"${targetName}\"\n")
@@ -348,7 +348,7 @@ function(jsu_create_test targetName)
             COMPILE_OPTIONS "${ARG_COMPILE_OPTIONS}"
             INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
-            LINK_OPTIONS "${ARG_LINK_OPTIONS}"
+            LINK_OPTIONS ${ARG_LINK_OPTIONS} -sENVIRONMENT=node -sEXIT_RUNTIME=1
             HAS_MAIN true)
 
     add_test(NAME "${targetName}"

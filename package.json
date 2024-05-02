@@ -11,7 +11,7 @@
     "copy-assets": " cp -r assets/release/* bin/",
     "build": "npm run build:ts && npm run copy-assets && npm run build:cpp",
     "build:ts": "tsc -p tsconfig.json --incremental",
-    "build:cpp": "sh scripts/build-cpp.sh --bindings=bin/esm/cpp.module.js --cmake-dir=cpp --module-loader=mjs --cmake-preset='safe-heap release asan' && sh scripts/copy-test-modules.sh --preset=asan",
+    "build:cpp": "sh scripts/build-cpp.sh --bindings=bin/esm/cpp.module.js --cmake-dir=cpp --module-loader=mjs --cmake-preset=asan && sh scripts/copy-test-modules.sh --preset=asan",
     "lib": "npm run clean && npm run build-lib-cjs && npm run build-lib-esm && npm run copy-assets",
     "build-lib-cjs": "tsc -d -p tsconfig-cjs.lib.json",
     "build-lib-esm": "tsc -d -p tsconfig-esm.lib.json",

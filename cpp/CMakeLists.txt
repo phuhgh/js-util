@@ -20,5 +20,6 @@ if (${BUILD_JSUTIL_TEST})
     # c++ tests
     jsu_create_test(TestVector
             SOURCE_FILES test/TestVector.cpp
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main)
 endif ()

@@ -72,3 +72,22 @@ REGISTER_TYPED_TEST_SUITE_P(TestVector, indexing);
 
 using VectorTypes = ::testing::Types<Vec2<float>, Vec3<float>, Vec4<float>, Mat2<float>, Mat3<float>, Mat4<float>>;
 INSTANTIATE_TYPED_TEST_SUITE_P(My, TestVector, VectorTypes);
+
+TEST(Vec2, multiply)
+{
+    Vec2<float>   result{};
+    Vec2<float>   vec2{{3, 4}};
+    Mat3<int32_t> scaling_mat{{2, 0, 0, 0, 2, 0, 0, 0, 2}};
+
+    vec2.matrixMultiply(scaling_mat, &result);
+    EXPECT_EQ(result.x(), 6);
+    EXPECT_EQ(result.y(), 8);
+
+    vec2.matrixMultiply<int32_t>(scaling_mat);
+    EXPECT_EQ(vec2.x(), 6);
+    EXPECT_EQ(vec2.y(), 8);
+
+    // compilation tests
+    auto const& vec2Ref = vec2;
+    vec2Ref.matrixMultiply(scaling_mat, &result);
+}

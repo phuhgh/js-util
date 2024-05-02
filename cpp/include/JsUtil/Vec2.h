@@ -16,8 +16,11 @@ template <typename T> struct Vec2
     {
     }
 
-    T  x() const { return m_elements[0]; }
-    T  y() const { return m_elements[1]; };
+    T x() const { return m_elements[0]; }
+    T y() const { return m_elements[1]; };
+    void setX(T x_val) { m_elements[0] = x_val; }
+    void setY(T y_val) { m_elements[0] = y_val; }
+
     T& operator[](int index) { return m_elements[index]; }
     T  operator[](int index) const { return m_elements[index]; }
 
@@ -25,12 +28,12 @@ template <typename T> struct Vec2
     std::array<T, scSIZE> const* asArray() const { return &m_elements; }
     static constexpr int         size() { return scSIZE; }
 
-    void matrixMultiply(Mat3<T> const& _mat3) { matrixMultiply(_mat3, *this); }
+    template <typename U> void matrixMultiply(Mat3<U> const& _mat3) { matrixMultiply(_mat3, this); }
 
-    void matrixMultiply(Mat3<T> const& _mat, Vec2<T>* o_result) const
+    template <typename U> void matrixMultiply(Mat3<U> const& _mat, Vec2<T>* o_result) const
     {
-        o_result->x = _mat[0] * x() + _mat[3] * x() + _mat[6];
-        o_result->y = _mat[1] * y() + _mat[4] * y() + _mat[7];
+        o_result->m_elements[0] = _mat[0] * x() + _mat[3] * x() + _mat[6];
+        o_result->m_elements[1] = _mat[1] * y() + _mat[4] * y() + _mat[7];
     }
 
   private:
