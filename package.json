@@ -40,7 +40,7 @@
     "typescript": "~5.4.5"
   },
   "bin": {
-    "rc-build:cpp": "scripts/build:cpp.sh"
+    "rc-build-cpp": "scripts/build:cpp.sh"
   },
   "main": "bin/cjs/index.js",
   "typings": "bin/cjs/index.d.ts",
