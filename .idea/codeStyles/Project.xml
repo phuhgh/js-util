@@ -36,26 +36,8 @@
       <option name="SPACES_WITHIN_IMPORTS" value="true" />
       <option name="FUNCTION_EXPRESSION_BRACE_STYLE" value="2" />
     </TypeScriptCodeStyleSettings>
-    <clangFormatSettings>
-      <option name="ENABLED" value="true" />
-    </clangFormatSettings>
     <codeStyleSettings language="HTML">
       <option name="RIGHT_MARGIN" value="1000" />
-    </codeStyleSettings>
-    <codeStyleSettings language="ObjectiveC">
-      <option name="RIGHT_MARGIN" value="500" />
-      <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
-      <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
-      <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
-      <option name="BLANK_LINES_AROUND_METHOD" value="0" />
-      <option name="BLANK_LINES_AROUND_METHOD_IN_INTERFACE" value="0" />
-      <option name="BRACE_STYLE" value="2" />
-      <option name="CLASS_BRACE_STYLE" value="5" />
-      <option name="ELSE_ON_NEW_LINE" value="true" />
-      <option name="WHILE_ON_NEW_LINE" value="true" />
-      <option name="CATCH_ON_NEW_LINE" value="true" />
-      <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
-      <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
     </codeStyleSettings>
     <codeStyleSettings language="TypeScript">
       <option name="BLANK_LINES_AROUND_METHOD_IN_INTERFACE" value="0" />

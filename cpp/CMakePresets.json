@@ -11,10 +11,10 @@
       "displayName": "Debug",
       "generator": "Ninja",
       "binaryDir": "build/${presetName}",
-      "toolchainFile": "$env{EMSDK_ROOT}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+      "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_CROSSCOMPILING_EMULATOR": "$env{EMSDK_ROOT}/node/14.18.2_64bit/bin/node.exe",
+        "CMAKE_CROSSCOMPILING_EMULATOR": "$env{EMSDK}/node/14.18.2_64bit/bin/node.exe",
         "BUILD_JSUTIL_TEST": true
       }
     },
