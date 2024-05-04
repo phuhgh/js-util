@@ -12,6 +12,7 @@ print_instructions() {
   echo "--module-loader - the module loader for the javascript {mjs/cjs}"
   echo "--cmake-preset - {string} see CMakePresets.json for options"
   echo "--clean - delete the build dir"
+  echo "--out-dir - instead of outputting to build/{presetName}, output here instead"
   echo "================================="
   exit 1
 }
@@ -38,6 +39,9 @@ while [ "$1" != "" ]; do
     ;;
   --cmake-preset)
     CMAKE_PRESETS=$VALUE
+    ;;
+  --out-dir)
+    OUT_DIR=$VALUE
     ;;
   --clean)
     BUILD_CLEAN="true"
@@ -93,5 +97,9 @@ for CMAKE_PRESET in $CMAKE_PRESETS; do
     emcmake cmake --preset="$CMAKE_PRESET" || exit
   fi
 
-  cmake --build ./build/"$CMAKE_PRESET" || exit
+  if [ ! "$OUT_DIR" ]; then
+    cmake --build ./build/"$CMAKE_PRESET" || exit
+  else
+    cmake --build "$OUT_DIR" || exit
+fi
 done
