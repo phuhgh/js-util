@@ -12,6 +12,9 @@ template <typename T> struct Vec3
     T x() const { return m_elements[0]; };
     T y() const { return m_elements[1]; };
     T z() const { return m_elements[2]; };
+    void setX(T x_val) { m_elements[0] = x_val; }
+    void setY(T y_val) { m_elements[1] = y_val; }
+    void setZ(T z_val) { m_elements[2] = z_val; }
 
     Vec3() = default;
     explicit Vec3(std::array<T, scSIZE> values)
