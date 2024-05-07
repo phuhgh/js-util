@@ -19,7 +19,7 @@ template <typename T> struct Vec2
     T x() const { return m_elements[0]; }
     T y() const { return m_elements[1]; };
     void setX(T x_val) { m_elements[0] = x_val; }
-    void setY(T y_val) { m_elements[0] = y_val; }
+    void setY(T y_val) { m_elements[1] = y_val; }
 
     T& operator[](int index) { return m_elements[index]; }
     T  operator[](int index) const { return m_elements[index]; }

@@ -19,6 +19,10 @@ template <typename T> struct Vec4
     T y() const { return m_elements[1]; }
     T z() const { return m_elements[2]; }
     T w() const { return m_elements[3]; }
+    void setX(T x_val) { m_elements[0] = x_val; }
+    void setY(T y_val) { m_elements[1] = y_val; }
+    void setZ(T z_val) { m_elements[2] = z_val; }
+    void setW(T w_val) { m_elements[3] = w_val; }
 
     T& operator[](int index) { return m_elements[index]; }
     T  operator[](int index) const { return m_elements[index]; }

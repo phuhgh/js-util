@@ -73,6 +73,15 @@ REGISTER_TYPED_TEST_SUITE_P(TestVector, indexing);
 using VectorTypes = ::testing::Types<Vec2<float>, Vec3<float>, Vec4<float>, Mat2<float>, Mat3<float>, Mat4<float>>;
 INSTANTIATE_TYPED_TEST_SUITE_P(My, TestVector, VectorTypes);
 
+TEST(Vec2, gettersSetters)
+{
+    Vec2<float> result{};
+    result.setX(5);
+    result.setY(6);
+    EXPECT_EQ(result.x(), 5);
+    EXPECT_EQ(result.y(), 6);
+}
+
 TEST(Vec2, multiply)
 {
     Vec2<float>   result{};
@@ -90,4 +99,28 @@ TEST(Vec2, multiply)
     // compilation tests
     auto const& vec2Ref = vec2;
     vec2Ref.matrixMultiply(scaling_mat, &result);
+}
+
+TEST(Vec3, gettersSetters)
+{
+    Vec3<float> result{};
+    result.setX(5);
+    result.setY(6);
+    result.setZ(7);
+    EXPECT_EQ(result.x(), 5);
+    EXPECT_EQ(result.y(), 6);
+    EXPECT_EQ(result.z(), 7);
+}
+
+TEST(Vec4, gettersSetters)
+{
+    Vec4<float> result{};
+    result.setX(5);
+    result.setY(6);
+    result.setZ(7);
+    result.setW(8);
+    EXPECT_EQ(result.x(), 5);
+    EXPECT_EQ(result.y(), 6);
+    EXPECT_EQ(result.z(), 7);
+    EXPECT_EQ(result.w(), 8);
 }
