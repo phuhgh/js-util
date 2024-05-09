@@ -8,6 +8,7 @@ AllowAllParametersOfDeclarationOnNextLine: false
 AlignAfterOpenBracket: BlockIndent
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
+SeparateDefinitionBlocks: Leave
 EmptyLineBeforeAccessModifier: LogicalBlock
 FixNamespaceComments: true
 QualifierAlignment: Right
@@ -15,3 +16,4 @@ AllowShortFunctionsOnASingleLine: InlineOnly
 AlignConsecutiveDeclarations: Consecutive
 PointerAlignment: Left
 ReferenceAlignment: Left
+MaxEmptyLinesToKeep: 1

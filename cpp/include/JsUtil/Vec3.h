@@ -1,35 +1,25 @@
 #pragma once
 
-#include <array>
+#include "JsUtil/Impl/VectorBase.h"
 
 namespace JsUtil
 {
-template <typename T> struct Vec3
+
+template <typename T> class Vec3 : public AVectorBase<T, 3, Vec3<T>>
 {
-    static constexpr int scSIZE = 3;
-
   public:
-    T x() const { return m_elements[0]; };
-    T y() const { return m_elements[1]; };
-    T z() const { return m_elements[2]; };
-    void setX(T x_val) { m_elements[0] = x_val; }
-    void setY(T y_val) { m_elements[1] = y_val; }
-    void setZ(T z_val) { m_elements[2] = z_val; }
+    using AVectorBase<T, 3, Vec3<T>>::AVectorBase;
 
-    Vec3() = default;
-    explicit Vec3(std::array<T, scSIZE> values)
-        : m_elements(std::move(values))
-    {
-    }
+    T x() const { return Vec3<T>::AVectorBase::m_elements[0]; };
+    T y() const { return Vec3<T>::AVectorBase::m_elements[1]; };
+    T z() const { return Vec3<T>::AVectorBase::m_elements[2]; };
 
-    T& operator[](int index) { return m_elements[index]; }
-    T  operator[](int index) const { return m_elements[index]; }
-
-    std::array<T, scSIZE>*       asArray() { return &m_elements; }
-    std::array<T, scSIZE> const* asArray() const { return &m_elements; }
-    static constexpr int         size() { return scSIZE; }
-
-  private:
-    std::array<T, scSIZE> m_elements;
+    void setX(T x_val) { Vec3<T>::AVectorBase::m_elements[0] = x_val; }
+    void setY(T y_val) { Vec3<T>::AVectorBase::m_elements[1] = y_val; }
+    void setZ(T z_val) { Vec3<T>::AVectorBase::m_elements[2] = z_val; }
 };
+
+static_assert(std::is_trivial_v<JsUtil::Vec3<float>>, "trivial required");
+static_assert(std::is_standard_layout_v<JsUtil::Vec3<float>>, "standard layout required");
+
 } // namespace JsUtil

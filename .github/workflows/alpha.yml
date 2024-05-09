@@ -35,7 +35,7 @@ jobs:
         shell: bash
         run: |
           npm ci
-          npm run build:ci
+          npm run ci
 
       - name: Publish to the npm registry
         run: npm publish

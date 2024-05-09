@@ -21,5 +21,5 @@ if (${BUILD_JSUTIL_TEST})
     jsu_create_test(TestVector
             SOURCE_FILES test/TestVector.cpp
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
-            LINK_LIBRARIES JsUtil GTest::gtest_main)
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
 endif ()
