@@ -36,6 +36,9 @@
       <option name="SPACES_WITHIN_IMPORTS" value="true" />
       <option name="FUNCTION_EXPRESSION_BRACE_STYLE" value="2" />
     </TypeScriptCodeStyleSettings>
+    <clangFormatSettings>
+      <option name="ENABLED" value="true" />
+    </clangFormatSettings>
     <codeStyleSettings language="HTML">
       <option name="RIGHT_MARGIN" value="1000" />
     </codeStyleSettings>
