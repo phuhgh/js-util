@@ -5,6 +5,7 @@
 !cpp/dummy.cpp
 !cpp/FindJsUtil.cmake
 !cpp/JsUtilFunctions.cmake
+!cpp/FindGoogleTest.cmake
 !cpp/exported-names.txt
 !src/**/*
 !docs/**/*
