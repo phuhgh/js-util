@@ -1,6 +1,9 @@
 #include "JsUtil/Debug.h"
+
+#include <cassert>
 #include <emscripten/em_js.h>
 #include <emscripten/em_macros.h>
+#include <iostream>
 
 EM_JS(void, DebugImpl_impl_onAllocate, (), { Module.RC_JS_MEMORY_DEBUG_UTIL.onAllocate.emit(); });
 
@@ -10,18 +13,40 @@ EM_JS(void, DebugImpl_log, (char const* _message), {
     Module.RC_JS_MEMORY_DEBUG_UTIL.verboseLog(UTF8ToString(_message));
 });
 
-namespace JsUtil::Impl
+namespace JsUtil
 {
-void Debug_onAllocate()
+bool Debug::sJS_INTEGRATION = true;
+
+void Impl::Debug_onAllocate()
 {
-    DebugImpl_impl_onAllocate();
+#ifndef JSU_NO_JS_DEBUG
+    if (Debug::hasJsIntegration())
+    {
+        DebugImpl_impl_onAllocate();
+    }
+#endif
 }
-void Debug_error(char const* _message)
+void Impl::Debug_error(char const* _message)
 {
-    DebugImpl_error(_message);
+    if (Debug::hasJsIntegration())
+    {
+        DebugImpl_error(_message);
+    }
+    else
+    {
+        Debug_log(_message);
+        assert(false);
+    }
 }
-void Debug_log(char const* _message)
+void Impl::Debug_log(char const* _message)
 {
-    DebugImpl_log(_message);
+    if (Debug::hasJsIntegration())
+    {
+        DebugImpl_log(_message);
+    }
+    else
+    {
+        std::cout << _message << "\n";
+    }
 }
-} // namespace JsUtil::Impl
+} // namespace JsUtil

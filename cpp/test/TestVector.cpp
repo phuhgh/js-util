@@ -5,7 +5,6 @@
 #include "JsUtil/Vec2.h"
 #include "JsUtil/Vec3.h"
 #include "JsUtil/Vec4.h"
-#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

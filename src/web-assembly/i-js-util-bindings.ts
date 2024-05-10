@@ -12,4 +12,11 @@ export interface IJsUtilBindings
             IDebugBindings,
             IEmscriptenBindings
 {
+    _isDebugBuild(): boolean;
+}
+
+export interface IJsUtilTestBindings extends IJsUtilBindings
+{
+    // todo jack: more sensible
+    // _jsUtilTestFoo(someArg: boolean): void;
 }

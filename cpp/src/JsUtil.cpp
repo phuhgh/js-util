@@ -35,4 +35,14 @@ extern "C"
     {
         free(ptr);
     }
+
+    EMSCRIPTEN_KEEPALIVE
+    bool isDebugBuild(void)
+    {
+#ifdef NDEBUG
+        return false;
+#else
+        return true;
+#endif
+    }
 }

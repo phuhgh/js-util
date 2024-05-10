@@ -116,7 +116,7 @@ macro(internal_jsu_get_common_link_flags writeTo hasMain)
             "-sEXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
     if (${hasMain})
         string(PREPEND __DEFAULT_LINK_FLAGS "-sINVOKE_RUN=1 ")
-    else()
+    else ()
         string(PREPEND __DEFAULT_LINK_FLAGS "--no-entry -sMODULARIZE=1 ")
     endif ()
     string(APPEND ${writeTo} "${__DEFAULT_LINK_FLAGS}")
@@ -165,7 +165,7 @@ function(jsu_create_libray targetName)
         message(SEND_ERROR "Extra argument found adding \"${targetName}\": ${ARG_UNPARSED_ARGUMENTS}.")
     endif ()
 
-    jsu_resolve_files(_resolvedSourceFiles ${ARG_SOURCE_FILES})
+    jsu_resolve_files(_resolvedSourceFiles "${ARG_SOURCE_FILES}")
     validatePaths("${targetName} SOURCE_FILES" "${_resolvedSourceFiles}" false)
     validatePaths("${targetName} PUBLIC_INCLUDE_DIRS" "${ARG_PUBLIC_INCLUDE_DIRS}" true)
     validatePaths("${targetName} PRIVATE_INCLUDE_DIRS" "${ARG_PRIVATE_INCLUDE_DIRS}" true)
@@ -297,23 +297,32 @@ endmacro()
 
 # creates an executable
 function(jsu_create_executable targetName)
-    set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS HAS_MAIN)
-    cmake_parse_arguments(ARG "" "" "${_multiParamArgs}" "${ARGN}")
+    set(_multiParamArgs SOURCE_FILES COMPILE_OPTIONS INCLUDE_DIRS LINK_LIBRARIES LINK_OPTIONS)
+    cmake_parse_arguments(ARG "HAS_MAIN" "" "${_multiParamArgs}" "${ARGN}")
     unset(_multiParamArgs)
 
     if (DEFINED ARG_UNPARSED_ARGUMENTS)
         message(SEND_ERROR "Extra argument found adding \"${targetName}\": ${ARG_UNPARSED_ARGUMENTS}.")
     endif ()
 
-    jsu_resolve_files(_resolvedSourceFiles ${ARG_SOURCE_FILES})
+    jsu_resolve_files(_resolvedSourceFiles "${ARG_SOURCE_FILES}")
     validatePaths("${targetName} SOURCE_FILES" "${_resolvedSourceFiles}" false)
     validatePaths("${targetName} INCLUDE_DIRS" "${ARG_INCLUDE_DIRS}" true)
 
     add_executable("${targetName}" "${_resolvedSourceFiles}")
     set(_message "")
 
+    get_common_path_prefix("${_resolvedSourceFiles}" commonPrefix)
+    string(REPLACE "${commonPrefix}/" "" _resolvedSourceFiles "${_resolvedSourceFiles}")
+
+    string(REPLACE ";" " " _resolvedSourceFiles "${_resolvedSourceFiles}")
+    list(APPEND _message "SOURCE_FILES: ${_resolvedSourceFiles}")
+
     if (ARG_INCLUDE_DIRS)
         target_include_directories("${targetName}" PUBLIC "${ARG_INCLUDE_DIRS}")
+
+        string(REPLACE ";" " " ARG_INCLUDE_DIRS "${ARG_INCLUDE_DIRS}")
+        list(APPEND _message "INCLUDE_DIRS: ${ARG_INCLUDE_DIRS}")
     endif ()
 
     if (ARG_LINK_LIBRARIES)
@@ -349,7 +358,7 @@ function(jsu_create_test targetName)
             INCLUDE_DIRS "${ARG_INCLUDE_DIRS}"
             LINK_LIBRARIES "${ARG_LINK_LIBRARIES}"
             LINK_OPTIONS ${ARG_LINK_OPTIONS} -sENVIRONMENT=node -sEXIT_RUNTIME=1
-            HAS_MAIN true)
+            HAS_MAIN)
 
     add_test(NAME "${targetName}"
             COMMAND node "${CMAKE_CURRENT_BINARY_DIR}/${targetName}.js")

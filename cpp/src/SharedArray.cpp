@@ -55,7 +55,7 @@ extern "C"
     }
 
     [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE void f32SharedArray_delete(JsUtil::SharedArray<float>* sharedArray)
+    EMSCRIPTEN_KEEPALIVE void f32SharedArray_destroy(JsUtil::SharedArray<float>* sharedArray)
     {
         delete sharedArray;
     }
@@ -74,7 +74,7 @@ extern "C"
     }
 
     [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE void f64SharedArray_delete(JsUtil::SharedArray<double>* sharedArray)
+    EMSCRIPTEN_KEEPALIVE void f64SharedArray_destroy(JsUtil::SharedArray<double>* sharedArray)
     {
         delete sharedArray;
     }

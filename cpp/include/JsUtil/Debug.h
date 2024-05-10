@@ -13,7 +13,11 @@ void Debug_log(char const* _message);
 class Debug
 {
   public:
+    static bool hasJsIntegration() { return sJS_INTEGRATION; };
+    static void disableJsIntegration() { sJS_INTEGRATION = false; };
+
     typedef void(T_RunBlock)();
+
     static void onBeforeAllocate()
     {
 #ifndef NDEBUG
@@ -50,6 +54,9 @@ class Debug
 #else
     static void runBlock(T_RunBlock*) {}
 #endif
+
+  private:
+    static bool sJS_INTEGRATION;
 };
 
 } // namespace JsUtil

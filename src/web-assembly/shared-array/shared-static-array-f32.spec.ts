@@ -88,7 +88,16 @@ describe("=> F32SharedStaticArray", () =>
                             const instance = sharedStaticArray.getInstance();
                             expect(instance[0]).toBe(2);
                             const sharedArray2 = SharedArray.createOneF32(testModule.wrapper, testOwner.getLinkedReferences(), 8);
-                            expect(() => instance[0]).toThrow();
+
+                            if (testModule.wrapper.instance._isDebugBuild())
+                            {
+                                expect(() => instance[0]).toThrow();
+                            }
+                            else
+                            {
+                                expect(() => instance[0]).not.toThrow();
+                            }
+
                             sharedArray2.sharedObject.release();
                             sharedStaticArray.sharedObject.release();
                             sharedArray.sharedObject.release();

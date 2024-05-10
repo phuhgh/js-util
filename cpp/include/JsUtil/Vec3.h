@@ -19,7 +19,7 @@ template <typename T> class Vec3 : public AVectorBase<T, 3, Vec3<T>>
     void setZ(T z_val) { Vec3<T>::AVectorBase::m_elements[2] = z_val; }
 };
 
-static_assert(std::is_trivial_v<JsUtil::Vec3<float>>, "trivial required");
-static_assert(std::is_standard_layout_v<JsUtil::Vec3<float>>, "standard layout required");
+static_assert(std::is_trivial_v<Vec3<float>>, "trivial required");
+static_assert(std::is_standard_layout_v<Vec3<float>>, "standard layout required");
 
 } // namespace JsUtil

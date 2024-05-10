@@ -11,9 +11,6 @@ while [ "$1" != "" ]; do
   --cmake-preset)
     PRESET=$VALUE
     ;;
-  --skip-build)
-    SKIP_BUILD="true"
-    ;;
   *)
     # can be ignored...
     ;;
@@ -21,7 +18,4 @@ while [ "$1" != "" ]; do
   shift
 done
 
-if [ "$SKIP_BUILD" != "true" ]; then
-  cp cpp/build/"${PRESET}"/util-test-module.js bin/esm/external/util-test-module.cjs || exit
-  cp cpp/build/"${PRESET}"/util-test-module.wasm bin/esm/external/util-test-module.wasm || exit
-fi
+cd cpp/build/"${PRESET}" && ctest --no-tests=error -j 4 --output-on-failure --timeout 60

@@ -183,7 +183,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         this.sharedObject.registerOnFreeListener(wrapper.memoryResize.addTemporaryListener(this));
         this.length = length;
         this.ctor = ctor;
-        this.cDelete = `_${cMethodPrefix}_delete`;
+        this.cDelete = `_${cMethodPrefix}_destroy`;
         this.cGetArrayAddress = `_${cMethodPrefix}_getArrayAddress`;
         this.wrapper = wrapper;
         this.elementByteSize = ctor.BYTES_PER_ELEMENT;
@@ -208,5 +208,5 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     private instance: InstanceType<TCtor>;
     private readonly wrapper: IEmscriptenWrapper<ISharedArrayBindings>;
     private readonly cGetArrayAddress: `_${TSharedArrayPrefix}_getArrayAddress`;
-    private readonly cDelete: `_${TSharedArrayPrefix}_delete`;
+    private readonly cDelete: `_${TSharedArrayPrefix}_destroy`;
 }

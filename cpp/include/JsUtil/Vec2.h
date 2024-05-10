@@ -24,7 +24,7 @@ template <typename T> class Vec2 : public AVectorBase<T, 2, Vec2<T>>
     template <typename U> void matrixMultiply(Mat3<U> const& _mat3) { matrixMultiply(_mat3, this); }
 };
 
-static_assert(std::is_trivial_v<JsUtil::Vec2<float>>, "trivial required");
-static_assert(std::is_standard_layout_v<JsUtil::Vec2<float>>, "standard layout required");
+static_assert(std::is_trivial_v<Vec2<float>>, "trivial required");
+static_assert(std::is_standard_layout_v<Vec2<float>>, "standard layout required");
 
 } // namespace JsUtil

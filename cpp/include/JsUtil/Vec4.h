@@ -21,7 +21,7 @@ template <typename T> class Vec4 : public AVectorBase<T, 4, Vec4<T>>
     void setW(T w_val) { Vec4<T>::AVectorBase::m_elements[3] = w_val; }
 };
 
-static_assert(std::is_trivial_v<JsUtil::Vec4<float>>, "trivial required");
-static_assert(std::is_standard_layout_v<JsUtil::Vec4<float>>, "standard layout required");
+static_assert(std::is_trivial_v<Vec4<float>>, "trivial required");
+static_assert(std::is_standard_layout_v<Vec4<float>>, "standard layout required");
 
 } // namespace JsUtil

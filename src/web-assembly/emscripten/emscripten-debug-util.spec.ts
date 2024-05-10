@@ -25,8 +25,17 @@ describe("JsUtil::Debug", () =>
         it("| logs if DEBUG_VERBOSE is true", () =>
         {
             const debugSpy = spyOn(console, "debug");
+            const isDebug = testModule.wrapper.instance._isDebugBuild();
             testModule.endEmscriptenProgram();
-            expect(debugSpy).toHaveBeenCalledWith("exiting program...");
+
+            if (isDebug)
+            {
+                expect(debugSpy).toHaveBeenCalledWith("exiting program...");
+            }
+            else
+            {
+                expect(debugSpy).not.toHaveBeenCalled();
+            }
         });
 
         it("| doesn't log if DEBUG_VERBOSE is false", () =>
@@ -53,8 +62,18 @@ describe("JsUtil::Debug", () =>
 
         it("| emits errors", () =>
         {
-            expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPointer))
-                .toThrowError("expected shared array, got null ptr");
+            if (testModule.wrapper.instance._isDebugBuild())
+            {
+                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPointer))
+                    .toThrowError("expected shared array, got null ptr");
+
+            }
+            else
+            {
+                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPointer))
+                    .not.toThrowError("expected shared array, got null ptr");
+            }
+
         });
     });
 

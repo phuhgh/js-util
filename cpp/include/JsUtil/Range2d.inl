@@ -51,30 +51,49 @@ template <typename T> template <typename U> bool Range2d<T>::pointInRange(JsUtil
 
 template <typename T> Range2d<T> Range2d<T>::getNw() const
 {
-    return Range2d<T>{{xMin(), xMin() + getXRange() / 2, yMin() + getYRange() / 2, yMax()}};
+    return Range2d<T>{{
+        xMin(),
+        static_cast<T>(xMin() + getXRange() / 2),
+        static_cast<T>(yMin() + getYRange() / 2),
+        yMax(),
+    }};
 }
 
 template <typename T> Range2d<T> Range2d<T>::getNe() const
 {
-    return Range2d<T>{{xMin() + getXRange() / 2, xMax(), yMin() + getYRange() / 2, yMax()}};
+    return Range2d<T>{{
+        static_cast<T>(xMin() + getXRange() / 2),
+        xMax(),
+        static_cast<T>(yMin() + getYRange() / 2),
+        yMax(),
+    }};
 }
 
 template <typename T> Range2d<T> Range2d<T>::getSe() const
 {
-    return Range2d<T>{{xMin() + getXRange() / 2, xMax(), yMin(), yMin() + getYRange() / 2}};
+    return Range2d<T>{{
+        static_cast<T>(xMin() + getXRange() / 2),
+        xMax(),
+        yMin(),
+        static_cast<T>(yMin() + getYRange() / 2),
+    }};
 }
 
 template <typename T> Range2d<T> Range2d<T>::getSw() const
 {
-    return Range2d<T>{{xMin(), xMin() + getXRange() / 2, yMin(), yMin() + getYRange() / 2}};
+    return Range2d<T>{{
+        xMin(),
+        static_cast<T>(xMin() + getXRange() / 2),
+        yMin(),
+        static_cast<T>(yMin() + getYRange() / 2),
+    }};
 }
 
 template class Range2d<float>;
-
 template class Range2d<double>;
 
-static_assert(std::is_trivial_v<JsUtil::Range2d<float>>, "trivial required");
-static_assert(std::is_standard_layout_v<JsUtil::Range2d<float>>, "standard layout required");
+static_assert(std::is_trivial_v<Range2d<float>>, "trivial required");
+static_assert(std::is_standard_layout_v<Range2d<float>>, "standard layout required");
 static_assert(sizeof(Mat2<float>) == sizeof(Range2d<float>), "must be interchangeable with Mat2");
 
 } // namespace JsUtil

@@ -17,7 +17,7 @@ template <typename T> class Mat2 : public AVectorBase<T, 4, Mat2<T>>
     }
 };
 
-static_assert(std::is_trivial_v<JsUtil::Mat2<float>>, "trivial required");
-static_assert(std::is_standard_layout_v<JsUtil::Mat2<float>>, "standard layout required");
+static_assert(std::is_trivial_v<Mat2<float>>, "trivial required");
+static_assert(std::is_standard_layout_v<Mat2<float>>, "standard layout required");
 
 } // namespace JsUtil

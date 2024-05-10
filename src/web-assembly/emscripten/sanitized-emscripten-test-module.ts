@@ -29,7 +29,7 @@ export interface ISanitizedTestModuleOptions
  */
 export const emscriptenTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: new Set<string>(["==42==WARNING: AddressSanitizer failed to allocate 0xfffffffc bytes"]),
-    initialMemoryPages: 8192,
+    initialMemoryPages: 128,
     maxMemoryPages: 8192,
     quitThrowsWith: {},
 };

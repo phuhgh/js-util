@@ -71,7 +71,7 @@ describe("=> SharedMemoryBlock", () =>
             {
                 const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
                 const dataView = smb.getDataView();
-                const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 8388608);
+                const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 16777216);
                 expect(() => dataView.getFloat32(0)).toThrow();
 
                 smb.sharedObject.release();

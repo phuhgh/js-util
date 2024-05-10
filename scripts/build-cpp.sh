@@ -13,6 +13,8 @@ print_instructions() {
   echo "--cmake-preset - {string} see CMakePresets.json for options"
   echo "--clean - delete the build dir"
   echo "--out-dir - instead of outputting to build/{presetName}, output here instead"
+  echo "--export-test - include symbols for test functions in exported_names.txt"
+  echo "--skip-build - don't configure or build"
   echo "================================="
   exit 1
 }
@@ -43,8 +45,14 @@ while [ "$1" != "" ]; do
   --out-dir)
     OUT_DIR=$VALUE
     ;;
+  --export-test)
+    EXTRACTION_ARG="--expose-tests"
+    ;;
   --clean)
     BUILD_CLEAN="true"
+    ;;
+  --skip-build)
+    SKIP_BUILD="true"
     ;;
   *)
     echo "ERROR: unknown parameter \"$PARAM\""
@@ -59,7 +67,7 @@ if [ -z "$JS_BINDINGS_FILE" ] || [ -z "$CMAKE_PROJ_DIR" ]; then
   print_instructions
 fi
 
-if [ ! "$CMAKE_PRESETS" ]; then
+if [ ! "$CMAKE_PRESETS" ] && [ "$SKIP_BUILD" != "true" ]; then
   print_instructions
 fi
 
@@ -74,9 +82,9 @@ if [ ! -d "$CMAKE_PROJ_DIR" ]; then
 fi
 
 if [ "$MODULE_LOADER" = "cjs" ]; then
-  node "$SCRIPTS_DIR/extract-cpp-names.cjs" "$JS_BINDINGS_FILE" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
+  node "$SCRIPTS_DIR/extract-cpp-names.cjs" "$JS_BINDINGS_FILE" "$EXTRACTION_ARG" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
 elif [ "$MODULE_LOADER" = "mjs" ]; then
-  node "$SCRIPTS_DIR/extract-cpp-names.mjs" "$JS_BINDINGS_FILE" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
+  node  "$SCRIPTS_DIR/extract-cpp-names.mjs" "$JS_BINDINGS_FILE" "$EXTRACTION_ARG" >"$CMAKE_PROJ_DIR/exported-names.txt" || exit
 else
   print_instructions
 fi
@@ -88,18 +96,20 @@ if [ "$BUILD_CLEAN" = "true" ]; then
   rm -rf build
 fi
 
-for CMAKE_PRESET in $CMAKE_PRESETS; do
-  # these are defined if we're running on windows, we otherwise don't care...
-  # shellcheck disable=SC2039
-  if [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ]; then
-    emcmake.bat cmake --preset="$CMAKE_PRESET" || exit
-  else
-    emcmake cmake --preset="$CMAKE_PRESET" || exit
-  fi
+if [ "$SKIP_BUILD" != "true" ]; then
+  for CMAKE_PRESET in $CMAKE_PRESETS; do
+    # these are defined if we're running on windows, we otherwise don't care...
+    # shellcheck disable=SC2039
+    if [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ]; then
+      emcmake.bat cmake --preset="$CMAKE_PRESET" || exit
+    else
+      emcmake cmake --preset="$CMAKE_PRESET" || exit
+    fi
 
-  if [ ! "$OUT_DIR" ]; then
-    cmake --build ./build/"$CMAKE_PRESET" || exit
-  else
-    cmake --build "$OUT_DIR" || exit
+    if [ ! "$OUT_DIR" ]; then
+      cmake --build ./build/"$CMAKE_PRESET" || exit
+    else
+      cmake --build "$OUT_DIR" || exit
+    fi
+  done
 fi
-done
