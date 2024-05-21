@@ -3,9 +3,14 @@
 namespace JsUtil
 {
 
-template <typename T> JsUtil::Range2d<T> Range2d<T>::createOne(JsUtil::Vec2<T> _bottomLeft, JsUtil::Vec2<T> _topRight)
+template <typename T> JsUtil::Range2d<T> Range2d<T>::fromCorners(JsUtil::Vec2<T> _bottomLeft, JsUtil::Vec2<T> _topRight)
 {
     return JsUtil::Range2d<T>{{_bottomLeft.x(), _topRight.x(), _bottomLeft.y(), _topRight.y()}};
+}
+
+template <typename T> JsUtil::Range2d<T> Range2d<T>::fromRanges(JsUtil::Vec2<T> _horizontal, JsUtil::Vec2<T> _vertical)
+{
+    return JsUtil::Range2d<T>{{_horizontal.min(), _horizontal.max(), _vertical.min(), _vertical.max()}};
 }
 
 template <typename T> template <typename U> bool Range2d<T>::rangeIntersects(Range2d<U> const& _range) const
@@ -86,6 +91,46 @@ template <typename T> Range2d<T> Range2d<T>::getSw() const
         static_cast<T>(xMin() + getXRange() / 2),
         yMin(),
         static_cast<T>(yMin() + getYRange() / 2),
+    }};
+}
+
+template <typename T> Range2d<T> Range2d<T>::getN() const
+{
+    return Range2d<T>{{
+        xMin(),
+        xMax(),
+        static_cast<T>(yMin() + getYRange() / 2),
+        yMax(),
+    }};
+}
+
+template <typename T> Range2d<T> Range2d<T>::getE() const
+{
+    return Range2d<T>{{
+        static_cast<T>(xMin() + getXRange() / 2),
+        xMax(),
+        yMin(),
+        yMax(),
+    }};
+}
+
+template <typename T> Range2d<T> Range2d<T>::getS() const
+{
+    return Range2d<T>{{
+        xMin(),
+        xMax(),
+        yMin(),
+        static_cast<T>(yMin() + getYRange() / 2),
+    }};
+}
+
+template <typename T> Range2d<T> Range2d<T>::getW() const
+{
+    return Range2d<T>{{
+        xMin(),
+        static_cast<T>(xMin() + getXRange() / 2),
+        yMin(),
+        yMax(),
     }};
 }
 

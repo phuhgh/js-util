@@ -10,8 +10,10 @@ namespace JsUtil
 template <typename T> class Range2d : public Mat2<T>
 {
   public:
+    static Range2d<T> fromCorners(Vec2<T> _bottomLeft, Vec2<T> _topRight);
+    static Range2d<T> fromRanges(Vec2<T> _horizontal, Vec2<T> _vertical);
+
     using Mat2<T>::Mat2;
-    Range2d<T> createOne(Vec2<T> _bottomLeft, Vec2<T> _topRight);
 
     // getters
     T xMin() const { return this->operator[](0); }
@@ -42,6 +44,12 @@ template <typename T> class Range2d : public Mat2<T>
     Range2d<T> getNe() const;
     Range2d<T> getSw() const;
     Range2d<T> getSe() const;
+
+    // halves
+    Range2d<T> getN() const;
+    Range2d<T> getE() const;
+    Range2d<T> getS() const;
+    Range2d<T> getW() const;
 };
 
 } // namespace JsUtil

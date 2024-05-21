@@ -129,6 +129,12 @@ TEST(Vec4, gettersSetters)
 
 TEST(Range2d, basicFunctionality)
 {
+    auto fromRange = Range2d<int>::fromRanges(Vec2<int>{{0, 1}}, Vec2<int>{{2, 3}});
+    EXPECT_EQ(fromRange.xMin(), 0);
+    EXPECT_EQ(fromRange.xMax(), 1);
+    EXPECT_EQ(fromRange.yMin(), 2);
+    EXPECT_EQ(fromRange.yMax(), 3);
+
     Range2d<int> r2d{{1, 2, 3, 4}};
     EXPECT_EQ(r2d.xMin(), 1);
     EXPECT_EQ(r2d.xMax(), 2);
@@ -174,4 +180,27 @@ TEST(Range2d, basicFunctionality)
     EXPECT_TRUE((r2d.getSe() == Range2d<int>{{3, 4, 6, 7}}));
     EXPECT_TRUE((r2d.getSw() == Range2d<int>{{2, 3, 6, 7}}));
     EXPECT_TRUE((r2d.getNw() == Range2d<int>{{2, 3, 7, 8}}));
+
+    EXPECT_TRUE((r2d.getN() == Range2d<int>{{2, 4, 7, 8}}));
+    EXPECT_TRUE((r2d.getE() == Range2d<int>{{3, 4, 6, 8}}));
+    EXPECT_TRUE((r2d.getS() == Range2d<int>{{2, 4, 6, 7}}));
+    EXPECT_TRUE((r2d.getW() == Range2d<int>{{2, 3, 6, 8}}));
+}
+
+TEST(Range2d, integerQuadSubdivision)
+{
+    Range2d<unsigned> r1{{0, 11, 0, 21}};
+    EXPECT_TRUE(r1.getNw() == (Range2d<unsigned>{{0, 5, 10, 21}}));
+    EXPECT_TRUE(r1.getNe() == (Range2d<unsigned>{{5, 11, 10, 21}}));
+    EXPECT_TRUE(r1.getSw() == (Range2d<unsigned>{{0, 5, 0, 10}}));
+    EXPECT_TRUE(r1.getSe() == (Range2d<unsigned>{{5, 11, 0, 10}}));
+}
+
+TEST(Range2d, integerHalfSubdivision)
+{
+    Range2d<unsigned> r1{{0, 11, 0, 21}};
+    EXPECT_TRUE(r1.getN() == (Range2d<unsigned>{{0, 11, 10, 21}}));
+    EXPECT_TRUE(r1.getE() == (Range2d<unsigned>{{5, 11, 0, 21}}));
+    EXPECT_TRUE(r1.getS() == (Range2d<unsigned>{{0, 11, 0, 10}}));
+    EXPECT_TRUE(r1.getW() == (Range2d<unsigned>{{0, 5, 0, 21}}));
 }

@@ -13,6 +13,9 @@ template <typename T> class Vec2 : public AVectorBase<T, 2, Vec2<T>>
     T x() const { return Vec2<T>::AVectorBase::m_elements[0]; }
     T y() const { return Vec2<T>::AVectorBase::m_elements[1]; };
 
+    T min() const { return Vec2<T>::AVectorBase::m_elements[0]; }
+    T max() const { return Vec2<T>::AVectorBase::m_elements[1]; };
+
     void setX(T x_val) { Vec2<T>::AVectorBase::m_elements[0] = x_val; }
     void setY(T y_val) { Vec2<T>::AVectorBase::m_elements[1] = y_val; }
 
