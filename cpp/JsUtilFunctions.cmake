@@ -370,8 +370,11 @@ function(jsu_create_test targetName)
             HAS_MAIN
             NO_BINDINGS)
 
+    # make it simpler to run all of the tests in one go
+    set_target_properties(${targetName} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/test")
+
     add_test(NAME "${targetName}"
-            COMMAND node "${CMAKE_CURRENT_BINARY_DIR}/${targetName}.js")
+            COMMAND node "${CMAKE_BINARY_DIR}/test/${targetName}.js")
 endfunction(jsu_create_test)
 
 # todo jack: test if this can handle the case where there is no node_modules dir
