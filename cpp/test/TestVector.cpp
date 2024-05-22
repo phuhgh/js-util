@@ -185,6 +185,9 @@ TEST(Range2d, basicFunctionality)
     EXPECT_TRUE((r2d.getE() == Range2d<int>{{3, 4, 6, 8}}));
     EXPECT_TRUE((r2d.getS() == Range2d<int>{{2, 4, 6, 7}}));
     EXPECT_TRUE((r2d.getW() == Range2d<int>{{2, 3, 6, 8}}));
+
+    // should be able to use overloads from vector base
+    EXPECT_FALSE(r2d.getNe() == r2d.getNw());
 }
 
 TEST(Range2d, integerQuadSubdivision)

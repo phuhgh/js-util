@@ -29,7 +29,11 @@ if (${BUILD_JSUTIL_TEST})
             COMPILE_OPTIONS
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
-
+    jsu_create_test(DebugUtil
+            SOURCE_FILES test/TestDebug.cpp
+            COMPILE_OPTIONS
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     # todo jack: workerLoop
     jsu_create_test(TestWorkerTask
             SOURCE_FILES test/TestWorkerLoop.cpp
