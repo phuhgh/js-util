@@ -1,12 +1,13 @@
-import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
+import { SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
 import { _Debug } from "../../debug/_debug.js";
 import { nullPointer } from "./null-pointer.js";
 import utilTestModule from "../../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
+import { getTestModuleOptions } from "../../test-util/test-utils.js";
 
 describe("JsUtil::Debug", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, emscriptenTestModuleOptions);
+    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
 
     describe("::Log", () =>
     {

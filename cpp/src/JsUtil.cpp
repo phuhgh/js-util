@@ -1,7 +1,6 @@
 #include "JsUtil/Debug.h"
 #include <cstdint>
 #include <cstdlib>
-#include <emscripten/bind.h>
 #include <emscripten/em_macros.h>
 
 // purely for javascript, these are never referenced from c++

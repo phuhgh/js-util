@@ -1,4 +1,4 @@
-import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "../../web-assembly/emscripten/sanitized-emscripten-test-module.js";
+import { SanitizedEmscriptenTestModule } from "../../web-assembly/emscripten/sanitized-emscripten-test-module.js";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import utilTestModule from "../../external/util-test-module.cjs";
 import { SharedTypedArrayTuple } from "./shared-typed-array-tuple.js";
@@ -7,6 +7,7 @@ import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
 import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
 import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
+import { getTestModuleOptions } from "../../test-util/test-utils.js";
 
 describe("=> SharedTypedArrayTuple", () =>
 {
@@ -19,7 +20,7 @@ describe("=> SharedTypedArrayTuple", () =>
     });
 
     afterEach(() => testOwner.release());
-    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, emscriptenTestModuleOptions);
+    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
 
     beforeAll(async () =>
     {

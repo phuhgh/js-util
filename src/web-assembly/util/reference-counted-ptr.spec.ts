@@ -1,14 +1,15 @@
-import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
+import { SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import utilTestModule from "../../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { ReferenceCountedPtr } from "./reference-counted-ptr.js";
 import { nullPointer } from "../emscripten/null-pointer.js";
 import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
+import { getTestModuleOptions } from "../../test-util/test-utils.js";
 
 describe("=> ReferenceCountedPtr", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule<object, object>(utilTestModule, emscriptenTestModuleOptions);
+    const testModule = new SanitizedEmscriptenTestModule<object, object>(utilTestModule, getTestModuleOptions());
 
     beforeAll(async () =>
     {

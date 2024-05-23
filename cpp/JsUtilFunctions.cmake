@@ -53,7 +53,7 @@ endfunction()
 # note: call this before creating any targets
 # note: enables LTO for all targets in release...
 # mode {ASAN/SAFE_HEAP} - optional
-macro(jsu_set_build_flags mode)
+function(jsu_set_build_flags mode)
     set(JSU_CXX_FLAGS "")
     set(JSU_EXE_LINKER_FLAGS "")
     set(JSU_STATIC_LINKER_FLAGS "")
@@ -82,17 +82,16 @@ macro(jsu_set_build_flags mode)
         message(STATUS "Applying safe heap build flags")
         list(APPEND JSU_EXE_LINKER_FLAGS "-sSAFE_HEAP")
         list(APPEND JSU_STATIC_LINKER_FLAGS "-sSAFE_HEAP")
-    else (${mode} STREQUAL "")
-        message(SEND_ERROR "Unknown mode option '${mode}'. The options are: ASAN, SAFE_HEAP.")
     endif ()
+
+    list(REMOVE_DUPLICATES JSU_CXX_FLAGS)
+    list(REMOVE_DUPLICATES JSU_STATIC_LINKER_FLAGS)
+    list(REMOVE_DUPLICATES JSU_EXE_LINKER_FLAGS)
 
     set_property(GLOBAL PROPERTY JSU_CXX_FLAGS "${JSU_CXX_FLAGS}")
     set_property(GLOBAL PROPERTY JSU_STATIC_LINKER_FLAGS "${JSU_STATIC_LINKER_FLAGS}")
     set_property(GLOBAL PROPERTY JSU_EXE_LINKER_FLAGS "${JSU_EXE_LINKER_FLAGS}")
-    UNSET(JSU_CXX_FLAGS)
-    UNSET(JSU_STATIC_LINKER_FLAGS)
-    UNSET(JSU_EXE_LINKER_FLAGS)
-endmacro()
+endfunction()
 
 macro(internal_jsu_get_common_link_flags writeTo hasMain noBindings)
     LIST(LENGTH RC_JS_EXPORTED_NAMES __length)
@@ -119,7 +118,7 @@ macro(internal_jsu_get_common_link_flags writeTo hasMain noBindings)
         string(PREPEND __DEFAULT_LINK_FLAGS "--no-entry -sMODULARIZE=1 ")
     endif ()
 
-    if(NOT ${noBindings})
+    if (NOT ${noBindings})
         string(APPEND __DEFAULT_LINK_FLAGS "-sEXPORTED_FUNCTIONS=['${__EXPORTED_NAMES}']")
     endif ()
 
@@ -341,11 +340,10 @@ function(jsu_create_executable targetName)
         # ensure there is always a boolean, makes it easier to consume...
         set(ARG_HAS_MAIN false)
     endif ()
-        if (NOT ARG_NO_BINDINGS)
+    if (NOT ARG_NO_BINDINGS)
         # ensure there is always a boolean, makes it easier to consume...
         set(ARG_NO_BINDINGS false)
     endif ()
-
 
     internal_jsu_set_compile_options()
     internal_jsu_set_link_options(true ${ARG_HAS_MAIN} ${ARG_NO_BINDINGS})

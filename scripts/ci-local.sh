@@ -11,7 +11,8 @@ npm run test || exit
 
 # release build
 npm run build:cpp -- --cmake-preset=release --export-test || exit
-IS_RELEASE_BUILD=true npm run test --  -- --cmake-preset=release || exit
+npm run test:js || exit
+npm run test:cpp -- --cmake-preset=release || exit
 
 # generate library
 npm run lib || exit

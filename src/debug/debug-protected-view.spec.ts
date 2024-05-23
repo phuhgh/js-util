@@ -1,11 +1,12 @@
 import { DebugProtectedView } from "./debug-protected-view.js";
-import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
+import { SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
 import utilTestModule from "../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
+import { getTestModuleOptions } from "../test-util/test-utils.js";
 
 describe("=> DebugProtectedView", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule<object, object>(utilTestModule, emscriptenTestModuleOptions);
+    const testModule = new SanitizedEmscriptenTestModule<object, object>(utilTestModule, getTestModuleOptions());
 
     beforeEach(async () =>
     {

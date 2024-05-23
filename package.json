@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf bin cpp/build cpp/exported-names.txt docs dist tmp",
-    "test": "npm run test:js && npm run test:cpp -- --cmake-preset=asan",
+    "test": "npm run test:js -- JSU_BUILD_MODE=ASAN && npm run test:cpp -- --cmake-preset=asan",
     "test:js": "jasmine --config=jasmine.json",
     "test:cpp": "sh scripts/test-cpp-local.sh",
     "copy-assets": "cp -r assets/release/* bin/",

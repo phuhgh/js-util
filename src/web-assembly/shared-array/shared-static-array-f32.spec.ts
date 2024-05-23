@@ -1,4 +1,4 @@
-import { emscriptenTestModuleOptions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
+import { SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import { SharedStaticArray, TF32SharedStaticArray } from "./shared-static-array.js";
 import { SharedArray, TF32SharedArray } from "./shared-array.js";
 import { IJsUtilBindings } from "../i-js-util-bindings.js";
@@ -7,6 +7,7 @@ import utilTestModule from "../../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
+import { getTestModuleOptions } from "../../test-util/test-utils.js";
 
 describe("=> F32SharedStaticArray", () =>
 {
@@ -20,7 +21,7 @@ describe("=> F32SharedStaticArray", () =>
 
     describe("=> asan tests", () =>
     {
-        const testModule = new SanitizedEmscriptenTestModule(utilTestModule, emscriptenTestModuleOptions);
+        const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
         let sharedArray: TF32SharedArray;
 
         beforeAll(async () =>
@@ -110,7 +111,7 @@ describe("=> F32SharedStaticArray", () =>
 
     describe("=> safe heap tests", () =>
     {
-        const testModule = new SanitizedEmscriptenTestModule(utilTestModule, emscriptenTestModuleOptions);
+        const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
 
         beforeAll(async () =>
         {

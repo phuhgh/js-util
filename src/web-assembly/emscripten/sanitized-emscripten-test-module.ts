@@ -24,15 +24,25 @@ export interface ISanitizedTestModuleOptions
     quitThrowsWith: object;
 }
 
-/**
- * @public
- */
-export const emscriptenTestModuleOptions: ISanitizedTestModuleOptions = {
+
+const emscriptenTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: new Set<string>(["==42==WARNING: AddressSanitizer failed to allocate 0xfffffffc bytes"]),
     initialMemoryPages: 128,
     maxMemoryPages: 8192,
     quitThrowsWith: {},
 };
+
+/**
+ * @public
+ */
+export function getEmscriptenTestModuleOptions(
+    overrides?: Partial<ISanitizedTestModuleOptions>,
+)
+    : ISanitizedTestModuleOptions
+{
+    return { ...emscriptenTestModuleOptions, ...overrides };
+}
+
 
 /**
  * @public

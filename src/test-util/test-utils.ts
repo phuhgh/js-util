@@ -1,4 +1,6 @@
 import { _Debug } from "../debug/_debug.js";
+import { getEmscriptenTestModuleOptions } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
+import { IDictionary } from "../typescript/i-dictionary.js";
 
 /**
  * @internal
@@ -37,4 +39,26 @@ export function expectValueToBeNearTo(value: number, expectation: number, varian
 {
     expect(value).toBeLessThan(expectation + variance);
     expect(value).toBeGreaterThan(expectation - variance);
+}
+
+
+declare const process: { env: IDictionary<string>, argv: readonly string[] };
+
+export function getTestModuleOptions()
+{
+    let mode = process.argv.find((v) => v.startsWith("JSU_BUILD_MODE="));
+
+    if (mode != null)
+    {
+        mode = mode.split("=")[1];
+    }
+    let initialMemory = 128;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    switch (mode)
+    {
+        case "ASAN":
+            initialMemory = 4810;
+            break;
+    }
+    return getEmscriptenTestModuleOptions({ initialMemoryPages: initialMemory });
 }
