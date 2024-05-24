@@ -2,7 +2,7 @@ import { SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripte
 import { SharedMemoryBlock } from "./shared-memory-block.js";
 import utilTestModule from "../../external/util-test-module.cjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
-import { blockScopedLifecycle } from "../../lifecycle/block-scoped-lifecycle.js";
+import { blockScopedCallback } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
 import { getTestModuleOptions } from "../../test-util/test-utils.js";
 
@@ -34,24 +34,21 @@ describe("=> SharedMemoryBlock", () =>
 
         beforeEach(() => testModule.reset());
 
-        it("| creates, writes, reads and destroys without triggering the asan", () =>
+        it("| creates, writes, reads and destroys without triggering the asan", blockScopedCallback(() =>
         {
-            blockScopedLifecycle(() =>
-            {
-                const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-                expect(smb.getDataView().byteLength).toEqual(128);
-                new Float32Array(smb.getDataView().buffer, smb.pointer, 4).set([1, 2, 3, 4]);
+            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
+            expect(smb.getDataView().byteLength).toEqual(128);
+            new Float32Array(smb.getDataView().buffer, smb.pointer, 4).set([1, 2, 3, 4]);
 
-                expect(smb.getDataView().getFloat32(0, true)).toEqual(1);
-                expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT, true)).toEqual(2);
-                expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 2, true)).toEqual(3);
-                expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 3, true)).toEqual(4);
+            expect(smb.getDataView().getFloat32(0, true)).toEqual(1);
+            expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT, true)).toEqual(2);
+            expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 2, true)).toEqual(3);
+            expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 3, true)).toEqual(4);
 
-                testOwner.release();
-                smb.sharedObject.release();
-                expect(smb.sharedObject.getIsDestroyed()).toBeTrue();
-            });
-        });
+            testOwner.release();
+            smb.sharedObject.release();
+            expect(smb.sharedObject.getIsDestroyed()).toBeTrue();
+        }));
     });
 
     describe("=> safe heap tests", () =>
@@ -66,42 +63,33 @@ describe("=> SharedMemoryBlock", () =>
 
         beforeEach(() => testModule.reset());
 
-        it("| invalidates dataView on memory resize", () =>
+        it("| invalidates dataView on memory resize", blockScopedCallback(() =>
         {
-            blockScopedLifecycle(() =>
-            {
-                const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-                const dataView = smb.getDataView();
-                const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 16777216);
-                expect(() => dataView.getFloat32(0)).toThrow();
+            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
+            const dataView = smb.getDataView();
+            const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 16777216);
+            expect(() => dataView.getFloat32(0)).toThrow();
 
-                smb.sharedObject.release();
-                smb2.sharedObject.release();
-            });
-        });
+            smb.sharedObject.release();
+            smb2.sharedObject.release();
+        }));
 
-        it("| invalidates dataView on memory release", () =>
+        it("| invalidates dataView on memory release", blockScopedCallback(() =>
         {
-            blockScopedLifecycle(() =>
-            {
-                const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-                smb.sharedObject.release();
-                testOwner.release();
-                expect(() => smb.getDataView().getFloat32(0)).toThrow();
-            });
-        });
+            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
+            smb.sharedObject.release();
+            testOwner.release();
+            expect(() => smb.getDataView().getFloat32(0)).toThrow();
+        }));
 
-        it("| updates the dataView on resize", () =>
+        it("| updates the dataView on resize", blockScopedCallback(() =>
         {
-            blockScopedLifecycle(() =>
-            {
-                const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-                const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 8388608);
-                smb.getDataView().getFloat32(0);
+            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
+            const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 8388608);
+            smb.getDataView().getFloat32(0);
 
-                smb.sharedObject.release();
-                smb2.sharedObject.release();
-            });
-        });
+            smb.sharedObject.release();
+            smb2.sharedObject.release();
+        }));
     });
 });

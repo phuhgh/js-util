@@ -1,4 +1,4 @@
-import { blockScopedLifecycle } from "./block-scoped-lifecycle.js";
+import { BlockScopedLifecycle, blockScopedLifecycle } from "./block-scoped-lifecycle.js";
 import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
 import { ReferenceCountedOwner } from "./reference-counted-owner.js";
 import { ILinkedReferences } from "./linked-references.js";
@@ -11,6 +11,37 @@ describe("=> blockScopedLifecycle", () =>
     {
         Test_setDefaultFlags();
         Test_resetLifeCycle();
+    });
+
+    describe("=> RAII version", () =>
+    {
+        it("| behaves like the functional version", () =>
+        {
+            let ptr!: ReferenceCountedOwner;
+            (() =>
+            {
+                using _owner = new BlockScopedLifecycle();
+                ptr = new ReferenceCountedOwner();
+                expect(ptr.getIsDestroyed()).toBe(false);
+            })();
+            expect(ptr.getIsDestroyed()).toBe(true);
+        });
+
+        it("| handles exceptions", () =>
+        {
+            let ptr!: ReferenceCountedOwner;
+            const error = new Error("oh noes, potatoes!");
+            expect(() =>
+                {
+                    using _owner = new BlockScopedLifecycle();
+                    ptr = new ReferenceCountedOwner();
+                    expect(ptr.getIsDestroyed()).toBe(false);
+                    throw error;
+                }
+            ).toThrow(error);
+
+            expect(ptr.getIsDestroyed()).toBe(true);
+        });
     });
 
     it("| releases on callback return", () =>

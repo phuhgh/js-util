@@ -14,13 +14,13 @@ describe("=> asan sanity check", () =>
         await testModule.initialize();
     });
 
-    it("| throws when the program ends and memory has not been released", () =>
-    {
-        _Debug.applyLabel("sanity check - end program", () =>
+    it(
+        "| throws when the program ends and memory has not been released",
+        _Debug.applyLabelCallback("sanity check - end program", () =>
         {
             const address = testModule.wrapper.instance._malloc(12);
             testModule.wrapper.instance._free(address);
             expect(() => testModule.wrapper.instance._free(address));
-        });
-    });
+        })
+    );
 });

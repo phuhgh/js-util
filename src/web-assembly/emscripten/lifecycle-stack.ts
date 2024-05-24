@@ -3,9 +3,6 @@ import { IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
 import { _Production } from "../../production/_production.js";
 import { getGlobal } from "../../runtime/get-global.js";
 
-/**
- * @public
- */
 export class LifecycleStack
 {
     public push(): IReferenceCounted[]
@@ -29,7 +26,6 @@ export class LifecycleStack
         if (top == null)
         {
             throw _Production.createError("attempted to create shared lifecycle object outside of allocation scope.");
-
         }
 
         top.push(ref);

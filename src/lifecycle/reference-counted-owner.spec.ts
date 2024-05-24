@@ -1,5 +1,5 @@
 import { ReferenceCountedOwner } from "./reference-counted-owner.js";
-import { blockScopedLifecycle } from "./block-scoped-lifecycle.js";
+import { blockScopedCallback, blockScopedLifecycle } from "./block-scoped-lifecycle.js";
 import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 import { Test_resetLifeCycle } from "../test-util/test_reset-life-cycle.js";
 
@@ -47,17 +47,15 @@ describe("=> ReferenceCountedOwner", () =>
             expect(ref.getIsDestroyed()).toBe(true);
         });
 
-        it("binds to the ref and does not release with blockScoped true", () =>
+        it("binds to the ref and does not release with blockScoped true", blockScopedCallback(() =>
         {
-            blockScopedLifecycle(() =>
-            {
-                const owner = new ReferenceCountedOwner();
-                const ref = ReferenceCountedOwner.createOneBound(owner.getLinkedReferences(), true);
-                ref.release();
-                expect(ref.getIsDestroyed()).toBe(false);
-                owner.release();
-                expect(ref.getIsDestroyed()).toBe(true);
-            });
-        });
+            const owner = new ReferenceCountedOwner();
+            const ref = ReferenceCountedOwner.createOneBound(owner.getLinkedReferences(), true);
+            ref.release();
+            expect(ref.getIsDestroyed()).toBe(false);
+            owner.release();
+            expect(ref.getIsDestroyed()).toBe(true);
+
+        }));
     });
 });

@@ -18,6 +18,17 @@ export class _Debug
         _Debug._label = label;
     }
 
+    public static applyLabelCallback<T>
+    (
+        this: void,
+        label: string | undefined,
+        callback: () => T
+    )
+        : () => T
+    {
+        return () => _Debug.applyLabel(label, callback);
+    }
+
     public static applyLabel<T>(this: void, label: string | undefined, callback: () => T): T
     {
         _Debug.label = label;

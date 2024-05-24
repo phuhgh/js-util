@@ -3,6 +3,41 @@ import { IReferenceCounted } from "./a-reference-counted.js";
 
 /**
  * @public
+ * RAII style shared object owner, otherwise like {@link blockScopedLifecycle} with `WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH`
+ * set to `false`.
+ */
+export class BlockScopedLifecycle implements Disposable
+{
+    public constructor()
+    {
+        this.refs = lifecycleStack.push();
+    }
+
+    public [Symbol.dispose](): void
+    {
+        releaseRefs(this.refs);
+        lifecycleStack.pop();
+    }
+
+    private readonly refs: IReferenceCounted[];
+}
+
+/**
+ * @public
+ * Behaves like {@link blockScopedLifecycle}, but instead of being called immediately, it returns a callback which can
+ * be invoked later.
+ */
+export function blockScopedCallback<TRet, TArgs extends readonly unknown[]>
+(
+    callback: (...args: TArgs) => TRet,
+)
+    : (...args: TArgs) => TRet
+{
+    return (...args) => blockScopedLifecycle(() => callback(...args));
+}
+
+/**
+ * @public
  * Any shared objects allocated in the callback will be released on return. By default, these will be released on throw too.
  * In such event the error will be rethrown after releasing any shared objects.
  *
