@@ -5,6 +5,9 @@ import { IReferenceCounted } from "./a-reference-counted.js";
  * @public
  * RAII style shared object owner, otherwise like {@link blockScopedLifecycle} with `WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH`
  * set to `false`.
+ *
+ * @remark
+ * Constructing this has the side effect of adding to the stack.
  */
 export class BlockScopedLifecycle implements Disposable
 {

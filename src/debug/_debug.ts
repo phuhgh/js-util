@@ -18,6 +18,21 @@ export class _Debug
         _Debug._label = label;
     }
 
+    /**
+     * RAII edition of {@link applyLabelCallback}, has creation side effect of applying the label.
+     */
+    public static createLabelOwner(label: string | undefined): Disposable
+    {
+        this.label = label;
+        return new class LabelOwner implements Disposable
+        {
+            [Symbol.dispose](): void
+            {
+                _Debug.label = undefined;
+            }
+        };
+    }
+
     public static applyLabelCallback<T>
     (
         this: void,
