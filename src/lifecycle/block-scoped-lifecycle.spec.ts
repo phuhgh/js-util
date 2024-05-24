@@ -1,9 +1,10 @@
-import { BlockScopedLifecycle, blockScopedLifecycle } from "./block-scoped-lifecycle.js";
+import { blockScopedLifecycle } from "./block-scoped-lifecycle.js";
 import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
 import { ReferenceCountedOwner } from "./reference-counted-owner.js";
 import { ILinkedReferences } from "./linked-references.js";
 import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 import { Test_resetLifeCycle } from "../test-util/test_reset-life-cycle.js";
+import { BlockScopedLifecycle } from "./block-scoped-lifecycle-owner.js";
 
 describe("=> blockScopedLifecycle", () =>
 {

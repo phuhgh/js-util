@@ -46,8 +46,24 @@
   "typings": "bin/cjs/index.d.ts",
   "exports": {
     ".": {
-      "import": "./bin/esm/index.js",
-      "require": "./bin/cjs/index.js"
+      "import": {
+        "types": "./bin/esm/index.d.ts",
+        "default": "./bin/esm/index.js"
+      },
+      "require": {
+        "types": "./bin/cjs/index.d.ts",
+        "default": "./bin/cjs/index.js"
+      }
+    },
+    "./beta-features.js": {
+      "import": {
+        "types": "./bin/esm/test-utils.d.ts",
+        "default": "./bin/esm/test-utils.js"
+      },
+      "require": {
+        "types": "./bin/cjs/test-utils.d.ts",
+        "default": "./bin/cjs/test-utils.js"
+      }
     }
   },
   "keywords": [

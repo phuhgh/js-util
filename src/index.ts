@@ -104,7 +104,7 @@ export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";
 export { IEmscriptenBindings } from "./web-assembly/emscripten/i-emscripten-bindings.js";
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
 export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings.js";
-export { blockScopedLifecycle, blockScopedCallback, BlockScopedLifecycle } from "./lifecycle/block-scoped-lifecycle.js";
+export { blockScopedLifecycle, blockScopedCallback } from "./lifecycle/block-scoped-lifecycle.js";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize.js";
 
 export { arrayAddToSet } from "./array/impl/array-add-to-set.js";

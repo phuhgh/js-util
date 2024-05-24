@@ -3,30 +3,6 @@ import { IReferenceCounted } from "./a-reference-counted.js";
 
 /**
  * @public
- * RAII style shared object owner, otherwise like {@link blockScopedLifecycle} with `WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH`
- * set to `false`.
- *
- * @remark
- * Constructing this has the side effect of adding to the stack.
- */
-export class BlockScopedLifecycle implements Disposable
-{
-    public constructor()
-    {
-        this.refs = lifecycleStack.push();
-    }
-
-    public [Symbol.dispose](): void
-    {
-        releaseRefs(this.refs);
-        lifecycleStack.pop();
-    }
-
-    private readonly refs: IReferenceCounted[];
-}
-
-/**
- * @public
  * Behaves like {@link blockScopedLifecycle}, but instead of being called immediately, it returns a callback which can
  * be invoked later.
  */
@@ -78,7 +54,10 @@ export function blockScopedLifecycle<TRet>
     return ret;
 }
 
-function releaseRefs
+/**
+ * @internal
+ */
+export function releaseRefs
 (
     refs: IReferenceCounted[],
 )
