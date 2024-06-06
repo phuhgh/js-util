@@ -69,7 +69,7 @@ export { IReadonlyDictionary } from "./typescript/i-readonly-dictionary.js";
 export { INumericKeyedDictionary } from "./typescript/i-numeric-keyed-dictionary.js";
 export { IReadonlySetLike } from "./typescript/i-readonly-set-like.js";
 export { ISetLike } from "./typescript/i-set-like.js";
-export { TDictionaryValue } from "./typescript/t-dictionary-value.js";
+export { TObjectValue } from "./typescript/t-object-value.js";
 export { TExtractTypeTypedArrayTuple } from "./typescript/t-extract-type-typed-array-tuple.js";
 export { TKeysOf } from "./typescript/t-keys-of.js";
 export { TNeverFallback } from "./typescript/t-never-fallback.js";
