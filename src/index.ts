@@ -147,7 +147,7 @@ export { dictionaryPush } from "./dictionary/impl/dictionary-push.js";
 export { dictionaryValues } from "./dictionary/impl/dictionary-values.js";
 export { equalityAllEqual } from "./equality/impl/equality-all-equal.js";
 export { equalityAreConsistentlyDefined } from "./equality/impl/equality-are-consistently-defined.js";
-export { Once } from "./decorators/once.js";
+export { Once } from "./decorator/once.js";
 export { fpDebounce, TDebouncedFn } from "./fp/impl/fp-debounce.js";
 export { fpIdentity } from "./fp/impl/fp-identity.js";
 export { fpMaybeNewValue } from "./fp/impl/fp-maybe-new-value.js";
