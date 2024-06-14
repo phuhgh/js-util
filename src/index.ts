@@ -63,6 +63,10 @@ export { ILinkedReferences, LinkedReferences } from "./lifecycle/linked-referenc
 export { AOnDestroy, IOnDestroy } from "./lifecycle/i-on-destroy.js";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted.js";
 export { TemporaryListener, ITemporaryListener } from "./lifecycle/temporary-listener.js";
+export { ITreeNodeLike } from "./tree/tree-model.js";
+export { _Tree } from "./tree/_tree.js";
+export { treeIterate } from "./tree/impl/tree-iterate.js";
+export { treeCollect } from "./tree/impl/tree-collect.js";
 export { IContextlessFn } from "./typescript/i-contextless-function.js";
 export { IDictionary } from "./typescript/i-dictionary.js";
 export { IReadonlyDictionary } from "./typescript/i-readonly-dictionary.js";
