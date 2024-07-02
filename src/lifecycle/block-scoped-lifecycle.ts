@@ -1,5 +1,6 @@
 import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
 import { IReferenceCounted } from "./a-reference-counted.js";
+import { _Debug } from "../debug/_debug.js";
 
 /**
  * @public
@@ -12,7 +13,27 @@ export function blockScopedCallback<TRet, TArgs extends readonly unknown[]>
 )
     : (...args: TArgs) => TRet
 {
-    return (...args) => blockScopedLifecycle(() => callback(...args));
+    return (...args) =>
+    {
+        const ret = blockScopedLifecycle(() => callback(...args));
+        return ret;
+    };
+}
+
+/**
+ * @public
+ * Exactly like {@link blockScopedCallback}, but for promises.
+ */
+export function asyncBlockScopedCallback<TRet, TArgs extends readonly unknown[]>
+(
+    callback: (...args: TArgs) => Promise<TRet>,
+)
+    : (...args: TArgs) => Promise<TRet>
+{
+    return (...args) =>
+    {
+        return asyncBlockScopedLifecycle(() => callback(...args));
+    };
 }
 
 /**
@@ -43,6 +64,43 @@ export function blockScopedLifecycle<TRet>
         try
         {
             ret = callback();
+            _BUILD.DEBUG && _Debug.assert(!(ret instanceof Promise), "found promise, use asyncBlockScopedLifecycle instead");
+            releaseRefs(refs);
+        }
+        finally
+        {
+            lifecycleStack.pop();
+        }
+    }
+
+    return ret;
+}
+
+/**
+ * @public
+ * Exactly like {@link blockScopedLifecycle}, but for promises.
+ */
+export async function asyncBlockScopedLifecycle<TRet>
+(
+    callback: () => Promise<TRet>,
+)
+    : Promise<TRet>
+{
+    const refs = lifecycleStack.push();
+    let ret: TRet | undefined;
+
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (_BUILD.WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH)
+    {
+        ret = await callback();
+        releaseRefs(refs);
+        lifecycleStack.pop();
+    }
+    else
+    {
+        try
+        {
+            ret = await callback();
             releaseRefs(refs);
         }
         finally

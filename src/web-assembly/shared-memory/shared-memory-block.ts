@@ -1,6 +1,6 @@
 import { IReferenceCountedPtr, ReferenceCountedPtr } from "../util/reference-counted-ptr.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
-import { nullPointer } from "../emscripten/null-pointer.js";
+import { nullPtr } from "../emscripten/null-pointer.js";
 import { _Production } from "../../production/_production.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
@@ -65,7 +65,7 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
         _BUILD.DEBUG && wrapper.debug.onAllocate.emit();
         const pointer = wrapper.instance._jsUtilMalloc(byteSize);
 
-        if (pointer == nullPointer)
+        if (pointer == nullPtr)
         {
             if (allocationFailThrows)
             {
@@ -87,6 +87,7 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
     {
         if (_BUILD.DEBUG)
         {
+            _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
             return this.wrapper.debug.protectedViews
                 .getValue(this)
                 .createProtectedView(this.dataView);
@@ -141,4 +142,3 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
     private dataView: DataView;
     public debugOnAllocate?: (() => void);
 }
-

@@ -10,10 +10,9 @@ export interface ISharedObject
     readonly sharedObject: IReferenceCountedPtr;
 }
 
-// todo jack: nay sure on this one
 /**
  * @public
- * Holds a reference to wasm objects, is not (necessarily) itself a shared object.
+ * Holds a reference to wasm objects, is not itself a shared object.
  */
 export interface ISharedObjectOwner
 {

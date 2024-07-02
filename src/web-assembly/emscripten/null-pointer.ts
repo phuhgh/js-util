@@ -1,1 +1,1 @@
-export const nullPointer = 0;
+export const nullPtr = 0;

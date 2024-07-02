@@ -1,6 +1,6 @@
 import { SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import { SharedMemoryBlock } from "./shared-memory-block.js";
-import utilTestModule from "../../external/util-test-module.cjs";
+import utilTestModule from "../../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { blockScopedCallback } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";

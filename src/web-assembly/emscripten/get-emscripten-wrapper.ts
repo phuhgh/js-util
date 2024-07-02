@@ -1,5 +1,5 @@
 import { shimWebAssemblyMemory } from "../util/shim-web-assembly-memory.js";
-import { IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
+import { EBinderKind, type IEmscriptenBinder, IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
 import { BroadcastEvent } from "../../eventing/broadcast-event.js";
 import { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
 import { _Debug } from "../../debug/_debug.js";
@@ -10,16 +10,7 @@ import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
 import { DebugSharedObjectLifeCycleChecker, IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
 import { DebugWeakValue } from "../../debug/debug-weak-value.js";
-import { arrayEmptyArray } from "../../array/impl/array-empty-array.js";
-
-/**
- * @public
- * Exists only with _BUILD.DEBUG true.
- */
-export interface IEmscriptenDebugInstance
-{
-    RC_JS_MEMORY_DEBUG_UTIL: IEmscriptenDebug;
-}
+import { _Production } from "../../production/_production.js";
 
 /**
  * @public
@@ -37,16 +28,18 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
         ? new DebugWeakBroadcastEvent<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize")
         : new BroadcastEvent<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize");
     const debug = new EmscriptenDebug();
+    const binder = new EmscriptenBinder();
 
     if (_BUILD.DEBUG)
     {
         const debugInstance = extension as never as IEmscriptenDebugInstance;
-        debugInstance.RC_JS_MEMORY_DEBUG_UTIL = debug;
+        debugInstance.JSU_DEBUG_UTIL = debug;
     }
 
     const instance = await emscriptenModuleFactory({
         wasmMemory: memory,
         INITIAL_MEMORY: memory.buffer.byteLength,
+        JSU_BINDER: binder,
         ...extension,
     } as TExt) as TExt & TMod & Emscripten.EmscriptenModule;
 
@@ -55,6 +48,7 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
         instance,
         memory,
         debug,
+        binder,
     );
 }
 
@@ -68,6 +62,7 @@ class EmscriptenWrapper<T extends object> implements IEmscriptenWrapper<T>
         public readonly instance: T & Emscripten.EmscriptenModule,
         public readonly memory: IWebAssemblyMemoryMemory,
         public readonly debug: IEmscriptenDebug,
+        public readonly binder: IEmscriptenBinder,
     )
     {
         this.dataView = new DataView(memory.buffer);
@@ -81,6 +76,11 @@ class EmscriptenWrapper<T extends object> implements IEmscriptenWrapper<T>
     }
 }
 
+interface IEmscriptenDebugInstance
+{
+    JSU_DEBUG_UTIL: IEmscriptenDebug;
+}
+
 class EmscriptenDebug implements IEmscriptenDebug
 {
     public error(message: string): void
@@ -88,7 +88,7 @@ class EmscriptenDebug implements IEmscriptenDebug
         _Debug.error(message);
     }
 
-    public verboseLog(message: string, tags: readonly string[] = arrayEmptyArray): void
+    public verboseLog(message: string, tags: readonly string[] = defaultTags): void
     {
         _Debug.verboseLog(tags, message);
     }
@@ -98,3 +98,55 @@ class EmscriptenDebug implements IEmscriptenDebug
     public sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecker = new DebugSharedObjectLifeCycleChecker();
     public uniquePointers: Set<number> = new Set();
 }
+
+class EmscriptenBinder implements IEmscriptenBinder
+{
+    public push(interopObject: unknown): void
+    {
+        this.bindingObjects.set(this.counter++, interopObject);
+    }
+
+    public getLast(kind: EBinderKind): number
+    {
+        _BUILD.DEBUG && _Debug.runBlock(() =>
+        {
+            switch (kind)
+            {
+                case EBinderKind.Callback:
+                    _Debug.assert(
+                        typeof this.bindingObjects.get(this.counter - 1) == "function",
+                        "expected to find callback",
+                    );
+                    break;
+                default:
+                    _Production.assertValueIsNever(kind);
+            }
+        });
+        return this.counter - 1;
+    }
+
+    public remove(index: number): boolean
+    {
+        return this.bindingObjects.delete(index);
+    }
+
+    public callback(index: number): void
+    {
+        _BUILD.DEBUG && _Debug.runBlock(() =>
+        {
+            const binder = this.bindingObjects.get(index);
+            const binderType = typeof binder;
+            _Debug.assert(
+                binderType == "function",
+                `expected to find function at ${index}, got ${binderType}`,
+            );
+        });
+
+        (this.bindingObjects.get(index) as () => void)();
+    }
+
+    private readonly bindingObjects = new Map<number, unknown>();
+    private counter = 0;
+}
+
+const defaultTags = ["WASM"];

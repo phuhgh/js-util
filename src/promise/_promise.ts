@@ -2,6 +2,7 @@ import { promiseRejectFalsey } from "./impl/promise-reject-falsey.js";
 import { promiseRejectNull } from "./impl/promise-reject-null.js";
 import { promiseRejectFalse } from "./impl/promise-reject-false.js";
 import { promiseDelay } from "./impl/promise-delay.js";
+import { promisePoll } from "./impl/promise-poll.js";
 
 /**
  * @public
@@ -9,6 +10,9 @@ import { promiseDelay } from "./impl/promise-delay.js";
  */
 export class _Promise
 {
+    /** {@inheritDoc promisePoll} */
+    public static readonly poll = promisePoll;
+
     /** {@inheritDoc promiseDelay} */
     public static readonly delay = promiseDelay;
 

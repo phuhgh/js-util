@@ -1,6 +1,6 @@
 import { AReferenceCounted, IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
 import { _Debug } from "../../debug/_debug.js";
-import { nullPointer } from "../emscripten/null-pointer.js";
+import { nullPtr } from "../emscripten/null-pointer.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { lifecycleStack } from "../emscripten/lifecycle-stack.js";
 import { ILinkedReferences } from "../../lifecycle/linked-references.js";
@@ -18,16 +18,18 @@ export interface IReferenceCountedPtr extends IReferenceCounted
 
 /**
  * @public
- * Wrapper of wasm object.
+ * Wrapper of wasm void*. This must have been allocated by malloc, otherwise the behavior is undefined.
  */
-export class ReferenceCountedPtr extends AReferenceCounted implements IReferenceCountedPtr
+export class ReferenceCountedPtr<TBindings extends object = object>
+    extends AReferenceCounted
+    implements IReferenceCountedPtr
 {
-    public static createOneBound
+    public static createOneBound<TBindings extends object = object>
     (
         bindToReference: ILinkedReferences | null,
         isStatic: boolean,
         wasmPtr: number,
-        wrapper: IEmscriptenWrapper<object>,
+        wrapper: IEmscriptenWrapper<TBindings>,
     )
         : IReferenceCountedPtr
     {
@@ -46,20 +48,19 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
      */
     protected onFree(): void
     {
+        super.onFree();
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
             this.wrapper.debug.uniquePointers.delete(this.wasmPtr);
         });
-
-        super.onFree();
-        this.wasmPtr = nullPointer;
+        this.wasmPtr = nullPtr;
     }
 
     public constructor
     (
         public readonly isStatic: boolean,
         protected wasmPtr: number,
-        protected readonly wrapper: IEmscriptenWrapper<object>,
+        protected readonly wrapper: IEmscriptenWrapper<TBindings>,
     )
     {
         super();
@@ -67,13 +68,14 @@ export class ReferenceCountedPtr extends AReferenceCounted implements IReference
 
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
-            _Debug.assert(this.wasmPtr !== nullPointer && this.wasmPtr != null, "expected pointer to object but got null pointer");
+            _Debug.assert(this.wasmPtr !== nullPtr && this.wasmPtr != null, "expected pointer to object but got null pointer");
 
             if (!this.isStatic)
             {
-                _Debug.assert(!this.wrapper.debug.uniquePointers.has(this.wasmPtr), "expected pointer to be unique");
+                _Debug.assert(!this.wrapper.debug.uniquePointers.has(this.wasmPtr), `expected pointer to be unique (0x${this.wasmPtr.toString(16)})`);
                 this.wrapper.debug.uniquePointers.add(this.wasmPtr);
             }
         });
     }
 }
+

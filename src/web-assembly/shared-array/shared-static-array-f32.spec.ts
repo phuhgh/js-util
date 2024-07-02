@@ -3,7 +3,7 @@ import { SharedStaticArray, TF32SharedStaticArray } from "./shared-static-array.
 import { SharedArray, TF32SharedArray } from "./shared-array.js";
 import { IJsUtilBindings } from "../i-js-util-bindings.js";
 import { _Debug } from "../../debug/_debug.js";
-import utilTestModule from "../../external/util-test-module.cjs";
+import utilTestModule from "../../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { blockScopedCallback } from "../../lifecycle/block-scoped-lifecycle.js";
 import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";

@@ -1,6 +1,6 @@
 import { SanitizedEmscriptenTestModule } from "../../web-assembly/emscripten/sanitized-emscripten-test-module.js";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
-import utilTestModule from "../../external/util-test-module.cjs";
+import utilTestModule from "../../external/util-test-module.mjs";
 import { SharedTypedArrayTuple } from "./shared-typed-array-tuple.js";
 import { Range2d } from "./2d/range2d/range2d.js";
 import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";

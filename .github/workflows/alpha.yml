@@ -31,11 +31,22 @@ jobs:
           node --version
           npm --version
 
-      - name: Install and Build
+      - name: Install
         shell: bash
         run: |
           npm ci
+
+      - name: Build and test
+        shell: bash
+        run: |
           npm run ci
+
+      - name: Output test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            test-report/*.xml
 
       - name: Publish to the npm registry
         run: npm publish

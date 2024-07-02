@@ -20,3 +20,4 @@ export function promiseDelay<T>(resolveWith: T, delay: number = 4): Promise<T>
 }
 
 declare function setTimeout(handler: () => void, timeout?: number, ...arguments: unknown[]): number;
+

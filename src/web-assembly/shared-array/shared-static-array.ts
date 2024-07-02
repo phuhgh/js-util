@@ -68,7 +68,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     {
         if (_BUILD.DEBUG)
         {
-            _Debug.assert(!this.sharedObject.getIsDestroyed(), "access violation - object has been destroyed");
+            _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
             return this.wrapper.debug.protectedViews
                 .getValue(this)
                 .createProtectedView(this.instance);

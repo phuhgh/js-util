@@ -4,7 +4,7 @@ import { _Debug } from "../../debug/_debug.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Production } from "../../production/_production.js";
-import { nullPointer } from "../emscripten/null-pointer.js";
+import { nullPtr } from "../emscripten/null-pointer.js";
 import { ISharedArray } from "./i-shared-array.js";
 import { DebugSharedObjectChecks } from "../util/debug-shared-object-checks.js";
 import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindings.js";
@@ -113,7 +113,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     {
         const ptr = SharedArray.allocateMemory(prefix, wrapper, length, clearMemory, allocationFailThrows);
 
-        if (ptr !== nullPointer)
+        if (ptr !== nullPtr)
         {
             const sa = new SharedArray(prefix, ctor, wrapper, length, ptr);
             bindToReference?.linkRef(sa.sharedObject);
@@ -135,7 +135,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     {
         const ptr = wrapper.instance[`_${cMethodPrefix}_createOne`](length, clearMemory);
 
-        if (ptr === nullPointer && allocationFailThrows)
+        if (ptr === nullPtr && allocationFailThrows)
         {
             throw _Production.createError("Failed to allocate memory for shared array.");
         }
@@ -153,7 +153,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     {
         if (_BUILD.DEBUG)
         {
-            _Debug.assert(!this.sharedObject.getIsDestroyed(), "access violation - object has been destroyed");
+            _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
             return this.wrapper.debug.protectedViews
                 .getValue(this)
                 .createProtectedView(this.instance);
@@ -200,7 +200,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     private createLocalInstance(): InstanceType<TCtor>
     {
         const arrayPtr = this.wrapper.instance[this.cGetArrayAddress](this.sharedObject.getPtr());
-        _BUILD.DEBUG && _Debug.assert(arrayPtr !== nullPointer, "failed to get array address");
+        _BUILD.DEBUG && _Debug.assert(arrayPtr !== nullPtr, "failed to get array address");
 
         return new this.ctor(this.wrapper.memory.buffer, arrayPtr, this.length) as InstanceType<TCtor>;
     }

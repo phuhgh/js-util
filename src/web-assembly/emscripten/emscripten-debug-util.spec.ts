@@ -1,7 +1,7 @@
 import { SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
 import { _Debug } from "../../debug/_debug.js";
-import { nullPointer } from "./null-pointer.js";
-import utilTestModule from "../../external/util-test-module.cjs";
+import { nullPtr } from "./null-pointer.js";
+import utilTestModule from "../../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { getTestModuleOptions } from "../../test-util/test-utils.js";
 
@@ -31,7 +31,7 @@ describe("JsUtil::Debug", () =>
 
             if (isDebug)
             {
-                expect(debugSpy).toHaveBeenCalledWith("exiting program...");
+                expect(debugSpy).toHaveBeenCalledWith("[WASM] exiting program...");
             }
             else
             {
@@ -65,13 +65,13 @@ describe("JsUtil::Debug", () =>
         {
             if (testModule.wrapper.instance._isDebugBuild())
             {
-                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPointer))
+                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPtr))
                     .toThrowError("expected shared array, got null ptr");
 
             }
             else
             {
-                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPointer))
+                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPtr))
                     .not.toThrowError("expected shared array, got null ptr");
             }
 

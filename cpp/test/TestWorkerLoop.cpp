@@ -1,26 +1,63 @@
-#include "FakeWorkerJob.h"
+#include "FakeWorkerConfig.h"
 #include "JsUtil/WorkerLoop.h"
 #include "JsUtilTestUtil/ThreadingHelpers.h"
-#include "JsUtil/SharedArray.h"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;
 
-// todo jack: naming etc
-TEST(WorkerLoop, basicFunctionality)
+TEST(WorkerLoop, sequencing)
 {
-    auto       conf = std::make_shared<FakeWorkerJob>();
+    Debug::disableJsIntegration();
+    auto       conf = FakeWorkerConfig{};
     WorkerLoop worker{conf};
-    EXPECT_EQ(conf->m_ready_calls, 0);
+    EXPECT_EQ(conf.m_ready_calls->load(), 0);
 
     worker.start();
-    ASSERT_TRUE(tryVerify([&] { return conf->m_ready_calls == 1; }));
+    ASSERT_TRUE(tryVerify([&] { return *conf.m_ready_calls == 1; }));
 
-    EXPECT_EQ(conf->m_tick_calls, 0);
+    EXPECT_EQ(*conf.m_tick_calls, 0);
     worker.proceed();
-    ASSERT_TRUE(tryVerify([&] { return conf->m_tick_calls == 1; }));
+    ASSERT_TRUE(tryVerify([&] { return *conf.m_tick_calls == 1; }));
 
-    EXPECT_EQ(conf->m_complete_calls, 0);
+    EXPECT_EQ(*conf.m_complete_calls, 0);
     worker.stop();
-    ASSERT_TRUE(tryVerify([&] { return conf->m_complete_calls == 1; }));
+    ASSERT_TRUE(tryVerify([&] { return *conf.m_complete_calls == 1; }));
+}
+
+TEST(WorkerLoop, multipleRuns)
+{
+    auto       conf = FakeWorkerConfig{};
+    WorkerLoop worker{conf};
+
+    ASSERT_TRUE(worker.start());
+    worker.proceed();
+    ASSERT_TRUE(tryVerify([&] { return *conf.m_tick_calls == 1; }));
+    worker.stop();
+    ASSERT_TRUE(tryVerify([&] { return *conf.m_complete_calls == 1; }));
+
+    ASSERT_TRUE(worker.start());
+    worker.proceed();
+    ASSERT_TRUE(tryVerify([&] { return *conf.m_tick_calls == 2; }));
+    worker.stop();
+    ASSERT_TRUE(tryVerify([&] { return *conf.m_complete_calls == 2; }));
+}
+
+TEST(WorkerLoop, cleanup)
+{
+    // mostly we're just looking for deadlocks, relying on ASAN to catch anything that is lost
+    {
+        auto       conf = FakeWorkerConfig{};
+        WorkerLoop worker{conf};
+    }
+    {
+        auto       conf = FakeWorkerConfig{};
+        WorkerLoop worker{conf};
+        ASSERT_TRUE(worker.start());
+    }
+    {
+        auto       conf = FakeWorkerConfig{};
+        WorkerLoop worker{conf};
+        ASSERT_TRUE(worker.start());
+        ASSERT_TRUE(tryVerify([&] { return *conf.m_ready_calls == 1; }));
+    }
 }

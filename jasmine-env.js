@@ -1,1 +1,0 @@
-global._BUILD = {DEBUG: true, DISABLE_BREAKPOINT: true};

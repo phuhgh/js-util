@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="tests:js - asan" type="NodeJSConfigurationType" application-parameters="--config=jasmine.json --seed=78863 JSU_BUILD_MODE=ASAN" path-to-js-file="node_modules/jasmine/bin/jasmine.js" show_console_on_std_err="true" working-dir="$PROJECT_DIR$">
+    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
+      <profiling log-folder="bin/logs" />
+    </EXTENSION>
+    <method v="2" />
+  </configuration>
+</component>

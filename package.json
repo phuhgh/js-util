@@ -4,9 +4,10 @@
   "version": "9.0.9-alpha.54",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf bin cpp/build cpp/exported-names.txt docs dist tmp",
-    "test": "npm run test:js -- JSU_BUILD_MODE=ASAN && npm run test:cpp -- --cmake-preset=asan",
-    "test:js": "jasmine --config=jasmine.json",
+    "clean": "rimraf bin cpp/build cpp/exported-names.txt docs dist tmp test-report",
+    "test": "npm run test:js -- --ASAN && npm run test:cpp -- --cmake-preset=asan",
+    "test:js": "jasmine --config=config/jasmine-node.mjs --",
+    "debug:browser": "jasmine-browser-runner serve --config=config/jasmine-browser.mjs -- --debug --ASAN",
     "test:cpp": "sh scripts/test-cpp-local.sh",
     "copy-assets": "cp -r assets/release/* bin/",
     "build": "npm run build:ts && npm run copy-assets && npm run build:cpp -- --cmake-preset=asan --export-test",
@@ -18,7 +19,7 @@
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "eslint -c .eslintrc.cjs src/",
     "ci": "sh scripts/ci-local.sh",
-    "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.json"
+    "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.mjs -- --debug --ASAN"
   },
   "dependencies": {
     "rc-js-util-globals": "^7.0.1",
@@ -28,14 +29,15 @@
     "@microsoft/api-documenter": "~7.24.2",
     "@microsoft/api-extractor": "~7.43.1",
     "@types/jasmine": "^4.3.5",
-    "@typescript-eslint/eslint-plugin": "~7.7.1",
-    "@typescript-eslint/parser": "~7.7.1",
+    "@typescript-eslint/eslint-plugin": "~7.14.1",
+    "@typescript-eslint/parser": "~7.14.1",
     "eslint": "~8.57.0",
     "eslint-plugin-import": "~2.29.1",
     "rc-lint-rules": "~10.0.1",
     "jasmine": "^5.1.0",
     "jasmine-browser-runner": "^2.1.0",
     "jasmine-core": "^5.1.0",
+    "jasmine-reporters": "^2.5.2",
     "rimraf": "^4.4.1",
     "typescript": "~5.4.5"
   },

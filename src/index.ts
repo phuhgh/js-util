@@ -2,7 +2,6 @@ import "rc-js-util-globals";
 import { IDebugFlags } from "./debug/i-debug-flags.js";
 import { IWasmBuildFlags } from "./web-assembly/i-wasm-build-flags.js";
 
-export { getEmscriptenTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule } from "./web-assembly/emscripten/sanitized-emscripten-test-module.js";
 export { IDebugAllocateListener } from "./debug/i-debug-allocate-listener.js";
 export { IDebugProtectedView } from "./debug/i-debug-protected-view.js";
 export { Emscripten, IWebAssemblyMemoryMemory } from "./external/emscripten.js";
@@ -92,7 +91,7 @@ export { TUnionToIntersection } from "./typescript/t-union-to-intersection.js";
 export { TUnpackArray } from "./typescript/t-unpack-array.js";
 export { TUnpackIfArray } from "./typescript/t-unpack-if-array.js";
 export { TWriteable } from "./typescript/t-writable.js";
-export { IEmscriptenWrapper, IEmscriptenDebug } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
+export { IEmscriptenWrapper, IEmscriptenDebug, EBinderKind, IEmscriptenBinder } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
 export { getEmscriptenWrapper } from "./web-assembly/emscripten/get-emscripten-wrapper.js";
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array.js";
 export { SharedArray, TF32SharedArray, TF64SharedArray } from "./web-assembly/shared-array/shared-array.js";
@@ -108,8 +107,12 @@ export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";
 export { IEmscriptenBindings } from "./web-assembly/emscripten/i-emscripten-bindings.js";
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
 export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings.js";
-export { blockScopedLifecycle, blockScopedCallback } from "./lifecycle/block-scoped-lifecycle.js";
+export { blockScopedLifecycle, blockScopedCallback, asyncBlockScopedCallback, asyncBlockScopedLifecycle } from "./lifecycle/block-scoped-lifecycle.js";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize.js";
+export { WorkerPool, IWorkerPool, IWorkerPoolConfig } from "./web-assembly/worker-pool/worker-pool.js";
+export { IWorkerPoolBindings } from "./web-assembly/worker-pool/i-worker-pool-bindings.js";
+export { ReferenceCountedSharedObject } from "./web-assembly/util/reference-counted-shared-object.js";
+export { getEmscriptenTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule, IErrorExclusions } from "./web-assembly/emscripten/sanitized-emscripten-test-module.js";
 
 export { arrayAddToSet } from "./array/impl/array-add-to-set.js";
 export { arrayBinaryIndexOf } from "./array/impl/array-binary-index-of.js";
@@ -159,6 +162,7 @@ export { fpNoOp } from "./fp/impl/fp-no-op.js";
 export { fpNormalizeToNull } from "./fp/impl/fp-normalize-to-null.js";
 export { fpNormalizeToUndefined } from "./fp/impl/fp-normalize-to-undefined.js";
 export { fpOnce } from "./fp/impl/fp-once.js";
+export { EResolutionState, promisePoll, INonblockingPoll } from "./promise/impl/promise-poll.js";
 export { promiseDelay } from "./promise/impl/promise-delay.js";
 export { promiseRejectFalse } from "./promise/impl/promise-reject-false.js";
 export { promiseRejectFalsey } from "./promise/impl/promise-reject-falsey.js";
@@ -217,6 +221,7 @@ export { IDebugSharedObjectLifeCycleChecker } from "./debug/debug-shared-object-
 export { TDebugListener } from "./debug/t-debug-listener.js";
 export { Test_setDefaultFlags } from "./test-util/test_set-default-flags.js";
 export { Test_resetLifeCycle } from "./test-util/test_reset-life-cycle.js";
+
 
 declare global
 {

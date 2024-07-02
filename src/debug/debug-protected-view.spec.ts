@@ -1,6 +1,6 @@
 import { DebugProtectedView } from "./debug-protected-view.js";
 import { SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
-import utilTestModule from "../external/util-test-module.cjs";
+import utilTestModule from "../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 import { getTestModuleOptions } from "../test-util/test-utils.js";
 

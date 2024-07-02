@@ -194,10 +194,14 @@ export class _Debug
 
         if (!_Debug.isFlagSet("VERBOSE"))
         {
-            if (!tags.some(tag => _Debug._enabledTags.has(tag)))
-            {
-                return;
-            }
+            return;
+        }
+
+        // by default, all logging is enabled
+        const enabledTags = _Debug._enabledTags;
+        if (enabledTags != null && !tags.some(tag => enabledTags.has(tag)))
+        {
+            return;
         }
 
         const prefixedMessage = tags.length > 0
@@ -214,6 +218,12 @@ export class _Debug
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
             console.debug(prefixedMessage, ancillaryObject);
         }
+    }
+
+    public static logError(this: void, message: string|object): void
+    {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+        console.error(message);
     }
 
     public static getStackTrace(this: void): string
@@ -286,7 +296,7 @@ export class _Debug
     };
 
     private static _label: string | undefined = undefined;
-    private static _enabledTags = new Set<string>();
+    private static _enabledTags: Set<string> | null = null;
     private static _seenTags = new Set<string>();
 }
 

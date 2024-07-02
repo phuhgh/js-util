@@ -1,10 +1,13 @@
-import type { IJsUtilBindings, IJsUtilTestBindings } from "./web-assembly/i-js-util-bindings.js";
+import type { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
 
 export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } = {
     _jsUtilEndProgram: true,
     _jsUtilCalloc: true,
     _jsUtilMalloc: true,
     _jsUtilFree: true,
+    runtimeKeepalivePush: true,
+    runtimeKeepalivePop: true,
+    _jsUtilDeleteObject: false,
     _isDebugBuild: true,
     _f32SharedArray_createOne: true,
     _f32SharedArray_destroy: true,
@@ -12,12 +15,20 @@ export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } =
     _f64SharedArray_createOne: true,
     _f64SharedArray_destroy: true,
     _f64SharedArray_getArrayAddress: true,
+    _workerPool_createRoundRobin: true,
+    _workerPool_start: true,
+    _workerPool_setBatchReadyPoint: true,
+    _workerPool_isBatchDone: true,
+    _workerPool_stop: true,
+    _workerPool_createJob: true,
+    _workerPool_addJob: true,
+    _workerPool_isAnyWorkerRunning: true,
+    _workerPool_isReady: true,
+    _workerPool_hasPendingWork: true,
     _malloc: true,
     _free: true,
 };
 
-export const exportedTestFunctions: { [index in keyof IJsUtilTestBindings]: boolean; } = {
+export const exportedTestFunctions = {
     ...exportedFunctions,
-    // todo jack: make it not stoopid
-    // _jsUtilTestFoo: true,
 };

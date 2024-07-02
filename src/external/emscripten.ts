@@ -58,6 +58,9 @@ export namespace Emscripten
         filePackagePrefixURL: string;
         wasmBinary: ArrayBuffer;
 
+        runtimeKeepalivePush?(): void;
+        runtimeKeepalivePop?(): void;
+
         destroy(object: object): void;
         getPreloadedPackage(remotePackageName: string, remotePackageSize: number): ArrayBuffer;
         instantiateWasm

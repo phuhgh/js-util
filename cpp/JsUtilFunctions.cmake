@@ -108,8 +108,9 @@ macro(internal_jsu_get_common_link_flags writeTo hasMain noBindings)
     string(REPLACE ";" "','" __EXPORTED_NAMES "${__EXPORTED_NAMES}")
 
     string(CONCAT __DEFAULT_LINK_FLAGS
-            "-sNODEJS_CATCH_REJECTION=0 "
-            "-sNODEJS_CATCH_EXIT=0 "
+            "-sABORTING_MALLOC=0 "
+#            "-sNODEJS_CATCH_REJECTION=0 "
+#            "-sNODEJS_CATCH_EXIT=0 "
             "-sIMPORTED_MEMORY "
             "-sLLD_REPORT_UNDEFINED ")
     if (${hasMain})
@@ -244,26 +245,26 @@ function(jsu_create_libray targetName)
 endfunction(jsu_create_libray)
 
 macro(internal_jsu_set_compile_options)
-    set(CompileFlags "")
+    set(_compileFlags "")
     if (ARG_COMPILE_OPTIONS)
         set(_compileOptions ${ARG_COMPILE_OPTIONS})
         separate_arguments(_compileOptions)
-        set(CompileFlags ${_compileOptions})
+        set(_compileFlags ${_compileOptions})
     endif ()
 
     get_property(JSU_CXX_FLAGS GLOBAL PROPERTY JSU_CXX_FLAGS)
     if (JSU_CXX_FLAGS)
-        list(PREPEND CompileFlags "${JSU_CXX_FLAGS}")
+        list(PREPEND _compileFlags "${JSU_CXX_FLAGS}")
     endif ()
     unset(JSU_CXX_FLAGS)
 
-    target_compile_options("${targetName}" PRIVATE "${CompileFlags}")
+    target_compile_options("${targetName}" PUBLIC "${_compileFlags}")
 
-    if (CompileFlags)
-        string(REPLACE ";" " " CompileFlags "${CompileFlags}")
-        list(APPEND _message "COMPILE_OPTIONS: ${CompileFlags}")
+    if (_compileFlags)
+        string(REPLACE ";" " " _compileFlags "${_compileFlags}")
+        list(APPEND _message "COMPILE_OPTIONS: ${_compileFlags}")
     endif ()
-    unset(CompileFlags)
+    unset(_compileFlags)
 endmacro()
 
 macro(internal_jsu_set_link_options isExe hasMain noBindings)

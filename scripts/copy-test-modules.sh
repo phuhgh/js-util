@@ -22,6 +22,7 @@ while [ "$1" != "" ]; do
 done
 
 if [ "$SKIP_BUILD" != "true" ]; then
-  cp cpp/build/"${PRESET}"/util-test-module.js bin/esm/external/util-test-module.cjs || exit
+  cp cpp/build/"${PRESET}"/util-test-module.js bin/esm/external/util-test-module.mjs || exit
+  cp cpp/build/"${PRESET}"/util-test-module.worker.mjs bin/esm/external/util-test-module.worker.mjs || exit
   cp cpp/build/"${PRESET}"/util-test-module.wasm bin/esm/external/util-test-module.wasm || exit
 fi

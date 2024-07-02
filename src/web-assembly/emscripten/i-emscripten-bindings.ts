@@ -6,4 +6,6 @@ export interface IEmscriptenBindings
 {
     _malloc(size: number): number;
     _free(ptr: number): void;
+    runtimeKeepalivePush(): void;
+    runtimeKeepalivePop(): void;
 }
