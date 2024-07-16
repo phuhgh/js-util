@@ -7,7 +7,6 @@
     "clean": "rimraf bin cpp/build cpp/exported-names.txt docs dist tmp test-report",
     "test": "npm run test:js -- --ASAN && npm run test:cpp -- --cmake-preset=asan",
     "test:js": "jasmine --config=config/jasmine-node.mjs --",
-    "debug:browser": "jasmine-browser-runner serve --config=config/jasmine-browser.mjs -- --debug --ASAN",
     "test:cpp": "sh scripts/test-cpp-local.sh",
     "copy-assets": "cp -r assets/release/* bin/",
     "build": "npm run build:ts && npm run copy-assets && npm run build:cpp -- --cmake-preset=asan --export-test",
@@ -19,7 +18,8 @@
     "generate-docs": "rimraf docs tmp && api-extractor run && api-documenter markdown --input-folder tmp --output-folder docs",
     "lint": "eslint -c .eslintrc.cjs src/",
     "ci": "sh scripts/ci-local.sh",
-    "debug-test": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=jasmine.mjs -- --debug --ASAN"
+    "debug:browser": "jasmine-browser-runner serve --config=config/jasmine-browser.mjs -- --debug --ASAN",
+    "debug:node": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=config/jasmine-node.mjs -- --debug --ASAN"
   },
   "dependencies": {
     "rc-js-util-globals": "^7.0.1",
