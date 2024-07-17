@@ -109,7 +109,7 @@ export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array
 export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings.js";
 export { blockScopedLifecycle, blockScopedCallback, asyncBlockScopedCallback, asyncBlockScopedLifecycle } from "./lifecycle/block-scoped-lifecycle.js";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize.js";
-export { WorkerPool, IWorkerPool, IWorkerPoolConfig } from "./web-assembly/worker-pool/worker-pool.js";
+export { WorkerPool, IWorkerPool, IWorkerPoolConfig, EWorkerPoolOverflowMode, WorkerPoolErrorCause } from "./web-assembly/worker-pool/worker-pool.js";
 export { IWorkerPoolBindings } from "./web-assembly/worker-pool/i-worker-pool-bindings.js";
 export { ReferenceCountedSharedObject } from "./web-assembly/util/reference-counted-shared-object.js";
 export { getEmscriptenTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule, IErrorExclusions } from "./web-assembly/emscripten/sanitized-emscripten-test-module.js";

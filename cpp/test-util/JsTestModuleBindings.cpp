@@ -11,11 +11,20 @@ class TestExecutor : public IExecutor
 {
   public:
     // from IExecutor
-    void run() override { ++m_tick_count; }
+    void run() override
+    {
+        if (sGO_SLOW)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        }
+        ++sTICK_COUNT;
+    }
 
-    static std::atomic<unsigned> m_tick_count;
+    static std::atomic<unsigned> sTICK_COUNT;
+    static std::atomic<bool>     sGO_SLOW;
 };
-std::atomic<unsigned> TestExecutor::m_tick_count{0};
+std::atomic<unsigned> TestExecutor::sTICK_COUNT{0};
+std::atomic<bool>     TestExecutor::sGO_SLOW{false};
 
 class TestWorkerFactory : public IWorkerPoolJobFactory
 {
@@ -32,7 +41,7 @@ using TrackedExecutor = CreateDestroyTestCounter<JsUtil::TestExecutor>;
 
 void fakeWorkerJob_resetCounts()
 {
-    TrackedExecutor::m_tick_count = 0;
+    TrackedExecutor::sTICK_COUNT = 0;
     TrackedExecutor::reset();
 }
 unsigned fakeWorkerJob_getCreateCount()
@@ -41,15 +50,16 @@ unsigned fakeWorkerJob_getCreateCount()
 }
 unsigned fakeWorkerJob_getTickCount()
 {
-    return TrackedExecutor::m_tick_count;
+    return TrackedExecutor::sTICK_COUNT;
 }
 unsigned fakeWorkerJob_getDestroyCount()
 {
     return TrackedExecutor::m_destroyed.load();
 }
-void fakeWorkerJob_setJobFactory()
+void fakeWorkerJob_setJobFactory(bool goSlow)
 {
     JsUtil::setWorkerPoolFactory(&JsUtil::TestWorkerFactory::sINSTANCE);
+    JsUtil::TestExecutor::sGO_SLOW = goSlow;
 }
 
 EMSCRIPTEN_BINDINGS(clazz)

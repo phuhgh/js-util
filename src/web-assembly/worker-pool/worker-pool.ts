@@ -9,6 +9,44 @@ import { _Production } from "../../production/_production.js";
 import type { IWorkerPoolBindings } from "./i-worker-pool-bindings.js";
 import { promisePoll } from "../../promise/impl/promise-poll.js";
 import { _Debug } from "../../debug/_debug.js";
+import { NestedError } from "../../error-handling/nested-error.js";
+
+/**
+ * @public
+ * How to handle jobs which don't "overflow", i.e. the workers cannot keep up with the work being sent.
+ */
+export enum EWorkerPoolOverflowMode
+{
+    /**
+     * Delete the job and then throw a {@link NestedError} with a cause of {@link WorkerPoolErrorCause.overflow}.
+     * @remarks This is intended mainly for unit tests.
+     * @remarks Ownership of the job is transferred to the job queue.
+     */
+    Throw = 1,
+    /**
+     * If no worker is able to accept the job, the job runs on the producer (caller) thread. This automatically
+     * "fixes" backpressure by throttling the caller thread. This will result in degraded performance on the producer thread
+     * (often the UI thread) which is not always desirable.
+     * @remarks {@link IWorkerPool.addJob} will return false where the job ran synchronously.
+     * @remarks Ownership of the job is transferred to the job queue.
+     */
+    Synchronous,
+    /**
+     * Do nothing, it's up to you to choose an action.
+     * @remarks {@link IWorkerPool.addJob} will return false where the job did not run.
+     * @remarks Ownership of the job is NOT transferred to the job queue, the caller must clean up.
+     */
+    Noop,
+}
+
+/**
+ * @public
+ * The static members are the cause in {@link INestedError}.
+ */
+export class WorkerPoolErrorCause
+{
+    public static readonly overflow = Symbol("overflow");
+}
 
 /**
  * @public
@@ -25,6 +63,8 @@ export interface IWorkerPoolConfig
      * Tune this in conjunction with the distribution strategy, # of workers and queue size to meet your needs.
      */
     readonly queueSize: number;
+
+    readonly overflowMode?: EWorkerPoolOverflowMode;
 }
 
 /**
@@ -37,15 +77,20 @@ export interface IWorkerPoolConfig
 export interface IWorkerPool
     extends ISharedObject
 {
-    start(): Promise<void>;
+    /**
+     * @returns The number of workers that started.
+     */
+    start(): Promise<number>;
     stop(): Promise<void>;
+
+    // todo jack: document meaning
     isRunning(): boolean;
 
     /**
      * Transfer unique ownership of the job to the pool. If the pool is running, the job should eventually be run.
      * @remarks The job is deleted on completion.
      */
-    addJob(jobPointer: number): void;
+    addJob(jobPtr: number): boolean;
     /**
      * True if there is any job which has yet to be run. The answer is guaranteed correct on the producer thread.
      */
@@ -58,6 +103,15 @@ export interface IWorkerPool
      * This can be polled using {@link promisePoll}.;
      */
     isBatchDone(): boolean;
+    /**
+     * Cancel any outstanding jobs, does not kill the current job (which must complete first).
+     */
+    invalidateBatch(): void;
+    /**
+     * Becomes true once only "valid" jobs are running (use in combination with {@link IWorkerPool.invalidateBatch}). Alternately,
+     * you can check {@link IWorkerPool.isBatchDone} if you don't need to start a new batch right away.
+     */
+    areWorkersSynced(): boolean;
 }
 
 /**
@@ -91,9 +145,23 @@ export class WorkerPool implements IWorkerPool
         : WorkerPool | null
     {
         _BUILD.DEBUG && wrapper.debug.onAllocate.emit();
+        const overflowMode = config.overflowMode ?? EWorkerPoolOverflowMode.Synchronous;
+
+        const maxSize = 0xFFFF;
+        if (config.workerCount > maxSize)
+        {
+            throw _Production.createError(`Requested pool size ${config.workerCount}, exceeds limit ${maxSize}.`);
+        }
+
+        if (config.queueSize > maxSize)
+        {
+            throw _Production.createError(`Requested queue size ${config.queueSize}, exceeds limit ${maxSize}.`);
+        }
+
         const pointer = wrapper.instance._workerPool_createRoundRobin(
             config.workerCount,
             config.queueSize,
+            overflowMode === EWorkerPoolOverflowMode.Synchronous,
         );
 
         if (pointer == nullPtr)
@@ -108,7 +176,7 @@ export class WorkerPool implements IWorkerPool
             }
         }
 
-        const pool = new WorkerPool(wrapper, pointer);
+        const pool = new WorkerPool(wrapper, pointer, overflowMode);
         bindToReference?.linkRef(pool.sharedObject);
 
         return pool;
@@ -116,14 +184,14 @@ export class WorkerPool implements IWorkerPool
 
     public readonly sharedObject: IReferenceCountedPtr;
 
-    public start(): Promise<void>
+    public start(): Promise<number>
     {
         _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        this.wrapper.instance._workerPool_start(this.sharedObject.getPtr());
+        const started = this.wrapper.instance._workerPool_start(this.sharedObject.getPtr());
 
-        return promisePoll(() => this.wrapper.instance._workerPool_isReady(this.sharedObject.getPtr()))
+        return promisePoll(() => this.wrapper.instance._workerPool_isAcceptingJobs(this.sharedObject.getPtr()))
             .getPromise()
-            .then(() => undefined);
+            .then(() => started);
     }
 
     public stop(): Promise<void>
@@ -151,7 +219,18 @@ export class WorkerPool implements IWorkerPool
     public setBatchEnd(): void
     {
         _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        this.wrapper.instance._workerPool_setBatchReadyPoint(this.sharedObject.getPtr());
+        this.wrapper.instance._workerPool_setBatchEndPoint(this.sharedObject.getPtr());
+    }
+
+    public invalidateBatch(): void
+    {
+        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
+        this.wrapper.instance._workerPool_invalidateBatch(this.sharedObject.getPtr());
+    }
+
+    public areWorkersSynced(): boolean
+    {
+        return Boolean(this.wrapper.instance._workerPool_areWorkersSynced(this.sharedObject.getPtr()));
     }
 
     public hasPendingWork(): boolean
@@ -160,22 +239,43 @@ export class WorkerPool implements IWorkerPool
         return Boolean(this.wrapper.instance._workerPool_hasPendingWork(this.sharedObject.getPtr()));
     }
 
-    public addJob(jobPointer: number): void
+    public addJob(jobPtr: number): boolean
     {
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
             _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-            _Debug.assert(jobPointer !== nullPtr, "expected job, got nullptr");
+            _Debug.assert(jobPtr !== nullPtr, "expected job, got nullptr");
         });
-        this.wrapper.instance._workerPool_addJob(this.sharedObject.getPtr(), jobPointer);
+        const added = this.wrapper.instance._workerPool_addJob(this.sharedObject.getPtr(), jobPtr);
+        if (!added)
+        {
+            switch (this.overflowMode)
+            {
+                case EWorkerPoolOverflowMode.Noop: // intentional fallthrough
+                case EWorkerPoolOverflowMode.Synchronous:
+                    break;
+                case EWorkerPoolOverflowMode.Throw:
+                {
+                    this.wrapper.instance._workerPool_deleteJob(jobPtr);
+                    throw new NestedError("WorkerPool overflow", WorkerPoolErrorCause.overflow);
+                }
+                default:
+                    _Production.assertValueIsNever(this.overflowMode);
+            }
+        }
+        return added;
     }
 
     protected constructor
     (
         private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
         pointer: number,
+        overflowMode: EWorkerPoolOverflowMode,
     )
     {
         this.sharedObject = new ReferenceCountedSharedObject(pointer, wrapper);
+        this.overflowMode = overflowMode;
     }
+
+    private readonly overflowMode: EWorkerPoolOverflowMode;
 }

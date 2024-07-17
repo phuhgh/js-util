@@ -32,12 +32,12 @@ enum class ECircularStackOverflowMode
 
 template <typename TValue, typename TIndex, typename TStorage> class CircularFIFOStackBase;
 
-/// methods no explicitly marked unsafe are safe in single producer consumer usage
+/// methods not explicitly marked unsafe are safe in single producer consumer usage
 template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
 {
   public:
     explicit CircularFIFOStackBase(TIndex capacity)
-        : m_buffer(CircularBuffer<TValue>(capacity))
+        : m_buffer(CircularBuffer<TValue, TIndex>(capacity))
     {
         Debug::debugAssert(capacity > 0, "0 capacity buffer is definitely a bug");
     }
@@ -85,7 +85,7 @@ template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue
     TIndex getAbsoluteEnd() const { return m_end.load(); }
 
   protected:
-    CircularBuffer<TValue> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)
+    CircularBuffer<TValue, TIndex> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)
     std::atomic<TIndex>    m_start = 0; // NOLINT(*-non-private-member-variables-in-classes)
     std::atomic<TIndex>    m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
 };
@@ -94,7 +94,7 @@ template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue
 {
   public:
     explicit CircularFIFOStackBase(TIndex capacity)
-        : m_buffer(CircularBuffer<TValue>(capacity))
+        : m_buffer(CircularBuffer<TValue, TIndex>(capacity))
     {
         Debug::debugAssert(capacity > 0, "0 capacity buffer is definitely a bug");
     }
@@ -122,7 +122,7 @@ template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue
     TIndex getAbsoluteEnd() const { return m_end; }
 
   protected:
-    CircularBuffer<TValue> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)
+    CircularBuffer<TValue, TIndex> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)
     TIndex                 m_start = 0; // NOLINT(*-non-private-member-variables-in-classes)
     TIndex                 m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
 };

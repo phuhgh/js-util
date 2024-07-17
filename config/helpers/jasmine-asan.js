@@ -1,7 +1,9 @@
-console.log("ASAN build")
+console.log("ASAN build");
 
-if (typeof _BUILD === "undefined") {
-    _BUILD = {};
+const globalObject = typeof global === "object" ? global : typeof window === "object" ? window : null;
+
+if (globalObject._BUILD == null) {
+    globalObject._BUILD = {};
 }
 
-_BUILD.ASAN = true;
+globalObject._BUILD = {..._BUILD, ASAN: true};

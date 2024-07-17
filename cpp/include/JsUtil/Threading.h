@@ -19,8 +19,8 @@ template <IsVoidCallback TCallback> class CallbackExecutor : public IExecutor
     {
     }
 
-    // from IExecutor
-    void run() override { m_callback(); }
+    // form IExecutor
+    void     run() override { m_callback(); }
 
   private:
     TCallback m_callback;

@@ -4,6 +4,7 @@
 #include "JsUtil/WorkerLoop.h"
 #include <gsl/pointers>
 
+// todo jack: replace unsigned with uint64 (all), might overflow in some long running cases
 namespace JsUtil
 {
 /**
@@ -20,11 +21,17 @@ class PoolWorkerConfig : public IWorkerLoopConfig
     PoolWorkerConfig(PoolWorkerConfig& other) = delete;
     PoolWorkerConfig& operator=(PoolWorkerConfig& other) = delete;
 
+    /**
+     * @return True if there's no job possibility of an invalidated job running.
+     * @remark Thread safe from the producer thread.
+     */
+    bool        isWorkerSynced() const { return m_invalidateToIndex == 0 || m_jobs.getIsEmpty(); }
     bool        hasPendingWork() const { return !m_jobs.getIsEmpty(); }
     bool        addJob(gsl::owner<IExecutor*> job) { return m_jobs.push(std::move(job)); }
     inline void setJobQueueSize(uint16_t jobQueueSize);
-    void        setBatchReadyPoint() { m_completionPoint = m_jobs.getAbsoluteEnd(); };
-    bool        isBatchDone() { return m_jobs.getAbsoluteStart() >= m_completionPoint; };
+    void        setBatchEndPoint() { m_batchEndIndex = m_jobs.getAbsoluteEnd(); };
+    bool        isBatchDone() { return m_jobs.getAbsoluteStart() >= m_batchEndIndex; };
+    void        invalidateBatch() { m_invalidateToIndex = m_batchEndIndex.load(); }
     bool        isAcceptingWork() const { return m_acceptingWork; }
 
   public: // from IWorkerLoopConfig
@@ -33,17 +40,18 @@ class PoolWorkerConfig : public IWorkerLoopConfig
     inline void onTick() override;
     void        onComplete() override { m_acceptingWork = false; }
 
-    // todo jack: proper handling of jobs that can't be added (have the caller run it...)
   private:
     CircularFIFOStack<gsl::owner<IExecutor*>, ECircularStackOverflowMode::NoOp, uint16_t, std::atomic<uint16_t>> m_jobs;
-    std::atomic<unsigned> m_completionPoint = -1;
+    std::atomic<unsigned> m_batchEndIndex = 0;
     std::atomic<bool>     m_acceptingWork = false;
+    std::atomic<unsigned> m_invalidateToIndex = 0;
 };
 
 struct WorkerPoolConfig
 {
     uint16_t workerCount{4};
     uint16_t jobCount{32};
+    bool     syncOverflowHandling{true};
 };
 
 struct IDistributionStrategy
@@ -61,14 +69,19 @@ struct IWorkerPool : public ISharedMemoryObject
     ~IWorkerPool() override = default;
     virtual uint16_t start() = 0;
     virtual void     stop(bool wait) = 0;
-    virtual void     addJob(gsl::owner<IExecutor*> job) = 0;
-    virtual bool     hasPendingWork() const = 0;
-    /// to accept jobs
-    virtual bool isReady() const = 0;
+
+    /**
+     * @return true if the job was distributed to a worker, false if it ran synchronously.
+     */
+    virtual bool addJob(gsl::owner<IExecutor*> job) = 0;
+    virtual bool hasPendingWork() const = 0;
+    virtual bool isAcceptingJobs() const = 0;
     virtual bool isAnyWorkerRunning() const = 0;
 
-    virtual void setBatchReadyPoint() = 0;
-    virtual bool isBatchDone() = 0;
+    virtual void setBatchEndPoint() = 0;
+    virtual bool isBatchDone() const = 0;
+    virtual void invalidateBatch() = 0;
+    virtual bool areAllWorkersSynced() const = 0;
 };
 
 /**
@@ -87,21 +100,10 @@ template <IsDistributionStrategy TDistributionStrategy> class WorkerPool final :
     inline uint16_t start() override;
     inline void     stop(bool wait) override;
 
-    // todo jack: put it in the inl file
     // See `TDistributionStrategy` for threading guarantees.
-    inline void addJob(gsl::owner<IExecutor*> job) override
-    {
-        auto jobAdded = m_strategy.distributeWork(m_workers.asSpan(), job);
-        if (!jobAdded)
-        {
-            // handle backpressure by throttling the producer... not pretty but will "work"...
-            Debug::verboseLog("job overflow, running synchronously...");
-            job->run();
-            delete job;
-        }
-    }
+    inline bool addJob(gsl::owner<IExecutor*> job) override;
 
-    bool isReady() const override;
+    bool isAcceptingJobs() const override;
     bool isAnyWorkerRunning() const override;
     /**
      * @remark "Safe" from any thread, in that the behavior is defined. For the answer to be correct (i.e. resolves in a
@@ -110,12 +112,16 @@ template <IsDistributionStrategy TDistributionStrategy> class WorkerPool final :
      * @return true if any worker has a job.
      */
     inline bool hasPendingWork() const override;
-    inline void setBatchReadyPoint() override;
-    inline bool isBatchDone() override;
+    inline void setBatchEndPoint() override;
+    inline bool isBatchDone() const override;
+    /// Only thread safe from the producer thread, you must set the batch first.
+    void invalidateBatch() override;
+    bool areAllWorkersSynced() const override;
 
   private:
     ResizableArray<gsl::owner<WorkerLoop<PoolWorkerConfig>*>, uint16_t> m_workers;
     TDistributionStrategy                                               m_strategy;
+    bool                                                                m_syncOverflowHandling;
 };
 
 /**
@@ -147,10 +153,7 @@ class NoopJobFactory : public IWorkerPoolJobFactory
         class NoopJob : public IExecutor
         {
           public:
-            void run() override
-            {
-                // do nothing, intentionally
-            }
+            void run() override {}
         };
 
         return new (std::nothrow) NoopJob;

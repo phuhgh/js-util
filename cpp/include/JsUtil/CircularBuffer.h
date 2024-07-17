@@ -23,7 +23,7 @@ template <typename TValue, IsUnsigned TIndex = size_t> class CircularBuffer
     TValue& operator[](TIndex index) { return m_array[getAdjustedIndex(index)]; }
 
   private:
-    ResizableArray<TValue> m_array;
+    ResizableArray<TValue, TIndex> m_array;
 
     TIndex getAdjustedIndex(TIndex index) const { return index % m_array.size(); }
 };

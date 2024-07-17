@@ -18,7 +18,11 @@ void setWorkerPoolFactory(IWorkerPoolJobFactory* factory)
 extern "C"
 {
     EMSCRIPTEN_KEEPALIVE
-    gsl::owner<JsUtil::IWorkerPool*> workerPool_createRoundRobin(uint16_t workerCount, uint16_t queueSize)
+    gsl::owner<JsUtil::IWorkerPool*> workerPool_createRoundRobin(
+        uint16_t workerCount,
+        uint16_t queueSize,
+        bool     syncOverflowHandling
+    )
     {
         using namespace JsUtil;
 
@@ -27,14 +31,15 @@ extern "C"
             WorkerPoolConfig{
                 .workerCount = workerCount,
                 .jobCount = queueSize,
+                .syncOverflowHandling = syncOverflowHandling,
             }
         );
     }
 
     EMSCRIPTEN_KEEPALIVE
-    void workerPool_setBatchReadyPoint(JsUtil::IWorkerPool* o_pool)
+    void workerPool_setBatchEndPoint(JsUtil::IWorkerPool* o_pool)
     {
-        o_pool->setBatchReadyPoint();
+        o_pool->setBatchEndPoint();
     }
 
     EMSCRIPTEN_KEEPALIVE
@@ -44,9 +49,21 @@ extern "C"
     }
 
     EMSCRIPTEN_KEEPALIVE
-    void workerPool_addJob(JsUtil::IWorkerPool* o_pool, gsl::owner<JsUtil::IExecutor*> job)
+    void workerPool_invalidateBatch(JsUtil::IWorkerPool* pool)
     {
-        o_pool->addJob(job);
+        pool->invalidateBatch();
+    }
+
+    EMSCRIPTEN_KEEPALIVE
+    bool workerPool_areWorkersSynced(JsUtil::IWorkerPool* pool)
+    {
+        return pool->areAllWorkersSynced();
+    }
+
+    EMSCRIPTEN_KEEPALIVE
+    bool workerPool_addJob(JsUtil::IWorkerPool* o_pool, gsl::owner<JsUtil::IExecutor*> job)
+    {
+        return o_pool->addJob(job);
     }
 
     EMSCRIPTEN_KEEPALIVE
@@ -56,9 +73,9 @@ extern "C"
     }
 
     EMSCRIPTEN_KEEPALIVE
-    bool workerPool_isReady(JsUtil::IWorkerPool* pool)
+    bool workerPool_isAcceptingJobs(JsUtil::IWorkerPool* pool)
     {
-        return pool->isReady();
+        return pool->isAcceptingJobs();
     }
 
     EMSCRIPTEN_KEEPALIVE
@@ -83,5 +100,11 @@ extern "C"
     gsl::owner<JsUtil::IExecutor*> workerPool_createJob()
     {
         return JsUtil::sWORKER_POOL_JOB_FACTORY->createJob();
+    }
+
+    EMSCRIPTEN_KEEPALIVE
+    void workerPool_deleteJob(gsl::owner<JsUtil::IExecutor*> job)
+    {
+        delete job;
     }
 }

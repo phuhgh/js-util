@@ -18,3 +18,4 @@ PointerAlignment: Left
 ReferenceAlignment: Left
 MaxEmptyLinesToKeep: 1
 AllowShortEnumsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: Yes

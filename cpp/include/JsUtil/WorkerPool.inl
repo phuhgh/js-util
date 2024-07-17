@@ -54,9 +54,26 @@ void PoolWorkerConfig::onTick()
 {
     while (!m_jobs.getIsEmpty())
     {
-        auto* job = m_jobs.pop();
-        job->run();
-        delete job;
+        auto invalidateToIndex = m_invalidateToIndex.load();
+        if (invalidateToIndex == 0)
+        {
+            // no invalidation has been requested, run the job
+            // we rely on indexes to determine if we're in a valid state, so do the pop after the work
+            m_jobs[0]->run(); // the circular buffer will translate for us...
+            delete m_jobs[0];
+            m_jobs.pop(); // it's a circular buffer, the pop moves the front
+        }
+        else
+        {
+            // producer has asked us to invalidate up to a job index
+            while (m_jobs.getAbsoluteStart() < invalidateToIndex)
+            {
+                Debug::debugAssert(!m_jobs.getIsEmpty(), "unexpected state, probably received invalid index...");
+                delete m_jobs.pop();
+            }
+            // reset, assuming the value hasn't changed, otherwise just go around again...
+            m_invalidateToIndex.compare_exchange_weak(invalidateToIndex, 0);
+        }
     }
 }
 
@@ -79,6 +96,7 @@ WorkerPool<TDistributionStrategy>::WorkerPool(TDistributionStrategy strategy, Wo
           }
       ))
     , m_strategy(std::move(strategy))
+    , m_syncOverflowHandling(config.syncOverflowHandling)
 {
     m_strategy.configure(config);
     for (auto& worker : m_workers.asSpan())
@@ -129,14 +147,14 @@ template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistrib
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistributionStrategy>::isReady() const
+template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const
 {
-    bool isReady{true};
+    bool isAcceptingJobs{true};
     for (auto& worker : m_workers.asSpan())
     {
-        isReady = isReady && worker->getTask().isAcceptingWork();
+        isAcceptingJobs = isAcceptingJobs && worker->getTask().isAcceptingWork();
     }
-    return isReady;
+    return isAcceptingJobs;
 }
 
 template <IsDistributionStrategy TDistributionStrategy>
@@ -160,16 +178,16 @@ template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistrib
     return hasPendingWork;
 }
 
-template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistributionStrategy>::setBatchReadyPoint()
+template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistributionStrategy>::setBatchEndPoint()
 {
     for (auto& worker : m_workers.asSpan())
     {
-        worker->getTask().setBatchReadyPoint();
+        worker->getTask().setBatchEndPoint();
     }
 }
 
 // todo jack: definitely need tests on the cpp side for this
-template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistributionStrategy>::isBatchDone()
+template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistributionStrategy>::isBatchDone() const
 {
     auto ready{true};
     for (auto& worker : m_workers.asSpan())
@@ -177,6 +195,39 @@ template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistrib
         ready = ready && worker->getTask().isBatchDone();
     }
     return ready;
+}
+
+template <IsDistributionStrategy TDistributionStrategy>
+bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job)
+{
+    auto jobAdded = m_strategy.distributeWork(m_workers.asSpan(), job);
+    if (!jobAdded && m_syncOverflowHandling)
+    {
+        // handle backpressure by throttling the producer... not pretty but will "work"...
+        Debug::verboseLog("job overflow, running synchronously...");
+        job->run();
+        delete job;
+    }
+    return jobAdded;
+}
+
+template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistributionStrategy>::invalidateBatch()
+{
+    for (auto& worker : m_workers.asSpan())
+    {
+        worker->getTask().invalidateBatch();
+    }
+}
+
+template <IsDistributionStrategy TDistributionStrategy>
+bool WorkerPool<TDistributionStrategy>::areAllWorkersSynced() const
+{
+    bool synced{true};
+    for (auto& worker : m_workers.asSpan())
+    {
+        synced = synced && worker->getTask().isWorkerSynced();
+    }
+    return synced;
 }
 
 bool RoundRobin::distributeWork(std::span<WorkerLoop<PoolWorkerConfig>*> o_workers, gsl::owner<IExecutor*> job)
