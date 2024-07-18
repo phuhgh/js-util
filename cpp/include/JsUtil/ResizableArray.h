@@ -14,7 +14,8 @@ namespace JsUtil
  * @remarks Construction of TValue() should not throw, exceptions more generally are not supported.
  * @remarks Should generally be viewed through `asSpan`.
  */
-template <typename TValue, IsUnsigned TIndex = uint32_t> class ResizableArray
+template <typename TValue, IsUnsigned TIndex = uint32_t>
+class ResizableArray
 {
   public:
     // todo jack: move these into impl
@@ -47,7 +48,8 @@ template <typename TValue, IsUnsigned TIndex = uint32_t> class ResizableArray
         return array;
     }
 
-    template <typename T = TValue> typename std::enable_if<std::is_pointer<T>::value, void>::type compact()
+    template <typename T = TValue>
+    typename std::enable_if<std::is_pointer<T>::value, void>::type compact()
     {
         TIndex last = 0;
         for (TIndex i = 0; i < m_size; ++i)
@@ -89,10 +91,12 @@ template <typename TValue, IsUnsigned TIndex = uint32_t> class ResizableArray
     TIndex              m_size;
     gsl::owner<TValue*> m_values;
 
-    void                            deleteArray();
-    template <typename TOther> void copyArrayValues(TOther const& other);
-    template <typename TOther> void moveArrayValues(TOther const& other);
-    static gsl::owner<TValue*>      allocateArray(TIndex size);
+    void deleteArray();
+    template <typename TOther>
+    void copyArrayValues(TOther const& other);
+    template <typename TOther>
+    void                       moveArrayValues(TOther const& other);
+    static gsl::owner<TValue*> allocateArray(TIndex size);
 };
 
 } // namespace JsUtil

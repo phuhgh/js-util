@@ -178,7 +178,6 @@ TEST(TestCircularFIFOStack, atomicProducerConsumer)
     // todo jack: actually implement
 }
 
-
 TEST(TestCircularFIFOStack, atomicAbsoluteIndexes)
 {
     CircularFIFOStack<int, ECircularStackOverflowMode::NoOp, unsigned, std::atomic<unsigned>> nStack(4);

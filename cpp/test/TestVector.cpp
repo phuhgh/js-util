@@ -9,36 +9,44 @@
 
 using namespace JsUtil;
 
-template <typename T> struct TestConfig
+template <typename T>
+struct TestConfig
 {
     static int const size = 0;
 };
-template <> struct TestConfig<Vec2<float>>
+template <>
+struct TestConfig<Vec2<float>>
 {
     static int const size = 2;
 };
-template <> struct TestConfig<Vec3<float>>
+template <>
+struct TestConfig<Vec3<float>>
 {
     static int const size = 3;
 };
-template <> struct TestConfig<Vec4<float>>
+template <>
+struct TestConfig<Vec4<float>>
 {
     static int const size = 4;
 };
-template <> struct TestConfig<Mat2<float>>
+template <>
+struct TestConfig<Mat2<float>>
 {
     static int const size = 4;
 };
-template <> struct TestConfig<Mat3<float>>
+template <>
+struct TestConfig<Mat3<float>>
 {
     static int const size = 9;
 };
-template <> struct TestConfig<Mat4<float>>
+template <>
+struct TestConfig<Mat4<float>>
 {
     static int const size = 16;
 };
 
-template <typename T> class TestVector : public testing::Test
+template <typename T>
+class TestVector : public testing::Test
 {
   public:
     T createOne() const

@@ -4,14 +4,16 @@
 
 using namespace JsUtil;
 
-TEST(TestCircularBuffer, insideInputRange) {
+TEST(TestCircularBuffer, insideInputRange)
+{
     CircularBuffer<int> buffer({0, 1, 2, 3});
 
     EXPECT_EQ(buffer[0], 0);
     EXPECT_EQ(buffer[3], 3);
 }
 
-TEST(TestCircularBuffer, goingForwardPastEnd) {
+TEST(TestCircularBuffer, goingForwardPastEnd)
+{
     CircularBuffer<int> buffer({0, 1, 2, 3});
 
     EXPECT_EQ(buffer[4], 0);
@@ -19,7 +21,8 @@ TEST(TestCircularBuffer, goingForwardPastEnd) {
     EXPECT_EQ(buffer[8], 0);
 }
 
-TEST(TestCircularBuffer, goingBackwardPastStart) {
+TEST(TestCircularBuffer, goingBackwardPastStart)
+{
     CircularBuffer<int> buffer({0, 1, 2, 3});
 
     // it's possible, I'm not saying it's a good idea...
@@ -30,10 +33,12 @@ TEST(TestCircularBuffer, goingBackwardPastStart) {
     EXPECT_EQ(buffer[-5], 3);
 }
 
-TEST(TestCircularBuffer, writingBasic) {
+TEST(TestCircularBuffer, writingBasic)
+{
     CircularBuffer<int> buffer(5);
 
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i)
+    {
         buffer[i] = i;
     }
 
@@ -44,18 +49,20 @@ TEST(TestCircularBuffer, writingBasic) {
     EXPECT_EQ(buffer[4], 99);
 }
 
-TEST(TestCircularBuffer, moveOnlyElementSupport) {
+TEST(TestCircularBuffer, moveOnlyElementSupport)
+{
     CircularBuffer<MoveOnlyTestObject> buffer(5);
 
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i)
+    {
         // not important how we got the object, only that we can put it in the buffer and know that
         // it didn't copy
-        MoveOnlyTestObject tmp {i};
+        MoveOnlyTestObject tmp{i};
         buffer[i] = std::move(tmp);
     }
 
     // how the language is supposed to work, but doesn't hurt to check...
-    const auto& val = buffer[0];
+    auto const& val = buffer[0];
     EXPECT_EQ(val.m_val, 95);
 
     EXPECT_EQ(buffer[0].m_val, 95);

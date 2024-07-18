@@ -87,7 +87,8 @@ struct IWorkerPool : public ISharedMemoryObject
 /**
  * @remark TDistributionStrategy sets the thread safety of `addJob`. Other methods are NOT thread safe (unless marked).
  */
-template <IsDistributionStrategy TDistributionStrategy> class WorkerPool final : public IWorkerPool
+template <IsDistributionStrategy TDistributionStrategy>
+class WorkerPool final : public IWorkerPool
 {
   public:
     inline WorkerPool(TDistributionStrategy strategy, WorkerPoolConfig const& config);

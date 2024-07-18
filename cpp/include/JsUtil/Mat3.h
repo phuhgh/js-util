@@ -5,7 +5,8 @@
 namespace JsUtil
 {
 
-template <typename T> class Mat3: public AVectorBase<T, 9, Mat3<T>>
+template <typename T>
+class Mat3 : public AVectorBase<T, 9, Mat3<T>>
 {
   public:
     using AVectorBase<T, 9, Mat3<T>>::AVectorBase;

@@ -2,7 +2,8 @@
 
 #include <atomic>
 
-template <typename TCounted> class CreateDestroyTestCounter : public TCounted
+template <typename TCounted>
+class CreateDestroyTestCounter : public TCounted
 {
   public:
     template <typename... Args>
@@ -54,10 +55,14 @@ template <typename TCounted> class CreateDestroyTestCounter : public TCounted
     ~CreateDestroyTestCounter() { m_destroyed++; }
 };
 
-template <typename TCounted> std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_default_constructed = 0;
+template <typename TCounted>
+std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_default_constructed = 0;
 
-template <typename TCounted> std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_destroyed = 0;
+template <typename TCounted>
+std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_destroyed = 0;
 
-template <typename TCounted> std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_copy_constructed = 0;
+template <typename TCounted>
+std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_copy_constructed = 0;
 
-template <typename TCounted> std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_move_constructed = 0;
+template <typename TCounted>
+std::atomic<unsigned> CreateDestroyTestCounter<TCounted>::m_move_constructed = 0;

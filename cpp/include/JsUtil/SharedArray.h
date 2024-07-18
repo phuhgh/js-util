@@ -5,7 +5,8 @@
 
 namespace JsUtil
 {
-template <typename T> class SharedArray
+template <typename T>
+class SharedArray
 {
   public:
     static SharedArray* createOne(size_t _size, bool _clearMemory);

@@ -1,4 +1,3 @@
-
 /**
  * @public
  * Infers the value type of `TDictionary`, if it resembles a dictionary.

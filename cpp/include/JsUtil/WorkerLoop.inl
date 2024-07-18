@@ -3,13 +3,15 @@
 namespace JsUtil
 {
 
-template <WorkerLoopConfigExt TConfig> WorkerLoop<TConfig>::~WorkerLoop()
+template <WorkerLoopConfigExt TConfig>
+WorkerLoop<TConfig>::~WorkerLoop()
 {
     stop(true);
     safeDeleteThread();
 }
 
-template <WorkerLoopConfigExt TConfig> bool WorkerLoop<TConfig>::start(bool tickOnStart)
+template <WorkerLoopConfigExt TConfig>
+bool WorkerLoop<TConfig>::start(bool tickOnStart)
 {
     bool started{false};
     {
@@ -66,7 +68,8 @@ template <WorkerLoopConfigExt TConfig> bool WorkerLoop<TConfig>::start(bool tick
     return started;
 }
 
-template <WorkerLoopConfigExt TConfig> void WorkerLoop<TConfig>::stop(bool wait)
+template <WorkerLoopConfigExt TConfig>
+void WorkerLoop<TConfig>::stop(bool wait)
 {
     setWorkerNotification(eEND);
 
@@ -76,7 +79,8 @@ template <WorkerLoopConfigExt TConfig> void WorkerLoop<TConfig>::stop(bool wait)
     }
 }
 
-template <WorkerLoopConfigExt TConfig> void WorkerLoop<TConfig>::awaitCompletion()
+template <WorkerLoopConfigExt TConfig>
+void WorkerLoop<TConfig>::awaitCompletion()
 {
     std::unique_lock lock(m_state_mutex);
 
@@ -86,18 +90,21 @@ template <WorkerLoopConfigExt TConfig> void WorkerLoop<TConfig>::awaitCompletion
     }
 }
 
-template <WorkerLoopConfigExt TConfig> TConfig& WorkerLoop<TConfig>::getTask()
+template <WorkerLoopConfigExt TConfig>
+TConfig& WorkerLoop<TConfig>::getTask()
 {
     return m_config;
 }
 
-template <WorkerLoopConfigExt TConfig> bool WorkerLoop<TConfig>::isRunning() const
+template <WorkerLoopConfigExt TConfig>
+bool WorkerLoop<TConfig>::isRunning() const
 {
     std::unique_lock lock(m_state_mutex);
     return m_loop_state == eRUNNING;
 }
 
-template <WorkerLoopConfigExt TConfig> void WorkerLoop<TConfig>::proceed()
+template <WorkerLoopConfigExt TConfig>
+void WorkerLoop<TConfig>::proceed()
 {
     setWorkerNotification(eSPIN_LOOP);
 }
@@ -113,7 +120,8 @@ void WorkerLoop<TConfig>::setWorkerNotification(WorkerLoop::ENotification notifi
     m_notification_cv.notify_all();
 }
 
-template <WorkerLoopConfigExt TConfig> WorkerLoop<TConfig>::ENotification WorkerLoop<TConfig>::consumeNotification()
+template <WorkerLoopConfigExt TConfig>
+WorkerLoop<TConfig>::ENotification WorkerLoop<TConfig>::consumeNotification()
 {
     std::unique_lock lock(m_state_mutex);
 
@@ -130,7 +138,8 @@ template <WorkerLoopConfigExt TConfig> WorkerLoop<TConfig>::ENotification Worker
     return notification;
 }
 
-template <WorkerLoopConfigExt TConfig> void WorkerLoop<TConfig>::safeDeleteThread()
+template <WorkerLoopConfigExt TConfig>
+void WorkerLoop<TConfig>::safeDeleteThread()
 {
     if (m_thread != nullptr && m_thread->joinable())
     {

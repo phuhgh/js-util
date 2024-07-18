@@ -35,8 +35,8 @@ TEST(WorkerPoolJob, workerJobHandling)
 
 TEST(WorkerPoolJob, overflowHandling)
 {
-    std::atomic<int>                jobsExecuted{0};
-    WorkerLoop                      workerLoop{PoolWorkerConfig{1}};
+    std::atomic<int>       jobsExecuted{0};
+    WorkerLoop             workerLoop{PoolWorkerConfig{1}};
     gsl::owner<IExecutor*> overflowJob = new CallbackExecutor([&]() { ++jobsExecuted; });
     ASSERT_TRUE(workerLoop.getTask().addJob(new CallbackExecutor([&]() { ++jobsExecuted; })));
     ASSERT_FALSE(workerLoop.getTask().addJob(overflowJob));

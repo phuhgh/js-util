@@ -12,7 +12,8 @@ namespace JsUtil
  * @brief Provides basic locking functionality for a value
  * @tparam T - The value type to be locked.
  */
-template <typename T> class SmartLocked
+template <typename T>
+class SmartLocked
 {
   public:
     class ReadonlyReference

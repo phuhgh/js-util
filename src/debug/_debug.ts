@@ -220,7 +220,7 @@ export class _Debug
         }
     }
 
-    public static logError(this: void, message: string|object): void
+    public static logError(this: void, message: string | object): void
     {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         console.error(message);

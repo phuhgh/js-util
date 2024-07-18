@@ -30,10 +30,12 @@ enum class ECircularStackOverflowMode
     Grow,
 };
 
-template <typename TValue, typename TIndex, typename TStorage> class CircularFIFOStackBase;
+template <typename TValue, typename TIndex, typename TStorage>
+class CircularFIFOStackBase;
 
 /// methods not explicitly marked unsafe are safe in single producer consumer usage
-template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
+template <typename TValue, IsUnsigned TIndex>
+class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
 {
   public:
     explicit CircularFIFOStackBase(TIndex capacity)
@@ -86,11 +88,12 @@ template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue
 
   protected:
     CircularBuffer<TValue, TIndex> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)
-    std::atomic<TIndex>    m_start = 0; // NOLINT(*-non-private-member-variables-in-classes)
-    std::atomic<TIndex>    m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
+    std::atomic<TIndex>            m_start = 0; // NOLINT(*-non-private-member-variables-in-classes)
+    std::atomic<TIndex>            m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
 };
 
-template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue, TIndex, TIndex>
+template <typename TValue, IsUnsigned TIndex>
+class CircularFIFOStackBase<TValue, TIndex, TIndex>
 {
   public:
     explicit CircularFIFOStackBase(TIndex capacity)
@@ -123,8 +126,8 @@ template <typename TValue, IsUnsigned TIndex> class CircularFIFOStackBase<TValue
 
   protected:
     CircularBuffer<TValue, TIndex> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)
-    TIndex                 m_start = 0; // NOLINT(*-non-private-member-variables-in-classes)
-    TIndex                 m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
+    TIndex                         m_start = 0; // NOLINT(*-non-private-member-variables-in-classes)
+    TIndex                         m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
 };
 
 template <typename TValue, ECircularStackOverflowMode TMode, IsUnsigned TIndex = size_t, typename TStorage = TIndex>

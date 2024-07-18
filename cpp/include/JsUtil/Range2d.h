@@ -7,7 +7,8 @@
 namespace JsUtil
 {
 
-template <typename T> class Range2d : public Mat2<T>
+template <typename T>
+class Range2d : public Mat2<T>
 {
   public:
     static Range2d<T> fromCorners(Vec2<T> _bottomLeft, Vec2<T> _topRight);
@@ -28,9 +29,11 @@ template <typename T> class Range2d : public Mat2<T>
     void setYMax(T value) { this->operator[](3) = value; }
 
     /// bounding boxes "touching" is not considered an intersection
-    template <typename U> inline bool rangeIntersects(Range2d<U> const& _range) const;
+    template <typename U>
+    inline bool rangeIntersects(Range2d<U> const& _range) const;
     /// check is inclusive of the boundary (>= min and <= max)
-    template <typename U> inline bool pointInRange(Vec2<U> _point) const;
+    template <typename U>
+    inline bool pointInRange(Vec2<U> _point) const;
 
     /// adjusts min & maxes such that max >= min
     void ensureAABB();

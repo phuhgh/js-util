@@ -6,7 +6,8 @@
 namespace JsUtil
 {
 
-template <typename TStorage, unsigned TSize, typename TExt> class AVectorBase
+template <typename TStorage, unsigned TSize, typename TExt>
+class AVectorBase
 {
   public:
     static constexpr int scSIZE = TSize;

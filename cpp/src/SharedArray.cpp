@@ -4,7 +4,8 @@
 namespace JsUtil
 {
 
-template <typename T> SharedArray<T>* SharedArray<T>::createOne(size_t _size, bool _clearMemory)
+template <typename T>
+SharedArray<T>* SharedArray<T>::createOne(size_t _size, bool _clearMemory)
 {
     Debug::onBeforeAllocate();
     T* arrayPtr = _clearMemory ? static_cast<T*>(calloc(_size, sizeof(T))) : static_cast<T*>(malloc(_size * sizeof(T)));
@@ -26,7 +27,8 @@ template <typename T> SharedArray<T>* SharedArray<T>::createOne(size_t _size, bo
     return shared_array;
 }
 
-template <typename T> T const* sharedArray_getArrayAddress(SharedArray<T>* sharedArray)
+template <typename T>
+T const* sharedArray_getArrayAddress(SharedArray<T>* sharedArray)
 {
     if (!sharedArray)
     {

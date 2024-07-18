@@ -77,7 +77,8 @@ void PoolWorkerConfig::onTick()
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy> WorkerPool<TDistributionStrategy>::~WorkerPool()
+template <IsDistributionStrategy TDistributionStrategy>
+WorkerPool<TDistributionStrategy>::~WorkerPool()
 {
     // the stop method is more optimized than just relying on destructors (which would serial wait)
     stop(true);
@@ -105,7 +106,8 @@ WorkerPool<TDistributionStrategy>::WorkerPool(TDistributionStrategy strategy, Wo
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy> uint16_t WorkerPool<TDistributionStrategy>::start()
+template <IsDistributionStrategy TDistributionStrategy>
+uint16_t WorkerPool<TDistributionStrategy>::start()
 {
     uint16_t startedCount{0};
     for (auto& workerPtr : m_workers.asSpan())
@@ -130,7 +132,8 @@ template <IsDistributionStrategy TDistributionStrategy> uint16_t WorkerPool<TDis
     return startedCount;
 }
 
-template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistributionStrategy>::stop(bool wait)
+template <IsDistributionStrategy TDistributionStrategy>
+void WorkerPool<TDistributionStrategy>::stop(bool wait)
 {
     // stop in parallel
     for (auto& worker : m_workers.asSpan())
@@ -147,7 +150,8 @@ template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistrib
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const
+template <IsDistributionStrategy TDistributionStrategy>
+bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const
 {
     bool isAcceptingJobs{true};
     for (auto& worker : m_workers.asSpan())
@@ -168,7 +172,8 @@ bool WorkerPool<TDistributionStrategy>::isAnyWorkerRunning() const
     return isRunning;
 }
 
-template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistributionStrategy>::hasPendingWork() const
+template <IsDistributionStrategy TDistributionStrategy>
+bool WorkerPool<TDistributionStrategy>::hasPendingWork() const
 {
     bool hasPendingWork{false};
     for (auto& worker : m_workers.asSpan())
@@ -178,7 +183,8 @@ template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistrib
     return hasPendingWork;
 }
 
-template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistributionStrategy>::setBatchEndPoint()
+template <IsDistributionStrategy TDistributionStrategy>
+void WorkerPool<TDistributionStrategy>::setBatchEndPoint()
 {
     for (auto& worker : m_workers.asSpan())
     {
@@ -187,7 +193,8 @@ template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistrib
 }
 
 // todo jack: definitely need tests on the cpp side for this
-template <IsDistributionStrategy TDistributionStrategy> bool WorkerPool<TDistributionStrategy>::isBatchDone() const
+template <IsDistributionStrategy TDistributionStrategy>
+bool WorkerPool<TDistributionStrategy>::isBatchDone() const
 {
     auto ready{true};
     for (auto& worker : m_workers.asSpan())
@@ -211,7 +218,8 @@ bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job)
     return jobAdded;
 }
 
-template <IsDistributionStrategy TDistributionStrategy> void WorkerPool<TDistributionStrategy>::invalidateBatch()
+template <IsDistributionStrategy TDistributionStrategy>
+void WorkerPool<TDistributionStrategy>::invalidateBatch()
 {
     for (auto& worker : m_workers.asSpan())
     {

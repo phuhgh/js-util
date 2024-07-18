@@ -12,11 +12,11 @@ describe("=> treeIterate", () =>
     it("| iterates over all nodes", () =>
     {
         const tree = new TestNode("root", [
-            new TestNode("a1",[
-                new TestNode("a2",[]),
-                new TestNode("b2",null),
+            new TestNode("a1", [
+                new TestNode("a2", []),
+                new TestNode("b2", null),
             ]),
-            new TestNode("b1",null),
+            new TestNode("b1", null),
         ]);
 
         const result: any[] = [];
