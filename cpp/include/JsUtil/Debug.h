@@ -15,6 +15,15 @@ void Debug_log(char const* _message);
 class Debug
 {
   public:
+    constexpr static bool isDebug()
+    {
+#ifndef NDEBUG
+        return true;
+#else
+        return false;
+#endif
+    }
+
     static bool hasJsIntegration() { return sJS_INTEGRATION; }
     static void disableJsIntegration() { sJS_INTEGRATION = false; };
     static void setDebugDisabled(bool disabled) { sDEBUG_DISABLED = disabled; }

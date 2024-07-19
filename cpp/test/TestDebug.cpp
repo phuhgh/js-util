@@ -15,3 +15,13 @@ TEST(Debug, runBlock)
     EXPECT_EQ(count, 1);
 #endif
 }
+
+TEST(Debug, isDebug)
+{
+    // a slightly questionable use, but it removes a warning about not being used...
+#ifdef NDEBUG
+    static_assert(!Debug::isDebug());
+#else
+    static_assert(Debug::isDebug());
+#endif
+}
