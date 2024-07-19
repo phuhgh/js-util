@@ -15,6 +15,10 @@ void Debug_log(char const* _message);
 class Debug
 {
   public:
+    /**
+     * If you want to be extra sure ALL debug code is removed, you can constexpr if on this (99.99% placebo)...
+     * @return True if it's a debug build.
+     */
     constexpr static bool isDebug()
     {
 #ifndef NDEBUG

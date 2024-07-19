@@ -41,7 +41,10 @@ class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
     explicit CircularFIFOStackBase(TIndex capacity)
         : m_buffer(CircularBuffer<TValue, TIndex>(capacity))
     {
-        Debug::debugAssert(capacity > 0, "0 capacity buffer is definitely a bug");
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(capacity > 0, "0 capacity buffer is definitely a bug");
+        }
     }
 
     /// not thread safe
@@ -66,13 +69,19 @@ class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
 
     TValue& operator[](TIndex index)
     {
-        Debug::debugAssert(index + m_start < m_end, "index out of bounds");
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(index + m_start < m_end, "index out of bounds");
+        }
         return m_buffer[index + m_start];
     }
 
     TValue pop()
     {
-        Debug::debugAssert(!getIsEmpty(), "Attempted to pop empty stack.");
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(!getIsEmpty(), "Attempted to pop empty stack.");
+        }
 
         return std::move(m_buffer[m_start++]);
     }
@@ -99,18 +108,27 @@ class CircularFIFOStackBase<TValue, TIndex, TIndex>
     explicit CircularFIFOStackBase(TIndex capacity)
         : m_buffer(CircularBuffer<TValue, TIndex>(capacity))
     {
-        Debug::debugAssert(capacity > 0, "0 capacity buffer is definitely a bug");
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(capacity > 0, "0 capacity buffer is definitely a bug");
+        }
     }
 
     TValue& operator[](TIndex index)
     {
-        Debug::debugAssert(index + m_start < m_end, "index out of bounds");
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(index + m_start < m_end, "index out of bounds");
+        }
         return m_buffer[index + m_start];
     }
 
     TValue pop()
     {
-        Debug::debugAssert(!getIsEmpty(), "Attempted to pop empty stack.");
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(!getIsEmpty(), "Attempted to pop empty stack.");
+        }
 
         return std::move(m_buffer[m_start++]);
     }
@@ -291,7 +309,10 @@ class CircularFIFOStack<TValue, ECircularStackOverflowMode::DebugException, TInd
 
         if (Base::getRemainingCapacity() == 0)
         {
-            Debug::error("Attempted to push to full stack.");
+            if constexpr (Debug::isDebug())
+            {
+                Debug::error("Attempted to push to full stack.");
+            }
 
             return false;
         }

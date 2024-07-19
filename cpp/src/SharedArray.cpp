@@ -7,7 +7,10 @@ namespace JsUtil
 template <typename T>
 SharedArray<T>* SharedArray<T>::createOne(size_t _size, bool _clearMemory)
 {
-    Debug::onBeforeAllocate();
+    if constexpr (Debug::isDebug())
+    {
+        Debug::onBeforeAllocate();
+    }
     T* arrayPtr = _clearMemory ? static_cast<T*>(calloc(_size, sizeof(T))) : static_cast<T*>(malloc(_size * sizeof(T)));
 
     if (arrayPtr == nullptr)
@@ -32,7 +35,10 @@ T const* sharedArray_getArrayAddress(SharedArray<T>* sharedArray)
 {
     if (!sharedArray)
     {
-        Debug::error("expected shared array, got null ptr");
+        if constexpr (Debug::isDebug())
+        {
+            Debug::error("expected shared array, got null ptr");
+        }
         return nullptr;
     }
 

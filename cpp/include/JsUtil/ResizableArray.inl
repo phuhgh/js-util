@@ -153,14 +153,20 @@ bool ResizableArray<TValue, TIndex>::resize(TIndex newSize)
 template <typename TValue, IsUnsigned TIndex>
 TValue ResizableArray<TValue, TIndex>::operator[](TIndex index) const
 {
-    Debug::debugAssert(index < m_size, "index out of bounds");
+    if constexpr (Debug::isDebug())
+    {
+        Debug::debugAssert(index < m_size, "index out of bounds");
+    }
     return m_values[index];
 }
 
 template <typename TValue, IsUnsigned TIndex>
 TValue& ResizableArray<TValue, TIndex>::operator[](TIndex index)
 {
-    Debug::debugAssert(index < m_size, "index out of bounds");
+    if constexpr (Debug::isDebug())
+    {
+        Debug::debugAssert(index < m_size, "index out of bounds");
+    }
     return m_values[index];
 }
 
