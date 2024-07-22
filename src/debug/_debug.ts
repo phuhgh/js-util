@@ -3,6 +3,12 @@ import { arrayAddToSet } from "../array/impl/array-add-to-set.js";
 import { _Set } from "../set/_set.js";
 
 /**
+ * todo jack: additional uses cases we want to support
+ *  - additional logging in release builds (tangential, it's production logging)
+ *  - make it easier to get the set of labels, maybe just print each new one we get
+ *  - add black listing, allows removal of annoying messages you don't care about
+ */
+/**
  * @public
  * Utilities for debug builds.
  */
