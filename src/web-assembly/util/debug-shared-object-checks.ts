@@ -4,6 +4,7 @@ import { stringNormalizeNullUndefinedToEmpty } from "../../string/impl/string-no
 import { ISharedObject } from "../../lifecycle/i-shared-object.js";
 import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
+import type { TListener } from "../../eventing/t-listener.js";
 
 /**
  * @public
@@ -27,7 +28,12 @@ export class DebugSharedObjectChecks
     )
         : IDebugProtectedView
     {
-        instance.sharedObject.registerOnFreeListener(() => DebugSharedObjectChecks.unregister(protectedView, instance, nameOfInstance));
+
+        instance.sharedObject.onFreeChannel.addListener(
+            instance.sharedObject.onFreeChannel.fromAnonymous(
+                () => DebugSharedObjectChecks.unregister(protectedView, instance, nameOfInstance)
+            )
+        );
         return DebugSharedObjectChecks.register(instance, protectedView, nameOfInstance);
     }
 
@@ -47,7 +53,7 @@ export class DebugSharedObjectChecks
         const debug = protectedView.owningInstance.debug;
         debug.protectedViews.setValue(instance, protectedView);
         debug.sharedObjectLifeCycleChecks.registerFinalizationCheck(instance.sharedObject);
-        debug.onAllocate.addListener(instance);
+        debug.onAllocate.addListener(instance as TListener<"debugOnAllocate", []>);
 
         if (!instance.sharedObject.isStatic)
         {
@@ -76,7 +82,7 @@ export class DebugSharedObjectChecks
             .invalidate();
         debug.protectedViews.deleteValue(instance);
         instance.debugOnAllocate = () => undefined;
-        debug.onAllocate.removeListener(instance);
+        debug.onAllocate.removeListener(instance as TListener<"debugOnAllocate", []>);
 
         if (!instance.sharedObject.isStatic)
         {

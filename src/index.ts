@@ -55,13 +55,14 @@ export { ERgbaMasks, ERgbaShift } from "./colors/e-rgba-masks.js";
 export { RgbaColorPacker } from "./colors/rgba-color-packer.js";
 export { DebugProtectedView } from "./debug/debug-protected-view.js";
 export { IncrementingIdentifierFactory } from "./identifier/impl/incrementing-identifier-factory.js";
-export { BroadcastEvent } from "./eventing/broadcast-event.js";
-export { IBroadcastEvent } from "./eventing/i-broadcast-event.js";
+export { BroadcastChannel } from "./eventing/broadcast-channel.js";
+export { IBroadcastChannel } from "./eventing/i-broadcast-channel.js";
 export { TListener } from "./eventing/t-listener.js";
 export { ILinkedReferences, LinkedReferences } from "./lifecycle/linked-references.js";
-export { AOnDestroy, IOnDestroy } from "./lifecycle/i-on-destroy.js";
+export { AOnDestroy, IManagedResource, IOnFreeListener } from "./lifecycle/i-managed-resource.js";
 export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted.js";
-export { TemporaryListener, ITemporaryListener } from "./lifecycle/temporary-listener.js";
+export { CleanupStore } from "./lifecycle/cleanup-store.js";
+export type { ICleanupStore } from "./lifecycle/i-cleanup-store.js";
 export { ITreeNodeLike } from "./tree/tree-model.js";
 export { _Tree } from "./tree/_tree.js";
 export { treeIterate } from "./tree/impl/tree-iterate.js";
@@ -210,18 +211,16 @@ export { stringNormalizeEmptyToUndefined } from "./string/impl/string-normalize-
 export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normalize-null-undefined-to-empty.js";
 export { ISharedObject, ISharedObjectOwner } from "./lifecycle/i-shared-object.js";
 export { IRefCountedObject } from "./lifecycle/i-ref-counted-object.js";
-export { IOnFree } from "./lifecycle/i-on-free.js";
 export { ReferenceCountedOwner } from "./lifecycle/reference-counted-owner.js";
 export { IIdentifierFactory } from "./identifier/impl/i-identifier-factory.js";
 export { arrayMin } from "./array/impl/array-min.js";
 export { IDebugWeakStore } from "./debug/i-debug-weak-store.js";
 export { IDebugSharedObject } from "./debug/i-debug-shared-object.js";
-export { IDebugWeakBroadcastEvent } from "./debug/debug-weak-broadcast-event.js";
+export { DebugWeakBroadcastChannel } from "./debug/debug-weak-broadcast-event.js";
 export { IDebugSharedObjectLifeCycleChecker } from "./debug/debug-shared-object-life-cycle-checker.js";
 export { TDebugListener } from "./debug/t-debug-listener.js";
 export { Test_setDefaultFlags } from "./test-util/test_set-default-flags.js";
 export { Test_resetLifeCycle } from "./test-util/test_reset-life-cycle.js";
-
 
 declare global
 {

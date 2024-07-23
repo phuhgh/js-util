@@ -9,6 +9,7 @@ import { ISharedArrayBindings } from "./i-shared-array-bindings.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
 import { ILinkedReferences } from "../../lifecycle/linked-references.js";
+import type { IOnFreeListener } from "../../lifecycle/i-managed-resource.js";
 
 /**
  * @public
@@ -28,6 +29,7 @@ export type TF64SharedStaticArray = ISharedArray<Float64ArrayConstructor>;
 export class SharedStaticArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>,
                IOnMemoryResize,
+               IOnFreeListener,
                IDebugAllocateListener
 {
     public static createOneF32
@@ -79,10 +81,15 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
         }
     }
 
-    public onMemoryResize = (): void =>
+    public onMemoryResize(): void
     {
         this.instance = this.createLocalInstance();
-    };
+    }
+
+    public onFree(): void
+    {
+        this.wrapper.memoryResize.removeListener(this);
+    }
 
     protected constructor
     (
@@ -103,7 +110,7 @@ export class SharedStaticArray<TCtor extends TTypedArrayCtor>
             DebugSharedObjectChecks.registerWithCleanup(this, DebugProtectedView.createTypedArrayView(this.wrapper), "");
         });
 
-        this.sharedObject.registerOnFreeListener(wrapper.memoryResize.addTemporaryListener(this));
+        wrapper.memoryResize.addListener(this);
         this.instance = this.createLocalInstance();
     }
 

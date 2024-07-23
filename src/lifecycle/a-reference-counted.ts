@@ -1,25 +1,28 @@
 import { _Debug } from "../debug/_debug.js";
 import { ILinkedReferences, LinkedReferences } from "./linked-references.js";
-import { ITemporaryListener, TemporaryListener } from "./temporary-listener.js";
+import type { IBroadcastChannel } from "../eventing/i-broadcast-channel.js";
+import { BroadcastChannel } from "../eventing/broadcast-channel.js";
+import type { IManagedResource } from "./i-managed-resource.js";
 
 /**
  * @public
  * Provides a way to handle cleanup of manually managed resources where there is not a single owner.
  */
-export interface IReferenceCounted
+export interface IReferenceCounted extends IManagedResource
 {
+    readonly onFreeChannel: IBroadcastChannel<"onFree", []>;
+
+    /**
+     * Increments the ref count.
+     */
     claim(): void;
+    /**
+     * Decrements the ref count.
+     */
     release(): void;
+
     getIsDestroyed(): boolean;
     getLinkedReferences(): ILinkedReferences;
-    /**
-     * Callback will be called when the reference count hits 0. Useful for cleanup.
-     */
-    registerOnFreeListener(callback: () => void): void;
-    /**
-     * Remove the listener set by "registerOnFreeListener".
-     */
-    unregisterOnFreeListener(callback: () => void): void;
 }
 
 /**
@@ -29,6 +32,8 @@ export interface IReferenceCounted
  */
 export abstract class AReferenceCounted implements IReferenceCounted
 {
+    public readonly onFreeChannel: IBroadcastChannel<"onFree", []> = new BroadcastChannel("onFree");
+
     /**
      * Take a claim on the object, preventing it from being destroyed. Once you're done with the object you should
      * call `release`.
@@ -70,32 +75,16 @@ export abstract class AReferenceCounted implements IReferenceCounted
         return this.linkedReferences;
     }
 
-
-    public registerOnFreeListener(callback: () => void): void
-    {
-        this.onFreeListener = this.onFreeListener ?? new TemporaryListener();
-        this.onFreeListener.addListener(callback);
-    }
-
-    public unregisterOnFreeListener(callback: () => void): void
-    {
-        if (this.onFreeListener)
-        {
-            this.onFreeListener.removeListener(callback);
-        }
-    }
-
     /**
      * DO NOT CALL THIS DIRECTLY, CALL RELEASE.
      */
     protected onFree(): void
     {
         this.linkedReferences?.unlinkAllRefs();
-        this.onFreeListener?.clearingEmit();
+        this.onFreeChannel.emit();
     }
 
     private references = 1;
     private linkedReferences: ILinkedReferences | null = null;
-    private onFreeListener: ITemporaryListener<[]> | null = null;
 }
 

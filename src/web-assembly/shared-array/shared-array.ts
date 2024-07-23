@@ -11,6 +11,7 @@ import { ISharedArrayBindings, TSharedArrayPrefix } from "./i-shared-array-bindi
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
 import { ILinkedReferences } from "../../lifecycle/linked-references.js";
+import type { IOnFreeListener } from "../../lifecycle/i-managed-resource.js";
 
 /**
  * @public
@@ -31,6 +32,7 @@ export type TF64SharedArray = ISharedArray<Float64ArrayConstructor>;
 export class SharedArray<TCtor extends TTypedArrayCtor>
     implements ISharedArray<TCtor>,
                IOnMemoryResize,
+               IOnFreeListener,
                IDebugAllocateListener
 {
     /**
@@ -164,10 +166,16 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         }
     }
 
-    public onMemoryResize = (): void =>
+    public onMemoryResize(): void
     {
         this.instance = this.createLocalInstance();
-    };
+    }
+
+    public onFree(): void
+    {
+        this.wrapper.memoryResize.removeListener(this);
+        this.wrapper.instance[this.cDelete](this.sharedObject.getPtr());
+    }
 
     protected constructor
     (
@@ -179,8 +187,8 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     )
     {
         this.sharedObject = new ReferenceCountedPtr(false, pointer, wrapper);
-        this.sharedObject.registerOnFreeListener(() => this.wrapper.instance[this.cDelete](this.sharedObject.getPtr()));
-        this.sharedObject.registerOnFreeListener(wrapper.memoryResize.addTemporaryListener(this));
+        this.sharedObject.onFreeChannel.addListener(this);
+        wrapper.memoryResize.addListener(this);
         this.length = length;
         this.ctor = ctor;
         this.cDelete = `_${cMethodPrefix}_destroy`;

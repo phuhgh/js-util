@@ -1,11 +1,11 @@
 import { shimWebAssemblyMemory } from "../util/shim-web-assembly-memory.js";
 import { EBinderKind, type IEmscriptenBinder, IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
-import { BroadcastEvent } from "../../eventing/broadcast-event.js";
+import { BroadcastChannel } from "../../eventing/broadcast-channel.js";
 import { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
 import { _Debug } from "../../debug/_debug.js";
 import { TWebAssemblyMemoryListenerArgs } from "../util/t-web-assembly-memory-listener-args.js";
-import { DebugWeakBroadcastEvent, IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event.js";
-import { IBroadcastEvent } from "../../eventing/i-broadcast-event.js";
+import { DebugWeakBroadcastChannel } from "../../debug/debug-weak-broadcast-event.js";
+import { IBroadcastChannel } from "../../eventing/i-broadcast-channel.js";
 import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
 import { DebugSharedObjectLifeCycleChecker, IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
@@ -25,8 +25,8 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
     : Promise<IEmscriptenWrapper<TExt & TMod>>
 {
     const memoryListener = _BUILD.DEBUG
-        ? new DebugWeakBroadcastEvent<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize")
-        : new BroadcastEvent<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize");
+        ? new DebugWeakBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize")
+        : new BroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize");
     const debug = new EmscriptenDebug();
     const binder = new EmscriptenBinder();
 
@@ -58,7 +58,7 @@ class EmscriptenWrapper<T extends object> implements IEmscriptenWrapper<T>
 
     public constructor
     (
-        public readonly memoryResize: IBroadcastEvent<"onMemoryResize", TWebAssemblyMemoryListenerArgs>,
+        public readonly memoryResize: IBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>,
         public readonly instance: T & Emscripten.EmscriptenModule,
         public readonly memory: IWebAssemblyMemoryMemory,
         public readonly debug: IEmscriptenDebug,
@@ -93,7 +93,7 @@ class EmscriptenDebug implements IEmscriptenDebug
         _Debug.verboseLog(tags, message);
     }
 
-    public onAllocate: IDebugWeakBroadcastEvent<"debugOnAllocate", []> = new DebugWeakBroadcastEvent("debugOnAllocate");
+    public onAllocate: IBroadcastChannel<"debugOnAllocate", []> = new DebugWeakBroadcastChannel("debugOnAllocate");
     public protectedViews: IDebugWeakStore<IDebugProtectedView> = new DebugWeakValue();
     public sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecker = new DebugSharedObjectLifeCycleChecker();
     public uniquePointers: Set<number> = new Set();

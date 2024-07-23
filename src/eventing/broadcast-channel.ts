@@ -1,17 +1,18 @@
-import { TListener } from "../eventing/t-listener.js";
-import { IBroadcastChannel } from "../eventing/i-broadcast-channel.js";
+import { TListener } from "./t-listener.js";
+import { IBroadcastChannel } from "./i-broadcast-channel.js";
+import { _Set } from "../set/_set.js";
 import type { ICleanupStore } from "../lifecycle/i-cleanup-store.js";
 
 /**
  * @public
- * Like {@link BroadcastChannel} but without holding strong references. Available in debug contexts only.
+ * Strong reference implementation of {@link IBroadcastChannel}.
  */
-export class DebugWeakBroadcastChannel<TKey extends string, TArgs extends unknown[]>
+export class BroadcastChannel<TKey extends string, TArgs extends unknown[]>
     implements IBroadcastChannel<TKey, TArgs>
 {
     public constructor
     (
-        private readonly key: TKey,
+        private key: TKey,
     )
     {
     }
@@ -37,13 +38,10 @@ export class DebugWeakBroadcastChannel<TKey extends string, TArgs extends unknow
             // we have both args
             (maybeStore as ICleanupStore).addCleanup(() => this.removeListener(listener as TListener<TKey, TArgs>));
         }
-
-        this.removeListener(listener);
-
-        const ref = new WeakRef(listener);
-        this.listenersSet.add(ref);
-        this.listenersMap.set(listener, ref);
+        this.listeners.add(listener);
+        this.cache = null;
     }
+
 
     public addOneTimeListener(listener: TListener<TKey, TArgs>): void;
     public addOneTimeListener(store: ICleanupStore, listener: TListener<TKey, TArgs>): void;
@@ -71,55 +69,29 @@ export class DebugWeakBroadcastChannel<TKey extends string, TArgs extends unknow
         }
     }
 
-    public emit(...args: TArgs): void
-    {
-        this.listenersSet.forEach(ref =>
-        {
-            const listener = ref.deref();
-
-            if (listener == null)
-            {
-                this.listenersSet.delete(ref);
-            }
-            else
-            {
-                listener[this.key](...args);
-            }
-        });
-    }
-
     public removeListener(listener: TListener<TKey, TArgs>): void
     {
-        const ref = this.listenersMap.get(listener);
+        this.listeners.delete(listener);
+        this.cache = null;
+    }
 
-        if (ref != null)
-        {
-            this.listenersMap.delete(listener);
-            this.listenersSet.delete(ref);
-        }
+    public emit(...args: TArgs): void
+    {
+        this.listeners.forEach(listener => listener[this.key](...args));
     }
 
     public getTargets(): readonly TListener<TKey, TArgs>[]
     {
-        const targets: TListener<TKey, TArgs>[] = [];
-
-        this.listenersSet.forEach(ref =>
+        if (this.cache == null)
         {
-            const listener = ref.deref();
-
-            if (listener == null)
-            {
-                this.listenersSet.delete(ref);
-            }
-            else
-            {
-                targets.push(listener);
-            }
-        });
-
-        return targets;
+            return this.cache = _Set.valuesToArray(this.listeners);
+        }
+        else
+        {
+            return this.cache;
+        }
     }
 
-    private readonly listenersSet = new Set<WeakRef<TListener<TKey, TArgs>>>();
-    private readonly listenersMap = new WeakMap<TListener<TKey, TArgs>, WeakRef<TListener<TKey, TArgs>>>();
+    private readonly listeners = new Set<TListener<TKey, TArgs>>();
+    private cache: TListener<TKey, TArgs>[] | null = null;
 }

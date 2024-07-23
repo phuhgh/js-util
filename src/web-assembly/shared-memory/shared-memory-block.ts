@@ -11,14 +11,14 @@ import { ISharedObject } from "../../lifecycle/i-shared-object.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
 import { ILinkedReferences } from "../../lifecycle/linked-references.js";
+import type { IOnFreeListener } from "../../lifecycle/i-managed-resource.js";
 
 /**
  * @public
  * Provides a reference counted wrapper to a pointer `malloc`'d from JS and is `free`'d on reference count hitting 0.
  */
 export interface ISharedMemoryBlock
-    extends ISharedObject,
-            IOnMemoryResize
+    extends ISharedObject
 {
     readonly pointer: number;
     readonly byteSize: number;
@@ -29,7 +29,11 @@ export interface ISharedMemoryBlock
  * @public
  * {@inheritDoc ISharedMemoryBlock}
  */
-export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateListener
+export class SharedMemoryBlock
+    implements ISharedMemoryBlock,
+               IOnMemoryResize,
+               IOnFreeListener,
+               IDebugAllocateListener
 {
     public readonly sharedObject: IReferenceCountedPtr;
     public readonly pointer: number;
@@ -98,7 +102,7 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
         }
     }
 
-    public onMemoryResize = (): void =>
+    public onMemoryResize(): void
     {
         if (this.wrapper == null)
         {
@@ -107,7 +111,13 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
         }
 
         this.dataView = this.recreateDataView();
-    };
+    }
+
+    public onFree(): void
+    {
+        this.wrapper.memoryResize.removeListener(this);
+        this.wrapper.instance._jsUtilFree(this.pointer);
+    }
 
     protected constructor
     (
@@ -119,8 +129,8 @@ export class SharedMemoryBlock implements ISharedMemoryBlock, IDebugAllocateList
         this.pointer = pointer;
         this.byteSize = byteSize;
         this.sharedObject = new ReferenceCountedPtr(false, pointer, wrapper);
-        this.sharedObject.registerOnFreeListener(this.wrapper.memoryResize.addTemporaryListener(this));
-        this.sharedObject.registerOnFreeListener(() => this.wrapper.instance._jsUtilFree(this.pointer));
+        this.wrapper.memoryResize.addListener(this);
+        this.sharedObject.onFreeChannel.addListener(this);
 
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {

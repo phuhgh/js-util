@@ -1,7 +1,6 @@
 import { TWebAssemblyMemoryListenerArgs } from "../util/t-web-assembly-memory-listener-args.js";
-import { IBroadcastEvent } from "../../eventing/i-broadcast-event.js";
+import { IBroadcastChannel } from "../../eventing/i-broadcast-channel.js";
 import { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
-import { IDebugWeakBroadcastEvent } from "../../debug/debug-weak-broadcast-event.js";
 import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
 import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
@@ -34,7 +33,7 @@ export interface IEmscriptenDebug
     /**
      * Emits an event on memory allocation.
      */
-    onAllocate: IDebugWeakBroadcastEvent<"debugOnAllocate", []>;
+    onAllocate: IBroadcastChannel<"debugOnAllocate", []>;
     /**
      * Store for {@link IDebugProtectedView}.
      */
@@ -63,7 +62,7 @@ export interface IEmscriptenDebug
  */
 export interface IEmscriptenWrapper<T extends object>
 {
-    memoryResize: IBroadcastEvent<"onMemoryResize", TWebAssemblyMemoryListenerArgs>;
+    memoryResize: IBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>;
     instance: T & Emscripten.EmscriptenModule;
     memory: IWebAssemblyMemoryMemory;
     dataView: DataView;
