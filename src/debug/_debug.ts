@@ -1,6 +1,6 @@
 import { getGlobal } from "../runtime/get-global.js";
 import { arrayAddToSet } from "../array/impl/array-add-to-set.js";
-import { _Set } from "../set/_set.js";
+import { setValuesToArray } from "../set/impl/set-values-to-array.js";
 
 /**
  * todo jack: additional uses cases we want to support
@@ -292,7 +292,7 @@ export class _Debug
      */
     public static getTags(): string[]
     {
-        return _Set.valuesToArray(this._seenTags);
+        return setValuesToArray(this._seenTags);
     }
 
     private static onBreakpoint = () =>

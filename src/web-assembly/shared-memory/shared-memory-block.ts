@@ -6,12 +6,12 @@ import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
 import { DebugSharedObjectChecks } from "../util/debug-shared-object-checks.js";
 import { IMemoryUtilBindings } from "../emscripten/i-memory-util-bindings.js";
-import { _Number } from "../../number/_number.js";
 import { ISharedObject } from "../../lifecycle/i-shared-object.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
 import { ILinkedReferences } from "../../lifecycle/linked-references.js";
 import type { IOnFreeListener } from "../../lifecycle/i-managed-resource.js";
+import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
 
 /**
  * @public
@@ -136,7 +136,7 @@ export class SharedMemoryBlock
         {
             const protectedView = new DebugProtectedView(
                 this.wrapper,
-                `SharedMemoryBlock - memory resize danger: don't hold reference to the DataView ${_Number.getHexString(this.pointer)}`,
+                `SharedMemoryBlock - memory resize danger: don't hold reference to the DataView ${numberGetHexString(this.pointer)}`,
             );
             DebugSharedObjectChecks.registerWithCleanup(this, protectedView, "SharedMemoryBlock");
         });

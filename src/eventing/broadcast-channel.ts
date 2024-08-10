@@ -1,7 +1,7 @@
 import { TListener } from "./t-listener.js";
 import { IBroadcastChannel } from "./i-broadcast-channel.js";
-import { _Set } from "../set/_set.js";
 import type { ICleanupStore } from "../lifecycle/i-cleanup-store.js";
+import { DirtyCheckedUniqueCollection } from "../collection/dirty-checked-unique-collection.js";
 
 /**
  * @public
@@ -39,7 +39,6 @@ export class BroadcastChannel<TKey extends string, TArgs extends unknown[]>
             (maybeStore as ICleanupStore).addCleanup(() => this.removeListener(listener as TListener<TKey, TArgs>));
         }
         this.listeners.add(listener);
-        this.cache = null;
     }
 
 
@@ -72,26 +71,23 @@ export class BroadcastChannel<TKey extends string, TArgs extends unknown[]>
     public removeListener(listener: TListener<TKey, TArgs>): void
     {
         this.listeners.delete(listener);
-        this.cache = null;
     }
 
     public emit(...args: TArgs): void
     {
-        this.listeners.forEach(listener => listener[this.key](...args));
+        const listeners = this.listeners.getArray();
+        const key = this.key;
+
+        for (let i = 0, iEnd = listeners.length; i < iEnd; i++)
+        {
+            listeners[i][key](...args);
+        }
     }
 
     public getTargets(): readonly TListener<TKey, TArgs>[]
     {
-        if (this.cache == null)
-        {
-            return this.cache = _Set.valuesToArray(this.listeners);
-        }
-        else
-        {
-            return this.cache;
-        }
+        return this.listeners.getArray();
     }
 
-    private readonly listeners = new Set<TListener<TKey, TArgs>>();
-    private cache: TListener<TKey, TArgs>[] | null = null;
+    private readonly listeners = new DirtyCheckedUniqueCollection<TListener<TKey, TArgs>>();
 }
