@@ -7,8 +7,6 @@ import type { ICleanupStore } from "../lifecycle/i-cleanup-store.js";
  */
 export interface IBroadcastChannel<TKey extends string, TArgs extends readonly unknown[]>
 {
-    fromAnonymous(callback: (...args: TArgs) => void): TListener<TKey, TArgs>;
-
     addListener(listener: TListener<TKey, TArgs>): void;
     /**
      * Registers a cleanup callback on the supplied {@link ICleanupStore}.

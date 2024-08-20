@@ -43,7 +43,7 @@ describe("=> LinkedReferenceCounter", () =>
         {
             const owner = new ReferenceCountedOwner(false);
             const spy = jasmine.createSpy();
-            owner.onFreeChannel.addListener(owner.onFreeChannel.fromAnonymous(spy));
+            owner.onFreeChannel.addListener({ onFree: spy });
 
             owner.getLinkedReferences().unlinkAllRefs();
             expect(spy).not.toHaveBeenCalled();

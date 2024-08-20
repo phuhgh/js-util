@@ -15,7 +15,7 @@ describe("=> ReferenceCountedOwner", () =>
     {
         const ref = new ReferenceCountedOwner(false);
         const spy = jasmine.createSpy();
-        ref.onFreeChannel.addListener(ref.onFreeChannel.fromAnonymous(spy));
+        ref.onFreeChannel.addListener({ onFree: spy });
         ref.release();
         expect(spy).toHaveBeenCalledOnceWith();
     });

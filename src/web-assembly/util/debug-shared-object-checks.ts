@@ -29,11 +29,9 @@ export class DebugSharedObjectChecks
         : IDebugProtectedView
     {
 
-        instance.sharedObject.onFreeChannel.addListener(
-            instance.sharedObject.onFreeChannel.fromAnonymous(
-                () => DebugSharedObjectChecks.unregister(protectedView, instance, nameOfInstance)
-            )
-        );
+        instance.sharedObject.onFreeChannel.addListener({
+            onFree: () => DebugSharedObjectChecks.unregister(protectedView, instance, nameOfInstance)
+        });
         return DebugSharedObjectChecks.register(instance, protectedView, nameOfInstance);
     }
 

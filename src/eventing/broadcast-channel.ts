@@ -17,13 +17,6 @@ export class BroadcastChannel<TKey extends string, TArgs extends unknown[]>
     {
     }
 
-    public fromAnonymous(callback: (...args: TArgs) => void): TListener<TKey, TArgs>
-    {
-        return {
-            [this.key]: callback,
-        } as TListener<TKey, TArgs>;
-    }
-
     public addListener(listener: TListener<TKey, TArgs>): void;
     public addListener(store: ICleanupStore, listener: TListener<TKey, TArgs>): void;
     public addListener(maybeStore: ICleanupStore | TListener<TKey, TArgs>, listener?: TListener<TKey, TArgs>): void

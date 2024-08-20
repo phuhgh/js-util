@@ -34,7 +34,7 @@ describe("=> ReferenceCountedPtr", () =>
     {
         const ref = new ReferenceCountedPtr(false, 1, testModule.wrapper);
         const spy = jasmine.createSpy();
-        ref.onFreeChannel.addListener(ref.onFreeChannel.fromAnonymous(spy));
+        ref.onFreeChannel.addListener({ onFree: spy });
         ref.release();
         expect(spy).toHaveBeenCalledOnceWith();
     }));
