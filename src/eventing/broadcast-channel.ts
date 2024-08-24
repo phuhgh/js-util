@@ -39,6 +39,7 @@ export class BroadcastChannel<TKey extends string, TArgs extends unknown[]>
     public addOneTimeListener(store: ICleanupStore, listener: TListener<TKey, TArgs>): void;
     public addOneTimeListener(maybeStore: ICleanupStore | TListener<TKey, TArgs>, listener?: TListener<TKey, TArgs>): void
     {
+        const hasStore = listener != null;
         if (listener == null)
         {
             // no store was supplied
@@ -55,7 +56,7 @@ export class BroadcastChannel<TKey extends string, TArgs extends unknown[]>
 
         this.addListener(temporaryListener);
 
-        if (listener != null)
+        if (hasStore)
         {
             (maybeStore as ICleanupStore).addCleanup(() => this.removeListener(temporaryListener));
         }

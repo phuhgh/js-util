@@ -4,7 +4,7 @@ import { ILinkedReferences } from "./linked-references.js";
 
 /**
  * @public
- * A reference counted object
+ * A reference counted object.
  */
 export class ReferenceCountedOwner extends AReferenceCounted implements IReferenceCounted
 {
