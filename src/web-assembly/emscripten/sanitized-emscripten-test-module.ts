@@ -107,12 +107,28 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
                 this.errorLogged = true;
                 _Debug.logError(error);
             },
+            // legacy handler (this doesn't appear to be used anymore...)
             quit: () =>
             {
                 // emscripten hits asserts if quit doesn't interrupt execution
                 // the default behavior in node is to kill the process which would kill the tests
                 // by throwing something unique we can catch but avoid swallowing actual errors
                 throw this.options.quitThrowsWith;
+            },
+            onExit: (statusCode: number): void =>
+            {
+                // noinspection SuspiciousTypeOfGuard - we want to know if they change the API
+                if (typeof statusCode !== "number")
+                {
+                    throw _Production.createError("Unsupported emscripten version, expected to get a status code...");
+                }
+                if (statusCode === 0)
+                {
+                    // we could just use their object, but for simplicity we normalize to "the old way"
+                    throw this.options.quitThrowsWith;
+                }
+
+                // there's a non-zero status code, emscripten is pretty good at reporting this, so let them do it...
             },
             ...this.extension,
         } as TEmscriptenBindings) as IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings>;
