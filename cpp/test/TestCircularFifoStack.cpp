@@ -1,5 +1,5 @@
-#include "JsUtil/CircularFifoStack.h"
-#include "JsUtilTestUtil/MoveOnlyTestObject.h"
+#include "JsUtil/CircularFifoStack.hpp"
+#include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

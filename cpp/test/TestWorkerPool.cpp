@@ -1,7 +1,7 @@
 #include "FakeWorkerConfig.h"
-#include "JsUtil/SmartLocked.h"
-#include "JsUtil/WorkerPool.h"
-#include "JsUtilTestUtil/ThreadingHelpers.h"
+#include "JsUtil/SmartLocked.hpp"
+#include "JsUtil/WorkerPool.hpp"
+#include "JsUtilTestUtil/ThreadingHelpers.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

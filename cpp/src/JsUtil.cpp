@@ -1,5 +1,5 @@
-#include "JsUtil/Debug.h"
-#include "JsUtil/TypeTraits.h"
+#include "JsUtil/Debug.hpp"
+#include "JsUtil/TypeTraits.hpp"
 #include <cstdint>
 #include <cstdlib>
 #include <emscripten/em_macros.h>

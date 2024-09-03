@@ -1,5 +1,5 @@
-#include "JsUtil/CircularBuffer.h"
-#include "JsUtilTestUtil/MoveOnlyTestObject.h"
+#include "JsUtil/CircularBuffer.hpp"
+#include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

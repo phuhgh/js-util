@@ -1,4 +1,4 @@
-#include "JsUtil/Debug.h"
+#include "JsUtil/Debug.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

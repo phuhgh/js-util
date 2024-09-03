@@ -1,7 +1,7 @@
 #pragma once
 
-#include "JsUtil/Mat2.h"
-#include "JsUtil/Vec2.h"
+#include "JsUtil/Mat2.hpp"
+#include "JsUtil/Vec2.hpp"
 #include <cmath>
 
 namespace JsUtil

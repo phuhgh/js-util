@@ -1,7 +1,7 @@
 #pragma once
 
-#include "JsUtil/CircularBuffer.h"
-#include "JsUtil/Debug.h"
+#include "JsUtil/CircularBuffer.hpp"
+#include "JsUtil/Debug.hpp"
 #include <memory>
 
 namespace JsUtil

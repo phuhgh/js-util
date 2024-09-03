@@ -1,4 +1,4 @@
-#include "JsUtil/Debug.h"
+#include "JsUtil/Debug.hpp"
 #include <cassert>
 #include <emscripten/em_js.h>
 #include <emscripten/em_macros.h>

@@ -1,5 +1,5 @@
-#include "JsUtil/ResizableArray.h"
-#include "JsUtilTestUtil/CreateDestroyTestCounter.h"
+#include "JsUtil/ResizableArray.hpp"
+#include "JsUtilTestUtil/CreateDestroyTestCounter.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

@@ -1,4 +1,4 @@
-#include "JsUtil/Binder.h"
+#include "JsUtil/Binder.hpp"
 #include <emscripten/em_js.h>
 #include <emscripten/em_macros.h>
 

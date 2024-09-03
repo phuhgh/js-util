@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JsUtil/Mat3.h"
+#include "JsUtil/Mat3.hpp"
 
 namespace JsUtil
 {

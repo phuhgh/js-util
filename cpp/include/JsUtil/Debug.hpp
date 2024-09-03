@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JsUtil/TypeTraits.h"
+#include "JsUtil/TypeTraits.hpp"
 
 namespace JsUtil
 {

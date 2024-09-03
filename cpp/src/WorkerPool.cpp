@@ -1,4 +1,4 @@
-#include "JsUtil/WorkerPool.h"
+#include "JsUtil/WorkerPool.hpp"
 #include <emscripten/em_macros.h>
 
 namespace JsUtil

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "JsUtil/CircularFifoStack.h"
-#include "JsUtil/Debug.h"
-#include "JsUtil/Threading.h"
+#include "JsUtil/CircularFifoStack.hpp"
+#include "JsUtil/Debug.hpp"
+#include "JsUtil/Threading.hpp"
 #include <condition_variable>
 #include <gsl/pointers>
 #include <mutex>

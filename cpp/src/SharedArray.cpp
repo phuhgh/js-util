@@ -1,4 +1,4 @@
-#include "JsUtil/SharedArray.h"
+#include "JsUtil/SharedArray.hpp"
 #include <emscripten/em_macros.h>
 
 namespace JsUtil

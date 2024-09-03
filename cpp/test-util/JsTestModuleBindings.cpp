@@ -1,6 +1,6 @@
 #include "FakeWorkerConfig.h"
-#include "JsUtil/WorkerPool.h"
-#include "JsUtilTestUtil/CreateDestroyTestCounter.h"
+#include "JsUtil/WorkerPool.hpp"
+#include "JsUtilTestUtil/CreateDestroyTestCounter.hpp"
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
 

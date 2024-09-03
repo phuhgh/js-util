@@ -1,7 +1,7 @@
 #pragma once
 
-#include "JsUtil/Threading.h"
-#include "JsUtil/WorkerLoop.h"
+#include "JsUtil/Threading.hpp"
+#include "JsUtil/WorkerLoop.hpp"
 #include <gsl/pointers>
 
 // todo jack: replace unsigned with uint64 (all), might overflow in some long running cases

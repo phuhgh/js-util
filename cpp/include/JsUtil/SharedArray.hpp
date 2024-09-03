@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JsUtil/Debug.h"
+#include "JsUtil/Debug.hpp"
 #include <span>
 
 namespace JsUtil

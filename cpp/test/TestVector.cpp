@@ -1,10 +1,10 @@
-#include "JsUtil/Mat2.h"
-#include "JsUtil/Mat3.h"
-#include "JsUtil/Mat4.h"
-#include "JsUtil/Range2d.h"
-#include "JsUtil/Vec2.h"
-#include "JsUtil/Vec3.h"
-#include "JsUtil/Vec4.h"
+#include "JsUtil/Mat2.hpp"
+#include "JsUtil/Mat3.hpp"
+#include "JsUtil/Mat4.hpp"
+#include "JsUtil/Range2d.hpp"
+#include "JsUtil/Vec2.hpp"
+#include "JsUtil/Vec3.hpp"
+#include "JsUtil/Vec4.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

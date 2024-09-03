@@ -1,7 +1,7 @@
 #pragma once
 
-#include "JsUtil/Debug.h"
-#include "JsUtil/TypeTraits.h"
+#include "JsUtil/Debug.hpp"
+#include "JsUtil/TypeTraits.hpp"
 #include <gsl/pointers>
 #include <span>
 

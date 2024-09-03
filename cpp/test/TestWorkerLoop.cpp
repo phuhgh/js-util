@@ -1,6 +1,6 @@
 #include "FakeWorkerConfig.h"
-#include "JsUtil/WorkerLoop.h"
-#include "JsUtilTestUtil/ThreadingHelpers.h"
+#include "JsUtil/WorkerLoop.hpp"
+#include "JsUtilTestUtil/ThreadingHelpers.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;

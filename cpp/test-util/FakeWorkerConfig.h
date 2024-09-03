@@ -1,7 +1,7 @@
 #pragma once
 
-#include "JsUtil/Debug.h"
-#include "JsUtil/WorkerLoop.h"
+#include "JsUtil/Debug.hpp"
+#include "JsUtil/WorkerLoop.hpp"
 
 class FakeWorkerConfig : public JsUtil::IWorkerLoopConfig
 {

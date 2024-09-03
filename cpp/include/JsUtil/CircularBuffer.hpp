@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JsUtil/ResizableArray.h"
+#include "JsUtil/ResizableArray.hpp"
 
 namespace JsUtil
 {
