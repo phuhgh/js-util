@@ -9,6 +9,7 @@ enum EBINDER_KIND
     eCALLBACK = 1,
 };
 
+// todo jack: doesn't appear to be any test code for this
 EM_JS(unsigned, jsu_binderGetLast, (unsigned expectedType), { Module.JSU_BINDER.getLast(); });
 EM_JS(unsigned, jsu_binderRemove, (unsigned index), { Module.JSU_BINDER.remove(index); });
 EM_JS(unsigned, jsu_binderCb, (unsigned index), { Module.JSU_BINDER.callback(index); });

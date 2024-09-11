@@ -4,33 +4,31 @@
 
 struct A
 {
-    int val{1};
+    int  val{1};
     bool operator==(A const& other) const { return other.val == val; }
 };
 
 struct B
 {
-    int val{2};
+    int  val{2};
     bool operator==(B const& other) const { return other.val == val; }
 };
 
 struct C
 {
-    int val{3};
+    int  val{3};
     bool operator==(C const& other) const { return other.val == val; }
 };
 
 struct D
 {
-    int val{4};
+    int  val{4};
     bool operator==(D const& other) const { return other.val == val; }
 };
 
-// for this to be useful, it needs to happen in a constexpr way (this use case being precompiling combinations...)
-// the easiest way to ensure this is to have it in a constexpr function
 constexpr auto testCombinations()
 {
-    auto input = std::make_tuple(std::make_tuple(A{9}, B{8}), std::make_tuple(C{7}, D{6}));
+    constexpr auto input = std::make_tuple(std::make_tuple(A{9}, B{8}), std::make_tuple(C{7}, D{6}));
     return TupleExt::combinatorial(input);
 }
 
@@ -63,4 +61,50 @@ TEST(Tuple, combinitorial)
     EXPECT_EQ(std::get<1>(result), std::make_tuple(A{9}, D{6}));
     EXPECT_EQ(std::get<2>(result), std::make_tuple(B{8}, C{7}));
     EXPECT_EQ(std::get<3>(result), std::make_tuple(B{8}, D{6}));
+}
+
+constexpr int forEach()
+{
+    auto input = std::make_tuple(A{9}, B{8});
+    int  r = 0;
+    TupleExt::forEach(input, [&r](auto element) { r += element.val; });
+    return r;
+}
+
+TEST(Tuple, forEach)
+{
+    constexpr int result = forEach();
+    static_assert(result == 17);
+}
+
+TEST(Tuple, map)
+{
+    auto input = std::make_tuple(A{9}, B{8});
+    EXPECT_EQ(TupleExt::map(input, LangExt::identity), std::make_tuple(A{9}, B{8}));
+}
+
+constexpr int reduceInts()
+{
+    auto input = std::make_tuple(A{9}, B{8});
+    return TupleExt::reduce(input, [&](auto accum, auto element) { return accum + element.val; }, 5);
+}
+
+constexpr C reduceVaryingReturn()
+{
+    auto input = std::make_tuple(A{9}, B{8});
+    return TupleExt::reduce(input, [&](auto accum, auto element) { return C{accum.val + element.val}; }, A{5});
+}
+
+TEST(Tuple, reduce)
+{
+    constexpr auto r1 = reduceInts();
+    static_assert(r1 == 22);
+    constexpr auto r2 = reduceVaryingReturn();
+    static_assert(r2.val == 22);
+}
+
+TEST(Tuple, flatMap)
+{
+    auto input = std::make_tuple(std::make_tuple(A{9}), std::make_tuple(B{8}));
+    EXPECT_EQ(TupleExt::flatMap(input, LangExt::identity), std::make_tuple(A{9}, B{8}));
 }

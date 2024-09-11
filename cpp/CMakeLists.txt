@@ -68,4 +68,15 @@ if (${BUILD_JSUTIL_TEST})
             COMPILE_OPTIONS -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestFunctionFactory
+            SOURCE_FILES test/TestFunctionFactory.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            COMPILE_OPTIONS -pthread
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestLangExt
+            SOURCE_FILES test/TestLangExt.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
 endif ()
