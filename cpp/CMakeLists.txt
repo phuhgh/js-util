@@ -36,6 +36,10 @@ if (${BUILD_JSUTIL_TEST})
             SOURCE_FILES test/TestVector.cpp
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestTuple
+            SOURCE_FILES test/TestTuple.cpp
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestResizableArray
             SOURCE_FILES test/TestResizableArray.cpp
             LINK_OPTIONS -sINITIAL_MEMORY=16mb
