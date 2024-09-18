@@ -95,7 +95,8 @@ fi
 
 if [ "$SKIP_BUILD" != "true" ]; then
   for CMAKE_PRESET in $CMAKE_PRESETS; do
-    if [[ "$OSTYPE" == "msys"* ]] || [[ "$OSTYPE" == "msys2"* ]]; then
+    # shellcheck disable=SC3028
+    if [ "$OSTYPE" = "msys" ] || [ "$OSTYPE" = "win32" ]; then
       emcmake.bat cmake --preset="$CMAKE_PRESET" || exit
     else
       emcmake cmake --preset="$CMAKE_PRESET" || exit
