@@ -7,7 +7,7 @@
     "clean": "rimraf bin cpp/build cpp/exported-names.txt docs dist tmp test-report",
     "test": "npm run test:js -- --ASAN && npm run test:cpp -- --cmake-preset=asan",
     "test:js": "jasmine --config=config/jasmine-node.mjs --",
-    "test:cpp": "sh scripts/test-cpp-local.sh",
+    "test:cpp": "sh scripts/test-cpp-local.sh --output-junit ../../../test-report/ctest-results.xml",
     "copy-assets": "cp -r assets/release/* bin/",
     "build": "npm run build:ts && npm run copy-assets && npm run build:cpp -- --cmake-preset=asan",
     "build:ts": "tsc -p tsconfig.json --incremental",
