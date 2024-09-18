@@ -1,4 +1,5 @@
 #include "JsUtil/FunctionFactory.hpp"
+#include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
 #include <gtest/gtest.h>
 
 struct A
@@ -31,6 +32,23 @@ TEST(FunctionFactory, basicConstexprFunctionComposition)
 
     auto result = pipeline.run(2, 3);
     EXPECT_EQ(result, 19);
+}
+
+TEST(FunctionFactory, moveOnlyObjects)
+{
+    constexpr auto pipeline =
+        JsUtil::FunctionFactory(
+            [](MoveOnlyTestObject arg, MoveOnlyTestObject context) -> std::tuple<MoveOnlyTestObject, int> {
+                return std::make_tuple(std::move(arg), context.m_val);
+            }
+        )
+            .extend([](std::tuple<MoveOnlyTestObject, int> arg, MoveOnlyTestObject context) {
+                return std::get<0>(arg).m_val + std::get<1>(arg) + context.m_val;
+            })
+            .extend([](int arg, MoveOnlyTestObject context) { return MoveOnlyTestObject{(arg * 2) + context.m_val}; });
+
+    auto result = pipeline.run(MoveOnlyTestObject{2}, MoveOnlyTestObject{3});
+    EXPECT_EQ(result.m_val, 19);
 }
 
 TEST(FunctionFactory, combinatorialFunctionComposition)

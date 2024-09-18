@@ -2,6 +2,7 @@
 
 #include "JsUtil/LangExt.hpp"
 #include "JsUtil/Tuple.hpp"
+#include <utility>
 
 namespace JsUtil
 {
@@ -28,8 +29,8 @@ class FunctionFactory
     template <typename TExtFn>
     constexpr auto extend(TExtFn const& callback) const
     {
-        auto wrapper = [other = m_callback, callback](TArg arg, TContext context) {
-            return callback(other(arg, context), context);
+        auto wrapper = [other = m_callback, callback](TArg&& arg, TContext&& context) {
+            return callback(other(std::forward<TArg>(arg), std::forward<TContext>(context)), std::forward<TContext>(context));
         };
         return FunctionFactory<decltype(wrapper)>(wrapper);
     }
@@ -40,13 +41,16 @@ class FunctionFactory
     template <typename TFact>
     constexpr auto wrap(TFact const& functionFactory) const
     {
-        auto wrapper = [other = m_callback, functionFactory](TArg arg, TContext context) {
-            return functionFactory.m_callback(other(arg, context), context);
+        auto wrapper = [other = m_callback, functionFactory](TArg&& arg, TContext&& context) {
+            return functionFactory.m_callback(other(std::forward<TArg>(arg), std::forward<TContext>(context)), std::forward<TContext>(context));
         };
         return FunctionFactory<decltype(wrapper)>(wrapper);
     }
 
-    constexpr TRet run(TArg arg, TContext context) const { return m_callback(arg, context); }
+    constexpr TRet run(TArg&& arg, TContext&& context) const
+    {
+        return m_callback(std::forward<TArg>(arg), std::forward<TContext>(context));
+    }
 
   private:
     TFn m_callback;
