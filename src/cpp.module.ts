@@ -31,7 +31,3 @@ export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } =
     _malloc: true,
     _free: true,
 };
-
-export const exportedTestFunctions = {
-    ...exportedFunctions,
-};
