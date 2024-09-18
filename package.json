@@ -42,7 +42,9 @@
     "typescript": "~5.4.5"
   },
   "bin": {
-    "rc-build-cpp": "scripts/build-cpp.sh"
+    "rc-build-cpp": "scripts/build-cpp.sh",
+    "rc-ci-local": "scripts/ci-local.sh",
+    "rc-test-cpp-local": "scripts/test-cpp-local"
   },
   "main": "bin/cjs/index.js",
   "typings": "bin/cjs/index.d.ts",
