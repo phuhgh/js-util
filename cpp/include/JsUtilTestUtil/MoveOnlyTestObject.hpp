@@ -4,7 +4,7 @@ class MoveOnlyTestObject
 {
   public:
     int m_val;
-    explicit MoveOnlyTestObject(int val = 0)
+    constexpr explicit MoveOnlyTestObject(int val = 0)
         : m_val(val){};
     ~MoveOnlyTestObject() = default;
 
