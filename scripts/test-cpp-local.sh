@@ -23,4 +23,4 @@ while [ "$1" != "" ]; do
   shift
 done
 
-ctest --no-tests=error -j 4 --verbose --output-on-failure --timeout 60 --test-dir cpp/build/"${PRESET}" ${OUTPUT_JUNIT}
+ctest --no-tests=error -j 4 --no-tests=error --verbose --output-on-failure --timeout 60 --test-dir cpp/build/"${PRESET}" ${OUTPUT_JUNIT}
