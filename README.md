@@ -7,6 +7,12 @@ Using npm:
 $ npm i --save rc-js-util
 ```
 
+# Building the C++
+To see the required version, see the `Echo versions` step of CI. Recent versions of all tools should build.
+- install emscripten (and use their env utility to set required env vars)
+- install cmake
+- install ninja build
+
 ## Configuration
 The global variable `DEBUG_MODE` must be set for js-util to function correctly. Setting `DEBUG_MODE`
 to true enables debug assertions. In production builds it is recommended to use a tool such as uglify-js' dead code
