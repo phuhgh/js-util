@@ -25,9 +25,9 @@ struct IWorkerLoopConfig
 };
 
 template <typename T>
-concept WorkerLoopConfigExt = std::is_base_of_v<IWorkerLoopConfig, T>;
+concept WithWorkerLoopConfig = std::is_base_of_v<IWorkerLoopConfig, T>;
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 class WorkerLoop
     : public INotifiable
     , public ISharedMemoryObject

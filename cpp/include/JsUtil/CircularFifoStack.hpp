@@ -34,7 +34,7 @@ template <typename TValue, typename TIndex, typename TStorage>
 class CircularFIFOStackBase;
 
 /// methods not explicitly marked unsafe are safe in single producer consumer usage
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
 {
   public:
@@ -101,7 +101,7 @@ class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
     std::atomic<TIndex>            m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
 };
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 class CircularFIFOStackBase<TValue, TIndex, TIndex>
 {
   public:
@@ -148,13 +148,13 @@ class CircularFIFOStackBase<TValue, TIndex, TIndex>
     TIndex                         m_end = 0;   // NOLINT(*-non-private-member-variables-in-classes)
 };
 
-template <typename TValue, ECircularStackOverflowMode TMode, IsUnsigned TIndex = size_t, typename TStorage = TIndex>
+template <typename TValue, ECircularStackOverflowMode TMode, WithUnsigned TIndex = size_t, typename TStorage = TIndex>
 class CircularFIFOStack
 {
 };
 
 /// thread safe for single producer consumer pair
-template <typename TValue, IsUnsigned TIndex, typename TStorage>
+template <typename TValue, WithUnsigned TIndex, typename TStorage>
 class CircularFIFOStack<TValue, ECircularStackOverflowMode::NoOp, TIndex, TStorage>
     : public CircularFIFOStackBase<TValue, TIndex, TStorage>
 {
@@ -194,7 +194,7 @@ class CircularFIFOStack<TValue, ECircularStackOverflowMode::NoOp, TIndex, TStora
 };
 
 /// __NOT__ thread safe, at all!
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 class CircularFIFOStack<TValue, ECircularStackOverflowMode::Grow, TIndex>
     : public CircularFIFOStackBase<TValue, TIndex, TIndex>
 {
@@ -249,7 +249,7 @@ class CircularFIFOStack<TValue, ECircularStackOverflowMode::Grow, TIndex>
 };
 
 /// __NOT__ thread safe, at all!
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 class CircularFIFOStack<TValue, ECircularStackOverflowMode::Overwrite, TIndex>
     : public CircularFIFOStackBase<TValue, TIndex, TIndex>
 {
@@ -278,7 +278,7 @@ class CircularFIFOStack<TValue, ECircularStackOverflowMode::Overwrite, TIndex>
 };
 
 /// thread safe for single producer consumer pair
-template <typename TValue, IsUnsigned TIndex, typename TStorage>
+template <typename TValue, WithUnsigned TIndex, typename TStorage>
 class CircularFIFOStack<TValue, ECircularStackOverflowMode::DebugException, TIndex, TStorage>
     : public CircularFIFOStackBase<TValue, TIndex, TStorage>
 {

@@ -14,7 +14,7 @@ namespace JsUtil
  * @remarks Construction of TValue() should not throw, exceptions more generally are not supported.
  * @remarks Should generally be viewed through `asSpan`.
  */
-template <typename TValue, IsUnsigned TIndex = uint32_t>
+template <typename TValue, WithUnsigned TIndex = uint32_t>
 class ResizableArray
 {
   public:

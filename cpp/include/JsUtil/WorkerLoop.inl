@@ -3,14 +3,14 @@
 namespace JsUtil
 {
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 WorkerLoop<TConfig>::~WorkerLoop()
 {
     stop(true);
     safeDeleteThread();
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 bool WorkerLoop<TConfig>::start(bool tickOnStart)
 {
     bool started{false};
@@ -68,7 +68,7 @@ bool WorkerLoop<TConfig>::start(bool tickOnStart)
     return started;
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 void WorkerLoop<TConfig>::stop(bool wait)
 {
     setWorkerNotification(eEND);
@@ -79,7 +79,7 @@ void WorkerLoop<TConfig>::stop(bool wait)
     }
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 void WorkerLoop<TConfig>::awaitCompletion()
 {
     std::unique_lock lock(m_state_mutex);
@@ -90,26 +90,26 @@ void WorkerLoop<TConfig>::awaitCompletion()
     }
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 TConfig& WorkerLoop<TConfig>::getTask()
 {
     return m_config;
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 bool WorkerLoop<TConfig>::isRunning() const
 {
     std::unique_lock lock(m_state_mutex);
     return m_loop_state == eRUNNING;
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 void WorkerLoop<TConfig>::proceed()
 {
     setWorkerNotification(eSPIN_LOOP);
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 void WorkerLoop<TConfig>::setWorkerNotification(WorkerLoop::ENotification notification)
 {
     {
@@ -120,7 +120,7 @@ void WorkerLoop<TConfig>::setWorkerNotification(WorkerLoop::ENotification notifi
     m_notification_cv.notify_all();
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 WorkerLoop<TConfig>::ENotification WorkerLoop<TConfig>::consumeNotification()
 {
     std::unique_lock lock(m_state_mutex);
@@ -138,7 +138,7 @@ WorkerLoop<TConfig>::ENotification WorkerLoop<TConfig>::consumeNotification()
     return notification;
 }
 
-template <WorkerLoopConfigExt TConfig>
+template <WithWorkerLoopConfig TConfig>
 void WorkerLoop<TConfig>::safeDeleteThread()
 {
     if (m_thread != nullptr && m_thread->joinable())

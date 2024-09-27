@@ -11,7 +11,7 @@ struct IExecutor
     virtual void run() = 0;
 };
 
-template <IsVoidCallback TCallback>
+template <WithCallable<void> TCallback>
 class CallbackExecutor : public IExecutor
 {
   public:

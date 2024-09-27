@@ -77,7 +77,7 @@ void PoolWorkerConfig::onTick()
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 WorkerPool<TDistributionStrategy>::~WorkerPool()
 {
     // the stop method is more optimized than just relying on destructors (which would serial wait)
@@ -88,7 +88,7 @@ WorkerPool<TDistributionStrategy>::~WorkerPool()
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 WorkerPool<TDistributionStrategy>::WorkerPool(TDistributionStrategy strategy, WorkerPoolConfig const& config)
     : m_workers(ResizableArray<gsl::owner<WorkerLoop<PoolWorkerConfig>*>, uint16_t>::createPointerArray(
           config.workerCount,
@@ -106,7 +106,7 @@ WorkerPool<TDistributionStrategy>::WorkerPool(TDistributionStrategy strategy, Wo
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 uint16_t WorkerPool<TDistributionStrategy>::start()
 {
     uint16_t startedCount{0};
@@ -132,7 +132,7 @@ uint16_t WorkerPool<TDistributionStrategy>::start()
     return startedCount;
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 void WorkerPool<TDistributionStrategy>::stop(bool wait)
 {
     // stop in parallel
@@ -150,7 +150,7 @@ void WorkerPool<TDistributionStrategy>::stop(bool wait)
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const
 {
     bool isAcceptingJobs{true};
@@ -161,7 +161,7 @@ bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const
     return isAcceptingJobs;
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 bool WorkerPool<TDistributionStrategy>::isAnyWorkerRunning() const
 {
     bool isRunning{false};
@@ -172,7 +172,7 @@ bool WorkerPool<TDistributionStrategy>::isAnyWorkerRunning() const
     return isRunning;
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 bool WorkerPool<TDistributionStrategy>::hasPendingWork() const
 {
     bool hasPendingWork{false};
@@ -183,7 +183,7 @@ bool WorkerPool<TDistributionStrategy>::hasPendingWork() const
     return hasPendingWork;
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 void WorkerPool<TDistributionStrategy>::setBatchEndPoint()
 {
     for (auto& worker : m_workers.asSpan())
@@ -193,7 +193,7 @@ void WorkerPool<TDistributionStrategy>::setBatchEndPoint()
 }
 
 // todo jack: definitely need tests on the cpp side for this
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 bool WorkerPool<TDistributionStrategy>::isBatchDone() const
 {
     auto ready{true};
@@ -204,7 +204,7 @@ bool WorkerPool<TDistributionStrategy>::isBatchDone() const
     return ready;
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job)
 {
     auto jobAdded = m_strategy.distributeWork(m_workers.asSpan(), job);
@@ -218,7 +218,7 @@ bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job)
     return jobAdded;
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 void WorkerPool<TDistributionStrategy>::invalidateBatch()
 {
     for (auto& worker : m_workers.asSpan())
@@ -227,7 +227,7 @@ void WorkerPool<TDistributionStrategy>::invalidateBatch()
     }
 }
 
-template <IsDistributionStrategy TDistributionStrategy>
+template <WithDistributionStrategy TDistributionStrategy>
 bool WorkerPool<TDistributionStrategy>::areAllWorkersSynced() const
 {
     bool synced{true};

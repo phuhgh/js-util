@@ -2,7 +2,7 @@
 
 #include <array>
 #include <tuple>
-#include <type_traits>
+#include "JsUtil/TypeTraits.hpp"
 
 namespace LangExt
 {
@@ -20,9 +20,6 @@ template <template <typename...> class Ref, typename... Args>
 struct IsSpecialization<Ref<Args...>, Ref> : std::true_type
 {
 };
-
-template <typename TFn, typename TRet, typename... TArgs>
-concept Callable = std::invocable<TFn, TArgs...> && std::same_as<std::invoke_result_t<TFn, TArgs...>, TRet>;
 
 template <typename T>
 struct FunctionTraits;
@@ -96,11 +93,11 @@ struct FunctionTraits<ReturnType (ClassType::*)(Args...) const>
 };
 
 // lambdas etc
-template <typename Callable>
+template <typename WithCallable>
 struct FunctionTraits
 {
   private:
-    using TTraits = FunctionTraits<decltype(&Callable::operator())>;
+    using TTraits = FunctionTraits<decltype(&WithCallable::operator())>;
 
   public:
     using TRet = typename TTraits::TRet;

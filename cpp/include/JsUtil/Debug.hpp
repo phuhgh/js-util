@@ -66,13 +66,13 @@ class Debug
 #endif
 
 #ifndef NDEBUG
-    template <IsVoidCallback TCallback>
+    template <WithCallable<void> TCallback>
     static void runBlock(TCallback _callback)
     {
         _callback();
     }
 #else
-    template <IsVoidCallback TCallback>
+    template <WithCallable<void> TCallback>
     static void runBlock(TCallback)
     {
     }

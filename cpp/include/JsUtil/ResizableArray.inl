@@ -4,13 +4,13 @@ namespace JsUtil
 {
 
 // todo jack: looks like i messed up in here, zero size allocatons...
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::~ResizableArray()
 {
     deleteArray();
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::ResizableArray(TIndex size)
     : m_size(size)
     , m_values(allocateArray(size))
@@ -29,7 +29,7 @@ ResizableArray<TValue, TIndex>::ResizableArray(TIndex size)
     }
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::ResizableArray(std::initializer_list<TValue> const& values)
     : m_size(values.size())
     , m_values(allocateArray(values.size()))
@@ -45,7 +45,7 @@ ResizableArray<TValue, TIndex>::ResizableArray(std::initializer_list<TValue> con
     }
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::ResizableArray(ResizableArray const& other)
     : m_size(other.m_size)
     , m_values(allocateArray(other.size()))
@@ -61,7 +61,7 @@ ResizableArray<TValue, TIndex>::ResizableArray(ResizableArray const& other)
     }
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::ResizableArray(ResizableArray&& other) noexcept
     : m_size(other.m_size)
     , m_values(other.m_values)
@@ -70,7 +70,7 @@ ResizableArray<TValue, TIndex>::ResizableArray(ResizableArray&& other) noexcept
     other.m_values = nullptr;
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>& ResizableArray<TValue, TIndex>::operator=(ResizableArray&& other) noexcept
 {
     if (this != &other)
@@ -85,7 +85,7 @@ ResizableArray<TValue, TIndex>& ResizableArray<TValue, TIndex>::operator=(Resiza
     return *this;
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>& ResizableArray<TValue, TIndex>::operator=(ResizableArray const& other)
 {
     if (this != &other)
@@ -111,7 +111,7 @@ ResizableArray<TValue, TIndex>& ResizableArray<TValue, TIndex>::operator=(Resiza
     return *this;
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 bool ResizableArray<TValue, TIndex>::resize(TIndex newSize)
 {
     if (newSize <= m_size)
@@ -150,7 +150,7 @@ bool ResizableArray<TValue, TIndex>::resize(TIndex newSize)
     return true;
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 TValue ResizableArray<TValue, TIndex>::operator[](TIndex index) const
 {
     if constexpr (Debug::isDebug())
@@ -160,7 +160,7 @@ TValue ResizableArray<TValue, TIndex>::operator[](TIndex index) const
     return m_values[index];
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 TValue& ResizableArray<TValue, TIndex>::operator[](TIndex index)
 {
     if constexpr (Debug::isDebug())
@@ -170,7 +170,7 @@ TValue& ResizableArray<TValue, TIndex>::operator[](TIndex index)
     return m_values[index];
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 void ResizableArray<TValue, TIndex>::deleteArray()
 {
     for (TIndex i = 0; i < m_size; ++i)
@@ -180,7 +180,7 @@ void ResizableArray<TValue, TIndex>::deleteArray()
     std::free(m_values);
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 template <typename TOther>
 void ResizableArray<TValue, TIndex>::copyArrayValues(TOther const& other)
 {
@@ -190,7 +190,7 @@ void ResizableArray<TValue, TIndex>::copyArrayValues(TOther const& other)
     }
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 template <typename TOther>
 void ResizableArray<TValue, TIndex>::moveArrayValues(TOther const& other)
 {
@@ -202,7 +202,7 @@ void ResizableArray<TValue, TIndex>::moveArrayValues(TOther const& other)
     }
 }
 
-template <typename TValue, IsUnsigned TIndex>
+template <typename TValue, WithUnsigned TIndex>
 TValue* ResizableArray<TValue, TIndex>::allocateArray(TIndex size)
 {
     return static_cast<gsl::owner<TValue*>>(std::malloc(sizeof(TValue) * size));

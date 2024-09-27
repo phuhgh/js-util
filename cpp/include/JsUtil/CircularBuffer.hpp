@@ -5,7 +5,7 @@
 namespace JsUtil
 {
 
-template <typename TValue, IsUnsigned TIndex = size_t>
+template <typename TValue, WithUnsigned TIndex = size_t>
 class CircularBuffer
 {
   public:

@@ -7,16 +7,17 @@
 namespace JsUtil
 {
 
-/// Convenience interface, allows delete from javascript without a specialized method
+/// Convenience interface, allows calling delete from javascript without a specialized method
 struct ISharedMemoryObject
 {
     virtual ~ISharedMemoryObject() = default;
 };
 
 template <typename T>
-concept IsUnsigned = std::is_integral_v<T> && !std::is_signed_v<T>;
+concept WithUnsigned = std::is_integral_v<T> && !std::is_signed_v<T>;
 
-template <typename T>
-concept IsVoidCallback = std::invocable<T> && std::is_void_v<std::invoke_result_t<T>>;
+template <typename TFn, typename TRet, typename... TArgs>
+concept WithCallable = std::invocable<TFn, TArgs...> && std::same_as<std::invoke_result_t<TFn, TArgs...>, TRet>;
+
 
 } // namespace JsUtil
