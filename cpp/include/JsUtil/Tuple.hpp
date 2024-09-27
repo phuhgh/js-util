@@ -3,6 +3,7 @@
 #include "JsUtil/LangExt.hpp"
 #include <tuple>
 
+// ReSharper disable once CppUnnamedNamespaceInHeaderFile
 namespace
 {
 
@@ -18,6 +19,23 @@ constexpr auto reduceRecursive(TTuple const& tuple, TFn&& callback, TAcc&& accum
     else
     {
         return std::forward<TAcc>(accumulator);
+    }
+}
+
+// adapted from https://stackoverflow.com/questions/18063451/get-index-of-a-tuple-elements-type
+template <size_t Index, typename TItem, typename TTuple>
+constexpr size_t getItemIndex()
+{
+    static_assert(Index < std::tuple_size<TTuple>::value, "couldn't find the element");
+    using TCurrentItem = typename std::tuple_element<Index, TTuple>::type;
+
+    if constexpr (std::is_same_v<TItem, TCurrentItem>)
+    {
+        return Index;
+    }
+    else
+    {
+        return getItemIndex<Index + 1, TItem, TTuple>();
     }
 }
 
@@ -80,15 +98,16 @@ constexpr auto flatMap(std::tuple<TInput...> const& tuple, TCallback&& callback)
     }
 }
 
+// todo jack: document with an example
 template <typename... TInputs>
-constexpr auto combinatorial(std::tuple<TInputs...> const& tuple)
+constexpr auto flattenCombinations(std::tuple<TInputs...> const& tuple)
 {
     using TTuple = std::tuple<TInputs...>;
 
     if constexpr (0 < std::tuple_size_v<TTuple>)
     {
         auto first = std::get<0>(tuple);
-        auto combinationsOfRest = combinatorial(tail(tuple));
+        auto combinationsOfRest = flattenCombinations(tail(tuple));
 
         return flatMap(first, [&combinationsOfRest](auto element) {
             return map(combinationsOfRest, [&element](auto combination) {
@@ -101,4 +120,21 @@ constexpr auto combinatorial(std::tuple<TInputs...> const& tuple)
         return std::tuple<std::tuple<>>{std::tuple<>{}};
     }
 }
+
+template <typename TTuple>
+constexpr auto reverse(TTuple&& tuple)
+{
+    constexpr auto Size = std::tuple_size_v<std::decay_t<TTuple>>;
+
+    return [&tuple]<std::size_t... Is>(std::index_sequence<Is...>) {
+        return std::make_tuple(std::get<Size - 1 - Is>(std::forward<TTuple>(tuple))...);
+    }(std::make_index_sequence<Size>{});
+}
+
+template <typename TElement, typename TTuple>
+struct IndexOf
+{
+    static constexpr size_t value = getItemIndex<0, TElement, TTuple>();
+};
+
 } // namespace TupleExt

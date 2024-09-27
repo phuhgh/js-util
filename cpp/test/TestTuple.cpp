@@ -29,10 +29,10 @@ struct D
 constexpr auto testCombinations()
 {
     constexpr auto input = std::make_tuple(std::make_tuple(A{9}, B{8}), std::make_tuple(C{7}, D{6}));
-    return TupleExt::combinatorial(input);
+    return TupleExt::flattenCombinations(input);
 }
 
-TEST(Tuple, combinitorial)
+TEST(Tuple, flattenCombinations)
 {
     constexpr auto result = testCombinations();
 
@@ -107,4 +107,19 @@ TEST(Tuple, flatMap)
 {
     auto input = std::make_tuple(std::make_tuple(A{9}), std::make_tuple(B{8}));
     EXPECT_EQ(TupleExt::flatMap(input, LangExt::identity), std::make_tuple(A{9}, B{8}));
+}
+
+TEST(Tuple, reverseTuple)
+{
+    auto input = std::make_tuple(A{9}, B{8}, C{7}, D{6});
+    EXPECT_EQ(TupleExt::reverse(input), std::make_tuple(D{6}, C{7}, B{8}, A{9}));
+}
+
+TEST(Tuple, indexOf)
+{
+    auto input = std::make_tuple(A{9}, B{8}, C{7});
+
+    static_assert(TupleExt::IndexOf<A, decltype(input)>::value == 0);
+    static_assert(TupleExt::IndexOf<B, decltype(input)>::value == 1);
+    static_assert(TupleExt::IndexOf<C, decltype(input)>::value == 2);
 }

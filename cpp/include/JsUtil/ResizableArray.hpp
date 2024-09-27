@@ -1,6 +1,5 @@
 #pragma once
 
-#include "JsUtil/Debug.hpp"
 #include "JsUtil/TypeTraits.hpp"
 #include <gsl/pointers>
 #include <span>
@@ -18,6 +17,9 @@ template <typename TValue, WithUnsigned TIndex = uint32_t>
 class ResizableArray
 {
   public:
+    // imitate stl containers
+    using value_type = TValue;
+
     // todo jack: move these into impl
     /**
      * @brief create an array of pointers, if allocation fails (use new std::nothrow) the element will be removed.
@@ -71,9 +73,9 @@ class ResizableArray
     ~ResizableArray();
 
     explicit ResizableArray(TIndex size);
-    ResizableArray(std::initializer_list<TValue> const& values);
-    ResizableArray(ResizableArray const& other);
-    ResizableArray(ResizableArray&& other) noexcept;
+             ResizableArray(std::initializer_list<TValue> const& values);
+             ResizableArray(ResizableArray const& other);
+             ResizableArray(ResizableArray&& other) noexcept;
 
     ResizableArray& operator=(ResizableArray&& other) noexcept;
     ResizableArray& operator=(ResizableArray const& other);
@@ -85,6 +87,7 @@ class ResizableArray
     /// If the new size is smaller than the old size, success is guaranteed, otherwise check return (true is success)
     bool resize(TIndex newSize);
 
+    operator std::span<TValue>() const { return asSpan(); }
     std::span<TValue> asSpan() const { return std::span<TValue>(m_values, size_t(m_size)); }
 
   private:

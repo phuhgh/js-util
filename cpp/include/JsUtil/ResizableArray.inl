@@ -1,5 +1,7 @@
 #pragma once
 
+#include "JsUtil/Debug.hpp"
+
 namespace JsUtil
 {
 
@@ -203,7 +205,7 @@ void ResizableArray<TValue, TIndex>::moveArrayValues(TOther const& other)
 }
 
 template <typename TValue, WithUnsigned TIndex>
-TValue* ResizableArray<TValue, TIndex>::allocateArray(TIndex size)
+gsl::owner<TValue*> ResizableArray<TValue, TIndex>::allocateArray(TIndex size)
 {
     return static_cast<gsl::owner<TValue*>>(std::malloc(sizeof(TValue) * size));
 }

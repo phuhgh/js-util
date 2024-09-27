@@ -201,3 +201,20 @@ TEST(TestResizableArray, createPointerArray)
         delete obj;
     }
 }
+
+TEST(TestResizableArray, spanConversion)
+{
+    TestStruct::reset();
+    {
+        ResizableArray b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
+        EXPECT_EQ(TestStruct::getTotalConstructedCount(), 8); // 4 default, 4 move
+        ASSERT_EQ(b1.size(), 4);
+        ASSERT_EQ(b1[3].m_val, 3);
+        std::span<decltype(b1)::value_type> s1 = b1;
+        EXPECT_EQ(s1.size(), 4);
+        EXPECT_EQ(s1[0].m_val, 0);
+        EXPECT_EQ(s1[3].m_val, 3);
+        EXPECT_EQ(TestStruct::getTotalConstructedCount(), 8); // 4 default, 4 move
+    }
+    EXPECT_EQ(TestStruct::m_destroyed, 8);
+}

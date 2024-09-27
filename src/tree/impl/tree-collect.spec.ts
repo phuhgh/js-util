@@ -27,7 +27,8 @@ describe("=> treeIterate", () =>
 
 class TestNode implements ITreeNodeLike<TestNode>
 {
-    public constructor(
+    public constructor
+    (
         public id: string,
         private children: TestNode[] | null,
     )

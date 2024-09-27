@@ -42,7 +42,7 @@ T const* sharedArray_getArrayAddress(SharedArray<T>* sharedArray)
         return nullptr;
     }
 
-    return sharedArray->getArray().data();
+    return sharedArray->asSpan().data();
 }
 
 } // namespace JsUtil
