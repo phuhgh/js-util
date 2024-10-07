@@ -26,6 +26,5 @@ if [ "$SKIP_BUILD" != "true" ]; then
   # todo jack: can we do any better?
   # mysteriously, on linux the name is different
   cp cpp/build/"${PRESET}"/util-test-module.js bin/esm/external/util-test-module.js || exit
-  cp cpp/build/"${PRESET}"/util-test-module.worker.mjs bin/esm/external/util-test-module.worker.mjs || exit
   cp cpp/build/"${PRESET}"/util-test-module.wasm bin/esm/external/util-test-module.wasm || exit
 fi
