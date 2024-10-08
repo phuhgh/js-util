@@ -1,5 +1,5 @@
 import { shimWebAssemblyMemory } from "../util/shim-web-assembly-memory.js";
-import { EBinderKind, type IEmscriptenBinder, IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
+import { type IEmscriptenBinder, IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
 import { BroadcastChannel } from "../../eventing/broadcast-channel.js";
 import { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
 import { _Debug } from "../../debug/_debug.js";
@@ -10,7 +10,6 @@ import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
 import { DebugSharedObjectLifeCycleChecker, IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
 import { DebugWeakValue } from "../../debug/debug-weak-value.js";
-import { _Production } from "../../production/_production.js";
 
 /**
  * @public
@@ -101,48 +100,22 @@ class EmscriptenDebug implements IEmscriptenDebug
 
 class EmscriptenBinder implements IEmscriptenBinder
 {
-    public push(interopObject: unknown): void
+    public pushBinder(interopObject: unknown): number
     {
-        this.bindingObjects.set(this.counter++, interopObject);
+        const index = this.counter;
+        ++this.counter;
+        this.bindingObjects.set(index, interopObject);
+        return index;
     }
 
-    public getLast(kind: EBinderKind): number
+    public getBinder(index: number): unknown
     {
-        _BUILD.DEBUG && _Debug.runBlock(() =>
-        {
-            switch (kind)
-            {
-                case EBinderKind.Callback:
-                    _Debug.assert(
-                        typeof this.bindingObjects.get(this.counter - 1) == "function",
-                        "expected to find callback",
-                    );
-                    break;
-                default:
-                    _Production.assertValueIsNever(kind);
-            }
-        });
-        return this.counter - 1;
+        return this.bindingObjects.get(index);
     }
 
-    public remove(index: number): boolean
+    public removeBinder(index: number): boolean
     {
         return this.bindingObjects.delete(index);
-    }
-
-    public callback(index: number): void
-    {
-        _BUILD.DEBUG && _Debug.runBlock(() =>
-        {
-            const binder = this.bindingObjects.get(index);
-            const binderType = typeof binder;
-            _Debug.assert(
-                binderType == "function",
-                `expected to find function at ${index}, got ${binderType}`,
-            );
-        });
-
-        (this.bindingObjects.get(index) as () => void)();
     }
 
     private readonly bindingObjects = new Map<number, unknown>();

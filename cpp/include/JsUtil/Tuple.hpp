@@ -1,5 +1,6 @@
 #pragma once
 
+#include "JsUtil/Debug.hpp"
 #include "JsUtil/LangExt.hpp"
 #include <tuple>
 
@@ -47,12 +48,12 @@ namespace TupleExt
 /**
  * @brief Return all elements minus the first one.
  */
-template <typename Tuple>
-constexpr auto tail(Tuple&& tuple)
+template <typename TTuple>
+constexpr auto tail(TTuple&& tuple)
 {
-    constexpr auto Size = std::tuple_size_v<std::decay_t<Tuple>>;
+    constexpr auto Size = std::tuple_size_v<std::decay_t<TTuple>>;
     return [&tuple]<std::size_t... Is>(std::index_sequence<Is...>) {
-        return std::make_tuple(std::get<1 + Is>(std::forward<Tuple>(tuple))...);
+        return std::make_tuple(std::get<1 + Is>(std::forward<TTuple>(tuple))...);
     }(std::make_index_sequence<Size - 1>());
 }
 
@@ -98,7 +99,22 @@ constexpr auto flatMap(std::tuple<TInput...> const& tuple, TCallback&& callback)
     }
 }
 
-// todo jack: document with an example
+/**
+ *@brief Multiplies out tuple combinations to a depth of 2, e.g.:
+ * [
+ *   [A, B],
+ *   [C, D]
+ * ]
+ *
+ * Would become:
+ * [
+ *   [A, C],
+ *   [A, D],
+ *   [B, C],
+ *   [B, D]
+ * ]
+ */
+
 template <typename... TInputs>
 constexpr auto flattenCombinations(std::tuple<TInputs...> const& tuple)
 {
@@ -136,5 +152,53 @@ struct IndexOf
 {
     static constexpr size_t value = getItemIndex<0, TElement, TTuple>();
 };
+
+// https://stackoverflow.com/questions/76107260/is-there-anyway-to-find-stdtuple-elements-are-all-same-type-or-not
+template <typename TFirst, typename... TRest>
+struct IsUniform
+{
+    constexpr static bool value = std::is_same_v<std::tuple<TFirst, TRest...>, std::tuple<TRest..., TFirst>>;
+};
+
+template <typename... TElements>
+struct IsUniform<std::tuple<TElements...>> : IsUniform<TElements...>
+{
+};
+
+template <typename... TTuple>
+constexpr bool IsUniformValue = IsUniform<TTuple...>::value;
+
+/// I.e. at runtime, by value. If the index is out of bound, YOU WILL GET THE FIRST ELEMENT!
+template <class TTuple, size_t Index = 0>
+auto* dynamicLookupByPtr(TTuple& tuple, size_t index)
+{
+    static_assert(
+        IsUniform<TTuple>::value, "the tuple must be uniform for runtime indexing of this form to make sense"
+    );
+
+    if (Index == index)
+    {
+        return &std::get<Index>(tuple);
+    }
+    if constexpr (Index + 1 < std::tuple_size_v<TTuple>)
+    {
+        return dynamicLookupByPtr<TTuple, Index + 1>(tuple, index);
+    }
+    else
+    {
+        if constexpr (JsUtil::Debug::isDebug())
+        {
+            JsUtil::Debug::error("index out of range");
+        }
+
+        return &std::get<0>(tuple);
+    }
+}
+
+template <class TTuple>
+auto dynamicLookup(TTuple& tuple, size_t index)
+{
+    return *dynamicLookupByPtr(tuple, index);
+}
 
 } // namespace TupleExt

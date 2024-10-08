@@ -19,56 +19,18 @@ class ResizableArray
   public:
     // imitate stl containers
     using value_type = TValue;
+    using size_type = TIndex;
 
-    // todo jack: move these into impl
     /**
      * @brief create an array of pointers, if allocation fails (use new std::nothrow) the element will be removed.
      * @remark You must delete the pointers when done, avoid using this unless there is no alternative...
      */
     template <typename TCallback>
         requires std::invocable<TCallback> && std::is_invocable_r<TValue, TCallback>::value
-    static ResizableArray<TValue, TIndex> createPointerArray(TIndex size, TCallback createItem)
-    {
-        static_assert(std::is_pointer_v<TValue>, "TValue must be a pointer type");
-        ResizableArray<TValue, TIndex> array(size);
-
-        auto allocFailed = false;
-        for (auto& ptr : array.asSpan())
-        {
-            ptr = createItem();
-            if (ptr == nullptr)
-            {
-                allocFailed = true;
-            }
-        }
-
-        if (allocFailed)
-        {
-            array.compact();
-        }
-
-        return array;
-    }
+    static ResizableArray<TValue, TIndex> createPointerArray(TIndex size, TCallback createItem);
 
     template <typename T = TValue>
-    typename std::enable_if<std::is_pointer<T>::value, void>::type compact()
-    {
-        TIndex last = 0;
-        for (TIndex i = 0; i < m_size; ++i)
-        {
-            if (m_values[i] != nullptr)
-            {
-                if (i != last)
-                {
-                    m_values[last] = m_values[i];
-                    m_values[i] = nullptr;
-                }
-                ++last;
-            }
-        }
-
-        resize(last);
-    }
+    typename std::enable_if<std::is_pointer<T>::value, void>::type compact();
 
     ~ResizableArray();
 

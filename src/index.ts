@@ -92,7 +92,7 @@ export { TUnionToIntersection } from "./typescript/t-union-to-intersection.js";
 export { TUnpackArray } from "./typescript/t-unpack-array.js";
 export { TUnpackIfArray } from "./typescript/t-unpack-if-array.js";
 export { TWriteable } from "./typescript/t-writable.js";
-export { IEmscriptenWrapper, IEmscriptenDebug, EBinderKind, IEmscriptenBinder } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
+export { IEmscriptenWrapper, IEmscriptenDebug, IEmscriptenBinder } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
 export { getEmscriptenWrapper } from "./web-assembly/emscripten/get-emscripten-wrapper.js";
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array.js";
 export { SharedArray, TF32SharedArray, TF64SharedArray } from "./web-assembly/shared-array/shared-array.js";

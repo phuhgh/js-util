@@ -1,6 +1,9 @@
 #include "JsUtil/CircularFifoStack.hpp"
 #include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
+#include <JsUtilTestUtil/DisableJsIntegration.hpp>
 #include <gtest/gtest.h>
+
+[[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
 
 using namespace JsUtil;
 
@@ -168,14 +171,6 @@ TEST(TestCircularFIFOStack, atomicPushPop)
     CircularFIFOStack<MoveOnlyTestObject, ECircularStackOverflowMode::NoOp, unsigned, std::atomic<unsigned>> nStack(4);
     nStack.push(MoveOnlyTestObject{4});
     EXPECT_EQ(nStack.pop().m_val, 4);
-}
-
-TEST(TestCircularFIFOStack, atomicProducerConsumer)
-{
-    CircularFIFOStack<MoveOnlyTestObject, ECircularStackOverflowMode::NoOp, unsigned, std::atomic<unsigned>> nStack(4);
-    nStack.push(MoveOnlyTestObject{4});
-    EXPECT_EQ(nStack.pop().m_val, 4);
-    // todo jack: actually implement
 }
 
 TEST(TestCircularFIFOStack, atomicAbsoluteIndexes)

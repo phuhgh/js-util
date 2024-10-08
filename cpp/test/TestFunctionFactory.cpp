@@ -17,7 +17,7 @@ struct C
 
 TEST(FunctionFactory, basicConstexprFunctionComposition)
 {
-    constexpr auto pipeline = JsUtil::FunctionFactory([](int context, int arg) -> std::tuple<int, int> {
+    constexpr auto pipeline = Autogen::FunctionFactory([](int context, int arg) -> std::tuple<int, int> {
                                   return std::make_tuple(arg, context);
                               }) //
                                   .extend([](int context, std::tuple<int, int> arg) -> int {
@@ -32,7 +32,7 @@ TEST(FunctionFactory, basicConstexprFunctionComposition)
 TEST(FunctionFactory, moveOnlyObjects)
 {
     constexpr auto pipeline =
-        JsUtil::FunctionFactory(
+        Autogen::FunctionFactory(
             [](MoveOnlyTestObject context, MoveOnlyTestObject arg) -> std::tuple<MoveOnlyTestObject, int> {
                 return std::make_tuple(std::move(arg), context.m_val);
             }
@@ -57,7 +57,7 @@ TEST(FunctionFactory, combinatorialFunctionComposition)
         TupleExt::flattenCombinations(std::make_tuple(std::make_tuple(f1, f2), std::make_tuple(f3, f4)));
     static_assert(std::tuple_size_v<decltype(combinations)> == 4);
 
-    constexpr auto functions = JsUtil::applyFunctionFactory(combinations);
+    constexpr auto functions = Autogen::applyFunctionFactory(combinations);
     static_assert(std::tuple_size_v<decltype(functions)> == 4);
 
     EXPECT_EQ(std::get<0>(functions).run(1, A{10}).val, 24);
@@ -66,8 +66,9 @@ TEST(FunctionFactory, combinatorialFunctionComposition)
     EXPECT_EQ(std::get<3>(functions).run(1, A{10}).val, 39);
 }
 
-TEST(FunctionFactory, operatorsForEach)
+TEST(FunctionFactory, operatorsForEachBasic)
 {
+    // test default options (single item etc)
     struct TestContext
     {
         std::vector<C>* result;
@@ -80,19 +81,19 @@ TEST(FunctionFactory, operatorsForEach)
     TestContext    o2Context{&o2Result, 1};
 
     auto constexpr operations = std::make_tuple(
-        std::make_tuple([](TestContext context, int arg) {
+        std::make_tuple([](TestContext const& context, int arg) {
             return std::vector<B>{B{arg}, B{context.value}};
         }),
-        std::make_tuple(JsUtil::ForEachFactory()),
+        std::make_tuple(Autogen::ForEachConnector()),
         std::make_tuple(
-            [](TestContext context, B arg) -> void { context.result->emplace_back(C{arg.val * 2}); },
-            [](TestContext context, B arg) -> void { context.result->emplace_back(C{arg.val * 3}); }
+            [](TestContext const& context, B arg) -> void { context.result->emplace_back(C{arg.val * 2}); },
+            [](TestContext const& context, B arg) -> void { context.result->emplace_back(C{arg.val * 3}); }
         )
     );
 
     constexpr auto combinations = TupleExt::flattenCombinations(operations);
     static_assert(std::tuple_size_v<decltype(combinations)> == 2);
-    constexpr auto functions = JsUtil::applyFunctionFactory(combinations);
+    constexpr auto functions = Autogen::applyFunctionFactory(combinations);
     static_assert(std::tuple_size_v<decltype(functions)> == 2);
 
     // factory generation is constexpr, the actual running of the pipeline is not in this case
@@ -107,67 +108,99 @@ TEST(FunctionFactory, operatorsForEach)
     EXPECT_EQ(o2Result[1].val, 3);
 }
 
-struct IIndexedConnector
+TEST(FunctionFactory, operatorsForEachWindowed)
 {
-    virtual ~IIndexedConnector() = default;
-
-    virtual double      getValue(std::size_t _index, int8_t _offset) const = 0;
-    virtual std::size_t getLength() const = 0;
-};
-
-class TestConnectorInterleaved : public IIndexedConnector
-{
-  public:
-    ~TestConnectorInterleaved() override = default;
-     TestConnectorInterleaved(int stride, int length)
-        : m_stride(stride)
-        , m_data(length * stride)
+    // larger window, different stride etc
+    struct TestContext
     {
-        std::vector<int> counters(stride, 0);
+        std::vector<C>* result;
+        int             value;
+    };
 
-        for (int i = 0; i < length; ++i)
-        {
-            for (int j = 0; j < stride; ++j)
-            {
-                m_data[(i * stride) + j] = counters[j]++;
+    std::vector<C> o1Result;
+    std::vector<C> o2Result;
+    TestContext    o1Context{&o1Result, 1};
+    TestContext    o2Context{&o2Result, 1};
+
+    auto constexpr operations = std::make_tuple(
+        std::make_tuple([](TestContext const& context, int arg) {
+            return std::vector{B{arg}, B{context.value}, B{-1}};
+        }),
+        std::make_tuple(Autogen::ForEachConnector(Autogen::ForEachConnector<2>::Options{
+            .stride = 3,
+        })),
+        std::make_tuple(
+            [](TestContext const& context, B a1, B a2) -> void {
+                context.result->emplace_back(C{(a1.val * 2) + a2.val});
+            },
+            [](TestContext const& context, B a1, B a2) -> void {
+                context.result->emplace_back(C{(a1.val * 3) + a2.val});
             }
-        }
-    }
+        )
+    );
 
-    double getValue(std::size_t index, int8_t offset) const override { return m_data[(index * m_stride) + offset]; }
-    std::size_t getLength() const override { return m_data.size() / m_stride; }
+    constexpr auto combinations = TupleExt::flattenCombinations(operations);
+    static_assert(std::tuple_size_v<decltype(combinations)> == 2);
+    constexpr auto functions = Autogen::applyFunctionFactory(combinations);
+    static_assert(std::tuple_size_v<decltype(functions)> == 2);
 
-  private:
-    int                 m_stride;
-    std::vector<double> m_data;
-};
+    // factory generation is constexpr, the actual running of the pipeline is not in this case
+    std::get<0>(functions).run(o1Context, 2);
+    std::get<1>(functions).run(o2Context, 2);
 
-class TestConnectorParallel : public IIndexedConnector
+    EXPECT_EQ(o1Result.size(), 1);
+    EXPECT_EQ(o1Result[0].val, 5);
+    EXPECT_EQ(o2Result.size(), 1);
+    EXPECT_EQ(o2Result[0].val, 7);
+}
+
+TEST(FunctionFactory, operatorsForSpan)
 {
-  public:
-    ~TestConnectorParallel() override = default;
-     TestConnectorParallel(int stride, int length)
-        : m_data(stride, std::vector<double>(length))
+    struct TestContext
     {
-        std::vector<int> counters(stride, 0);
+        std::vector<C>* result;
+        int             value;
+    };
 
-        for (int i = 0; i < stride; ++i)
-        {
-            for (int j = 0; j < length; ++j)
-            {
-                m_data[i][j] = counters[i]++;
+    std::vector<C> o1Result;
+    std::vector<C> o2Result;
+    TestContext    o1Context{&o1Result, 1};
+    TestContext    o2Context{&o2Result, 1};
+
+    auto constexpr operations = std::make_tuple(
+        std::make_tuple([](TestContext const& context, int arg) {
+            return std::vector{B{arg}, B{context.value}, B{-1}};
+        }),
+        std::make_tuple(Autogen::ForEachSpanConnector({.spanSize = 2, .stride = 3})),
+        std::make_tuple(
+            [](TestContext const& context, std::span<B> span) -> void {
+                for (auto item : span)
+                {
+                    context.result->emplace_back(C{item.val * 2});
+                }
+            },
+            [](TestContext const& context, std::span<B> span) -> void {
+                for (auto item : span)
+                {
+                    context.result->emplace_back(C{item.val * 3});
+                };
             }
-        }
-    }
+        )
+    );
 
-    double      getValue(std::size_t index, int8_t offset) const override { return m_data[offset][index]; }
-    std::size_t getLength() const override { return m_data.empty() ? 0 : m_data[0].size(); }
+    constexpr auto combinations = TupleExt::flattenCombinations(operations);
+    static_assert(std::tuple_size_v<decltype(combinations)> == 2);
+    constexpr auto functions = Autogen::applyFunctionFactory(combinations);
+    static_assert(std::tuple_size_v<decltype(functions)> == 2);
 
-  private:
-    std::vector<std::vector<double>> m_data;
-};
+    // factory generation is constexpr, the actual running of the pipeline is not in this case
+    std::get<0>(functions).run(o1Context, 2);
+    std::get<1>(functions).run(o2Context, 2);
 
-TEST(FunctionFactory, reduction)
-{
-    // todo jack
+    EXPECT_EQ(o1Result.size(), 2);
+    EXPECT_EQ(o1Result[0].val, 4);
+    EXPECT_EQ(o1Result[1].val, 2);
+    EXPECT_EQ(o2Result.size(), 2);
+    EXPECT_EQ(o2Result[0].val, 6);
+    EXPECT_EQ(o2Result[1].val, 3);
 }

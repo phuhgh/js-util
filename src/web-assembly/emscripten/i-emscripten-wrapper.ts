@@ -5,24 +5,14 @@ import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
 import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
 import { IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
 
-
-/**
- * @public
- */
-export enum EBinderKind
-{
-    Callback = 1,
-}
-
 /**
  * @public
  */
 export interface IEmscriptenBinder
 {
-    push(interopObject: unknown): void;
-    getLast(kind: EBinderKind): number;
-    callback(index: number): void;
-    remove(index: number): boolean;
+    pushBinder(interopObject: unknown): number;
+    getBinder(index: number): unknown;
+    removeBinder(index: number): boolean;
 }
 
 /**

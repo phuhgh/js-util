@@ -83,7 +83,7 @@ export interface IWorkerPool
     start(): Promise<number>;
     stop(): Promise<void>;
 
-    // todo jack: document meaning
+    /// @returns true if there is at least one worker capable of taking jobs (one worker or more in eRUNNING state).
     isRunning(): boolean;
 
     /**

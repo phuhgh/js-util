@@ -1,34 +1,9 @@
 #include "JsUtil/SharedArray.hpp"
 #include <emscripten/em_macros.h>
 
+// todo jack: this needs re-reviewing...
 namespace JsUtil
 {
-
-template <typename T>
-SharedArray<T>* SharedArray<T>::createOne(size_t _size, bool _clearMemory)
-{
-    if constexpr (Debug::isDebug())
-    {
-        Debug::onBeforeAllocate();
-    }
-    T* arrayPtr = _clearMemory ? static_cast<T*>(calloc(_size, sizeof(T))) : static_cast<T*>(malloc(_size * sizeof(T)));
-
-    if (arrayPtr == nullptr)
-    {
-        // allocation failed
-        return nullptr;
-    }
-
-    auto shared_array = new (std::nothrow) SharedArray<T>(arrayPtr, _size);
-
-    if (shared_array == nullptr)
-    {
-        free(arrayPtr);
-        return nullptr;
-    }
-
-    return shared_array;
-}
 
 template <typename T>
 T const* sharedArray_getArrayAddress(SharedArray<T>* sharedArray)

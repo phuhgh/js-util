@@ -60,8 +60,11 @@ void Impl::Debug_log(char const* _message)
     }
     else
     {
-        // todo jack: this is blocking! definitely switch to console.log if possible
-        std::cout << _message << "\n";
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+        EM_ASM({ console.log(UTF8ToString($0)); }, _message);
+#pragma clang diagnostic pop
     }
 }
+
 } // namespace JsUtil

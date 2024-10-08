@@ -44,7 +44,7 @@ TEST(WorkerPoolJob, overflowHandling)
     ASSERT_TRUE(workerLoop.start(true));
     ASSERT_TRUE(tryVerify([&]() { return !workerLoop.getTask().hasPendingWork(); }));
     delete overflowJob;
-    EXPECT_EQ(jobsExecuted.load(), 1); // todo jack: this was 0
+    EXPECT_EQ(jobsExecuted.load(), 1);
 }
 
 TEST(WorkerPool, distribution)
@@ -121,4 +121,5 @@ TEST(WorkerPool, invalidation)
     // first job, plus the last 8
     EXPECT_EQ(jobsExecuted.load(), 9);
 }
+
 // todo jack: allocation failure of worker threads?

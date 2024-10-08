@@ -5,7 +5,53 @@
 namespace JsUtil
 {
 
-// todo jack: looks like i messed up in here, zero size allocatons...
+template <typename TValue, WithUnsigned TIndex>
+template <typename TCallback>
+    requires std::invocable<TCallback> && std::is_invocable_r<TValue, TCallback>::value
+ResizableArray<TValue, TIndex> ResizableArray<TValue, TIndex>::createPointerArray(TIndex size, TCallback createItem)
+{
+    static_assert(std::is_pointer_v<TValue>, "TValue must be a pointer type");
+    ResizableArray<TValue, TIndex> array(size);
+
+    auto allocFailed = false;
+    for (auto& ptr : array.asSpan())
+    {
+        ptr = createItem();
+        if (ptr == nullptr)
+        {
+            allocFailed = true;
+        }
+    }
+
+    if (allocFailed)
+    {
+        array.compact();
+    }
+
+    return array;
+}
+
+template <typename TValue, WithUnsigned TIndex>
+template <typename T>
+typename std::enable_if<std::is_pointer<T>::value, void>::type ResizableArray<TValue, TIndex>::compact()
+{
+    TIndex last = 0;
+    for (TIndex i = 0; i < m_size; ++i)
+    {
+        if (m_values[i] != nullptr)
+        {
+            if (i != last)
+            {
+                m_values[last] = m_values[i];
+                m_values[i] = nullptr;
+            }
+            ++last;
+        }
+    }
+
+    resize(last);
+}
+
 template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::~ResizableArray()
 {
@@ -15,7 +61,7 @@ ResizableArray<TValue, TIndex>::~ResizableArray()
 template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::ResizableArray(TIndex size)
     : m_size(size)
-    , m_values(allocateArray(size))
+    , m_values(std::move(allocateArray(size)))
 {
     if (m_values == nullptr)
     {
@@ -34,7 +80,7 @@ ResizableArray<TValue, TIndex>::ResizableArray(TIndex size)
 template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::ResizableArray(std::initializer_list<TValue> const& values)
     : m_size(values.size())
-    , m_values(allocateArray(values.size()))
+    , m_values(std::move(allocateArray(values.size())))
 {
     if (m_values == nullptr)
     {
@@ -50,7 +96,7 @@ ResizableArray<TValue, TIndex>::ResizableArray(std::initializer_list<TValue> con
 template <typename TValue, WithUnsigned TIndex>
 ResizableArray<TValue, TIndex>::ResizableArray(ResizableArray const& other)
     : m_size(other.m_size)
-    , m_values(allocateArray(other.size()))
+    , m_values(std::move(allocateArray(other.size())))
 {
     if (m_values == nullptr)
     {
@@ -136,6 +182,7 @@ bool ResizableArray<TValue, TIndex>::resize(TIndex newSize)
         TIndex minSize = std::min(m_size, newSize);
         for (TIndex i = 0; i < minSize; ++i)
         {
+            // ReSharper disable once CppDFANullDereference - if null, then size 0 (i.e. user problem...)
             new (pNewValues + i) TValue(std::move_if_noexcept(m_values[i]));
         }
 
@@ -177,6 +224,7 @@ void ResizableArray<TValue, TIndex>::deleteArray()
 {
     for (TIndex i = 0; i < m_size; ++i)
     {
+        // ReSharper disable once CppDFANullDereference - size zero if null
         m_values[i].~TValue();
     }
     std::free(m_values);
@@ -207,7 +255,14 @@ void ResizableArray<TValue, TIndex>::moveArrayValues(TOther const& other)
 template <typename TValue, WithUnsigned TIndex>
 gsl::owner<TValue*> ResizableArray<TValue, TIndex>::allocateArray(TIndex size)
 {
+    if constexpr (Debug::isDebug())
+    {
+        Debug::onBeforeAllocate();
+    }
+
+    // ReSharper disable CppDFAMemoryLeak
     return static_cast<gsl::owner<TValue*>>(std::malloc(sizeof(TValue) * size));
+    // ReSharper enable CppDFAMemoryLeak
 }
 
 } // namespace JsUtil

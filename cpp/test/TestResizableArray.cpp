@@ -1,6 +1,9 @@
 #include "JsUtil/ResizableArray.hpp"
 #include "JsUtilTestUtil/CreateDestroyTestCounter.hpp"
+#include "JsUtilTestUtil/DisableJsIntegration.hpp"
 #include <gtest/gtest.h>
+
+[[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
 
 using namespace JsUtil;
 
@@ -19,7 +22,6 @@ struct TestStructImpl
 };
 
 using TestStruct = CreateDestroyTestCounter<TestStructImpl>;
-// todo jack: actually check the create destroy counts
 
 extern "C" char const* __asan_default_options() // NOLINT(*-reserved-identifier)
 {
@@ -43,7 +45,7 @@ TEST(TestResizableArray, resizing)
 {
     TestStruct::reset();
     {
-        ResizableArray<TestStruct> buffer{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
+        ResizableArray buffer{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
         EXPECT_EQ(buffer.size(), 4);
         EXPECT_EQ(buffer[0].m_val, 0);
         EXPECT_EQ(buffer[3].m_val, 3);
@@ -74,8 +76,8 @@ TEST(TestResizableArray, resizing)
 
 TEST(TestResizableArray, span)
 {
-    ResizableArray<TestStruct> buffer{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
-    auto                       span = buffer.asSpan();
+    ResizableArray buffer{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
+    auto           span = buffer.asSpan();
     ASSERT_EQ(span.size(), 4);
     EXPECT_EQ(span[0].m_val, 0);
     EXPECT_EQ(span[3].m_val, 3);
@@ -91,12 +93,12 @@ TEST(TestResizableArray, copyCtor)
 {
     TestStruct::reset();
     {
-        ResizableArray<TestStruct> b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
+        ResizableArray b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
         EXPECT_EQ(TestStruct::getTotalConstructedCount(), 8); // 4 default, 4 move
         ASSERT_EQ(b1.size(), 4);
         ASSERT_EQ(b1[3].m_val, 3);
-        ResizableArray<TestStruct> b2(b1);
-        auto                       s1 = b2.asSpan();
+        ResizableArray b2(b1);
+        auto           s1 = b2.asSpan();
         EXPECT_EQ(s1.size(), 4);
         EXPECT_EQ(s1[0].m_val, 0);
         EXPECT_EQ(s1[3].m_val, 3);
@@ -110,10 +112,10 @@ TEST(TestResizableArray, moveCtor)
 {
     TestStruct::reset();
     {
-        ResizableArray<TestStruct> b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
+        ResizableArray b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
         EXPECT_EQ(TestStruct::getTotalConstructedCount(), 8); // 4 default, 4 move
-        ResizableArray<TestStruct> b2(std::move(b1));
-        auto                       s1 = b2.asSpan();
+        ResizableArray b2(std::move(b1));
+        auto           s1 = b2.asSpan();
         EXPECT_EQ(s1.size(), 4);
         EXPECT_EQ(s1[0].m_val, 0);
         EXPECT_EQ(s1[3].m_val, 3);
@@ -128,12 +130,12 @@ TEST(TestResizableArray, copyAssignment)
 {
     TestStruct::reset();
     {
-        ResizableArray<TestStruct> b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
+        ResizableArray b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
         EXPECT_EQ(TestStruct::getTotalConstructedCount(), 8); // 4 default, 4 move
         ASSERT_EQ(b1.size(), 4);
         ASSERT_EQ(b1[3].m_val, 3);
-        ResizableArray<TestStruct> b2 = b1;
-        auto                       s1 = b2.asSpan();
+        ResizableArray b2 = b1;
+        auto           s1 = b2.asSpan();
         EXPECT_EQ(s1.size(), 4);
         EXPECT_EQ(s1[0].m_val, 0);
         EXPECT_EQ(s1[3].m_val, 3);
@@ -147,10 +149,10 @@ TEST(TestResizableArray, moveAssignment)
 {
     TestStruct::reset();
     {
-        ResizableArray<TestStruct> b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
+        ResizableArray b1{TestStruct{0}, TestStruct{1}, TestStruct{2}, TestStruct{3}};
         EXPECT_EQ(TestStruct::getTotalConstructedCount(), 8); // 4 default, 4 move
-        ResizableArray<TestStruct> b2 = std::move(b1);
-        auto                       s1 = b2.asSpan();
+        ResizableArray b2 = std::move(b1);
+        auto           s1 = b2.asSpan();
         EXPECT_EQ(s1.size(), 4);
         EXPECT_EQ(s1[0].m_val, 0);
         EXPECT_EQ(s1[3].m_val, 3);

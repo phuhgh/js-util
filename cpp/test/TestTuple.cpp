@@ -123,3 +123,19 @@ TEST(Tuple, indexOf)
     static_assert(TupleExt::IndexOf<B, decltype(input)>::value == 1);
     static_assert(TupleExt::IndexOf<C, decltype(input)>::value == 2);
 }
+
+TEST(Tuple, uniformity)
+{
+    static_assert(!TupleExt::IsUniform<std::tuple<A, B, C>>::value);
+    static_assert(TupleExt::IsUniform<std::tuple<A>>::value);
+    static_assert(TupleExt::IsUniform<std::tuple<A, A>>::value);
+}
+
+TEST(Tuple, dynamicLookup)
+{
+    auto  input = std::make_tuple(A{9}, A{8}, A{7});
+    auto* element = TupleExt::dynamicLookupByPtr(input, 1);
+    EXPECT_EQ(element->val, 8);
+    element->val = 1;
+    EXPECT_EQ(TupleExt::dynamicLookup(input, 1).val, 1);
+}

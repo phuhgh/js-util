@@ -4,7 +4,6 @@
 #include "JsUtil/WorkerLoop.hpp"
 #include <gsl/pointers>
 
-// todo jack: replace unsigned with uint64 (all), might overflow in some long running cases
 namespace JsUtil
 {
     /**
@@ -13,7 +12,6 @@ namespace JsUtil
     class PoolWorkerConfig : public IWorkerLoopConfig
     {
     public:
-        // todo jack: handle allocation failure?
         inline explicit PoolWorkerConfig(uint16_t jobQueueSize = 32);
         inline PoolWorkerConfig(PoolWorkerConfig&& other) noexcept;
         inline ~PoolWorkerConfig() override;
@@ -46,9 +44,9 @@ namespace JsUtil
     private:
         CircularFIFOStack<gsl::owner<IExecutor*>, ECircularStackOverflowMode::NoOp, uint16_t, std::atomic<uint16_t>>
         m_jobs;
-        std::atomic<unsigned> m_batchEndIndex = 0;
+        std::atomic<uint64_t> m_batchEndIndex = 0;
         std::atomic<bool> m_acceptingWork = false;
-        std::atomic<unsigned> m_invalidateToIndex = 0;
+        std::atomic<uint64_t> m_invalidateToIndex = 0;
     };
 
     struct WorkerPoolConfig

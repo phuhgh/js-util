@@ -2,38 +2,32 @@
 
 #include "JsUtil/LangExt.hpp"
 #include "JsUtil/Tuple.hpp"
-#include <utility>
+#include <span>
 
-namespace JsUtil
+namespace Autogen
 {
 
-// todo jack: basically the idea of branching is required, everything else is just a kludge
-// todo jack: naming etc, try restricting this, if possible...
-template <
-    typename TFn,
-    typename TFTraits = LangExt::FunctionTraits<TFn>,
-    typename TArg = typename TFTraits::template argument<1>::type,
-    typename TContext = typename TFTraits::template argument<0>::type,
-    typename TRet = typename TFTraits::TRet>
+template <typename TFn>
 class FunctionFactory
 {
   public:
-    using Arg = TArg;
-    using Context = TContext;
+    using TFTraits = LangExt::FunctionTraits<TFn>;
+    using TArg = typename TFTraits::template argument<1>::type;
+    using TContext = typename TFTraits::template argument<0>::type;
+    using TRet = typename TFTraits::TRet;
 
     constexpr explicit FunctionFactory(TFn callback)
         : m_callback(callback)
     {
     }
 
-    // todo jack: restrict if possible...
     /**
      * @brief Extend the chain of function calls right, if A > B before, and calling with C, becomes A > B > C.
      */
     template <typename TExtFn>
     constexpr auto extend(TExtFn const& callback) const
     {
-        auto wrapper = [other = m_callback, callback](TContext context, TArg&& arg) {
+        auto wrapper = [other = m_callback, callback](TContext&& context, TArg&& arg) {
             return callback(
                 std::forward<TContext>(context), other(std::forward<TContext>(context), std::forward<TArg>(arg))
             );
@@ -41,15 +35,13 @@ class FunctionFactory
         return FunctionFactory<decltype(wrapper)>(wrapper);
     }
 
-    // todo jack: unit tests for perfect forwarding, logically this should probably just be a free function
-    // todo jack: better docs, it's not obvious which is the wrapped one
     /**
      * @brief Extend the chain of function calls left, if A > B before, and calling with C, becomes C > A > B.
      */
     template <typename TFact>
     constexpr auto wrap(TFact const& functionFactory) const
     {
-        auto wrapper = [other = m_callback, functionFactory](TContext context, TArg&& arg) {
+        auto wrapper = [other = m_callback, functionFactory](TContext&& context, TArg&& arg) {
             return functionFactory.m_callback(
                 std::forward<TContext>(context), other(std::forward<TContext>(context), std::forward<TArg>(arg))
             );
@@ -57,37 +49,109 @@ class FunctionFactory
         return FunctionFactory<decltype(wrapper)>(wrapper);
     }
 
-    constexpr TRet run(TContext context, TArg&& arg) const
+    constexpr TRet run(TContext&& context, TArg&& arg) const
     {
         return m_callback(std::forward<TContext>(context), std::forward<TArg>(arg));
     }
 
-    // todo jack: HACK!, maybe hide it in a parent class or something? (problem is that it's templated, therefore
-    // unrelated)
-  public:
     TFn m_callback;
 };
 
-// todo jack: restrict this if possible, deduction guide?
-struct ForEachFactory
+/**
+ * @brief Connects the previous pipeline step (which should return some STL like collection) with the next function in
+ * the pipeline.
+ *
+ * Optionally You may specify an `offset`, `end` and `stride` - which all have the usual meaning. The `BlockSize`
+ * should be smaller than the stride, and provides a window into the data, which is "spread" over the callback, e.g. for
+ * a block size of 2 the callback signature would be TRet *(TContext, TItem, TItem).
+ */
+template <unsigned BlockSize>
+struct ForEachConnector
 {
+    struct Options
+    {
+        static constexpr unsigned blockSize{BlockSize};
+        unsigned                  stride{BlockSize};
+        unsigned                  offset{0};
+        size_t                    end{std::numeric_limits<size_t>::max()};
+    };
+
     template <typename TContext, typename TArg, typename TFunction>
     constexpr auto createOne(TFunction callback)
     {
-        return [callback](TContext context, TArg items) {
-            // todo jack: obviously we need to support windows into the data etc...
-            // todo jack: does the & matter here for trivial types
-            for (auto item : items)
+        return [callback, _opts = options](TContext&& context, TArg items) {
+            using TIndex = typename TArg::size_type;
+
+            auto stride = static_cast<TIndex>(_opts.stride);
+            auto offset = static_cast<TIndex>(_opts.offset);
+            auto end = std::min(static_cast<TIndex>(_opts.end), items.size());
+
+            static_assert(
+                // (-1 as the function must take context as a parameter too)
+                LangExt::FunctionTraits<TFunction>::arity - 1 == BlockSize,
+                "callback doesn't have the correct number of parameters (it must match the window size + context)"
+            );
+
+            for (TIndex i = offset; i < end; i += stride)
             {
-                callback(std::forward<TContext>(context), item);
+                [&]<std::size_t... Is>(std::index_sequence<Is...>) {
+                    callback(std::forward<TContext>(context), items[i + Is]...);
+                }(std::make_index_sequence<BlockSize>());
             }
         };
     }
+
+    Options options;
 };
 
-// todo jack: the naming no longer makes much sense...
+template <typename T>
+ForEachConnector(T) -> ForEachConnector<T::blockSize>;
+ForEachConnector() -> ForEachConnector<1>;
+
+/**
+ * @brief Connects the previous pipeline step (which should return some STL like collection) with the next function in
+ * the pipeline.
+ *
+ * Optionally You may specify an `offset`, `end` and `stride` - which all have the usual meaning. The `spanSize`
+ * should be smaller than the stride, and provides a window into the data via std::span, which is provided in the
+ * callback.
+ */
+struct ForEachSpanConnector
+{
+    struct Options
+    {
+        unsigned spanSize{1};
+        unsigned stride{spanSize};
+        unsigned offset{0};
+        size_t   end{std::numeric_limits<size_t>::max()};
+    };
+
+    template <typename TContext, typename TArg, typename TFunction>
+    constexpr auto createOne(TFunction callback)
+    {
+        return [callback, _opts = options](TContext&& context, TArg items) {
+            using TIndex = typename TArg::size_type;
+
+            auto const spanSize = static_cast<TIndex>(_opts.spanSize);
+            auto const stride = static_cast<TIndex>(_opts.stride);
+            auto const offset = static_cast<TIndex>(_opts.offset);
+            auto const end = std::min(static_cast<TIndex>(_opts.end), items.size());
+
+            for (TIndex i = offset; i < end; i += stride)
+            {
+                callback(std::forward<TContext>(context), std::span{&items[i], spanSize});
+            }
+        };
+    }
+
+    Options options;
+};
+
+namespace Impl
+{
+
 template <typename>
-struct AttributeTraits
+struct PipelineExtensions
 {
     template <typename TFactory, typename TFunction>
     static constexpr auto apply(TFactory&& factory, TFunction&& function)
@@ -103,74 +167,80 @@ struct AttributeTraits
     }
 };
 
-// todo jack: perfect forwarding etc
-template <>
-struct AttributeTraits<ForEachFactory>
+template <unsigned BlockSize>
+struct PipelineExtensions<ForEachConnector<BlockSize>>
 {
     template <typename TFactory, typename TFunction>
     static constexpr auto apply(TFactory, TFunction)
     {
         // encode each collection type in a step before (even if it's just identity), they will then be expanded out
-        static_assert(false, "ForEachFactory must not be the first function");
+        static_assert(false, "ForEachConnector must not be the first function");
     }
     template <typename TFactory, typename TFunction, typename TPreviousFunction>
     static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)
     {
-        using TContext = typename decltype(factory)::Context;
+        using TContext = typename decltype(factory)::TContext;
         using TFTraits = LangExt::FunctionTraits<TPreviousFunction>;
         // the step before must be a regular function
         static_assert(TFTraits::arity == 2);
         using TArg = typename TFTraits::TRet;
 
-        // function it is itself a factory, which takes a callback to create the chainable
+        // function is itself a factory, which takes a callback to create the chainable
         return FunctionFactory(function.template createOne<TContext, TArg>(factory.m_callback));
     }
 };
 
-/**
- * todo jack: documentation with example, document that empty is not permitted
- * todo jack: concrete use case:
- * - multiple kinds of containers, multiple kinds of things to index into
- *
- * for each container (e.g. interleaved, parallel, linked list etc),
- * for each data arrangement (e.g. points, lines, etc),
- * for each indexer (e.g. quad tree)
- *
- *
- * this might be the more appropriate place to handle that idea, the idea is really only useful where generated
- */
-
-template <typename... TCombinations>
-constexpr auto applyFunctionFactory(std::tuple<TCombinations...> const& combinations)
+template <>
+struct PipelineExtensions<ForEachSpanConnector>
 {
-    return TupleExt::map(combinations, [](auto functions) {
+    template <typename TFactory, typename TFunction>
+    static constexpr auto apply(TFactory, TFunction)
+    {
+        // encode each collection type in a step before (even if it's just identity), they will then be expanded out
+        static_assert(false, "ForEachSpanConnector must not be the first function");
+    }
+    template <typename TFactory, typename TFunction, typename TPreviousFunction>
+    static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)
+    {
+        using TContext = typename decltype(factory)::TContext;
+        using TFTraits = LangExt::FunctionTraits<TPreviousFunction>;
+        // the step before must be a regular function
+        static_assert(TFTraits::arity == 2);
+        using TArg = typename TFTraits::TRet;
+
+        // function is itself a factory, which takes a callback to create the chainable
+        return FunctionFactory(function.template createOne<TContext, TArg>(factory.m_callback));
+    }
+};
+
+} // namespace Impl
+
+/**
+ *@brief Generates all possible permutations of `pipelineSteps` at compile time. This prevents the need for runtime
+ *lookups / use of interfaces in inner loops, while maintaining a composition approach with (typically) perfect
+ *inlining in the inner loops.
+ */
+template <typename... TPipelineSteps>
+constexpr auto applyFunctionFactory(std::tuple<TPipelineSteps...> const& pipelineSteps)
+{
+    return TupleExt::map(pipelineSteps, [](auto functions) {
         auto reversedFunctions = TupleExt::reverse(functions);
         auto last = std::get<0>(reversedFunctions);
         auto rest = TupleExt::tail(reversedFunctions);
 
-        /**
-         *todo jack: so the thing that's totally fucking here is this:
-         *I need to start from the back to collect the functions to put into operators
-         *but I also need to start from the front so we can know what the fucking collection types are
-         *we can't really encode that, as one of the requirements is to be container agnostic...
-         *I say that, we have the expansion system, so in principle you can just hard code a list and it will be
-         *expanded for you... this is accetpable
-         */
-
         return TupleExt::reduce(
             rest,
             [&functions](auto factory, auto function) {
-                // todo jack: big doubt that the indexing will be correct, map it out
                 constexpr auto Index = TupleExt::IndexOf<decltype(function), decltype(functions)>::value;
                 if constexpr (Index > 0)
                 {
                     auto nextFunction = std::get<Index - 1>(functions);
                     // we're going backwards, so it's next, but in logical order this is the step before...
-                    return AttributeTraits<decltype(function)>::apply(factory, function, nextFunction);
+                    return Impl::PipelineExtensions<decltype(function)>::apply(factory, function, nextFunction);
                 }
                 else
                 {
-                    return AttributeTraits<decltype(function)>::apply(factory, function);
+                    return Impl::PipelineExtensions<decltype(function)>::apply(factory, function);
                 }
             },
             FunctionFactory(last)
@@ -178,4 +248,4 @@ constexpr auto applyFunctionFactory(std::tuple<TCombinations...> const& combinat
     });
 }
 
-} // namespace JsUtil
+} // namespace Autogen
