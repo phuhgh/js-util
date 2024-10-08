@@ -75,14 +75,50 @@ struct ForEachFactory
     constexpr auto createOne(TFunction callback)
     {
         return [callback](TContext context, TArg items) {
-            // todo jack: obviously we need to support windows into the data etc...
-            // todo jack: does the & matter here for trivial types
-            for (auto item : items)
+            for (const auto& item : items)
             {
                 callback(std::forward<TContext>(context), item);
             }
         };
     }
+};
+
+// todo jack: cleanup
+template <unsigned WindowSize>
+struct Options
+{
+    static constexpr unsigned windowSize = WindowSize;
+    unsigned                  start{0};
+    size_t                    end{std::numeric_limits<size_t>::max()};
+};
+
+template <typename TOptions>
+struct WindowedForEachFactory
+{
+
+    template <typename TContext, typename TArg, typename TFunction>
+    constexpr auto createOne(TFunction callback)
+    {
+        return [callback, _opts = options](TContext context, TArg items) {
+            using TIndex = typename TArg::size_type;
+            constexpr unsigned windowSize = TOptions::windowSize;
+
+            static_assert(
+                // (-1 as context)
+                LangExt::FunctionTraits<TFunction>::arity - 1 == windowSize,
+                "callback does have the correct number of parameters (it must match the window size)"
+            );
+
+            for (TIndex i = _opts.start, iEnd = std::min(_opts.end, items.size()); i < iEnd; i += windowSize)
+            {
+                [&]<std::size_t... Is>(std::index_sequence<Is...>) {
+                    callback(context, items[i + Is]...);
+                }(std::make_index_sequence<windowSize>());
+            }
+        };
+    }
+
+    TOptions options;
 };
 
 // todo jack: the naming no longer makes much sense...
@@ -112,6 +148,29 @@ struct AttributeTraits<ForEachFactory>
     {
         // encode each collection type in a step before (even if it's just identity), they will then be expanded out
         static_assert(false, "ForEachFactory must not be the first function");
+    }
+    template <typename TFactory, typename TFunction, typename TPreviousFunction>
+    static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)
+    {
+        using TContext = typename decltype(factory)::Context;
+        using TFTraits = LangExt::FunctionTraits<TPreviousFunction>;
+        // the step before must be a regular function
+        static_assert(TFTraits::arity == 2);
+        using TArg = typename TFTraits::TRet;
+
+        // function it is itself a factory, which takes a callback to create the chainable
+        return FunctionFactory(function.template createOne<TContext, TArg>(factory.m_callback));
+    }
+};
+
+template <typename TOptions>
+struct AttributeTraits<WindowedForEachFactory<TOptions>>
+{
+    template <typename TFactory, typename TFunction>
+    static constexpr auto apply(TFactory, TFunction)
+    {
+        // encode each collection type in a step before (even if it's just identity), they will then be expanded out
+        static_assert(false, "WindowedForEachFactory must not be the first function");
     }
     template <typename TFactory, typename TFunction, typename TPreviousFunction>
     static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)

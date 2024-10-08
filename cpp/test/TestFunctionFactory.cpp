@@ -107,6 +107,45 @@ TEST(FunctionFactory, operatorsForEach)
     EXPECT_EQ(o2Result[1].val, 3);
 }
 
+TEST(FunctionFactory, operatorsWindowedForEach)
+{
+    struct TestContext
+    {
+        std::vector<C>* result;
+        int             value;
+    };
+
+    std::vector<C> o1Result;
+    std::vector<C> o2Result;
+    TestContext    o1Context{&o1Result, 1};
+    TestContext    o2Context{&o2Result, 1};
+
+    auto constexpr operations = std::make_tuple(
+        std::make_tuple([](TestContext context, int arg) {
+            return std::vector{B{arg}, B{context.value}};
+        }),
+        std::make_tuple(JsUtil::WindowedForEachFactory(JsUtil::Options<2>{})),
+        std::make_tuple(
+            [](TestContext context, B a1, B a2) -> void { context.result->emplace_back(C{(a1.val * 2) + a2.val}); },
+            [](TestContext context, B a1, B a2) -> void { context.result->emplace_back(C{(a1.val * 3) + a2.val}); }
+        )
+    );
+
+    constexpr auto combinations = TupleExt::flattenCombinations(operations);
+    static_assert(std::tuple_size_v<decltype(combinations)> == 2);
+    constexpr auto functions = JsUtil::applyFunctionFactory(combinations);
+    static_assert(std::tuple_size_v<decltype(functions)> == 2);
+
+    // factory generation is constexpr, the actual running of the pipeline is not in this case
+    std::get<0>(functions).run(o1Context, 2);
+    std::get<1>(functions).run(o2Context, 2);
+
+    EXPECT_EQ(o1Result.size(), 1);
+    EXPECT_EQ(o1Result[0].val, 5);
+    EXPECT_EQ(o2Result.size(), 1);
+    EXPECT_EQ(o2Result[0].val, 7);
+}
+
 struct IIndexedConnector
 {
     virtual ~IIndexedConnector() = default;
