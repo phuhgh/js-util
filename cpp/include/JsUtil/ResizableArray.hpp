@@ -19,6 +19,7 @@ class ResizableArray
   public:
     // imitate stl containers
     using value_type = TValue;
+    using size_type = TIndex;
 
     // todo jack: move these into impl
     /**

@@ -10,16 +10,14 @@ namespace JsUtil
 // todo jack: basically the idea of branching is required, everything else is just a kludge
 // todo jack: naming etc, try restricting this, if possible...
 template <
-    typename TFn,
-    typename TFTraits = LangExt::FunctionTraits<TFn>,
-    typename TArg = typename TFTraits::template argument<1>::type,
-    typename TContext = typename TFTraits::template argument<0>::type,
-    typename TRet = typename TFTraits::TRet>
+    typename TFn>
 class FunctionFactory
 {
   public:
-    using Arg = TArg;
-    using Context = TContext;
+    using TFTraits = LangExt::FunctionTraits<TFn>;
+    using TArg = typename TFTraits::template argument<1>::type;
+    using TContext = typename TFTraits::template argument<0>::type;
+    using TRet = typename TFTraits::TRet;
 
     constexpr explicit FunctionFactory(TFn callback)
         : m_callback(callback)
@@ -152,7 +150,7 @@ struct AttributeTraits<ForEachFactory>
     template <typename TFactory, typename TFunction, typename TPreviousFunction>
     static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)
     {
-        using TContext = typename decltype(factory)::Context;
+        using TContext = typename decltype(factory)::TContext;
         using TFTraits = LangExt::FunctionTraits<TPreviousFunction>;
         // the step before must be a regular function
         static_assert(TFTraits::arity == 2);
@@ -175,7 +173,7 @@ struct AttributeTraits<WindowedForEachFactory<TOptions>>
     template <typename TFactory, typename TFunction, typename TPreviousFunction>
     static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)
     {
-        using TContext = typename decltype(factory)::Context;
+        using TContext = typename decltype(factory)::TContext;
         using TFTraits = LangExt::FunctionTraits<TPreviousFunction>;
         // the step before must be a regular function
         static_assert(TFTraits::arity == 2);

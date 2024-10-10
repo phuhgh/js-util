@@ -79,4 +79,9 @@ if (${BUILD_JSUTIL_TEST})
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestSegmentedDataView
+            SOURCE_FILES test/TestSegmentedDataView.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
 endif ()

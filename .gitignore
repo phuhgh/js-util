@@ -4,6 +4,7 @@ dist/
 docs/
 tmp/
 .vs/
+.vscode/settings.json
 node_modules/
 test-report/
 exported-names.txt

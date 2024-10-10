@@ -1,6 +1,9 @@
 #include "JsUtil/CircularFifoStack.hpp"
 #include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
+#include <JsUtilTestUtil/DisableJsIntegration.hpp>
 #include <gtest/gtest.h>
+
+[[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
 
 using namespace JsUtil;
 
