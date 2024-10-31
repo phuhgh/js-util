@@ -2,94 +2,80 @@ import { SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripte
 import { SharedMemoryBlock } from "./shared-memory-block.js";
 import utilTestModule from "../../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
-import { blockScopedCallback } from "../../lifecycle/block-scoped-lifecycle.js";
-import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
-import { getTestModuleOptions } from "../../test-util/test-utils.js";
+import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
+import { fpRunWithin } from "../../fp/impl/fp-run-within.js";
+import { blockScope } from "../../lifecycle/block-scoped-lifecycle.js";
+import { _Debug } from "../../debug/_debug.js";
 
-// typically not good usage to directly release, but it shouldn't error to release twice
 describe("=> SharedMemoryBlock", () =>
 {
-    let testOwner: ReferenceCountedOwner;
+    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
 
-    beforeEach(() =>
+    beforeEach(async () =>
     {
-        testOwner = new ReferenceCountedOwner(false);
-    });
-    afterEach(() => testOwner.release());
-
-    describe("=> asan tests", () =>
-    {
-        const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
-
-        beforeAll(async () =>
-        {
-            Test_setDefaultFlags();
-            await testModule.initialize();
-        });
-
-        afterAll(() =>
-        {
-            testModule.endEmscriptenProgram();
-        });
-
-        beforeEach(() => testModule.reset());
-
-        it("| creates, writes, reads and destroys without triggering the asan", blockScopedCallback(() =>
-        {
-            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-            expect(smb.getDataView().byteLength).toEqual(128);
-            new Float32Array(smb.getDataView().buffer, smb.pointer, 4).set([1, 2, 3, 4]);
-
-            expect(smb.getDataView().getFloat32(0, true)).toEqual(1);
-            expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT, true)).toEqual(2);
-            expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 2, true)).toEqual(3);
-            expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 3, true)).toEqual(4);
-
-            testOwner.release();
-            smb.sharedObject.release();
-            expect(smb.sharedObject.getIsDestroyed()).toBeTrue();
-        }));
+        Test_setDefaultFlags();
+        await testModule.initialize();
     });
 
-    describe("=> safe heap tests", () =>
+    afterEach(() =>
     {
-        const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
+        testModule.reset();
+        testModule.endEmscriptenProgram();
+    });
 
-        beforeAll(async () =>
+    it("| creates, writes, reads and destroys without triggering the asan", fpRunWithin([blockScope], () =>
+    {
+        const smb = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 128);
+        expect(smb.getDataView().byteLength).toEqual(128);
+        new Float32Array(smb.getDataView().buffer, smb.pointer, 4).set([1, 2, 3, 4]);
+
+        expect(smb.getDataView().getFloat32(0, true)).toEqual(1);
+        expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT, true)).toEqual(2);
+        expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 2, true)).toEqual(3);
+        expect(smb.getDataView().getFloat32(Float32Array.BYTES_PER_ELEMENT * 3, true)).toEqual(4);
+        testModule.wrapper.rootNode.getLinked().unlinkAll();
+        expect(smb.resourceHandle.getIsDestroyed()).toBeTrue();
+    }));
+
+    it("| invalidates dataView on memory resize", fpRunWithin([blockScope], () =>
+    {
+        const smb = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 128);
+        const dataView = smb.getDataView();
+        const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 16777216);
+        expect(() => dataView.getFloat32(0)).toThrow();
+
+        testModule.wrapper.rootNode.getLinked().unlink(smb2.resourceHandle);
+    }));
+
+    it("| invalidates dataView on memory release", fpRunWithin([blockScope], () =>
+    {
+        const smb = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 128);
+        testModule.wrapper.rootNode.getLinked().unlink(smb.resourceHandle);
+        expect(() => smb.getDataView().getFloat32(0)).toThrow();
+    }));
+
+    it("| updates the dataView on resize", fpRunWithin([blockScope], () =>
+    {
+        const smb = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 128);
+        const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 8388608);
+        smb.getDataView().getFloat32(0);
+        testModule.wrapper.rootNode.getLinked().unlink(smb2.resourceHandle);
+    }));
+
+
+    it("| errors when not released", async () =>
+    {
+        if (!_BUILD.DEBUG || !TestGarbageCollector.isAvailable)
         {
-            Test_setDefaultFlags();
-            await testModule.initialize();
-        });
+            return pending("Test not available in this environment");
+        }
 
-        beforeEach(() => testModule.reset());
+        const spy = spyOn(_Debug, "error");
 
-        it("| invalidates dataView on memory resize", blockScopedCallback(() =>
-        {
-            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-            const dataView = smb.getDataView();
-            const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 16777216);
-            expect(() => dataView.getFloat32(0)).toThrow();
+        // "forget" to use the return
+        SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 128);
 
-            smb.sharedObject.release();
-            smb2.sharedObject.release();
-        }));
-
-        it("| invalidates dataView on memory release", blockScopedCallback(() =>
-        {
-            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-            smb.sharedObject.release();
-            testOwner.release();
-            expect(() => smb.getDataView().getFloat32(0)).toThrow();
-        }));
-
-        it("| updates the dataView on resize", blockScopedCallback(() =>
-        {
-            const smb = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 128);
-            const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testOwner.getLinkedReferences(), 8388608);
-            smb.getDataView().getFloat32(0);
-
-            smb.sharedObject.release();
-            smb2.sharedObject.release();
-        }));
+        expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
+        expect(spy).toHaveBeenCalledWith(jasmine.stringMatching("A shared object was leaked"));
     });
 });

@@ -7,12 +7,6 @@
 namespace JsUtil
 {
 
-/// Convenience interface, allows calling delete from javascript without a specialized method
-struct ISharedMemoryObject
-{
-    virtual ~ISharedMemoryObject() = default;
-};
-
 template <typename T>
 concept WithUnsigned = std::is_integral_v<T> && !std::is_signed_v<T>;
 

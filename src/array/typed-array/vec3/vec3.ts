@@ -3,8 +3,8 @@ import { TTypedArray } from "../t-typed-array.js";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory.js";
 import { getVec3Ctor } from "./get-vec3-ctor.js";
 import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
-import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map.js";
 import { TPickExcept } from "../../../typescript/t-pick-except.js";
+import { populateTypedArrayConstructorMap } from "../rtti-interop.js";
 
 /**
  * @public
@@ -52,6 +52,8 @@ export abstract class Vec3<TArray extends TTypedArray> extends ATypedArrayTuple<
 {
     public static f64: IVec3Ctor<Float64Array> = getVec3Ctor(Float64Array);
     public static f32: IVec3Ctor<Float32Array> = getVec3Ctor(Float32Array);
+    public static i64 = null; // not supported
+    public static u64 = null; // not supported
     public static u32: IVec3Ctor<Uint32Array> = getVec3Ctor(Uint32Array);
     public static i32: IVec3Ctor<Int32Array> = getVec3Ctor(Int32Array);
     public static u16: IVec3Ctor<Uint16Array> = getVec3Ctor(Uint16Array);

@@ -5,9 +5,9 @@ import { getRange2dCtor } from "./get-range2d-ctor.js";
 import { IReadonlyVec2, Vec2 } from "../../vec2/vec2.js";
 import { IReadonlyMat3, Mat3 } from "../../mat3/mat3.js";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor.js";
-import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map.js";
 import { TPickExcept } from "../../../../typescript/t-pick-except.js";
 import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple.js";
+import { populateTypedArrayConstructorMap } from "../../rtti-interop.js";
 
 /**
  * @public

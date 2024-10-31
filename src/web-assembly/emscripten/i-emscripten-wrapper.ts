@@ -1,9 +1,12 @@
-import { TWebAssemblyMemoryListenerArgs } from "../util/t-web-assembly-memory-listener-args.js";
-import { IBroadcastChannel } from "../../eventing/i-broadcast-channel.js";
-import { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
-import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
-import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
-import { IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
+import type { TWebAssemblyMemoryListenerArgs } from "../util/t-web-assembly-memory-listener-args.js";
+import type { IBroadcastChannel } from "../../eventing/i-broadcast-channel.js";
+import type { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
+import type { DebugWeakStore } from "../../debug/debug-weak-store.js";
+import type { IDebugProtectedViewFactory } from "../../debug/i-debug-protected-view-factory.js";
+import type { DebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
+import type { IManagedResourceNode } from "../../lifecycle/manged-resources.js";
+import type { ILifecycleStrategy } from "./i-lifecycle-strategy.js";
+
 
 /**
  * @public
@@ -18,16 +21,16 @@ export interface IEmscriptenBinder
 /**
  * @public
  */
-export interface IEmscriptenDebug
+export interface IEmscriptenDebugUtils
 {
     /**
      * Emits an event on memory allocation.
      */
     onAllocate: IBroadcastChannel<"debugOnAllocate", []>;
     /**
-     * Store for {@link IDebugProtectedView}.
+     * Store for {@link IDebugProtectedViewFactory}.
      */
-    protectedViews: IDebugWeakStore<IDebugProtectedView>;
+    protectedViews: DebugWeakStore<IDebugProtectedViewFactory, IManagedResourceNode>;
     /**
      * Wrapper of `_Debug.error`.
      */
@@ -37,9 +40,9 @@ export interface IEmscriptenDebug
      */
     verboseLog: (message: string) => void;
     /**
-     * {@link IDebugSharedObjectLifeCycleChecker}.
+     * {@link DebugSharedObjectLifeCycleChecker}.
      */
-    sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecker;
+    sharedObjectLifeCycleChecks: DebugSharedObjectLifeCycleChecker;
 
     /**
      * It is an error for two unique pointers to point to the same thing.
@@ -50,12 +53,22 @@ export interface IEmscriptenDebug
 /**
  * @public
  */
-export interface IEmscriptenWrapper<T extends object>
+export interface IEmscriptenWrapper<TModule extends object, TLifeStrategy extends ILifecycleStrategy = ILifecycleStrategy>
 {
-    memoryResize: IBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>;
-    instance: T & Emscripten.EmscriptenModule;
-    memory: IWebAssemblyMemoryMemory;
-    dataView: DataView;
-    debug: IEmscriptenDebug;
-    binder: IEmscriptenBinder;
+
+    readonly memoryResize: IBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>;
+    readonly instance: TModule & Emscripten.EmscriptenModule;
+    readonly memory: IWebAssemblyMemoryMemory;
+    readonly debugUtils: IEmscriptenDebugUtils;
+    readonly binder: IEmscriptenBinder;
+    readonly lifecycleStrategy: TLifeStrategy;
+    /**
+     * This Emscripten instance's root node for memory management of shared objects.
+     */
+    readonly rootNode: IManagedResourceNode;
+
+    /**
+     * Replaced after each memory resize, don't hold onto it.
+     */
+    getDataView(): DataView;
 }

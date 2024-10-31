@@ -1,32 +1,19 @@
 #include "JsUtil/WorkerPool.hpp"
+#include "JsUtil/JsInterop.hpp"
 #include <emscripten/em_macros.h>
-
-namespace JsUtil
-{
-
-NoopJobFactory         NoopJobFactory::sINSTANCE;
-IWorkerPoolJobFactory* sWORKER_POOL_JOB_FACTORY = &NoopJobFactory::sINSTANCE;
-
-void setWorkerPoolFactory(IWorkerPoolJobFactory* factory)
-{
-    Debug::debugAssert(factory != nullptr, "expected a factory, got nullptr...");
-    sWORKER_POOL_JOB_FACTORY = factory;
-}
-
-} // namespace JsUtil
 
 extern "C"
 {
     EMSCRIPTEN_KEEPALIVE
-    gsl::owner<JsUtil::IWorkerPool*> workerPool_createRoundRobin(
+    JsInterop::SharedMemoryOwnerPtr<JsUtil::IWorkerPool> workerPool_createRoundRobin(
         uint16_t workerCount,
         uint16_t queueSize,
         bool     syncOverflowHandling
     )
     {
         using namespace JsUtil;
-
-        return new (std::nothrow) WorkerPool(
+        using namespace JsInterop;
+        auto pool = new (std::nothrow) WorkerPool(
             RoundRobin{},
             WorkerPoolConfig{
                 .workerCount = workerCount,
@@ -34,72 +21,71 @@ extern "C"
                 .syncOverflowHandling = syncOverflowHandling,
             }
         );
+
+        return createSharedMemoryOwner(static_cast<gsl::owner<IWorkerPool*>>(pool));
     }
 
     EMSCRIPTEN_KEEPALIVE
-    void workerPool_setBatchEndPoint(JsUtil::IWorkerPool* o_pool)
+    void workerPool_setBatchEndPoint(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        o_pool->setBatchEndPoint();
+        o_pool->m_owningPtr->setBatchEndPoint();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    bool workerPool_isBatchDone(JsUtil::IWorkerPool* o_pool)
+    bool workerPool_isBatchDone(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        return o_pool->isBatchDone();
+        return o_pool->m_owningPtr->isBatchDone();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    void workerPool_invalidateBatch(JsUtil::IWorkerPool* pool)
+    void workerPool_invalidateBatch(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        pool->invalidateBatch();
+        o_pool->m_owningPtr->invalidateBatch();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    bool workerPool_areWorkersSynced(JsUtil::IWorkerPool* pool)
+    bool workerPool_areWorkersSynced(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        return pool->areAllWorkersSynced();
+        return o_pool->m_owningPtr->areAllWorkersSynced();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    bool workerPool_addJob(JsUtil::IWorkerPool* o_pool, gsl::owner<JsUtil::IExecutor*> job)
+    bool workerPool_addJob(
+        JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool,
+        gsl::owner<JsUtil::IExecutor*>                     job
+    )
     {
-        return o_pool->addJob(job);
+        return o_pool->m_owningPtr->addJob(job);
     }
 
     EMSCRIPTEN_KEEPALIVE
-    bool workerPool_isAnyWorkerRunning(JsUtil::IWorkerPool* pool)
+    bool workerPool_isAnyWorkerRunning(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        return pool->isAnyWorkerRunning();
+        return o_pool->m_owningPtr->isAnyWorkerRunning();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    bool workerPool_isAcceptingJobs(JsUtil::IWorkerPool* pool)
+    bool workerPool_isAcceptingJobs(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        return pool->isAcceptingJobs();
+        return o_pool->m_owningPtr->isAcceptingJobs();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    bool workerPool_hasPendingWork(JsUtil::IWorkerPool* pool)
+    bool workerPool_hasPendingWork(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        return pool->hasPendingWork();
+        return o_pool->m_owningPtr->hasPendingWork();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    unsigned workerPool_start(JsUtil::IWorkerPool* o_pool)
+    unsigned workerPool_start(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool)
     {
-        return o_pool->start();
+        return o_pool->m_owningPtr->start();
     }
 
     EMSCRIPTEN_KEEPALIVE
-    void workerPool_stop(JsUtil::IWorkerPool* o_pool, bool wait)
+    void workerPool_stop(JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>* o_pool, bool wait)
     {
-        o_pool->stop(wait);
-    }
-
-    EMSCRIPTEN_KEEPALIVE
-    gsl::owner<JsUtil::IExecutor*> workerPool_createJob()
-    {
-        return JsUtil::sWORKER_POOL_JOB_FACTORY->createJob();
+        o_pool->m_owningPtr->stop(wait);
     }
 
     EMSCRIPTEN_KEEPALIVE

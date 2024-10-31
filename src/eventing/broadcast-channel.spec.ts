@@ -1,25 +1,25 @@
 import { BroadcastChannel } from "./broadcast-channel.js";
-import { CleanupStore } from "../lifecycle/cleanup-store.js";
+import { CleanupRegistry } from "../lifecycle/cleanup-registry.js";
 
 describe("=> BroadcastChannel", () =>
 {
     describe("=> addListener", () =>
     {
-        it("| add the listener with a CleanupStore ", () =>
+        it("| add the listener with a CleanupRegistry ", () =>
         {
             const channel = new BroadcastChannel("test");
-            const cleanupStore = new CleanupStore();
+            const cleanupRegistry = new CleanupRegistry();
             const listener = { test: jasmine.createSpy() };
-            channel.addListener(cleanupStore, listener);
+            channel.addListener(cleanupRegistry, listener);
             channel.emit();
             channel.emit();
 
-            cleanupStore.cleanup();
+            cleanupRegistry.executeCleanups();
             channel.emit();
             expect(listener.test.calls.count()).toBe(2);
         });
 
-        it("| add the listener without a CleanupStore ", () =>
+        it("| add the listener without a CleanupRegistry ", () =>
         {
             const channel = new BroadcastChannel("test");
             const listener = { test: jasmine.createSpy() };
@@ -34,20 +34,20 @@ describe("=> BroadcastChannel", () =>
     });
     describe("=> addOneTimeListener", () =>
     {
-        it("| add the listener with a CleanupStore ", () =>
+        it("| add the listener with a CleanupRegistry ", () =>
         {
             const channel = new BroadcastChannel("test");
-            const cleanupStore = new CleanupStore();
+            const cleanupRegistry = new CleanupRegistry();
             const listener = { test: jasmine.createSpy() };
-            channel.addOneTimeListener(cleanupStore, listener);
+            channel.addOneTimeListener(cleanupRegistry, listener);
             channel.emit();
             channel.emit();
 
-            cleanupStore.cleanup();
+            cleanupRegistry.executeCleanups();
             channel.emit();
             expect(listener.test.calls.count()).toBe(1);
         });
-        it("| add the listener without a CleanupStore ", () =>
+        it("| add the listener without a CleanupRegistry ", () =>
         {
             const channel = new BroadcastChannel("test");
             const listener = { test: jasmine.createSpy() };

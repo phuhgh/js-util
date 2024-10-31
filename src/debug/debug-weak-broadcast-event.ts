@@ -1,6 +1,7 @@
 import { TListener } from "../eventing/t-listener.js";
 import { IBroadcastChannel } from "../eventing/i-broadcast-channel.js";
-import type { ICleanupStore } from "../lifecycle/i-cleanup-store.js";
+
+import type { ICleanupRegistry } from "../lifecycle/cleanup-registry.js";
 
 /**
  * @public
@@ -17,8 +18,8 @@ export class DebugWeakBroadcastChannel<TKey extends string, TArgs extends unknow
     }
 
     public addListener(listener: TListener<TKey, TArgs>): void;
-    public addListener(store: ICleanupStore, listener: TListener<TKey, TArgs>): void;
-    public addListener(maybeStore: ICleanupStore | TListener<TKey, TArgs>, listener?: TListener<TKey, TArgs>): void
+    public addListener(store: ICleanupRegistry, listener: TListener<TKey, TArgs>): void;
+    public addListener(maybeStore: ICleanupRegistry | TListener<TKey, TArgs>, listener?: TListener<TKey, TArgs>): void
     {
         if (listener == null)
         {
@@ -28,7 +29,7 @@ export class DebugWeakBroadcastChannel<TKey extends string, TArgs extends unknow
         else
         {
             // we have both args
-            (maybeStore as ICleanupStore).addCleanup(() => this.removeListener(listener as TListener<TKey, TArgs>));
+            (maybeStore as ICleanupRegistry).registerCleanup(() => this.removeListener(listener as TListener<TKey, TArgs>));
         }
 
         this.removeListener(listener);
@@ -39,8 +40,8 @@ export class DebugWeakBroadcastChannel<TKey extends string, TArgs extends unknow
     }
 
     public addOneTimeListener(listener: TListener<TKey, TArgs>): void;
-    public addOneTimeListener(store: ICleanupStore, listener: TListener<TKey, TArgs>): void;
-    public addOneTimeListener(maybeStore: ICleanupStore | TListener<TKey, TArgs>, listener?: TListener<TKey, TArgs>): void
+    public addOneTimeListener(store: ICleanupRegistry, listener: TListener<TKey, TArgs>): void;
+    public addOneTimeListener(maybeStore: ICleanupRegistry | TListener<TKey, TArgs>, listener?: TListener<TKey, TArgs>): void
     {
         if (listener == null)
         {
@@ -60,7 +61,7 @@ export class DebugWeakBroadcastChannel<TKey extends string, TArgs extends unknow
 
         if (listener != null)
         {
-            (maybeStore as ICleanupStore).addCleanup(() => this.removeListener(temporaryListener));
+            (maybeStore as ICleanupRegistry).registerCleanup(() => this.removeListener(temporaryListener));
         }
     }
 

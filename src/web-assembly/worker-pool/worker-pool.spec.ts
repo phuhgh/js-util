@@ -1,12 +1,12 @@
 import utilTestModule from "../../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
-import { getTestModuleOptions } from "../../test-util/test-utils.js";
+import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
 import { type IErrorExclusions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
-import { asyncBlockScopedCallback } from "../../lifecycle/block-scoped-lifecycle.js";
 import { IJsUtilBindings } from "../i-js-util-bindings.js";
-import { EWorkerPoolOverflowMode, WorkerPool } from "./worker-pool.js";
+import { EWorkerPoolOverflowMode, type IWorkerPool, WorkerPool } from "./worker-pool.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { promisePoll } from "../../promise/impl/promise-poll.js";
+import { _Debug } from "../../debug/_debug.js";
 
 interface ITestOnlyBindings
 {
@@ -14,7 +14,7 @@ interface ITestOnlyBindings
     fakeWorkerJob_getCreateCount(): number;
     fakeWorkerJob_getTickCount(): number;
     fakeWorkerJob_getDestroyCount(): number;
-    fakeWorkerJob_setJobFactory(goSlow: boolean): void;
+    fakeWorkerJob_createJob(goSlow: boolean): number;
 }
 
 describe("=> WorkerPool", () =>
@@ -32,22 +32,22 @@ describe("=> WorkerPool", () =>
 
     afterEach(() =>
     {
+        testModule.reset();
         testModule.endEmscriptenProgram();
     });
 
-    it("| executes jobs on the workers", asyncBlockScopedCallback(async () =>
+    it("| executes jobs on the workers", async () =>
     {
         // manually verified using dev tools that this is loading the web workers evenly
-        const pool = WorkerPool.createRoundRobin(testModule.wrapper, { workerCount: 4, queueSize: 2000 }, null);
-        expect(pool.sharedObject.getPtr()).not.toBe(nullPtr);
-        testModule.wrapper.instance.fakeWorkerJob_setJobFactory(false);
+        const pool = WorkerPool.createRoundRobin(testModule.wrapper, { workerCount: 4, queueSize: 2000 }, testModule.wrapper.rootNode);
+        expect(pool.pointer).not.toBe(nullPtr);
         expect(testModule.wrapper.instance.fakeWorkerJob_getTickCount()).toBe(0);
         expect(await pool.start()).toBe(4);
         expect(pool.isRunning()).toBe(true);
 
         for (let i = 0; i < 1e4; ++i)
         {
-            addTestJob(testModule, pool);
+            addTestJob(testModule, pool, false);
         }
 
         pool.setBatchEnd();
@@ -58,24 +58,23 @@ describe("=> WorkerPool", () =>
         await pool.stop();
 
         // ignore "error" emitted by emscripten around joining on the main thread
-        testModule.runWithDisabledErrors(disabledErrors, () => pool.sharedObject.release());
-    }));
+        testModule.runWithDisabledErrors(disabledErrors, () => testModule.wrapper.rootNode.getLinked().unlinkAll());
+    });
 
-    it("| allows for cancellation of jobs", asyncBlockScopedCallback(async () =>
+    it("| allows for cancellation of jobs", async () =>
     {
         const pool = WorkerPool.createRoundRobin(
             testModule.wrapper,
             { workerCount: 1, queueSize: 0xFFFF, overflowMode: EWorkerPoolOverflowMode.Throw },
-            null
+            testModule.wrapper.rootNode,
         );
-        expect(pool.sharedObject.getPtr()).not.toBe(nullPtr);
-        testModule.wrapper.instance.fakeWorkerJob_setJobFactory(true);
+        expect(pool.pointer).not.toBe(nullPtr);
         expect(testModule.wrapper.instance.fakeWorkerJob_getTickCount()).toBe(0);
         expect(await pool.start()).toBe(1);
 
         for (let i = 0; i < 1e4; ++i)
         {
-            addTestJob(testModule, pool);
+            addTestJob(testModule, pool, true);
         }
         pool.setBatchEnd();
         pool.invalidateBatch();
@@ -88,13 +87,34 @@ describe("=> WorkerPool", () =>
         await pool.stop();
 
         // ignore "error" emitted by emscripten around joining on the main thread
-        testModule.runWithDisabledErrors(disabledErrors, () => pool.sharedObject.release());
-    }));
+        testModule.runWithDisabledErrors(disabledErrors, () => testModule.wrapper.rootNode.getLinked().unlinkAll());
+    });
+
+    it("| errors when not released", async () =>
+    {
+        if (!_BUILD.DEBUG || !TestGarbageCollector.isAvailable)
+        {
+            return pending("Test not available in this environment");
+        }
+
+        const spy = spyOn(_Debug, "error");
+
+        // "forget" to use the return
+        WorkerPool.createRoundRobin(testModule.wrapper, { workerCount: 4, queueSize: 2000 }, testModule.wrapper.rootNode);
+
+        expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
+        expect(spy).toHaveBeenCalledWith(jasmine.stringMatching("A shared object was leaked"));
+    });
 });
 
-function addTestJob(testModule: SanitizedEmscriptenTestModule<IJsUtilBindings, ITestOnlyBindings>, pool: WorkerPool)
+function addTestJob
+(
+    testModule: SanitizedEmscriptenTestModule<IJsUtilBindings, ITestOnlyBindings>,
+    pool: IWorkerPool,
+    goSlow: boolean,
+)
 {
-    const jobPtr = testModule.wrapper.instance._workerPool_createJob();
+    const jobPtr = testModule.wrapper.instance.fakeWorkerJob_createJob(goSlow);
     expect(jobPtr).not.toEqual(nullPtr);
 
     if (jobPtr !== nullPtr)

@@ -2,6 +2,7 @@
 
 #include "JsUtil/CircularFifoStack.hpp"
 #include "JsUtil/Debug.hpp"
+#include "JsUtil/JsInterop.hpp"
 #include "JsUtil/Threading.hpp"
 #include <condition_variable>
 #include <gsl/pointers>
@@ -28,9 +29,7 @@ template <typename T>
 concept WithWorkerLoopConfig = std::is_base_of_v<IWorkerLoopConfig, T>;
 
 template <WithWorkerLoopConfig TConfig>
-class WorkerLoop
-    : public INotifiable
-    , public ISharedMemoryObject
+class WorkerLoop : public INotifiable
 {
   public:
     enum EResult : uint8_t
@@ -50,10 +49,10 @@ class WorkerLoop
         m_config.onRegistered(this);
     };
 
-    ~WorkerLoop() override;
-    WorkerLoop(WorkerLoop const&) = delete;
+    ~           WorkerLoop() override;
+                WorkerLoop(WorkerLoop const&) = delete;
     WorkerLoop& operator=(WorkerLoop const&) = delete;
-    WorkerLoop(WorkerLoop&&) = delete;
+                WorkerLoop(WorkerLoop&&) = delete;
     WorkerLoop& operator=(WorkerLoop&&) = delete;
 
     bool     start(bool tickOnStart = false);

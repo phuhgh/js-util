@@ -1,5 +1,5 @@
 #include "JsUtil/Debug.hpp"
-#include "JsUtil/TypeTraits.hpp"
+#include "JsUtil/JsInterop.hpp"
 #include <cstdint>
 #include <cstdlib>
 #include <emscripten/em_macros.h>
@@ -37,7 +37,7 @@ extern "C"
     }
 
     EMSCRIPTEN_KEEPALIVE
-    void jsUtilDeleteObject(JsUtil::ISharedMemoryObject* ptr)
+    void jsUtilDeleteObject(JsInterop::ISharedMemoryObject* ptr)
     {
         delete ptr;
     }

@@ -1,13 +1,12 @@
-import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper.js";
+import type { TListener } from "../eventing/t-listener.js";
 
 /**
  * @public
  * Factory for creating proxy objects that can be invalidated later. Once invalidated any property
  * read that wasn't explicitly marked safe will cause a debug error. Available in debug contexts only.
  */
-export interface IDebugProtectedView
+export interface IDebugProtectedViewFactory extends TListener<"debugOnAllocate", []>
 {
-    readonly owningInstance: IEmscriptenWrapper<object>;
     /**
      * Invalidates all previous views.
      */

@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf bin cpp/build cpp/exported-names.txt docs dist tmp test-report",
     "test": "npm run test:js -- --ASAN && npm run test:cpp -- --cmake-preset=asan",
-    "test:js": "jasmine --config=config/jasmine-node.mjs --",
+    "test:js": "node --expose-gc ./node_modules/.bin/jasmine --config=config/jasmine-node.mjs --",
     "test:cpp": "sh scripts/test-cpp-local.sh --output-junit ../../../test-report/ctest-results.xml",
     "copy-assets": "cp -r assets/release/* bin/",
     "build": "npm run build:ts && npm run copy-assets && npm run build:cpp -- --cmake-preset=asan",
@@ -19,7 +19,7 @@
     "lint": "eslint -c .eslintrc.cjs src/",
     "ci": "sh scripts/ci-local.sh",
     "debug:browser": "jasmine-browser-runner serve --config=config/jasmine-browser.mjs -- --debug --ASAN",
-    "debug:node": "node --inspect-brk node_modules/jasmine/bin/jasmine.js --config=config/jasmine-node.mjs -- --debug --ASAN"
+    "debug:node": "node --expose-gc --inspect-brk node_modules/jasmine/bin/jasmine.js --config=config/jasmine-node.mjs -- --debug --ASAN"
   },
   "dependencies": {
     "rc-js-util-globals": "^7.0.1",
@@ -57,16 +57,6 @@
       "require": {
         "types": "./bin/cjs/index.d.ts",
         "default": "./bin/cjs/index.js"
-      }
-    },
-    "./beta-features.js": {
-      "import": {
-        "types": "./bin/esm/test-utils.d.ts",
-        "default": "./bin/esm/test-utils.js"
-      },
-      "require": {
-        "types": "./bin/cjs/test-utils.d.ts",
-        "default": "./bin/cjs/test-utils.js"
       }
     }
   },

@@ -1,10 +1,11 @@
 import { getGlobal } from "../runtime/get-global.js";
-import { IReferenceCounted } from "../lifecycle/a-reference-counted.js";
+import type { IManagedResourceNode } from "../lifecycle/manged-resources.js";
+
 
 /**
  * @public
  */
 export function Test_resetLifeCycle(): void
 {
-    (getGlobal()["RC_ALLOCATION_STACK"] as IReferenceCounted[][] ?? []).length = 0;
+    (getGlobal()["RC_ALLOCATION_STACK"] as IManagedResourceNode[][] ?? []).length = 0;
 }

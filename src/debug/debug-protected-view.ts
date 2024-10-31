@@ -3,8 +3,7 @@ import { _Debug } from "./_debug.js";
 import { arrayContains } from "../array/impl/array-contains.js";
 import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor.js";
 import { IDictionary } from "../typescript/i-dictionary.js";
-import { IDebugProtectedView } from "./i-debug-protected-view.js";
-import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper.js";
+import { IDebugProtectedViewFactory } from "./i-debug-protected-view-factory.js";
 
 /**
  * @public
@@ -13,16 +12,12 @@ import { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrap
  * @remarks
  * Allows the specification of `safeKeys`, accessing of these is not an error regardless of invalidation state.
  */
-export class DebugProtectedView<T extends object> implements IDebugProtectedView
+export class DebugProtectedView<TView extends object> implements IDebugProtectedViewFactory
 {
-    public static createTypedArrayView = <TCtor extends TTypedArrayCtor>
-    (
-        owningInstance: IEmscriptenWrapper<object>
-    )
+    public static createTypedArrayView = <TCtor extends TTypedArrayCtor>()
         : DebugProtectedView<InstanceType<TCtor>> =>
     {
         return new DebugProtectedView<InstanceType<TCtor>>(
-            owningInstance,
             "Shared Array - memory resize danger, refresh instance with getInstance",
             ["BYTES_PER_ELEMENT"],
         );
@@ -30,11 +25,15 @@ export class DebugProtectedView<T extends object> implements IDebugProtectedView
 
     public constructor
     (
-        public readonly owningInstance: IEmscriptenWrapper<object>,
         private readonly debugInfo: string,
-        private readonly safeKeys: TKeysOf<T> = [],
+        private readonly safeKeys: TKeysOf<TView> = [],
     )
     {
+    }
+
+    public debugOnAllocate(): void
+    {
+        this.invalidate();
     }
 
     public invalidate(): void

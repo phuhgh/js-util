@@ -1,5 +1,4 @@
 #include "JsUtil/SegmentedDataView.hpp"
-#include <JsUtil/Pointers.hpp>
 #include <JsUtil/ResizableArray.hpp>
 #include <JsUtil/SharedArray.hpp>
 #include <JsUtil/VectorUtil.hpp>
@@ -13,10 +12,10 @@ using namespace JsUtil;
 
 TEST(SegmentedDataView, sharedArrayCompat)
 {
-    auto sa = PtrOwner{SharedArray<int>::createOne(10, true)};
-    std::iota(sa->asSpan().begin(), sa->asSpan().end(), 0);
+    auto sa = SharedArray<int>::createOne(10, true);
+    std::iota(sa.asSpan().begin(), sa.asSpan().end(), 0);
 
-    SegmentedDataView<SharedArray<int>> dv{*sa, 2};
+    SegmentedDataView<SharedArray<int>> dv{sa, 2};
 
     EXPECT_EQ(dv.getLength(), 5);
     for (auto i : VectorExt::range(5))

@@ -6,51 +6,57 @@
 
 namespace JsUtil
 {
-template <typename T>
+
+template <typename TValue>
 class SharedArray
 {
   public:
     // imitate stl containers
-    using value_type = T;
+    using value_type = TValue;
     using size_type = size_t;
 
     ~SharedArray() { free(m_view.data()); }
 
-    static gsl::owner<SharedArray*> createOne(size_t _size, bool _clearMemory)
+    // allow move
+    SharedArray(SharedArray&& other) noexcept
+    {
+        m_view = other.m_view;
+        other.m_view = {};
+    }
+    SharedArray& operator=(SharedArray&& other)
+    {
+        if (this != &other)
+        {
+            m_view = other.m_view;
+            other.m_view = {};
+        }
+        return *this;
+    }
+
+    // but not copy
+                 SharedArray(SharedArray const&) = delete;
+    SharedArray& operator=(SharedArray const&) = delete;
+
+    static SharedArray createOne(size_t size, bool clearMemory)
     {
         if constexpr (Debug::isDebug())
         {
             Debug::onBeforeAllocate();
         }
-        // ReSharper disable CppDFAMemoryLeak
-        auto arrayPtr = _clearMemory ? static_cast<gsl::owner<T*>>(calloc(_size, sizeof(T)))
-                                     : static_cast<gsl::owner<T*>>(malloc(_size * sizeof(T)));
-        // ReSharper restore CppDFAMemoryLeak
 
-        if (arrayPtr == nullptr)
-        {
-            // allocation failed
-            // ReSharper disable once CppDFAMemoryLeak - ^ it's null -> no leak
-            return nullptr;
-        }
-
-        auto shared_array = new (std::nothrow) SharedArray<T>(arrayPtr, _size);
-
-        if (shared_array == nullptr)
-        {
-            free(arrayPtr);
-            return nullptr;
-        }
-
-        // ReSharper disable once CppDFAMemoryLeak
-        return shared_array;
+        return SharedArray{
+            static_cast<gsl::owner<TValue*>>(
+                clearMemory ? calloc(size, sizeof(TValue)) : malloc(size * sizeof(TValue))
+            ),
+            size
+        };
     }
 
-    std::span<T> asSpan() const { return m_view; }
-    operator std::span<T>() const { return asSpan(); }
+    std::span<TValue> asSpan() const { return m_view; }
+    operator std::span<TValue>() const { return asSpan(); }
     size_t size() const { return m_view.size(); }
 
-    T operator[](size_t index) const
+    TValue operator[](size_t index) const
     {
         if constexpr (Debug::isDebug())
         {
@@ -58,7 +64,7 @@ class SharedArray
         }
         return m_view[index];
     }
-    T& operator[](size_t index)
+    TValue& operator[](size_t index)
     {
         if constexpr (Debug::isDebug())
         {
@@ -68,15 +74,12 @@ class SharedArray
     }
 
   private:
-    explicit SharedArray(T* _arrayStart, size_t _size)
+    explicit SharedArray(TValue* _arrayStart, size_t _size)
         : m_view(_arrayStart, _size)
     {
     }
-                 SharedArray(SharedArray&&) = delete;
-    SharedArray& operator=(SharedArray&&) = delete;
-    SharedArray& operator=(SharedArray const&) = delete;
-                 SharedArray(SharedArray const&) = delete;
 
-    std::span<T> m_view;
+    std::span<TValue> m_view;
 };
+
 } // namespace JsUtil

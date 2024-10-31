@@ -4,6 +4,7 @@ import { nullPtr } from "./null-pointer.js";
 import utilTestModule from "../../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { getTestModuleOptions } from "../../test-util/test-utils.js";
+import { ENumberIdentifier } from "../../array/typed-array/rtti-interop.js";
 
 describe("JsUtil::Debug", () =>
 {
@@ -65,13 +66,13 @@ describe("JsUtil::Debug", () =>
         {
             if (testModule.wrapper.instance._isDebugBuild())
             {
-                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPtr))
+                expect(() => testModule.wrapper.instance._sharedArray_getArrayAddress(ENumberIdentifier.F32, nullPtr))
                     .toThrowError("expected shared array, got null ptr");
 
             }
             else
             {
-                expect(() => testModule.wrapper.instance._f32SharedArray_getArrayAddress(nullPtr))
+                expect(() => testModule.wrapper.instance._sharedArray_getArrayAddress(ENumberIdentifier.F32, nullPtr))
                     .not.toThrowError("expected shared array, got null ptr");
             }
 

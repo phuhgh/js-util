@@ -1,15 +1,12 @@
-import { ISharedObject } from "../../lifecycle/i-shared-object.js";
-import { IReferenceCountedPtr } from "../util/reference-counted-ptr.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { IMemoryUtilBindings } from "../emscripten/i-memory-util-bindings.js";
-import { ReferenceCountedSharedObject } from "../util/reference-counted-shared-object.js";
-import { ILinkedReferences } from "../../lifecycle/linked-references.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { _Production } from "../../production/_production.js";
 import type { IWorkerPoolBindings } from "./i-worker-pool-bindings.js";
 import { promisePoll } from "../../promise/impl/promise-poll.js";
 import { _Debug } from "../../debug/_debug.js";
 import { NestedError } from "../../error-handling/nested-error.js";
+import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
 
 /**
  * @public
@@ -75,7 +72,8 @@ export interface IWorkerPoolConfig
  * @remarks If you know the number of threads you need, use `-sPTHREAD_POOL_SIZE=` to allocate them up front.
  */
 export interface IWorkerPool
-    extends ISharedObject
+    extends IManagedObject,
+            IPointer
 {
     /**
      * @returns The number of workers that started.
@@ -83,7 +81,7 @@ export interface IWorkerPool
     start(): Promise<number>;
     stop(): Promise<void>;
 
-    /// @returns true if there is at least one worker capable of taking jobs (one worker or more in eRUNNING state).
+    // @returns true if there is at least one worker capable of taking jobs (one worker or more in eRUNNING state).
     isRunning(): boolean;
 
     /**
@@ -108,8 +106,8 @@ export interface IWorkerPool
      */
     invalidateBatch(): void;
     /**
-     * Becomes true once only "valid" jobs are running (use in combination with {@link IWorkerPool.invalidateBatch}). Alternately,
-     * you can check {@link IWorkerPool.isBatchDone} if you don't need to start a new batch right away.
+     * Becomes true once only "valid" jobs are running i.e. all the invalid jobs are gone - use in combination with
+     * {@link IWorkerPool.invalidateBatch}.
      */
     areWorkersSynced(): boolean;
 }
@@ -124,7 +122,7 @@ export class WorkerPool implements IWorkerPool
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
         config: IWorkerPoolConfig,
-        bindToReference: ILinkedReferences | null,
+        bindToReference: IManagedResourceNode | null,
         allocationFailThrows: boolean,
     )
         : WorkerPool | null;
@@ -132,121 +130,87 @@ export class WorkerPool implements IWorkerPool
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
         config: IWorkerPoolConfig,
-        bindToReference: ILinkedReferences | null,
+        bindToReference: IManagedResourceNode | null,
     )
-        : WorkerPool;
+        : IWorkerPool;
     public static createRoundRobin
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
         config: IWorkerPoolConfig,
-        bindToReference: ILinkedReferences | null,
+        bindToReference: IManagedResourceNode | null,
         allocationFailThrows: boolean = true,
     )
-        : WorkerPool | null
+        : IWorkerPool | null
     {
-        _BUILD.DEBUG && wrapper.debug.onAllocate.emit();
-        const overflowMode = config.overflowMode ?? EWorkerPoolOverflowMode.Synchronous;
-
-        const maxSize = 0xFFFF;
-        if (config.workerCount > maxSize)
-        {
-            throw _Production.createError(`Requested pool size ${config.workerCount}, exceeds limit ${maxSize}.`);
-        }
-
-        if (config.queueSize > maxSize)
-        {
-            throw _Production.createError(`Requested queue size ${config.queueSize}, exceeds limit ${maxSize}.`);
-        }
-
-        const pointer = wrapper.instance._workerPool_createRoundRobin(
-            config.workerCount,
-            config.queueSize,
-            overflowMode === EWorkerPoolOverflowMode.Synchronous,
-        );
-
-        if (pointer == nullPtr)
-        {
-            if (allocationFailThrows)
-            {
-                throw _Production.createError("Failed to allocate memory for shared memory block.");
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        const pool = new WorkerPool(wrapper, pointer, overflowMode);
-        bindToReference?.linkRef(pool.sharedObject);
-
-        return pool;
+        return createRoundRobinImpl(wrapper, config, bindToReference, allocationFailThrows);
     }
 
-    public readonly sharedObject: IReferenceCountedPtr;
+    public readonly resourceHandle: IManagedResourceNode;
+    public readonly pointer: number;
 
     public start(): Promise<number>
     {
-        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        const started = this.wrapper.instance._workerPool_start(this.sharedObject.getPtr());
+        _BUILD.DEBUG && _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+        const started = this.wrapper.instance._workerPool_start(this.pointer);
 
-        return promisePoll(() => this.wrapper.instance._workerPool_isAcceptingJobs(this.sharedObject.getPtr()))
+        return promisePoll(() => this.wrapper.instance._workerPool_isAcceptingJobs(this.pointer))
             .getPromise()
             .then(() => started);
     }
 
     public stop(): Promise<void>
     {
-        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        this.wrapper.instance._workerPool_stop(this.sharedObject.getPtr(), false);
+        _BUILD.DEBUG && _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+        this.wrapper.instance._workerPool_stop(this.pointer, false);
 
-        return promisePoll(() => !this.wrapper.instance._workerPool_isAnyWorkerRunning(this.sharedObject.getPtr()))
+        return promisePoll(() => !this.wrapper.instance._workerPool_isAnyWorkerRunning(this.pointer))
             .getPromise()
             .then(() => undefined);
     }
 
     public isRunning(): boolean
     {
-        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        return Boolean(this.wrapper.instance._workerPool_isAnyWorkerRunning(this.sharedObject.getPtr()));
+        _BUILD.DEBUG && _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+        return Boolean(this.wrapper.instance._workerPool_isAnyWorkerRunning(this.pointer));
     }
 
     public isBatchDone(): boolean
     {
-        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        return Boolean(this.wrapper.instance._workerPool_isBatchDone(this.sharedObject.getPtr()));
+        _BUILD.DEBUG && _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+        return Boolean(this.wrapper.instance._workerPool_isBatchDone(this.pointer));
     }
 
     public setBatchEnd(): void
     {
-        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        this.wrapper.instance._workerPool_setBatchEndPoint(this.sharedObject.getPtr());
+        _BUILD.DEBUG && _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+        this.wrapper.instance._workerPool_setBatchEndPoint(this.pointer);
     }
 
     public invalidateBatch(): void
     {
-        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        this.wrapper.instance._workerPool_invalidateBatch(this.sharedObject.getPtr());
+        _BUILD.DEBUG && _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+        this.wrapper.instance._workerPool_invalidateBatch(this.pointer);
     }
 
     public areWorkersSynced(): boolean
     {
-        return Boolean(this.wrapper.instance._workerPool_areWorkersSynced(this.sharedObject.getPtr()));
+        return Boolean(this.wrapper.instance._workerPool_areWorkersSynced(this.pointer));
     }
 
     public hasPendingWork(): boolean
     {
-        _BUILD.DEBUG && _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-        return Boolean(this.wrapper.instance._workerPool_hasPendingWork(this.sharedObject.getPtr()));
+        _BUILD.DEBUG && _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+        return Boolean(this.wrapper.instance._workerPool_hasPendingWork(this.pointer));
     }
 
     public addJob(jobPtr: number): boolean
     {
         _BUILD.DEBUG && _Debug.runBlock(() =>
         {
-            _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
+            _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
             _Debug.assert(jobPtr !== nullPtr, "expected job, got nullptr");
         });
-        const added = this.wrapper.instance._workerPool_addJob(this.sharedObject.getPtr(), jobPtr);
+        const added = this.wrapper.instance._workerPool_addJob(this.pointer, jobPtr);
         if (!added)
         {
             switch (this.overflowMode)
@@ -266,16 +230,84 @@ export class WorkerPool implements IWorkerPool
         return added;
     }
 
-    protected constructor
+    // @internal
+    public constructor
     (
         private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+        ownerNode: IManagedResourceNode | null,
         pointer: number,
         overflowMode: EWorkerPoolOverflowMode,
     )
     {
-        this.sharedObject = new ReferenceCountedSharedObject(pointer, wrapper);
+        this.resourceHandle = wrapper.lifecycleStrategy.createNode(ownerNode);
+        this.pointer = pointer;
         this.overflowMode = overflowMode;
+        this.impl = new WorkerPoolImpl(wrapper, pointer);
+
+        wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "WorkerPool"), null);
+        this.resourceHandle.onFreeChannel.addListener(this.impl);
     }
 
     private readonly overflowMode: EWorkerPoolOverflowMode;
+    private readonly impl: WorkerPoolImpl;
+}
+
+export class WorkerPoolImpl implements IOnFreeListener
+{
+    public constructor
+    (
+        public readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+        public readonly pointer: number,
+    )
+    {
+    }
+
+    public onFree()
+    {
+        this.wrapper.instance._jsUtilDeleteObject(this.pointer);
+    }
+}
+
+function createRoundRobinImpl
+(
+    wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+    config: IWorkerPoolConfig,
+    bindToReference: IManagedResourceNode | null,
+    allocationFailThrows: boolean = true,
+)
+    : WorkerPool | null
+{
+    _BUILD.DEBUG && wrapper.debugUtils.onAllocate.emit();
+    const overflowMode = config.overflowMode ?? EWorkerPoolOverflowMode.Synchronous;
+
+    const maxSize = 0xFFFF;
+    if (config.workerCount > maxSize)
+    {
+        throw _Production.createError(`Requested pool size ${config.workerCount}, exceeds limit ${maxSize}.`);
+    }
+
+    if (config.queueSize > maxSize)
+    {
+        throw _Production.createError(`Requested queue size ${config.queueSize}, exceeds limit ${maxSize}.`);
+    }
+
+    const pointer = wrapper.instance._workerPool_createRoundRobin(
+        config.workerCount,
+        config.queueSize,
+        overflowMode === EWorkerPoolOverflowMode.Synchronous,
+    );
+
+    if (pointer == nullPtr)
+    {
+        if (allocationFailThrows)
+        {
+            throw _Production.createError("Failed to allocate memory for shared memory block.");
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    return new WorkerPool(wrapper, bindToReference, pointer, overflowMode);
 }

@@ -1,43 +1,87 @@
 import { _Debug } from "../../debug/_debug.js";
-import { IReferenceCounted } from "../../lifecycle/a-reference-counted.js";
-import { _Production } from "../../production/_production.js";
 import { getGlobal } from "../../runtime/get-global.js";
+import type { IManagedResourceNode } from "../../lifecycle/manged-resources.js";
+import { arrayMap } from "../../array/impl/array-map.js";
+import { IManagedResourceLinks, ManagedResourceLinks } from "../../lifecycle/managed-resource-links.js";
+import type { IBroadcastChannel } from "../../eventing/i-broadcast-channel.js";
+import { BroadcastChannel } from "../../eventing/broadcast-channel.js";
 
 export class LifecycleStack
 {
-    public push(): IReferenceCounted[]
+    public constructor()
     {
-        const top: IReferenceCounted[] = [];
-        this.allocationStack.push(top);
-        return top;
+        const existingOwners = getGlobal()["RC_ALLOCATION_OWNER_STACK"] as IManagedResourceNode[] | undefined;
+        this.ownerStack = existingOwners ?? arrayMap(new Array<IManagedResourceNode[]>(100), () => new BlockScopeNode());
     }
 
-    public pop(): IReferenceCounted[]
+    public push(): IManagedResourceNode
     {
-        _BUILD.DEBUG && _Debug.assert(this.allocationStack.length > 0, "attempted to pop empty stack");
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return this.allocationStack.pop()!;
-    }
-
-    public register(ref: IReferenceCounted): void
-    {
-        const top = this.allocationStack[this.allocationStack.length - 1];
-
-        if (top == null)
+        if (_BUILD.DEBUG)
         {
-            throw _Production.createError("attempted to create shared lifecycle object outside of allocation scope.");
+            _Debug.assert(this.index < 100, "overflowed the allocation stack...");
         }
 
-        top.push(ref);
+        return this.ownerStack[this.index++];
+    }
+
+    public pop(): IManagedResourceNode
+    {
+        _BUILD.DEBUG && _Debug.assert(this.index > 0, "attempted to pop empty stack");
+        return this.ownerStack[--this.index];
+    }
+
+    /**
+     * For the current level, return the owning node.
+     */
+    public getTop(): IManagedResourceNode
+    {
+        _BUILD.DEBUG && _Debug.assert(this.index > 0, "tried to get top of empty stack");
+        return this.ownerStack[this.index - 1];
     }
 
     public getSize(): number
     {
-        return this.allocationStack.length;
+        return this.index;
     }
 
-    private readonly allocationStack = (getGlobal()["RC_ALLOCATION_STACK"] ??= []) as IReferenceCounted[][];
+    private readonly ownerStack: IManagedResourceNode[];
+    private index: number = 0;
 }
+
+
+/**
+ * @internal
+ * The block scoped node is mostly the same as other nodes, except they live forever (when a scope is exited
+ * we just unlink the refs).
+ */
+class BlockScopeNode implements IManagedResourceNode
+{
+    public readonly onFreeChannel: IBroadcastChannel<"onFree", []> = new BroadcastChannel("onFree");
+
+    public getIsDestroyed(): boolean
+    {
+        return false;
+    }
+
+    public getLinked(): IManagedResourceLinks
+    {
+        return this.linkedReferences;
+    }
+
+    public onClaimed(): void
+    {
+        _BUILD.DEBUG && _Debug.error("this should never be called");
+    }
+
+    public onReleased(): void
+    {
+        _BUILD.DEBUG && _Debug.error("this should never be called");
+    }
+
+    // we always have linked nodes, so no reason to lazy create this
+    protected linkedReferences: IManagedResourceLinks = new ManagedResourceLinks(this);
+}
+
 
 /**
  * @public

@@ -4,22 +4,16 @@ import utilTestModule from "../../external/util-test-module.mjs";
 import { SharedTypedArrayTuple } from "./shared-typed-array-tuple.js";
 import { Range2d } from "./2d/range2d/range2d.js";
 import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
-import { blockScopedCallback } from "../../lifecycle/block-scoped-lifecycle.js";
-import { ReferenceCountedOwner } from "../../lifecycle/reference-counted-owner.js";
 import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
-import { getTestModuleOptions } from "../../test-util/test-utils.js";
+import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
+import { fpRunWithin } from "../../fp/impl/fp-run-within.js";
+import { blockScope } from "../../lifecycle/block-scoped-lifecycle.js";
+import type { IManagedResourceNode } from "../../lifecycle/manged-resources.js";
+import { _Debug } from "../../debug/_debug.js";
 
 describe("=> SharedTypedArrayTuple", () =>
 {
-    let testOwner: ReferenceCountedOwner;
-
-    beforeEach(() =>
-    {
-        testOwner = new ReferenceCountedOwner(false);
-        Test_resetLifeCycle();
-    });
-
-    afterEach(() => testOwner.release());
+    let testOwner: IManagedResourceNode;
     const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
 
     beforeAll(async () =>
@@ -28,6 +22,14 @@ describe("=> SharedTypedArrayTuple", () =>
         await testModule.initialize();
     });
 
+    beforeEach(() =>
+    {
+        testOwner = testModule.wrapper.lifecycleStrategy.createNode(testModule.wrapper.rootNode);
+        Test_resetLifeCycle();
+    });
+
+    afterEach(() => testModule.wrapper.rootNode.getLinked().unlink(testOwner));
+
     afterAll(() =>
     {
         testModule.endEmscriptenProgram();
@@ -35,10 +37,10 @@ describe("=> SharedTypedArrayTuple", () =>
 
     describe("=> Range2d.f32", () =>
     {
-        it("| creates, writes, reads and destroys without triggering the asan", blockScopedCallback(() =>
+        it("| creates, writes, reads and destroys without triggering the asan", fpRunWithin([blockScope], () =>
         {
             const testRange = Range2d.f32.factory.createOne(1, 2, 3, 4);
-            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.f32, testOwner.getLinkedReferences(), testModule.wrapper);
+            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.f32, testOwner, testModule.wrapper);
             sharedTuple.copyToBuffer(testRange);
 
             expect(sharedTuple.memory.getDataView().byteLength).toEqual(16);
@@ -55,18 +57,17 @@ describe("=> SharedTypedArrayTuple", () =>
             expect(emptyRange[2]).toEqual(3);
             expect(emptyRange[3]).toEqual(4);
 
-            sharedTuple.sharedObject.release();
-            testOwner.release();
-            expect(sharedTuple.sharedObject.getIsDestroyed()).toBeTrue();
+            testOwner.getLinked().unlink(sharedTuple.resourceHandle);
+            expect(sharedTuple.resourceHandle.getIsDestroyed()).toBeTrue();
         }));
     });
 
     describe("=> Range2d.f32", () =>
     {
-        it("| creates, writes, reads and destroys without triggering the asan", blockScopedCallback(() =>
+        it("| creates, writes, reads and destroys without triggering the asan", fpRunWithin([blockScope], (() =>
         {
             const testRange = Range2d.u8.factory.createOne(1, 2, 3, 4);
-            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.u8, testOwner.getLinkedReferences(), testModule.wrapper);
+            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.u8, testOwner, testModule.wrapper);
             sharedTuple.copyToBuffer(testRange);
 
             expect(sharedTuple.memory.getDataView().byteLength).toEqual(4);
@@ -83,9 +84,24 @@ describe("=> SharedTypedArrayTuple", () =>
             expect(emptyRange[2]).toEqual(3);
             expect(emptyRange[3]).toEqual(4);
 
-            sharedTuple.sharedObject.release();
-            sharedTuple.sharedObject.release();
-            expect(sharedTuple.sharedObject.getIsDestroyed()).toBeTrue();
-        }));
+            testOwner.getLinked().unlink(sharedTuple.resourceHandle);
+            expect(sharedTuple.resourceHandle.getIsDestroyed()).toBeTrue();
+        })));
+    });
+
+    it("| errors when not released", async () =>
+    {
+        if (!_BUILD.DEBUG || !TestGarbageCollector.isAvailable)
+        {
+            return pending("Test not available in this environment");
+        }
+
+        const spy = spyOn(_Debug, "error");
+
+        // "forget" to use the return
+        SharedTypedArrayTuple.createOne(Range2d.u8, testOwner, testModule.wrapper);
+
+        expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
+        expect(spy).toHaveBeenCalledWith(jasmine.stringMatching("A shared object was leaked"));
     });
 });

@@ -34,6 +34,7 @@ export class NormalizedDataViewProvider
         [Uint8ClampedArray, new Uint8ClampedDataView()],
     ]);
 
+    // noinspection JSUnusedLocalSymbols
     private constructor()
     {
     }

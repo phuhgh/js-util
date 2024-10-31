@@ -3,9 +3,9 @@ import { TTypedArray } from "../t-typed-array.js";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory.js";
 import { getMat4Ctor } from "./get-mat4-ctor.js";
 import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
-import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map.js";
 import { IReadonlyVec4, Vec4 } from "../vec4/vec4.js";
 import { TPickExcept } from "../../../typescript/t-pick-except.js";
+import { populateTypedArrayConstructorMap } from "../rtti-interop.js";
 
 /**
  * @public
@@ -68,6 +68,8 @@ export abstract class Mat4<TArray extends TTypedArray> extends ATypedArrayTuple<
 {
     public static f64: IMat4Ctor<Float64Array> = getMat4Ctor(Float64Array);
     public static f32: IMat4Ctor<Float32Array> = getMat4Ctor(Float32Array);
+    public static i64 = null; // not supported
+    public static u64 = null; // not supported
     public static u32: IMat4Ctor<Uint32Array> = getMat4Ctor(Uint32Array);
     public static i32: IMat4Ctor<Int32Array> = getMat4Ctor(Int32Array);
     public static u16: IMat4Ctor<Uint16Array> = getMat4Ctor(Uint16Array);

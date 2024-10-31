@@ -4,7 +4,7 @@
  * {@link NormalizedDataViewProvider} to get an instance.
  *
  * @remarks
- * Does not performs any sort of bounds checking, overflow is entirely the consumers concern.
+ * Does not perform any sort of bounds checking, overflow is entirely the consumers concern.
  */
 export interface INormalizedDataView
 {

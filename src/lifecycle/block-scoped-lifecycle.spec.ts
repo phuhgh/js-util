@@ -1,76 +1,39 @@
-import { blockScopedLifecycle } from "./block-scoped-lifecycle.js";
 import { lifecycleStack } from "../web-assembly/emscripten/lifecycle-stack.js";
-import { ReferenceCountedOwner } from "./reference-counted-owner.js";
-import { ILinkedReferences } from "./linked-references.js";
+import { IManagedResourceLinks } from "./managed-resource-links.js";
 import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 import { Test_resetLifeCycle } from "../test-util/test_reset-life-cycle.js";
-import { BlockScopedLifecycle } from "./block-scoped-lifecycle-owner.js";
+import { blockScope } from "./block-scoped-lifecycle.js";
+import { SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
+import { getTestModuleOptions } from "../test-util/test-utils.js";
+import utilTestModule from "../external/util-test-module.mjs";
+import type { IManagedResourceNode } from "./manged-resources.js";
 
-describe("=> blockScopedLifecycle", () =>
+describe("=> blockScope", () =>
 {
-    beforeEach(() =>
+    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
+
+    beforeEach(async () =>
     {
+        await testModule.initialize();
         Test_setDefaultFlags();
         Test_resetLifeCycle();
     });
 
-    describe("=> RAII version", () =>
-    {
-        it("| behaves like the functional version", () =>
-        {
-            let ptr!: ReferenceCountedOwner;
-            (() =>
-            {
-                using _owner = new BlockScopedLifecycle();
-                ptr = new ReferenceCountedOwner();
-                expect(ptr.getIsDestroyed()).toBe(false);
-            })();
-            expect(ptr.getIsDestroyed()).toBe(true);
-        });
-
-        it("| handles exceptions", () =>
-        {
-            let ptr!: ReferenceCountedOwner;
-            const error = new Error("oh noes, potatoes!");
-            expect(() =>
-                {
-                    using _owner = new BlockScopedLifecycle();
-                    ptr = new ReferenceCountedOwner();
-                    expect(ptr.getIsDestroyed()).toBe(false);
-                    throw error;
-                }
-            ).toThrow(error);
-
-            expect(ptr.getIsDestroyed()).toBe(true);
-        });
-    });
-
-    it("| releases on callback return", () =>
-    {
-        let ptr!: ReferenceCountedOwner;
-
-        blockScopedLifecycle(() =>
-        {
-            ptr = new ReferenceCountedOwner();
-            expect(ptr.getIsDestroyed()).toBe(false);
-        });
-
-        expect(ptr.getIsDestroyed()).toBe(true);
-    });
+    afterEach(() => testModule.reset());
 
     it("| handles nested calls", () =>
     {
-        let outer!: ReferenceCountedOwner;
+        let outer!: IManagedResourceNode;
 
-        blockScopedLifecycle(() =>
+        blockScope(() =>
         {
-            let inner!: ReferenceCountedOwner;
-            outer = new ReferenceCountedOwner();
+            let inner!: IManagedResourceNode;
+            outer = testModule.wrapper.lifecycleStrategy.createNode(null);
             expect(outer.getIsDestroyed()).toBe(false);
 
-            blockScopedLifecycle(() =>
+            blockScope(() =>
             {
-                inner = new ReferenceCountedOwner();
+                inner = testModule.wrapper.lifecycleStrategy.createNode(null);
                 expect(inner.getIsDestroyed()).toBe(false);
             });
 
@@ -82,20 +45,21 @@ describe("=> blockScopedLifecycle", () =>
 
     it("| handles manual claim calls", () =>
     {
-        let owner!: ReferenceCountedOwner;
-        let child!: ReferenceCountedOwner;
-        const thirdParty = new ReferenceCountedOwner(false);
+        let owner!: IManagedResourceNode;
+        let child!: IManagedResourceNode;
+        const thirdParty = testModule.wrapper.lifecycleStrategy.createNode(testModule.wrapper.rootNode);
 
-        blockScopedLifecycle(() =>
+        blockScope(() =>
         {
-            [owner, child] = testFactory(thirdParty.getLinkedReferences());
+            [owner, child] = testFactory(thirdParty.getLinked());
             expect(owner.getIsDestroyed()).toBe(false);
             expect(child.getIsDestroyed()).toBe(false);
         });
 
         expect(owner.getIsDestroyed()).toBe(false);
         expect(child.getIsDestroyed()).toBe(false);
-        thirdParty.release();
+
+        testModule.wrapper.rootNode.getLinked().unlink(thirdParty);
         expect(owner.getIsDestroyed()).toBe(true);
         expect(child.getIsDestroyed()).toBe(true);
     });
@@ -108,7 +72,7 @@ describe("=> blockScopedLifecycle", () =>
         {
             expect(() =>
             {
-                blockScopedLifecycle(() =>
+                blockScope(() =>
                 {
                     expect(lifecycleStack.getSize()).toBe(1);
                     throw new Error();
@@ -124,7 +88,7 @@ describe("=> blockScopedLifecycle", () =>
 
             expect(() =>
             {
-                blockScopedLifecycle(() =>
+                blockScope(() =>
                 {
                     expect(lifecycleStack.getSize()).toBe(1);
                     throw new Error();
@@ -136,13 +100,13 @@ describe("=> blockScopedLifecycle", () =>
             _BUILD.WASM_DISABLE_STACK_LIFECYCLE_TRY_CATCH = false;
         });
     });
-});
 
-function testFactory(bindToReference: ILinkedReferences)
-{
-    const owner = new ReferenceCountedOwner();
-    const someComponent = new ReferenceCountedOwner();
-    owner.getLinkedReferences().linkRef(someComponent);
-    bindToReference.linkRef(owner);
-    return [owner, someComponent] as const;
-}
+    function testFactory(bindToReference: IManagedResourceLinks)
+    {
+        const owner = testModule.wrapper.lifecycleStrategy.createNode(null);
+        const someComponent = testModule.wrapper.lifecycleStrategy.createNode(null);
+        owner.getLinked().link(someComponent);
+        bindToReference.link(owner);
+        return [owner, someComponent] as const;
+    }
+});

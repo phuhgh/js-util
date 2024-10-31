@@ -6,6 +6,7 @@ import { fpNoOp } from "./impl/fp-no-op.js";
 import { fpValueOrNull } from "./impl/fp-value-or-null.js";
 import { fpMaybeNewValue } from "./impl/fp-maybe-new-value.js";
 import { fpDebounce } from "./impl/fp-debounce.js";
+import { fpRunWithin } from "./impl/fp-run-within.js";
 
 /**
  * @public
@@ -33,6 +34,9 @@ export class _Fp
 
     /** {@inheritDoc fpOnce} */
     public static readonly once = fpOnce;
+
+    /** {@inheritDoc fpRunWithin} */
+    public static readonly runWithin = fpRunWithin;
 
     /** {@inheritDoc fpValueOrNull} */
     public static readonly valueOrNull = fpValueOrNull;

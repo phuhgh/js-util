@@ -1,64 +1,110 @@
 #include "JsUtil/SharedArray.hpp"
+#include "JsUtil/Debug.hpp"
+#include "JsUtil/JsInterop.hpp"
+#include "JsUtil/RTTI.hpp"
 #include <emscripten/em_macros.h>
 
-// todo jack: this needs re-reviewing...
-namespace JsUtil
+gsl::owner<JsInterop::ISharedMemoryObject*> createOneDynamic(
+    RTTI::ENumberIdentifier numberId,
+    size_t                  size,
+    bool                    clearMemory
+)
 {
-
-template <typename T>
-T const* sharedArray_getArrayAddress(SharedArray<T>* sharedArray)
-{
-    if (!sharedArray)
+    using namespace JsUtil;
+    using namespace JsInterop;
+    switch (numberId)
     {
-        if constexpr (Debug::isDebug())
-        {
-            Debug::error("expected shared array, got null ptr");
-        }
+    case RTTI::ENumberIdentifier::U8:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<uint8_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::U16:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<uint16_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::U32:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<uint32_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::U64:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<uint64_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::I8:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<int8_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::I16:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<int16_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::I32:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<int32_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::I64:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<int64_t>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::F32:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<float>::createOne(size, clearMemory)};
+    case RTTI::ENumberIdentifier::F64:
+        return new (std::nothrow) SharedMemoryValue{SharedArray<double>::createOne(size, clearMemory)};
+    default:
         return nullptr;
     }
-
-    return sharedArray->asSpan().data();
 }
 
-} // namespace JsUtil
+void* getOffset(RTTI::ENumberIdentifier numberId, JsInterop::ISharedMemoryObject const* sharedObject)
+{
+    using namespace JsUtil;
+    using namespace JsInterop;
+    switch (numberId)
+    {
+    case RTTI::ENumberIdentifier::U8:
+        return static_cast<SharedArray<uint8_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::U16:
+        return static_cast<SharedArray<uint16_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::U32:
+        return static_cast<SharedArray<uint32_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::U64:
+        return static_cast<SharedArray<uint64_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::I8:
+        return static_cast<SharedArray<int8_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::I16:
+        return static_cast<SharedArray<int16_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::I32:
+        return static_cast<SharedArray<int32_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::I64:
+        return static_cast<SharedArray<int64_t>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::F32:
+        return static_cast<SharedArray<float>*>(sharedObject->m_valuePtr)->asSpan().data();
+    case RTTI::ENumberIdentifier::F64:
+        return static_cast<SharedArray<double>*>(sharedObject->m_valuePtr)->asSpan().data();
+    default:
+        return nullptr;
+    }
+}
 
 extern "C"
 {
-    // float 32 impl
-    [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE JsUtil::SharedArray<float>* f32SharedArray_createOne(size_t size, bool clearMemory)
+    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE void* sharedArray_getArrayAddress(
+        RTTI::ENumberIdentifier const         numberId,
+        JsInterop::ISharedMemoryObject const* sharedArray
+    )
     {
-        return JsUtil::SharedArray<float>::createOne(size, clearMemory);
+        if (sharedArray == nullptr)
+        {
+            if constexpr (JsUtil::Debug::isDebug())
+            {
+                JsUtil::Debug::error("expected shared array, got null ptr");
+            }
+            return nullptr;
+        }
+
+        return getOffset(numberId, sharedArray);
     }
 
-    [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE float const* f32SharedArray_getArrayAddress(JsUtil::SharedArray<float>* sharedArray)
+    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<JsInterop::ISharedMemoryObject*> sharedArray_createOne(
+        RTTI::ENumberIdentifier const numberId,
+        size_t const                  size,
+        bool const                    clearMemory
+    )
     {
-        return sharedArray_getArrayAddress(sharedArray);
-    }
-
-    [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE void f32SharedArray_destroy(JsUtil::SharedArray<float>* sharedArray)
-    {
-        delete sharedArray;
-    }
-
-    // float 64 impl
-    [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE JsUtil::SharedArray<double>* f64SharedArray_createOne(size_t size, bool clearMemory)
-    {
-        return JsUtil::SharedArray<double>::createOne(size, clearMemory);
-    }
-
-    [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE double const* f64SharedArray_getArrayAddress(JsUtil::SharedArray<double>* sharedArray)
-    {
-        return sharedArray_getArrayAddress(sharedArray);
-    }
-
-    [[maybe_unused]]
-    EMSCRIPTEN_KEEPALIVE void f64SharedArray_destroy(JsUtil::SharedArray<double>* sharedArray)
-    {
-        delete sharedArray;
+        gsl::owner<JsInterop::ISharedMemoryObject*> sharedArray = createOneDynamic(numberId, size, clearMemory);
+        if (sharedArray != nullptr)
+        {
+            if (sharedArray_getArrayAddress(numberId, sharedArray) == nullptr)
+            {
+                // we failed to allocate the memory
+                delete sharedArray;
+                return nullptr;
+            }
+        }
+        return sharedArray;
     }
 }

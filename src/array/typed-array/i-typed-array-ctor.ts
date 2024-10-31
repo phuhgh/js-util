@@ -9,3 +9,4 @@ export interface ITypedArrayCtor<T>
     new(buffer: ArrayBufferLike, byteOffset?: number, length?: number): T;
     readonly BYTES_PER_ELEMENT: number;
 }
+

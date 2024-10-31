@@ -3,9 +3,9 @@ import { TTypedArray } from "../t-typed-array.js";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory.js";
 import { getMat3Ctor } from "./get-mat3-ctor.js";
 import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
-import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map.js";
 import { IReadonlyVec3, Vec3 } from "../vec3/vec3.js";
 import { TPickExcept } from "../../../typescript/t-pick-except.js";
+import { populateTypedArrayConstructorMap } from "../rtti-interop.js";
 
 /**
  * @public
@@ -61,6 +61,8 @@ export abstract class Mat3<TArray extends TTypedArray> extends ATypedArrayTuple<
 {
     public static f64: IMat3Ctor<Float64Array> = getMat3Ctor(Float64Array);
     public static f32: IMat3Ctor<Float32Array> = getMat3Ctor(Float32Array);
+    public static i64 = null; // not supported
+    public static u64 = null; // not supported
     public static u32: IMat3Ctor<Uint32Array> = getMat3Ctor(Uint32Array);
     public static i32: IMat3Ctor<Int32Array> = getMat3Ctor(Int32Array);
     public static u16: IMat3Ctor<Uint16Array> = getMat3Ctor(Uint16Array);

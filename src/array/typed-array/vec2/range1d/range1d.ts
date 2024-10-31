@@ -2,11 +2,11 @@ import { TTypedArray } from "../../t-typed-array.js";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory.js";
 import { getRange1dCtor } from "./get-range1d-ctor.js";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor.js";
-import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map.js";
 import { Vec2 } from "../vec2.js";
 import { Mat2 } from "../../mat2/mat2.js";
 import { TPickExcept } from "../../../../typescript/t-pick-except.js";
 import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple.js";
+import { populateTypedArrayConstructorMap } from "../../rtti-interop.js";
 
 /**
  * @public

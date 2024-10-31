@@ -1,6 +1,7 @@
 import { getGlobal } from "../runtime/get-global.js";
 import { arrayAddToSet } from "../array/impl/array-add-to-set.js";
 import { setValuesToArray } from "../set/impl/set-values-to-array.js";
+import { stringConcat2 } from "../string/impl/string-concat-2.js";
 
 /**
  * @public
@@ -10,23 +11,16 @@ export class _Debug
 {
     public static get label(): string | undefined
     {
+        logDebugMisuse();
+
         return _Debug._label;
     }
 
     public static set label(label: string | undefined)
     {
-        _Debug._label = label;
-    }
+        logDebugMisuse();
 
-    public static applyLabelCallback<T>
-    (
-        this: void,
-        label: string | undefined,
-        callback: () => T
-    )
-        : () => T
-    {
-        return () => _Debug.applyLabel(label, callback);
+        _Debug._label = label;
     }
 
     public static applyLabel<T>(this: void, label: string | undefined, callback: () => T): T
@@ -36,6 +30,18 @@ export class _Debug
         _Debug.label = undefined;
 
         return ret;
+    }
+
+    public static labelBlock<T>(this: void, label: string | undefined): (callback: () => T) => T
+    {
+        return (callback: () => T) =>
+        {
+            if (_Debug.label != null && label != null)
+            {
+                label = stringConcat2(_Debug.label, label, "\n");
+            }
+            return _Debug.applyLabel(label, callback);
+        };
     }
 
     /**
@@ -70,6 +76,8 @@ export class _Debug
      */
     public static runBlock(this: void, cb: () => void): boolean
     {
+        logDebugMisuse();
+
         cb();
 
         return true;
@@ -98,6 +106,8 @@ export class _Debug
     )
         : boolean
     {
+        logDebugMisuse();
+
         if (this.isFlagSet(flag))
         {
             cb();
@@ -127,6 +137,8 @@ export class _Debug
      */
     public static assert(this: void, condition: boolean, errorMessage: string): boolean
     {
+        logDebugMisuse();
+
         if (!condition)
         {
             if (!_Debug.isFlagSet("DISABLE_BREAKPOINT"))
@@ -159,6 +171,8 @@ export class _Debug
      */
     public static error(this: void, message: string): boolean
     {
+        logDebugMisuse();
+
         if (!_Debug.isFlagSet("DISABLE_BREAKPOINT"))
         {
             _Debug.breakpoint();
@@ -190,6 +204,7 @@ export class _Debug
      */
     public static verboseLog(this: void, tags: readonly string[], message: string, ancillaryObject?: object): void
     {
+        logDebugMisuse();
         arrayAddToSet(tags, _Debug._seenTags);
 
         if (!_Debug.isFlagSet("VERBOSE"))
@@ -222,6 +237,7 @@ export class _Debug
 
     public static logError(this: void, message: string | object): void
     {
+        logDebugMisuse();
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         console.error(message);
     }
@@ -302,4 +318,15 @@ export class _Debug
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const console: any;
+
+// not every part of _Debug should be used outside _BUILD.DEBUG builds
+function logDebugMisuse(): void
+{
+    if (!_BUILD.DEBUG)
+    {
+        // ideally we'd throw, but making the program less "strict" in a production build would be a source of disgustingly awful bugs
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+        console.error("_Debug was called outside of a debug build, you should consider this an error. Use _Production instead.");
+    }
+}
 

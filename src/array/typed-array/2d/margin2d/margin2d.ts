@@ -3,11 +3,11 @@ import { TTypedArray } from "../../t-typed-array.js";
 import { ITypedArrayTupleFactory } from "../../i-typed-array-tuple-factory.js";
 import { getMargin2dCtor } from "./get-margin2d-ctor.js";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor.js";
-import { populateTypedArrayConstructorMap } from "../../populate-typed-array-constructor-map.js";
 import { Mat2 } from "../../mat2/mat2.js";
 import { IReadonlyMat3 } from "../../mat3/mat3.js";
 import { TPickExcept } from "../../../../typescript/t-pick-except.js";
 import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple.js";
+import { populateTypedArrayConstructorMap } from "../../rtti-interop.js";
 
 /**
  * @public
@@ -56,6 +56,8 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
 {
     public static f64: IMargin2dCtor<Float64Array> = getMargin2dCtor(Float64Array);
     public static f32: IMargin2dCtor<Float32Array> = getMargin2dCtor(Float32Array);
+    public static i64 = null; // not supported
+    public static u64 = null; // not supported
     public static u32: IMargin2dCtor<Uint32Array> = getMargin2dCtor(Uint32Array);
     public static i32: IMargin2dCtor<Int32Array> = getMargin2dCtor(Int32Array);
     public static u16: IMargin2dCtor<Uint16Array> = getMargin2dCtor(Uint16Array);

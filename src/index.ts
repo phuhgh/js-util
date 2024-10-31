@@ -1,12 +1,14 @@
 import "rc-js-util-globals";
-import { IDebugFlags } from "./debug/i-debug-flags.js";
+import { IDebugBuildFlags } from "./debug/i-debug-build-flags.js";
 import { IWasmBuildFlags } from "./web-assembly/i-wasm-build-flags.js";
 
-export { IDebugAllocateListener } from "./debug/i-debug-allocate-listener.js";
-export { IDebugProtectedView } from "./debug/i-debug-protected-view.js";
 export { Emscripten, IWebAssemblyMemoryMemory } from "./external/emscripten.js";
-export { _Array } from "./array/_array.js";
+
+export { IDebugProtectedViewFactory } from "./debug/i-debug-protected-view-factory.js";
+export { DebugWeakStore } from "./debug/debug-weak-store.js";
 export { _Debug } from "./debug/_debug.js";
+
+export { _Array } from "./array/_array.js";
 export { _Dictionary } from "./dictionary/_dictionary.js";
 export { _Equality } from "./equality/_equality.js";
 export { INestedError, INestedErrorCtor, INestedErrorCtorConfig, getNestedErrorCtor, IErrorSummary } from "./error-handling/nested-error-factory.js";
@@ -28,7 +30,7 @@ export { _String } from "./string/_string.js";
 
 export { TGetComparisonValueAtIndex } from "./array/impl/binary-find-insertion-index.js";
 export { arrayBinaryFindInsertionIndex } from "./array/impl/array-binary-find-insertion-index.js";
-export { TTypedArrayCtor } from "./array/typed-array/t-typed-array-ctor.js";
+export { TTypedArrayCtor, TFullSetTypedArrayCtor } from "./array/typed-array/t-typed-array-ctor.js";
 export { ATypedArrayTuple, TDecayedTypedArrayTuple, TExtractIndexes, TTypedArrayTupleMutativeMethods } from "./array/typed-array/a-typed-array-tuple.js";
 export { ITypedArrayTupleFactory } from "./array/typed-array/i-typed-array-tuple-factory.js";
 export { Margin2d, TF32Margin2d, TMargin2dCtorArgs, IMargin2dCtor, TF64Margin2d, IReadonlyMargin2d } from "./array/typed-array/2d/margin2d/margin2d.js";
@@ -45,6 +47,7 @@ export { INormalizedDataView } from "./array/typed-array/normalized-data-view/i-
 export { TTypedArray } from "./array/typed-array/t-typed-array.js";
 export { ITypedArrayExtensions } from "./array/typed-array/i-typed-array-extensions.js";
 export { ITypedArrayCtor } from "./array/typed-array/i-typed-array-ctor.js";
+export { ENumberIdentifier, getNumberIdentifier } from "./array/typed-array/rtti-interop.js";
 export { ISharedTypedArrayTuple, SharedTypedArrayTuple, TExtendedTypedArrayCtor } from "./array/typed-array/shared-typed-array-tuple.js";
 export { CircularBuffer } from "./collection/circular-buffer.js";
 export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circular-fifo-stack.js";
@@ -58,11 +61,9 @@ export { IncrementingIdentifierFactory } from "./identifier/impl/incrementing-id
 export { BroadcastChannel } from "./eventing/broadcast-channel.js";
 export { IBroadcastChannel } from "./eventing/i-broadcast-channel.js";
 export { TListener } from "./eventing/t-listener.js";
-export { ILinkedReferences, LinkedReferences } from "./lifecycle/linked-references.js";
-export { AOnDestroy, IManagedResource, IOnFreeListener } from "./lifecycle/i-managed-resource.js";
-export { AReferenceCounted, IReferenceCounted } from "./lifecycle/a-reference-counted.js";
-export { CleanupStore } from "./lifecycle/cleanup-store.js";
-export type { ICleanupStore } from "./lifecycle/i-cleanup-store.js";
+export { IManagedResourceLinks } from "./lifecycle/managed-resource-links.js";
+export { CleanupRegistry, ICleanupRegistry } from "./lifecycle/cleanup-registry.js";
+export { IManagedResourceNode, IManagedObject, IOnFreeListener, IPointer, PointerDebugMetadata } from "./lifecycle/manged-resources.js";
 export { ITreeNodeLike } from "./tree/tree-model.js";
 export { _Tree } from "./tree/_tree.js";
 export { treeIterate } from "./tree/impl/tree-iterate.js";
@@ -92,28 +93,24 @@ export { TUnionToIntersection } from "./typescript/t-union-to-intersection.js";
 export { TUnpackArray } from "./typescript/t-unpack-array.js";
 export { TUnpackIfArray } from "./typescript/t-unpack-if-array.js";
 export { TWriteable } from "./typescript/t-writable.js";
-export { IEmscriptenWrapper, IEmscriptenDebug, IEmscriptenBinder } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
+export { IEmscriptenWrapper, IEmscriptenDebugUtils, IEmscriptenBinder } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
 export { getEmscriptenWrapper } from "./web-assembly/emscripten/get-emscripten-wrapper.js";
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array.js";
-export { SharedArray, TF32SharedArray, TF64SharedArray } from "./web-assembly/shared-array/shared-array.js";
-export { SharedStaticArray, TF32SharedStaticArray, TF64SharedStaticArray } from "./web-assembly/shared-array/shared-static-array.js";
+export { SharedArray } from "./web-assembly/shared-array/shared-array.js";
 export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bindings.js";
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/util/t-web-assembly-memory-listener-args.js";
-export { ReferenceCountedPtr, IReferenceCountedPtr } from "./web-assembly/util/reference-counted-ptr.js";
 export { isLittleEndian } from "./web-assembly/util/is-little-endian.js";
 export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/shared-memory/shared-memory-block.js";
-export { DebugSharedObjectChecks } from "./web-assembly/util/debug-shared-object-checks.js";
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";
 export { IEmscriptenBindings } from "./web-assembly/emscripten/i-emscripten-bindings.js";
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
-export { TSharedArrayPrefix } from "./web-assembly/shared-array/i-shared-array-bindings.js";
-export { blockScopedLifecycle, blockScopedCallback, asyncBlockScopedCallback, asyncBlockScopedLifecycle } from "./lifecycle/block-scoped-lifecycle.js";
+export { blockScope } from "./lifecycle/block-scoped-lifecycle.js";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize.js";
+
 export { WorkerPool, IWorkerPool, IWorkerPoolConfig, EWorkerPoolOverflowMode, WorkerPoolErrorCause } from "./web-assembly/worker-pool/worker-pool.js";
-export { IWorkerPoolBindings } from "./web-assembly/worker-pool/i-worker-pool-bindings.js";
-export { ReferenceCountedSharedObject } from "./web-assembly/util/reference-counted-shared-object.js";
 export { getEmscriptenTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule, IErrorExclusions } from "./web-assembly/emscripten/sanitized-emscripten-test-module.js";
+export { IWorkerPoolBindings } from "./web-assembly/worker-pool/i-worker-pool-bindings.js";
 
 export { arrayAddToSet } from "./array/impl/array-add-to-set.js";
 export { arrayBinaryIndexOf } from "./array/impl/array-binary-index-of.js";
@@ -167,6 +164,7 @@ export { EResolutionState, promisePoll, INonblockingPoll } from "./promise/impl/
 export { promiseDelay } from "./promise/impl/promise-delay.js";
 export { promiseRejectFalse } from "./promise/impl/promise-reject-false.js";
 export { promiseRejectFalsey } from "./promise/impl/promise-reject-falsey.js";
+export { fpRunWithin } from "./fp/impl/fp-run-within.js";
 export { fpValueOrNull } from "./fp/impl/fp-value-or-null.js";
 export { promiseRejectNull } from "./promise/impl/promise-reject-null.js";
 export { iteratorEmptyIterator } from "./iterators/impl/iterator-empty-iterator.js";
@@ -209,23 +207,23 @@ export { setSymmetricDifference } from "./set/impl/set-symmetric-difference.js";
 export { setValuesToArray } from "./set/impl/set-values-to-array.js";
 export { stringNormalizeEmptyToUndefined } from "./string/impl/string-normalize-empty-to-undefined.js";
 export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normalize-null-undefined-to-empty.js";
-export { ISharedObject, ISharedObjectOwner } from "./lifecycle/i-shared-object.js";
-export { IRefCountedObject } from "./lifecycle/i-ref-counted-object.js";
-export { ReferenceCountedOwner } from "./lifecycle/reference-counted-owner.js";
+export { stringConcat2 } from "./string/impl/string-concat-2.js";
 export { IIdentifierFactory } from "./identifier/impl/i-identifier-factory.js";
 export { arrayMin } from "./array/impl/array-min.js";
-export { IDebugWeakStore } from "./debug/i-debug-weak-store.js";
-export { IDebugSharedObject } from "./debug/i-debug-shared-object.js";
 export { DebugWeakBroadcastChannel } from "./debug/debug-weak-broadcast-event.js";
-export { IDebugSharedObjectLifeCycleChecker } from "./debug/debug-shared-object-life-cycle-checker.js";
+export { DebugSharedObjectLifeCycleChecker } from "./debug/debug-shared-object-life-cycle-checker.js";
 export { TDebugListener } from "./debug/t-debug-listener.js";
 export { Test_setDefaultFlags } from "./test-util/test_set-default-flags.js";
 export { Test_resetLifeCycle } from "./test-util/test_reset-life-cycle.js";
 
 declare global
 {
-    interface IBuildConstants extends IDebugFlags,
+    interface IBuildConstants extends IDebugBuildFlags,
                                       IWasmBuildFlags
     {
     }
 }
+// todo jack: cleanup
+export { ReferenceCountedStrategy } from "./web-assembly/emscripten/reference-counted-strategy.js";
+export { AutomaticGcStrategy } from "./web-assembly/emscripten/automatic-gc-strategy.js";
+export { ILifecycleStrategy } from "./web-assembly/emscripten/i-lifecycle-strategy.js";

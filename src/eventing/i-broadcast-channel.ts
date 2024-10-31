@@ -1,5 +1,5 @@
 import { TListener } from "./t-listener.js";
-import type { ICleanupStore } from "../lifecycle/i-cleanup-store.js";
+import { ICleanupRegistry } from "../lifecycle/cleanup-registry.js";
 
 /**
  * @public
@@ -9,9 +9,9 @@ export interface IBroadcastChannel<TKey extends string, TArgs extends readonly u
 {
     addListener(listener: TListener<TKey, TArgs>): void;
     /**
-     * Registers a cleanup callback on the supplied {@link ICleanupStore}.
+     * Registers a cleanup callback on the supplied {@link ICleanupRegistry}.
      */
-    addListener(store: ICleanupStore, listener: TListener<TKey, TArgs>): void;
+    addListener(store: ICleanupRegistry, listener: TListener<TKey, TArgs>): void;
     /**
      * Like `addListener` but unregisters after first event.
      */
@@ -19,7 +19,7 @@ export interface IBroadcastChannel<TKey extends string, TArgs extends readonly u
     /**
      * Like `addListener` but unregisters after first or on cleanup, whichever comes first.
      */
-    addOneTimeListener(store: ICleanupStore, listener: TListener<TKey, TArgs>): void;
+    addOneTimeListener(store: ICleanupRegistry, listener: TListener<TKey, TArgs>): void;
 
     removeListener(listener: TListener<TKey, TArgs>): void;
     emit(...args: TArgs): void;

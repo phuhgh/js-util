@@ -4,7 +4,7 @@
  */
 export interface IWebAssemblyMemoryMemory
 {
-    readonly buffer: ArrayBuffer;
+    readonly buffer: ArrayBuffer | SharedArrayBuffer;
     grow(delta: number): number;
 }
 

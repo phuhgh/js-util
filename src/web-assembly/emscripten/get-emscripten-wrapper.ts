@@ -1,27 +1,29 @@
 import { shimWebAssemblyMemory } from "../util/shim-web-assembly-memory.js";
-import { type IEmscriptenBinder, IEmscriptenDebug, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
+import { type IEmscriptenBinder, IEmscriptenDebugUtils, IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
 import { BroadcastChannel } from "../../eventing/broadcast-channel.js";
 import { Emscripten, IWebAssemblyMemoryMemory } from "../../external/emscripten.js";
 import { _Debug } from "../../debug/_debug.js";
 import { TWebAssemblyMemoryListenerArgs } from "../util/t-web-assembly-memory-listener-args.js";
 import { DebugWeakBroadcastChannel } from "../../debug/debug-weak-broadcast-event.js";
 import { IBroadcastChannel } from "../../eventing/i-broadcast-channel.js";
-import { IDebugProtectedView } from "../../debug/i-debug-protected-view.js";
-import { IDebugWeakStore } from "../../debug/i-debug-weak-store.js";
-import { DebugSharedObjectLifeCycleChecker, IDebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
-import { DebugWeakValue } from "../../debug/debug-weak-value.js";
+import { IDebugProtectedViewFactory } from "../../debug/i-debug-protected-view-factory.js";
+import { DebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
+import { DebugWeakStore } from "../../debug/debug-weak-store.js";
+import type { IManagedResourceNode } from "../../lifecycle/manged-resources.js";
+import type { ILifecycleStrategy } from "./i-lifecycle-strategy.js";
 
 /**
  * @public
  * Factory for creating wrapped emscripten module.
  */
-export async function getEmscriptenWrapper<TExt extends object, TMod extends object>
+export async function getEmscriptenWrapper<TExt extends object, TMod extends object, TLifeStrategy extends ILifecycleStrategy>
 (
     memory: IWebAssemblyMemoryMemory,
     emscriptenModuleFactory: Emscripten.EmscriptenModuleFactory<TMod>,
+    lifecycleStrategy: TLifeStrategy,
     extension: Partial<TExt> = {},
 )
-    : Promise<IEmscriptenWrapper<TExt & TMod>>
+    : Promise<IEmscriptenWrapper<TExt & TMod, TLifeStrategy>>
 {
     const memoryListener = _BUILD.DEBUG
         ? new DebugWeakBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize")
@@ -42,45 +44,61 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
         ...extension,
     } as TExt) as TExt & TMod & Emscripten.EmscriptenModule;
 
-    return new EmscriptenWrapper<TExt & TMod>(
+    const wrapper = new EmscriptenWrapper<TExt & TMod, TLifeStrategy>(
         memoryListener,
         instance,
         memory,
         debug,
         binder,
+        lifecycleStrategy
     );
+    lifecycleStrategy.setWrapper(wrapper);
+
+    return wrapper;
 }
 
-class EmscriptenWrapper<T extends object> implements IEmscriptenWrapper<T>
+class EmscriptenWrapper<TModule extends object, TLifeStrategy extends ILifecycleStrategy>
+    implements IEmscriptenWrapper<TModule, TLifeStrategy>
 {
-    public dataView: DataView;
-
     public constructor
     (
         public readonly memoryResize: IBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>,
-        public readonly instance: T & Emscripten.EmscriptenModule,
+        public readonly instance: TModule & Emscripten.EmscriptenModule,
         public readonly memory: IWebAssemblyMemoryMemory,
-        public readonly debug: IEmscriptenDebug,
+        public readonly debugUtils: IEmscriptenDebugUtils,
         public readonly binder: IEmscriptenBinder,
+        public readonly lifecycleStrategy: TLifeStrategy,
+        public readonly rootNode: IManagedResourceNode = lifecycleStrategy.createRootNode(),
     )
     {
-        this.dataView = new DataView(memory.buffer);
 
+        const state = this.state = new EWState(new DataView(memory.buffer));
+
+        // in debug builds there are retainers on the wasm memory from libraries, sidestep by passing sub-object
+        // don't reference `this` here...
         shimWebAssemblyMemory(memory, (buffer, previous, delta) =>
         {
             _BUILD.DEBUG && _Debug.verboseLog(["WASM", "MEMORY"], `WebAssembly memory grew from ${previous} to ${previous + delta} pages.`);
-            this.dataView = new DataView(this.memory.buffer);
-            this.memoryResize.emit(buffer, previous, delta);
+            state.dataView = new DataView(memory.buffer);
+
+            memoryResize.emit(buffer, previous, delta);
         });
     }
+
+    public getDataView(): DataView
+    {
+        return this.state.dataView;
+    }
+
+    private state: EWState;
 }
 
 interface IEmscriptenDebugInstance
 {
-    JSU_DEBUG_UTIL: IEmscriptenDebug;
+    JSU_DEBUG_UTIL: IEmscriptenDebugUtils;
 }
 
-class EmscriptenDebug implements IEmscriptenDebug
+class EmscriptenDebug implements IEmscriptenDebugUtils
 {
     public error(message: string): void
     {
@@ -93,8 +111,8 @@ class EmscriptenDebug implements IEmscriptenDebug
     }
 
     public onAllocate: IBroadcastChannel<"debugOnAllocate", []> = new DebugWeakBroadcastChannel("debugOnAllocate");
-    public protectedViews: IDebugWeakStore<IDebugProtectedView> = new DebugWeakValue();
-    public sharedObjectLifeCycleChecks: IDebugSharedObjectLifeCycleChecker = new DebugSharedObjectLifeCycleChecker();
+    public protectedViews = new DebugWeakStore<IDebugProtectedViewFactory>();
+    public sharedObjectLifeCycleChecks = new DebugSharedObjectLifeCycleChecker();
     public uniquePointers: Set<number> = new Set();
 }
 
@@ -123,3 +141,13 @@ class EmscriptenBinder implements IEmscriptenBinder
 }
 
 const defaultTags = ["WASM"];
+
+class EWState
+{
+    public constructor
+    (
+        public dataView: DataView,
+    )
+    {
+    }
+}

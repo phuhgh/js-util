@@ -207,6 +207,12 @@ bool WorkerPool<TDistributionStrategy>::isBatchDone() const
 template <WithDistributionStrategy TDistributionStrategy>
 bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job)
 {
+    if (job == nullptr)
+    {
+        Debug::error("expected a job, got a nullptr...");
+        return false;
+    }
+
     auto jobAdded = m_strategy.distributeWork(m_workers.asSpan(), job);
     if (!jobAdded && m_syncOverflowHandling)
     {

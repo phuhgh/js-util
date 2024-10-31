@@ -8,6 +8,8 @@ import { _Production } from "../../production/_production.js";
 import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
 import { _Debug } from "../../debug/_debug.js";
 
+import { ReferenceCountedStrategy } from "./reference-counted-strategy.js";
+
 /**
  * @public
  * Options for {@link SanitizedEmscriptenTestModule}.
@@ -82,7 +84,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
         private readonly extension?: TWrapperExtensions,
     )
     {
-        this.currentDisabledErrors = this.options.disabledErrors || {};
+        this.state.currentDisabledErrors = this.options.disabledErrors || {};
     }
 
     public async initialize(): Promise<void>
@@ -93,51 +95,58 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
             shared: this.options.shared,
         });
 
-        this._wrapper = await getEmscriptenWrapper(memory, this.testModule, {
-            ASAN_OPTIONS: "allocator_may_return_null=1",
-            print: _Fp.noOp,
-            printErr: (error: string) =>
+        const options = this.options;
+        const state = this.state;
+        // avoid referencing `this` in closures, it prevents the test module from being gc'd in debug builds
+        this._wrapper = await getEmscriptenWrapper(
+            memory,
+            this.testModule, new ReferenceCountedStrategy(),
             {
-                if (isErrorExcluded(this.currentDisabledErrors, error))
+                ASAN_OPTIONS: "allocator_may_return_null=1",
+                print: _Fp.noOp,
+                printErr: (error: string) =>
                 {
-                    _Debug.verboseLog(["WASM"], "Ignoring logged error by exclusion:\n" + error);
-                    return;
-                }
+                    if (isErrorExcluded(state.currentDisabledErrors, error))
+                    {
+                        _Debug.verboseLog(["WASM"], "Ignoring logged error by exclusion:\n" + error);
+                        return;
+                    }
 
-                this.errorLogged = true;
-                _Debug.logError(error);
-            },
-            // legacy handler (this doesn't appear to be used anymore...)
-            quit: () =>
-            {
-                // emscripten hits asserts if quit doesn't interrupt execution
-                // the default behavior in node is to kill the process which would kill the tests
-                // by throwing something unique we can catch but avoid swallowing actual errors
-                throw this.options.quitThrowsWith;
-            },
-            onExit: (statusCode: number): void =>
-            {
-                // noinspection SuspiciousTypeOfGuard - we want to know if they change the API
-                if (typeof statusCode !== "number")
+                    state.errorLogged = true;
+                    _Debug.logError(error);
+                },
+                // legacy handler (this doesn't appear to be used anymore...)
+                quit: () =>
                 {
-                    throw _Production.createError("Unsupported emscripten version, expected to get a status code...");
-                }
-                if (statusCode === 0)
+                    // emscripten hits asserts if quit doesn't interrupt execution
+                    // the default behavior in node is to kill the process which would kill the tests
+                    // by throwing something unique we can catch but avoid swallowing actual errors
+                    throw options.quitThrowsWith;
+                },
+                onExit: (statusCode: number): void =>
                 {
-                    // we could just use their object, but for simplicity we normalize to "the old way"
-                    throw this.options.quitThrowsWith;
-                }
+                    // noinspection SuspiciousTypeOfGuard - we want to know if they change the API
+                    if (typeof statusCode !== "number")
+                    {
+                        throw _Production.createError("Unsupported emscripten version, expected to get a status code...");
+                    }
+                    if (statusCode === 0)
+                    {
+                        // we could just use their object, but for simplicity we normalize to "the old way"
+                        throw options.quitThrowsWith;
+                    }
 
-                // there's a non-zero status code, emscripten is pretty good at reporting this, so let them do it...
-            },
-            ...this.extension,
-        } as TEmscriptenBindings) as IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings>;
+                    // there's a non-zero status code, emscripten is pretty good at reporting this, so let them do it...
+                },
+                ...this.extension,
+            } as TEmscriptenBindings
+        ) as IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings, ReferenceCountedStrategy>;
 
         // -sEXIT_RUNTIME=1 does not play well with threads + no main, manually keep the runtime alive
         this.wrapper.instance.runtimeKeepalivePush!();
     }
 
-    public get wrapper(): IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings>
+    public get wrapper(): IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings, ReferenceCountedStrategy>
     {
         if (this._wrapper == null)
         {
@@ -154,7 +163,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
     public endEmscriptenProgram(): void
     {
         this.runWithDisabledErrors(
-            { ...this.currentDisabledErrors, ...this.options.disabledShutdownErrors },
+            { ...this.state.currentDisabledErrors, ...this.options.disabledShutdownErrors },
             () =>
             {
                 // kick off asan checks
@@ -173,7 +182,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
             },
         );
 
-        if (this.errorLogged)
+        if (this.state.errorLogged)
         {
             throw _Production.createError("The C++ logged an error to the console, this is considered a failure.");
         }
@@ -181,37 +190,37 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
 
     public runWithDisabledErrors(exclusions: IErrorExclusions, callback: () => void): void
     {
-        const original = this.currentDisabledErrors;
-        this.currentDisabledErrors = { ...this.currentDisabledErrors, ...exclusions };
+        const original = this.state.currentDisabledErrors;
+        this.state.currentDisabledErrors = { ...this.state.currentDisabledErrors, ...exclusions };
         callback();
-        this.currentDisabledErrors = original;
+        this.state.currentDisabledErrors = original;
     }
 
     /**
-     * Call this before each test case.
+     * Call this after each test case.
      */
     public reset(errorLoggingAllowed: boolean = false): void
     {
-        Test_resetLifeCycle();
+        this.wrapper.rootNode.getLinked().unlinkAll();
 
-        if (this._wrapper)
-        {
-            this._wrapper.debug.uniquePointers.clear();
-        }
+        Test_resetLifeCycle();
 
         if (errorLoggingAllowed)
         {
-            this.errorLogged = false;
+            this.state.errorLogged = false;
         }
-        else if (this.errorLogged)
+        else if (this.state.errorLogged)
         {
             throw _Production.createError("The C++ logged an error to the console, this is considered a failure.");
         }
     }
 
-    private _wrapper: IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings> | undefined;
-    private currentDisabledErrors: IErrorExclusions;
-    private errorLogged: boolean = false;
+    private _wrapper: IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings, ReferenceCountedStrategy> | undefined;
+
+    private readonly state = {
+        currentDisabledErrors: {} as IErrorExclusions,
+        errorLogged: false,
+    };
 }
 
 function isErrorExcluded(disabledErrors: IErrorExclusions, error: string)

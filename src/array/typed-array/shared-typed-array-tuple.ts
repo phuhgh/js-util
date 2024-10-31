@@ -1,4 +1,3 @@
-import { ISharedObject } from "../../lifecycle/i-shared-object.js";
 import { TTypedArray } from "./t-typed-array.js";
 import { ITypedArrayExtensions } from "./i-typed-array-extensions.js";
 import { ITypedArrayCtor } from "./i-typed-array-ctor.js";
@@ -7,16 +6,16 @@ import { ISharedMemoryBlock, SharedMemoryBlock } from "../../web-assembly/shared
 import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
 import { IEmscriptenWrapper } from "../../web-assembly/emscripten/i-emscripten-wrapper.js";
 import { IMemoryUtilBindings } from "../../web-assembly/emscripten/i-memory-util-bindings.js";
-import { IReferenceCountedPtr } from "../../web-assembly/util/reference-counted-ptr.js";
 import { ATypedArrayTuple } from "./a-typed-array-tuple.js";
-import { ILinkedReferences } from "../../lifecycle/linked-references.js";
+import type { IManagedObject, IManagedResourceNode } from "../../lifecycle/manged-resources.js";
 
 /**
  * @public
  * Wrapper of block of memory that is the same size as `TArray`. Provides utility functions with stronger typing than
  * {@link ISharedMemoryBlock}.
  */
-export interface ISharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTypedArray> & ITypedArrayExtensions)> extends ISharedObject
+export interface ISharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTypedArray> & ITypedArrayExtensions)>
+    extends IManagedObject
 {
     memory: ISharedMemoryBlock;
     copyToBuffer(readFrom: TArray): void;
@@ -36,12 +35,15 @@ export type TExtendedTypedArrayCtor<TArray extends ATypedArrayTuple<number, TTyp
  @public
  {@inheritDoc ISharedTypedArrayTuple}
  */
-export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTypedArray> & ITypedArrayExtensions)> implements ISharedTypedArrayTuple<TArray>
+export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTypedArray> & ITypedArrayExtensions)>
+    implements ISharedTypedArrayTuple<TArray>
 {
+    public resourceHandle: IManagedResourceNode;
+
     public static createOne<TArray extends (ATypedArrayTuple<number, TTypedArray> & ITypedArrayExtensions)>
     (
         typedArrayCtor: TExtendedTypedArrayCtor<TArray>,
-        bindToReference: ILinkedReferences | null,
+        bindToReference: IManagedResourceNode | null,
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
     )
         : ISharedTypedArrayTuple<TArray>
@@ -51,8 +53,6 @@ export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTyp
 
         return new SharedTypedArrayTuple<TArray>(block);
     }
-
-    public sharedObject: IReferenceCountedPtr;
 
     public copyToBuffer(readFrom: TArray)
     {
@@ -69,7 +69,7 @@ export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTyp
         public readonly memory: ISharedMemoryBlock,
     )
     {
-        this.sharedObject = memory.sharedObject;
+        this.resourceHandle = memory.resourceHandle;
     }
 
     private static littleEndian = isLittleEndian;

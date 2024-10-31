@@ -1,16 +1,11 @@
 import { TProperty } from "../../typescript/t-property.js";
-
-/**
- * @public
- */
-export type TSharedArrayPrefix = "f64SharedArray" | "f32SharedArray";
+import type { ENumberIdentifier } from "../../array/typed-array/rtti-interop.js";
 
 /**
  * @public
  */
 export interface ISharedArrayBindings
-    extends TProperty<`_${TSharedArrayPrefix}_createOne`, (size: number, clearMemory: boolean) => number>,
-            TProperty<`_${TSharedArrayPrefix}_getArrayAddress`, (objPointer: number) => number>,
-            TProperty<`_${TSharedArrayPrefix}_destroy`, (objPointer: number) => void>
+    extends TProperty<`_sharedArray_createOne`, (numberId: ENumberIdentifier, size: number, clearMemory: boolean) => number>,
+            TProperty<`_sharedArray_getArrayAddress`, (numberId: ENumberIdentifier, objPointer: number) => number>
 {
 }

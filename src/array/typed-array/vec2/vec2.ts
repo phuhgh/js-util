@@ -4,9 +4,9 @@ import { IReadonlyMat3 } from "../mat3/mat3.js";
 import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory.js";
 import { getVec2Ctor } from "./get-vec2-ctor.js";
 import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
-import { populateTypedArrayConstructorMap } from "../populate-typed-array-constructor-map.js";
 import { IReadonlyRange2d } from "../2d/range2d/range2d.js";
 import { TPickExcept } from "../../../typescript/t-pick-except.js";
+import { populateTypedArrayConstructorMap } from "../rtti-interop.js";
 
 /**
  * @public
@@ -56,6 +56,8 @@ export abstract class Vec2<TArray extends TTypedArray>
 {
     public static f64: IVec2Ctor<Float64Array> = getVec2Ctor(Float64Array);
     public static f32: IVec2Ctor<Float32Array> = getVec2Ctor(Float32Array);
+    public static i64 = null; // not supported
+    public static u64 = null; // not supported
     public static u32: IVec2Ctor<Uint32Array> = getVec2Ctor(Uint32Array);
     public static i32: IVec2Ctor<Int32Array> = getVec2Ctor(Int32Array);
     public static u16: IVec2Ctor<Uint16Array> = getVec2Ctor(Uint16Array);

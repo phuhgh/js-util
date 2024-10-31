@@ -1,96 +1,72 @@
 import { _Debug } from "./_debug.js";
-import { DebugPointer } from "./debug-pointer.js";
-import { _Production } from "../production/_production.js";
-import { IDebugSharedObject } from "./i-debug-shared-object.js";
+import type { IManagedObject, IManagedResourceNode, PointerDebugMetadata } from "../lifecycle/manged-resources.js";
+import { numberGetHexString } from "../number/impl/number-get-hex-string.js";
+import { arrayInsertAtIndex } from "../array/impl/array-insert-at-index.js";
 
 /**
  * @public
- * Wrapper of {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry|FinalizationRegistry} for shared objects,
+ * Wrapper of {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry} for shared objects,
  * useful for checking if the shared object was properly disposed. Available in debug contexts only.
  */
-export interface IDebugSharedObjectLifeCycleChecker
+export class DebugSharedObjectLifeCycleChecker
 {
-    registerFinalizationCheck(sharedObject: IDebugSharedObject): void;
-    markReadyForFinalize(sharedObject: IDebugSharedObject): void;
-}
-
-/**
- * When a javascript object is garbage collected, check if the corresponding WASM object has been freed.
- */
-export class DebugSharedObjectLifeCycleChecker implements IDebugSharedObjectLifeCycleChecker
-{
-    public registerFinalizationCheck(sharedObject: IDebugSharedObject): void
+    public registerFinalizationCheck(sharedObject: IManagedObject, metadata: PointerDebugMetadata | null): void
     {
-        const instanceOwningPtr = this.owningPointers.get(sharedObject.getPtr());
+        const debugPointer = metadata == null
+            ? null
+            : new DebugPointer(metadata.address, sharedObject.constructor);
 
-        if (instanceOwningPtr != null)
-        {
-            _Debug.error([
-                "Address has already been claimed by:",
-                instanceOwningPtr.toString(),
-            ].join("\n"));
-        }
-
-        const debugPointer = new DebugPointer(sharedObject.getPtr(), sharedObject.constructor, sharedObject.isStatic);
-        this.debugPointers.add(debugPointer);
-        this.sharedObjToPtr.set(sharedObject, debugPointer);
-
-        if (!sharedObject.isStatic)
-        {
-            this.owningPointers.set(debugPointer.pointer, debugPointer);
-        }
-
-        this.finalizationRegistry.register(sharedObject, debugPointer);
+        // associate the debug information along with the shared object
+        this.finalizationRegistry.register(sharedObject, [sharedObject.resourceHandle, debugPointer]);
     }
 
-    public markReadyForFinalize(sharedObject: IDebugSharedObject): void
+    private finalizationRegistry = new FinalizationRegistry(([node, maybePtr]: [IManagedResourceNode, DebugPointer | null]) =>
     {
-        if (!sharedObject.isStatic)
+        // the `sharedObject` has been destroyed, we get the tuple we associated in `registerFinalizationCheck`
+        if (!node.getIsDestroyed())
         {
-            this.owningPointers.delete(sharedObject.getPtr());
-        }
-
-        const pointer = this.sharedObjToPtr.get(sharedObject);
-
-        if (pointer == null)
-        {
-            throw _Production.createError("expected to find pointer");
-        }
-
-        this.debugPointers.delete(pointer);
-    }
-
-    private finalizationRegistry = new FinalizationRegistry((debugPointer: DebugPointer) =>
-    {
-        if (this.debugPointers.has(debugPointer))
-        {
-            // must have failed to clean up for the pointer to still be present
-
-            if (debugPointer.isStatic)
+            // the object has leaked...
+            if (maybePtr != null)
             {
-                // the wasm memory hasn't been cleaned up
-                // the js object may leak in production too (resize listener), but we don't know
-                // fixing one fixes the other
-                const message = [
-                    "Finalization registry found unreleased wasm object allocated by:",
-                    debugPointer.toString(),
-                ].join("\n");
-
-                _Debug.error(message);
+                _Debug.error(["A shared object was leaked:", maybePtr.toString()].join("\n"));
             }
             else
             {
-                // wasm memory never gets cleaned up (static)
-                // the js object will leak in production (resize listener is a strong reference in that case)
-                _Debug.error([
-                    "Leaked shared static object on the JS side:",
-                    debugPointer.toString(),
-                ].join("\n"));
+                // RIP
+                _Debug.error("A shared object was leaked, but we don't have any information about it...");
             }
         }
     });
+}
 
-    private owningPointers = new Map<number, DebugPointer>();
-    private sharedObjToPtr = new WeakMap<IDebugSharedObject, DebugPointer>();
-    private debugPointers = new Set<DebugPointer>();
+class DebugPointer
+{
+    public readonly creationCallstack: string;
+
+    public constructor
+    (
+        public readonly address: number,
+        public readonly objectConstructor: Function,
+        public readonly instanceLabel: string | undefined = _Debug.label,
+    )
+    {
+        this.creationCallstack = _Debug.getStackTrace();
+    }
+
+    public toString(): string
+    {
+        const lines = [
+            `WASM address: ${numberGetHexString(this.address)}`,
+            `Js constructor name: ${this.objectConstructor.name}`,
+            "\nCall site stack trace follows:",
+            this.creationCallstack,
+        ];
+
+        if (this.instanceLabel != null)
+        {
+            arrayInsertAtIndex(lines, `Instance label : ${this.instanceLabel}`, 2);
+        }
+
+        return lines.join("\n");
+    }
 }

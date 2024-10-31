@@ -14,6 +14,5 @@ export interface IWorkerPoolBindings
     _workerPool_hasPendingWork(jobPtr: number): boolean;
     _workerPool_start(o_poolPtr: number): number;
     _workerPool_stop(o_poolPtr: number, wait: boolean): void;
-    _workerPool_createJob(): number;
     _workerPool_deleteJob(o_jobPtr: number): void;
 }

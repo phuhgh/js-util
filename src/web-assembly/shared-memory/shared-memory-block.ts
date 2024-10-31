@@ -1,24 +1,19 @@
-import { IReferenceCountedPtr, ReferenceCountedPtr } from "../util/reference-counted-ptr.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { _Production } from "../../production/_production.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
-import { DebugSharedObjectChecks } from "../util/debug-shared-object-checks.js";
 import { IMemoryUtilBindings } from "../emscripten/i-memory-util-bindings.js";
-import { ISharedObject } from "../../lifecycle/i-shared-object.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
-import { IDebugAllocateListener } from "../../debug/i-debug-allocate-listener.js";
-import { ILinkedReferences } from "../../lifecycle/linked-references.js";
-import type { IOnFreeListener } from "../../lifecycle/i-managed-resource.js";
 import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
+import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
 
 /**
  * @public
  * Provides a reference counted wrapper to a pointer `malloc`'d from JS and is `free`'d on reference count hitting 0.
  */
 export interface ISharedMemoryBlock
-    extends ISharedObject
+    extends IManagedObject
 {
     readonly pointer: number;
     readonly byteSize: number;
@@ -30,12 +25,9 @@ export interface ISharedMemoryBlock
  * {@inheritDoc ISharedMemoryBlock}
  */
 export class SharedMemoryBlock
-    implements ISharedMemoryBlock,
-               IOnMemoryResize,
-               IOnFreeListener,
-               IDebugAllocateListener
+    implements ISharedMemoryBlock
 {
-    public readonly sharedObject: IReferenceCountedPtr;
+    public readonly resourceHandle: IManagedResourceNode;
     public readonly pointer: number;
     public readonly byteSize: number;
 
@@ -45,14 +37,14 @@ export class SharedMemoryBlock
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
-        bindToReference: ILinkedReferences | null,
+        bindToReference: IManagedResourceNode | null,
         byteSize: number,
     )
         : SharedMemoryBlock
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
-        bindToReference: ILinkedReferences | null,
+        bindToReference: IManagedResourceNode | null,
         byteSize: number,
         allocationFailThrows: boolean,
     )
@@ -60,13 +52,13 @@ export class SharedMemoryBlock
     public static createOne
     (
         wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
-        bindToReference: ILinkedReferences | null,
+        bindToReference: IManagedResourceNode | null,
         byteSize: number,
         allocationFailThrows: boolean = true,
     )
         : SharedMemoryBlock | null
     {
-        _BUILD.DEBUG && wrapper.debug.onAllocate.emit();
+        _BUILD.DEBUG && wrapper.debugUtils.onAllocate.emit();
         const pointer = wrapper.instance._jsUtilMalloc(byteSize);
 
         if (pointer == nullPtr)
@@ -81,25 +73,69 @@ export class SharedMemoryBlock
             }
         }
 
-        const smb = new SharedMemoryBlock(wrapper, pointer, byteSize);
-        bindToReference?.linkRef(smb.sharedObject);
-
-        return smb;
+        return new SharedMemoryBlock(wrapper, bindToReference, pointer, byteSize);
     }
 
     public getDataView(): DataView
     {
         if (_BUILD.DEBUG)
         {
-            _Debug.assert(!this.sharedObject.getIsDestroyed(), "use after free");
-            return this.wrapper.debug.protectedViews
-                .getValue(this)
-                .createProtectedView(this.dataView);
+            _Debug.assert(!this.resourceHandle.getIsDestroyed(), "use after free");
+            return this.wrapper.debugUtils.protectedViews
+                .getValue(this.resourceHandle)
+                .createProtectedView(this.impl.dataView);
         }
         else
         {
-            return this.dataView;
+            return this.impl.dataView;
         }
+    }
+
+    protected constructor
+    (
+        private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        owner: IManagedResourceNode | null,
+        pointer: number,
+        byteSize: number,
+    )
+    {
+        this.resourceHandle = wrapper.lifecycleStrategy.createNode(owner);
+        this.pointer = pointer;
+        this.byteSize = byteSize;
+        this.impl = new SharedMemoryBlockImpl(wrapper, pointer, byteSize);
+
+        const protectedView = _BUILD.DEBUG ? new DebugProtectedView(
+            `SharedMemoryBlock - memory resize danger: don't hold reference to the DataView ${numberGetHexString(this.pointer)}`,
+        ) : null;
+        wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "SharedMemoryBlock"), protectedView);
+        this.wrapper.memoryResize.addListener(this.impl);
+        this.resourceHandle.onFreeChannel.addListener(this.impl);
+    }
+
+    // @internal
+    public debugOnAllocate?: (() => void);
+    private impl: SharedMemoryBlockImpl;
+}
+
+class SharedMemoryBlockImpl
+    implements IOnMemoryResize, IOnFreeListener
+{
+    public dataView: DataView;
+
+    public constructor
+    (
+        public readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        public readonly pointer: number,
+        public readonly byteSize: number,
+    )
+    {
+        this.dataView = this.recreateDataView();
+    }
+
+    public onFree(): void
+    {
+        this.wrapper.memoryResize.removeListener(this);
+        this.wrapper.instance._jsUtilFree(this.pointer);
     }
 
     public onMemoryResize(): void
@@ -113,42 +149,8 @@ export class SharedMemoryBlock
         this.dataView = this.recreateDataView();
     }
 
-    public onFree(): void
-    {
-        this.wrapper.memoryResize.removeListener(this);
-        this.wrapper.instance._jsUtilFree(this.pointer);
-    }
-
-    protected constructor
-    (
-        private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
-        pointer: number,
-        byteSize: number,
-    )
-    {
-        this.pointer = pointer;
-        this.byteSize = byteSize;
-        this.sharedObject = new ReferenceCountedPtr(false, pointer, wrapper);
-        this.wrapper.memoryResize.addListener(this);
-        this.sharedObject.onFreeChannel.addListener(this);
-
-        _BUILD.DEBUG && _Debug.runBlock(() =>
-        {
-            const protectedView = new DebugProtectedView(
-                this.wrapper,
-                `SharedMemoryBlock - memory resize danger: don't hold reference to the DataView ${numberGetHexString(this.pointer)}`,
-            );
-            DebugSharedObjectChecks.registerWithCleanup(this, protectedView, "SharedMemoryBlock");
-        });
-
-        this.dataView = this.recreateDataView();
-    }
-
     private recreateDataView(): DataView
     {
         return new DataView(this.wrapper.memory.buffer, this.pointer, this.byteSize);
     }
-
-    private dataView: DataView;
-    public debugOnAllocate?: (() => void);
 }

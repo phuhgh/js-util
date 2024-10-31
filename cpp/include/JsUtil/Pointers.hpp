@@ -6,23 +6,58 @@ namespace JsUtil
 {
 
 template <typename T>
-class PtrOwner
+struct IsSmartPointer : std::false_type
+{
+};
+
+template <typename T>
+struct IsSmartPointer<std::unique_ptr<T>> : std::true_type
+{
+};
+
+template <typename T>
+struct IsSmartPointer<std::shared_ptr<T>> : std::true_type
+{
+};
+
+template <typename T>
+struct IsSmartPointer<std::weak_ptr<T>> : std::true_type
+{
+};
+
+template <typename T>
+struct IsArrayPointer : std::false_type
+{
+};
+
+template <typename T>
+struct IsArrayPointer<T[]> : std::true_type
+{
+};
+
+template <typename T, std::size_t N>
+struct IsArrayPointer<T[N]> : std::true_type
+{
+};
+
+template <typename T>
+class ScopedPointer
 {
   public:
-    ~PtrOwner() { delete m_ptr; }
+    ~ScopedPointer() { delete m_ptr; }
 
-    explicit PtrOwner(gsl::owner<T*> ptr)
+    explicit ScopedPointer(gsl::owner<T*> ptr)
         : m_ptr(ptr)
     {
     }
-    PtrOwner(PtrOwner&& other) noexcept
+    ScopedPointer(ScopedPointer&& other) noexcept
         : m_ptr(other.m_ptr)
     {
         other.m_ptr = nullptr;
     }
-    PtrOwner(PtrOwner const&) = delete;
+    ScopedPointer(ScopedPointer const&) = delete;
 
-    PtrOwner& operator=(PtrOwner&& other) noexcept
+    ScopedPointer& operator=(ScopedPointer&& other) noexcept
     {
         if (this != &other)
         {
@@ -32,7 +67,7 @@ class PtrOwner
         }
         return *this;
     }
-    PtrOwner& operator=(PtrOwner const&) = delete;
+    ScopedPointer& operator=(ScopedPointer const&) = delete;
 
     T& operator*() const { return *m_ptr; }
     T* operator->() const { return m_ptr; }
