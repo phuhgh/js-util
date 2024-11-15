@@ -4,6 +4,7 @@ import { arrayContains } from "../array/impl/array-contains.js";
 import { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor.js";
 import { IDictionary } from "../typescript/i-dictionary.js";
 import { IDebugProtectedViewFactory } from "./i-debug-protected-view-factory.js";
+import { stringConcat2 } from "../string/impl/string-concat-2.js";
 
 /**
  * @public
@@ -14,11 +15,14 @@ import { IDebugProtectedViewFactory } from "./i-debug-protected-view-factory.js"
  */
 export class DebugProtectedView<TView extends object> implements IDebugProtectedViewFactory
 {
-    public static createTypedArrayView = <TCtor extends TTypedArrayCtor>()
+    public static createTypedArrayView = <TCtor extends TTypedArrayCtor>
+    (
+        instanceName: string
+    )
         : DebugProtectedView<InstanceType<TCtor>> =>
     {
         return new DebugProtectedView<InstanceType<TCtor>>(
-            "Shared Array - memory resize danger, refresh instance with getInstance",
+            stringConcat2(instanceName, " - memory resize danger, refresh instance with getInstance"),
             ["BYTES_PER_ELEMENT"],
         );
     };

@@ -98,7 +98,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         this.numberId = numberId;
         this.elementByteSize = ctor.BYTES_PER_ELEMENT;
         this.impl = new SharedArrayImpl(wrapper, ctor, pointer, numberId, length);
-        const protectedView = _BUILD.DEBUG ? DebugProtectedView.createTypedArrayView() : null;
+        const protectedView = _BUILD.DEBUG ? DebugProtectedView.createTypedArrayView("SharedArray") : null;
         wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "SharedArray"), protectedView);
 
         // configure listeners
