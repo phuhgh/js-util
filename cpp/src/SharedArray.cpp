@@ -12,6 +12,12 @@ gsl::owner<JsInterop::ISharedMemoryObject*> createOneDynamic(
 {
     using namespace JsUtil;
     using namespace JsInterop;
+
+    if constexpr (Debug::isDebug())
+    {
+        Debug::onBeforeAllocate();
+    }
+
     switch (numberId)
     {
     case RTTI::ENumberIdentifier::U8:

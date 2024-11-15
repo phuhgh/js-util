@@ -13,6 +13,12 @@ extern "C"
     {
         using namespace JsUtil;
         using namespace JsInterop;
+
+        if constexpr (Debug::isDebug())
+        {
+            Debug::onBeforeAllocate();
+        }
+
         auto pool = new (std::nothrow) WorkerPool(
             RoundRobin{},
             WorkerPoolConfig{

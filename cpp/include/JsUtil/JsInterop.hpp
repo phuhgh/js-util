@@ -1,5 +1,6 @@
 #pragma once
 
+#include "JsUtil/Debug.hpp"
 #include "JsUtil/Pointers.hpp"
 #include <gsl/pointers>
 
@@ -79,6 +80,11 @@ template <typename T>
     if (owner_ptr == nullptr)
     {
         return nullptr;
+    }
+
+    if constexpr (JsUtil::Debug::isDebug())
+    {
+        JsUtil::Debug::onBeforeAllocate();
     }
 
     auto* wrapper = new (std::nothrow) SharedMemoryOwner<T>(owner_ptr);
