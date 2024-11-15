@@ -89,6 +89,9 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
 
     public async initialize(): Promise<void>
     {
+        Test_resetLifeCycle();
+        this.state.errorLogged = false;
+
         const memory = getWasmTestMemory({
             initial: this.options.initialMemoryPages,
             maximum: this.options.maxMemoryPages,
@@ -160,7 +163,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
     /**
      * NB you MUST set the flag `-s EXIT_RUNTIME=1` for this to work.
      */
-    public endEmscriptenProgram(): void
+    public endEmscriptenProgram(errorLoggingAllowed: boolean = false): void
     {
         this.runWithDisabledErrors(
             { ...this.state.currentDisabledErrors, ...this.options.disabledShutdownErrors },
@@ -182,10 +185,12 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
             },
         );
 
-        if (this.state.errorLogged)
+        if (this.state.errorLogged && !errorLoggingAllowed)
         {
             throw _Production.createError("The C++ logged an error to the console, this is considered a failure.");
         }
+
+        this.wrapper.rootNode.getLinked().unlinkAll();
     }
 
     public runWithDisabledErrors(exclusions: IErrorExclusions, callback: () => void): void
@@ -196,27 +201,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
         this.state.currentDisabledErrors = original;
     }
 
-    /**
-     * Call this after each test case.
-     */
-    public reset(errorLoggingAllowed: boolean = false): void
-    {
-        this.wrapper.rootNode.getLinked().unlinkAll();
-
-        Test_resetLifeCycle();
-
-        if (errorLoggingAllowed)
-        {
-            this.state.errorLogged = false;
-        }
-        else if (this.state.errorLogged)
-        {
-            throw _Production.createError("The C++ logged an error to the console, this is considered a failure.");
-        }
-    }
-
     private _wrapper: IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings, ReferenceCountedStrategy> | undefined;
-
     private readonly state = {
         currentDisabledErrors: {} as IErrorExclusions,
         errorLogged: false,

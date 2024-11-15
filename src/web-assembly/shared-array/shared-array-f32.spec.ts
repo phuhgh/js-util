@@ -21,7 +21,6 @@ describe("=> F32SharedArray", () =>
 
         afterEach(() =>
         {
-            testModule.reset();
             testModule.endEmscriptenProgram();
         });
 
@@ -29,10 +28,14 @@ describe("=> F32SharedArray", () =>
         {
             let sharedArray: SharedArray<Float32ArrayConstructor>;
 
-            beforeEach(fpRunWithin([_Debug.labelBlock("TestSetup"), blockScope], () =>
+            beforeEach(fpRunWithin([_Debug.labelBlock("TestSetup")], () =>
             {
                 sharedArray = SharedArray.createOne(testModule.wrapper, Float32Array, testModule.wrapper.rootNode, 8, true);
             }));
+            afterEach(() =>
+            {
+                testModule.wrapper.rootNode.getLinked().unlink(sharedArray.resourceHandle);
+            });
 
             it("| creates an array of the correct length", fpRunWithin([_Debug.labelBlock("LengthTest")], () =>
             {

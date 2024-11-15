@@ -57,7 +57,7 @@ describe("=> ReferenceCountedStrategy", () =>
         expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
 
         expect(errorSpy).toHaveBeenCalledWith(jasmine.stringMatching(/^A shared object was leaked/));
-        testModule.reset();
+        testModule.wrapper.rootNode.getLinked().unlinkAll();
         testModule.endEmscriptenProgram();
     });
 
@@ -78,7 +78,7 @@ describe("=> ReferenceCountedStrategy", () =>
 
         expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
         expect(errorSpy).toHaveBeenCalled();
-        testModule.reset();
+        testModule.wrapper.rootNode.getLinked().unlinkAll();
         testModule.endEmscriptenProgram();
     });
 });

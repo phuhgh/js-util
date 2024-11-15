@@ -1,5 +1,4 @@
 import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
-import { Test_resetLifeCycle } from "../test-util/test_reset-life-cycle.js";
 import { blockScope } from "./block-scoped-lifecycle.js";
 import { SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
 import { getTestModuleOptions } from "../test-util/test-utils.js";
@@ -13,12 +12,11 @@ describe("=> LinkedReferences", () =>
 
     beforeEach(async () =>
     {
-        await testModule.initialize();
         Test_setDefaultFlags();
-        Test_resetLifeCycle();
+        await testModule.initialize();
     });
 
-    afterEach(() => testModule.reset());
+    afterEach(() => testModule.endEmscriptenProgram());
 
     describe("linkRef", () =>
     {

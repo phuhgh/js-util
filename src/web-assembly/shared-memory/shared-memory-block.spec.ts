@@ -19,7 +19,6 @@ describe("=> SharedMemoryBlock", () =>
 
     afterEach(() =>
     {
-        testModule.reset();
         testModule.endEmscriptenProgram();
     });
 
@@ -44,6 +43,7 @@ describe("=> SharedMemoryBlock", () =>
         const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 16777216);
         expect(() => dataView.getFloat32(0)).toThrow();
 
+        testModule.wrapper.rootNode.getLinked().unlink(smb.resourceHandle);
         testModule.wrapper.rootNode.getLinked().unlink(smb2.resourceHandle);
     }));
 
@@ -59,6 +59,7 @@ describe("=> SharedMemoryBlock", () =>
         const smb = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 128);
         const smb2 = SharedMemoryBlock.createOne(testModule.wrapper, testModule.wrapper.rootNode, 8388608);
         smb.getDataView().getFloat32(0);
+        testModule.wrapper.rootNode.getLinked().unlink(smb.resourceHandle);
         testModule.wrapper.rootNode.getLinked().unlink(smb2.resourceHandle);
     }));
 
@@ -77,5 +78,6 @@ describe("=> SharedMemoryBlock", () =>
 
         expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
         expect(spy).toHaveBeenCalledWith(jasmine.stringMatching("A shared object was leaked"));
+        testModule.wrapper.rootNode.getLinked().unlinkAll();
     });
 });

@@ -4,33 +4,22 @@ import utilTestModule from "../../external/util-test-module.mjs";
 import { SharedTypedArrayTuple } from "./shared-typed-array-tuple.js";
 import { Range2d } from "./2d/range2d/range2d.js";
 import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
-import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
 import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
 import { fpRunWithin } from "../../fp/impl/fp-run-within.js";
 import { blockScope } from "../../lifecycle/block-scoped-lifecycle.js";
-import type { IManagedResourceNode } from "../../lifecycle/manged-resources.js";
 import { _Debug } from "../../debug/_debug.js";
 
 describe("=> SharedTypedArrayTuple", () =>
 {
-    let testOwner: IManagedResourceNode;
     const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
 
-    beforeAll(async () =>
+    beforeEach(async () =>
     {
         Test_setDefaultFlags();
         await testModule.initialize();
     });
 
-    beforeEach(() =>
-    {
-        testOwner = testModule.wrapper.lifecycleStrategy.createNode(testModule.wrapper.rootNode);
-        Test_resetLifeCycle();
-    });
-
-    afterEach(() => testModule.wrapper.rootNode.getLinked().unlink(testOwner));
-
-    afterAll(() =>
+    afterEach(() =>
     {
         testModule.endEmscriptenProgram();
     });
@@ -40,7 +29,7 @@ describe("=> SharedTypedArrayTuple", () =>
         it("| creates, writes, reads and destroys without triggering the asan", fpRunWithin([blockScope], () =>
         {
             const testRange = Range2d.f32.factory.createOne(1, 2, 3, 4);
-            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.f32, testOwner, testModule.wrapper);
+            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.f32, testModule.wrapper.rootNode, testModule.wrapper);
             sharedTuple.copyToBuffer(testRange);
 
             expect(sharedTuple.memory.getDataView().byteLength).toEqual(16);
@@ -57,7 +46,7 @@ describe("=> SharedTypedArrayTuple", () =>
             expect(emptyRange[2]).toEqual(3);
             expect(emptyRange[3]).toEqual(4);
 
-            testOwner.getLinked().unlink(sharedTuple.resourceHandle);
+            testModule.wrapper.rootNode.getLinked().unlink(sharedTuple.resourceHandle);
             expect(sharedTuple.resourceHandle.getIsDestroyed()).toBeTrue();
         }));
     });
@@ -67,7 +56,7 @@ describe("=> SharedTypedArrayTuple", () =>
         it("| creates, writes, reads and destroys without triggering the asan", fpRunWithin([blockScope], (() =>
         {
             const testRange = Range2d.u8.factory.createOne(1, 2, 3, 4);
-            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.u8, testOwner, testModule.wrapper);
+            const sharedTuple = SharedTypedArrayTuple.createOne(Range2d.u8, testModule.wrapper.rootNode, testModule.wrapper);
             sharedTuple.copyToBuffer(testRange);
 
             expect(sharedTuple.memory.getDataView().byteLength).toEqual(4);
@@ -84,7 +73,7 @@ describe("=> SharedTypedArrayTuple", () =>
             expect(emptyRange[2]).toEqual(3);
             expect(emptyRange[3]).toEqual(4);
 
-            testOwner.getLinked().unlink(sharedTuple.resourceHandle);
+            testModule.wrapper.rootNode.getLinked().unlink(sharedTuple.resourceHandle);
             expect(sharedTuple.resourceHandle.getIsDestroyed()).toBeTrue();
         })));
     });
@@ -99,9 +88,10 @@ describe("=> SharedTypedArrayTuple", () =>
         const spy = spyOn(_Debug, "error");
 
         // "forget" to use the return
-        SharedTypedArrayTuple.createOne(Range2d.u8, testOwner, testModule.wrapper);
+        SharedTypedArrayTuple.createOne(Range2d.u8, testModule.wrapper.rootNode, testModule.wrapper);
 
         expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
         expect(spy).toHaveBeenCalledWith(jasmine.stringMatching("A shared object was leaked"));
+        testModule.wrapper.rootNode.getLinked().unlinkAll();
     });
 });

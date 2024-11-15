@@ -32,7 +32,6 @@ describe("=> WorkerPool", () =>
 
     afterEach(() =>
     {
-        testModule.reset();
         testModule.endEmscriptenProgram();
     });
 
@@ -104,6 +103,7 @@ describe("=> WorkerPool", () =>
 
         expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
         expect(spy).toHaveBeenCalledWith(jasmine.stringMatching("A shared object was leaked"));
+        testModule.wrapper.rootNode.getLinked().unlinkAll();
     });
 });
 

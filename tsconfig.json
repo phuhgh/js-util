@@ -20,12 +20,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
-      "es5",
-      "ES2015.Proxy",
-      "ES2015.Collection",
-      "ES2015.Promise",
-      "ES2015.Iterable",
-      "ESNext" // WeakRef & FinalizationRegistry, not part of public sig
+      "ES2021"
     ],
     "types": [
       "jasmine"
