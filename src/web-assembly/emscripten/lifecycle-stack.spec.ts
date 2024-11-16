@@ -2,7 +2,6 @@ import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js"
 import { LifecycleStack } from "./lifecycle-stack.js";
 import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
 
-// todo jack: probably want a few more cases here now
 describe("=> LifecycleStack", () =>
 {
     beforeEach(() =>

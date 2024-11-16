@@ -1,6 +1,7 @@
 #pragma once
 
 #include "JsUtil/Debug.hpp"
+#include "JsUtil/JsInterop.hpp"
 #include <gsl/pointers>
 #include <span>
 
@@ -23,7 +24,7 @@ class SharedArray
         m_view = other.m_view;
         other.m_view = {};
     }
-    SharedArray& operator=(SharedArray&& other)
+    SharedArray& operator=(SharedArray&& other) noexcept
     {
         if (this != &other)
         {
@@ -34,10 +35,10 @@ class SharedArray
     }
 
     // but not copy
-                 SharedArray(SharedArray const&) = delete;
+    SharedArray(SharedArray const&) = delete;
     SharedArray& operator=(SharedArray const&) = delete;
 
-    static SharedArray createOne(size_t size, bool clearMemory)
+    static SharedArray createOne(size_t size, bool clearMemory) noexcept
     {
         if constexpr (Debug::isDebug())
         {
@@ -46,17 +47,17 @@ class SharedArray
 
         return SharedArray{
             static_cast<gsl::owner<TValue*>>(
-                clearMemory ? calloc(size, sizeof(TValue)) : malloc(size * sizeof(TValue))
+                clearMemory ? std::calloc(size, sizeof(TValue)) : std::malloc(size * sizeof(TValue))
             ),
             size
         };
     }
 
-    std::span<TValue> asSpan() const { return m_view; }
-    operator std::span<TValue>() const { return asSpan(); }
-    size_t size() const { return m_view.size(); }
+    std::span<TValue> asSpan() const noexcept { return m_view; }
+    operator std::span<TValue>() const noexcept { return asSpan(); }
+    size_t size() const noexcept { return m_view.size(); }
 
-    TValue operator[](size_t index) const
+    TValue const& operator[](size_t index) const noexcept
     {
         if constexpr (Debug::isDebug())
         {
@@ -64,7 +65,7 @@ class SharedArray
         }
         return m_view[index];
     }
-    TValue& operator[](size_t index)
+    TValue& operator[](size_t index) noexcept
     {
         if constexpr (Debug::isDebug())
         {

@@ -49,18 +49,18 @@ class WorkerLoop : public INotifiable
         m_config.onRegistered(this);
     };
 
-    ~           WorkerLoop() override;
-                WorkerLoop(WorkerLoop const&) = delete;
+    ~WorkerLoop() override;
+    WorkerLoop(WorkerLoop const&) = delete;
     WorkerLoop& operator=(WorkerLoop const&) = delete;
-                WorkerLoop(WorkerLoop&&) = delete;
+    WorkerLoop(WorkerLoop&&) = delete;
     WorkerLoop& operator=(WorkerLoop&&) = delete;
 
     bool     start(bool tickOnStart = false);
     void     proceed() override;
-    void     stop(bool wait = false);
-    void     awaitCompletion();
-    TConfig& getTask();
-    bool     isRunning() const;
+    void     stop(bool wait = false) noexcept;
+    void     awaitCompletion() noexcept;
+    TConfig& getTask() noexcept;
+    bool     isRunning() const noexcept;
 
   private:
     enum ENotification : uint8_t
@@ -76,6 +76,10 @@ class WorkerLoop : public INotifiable
         eCOMPLETE,
     };
 
+    void          setWorkerNotification(ENotification notification) noexcept;
+    ENotification consumeNotification();
+    void          safeDeleteThread();
+
     TConfig                  m_config;
     gsl::owner<std::thread*> m_thread{nullptr};
     mutable std::mutex       m_state_mutex; // locks all state below
@@ -83,10 +87,6 @@ class WorkerLoop : public INotifiable
     ENotification            m_notification{eNO_NOTIFICATION};
     std::condition_variable  m_state_cv;
     ELoopState               m_loop_state{eREADY_TO_START};
-
-    inline void          setWorkerNotification(ENotification notification);
-    inline ENotification consumeNotification();
-    inline void          safeDeleteThread();
 };
 
 } // namespace JsUtil

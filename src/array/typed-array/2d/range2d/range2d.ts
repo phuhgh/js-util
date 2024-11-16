@@ -7,7 +7,7 @@ import { IReadonlyMat3, Mat3 } from "../../mat3/mat3.js";
 import { TTypedArrayCtor } from "../../t-typed-array-ctor.js";
 import { TPickExcept } from "../../../../typescript/t-pick-except.js";
 import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple.js";
-import { populateTypedArrayConstructorMap } from "../../rtti-interop.js";
+import { populateTypedArrayConstructorMap } from "../../../../runtime/rtti-interop.js";
 
 /**
  * @public

@@ -11,7 +11,7 @@ namespace
 template <std::size_t I = 0, typename TFn, typename TAcc, typename TTuple>
 constexpr auto reduceRecursive(TTuple const& tuple, TFn&& callback, TAcc&& accumulator)
 {
-    if constexpr (I < std::tuple_size_v<TTuple>)
+    if constexpr (I < std::tuple_size_v<std::decay_t<TTuple>>)
     {
         return reduceRecursive<I + 1>(
             tuple, std::forward<TFn>(callback), callback(std::forward<TAcc>(accumulator), std::get<I>(tuple))
@@ -27,8 +27,9 @@ constexpr auto reduceRecursive(TTuple const& tuple, TFn&& callback, TAcc&& accum
 template <size_t Index, typename TItem, typename TTuple>
 constexpr size_t getItemIndex()
 {
-    static_assert(Index < std::tuple_size<TTuple>::value, "couldn't find the element");
-    using TCurrentItem = typename std::tuple_element<Index, TTuple>::type;
+    using TDecayedTuple = std::decay_t<TTuple>;
+    static_assert(Index < std::tuple_size<TDecayedTuple>::value, "couldn't find the element");
+    using TCurrentItem = typename std::tuple_element<Index, TDecayedTuple>::type;
 
     if constexpr (std::is_same_v<TItem, TCurrentItem>)
     {
@@ -49,7 +50,7 @@ namespace TupleExt
  * @brief Return all elements minus the first one.
  */
 template <typename TTuple>
-constexpr auto tail(TTuple&& tuple)
+[[nodiscard]] constexpr auto tail(TTuple&& tuple)
 {
     constexpr auto Size = std::tuple_size_v<std::decay_t<TTuple>>;
     return [&tuple]<std::size_t... Is>(std::index_sequence<Is...>) {
@@ -60,22 +61,51 @@ constexpr auto tail(TTuple&& tuple)
 template <typename TCallback, typename... TTuple>
 constexpr void forEach(std::tuple<TTuple...> const& tuple, TCallback&& callback)
 {
-    std::apply(
-        [&callback](auto&&... args) { (std::forward<TCallback>(callback)(std::forward<decltype(args)>(args)), ...); },
-        tuple
-    );
+    if constexpr (std::invocable<TCallback, decltype(std::get<0>(tuple)), size_t>)
+    {
+        return [&tuple, &callback]<std::size_t... Is>(std::index_sequence<Is...>) {
+            ((callback(std::get<Is>(tuple), Is)), ...);
+        }(std::make_index_sequence<sizeof...(TTuple)>{});
+    }
+    else
+    {
+        std::apply(
+            [&callback](auto&&... args) {
+                (std::forward<TCallback>(callback)(std::forward<decltype(args)>(args)), ...);
+            },
+            tuple
+        );
+    }
 }
 
-template <typename... TInput, typename TCallback>
-constexpr auto map(std::tuple<TInput...> const& tuple, TCallback callback)
+template <typename... TTuple, typename TCallback>
+[[nodiscard]] constexpr auto map(std::tuple<TTuple...> const& tuple, TCallback&& callback)
 {
-    return std::apply(
-        [&callback](auto&&... args) { return std::make_tuple(callback(std::forward<decltype(args)>(args))...); }, tuple
-    );
+    if constexpr (std::invocable<TCallback, decltype(std::get<0>(tuple)), size_t>)
+    {
+        return [&tuple, &callback]<std::size_t... Is>(std::index_sequence<Is...>) {
+            return std::make_tuple(
+                std::invoke(
+                    std::forward<TCallback>(callback), std::get<Is>(std::forward<decltype(tuple)>(tuple)), Is
+                )...
+            );
+        }(std::make_index_sequence<sizeof...(TTuple)>{});
+    }
+    else
+    {
+        return std::apply(
+            [&callback](auto&&... args) {
+                return std::make_tuple(
+                    std::invoke(std::forward<TCallback>(callback), std::forward<decltype(args)>(args))...
+                );
+            },
+            tuple
+        );
+    }
 }
 
 template <typename TFn, typename TAcc, typename... TTuple>
-constexpr auto reduce(std::tuple<TTuple...> const& tuple, TFn&& callback, TAcc&& accumulator)
+[[nodiscard]] constexpr auto reduce(std::tuple<TTuple...> const& tuple, TFn&& callback, TAcc&& accumulator)
 {
     return reduceRecursive<0, TFn, TAcc, std::tuple<TTuple...>>(
         tuple, std::forward<TFn>(callback), std::forward<TAcc>(accumulator)
@@ -83,7 +113,7 @@ constexpr auto reduce(std::tuple<TTuple...> const& tuple, TFn&& callback, TAcc&&
 }
 
 template <size_t i = 0, typename... TInput, typename TCallback>
-constexpr auto flatMap(std::tuple<TInput...> const& tuple, TCallback&& callback)
+[[nodiscard]] constexpr auto flatMap(std::tuple<TInput...> const& tuple, TCallback&& callback)
 {
     using TTuple = decltype(tuple);
 
@@ -116,7 +146,7 @@ constexpr auto flatMap(std::tuple<TInput...> const& tuple, TCallback&& callback)
  */
 
 template <typename... TInputs>
-constexpr auto flattenCombinations(std::tuple<TInputs...> const& tuple)
+[[nodiscard]] constexpr auto flattenCombinations(std::tuple<TInputs...> const& tuple)
 {
     using TTuple = std::tuple<TInputs...>;
 
@@ -138,7 +168,7 @@ constexpr auto flattenCombinations(std::tuple<TInputs...> const& tuple)
 }
 
 template <typename TTuple>
-constexpr auto reverse(TTuple&& tuple)
+[[nodiscard]] constexpr auto reverse(TTuple&& tuple)
 {
     constexpr auto Size = std::tuple_size_v<std::decay_t<TTuple>>;
 
@@ -168,37 +198,111 @@ struct IsUniform<std::tuple<TElements...>> : IsUniform<TElements...>
 template <typename... TTuple>
 constexpr bool IsUniformValue = IsUniform<TTuple...>::value;
 
-/// I.e. at runtime, by value. If the index is out of bound, YOU WILL GET THE FIRST ELEMENT!
-template <class TTuple, size_t Index = 0>
-auto* dynamicLookupByPtr(TTuple& tuple, size_t index)
+template <typename>
+struct CommonType
 {
-    static_assert(
-        IsUniform<TTuple>::value, "the tuple must be uniform for runtime indexing of this form to make sense"
-    );
+};
 
-    if (Index == index)
+template <typename... TElements>
+struct CommonType<std::tuple<TElements...>>
+{
+    using type = std::common_type_t<TElements...>;
+};
+
+template <typename... TElements>
+struct CommonType<std::tuple<TElements...> const>
+{
+    using type = std::common_type_t<TElements...> const;
+};
+
+template <typename... TElements>
+struct CommonType<std::tuple<TElements...>&>
+{
+    using type = std::common_type_t<TElements...>&;
+};
+
+template <typename... TElements>
+struct CommonType<std::tuple<TElements...> const&>
+{
+    using type = std::common_type_t<TElements...> const&;
+};
+
+/**
+ * @brief Lookup an index without requiring a templated index. If the `indexToFind` is out of bounds, you will get
+ * nullptr. In a constexpr setting you should see a (probably unhelpful) debug error.
+ * @remarks This only makes sense where the tuple type is uniform.
+ */
+template <typename TTuple, size_t Index = 0>
+[[nodiscard]] constexpr auto select(TTuple& tuple, size_t indexToFind)
+    -> std::remove_reference_t<typename CommonType<TTuple>::type>&
+{
+    static_assert(!std::is_rvalue_reference_v<decltype(tuple)>, "tuple must be a l-value reference");
+
+    if (Index == indexToFind)
     {
-        return &std::get<Index>(tuple);
+        return std::get<Index>(tuple);
     }
-    if constexpr (Index + 1 < std::tuple_size_v<TTuple>)
+    if constexpr (Index + 1 < std::tuple_size_v<std::decay_t<TTuple>>)
     {
-        return dynamicLookupByPtr<TTuple, Index + 1>(tuple, index);
+        return select<TTuple, Index + 1>(tuple, indexToFind);
     }
     else
     {
         if constexpr (JsUtil::Debug::isDebug())
         {
-            JsUtil::Debug::error("index out of range");
+            // this isn't constexpr, so if you see a compile error here, you went out of bounds...
+            // we can't just static assert here, because this path is required for non-constexpr uses
+            JsUtil::Debug::error("indexToFind out of range");
         }
 
-        return &std::get<0>(tuple);
+        return std::get<0>(tuple);
     }
 }
 
-template <class TTuple>
-auto dynamicLookup(TTuple& tuple, size_t index)
+template <typename TTuple, size_t Index = 0>
+[[nodiscard]] constexpr auto select(TTuple const& tuple, size_t indexToFind)
+    -> std::remove_reference_t<typename CommonType<TTuple>::type>
 {
-    return *dynamicLookupByPtr(tuple, index);
+    static_assert(!std::is_rvalue_reference_v<decltype(tuple)>, "tuple must be a l-value reference");
+
+    if (Index == indexToFind)
+    {
+        return std::get<Index>(tuple);
+    }
+    if constexpr (Index + 1 < std::tuple_size_v<std::decay_t<TTuple>>)
+    {
+        return select<TTuple, Index + 1>(tuple, indexToFind);
+    }
+    else
+    {
+        if constexpr (JsUtil::Debug::isDebug())
+        {
+            // this isn't constexpr, so if you see a compile error here, you went out of bounds...
+            // we can't just static assert here, because this path is required for non-constexpr uses
+            JsUtil::Debug::error("indexToFind out of range");
+        }
+
+        return std::get<0>(tuple);
+    }
+}
+
+/**
+ * @brief Put up to (but not including) `Index` into the first half, the rest goes into the second half.
+ */
+template <std::size_t Index, typename TTuple>
+[[nodiscard]] constexpr auto splitAt(TTuple&& tuple)
+{
+    static_assert(Index <= std::tuple_size_v<std::decay_t<TTuple>>, "index out of bounds");
+
+    auto h1 = [&tuple]<std::size_t... Is>(std::index_sequence<Is...>) {
+        return std::make_tuple(std::get<Is>(std::forward<TTuple>(tuple))...);
+    }(std::make_index_sequence<Index>{});
+
+    auto h2 = [&tuple]<std::size_t... Is>(std::index_sequence<Is...>) {
+        return std::make_tuple(std::get<Index + Is>(std::forward<TTuple>(tuple))...);
+    }(std::make_index_sequence<std::tuple_size_v<std::decay_t<TTuple>> - Index>{});
+
+    return std::make_tuple(std::move(h1), std::move(h2));
 }
 
 } // namespace TupleExt

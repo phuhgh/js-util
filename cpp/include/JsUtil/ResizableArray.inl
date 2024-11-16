@@ -200,7 +200,7 @@ bool ResizableArray<TValue, TIndex>::resize(TIndex newSize)
 }
 
 template <typename TValue, WithUnsigned TIndex>
-TValue ResizableArray<TValue, TIndex>::operator[](TIndex index) const
+TValue const& ResizableArray<TValue, TIndex>::operator[](TIndex index) const noexcept
 {
     if constexpr (Debug::isDebug())
     {
@@ -210,7 +210,7 @@ TValue ResizableArray<TValue, TIndex>::operator[](TIndex index) const
 }
 
 template <typename TValue, WithUnsigned TIndex>
-TValue& ResizableArray<TValue, TIndex>::operator[](TIndex index)
+TValue& ResizableArray<TValue, TIndex>::operator[](TIndex index) noexcept
 {
     if constexpr (Debug::isDebug())
     {
@@ -253,7 +253,7 @@ void ResizableArray<TValue, TIndex>::moveArrayValues(TOther const& other)
 }
 
 template <typename TValue, WithUnsigned TIndex>
-gsl::owner<TValue*> ResizableArray<TValue, TIndex>::allocateArray(TIndex size)
+gsl::owner<TValue*> ResizableArray<TValue, TIndex>::allocateArray(TIndex size) noexcept
 {
     if constexpr (Debug::isDebug())
     {

@@ -105,6 +105,9 @@ macro(internal_jsu_get_common_link_flags writeTo hasMain noBindings)
     if (${hasMain})
         list(APPEND __EXPORTED_NAMES _main)
     endif ()
+
+    # todo jack: add option to extend this in library fn, have jsUtil add these
+    list(APPEND __EXPORTED_NAMES UTF8ToString stringToNewUTF8)
     string(REPLACE ";" "','" __EXPORTED_NAMES "${__EXPORTED_NAMES}")
 
     string(CONCAT __DEFAULT_LINK_FLAGS

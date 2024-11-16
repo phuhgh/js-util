@@ -67,7 +67,7 @@ class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
         return *this;
     }
 
-    TValue& operator[](TIndex index)
+    TValue& operator[](TIndex index) noexcept
     {
         if constexpr (Debug::isDebug())
         {
@@ -86,14 +86,14 @@ class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
         return std::move(m_buffer[m_start++]);
     }
 
-    bool   getIsEmpty() const { return m_start == m_end; }
-    TIndex getCapacity() const { return m_buffer.getSize(); }
+    bool   getIsEmpty() const noexcept { return m_start == m_end; }
+    TIndex getCapacity() const noexcept { return m_buffer.getSize(); }
     /** the number of pushes left */
-    TIndex getRemainingCapacity() const { return m_start + m_buffer.getSize() - m_end; }
+    TIndex getRemainingCapacity() const noexcept { return m_start + m_buffer.getSize() - m_end; }
     /** the number of pops left */
-    TIndex getElementCount() const { return m_end - m_start; }
-    TIndex getAbsoluteStart() const { return m_start.load(); }
-    TIndex getAbsoluteEnd() const { return m_end.load(); }
+    TIndex getElementCount() const noexcept { return m_end - m_start; }
+    TIndex getAbsoluteStart() const noexcept { return m_start.load(); }
+    TIndex getAbsoluteEnd() const noexcept { return m_end.load(); }
 
   protected:
     CircularBuffer<TValue, TIndex> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)
@@ -114,7 +114,7 @@ class CircularFIFOStackBase<TValue, TIndex, TIndex>
         }
     }
 
-    TValue& operator[](TIndex index)
+    TValue& operator[](TIndex index) noexcept
     {
         if constexpr (Debug::isDebug())
         {
@@ -133,14 +133,14 @@ class CircularFIFOStackBase<TValue, TIndex, TIndex>
         return std::move(m_buffer[m_start++]);
     }
 
-    bool   getIsEmpty() const { return m_start == m_end; }
-    TIndex getCapacity() const { return m_buffer.getSize(); }
+    bool   getIsEmpty() const noexcept { return m_start == m_end; }
+    TIndex getCapacity() const noexcept { return m_buffer.getSize(); }
     /** the number of pushes left */
-    TIndex getRemainingCapacity() const { return m_start + m_buffer.getSize() - m_end; }
+    TIndex getRemainingCapacity() const noexcept { return m_start + m_buffer.getSize() - m_end; }
     /** the number of pops left */
-    TIndex getElementCount() const { return m_end - m_start; }
-    TIndex getAbsoluteStart() const { return m_start; }
-    TIndex getAbsoluteEnd() const { return m_end; }
+    TIndex getElementCount() const noexcept { return m_end - m_start; }
+    TIndex getAbsoluteStart() const noexcept { return m_start; }
+    TIndex getAbsoluteEnd() const noexcept { return m_end; }
 
   protected:
     CircularBuffer<TValue, TIndex> m_buffer;    // NOLINT(*-non-private-member-variables-in-classes)

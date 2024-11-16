@@ -50,5 +50,6 @@ jobs:
 
       - name: Publish to the npm registry
         run: npm publish
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

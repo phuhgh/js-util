@@ -58,6 +58,9 @@ export namespace Emscripten
         filePackagePrefixURL: string;
         wasmBinary: ArrayBuffer;
 
+        stringToNewUTF8(str: string): number;
+        UTF8ToString(ptr: number, maxBytesToRead?: number): string;
+
         runtimeKeepalivePush?(): void;
         runtimeKeepalivePop?(): void;
 

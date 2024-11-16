@@ -1,11 +1,50 @@
 #pragma once
 
+#include "JsUtil/FixedHashMap.hpp"
+#include "JsUtil/Identifiers.hpp"
 #include "JsUtil/LangExt.hpp"
+#include "JsUtil/Number.hpp"
 #include "JsUtil/Tuple.hpp"
 #include <span>
 
 namespace Autogen
 {
+
+template <unsigned BlockSize>
+struct ForEachConnector;
+struct ForEachSpanConnector;
+
+inline constexpr JsUtil::IdCategory<struct FFIterator>                               scITERATOR{"JSU_FF_ITERATOR"};
+inline constexpr JsUtil::IdSpecialization<ForEachConnector<1>, decltype(scITERATOR)> scFOR_EACH_1{
+    scITERATOR,
+    "JSU_FF_FOR_EACH_1"
+};
+inline constexpr JsUtil::IdSpecialization<ForEachConnector<2>, decltype(scITERATOR)> scFOR_EACH_2{
+    scITERATOR,
+    "JSU_FF_FOR_EACH_2"
+};
+inline constexpr JsUtil::IdSpecialization<ForEachConnector<3>, decltype(scITERATOR)> scFOR_EACH_3{
+    scITERATOR,
+    "JSU_FF_FOR_EACH_3"
+};
+inline constexpr JsUtil::IdSpecialization<ForEachSpanConnector, decltype(scITERATOR)> scFOR_EACH_SPAN{
+    scITERATOR,
+    "JSU_FF_FOR_EACH_SPAN"
+};
+
+template <typename TSpecialization, typename TFn>
+struct FuncStep
+{
+    using TFunction = TFn;
+
+    constexpr FuncStep(TSpecialization const& specialization, TFn function)
+        : specialization(specialization)
+        , function(function)
+    {
+    }
+    TSpecialization const& specialization;
+    TFn                    function;
+};
 
 template <typename TFn>
 class FunctionFactory
@@ -22,7 +61,7 @@ class FunctionFactory
     }
 
     /**
-     * @brief Extend the chain of function calls right, if A > B before, and calling with C, becomes A > B > C.
+     * @brief Extend the chain of function calls right. If `this` is A, and `callback` is B, the result would be A > B.
      */
     template <typename TExtFn>
     constexpr auto extend(TExtFn const& callback) const
@@ -36,7 +75,8 @@ class FunctionFactory
     }
 
     /**
-     * @brief Extend the chain of function calls left, if A > B before, and calling with C, becomes C > A > B.
+     * @brief Extend the chain of function calls left. If `functionFactory` is A, and `this` is B, the result
+     * would be B > A.
      */
     template <typename TFact>
     constexpr auto wrap(TFact const& functionFactory) const
@@ -77,29 +117,7 @@ struct ForEachConnector
     };
 
     template <typename TContext, typename TArg, typename TFunction>
-    constexpr auto createOne(TFunction callback)
-    {
-        return [callback, _opts = options](TContext&& context, TArg items) {
-            using TIndex = typename TArg::size_type;
-
-            auto stride = static_cast<TIndex>(_opts.stride);
-            auto offset = static_cast<TIndex>(_opts.offset);
-            auto end = std::min(static_cast<TIndex>(_opts.end), items.size());
-
-            static_assert(
-                // (-1 as the function must take context as a parameter too)
-                LangExt::FunctionTraits<TFunction>::arity - 1 == BlockSize,
-                "callback doesn't have the correct number of parameters (it must match the window size + context)"
-            );
-
-            for (TIndex i = offset; i < end; i += stride)
-            {
-                [&]<std::size_t... Is>(std::index_sequence<Is...>) {
-                    callback(std::forward<TContext>(context), items[i + Is]...);
-                }(std::make_index_sequence<BlockSize>());
-            }
-        };
-    }
+    constexpr auto createOne(TFunction callback) const;
 
     Options options;
 };
@@ -109,7 +127,7 @@ ForEachConnector(T) -> ForEachConnector<T::blockSize>;
 ForEachConnector() -> ForEachConnector<1>;
 
 /**
- * @brief Connects the previous pipeline step (which should return some STL like collection) with the next function in
+ * @brief Connects the previous pipeline step (which should return some STL like collection) with the next step in
  * the pipeline.
  *
  * Optionally You may specify an `offset`, `end` and `stride` - which all have the usual meaning. The `spanSize`
@@ -126,23 +144,8 @@ struct ForEachSpanConnector
         size_t   end{std::numeric_limits<size_t>::max()};
     };
 
-    template <typename TContext, typename TArg, typename TFunction>
-    constexpr auto createOne(TFunction callback)
-    {
-        return [callback, _opts = options](TContext&& context, TArg items) {
-            using TIndex = typename TArg::size_type;
-
-            auto const spanSize = static_cast<TIndex>(_opts.spanSize);
-            auto const stride = static_cast<TIndex>(_opts.stride);
-            auto const offset = static_cast<TIndex>(_opts.offset);
-            auto const end = std::min(static_cast<TIndex>(_opts.end), items.size());
-
-            for (TIndex i = offset; i < end; i += stride)
-            {
-                callback(std::forward<TContext>(context), std::span{&items[i], spanSize});
-            }
-        };
-    }
+    template <typename TContext, typename TArg, typename TStep>
+    constexpr auto createOne(TStep callback) const;
 
     Options options;
 };
@@ -150,67 +153,91 @@ struct ForEachSpanConnector
 namespace Impl
 {
 
-template <typename>
-struct PipelineExtensions
+template <typename T>
+struct SpecializationMatcher;
+
+template <unsigned BlockSize>
+struct SpecializationMatcher<ForEachConnector<BlockSize>>
 {
-    template <typename TFactory, typename TFunction>
-    static constexpr auto apply(TFactory&& factory, TFunction&& function)
+    static constexpr auto const& getSpecialization(ForEachConnector<BlockSize> const&);
+};
+
+template <>
+struct SpecializationMatcher<ForEachSpanConnector>
+{
+    static constexpr auto const& getSpecialization(ForEachSpanConnector const&) { return scFOR_EACH_SPAN; }
+};
+
+template <typename TSpecialization, typename TFn>
+struct SpecializationMatcher<FuncStep<TSpecialization, TFn>>
+{
+    static constexpr TSpecialization const& getSpecialization(FuncStep<TSpecialization, TFn> const& spec)
     {
-        // it should be a plain function
-        return FunctionFactory(std::forward<TFunction>(function)).wrap(std::forward<TFactory>(factory));
+        return spec.specialization;
     }
-    template <typename TFactory, typename TFunction, typename TPreviousFunction>
-    static constexpr auto apply(TFactory&& factory, TFunction&& function, TPreviousFunction&&)
+};
+
+template <typename>
+struct PipelineExtensions;
+
+template <typename TSpecialization, typename TFn>
+struct PipelineExtensions<FuncStep<TSpecialization, TFn>>
+{
+    static constexpr auto apply(FuncStep<TSpecialization, TFn> const& step) { return FunctionFactory(step.function); }
+
+    template <typename TFactory>
+    static constexpr auto apply(TFactory&& factory, FuncStep<TSpecialization, TFn> const& step)
     {
         // it should be a plain function
-        return FunctionFactory(std::forward<TFunction>(function)).wrap(std::forward<TFactory>(factory));
+        return FunctionFactory(step.function).wrap(std::forward<TFactory>(factory));
+    }
+
+    template <typename TFactory, typename TPrevStep>
+    static constexpr auto apply(TFactory&& factory, FuncStep<TSpecialization, TFn> const& step, TPrevStep&&)
+    {
+        // it should be a plain function
+        return FunctionFactory(step.function).wrap(std::forward<TFactory>(factory));
     }
 };
 
 template <unsigned BlockSize>
 struct PipelineExtensions<ForEachConnector<BlockSize>>
 {
-    template <typename TFactory, typename TFunction>
-    static constexpr auto apply(TFactory, TFunction)
+    template <typename TStep>
+    static constexpr auto apply(TStep)
+    {
+        static_assert(false, "ForEachConnector must not be the last step");
+    }
+
+    template <typename TFactory>
+    static constexpr auto apply(TFactory, ForEachConnector<BlockSize> const&)
     {
         // encode each collection type in a step before (even if it's just identity), they will then be expanded out
-        static_assert(false, "ForEachConnector must not be the first function");
+        static_assert(false, "ForEachConnector must not be the first step");
     }
-    template <typename TFactory, typename TFunction, typename TPreviousFunction>
-    static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)
-    {
-        using TContext = typename decltype(factory)::TContext;
-        using TFTraits = LangExt::FunctionTraits<TPreviousFunction>;
-        // the step before must be a regular function
-        static_assert(TFTraits::arity == 2);
-        using TArg = typename TFTraits::TRet;
 
-        // function is itself a factory, which takes a callback to create the chainable
-        return FunctionFactory(function.template createOne<TContext, TArg>(factory.m_callback));
-    }
+    template <typename TFactory, typename TPrevStep>
+    static constexpr auto apply(TFactory factory, ForEachConnector<BlockSize> const& step, TPrevStep);
 };
 
 template <>
 struct PipelineExtensions<ForEachSpanConnector>
 {
-    template <typename TFactory, typename TFunction>
-    static constexpr auto apply(TFactory, TFunction)
+    template <typename TStep>
+    static constexpr auto apply(TStep)
+    {
+        static_assert(false, "ForEachSpanConnector must not be the last step");
+    }
+
+    template <typename TFactory, typename TStep>
+    static constexpr auto apply(TFactory, TStep)
     {
         // encode each collection type in a step before (even if it's just identity), they will then be expanded out
-        static_assert(false, "ForEachSpanConnector must not be the first function");
+        static_assert(false, "ForEachSpanConnector must not be the first step");
     }
-    template <typename TFactory, typename TFunction, typename TPreviousFunction>
-    static constexpr auto apply(TFactory factory, TFunction function, TPreviousFunction)
-    {
-        using TContext = typename decltype(factory)::TContext;
-        using TFTraits = LangExt::FunctionTraits<TPreviousFunction>;
-        // the step before must be a regular function
-        static_assert(TFTraits::arity == 2);
-        using TArg = typename TFTraits::TRet;
 
-        // function is itself a factory, which takes a callback to create the chainable
-        return FunctionFactory(function.template createOne<TContext, TArg>(factory.m_callback));
-    }
+    template <typename TFactory, typename TPrevStep>
+    static constexpr auto apply(TFactory const& factory, ForEachSpanConnector const& step, TPrevStep);
 };
 
 } // namespace Impl
@@ -221,31 +248,20 @@ struct PipelineExtensions<ForEachSpanConnector>
  *inlining in the inner loops.
  */
 template <typename... TPipelineSteps>
-constexpr auto applyFunctionFactory(std::tuple<TPipelineSteps...> const& pipelineSteps)
-{
-    return TupleExt::map(pipelineSteps, [](auto functions) {
-        auto reversedFunctions = TupleExt::reverse(functions);
-        auto last = std::get<0>(reversedFunctions);
-        auto rest = TupleExt::tail(reversedFunctions);
+consteval auto applyFunctionFactory(std::tuple<TPipelineSteps...> const& pipelineSteps);
 
-        return TupleExt::reduce(
-            rest,
-            [&functions](auto factory, auto function) {
-                constexpr auto Index = TupleExt::IndexOf<decltype(function), decltype(functions)>::value;
-                if constexpr (Index > 0)
-                {
-                    auto nextFunction = std::get<Index - 1>(functions);
-                    // we're going backwards, so it's next, but in logical order this is the step before...
-                    return Impl::PipelineExtensions<decltype(function)>::apply(factory, function, nextFunction);
-                }
-                else
-                {
-                    return Impl::PipelineExtensions<decltype(function)>::apply(factory, function);
-                }
-            },
-            FunctionFactory(last)
-        );
-    });
-}
+/**
+ * @brief The categories which an entity must belong to in order to be allowed for use in the pipeline.
+ */
+template <typename... TPipelineSteps>
+auto getRequiredCategories(std::tuple<TPipelineSteps...> pipelineStages);
+
+/**
+ * @brief Creates a mapping between categories and specializations onto the function index.
+ */
+template <typename... TPipelineSteps>
+auto createFunctionMapping(std::tuple<TPipelineSteps...> pipelineStages);
 
 } // namespace Autogen
+
+#include "JsUtil/FunctionFactory.inl"

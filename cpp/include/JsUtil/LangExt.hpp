@@ -1,11 +1,35 @@
 #pragma once
 
+#include "JsUtil/TypeTraits.hpp"
 #include <array>
 #include <tuple>
-#include "JsUtil/TypeTraits.hpp"
 
 namespace LangExt
 {
+
+namespace Impl
+{
+template <typename TFrom, typename TTo>
+struct CopyQualifiersImpl
+{
+    using type_with_const = std::conditional_t<std::is_const_v<TFrom>, std::add_const_t<TTo>, TTo>;
+
+    using type_with_volatile =
+        std::conditional_t<std::is_volatile_v<TFrom>, std::add_volatile_t<type_with_const>, type_with_const>;
+
+    using type_with_rvalue = std::conditional_t<
+        std::is_rvalue_reference_v<TFrom>,
+        std::add_rvalue_reference_t<type_with_volatile>,
+        type_with_volatile>;
+
+    using type_with_lvalue = std::conditional_t<
+        std::is_lvalue_reference_v<TFrom>,
+        std::add_lvalue_reference_t<type_with_rvalue>,
+        type_with_rvalue>;
+
+    using type = type_with_lvalue;
+};
+} // namespace Impl
 
 inline auto const identity = [](auto const& val) { return val; };
 
@@ -111,6 +135,48 @@ struct FunctionTraits
 
     template <std::size_t Index>
     using argument_t = typename argument<Index>::type;
+};
+
+template <JsUtil::WithCallable<void> TCallable>
+class ScopeGuard
+{
+  public:
+    template <JsUtil::WithCallable<void> T>
+    explicit ScopeGuard(T&& onDestroy)
+        : m_onDestroy(std::forward<T>(onDestroy))
+    {
+    }
+    ~ScopeGuard() { m_onDestroy(); }
+
+  private:
+    TCallable m_onDestroy;
+};
+
+template <JsUtil::WithCallable<void> TCallable>
+ScopeGuard(TCallable) -> ScopeGuard<TCallable>;
+
+template <JsUtil::WithCallable<void> TCallable>
+class OnCreate
+{
+  public:
+    template <JsUtil::WithCallable<void> T>
+    explicit OnCreate(T&& onCreate)
+        : m_onCreate(std::forward<T>(onCreate))
+    {
+        m_onCreate();
+    }
+
+  private:
+    TCallable m_onCreate;
+};
+
+template <JsUtil::WithCallable<void> TCallable>
+OnCreate(TCallable) -> OnCreate<TCallable>;
+
+template <typename TFrom, typename TTo>
+struct CopyQualifiers
+{
+    using type = Impl::CopyQualifiersImpl<TFrom, TTo>;
 };
 
 } // namespace LangExt

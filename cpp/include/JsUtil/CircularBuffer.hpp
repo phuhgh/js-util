@@ -9,6 +9,7 @@ template <typename TValue, WithUnsigned TIndex = size_t>
 class CircularBuffer
 {
   public:
+    // noexcept if TValue is also noexcept
     explicit CircularBuffer(TIndex size)
         : m_array(size)
     {
@@ -19,14 +20,14 @@ class CircularBuffer
     {
     }
 
-    TIndex  getSize() const { return m_array.size(); }
-    TValue  operator[](TIndex index) const { return m_array[getAdjustedIndex(index)]; }
-    TValue& operator[](TIndex index) { return m_array[getAdjustedIndex(index)]; }
+    TIndex  getSize() const noexcept { return m_array.size(); }
+    TValue  operator[](TIndex index) const noexcept { return m_array[getAdjustedIndex(index)]; }
+    TValue& operator[](TIndex index) noexcept { return m_array[getAdjustedIndex(index)]; }
 
   private:
-    ResizableArray<TValue, TIndex> m_array;
+    TIndex getAdjustedIndex(TIndex index) const noexcept { return index % m_array.size(); }
 
-    TIndex getAdjustedIndex(TIndex index) const { return index % m_array.size(); }
+    ResizableArray<TValue, TIndex> m_array;
 };
 
 } // namespace JsUtil

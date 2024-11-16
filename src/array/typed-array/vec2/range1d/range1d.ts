@@ -6,7 +6,7 @@ import { Vec2 } from "../vec2.js";
 import { Mat2 } from "../../mat2/mat2.js";
 import { TPickExcept } from "../../../../typescript/t-pick-except.js";
 import { TTypedArrayTupleMutativeMethods } from "../../a-typed-array-tuple.js";
-import { populateTypedArrayConstructorMap } from "../../rtti-interop.js";
+import { populateTypedArrayConstructorMap } from "../../../../runtime/rtti-interop.js";
 
 /**
  * @public

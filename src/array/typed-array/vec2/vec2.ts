@@ -6,7 +6,7 @@ import { getVec2Ctor } from "./get-vec2-ctor.js";
 import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
 import { IReadonlyRange2d } from "../2d/range2d/range2d.js";
 import { TPickExcept } from "../../../typescript/t-pick-except.js";
-import { populateTypedArrayConstructorMap } from "../rtti-interop.js";
+import { populateTypedArrayConstructorMap } from "../../../runtime/rtti-interop.js";
 
 /**
  * @public

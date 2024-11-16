@@ -23,6 +23,11 @@ bool WorkerLoop<TConfig>::start(bool tickOnStart)
             m_loop_state = eRUNNING;
             m_notification = tickOnStart ? eSPIN_LOOP : eNO_NOTIFICATION;
 
+            if constexpr (Debug::isDebug())
+            {
+                Debug::onBeforeAllocate();
+            }
+
             // the thread may not outlive the WorkerLoop, so no special measures are required for lifecycles
             m_thread = new (std::nothrow) std::thread([this, tickOnStart]() {
                 m_config.onReady();
@@ -69,7 +74,7 @@ bool WorkerLoop<TConfig>::start(bool tickOnStart)
 }
 
 template <WithWorkerLoopConfig TConfig>
-void WorkerLoop<TConfig>::stop(bool wait)
+void WorkerLoop<TConfig>::stop(bool wait) noexcept
 {
     setWorkerNotification(eEND);
 
@@ -80,7 +85,7 @@ void WorkerLoop<TConfig>::stop(bool wait)
 }
 
 template <WithWorkerLoopConfig TConfig>
-void WorkerLoop<TConfig>::awaitCompletion()
+void WorkerLoop<TConfig>::awaitCompletion() noexcept
 {
     std::unique_lock lock(m_state_mutex);
 
@@ -91,13 +96,13 @@ void WorkerLoop<TConfig>::awaitCompletion()
 }
 
 template <WithWorkerLoopConfig TConfig>
-TConfig& WorkerLoop<TConfig>::getTask()
+TConfig& WorkerLoop<TConfig>::getTask() noexcept
 {
     return m_config;
 }
 
 template <WithWorkerLoopConfig TConfig>
-bool WorkerLoop<TConfig>::isRunning() const
+bool WorkerLoop<TConfig>::isRunning() const noexcept
 {
     std::unique_lock lock(m_state_mutex);
     return m_loop_state == eRUNNING;
@@ -110,7 +115,7 @@ void WorkerLoop<TConfig>::proceed()
 }
 
 template <WithWorkerLoopConfig TConfig>
-void WorkerLoop<TConfig>::setWorkerNotification(WorkerLoop::ENotification notification)
+void WorkerLoop<TConfig>::setWorkerNotification(WorkerLoop::ENotification notification) noexcept
 {
     {
         std::unique_lock lock(m_state_mutex);

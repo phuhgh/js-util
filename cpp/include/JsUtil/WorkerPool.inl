@@ -90,12 +90,14 @@ WorkerPool<TDistributionStrategy>::~WorkerPool()
 
 template <WithDistributionStrategy TDistributionStrategy>
 WorkerPool<TDistributionStrategy>::WorkerPool(TDistributionStrategy strategy, WorkerPoolConfig const& config)
-    : m_workers(ResizableArray<gsl::owner<WorkerLoop<PoolWorkerConfig>*>, uint16_t>::createPointerArray(
-          config.workerCount,
-          []() -> gsl::owner<WorkerLoop<PoolWorkerConfig>*> {
-              return new (std::nothrow) WorkerLoop<PoolWorkerConfig>();
-          }
-      ))
+    : m_workers(
+          ResizableArray<gsl::owner<WorkerLoop<PoolWorkerConfig>*>, uint16_t>::createPointerArray(
+              config.workerCount,
+              []() -> gsl::owner<WorkerLoop<PoolWorkerConfig>*> {
+                  return new (std::nothrow) WorkerLoop<PoolWorkerConfig>();
+              }
+          )
+      )
     , m_strategy(std::move(strategy))
     , m_syncOverflowHandling(config.syncOverflowHandling)
 {
@@ -133,7 +135,7 @@ uint16_t WorkerPool<TDistributionStrategy>::start()
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-void WorkerPool<TDistributionStrategy>::stop(bool wait)
+void WorkerPool<TDistributionStrategy>::stop(bool wait) noexcept
 {
     // stop in parallel
     for (auto& worker : m_workers.asSpan())
@@ -151,7 +153,7 @@ void WorkerPool<TDistributionStrategy>::stop(bool wait)
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const
+bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const noexcept
 {
     bool isAcceptingJobs{true};
     for (auto& worker : m_workers.asSpan())
@@ -162,7 +164,7 @@ bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-bool WorkerPool<TDistributionStrategy>::isAnyWorkerRunning() const
+bool WorkerPool<TDistributionStrategy>::isAnyWorkerRunning() const noexcept
 {
     bool isRunning{false};
     for (auto& worker : m_workers.asSpan())
@@ -173,7 +175,7 @@ bool WorkerPool<TDistributionStrategy>::isAnyWorkerRunning() const
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-bool WorkerPool<TDistributionStrategy>::hasPendingWork() const
+bool WorkerPool<TDistributionStrategy>::hasPendingWork() const noexcept
 {
     bool hasPendingWork{false};
     for (auto& worker : m_workers.asSpan())
@@ -184,7 +186,7 @@ bool WorkerPool<TDistributionStrategy>::hasPendingWork() const
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-void WorkerPool<TDistributionStrategy>::setBatchEndPoint()
+void WorkerPool<TDistributionStrategy>::setBatchEndPoint() noexcept
 {
     for (auto& worker : m_workers.asSpan())
     {
@@ -194,7 +196,7 @@ void WorkerPool<TDistributionStrategy>::setBatchEndPoint()
 
 // todo jack: definitely need tests on the cpp side for this
 template <WithDistributionStrategy TDistributionStrategy>
-bool WorkerPool<TDistributionStrategy>::isBatchDone() const
+bool WorkerPool<TDistributionStrategy>::isBatchDone() const noexcept
 {
     auto ready{true};
     for (auto& worker : m_workers.asSpan())
@@ -205,7 +207,7 @@ bool WorkerPool<TDistributionStrategy>::isBatchDone() const
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job)
+bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job) noexcept
 {
     if (job == nullptr)
     {
@@ -225,7 +227,7 @@ bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job)
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-void WorkerPool<TDistributionStrategy>::invalidateBatch()
+void WorkerPool<TDistributionStrategy>::invalidateBatch() noexcept
 {
     for (auto& worker : m_workers.asSpan())
     {
@@ -234,7 +236,7 @@ void WorkerPool<TDistributionStrategy>::invalidateBatch()
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-bool WorkerPool<TDistributionStrategy>::areAllWorkersSynced() const
+bool WorkerPool<TDistributionStrategy>::areAllWorkersSynced() const noexcept
 {
     bool synced{true};
     for (auto& worker : m_workers.asSpan())
@@ -244,7 +246,7 @@ bool WorkerPool<TDistributionStrategy>::areAllWorkersSynced() const
     return synced;
 }
 
-bool RoundRobin::distributeWork(std::span<WorkerLoop<PoolWorkerConfig>*> o_workers, gsl::owner<IExecutor*> job)
+bool RoundRobin::distributeWork(std::span<WorkerLoop<PoolWorkerConfig>*> o_workers, gsl::owner<IExecutor*> job) noexcept
 {
     if (o_workers.empty())
     {

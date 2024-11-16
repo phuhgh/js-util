@@ -47,7 +47,20 @@ export { INormalizedDataView } from "./array/typed-array/normalized-data-view/i-
 export { TTypedArray } from "./array/typed-array/t-typed-array.js";
 export { ITypedArrayExtensions } from "./array/typed-array/i-typed-array-extensions.js";
 export { ITypedArrayCtor } from "./array/typed-array/i-typed-array-ctor.js";
-export { ENumberIdentifier, getNumberIdentifier } from "./array/typed-array/rtti-interop.js";
+export type { IBuffer } from "./array/typed-array/i-buffer-view.js";
+export {
+    ENumberIdentifier,
+    getNumberIdentifier,
+    numberSpecializations,
+    IdSpecialization,
+    getNumberSpecialization,
+    numberCategory,
+    IdCategory,
+    bufferCategory,
+    IStableStore,
+    StableIdStore,
+    StableId,
+} from "./runtime/rtti-interop.js";
 export { ISharedTypedArrayTuple, SharedTypedArrayTuple, TExtendedTypedArrayCtor } from "./array/typed-array/shared-typed-array-tuple.js";
 export { CircularBuffer } from "./collection/circular-buffer.js";
 export { CircularFIFOStack, ECircularStackOverflowMode } from "./collection/circular-fifo-stack.js";
@@ -93,21 +106,27 @@ export { TUnionToIntersection } from "./typescript/t-union-to-intersection.js";
 export { TUnpackArray } from "./typescript/t-unpack-array.js";
 export { TUnpackIfArray } from "./typescript/t-unpack-if-array.js";
 export { TWriteable } from "./typescript/t-writable.js";
+export { IInteropBindings } from "./web-assembly/emscripten/i-interop-bindings.js";
 export { IEmscriptenWrapper, IEmscriptenDebugUtils, IEmscriptenBinder } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
-export { getEmscriptenWrapper } from "./web-assembly/emscripten/get-emscripten-wrapper.js";
+export { getEmscriptenWrapper, EmscriptenWrapperOptions } from "./web-assembly/emscripten/get-emscripten-wrapper.js";
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array.js";
-export { SharedArray } from "./web-assembly/shared-array/shared-array.js";
+export { SharedArray, sharedArraySpecialization } from "./web-assembly/shared-array/shared-array.js";
+export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
+export { IResizableArrayBindings } from "./web-assembly/resizable-array/i-resizable-array-bindings.js";
+export { resizableArraySpecialization, ResizableArray } from "./web-assembly/resizable-array/resizable-array.js";
 export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bindings.js";
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/util/t-web-assembly-memory-listener-args.js";
 export { isLittleEndian } from "./web-assembly/util/is-little-endian.js";
 export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/shared-memory/shared-memory-block.js";
+export { SharedBufferView, ISharedBufferView } from "./web-assembly/shared-memory/shared-buffer-view.js";
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";
 export { IEmscriptenBindings } from "./web-assembly/emscripten/i-emscripten-bindings.js";
-export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
-export { blockScope } from "./lifecycle/block-scoped-lifecycle.js";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize.js";
-
+export { ReferenceCountedStrategy } from "./web-assembly/emscripten/reference-counted-strategy.js";
+export { AutomaticGcStrategy } from "./web-assembly/emscripten/automatic-gc-strategy.js";
+export { ILifecycleStrategy } from "./web-assembly/emscripten/i-lifecycle-strategy.js";
+export { blockScope } from "./lifecycle/block-scoped-lifecycle.js";
 export { WorkerPool, IWorkerPool, IWorkerPoolConfig, EWorkerPoolOverflowMode, WorkerPoolErrorCause } from "./web-assembly/worker-pool/worker-pool.js";
 export { getEmscriptenTestModuleOptions, ISanitizedTestModuleOptions, SanitizedEmscriptenTestModule, IErrorExclusions } from "./web-assembly/emscripten/sanitized-emscripten-test-module.js";
 export { IWorkerPoolBindings } from "./web-assembly/worker-pool/i-worker-pool-bindings.js";
@@ -223,7 +242,3 @@ declare global
     {
     }
 }
-// todo jack: cleanup
-export { ReferenceCountedStrategy } from "./web-assembly/emscripten/reference-counted-strategy.js";
-export { AutomaticGcStrategy } from "./web-assembly/emscripten/automatic-gc-strategy.js";
-export { ILifecycleStrategy } from "./web-assembly/emscripten/i-lifecycle-strategy.js";

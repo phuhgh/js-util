@@ -11,16 +11,19 @@ import { DebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-obje
 import { DebugWeakStore } from "../../debug/debug-weak-store.js";
 import type { IManagedResourceNode } from "../../lifecycle/manged-resources.js";
 import type { ILifecycleStrategy } from "./i-lifecycle-strategy.js";
+import type { IJsUtilBindings } from "../i-js-util-bindings.js";
+import { type IStableStore, StableIdStore } from "../../runtime/rtti-interop.js";
 
 /**
  * @public
  * Factory for creating wrapped emscripten module.
  */
-export async function getEmscriptenWrapper<TExt extends object, TMod extends object, TLifeStrategy extends ILifecycleStrategy>
+export async function getEmscriptenWrapper<TExt extends object, TMod extends IJsUtilBindings, TLifeStrategy extends ILifecycleStrategy>
 (
     memory: IWebAssemblyMemoryMemory,
     emscriptenModuleFactory: Emscripten.EmscriptenModuleFactory<TMod>,
     lifecycleStrategy: TLifeStrategy,
+    options: EmscriptenWrapperOptions<TExt>,
     extension: Partial<TExt> = {},
 )
     : Promise<IEmscriptenWrapper<TExt & TMod, TLifeStrategy>>
@@ -50,28 +53,54 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends obj
         memory,
         debug,
         binder,
-        lifecycleStrategy
+        lifecycleStrategy,
+        options
     );
     lifecycleStrategy.setWrapper(wrapper);
+    // this depends on the lifecycle strategy having being initialized...
+    wrapper.interopIds.initialize();
+    initializeSubmodules(instance);
 
     return wrapper;
+}
+
+/**
+ * @public
+ */
+export class EmscriptenWrapperOptions<TModule extends object>
+{
+    public constructor
+    (
+        readonly initializeCallbacks: readonly ((wrapper: IEmscriptenWrapper<TModule, ILifecycleStrategy>) => void)[],
+    )
+    {
+    }
+
+    public extend<TExtModule extends object>(options: EmscriptenWrapperOptions<TExtModule>): EmscriptenWrapperOptions<TModule & TExtModule>
+    {
+        return new EmscriptenWrapperOptions<TModule & TExtModule>(
+            (this as EmscriptenWrapperOptions<TModule & TExtModule>).initializeCallbacks.concat(options.initializeCallbacks)
+        );
+    }
 }
 
 class EmscriptenWrapper<TModule extends object, TLifeStrategy extends ILifecycleStrategy>
     implements IEmscriptenWrapper<TModule, TLifeStrategy>
 {
+    public readonly interopIds: IStableStore = new StableIdStore(this as IEmscriptenWrapper<object> as IEmscriptenWrapper<IJsUtilBindings>);
+
     public constructor
     (
         public readonly memoryResize: IBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>,
-        public readonly instance: TModule & Emscripten.EmscriptenModule,
+        public readonly instance: TModule & IJsUtilBindings & Emscripten.EmscriptenModule,
         public readonly memory: IWebAssemblyMemoryMemory,
         public readonly debugUtils: IEmscriptenDebugUtils,
         public readonly binder: IEmscriptenBinder,
         public readonly lifecycleStrategy: TLifeStrategy,
+        options: EmscriptenWrapperOptions<TModule>,
         public readonly rootNode: IManagedResourceNode = lifecycleStrategy.createRootNode(),
     )
     {
-
         const state = this.state = new EWState(new DataView(memory.buffer));
 
         // in debug builds there are retainers on the wasm memory from libraries, sidestep by passing sub-object
@@ -83,6 +112,17 @@ class EmscriptenWrapper<TModule extends object, TLifeStrategy extends ILifecycle
 
             memoryResize.emit(buffer, previous, delta);
         });
+
+        const callbacks = options.initializeCallbacks;
+        for (let i = 0, iEnd = callbacks.length; i < iEnd; i++)
+        {
+            callbacks[i](this);
+        }
+    }
+
+    public destroyLinked()
+    {
+        this.rootNode.getLinked().unlinkAll();
     }
 
     public getDataView(): DataView
@@ -149,5 +189,21 @@ class EWState
         public dataView: DataView,
     )
     {
+    }
+}
+
+function initializeSubmodules(instance: Emscripten.EmscriptenModule): void
+{
+    const keys = Object.keys(instance);
+
+    for (let i = 0, iEnd = keys.length; i < iEnd; i++)
+    {
+        const key = keys[i];
+        if (key.startsWith("_jsuInitialize"))
+        {
+            const fn = (instance[key as keyof typeof instance] as () => void);
+            _BUILD.DEBUG && _Debug.assert(fn.length === 0, "initialization function must be parameterless");
+            fn();
+        }
     }
 }

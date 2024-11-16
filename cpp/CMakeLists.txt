@@ -74,6 +74,36 @@ if (${BUILD_JSUTIL_TEST})
             COMPILE_OPTIONS -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestHashMap
+            SOURCE_FILES test/TestHashMap.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            COMPILE_OPTIONS -pthread
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestHashSet
+            SOURCE_FILES test/TestHashSet.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            COMPILE_OPTIONS -pthread
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestLinkedList
+            SOURCE_FILES test/TestLinkedList.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            COMPILE_OPTIONS -pthread
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestSet
+            SOURCE_FILES test/TestSet.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            COMPILE_OPTIONS -pthread
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestInterop
+            SOURCE_FILES test/TestInterop.cpp
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            COMPILE_OPTIONS -pthread
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestLangExt
             SOURCE_FILES test/TestLangExt.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"

@@ -9,8 +9,9 @@ namespace JsUtil
 {
 
 /**
-* @brief Provides a non-owning view of a contiguous block of memory, much like how attributes are interpreted in opengl.
-*/
+ * @brief Provides a non-owning view of a contiguous block of memory, much like how attributes are interpreted in
+ * opengl.
+ */
 template <typename TContainer>
 class SegmentedDataView
 {
@@ -43,7 +44,7 @@ class SegmentedDataView
     {
     }
 
-    /// @returns A block, which contains one to many value_type.
+    /// @returns A block, which contains one or more value_type.
     template <typename T = TContainer, std::enable_if_t<!std::is_const<T>::value, int> = 0>
     std::span<value_type> getBlock(size_type index)
     {
@@ -55,7 +56,7 @@ class SegmentedDataView
 
         return std::span<value_type>(&m_container[start], m_block_size);
     }
-    /// @returns A block, which contains one to many value_type.
+    /// @returns A block, which contains one or more value_type.
     std::span<value_type const> getBlock(size_type index) const
     {
         size_type start = m_offset + index * m_stride;

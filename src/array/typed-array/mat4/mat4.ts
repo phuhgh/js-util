@@ -5,7 +5,7 @@ import { getMat4Ctor } from "./get-mat4-ctor.js";
 import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
 import { IReadonlyVec4, Vec4 } from "../vec4/vec4.js";
 import { TPickExcept } from "../../../typescript/t-pick-except.js";
-import { populateTypedArrayConstructorMap } from "../rtti-interop.js";
+import { populateTypedArrayConstructorMap } from "../../../runtime/rtti-interop.js";
 
 /**
  * @public

@@ -11,7 +11,6 @@ export class ReferenceCountedNode implements IManagedResourceNode
 {
     public readonly onFreeChannel: IBroadcastChannel<"onFree", []> = new BroadcastChannel("onFree");
 
-
     public onClaimed(): void
     {
         if (this.references <= 0)

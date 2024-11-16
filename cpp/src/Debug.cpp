@@ -18,19 +18,13 @@ bool Debug::sDEBUG_DISABLED = false;
 
 void Impl::Debug_onAllocate()
 {
-#ifndef JSU_NO_JS_DEBUG
-    if (Debug::isDebugDisabled())
+    if (Debug::isDebugDisabled() || !Debug::hasJsIntegration())
     {
         return;
     }
-
-    if (Debug::hasJsIntegration())
-    {
-        jsu_dbgOnAlloc();
-    }
-#endif
+    jsu_dbgOnAlloc();
 }
-void Impl::Debug_error(char const* _message)
+void Impl::Debug_error(std::string_view _message)
 {
     if (Debug::isDebugDisabled())
     {
@@ -39,7 +33,7 @@ void Impl::Debug_error(char const* _message)
 
     if (Debug::hasJsIntegration() && static_cast<bool>(emscripten_is_main_runtime_thread()))
     {
-        jsu_dbgErr(_message);
+        jsu_dbgErr(_message.data());
     }
     else
     {
@@ -47,7 +41,7 @@ void Impl::Debug_error(char const* _message)
         assert(false);
     }
 }
-void Impl::Debug_log(char const* _message)
+void Impl::Debug_log(std::string_view _message)
 {
     if (Debug::isDebugDisabled())
     {
@@ -56,13 +50,13 @@ void Impl::Debug_log(char const* _message)
 
     if (Debug::hasJsIntegration() && static_cast<bool>(emscripten_is_main_runtime_thread()))
     {
-        jsu_dbgLog(_message);
+        jsu_dbgLog(_message.data());
     }
     else
     {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
-        EM_ASM({ console.log(UTF8ToString($0)); }, _message);
+        EM_ASM({ console.log(UTF8ToString($0)); }, _message.data());
 #pragma clang diagnostic pop
     }
 }

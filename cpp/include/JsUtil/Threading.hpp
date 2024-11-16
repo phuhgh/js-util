@@ -8,10 +8,10 @@ namespace JsUtil
 struct IExecutor
 {
     virtual ~IExecutor() = default;
-    virtual void run() = 0;
+    virtual void run() noexcept = 0;
 };
 
-template <WithCallable<void> TCallback>
+template <WithNoThrowCallable<void> TCallback>
 class CallbackExecutor : public IExecutor
 {
   public:
@@ -21,7 +21,7 @@ class CallbackExecutor : public IExecutor
     }
 
     // form IExecutor
-    void run() override { m_callback(); }
+    void run() noexcept override { m_callback(); }
 
   private:
     TCallback m_callback;

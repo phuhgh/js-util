@@ -252,7 +252,7 @@ export class WorkerPool implements IWorkerPool
     private readonly impl: WorkerPoolImpl;
 }
 
-export class WorkerPoolImpl implements IOnFreeListener
+class WorkerPoolImpl implements IOnFreeListener
 {
     public constructor
     (

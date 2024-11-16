@@ -219,6 +219,13 @@ export class _Debug
             return;
         }
 
+        // if any tag is disabled, the message should not be logged
+        const disabledTags = _Debug._disabledTags;
+        if (disabledTags != null && tags.some(tag => disabledTags.has(tag)))
+        {
+            return;
+        }
+
         const prefixedMessage = tags.length > 0
             ? ["[", tags.join(", "), "] ", message].join("")
             : message;
@@ -292,9 +299,16 @@ export class _Debug
         return build[flag] ?? false;
     }
 
-    public static setLoggingTags(this: void, tags: string[]): void
+    public static setEnabledLoggingTags(this: void, tags: string[]): void
     {
-        _Debug._enabledTags = new Set(tags);
+        _Debug._enabledTags = tags.length === 0 ? null : new Set(tags);
+        _Debug._disabledTags = null;
+    }
+
+    public static setDisabledLoggingTags(this: void, tags: string[]): void
+    {
+        _Debug._enabledTags = null;
+        _Debug._disabledTags = tags.length === 0 ? null : new Set(tags);
     }
 
     /**
@@ -313,6 +327,7 @@ export class _Debug
 
     private static _label: string | undefined = undefined;
     private static _enabledTags: Set<string> | null = null;
+    private static _disabledTags: Set<string> | null = null;
     private static _seenTags = new Set<string>();
 }
 

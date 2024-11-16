@@ -7,15 +7,7 @@ import { EWorkerPoolOverflowMode, type IWorkerPool, WorkerPool } from "./worker-
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { promisePoll } from "../../promise/impl/promise-poll.js";
 import { _Debug } from "../../debug/_debug.js";
-
-interface ITestOnlyBindings
-{
-    fakeWorkerJob_resetCounts(): void;
-    fakeWorkerJob_getCreateCount(): number;
-    fakeWorkerJob_getTickCount(): number;
-    fakeWorkerJob_getDestroyCount(): number;
-    fakeWorkerJob_createJob(goSlow: boolean): number;
-}
+import type { ITestOnlyBindings } from "../i-test-only-bindings.js";
 
 describe("=> WorkerPool", () =>
 {

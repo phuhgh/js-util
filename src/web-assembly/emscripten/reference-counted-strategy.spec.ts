@@ -7,6 +7,7 @@ import { SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-modul
 import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
 import utilTestModule from "../../external/util-test-module.mjs";
 import { SharedArray } from "../shared-array/shared-array.js";
+import type { IJsUtilBindings } from "../i-js-util-bindings.js";
 
 
 describe("=> ReferenceCountedStrategy", () =>
@@ -92,7 +93,7 @@ class TestManagedObject implements IManagedObject
     }
 }
 
-function createTestManagedObject(testModule: SanitizedEmscriptenTestModule<object, object>): IManagedObject
+function createTestManagedObject(testModule: SanitizedEmscriptenTestModule<IJsUtilBindings, object>): IManagedObject
 {
 
     return new TestManagedObject(testModule.wrapper.lifecycleStrategy.createNode(testModule.wrapper.rootNode));

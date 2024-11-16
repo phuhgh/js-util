@@ -1,13 +1,13 @@
 import { Emscripten } from "../../external/emscripten.js";
 import { getWasmTestMemory } from "../util/get-wasm-test-memory.js";
-import { getEmscriptenWrapper } from "./get-emscripten-wrapper.js";
+import { EmscriptenWrapperOptions, getEmscriptenWrapper } from "./get-emscripten-wrapper.js";
 import { _Fp } from "../../fp/_fp.js";
 import { IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
 import { IDebugBindings } from "./i-debug-bindings.js";
 import { _Production } from "../../production/_production.js";
 import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
 import { _Debug } from "../../debug/_debug.js";
-
+import type { IJsUtilBindings } from "../i-js-util-bindings.js";
 import { ReferenceCountedStrategy } from "./reference-counted-strategy.js";
 
 /**
@@ -49,7 +49,7 @@ export interface IErrorExclusions
 const emscriptenTestModuleOptions: ISanitizedTestModuleOptions = {
     disabledErrors: {
         // looks like asan writes to stderr regardless of option...
-        exactMatch: ["==42==WARNING: AddressSanitizer failed to allocate 0xfffffffc bytes"],
+        startsWith: ["==42==WARNING: AddressSanitizer failed to allocate 0xfffffff"],
     },
     initialMemoryPages: 128,
     maxMemoryPages: 8192,
@@ -75,7 +75,7 @@ export function getEmscriptenTestModuleOptions(
  * @typeParam TEmscriptenBindings - The generated WASM bindings.
  * @typeParam TWrapperExtensions - Extensions to the test wrapper itself, i.e. overwrite the module with test specific logic.
  */
-export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, TWrapperExtensions extends object>
+export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends IJsUtilBindings, TWrapperExtensions extends object>
 {
     public constructor
     (
@@ -90,7 +90,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
     public async initialize(): Promise<void>
     {
         Test_resetLifeCycle();
-        this.state.errorLogged = false;
+        this.state.loggedErrors.length = 0;
 
         const memory = getWasmTestMemory({
             initial: this.options.initialMemoryPages,
@@ -104,6 +104,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
         this._wrapper = await getEmscriptenWrapper(
             memory,
             this.testModule, new ReferenceCountedStrategy(),
+            new EmscriptenWrapperOptions<IJsUtilBindings>([]),
             {
                 ASAN_OPTIONS: "allocator_may_return_null=1",
                 print: _Fp.noOp,
@@ -115,7 +116,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
                         return;
                     }
 
-                    state.errorLogged = true;
+                    state.loggedErrors.push(error);
                     _Debug.logError(error);
                 },
                 // legacy handler (this doesn't appear to be used anymore...)
@@ -142,11 +143,11 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
                     // there's a non-zero status code, emscripten is pretty good at reporting this, so let them do it...
                 },
                 ...this.extension,
-            } as TEmscriptenBindings
+            } as object as TEmscriptenBindings
         ) as IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings, ReferenceCountedStrategy>;
 
         // -sEXIT_RUNTIME=1 does not play well with threads + no main, manually keep the runtime alive
-        this.wrapper.instance.runtimeKeepalivePush!();
+        this.wrapper.instance.runtimeKeepalivePush();
     }
 
     public get wrapper(): IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings, ReferenceCountedStrategy>
@@ -172,7 +173,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
                 // kick off asan checks
                 try
                 {
-                    this.wrapper.instance.runtimeKeepalivePop!();
+                    this.wrapper.instance.runtimeKeepalivePop();
                     this.wrapper.instance._jsUtilEndProgram(0);
                 }
                 catch (error)
@@ -185,9 +186,10 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
             },
         );
 
-        if (this.state.errorLogged && !errorLoggingAllowed)
+        if (this.state.loggedErrors.length > 0 && !errorLoggingAllowed)
         {
-            throw _Production.createError("The C++ logged an error to the console, this is considered a failure.");
+            const messages = ["The C++ logged an error to the console, this is considered a failure.", "Reprinting errors:"].concat(this.state.loggedErrors);
+            throw _Production.createError(messages.join("\n"));
         }
 
         this.wrapper.rootNode.getLinked().unlinkAll();
@@ -204,7 +206,7 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends object, T
     private _wrapper: IEmscriptenWrapper<TEmscriptenBindings & TWrapperExtensions & IDebugBindings, ReferenceCountedStrategy> | undefined;
     private readonly state = {
         currentDisabledErrors: {} as IErrorExclusions,
-        errorLogged: false,
+        loggedErrors: new Array<string>(),
     };
 }
 

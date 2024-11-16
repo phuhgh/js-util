@@ -14,7 +14,7 @@ class TestExecutor : public IExecutor
     {
     }
     // from IExecutor
-    void run() override
+    void run() noexcept override
     {
         if (m_goSlow)
         {
@@ -51,7 +51,7 @@ unsigned fakeWorkerJob_getDestroyCount()
 }
 uint32_t fakeWorkerJob_createJob(bool goSlow)
 {
-    return (uint32_t) new (std::nothrow) JsUtil::TestExecutor(goSlow);
+    return (uint32_t)new (std::nothrow) JsUtil::TestExecutor(goSlow);
 }
 
 EMSCRIPTEN_BINDINGS(clazz)

@@ -2,86 +2,53 @@
 #include "JsUtil/Debug.hpp"
 #include "JsUtil/JsInterop.hpp"
 #include "JsUtil/RTTI.hpp"
+#include "JsUtil/Tuple.hpp"
 #include <emscripten/em_macros.h>
 
-gsl::owner<JsInterop::ISharedMemoryObject*> createOneDynamic(
-    RTTI::ENumberIdentifier numberId,
-    size_t                  size,
-    bool                    clearMemory
-)
-{
-    using namespace JsUtil;
-    using namespace JsInterop;
+auto const offsets = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
+    return [](JsInterop::ASharedMemoryObject* sharedObject) -> void* {
+        auto* array = static_cast<JsUtil::SharedArray<T>*>(sharedObject->getValuePtr());
+        return static_cast<void*>(array->asSpan().data());
+    };
+});
 
-    if constexpr (Debug::isDebug())
-    {
-        Debug::onBeforeAllocate();
-    }
+auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
+    return [](size_t size, bool clearMemory) -> gsl::owner<JsInterop::ASharedMemoryObject*> {
+        auto bufferCategory = getCategoryId(JsRTTI::scBUFFER_CATEGORY);
+        auto bufferSpecialization = getSpecializationId(JsRTTI::scSHARED_ARRAY);
 
-    switch (numberId)
-    {
-    case RTTI::ENumberIdentifier::U8:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<uint8_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::U16:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<uint16_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::U32:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<uint32_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::U64:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<uint64_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::I8:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<int8_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::I16:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<int16_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::I32:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<int32_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::I64:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<int64_t>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::F32:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<float>::createOne(size, clearMemory)};
-    case RTTI::ENumberIdentifier::F64:
-        return new (std::nothrow) SharedMemoryValue{SharedArray<double>::createOne(size, clearMemory)};
-    default:
-        return nullptr;
-    }
-}
+        auto           numberCategory = getCategoryId(JsRTTI::scNUMBER_CATEGORY);
+        constexpr auto index = TupleExt::IndexOf<T, JsRTTI::NumberKinds>::value;
+        auto           numberSpecialization = getSpecializationId(std::get<index>(JsRTTI::scNUMBER_KINDS));
 
-void* getOffset(RTTI::ENumberIdentifier numberId, JsInterop::ISharedMemoryObject const* sharedObject)
-{
-    using namespace JsUtil;
-    using namespace JsInterop;
-    switch (numberId)
-    {
-    case RTTI::ENumberIdentifier::U8:
-        return static_cast<SharedArray<uint8_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::U16:
-        return static_cast<SharedArray<uint16_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::U32:
-        return static_cast<SharedArray<uint32_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::U64:
-        return static_cast<SharedArray<uint64_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::I8:
-        return static_cast<SharedArray<int8_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::I16:
-        return static_cast<SharedArray<int16_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::I32:
-        return static_cast<SharedArray<int32_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::I64:
-        return static_cast<SharedArray<int64_t>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::F32:
-        return static_cast<SharedArray<float>*>(sharedObject->m_valuePtr)->asSpan().data();
-    case RTTI::ENumberIdentifier::F64:
-        return static_cast<SharedArray<double>*>(sharedObject->m_valuePtr)->asSpan().data();
-    default:
-        return nullptr;
-    }
-}
+        auto attributesMap = JsInterop::ASharedMemoryObject::TDescriptors({
+            {bufferCategory, bufferSpecialization},
+            {numberCategory, numberSpecialization},
+        });
+
+        if (attributesMap.empty())
+        {
+            return nullptr;
+        }
+
+        if constexpr (JsUtil::Debug::isDebug())
+        {
+            JsUtil::Debug::onBeforeAllocate();
+        }
+
+        return new (std::nothrow) JsInterop::SharedMemoryValue<JsUtil::SharedArray<T>>{
+            JsUtil::SharedArray<T>::createOne(size, clearMemory),
+            std::move(attributesMap),
+        };
+    };
+});
 
 extern "C"
 {
-    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE void* sharedArray_getArrayAddress(
-        RTTI::ENumberIdentifier const         numberId,
-        JsInterop::ISharedMemoryObject const* sharedArray
-    )
+    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE void* sharedArray_getDataAddress(
+        JsRTTI::ENumberIdentifier const numberId,
+        JsInterop::ASharedMemoryObject* sharedArray
+    ) noexcept
     {
         if (sharedArray == nullptr)
         {
@@ -92,25 +59,28 @@ extern "C"
             return nullptr;
         }
 
-        return getOffset(numberId, sharedArray);
+        return TupleExt::select(offsets, static_cast<size_t>(numberId))(sharedArray);
     }
 
-    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<JsInterop::ISharedMemoryObject*> sharedArray_createOne(
-        RTTI::ENumberIdentifier const numberId,
-        size_t const                  size,
-        bool const                    clearMemory
-    )
+    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<JsInterop::ASharedMemoryObject*> sharedArray_createOne(
+        JsRTTI::ENumberIdentifier const numberId,
+        size_t const                    size,
+        bool const                      clearMemory
+    ) noexcept
     {
-        gsl::owner<JsInterop::ISharedMemoryObject*> sharedArray = createOneDynamic(numberId, size, clearMemory);
+        gsl::owner<JsInterop::ASharedMemoryObject*> sharedArray =
+            TupleExt::select(factories, static_cast<size_t>(numberId))(size, clearMemory);
+
         if (sharedArray != nullptr)
         {
-            if (sharedArray_getArrayAddress(numberId, sharedArray) == nullptr)
+            if (sharedArray_getDataAddress(numberId, sharedArray) == nullptr)
             {
                 // we failed to allocate the memory
                 delete sharedArray;
                 return nullptr;
             }
         }
+
         return sharedArray;
     }
 }

@@ -13,7 +13,7 @@ TEST(WorkerPoolJob, cleanup)
     std::atomic<int> jobsExecuted{0};
     WorkerLoop       workerLoop{PoolWorkerConfig{}};
     ASSERT_TRUE(workerLoop.start());
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() { ++jobsExecuted; }));
+    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
     EXPECT_EQ(jobsExecuted.load(), 0);
     EXPECT_TRUE(workerLoop.getTask().hasPendingWork());
     // this test relies on the address sanitizer to pick up on the job not getting deleted
@@ -24,9 +24,9 @@ TEST(WorkerPoolJob, workerJobHandling)
     std::atomic<int> jobsExecuted{0};
     WorkerLoop       workerLoop{PoolWorkerConfig{}};
     ASSERT_TRUE(workerLoop.start());
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() { ++jobsExecuted; }));
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() { ++jobsExecuted; }));
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() { ++jobsExecuted; }));
+    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
+    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
+    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
     // notification is handled in the distribution strategy, give it a manual poke just for testing purposes
     workerLoop.proceed();
     EXPECT_TRUE(tryVerify([&]() { return !workerLoop.getTask().hasPendingWork(); }));
@@ -37,8 +37,8 @@ TEST(WorkerPoolJob, overflowHandling)
 {
     std::atomic<int>       jobsExecuted{0};
     WorkerLoop             workerLoop{PoolWorkerConfig{1}};
-    gsl::owner<IExecutor*> overflowJob = new CallbackExecutor([&]() { ++jobsExecuted; });
-    ASSERT_TRUE(workerLoop.getTask().addJob(new CallbackExecutor([&]() { ++jobsExecuted; })));
+    gsl::owner<IExecutor*> overflowJob = new CallbackExecutor([&]() noexcept { ++jobsExecuted; });
+    ASSERT_TRUE(workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; })));
     ASSERT_FALSE(workerLoop.getTask().addJob(overflowJob));
     ASSERT_FALSE(workerLoop.getTask().addJob(overflowJob));
     ASSERT_TRUE(workerLoop.start(true));
@@ -56,7 +56,7 @@ TEST(WorkerPool, distribution)
 
     for (int i = 0; i < 16; ++i)
     {
-        workerPool.addJob(new CallbackExecutor([&]() {
+        workerPool.addJob(new CallbackExecutor([&]() noexcept {
             ++jobsExecuted;
             threadIds.getMutableRef()->emplace(std::this_thread::get_id());
         }));
@@ -77,7 +77,7 @@ TEST(WorkerPool, overflowHandling)
 
     for (int i = 0; i < 16; ++i)
     {
-        workerPool.addJob(new CallbackExecutor([&]() {
+        workerPool.addJob(new CallbackExecutor([&]() noexcept {
             ++jobsExecuted;
             threadIds.getMutableRef()->emplace(std::this_thread::get_id());
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
@@ -109,7 +109,7 @@ TEST(WorkerPool, invalidation)
             block_worker = false;
         }
 
-        workerPool.addJob(new CallbackExecutor([&]() {
+        workerPool.addJob(new CallbackExecutor([&]() noexcept {
             ++jobsExecuted;
             while (block_worker)
             {

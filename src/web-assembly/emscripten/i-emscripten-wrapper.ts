@@ -6,7 +6,7 @@ import type { IDebugProtectedViewFactory } from "../../debug/i-debug-protected-v
 import type { DebugSharedObjectLifeCycleChecker } from "../../debug/debug-shared-object-life-cycle-checker.js";
 import type { IManagedResourceNode } from "../../lifecycle/manged-resources.js";
 import type { ILifecycleStrategy } from "./i-lifecycle-strategy.js";
-
+import type { IStableStore } from "../../runtime/rtti-interop.js";
 
 /**
  * @public
@@ -55,13 +55,13 @@ export interface IEmscriptenDebugUtils
  */
 export interface IEmscriptenWrapper<TModule extends object, TLifeStrategy extends ILifecycleStrategy = ILifecycleStrategy>
 {
-
     readonly memoryResize: IBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>;
     readonly instance: TModule & Emscripten.EmscriptenModule;
     readonly memory: IWebAssemblyMemoryMemory;
     readonly debugUtils: IEmscriptenDebugUtils;
     readonly binder: IEmscriptenBinder;
     readonly lifecycleStrategy: TLifeStrategy;
+    readonly interopIds: IStableStore;
     /**
      * This Emscripten instance's root node for memory management of shared objects.
      */
@@ -71,4 +71,9 @@ export interface IEmscriptenWrapper<TModule extends object, TLifeStrategy extend
      * Replaced after each memory resize, don't hold onto it.
      */
     getDataView(): DataView;
+
+    /**
+     * Unlink all managed handles from the root node. Convenience method.
+     */
+    destroyLinked(): void;
 }

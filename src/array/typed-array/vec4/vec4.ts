@@ -4,7 +4,7 @@ import { ITypedArrayTupleFactory } from "../i-typed-array-tuple-factory.js";
 import { getVec4Ctor } from "./get-vec4-ctor.js";
 import { TTypedArrayCtor } from "../t-typed-array-ctor.js";
 import { TPickExcept } from "../../../typescript/t-pick-except.js";
-import { populateTypedArrayConstructorMap } from "../rtti-interop.js";
+import { populateTypedArrayConstructorMap } from "../../../runtime/rtti-interop.js";
 
 /**
  * @public

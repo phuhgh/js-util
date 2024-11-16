@@ -1,6 +1,8 @@
 #pragma once
 
 #include "JsUtil/TypeTraits.hpp"
+#include <format>
+#include <string_view>
 
 namespace JsUtil
 {
@@ -8,8 +10,8 @@ namespace JsUtil
 namespace Impl
 {
 void Debug_onAllocate();
-void Debug_error(char const* _message);
-void Debug_log(char const* _message);
+void Debug_error(std::string_view _message);
+void Debug_log(std::string_view _message);
 } // namespace Impl
 
 class Debug
@@ -19,7 +21,7 @@ class Debug
      * If you want to be extra sure ALL debug code is removed, you can constexpr if on this (99.99% placebo)...
      * @return True if it's a debug build.
      */
-    [[nodiscard]] constexpr static bool isDebug()
+    [[nodiscard]] constexpr static bool isDebug() noexcept
     {
 #ifndef NDEBUG
         return true;
@@ -29,15 +31,16 @@ class Debug
     }
 
     static bool hasJsIntegration() { return sJS_INTEGRATION; }
-    static void disableJsIntegration() { sJS_INTEGRATION = false; };
+    static void disableJsIntegration(bool disable = true) { sJS_INTEGRATION = !disable; };
     static void setDebugDisabled(bool disabled) { sDEBUG_DISABLED = disabled; }
     static bool isDebugDisabled() { return sDEBUG_DISABLED; }
 
-    static void onBeforeAllocate()
+    static void onBeforeAllocate() noexcept
     {
-#ifndef NDEBUG
-        Impl::Debug_onAllocate();
-#endif
+        if constexpr (isDebug())
+        {
+            Impl::Debug_onAllocate();
+        }
     }
 
 #ifndef NDEBUG
@@ -60,7 +63,7 @@ class Debug
 #endif
 
 #ifndef NDEBUG
-    static void verboseLog(char const* _message) { Impl::Debug_log(_message); }
+    static void verboseLog(std::string_view _message) { Impl::Debug_log(_message); }
 #else
     static void verboseLog(char const*) {}
 #endif

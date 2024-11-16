@@ -2,8 +2,9 @@
 
 #include "JsUtil/Debug.hpp"
 
+
 class DisableJsIntegration
 {
-public:
+  public:
     DisableJsIntegration() { JsUtil::Debug::disableJsIntegration(); }
 };

@@ -4,7 +4,7 @@ import { nullPtr } from "./null-pointer.js";
 import utilTestModule from "../../external/util-test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { getTestModuleOptions } from "../../test-util/test-utils.js";
-import { ENumberIdentifier } from "../../array/typed-array/rtti-interop.js";
+import { ENumberIdentifier } from "../../runtime/rtti-interop.js";
 
 describe("JsUtil::Debug", () =>
 {
@@ -17,11 +17,13 @@ describe("JsUtil::Debug", () =>
             Test_setDefaultFlags();
             await testModule.initialize();
             _Debug.setFlag("VERBOSE", true);
+            _Debug.setDisabledLoggingTags(["MEMORY"]); // disable allocation tracking
         });
 
         afterEach(() =>
         {
             _Debug.setFlag("VERBOSE", false);
+            _Debug.setDisabledLoggingTags([]);
         });
 
         it("| logs if DEBUG_VERBOSE is true", () =>
@@ -66,13 +68,13 @@ describe("JsUtil::Debug", () =>
         {
             if (testModule.wrapper.instance._isDebugBuild())
             {
-                expect(() => testModule.wrapper.instance._sharedArray_getArrayAddress(ENumberIdentifier.F32, nullPtr))
+                expect(() => testModule.wrapper.instance._sharedArray_getDataAddress(ENumberIdentifier.F32, nullPtr))
                     .toThrowError("expected shared array, got null ptr");
 
             }
             else
             {
-                expect(() => testModule.wrapper.instance._sharedArray_getArrayAddress(ENumberIdentifier.F32, nullPtr))
+                expect(() => testModule.wrapper.instance._sharedArray_getDataAddress(ENumberIdentifier.F32, nullPtr))
                     .not.toThrowError("expected shared array, got null ptr");
             }
 

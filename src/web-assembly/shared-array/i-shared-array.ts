@@ -1,6 +1,6 @@
 import type { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
-import type { ENumberIdentifier } from "../../array/typed-array/rtti-interop.js";
 import type { IManagedObject, IPointer } from "../../lifecycle/manged-resources.js";
+import type { IBuffer } from "../../array/typed-array/i-buffer-view.js";
 
 /**
  * @public
@@ -12,14 +12,8 @@ import type { IManagedObject, IPointer } from "../../lifecycle/manged-resources.
  */
 export interface ISharedArray<TCtor extends TTypedArrayCtor>
     extends IManagedObject,
-            IPointer
+            IPointer,
+            IBuffer<TCtor>
 {
-    readonly ctor: TCtor;
-    readonly numberId: ENumberIdentifier;
     readonly length: number;
-    /**
-     * Size of element in the array, length * elementByteSize is not necessarily the size of the object.
-     */
-    readonly elementByteSize: number;
-    getInstance(): InstanceType<TCtor>;
 }
