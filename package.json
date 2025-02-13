@@ -1,7 +1,7 @@
 {
   "name": "rc-js-util",
   "sideEffects": false,
-  "version": "9.0.9-alpha.69",
+  "version": "9.0.9-alpha.70",
   "license": "MIT",
   "scripts": {
     "clean": "rimraf bin cpp/build cpp/exported-names.txt docs dist tmp test-report",
