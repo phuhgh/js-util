@@ -61,7 +61,7 @@ extern "C"
         gsl::owner<JsUtil::IExecutor*>                     job
     ) noexcept
     {
-        return o_pool->m_owningPtr->addJob(job);
+        return o_pool->m_owningPtr->addJob(std::shared_ptr<JsUtil::IExecutor>{job});
     }
 
     EMSCRIPTEN_KEEPALIVE

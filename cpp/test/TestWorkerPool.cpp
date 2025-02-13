@@ -3,6 +3,7 @@
 #include "JsUtil/WorkerPool.hpp"
 #include "JsUtilTestUtil/ThreadingHelpers.hpp"
 #include <gtest/gtest.h>
+#include <memory>
 
 using namespace JsUtil;
 
@@ -13,7 +14,9 @@ TEST(WorkerPoolJob, cleanup)
     std::atomic<int> jobsExecuted{0};
     WorkerLoop       workerLoop{PoolWorkerConfig{}};
     ASSERT_TRUE(workerLoop.start());
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
+    workerLoop.getTask().addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
+        ++jobsExecuted;
+    }));
     EXPECT_EQ(jobsExecuted.load(), 0);
     EXPECT_TRUE(workerLoop.getTask().hasPendingWork());
     // this test relies on the address sanitizer to pick up on the job not getting deleted
@@ -24,9 +27,15 @@ TEST(WorkerPoolJob, workerJobHandling)
     std::atomic<int> jobsExecuted{0};
     WorkerLoop       workerLoop{PoolWorkerConfig{}};
     ASSERT_TRUE(workerLoop.start());
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
-    workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; }));
+    workerLoop.getTask().addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
+        ++jobsExecuted;
+    }));
+    workerLoop.getTask().addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
+        ++jobsExecuted;
+    }));
+    workerLoop.getTask().addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
+        ++jobsExecuted;
+    }));
     // notification is handled in the distribution strategy, give it a manual poke just for testing purposes
     workerLoop.proceed();
     EXPECT_TRUE(tryVerify([&]() { return !workerLoop.getTask().hasPendingWork(); }));
@@ -35,15 +44,17 @@ TEST(WorkerPoolJob, workerJobHandling)
 
 TEST(WorkerPoolJob, overflowHandling)
 {
-    std::atomic<int>       jobsExecuted{0};
-    WorkerLoop             workerLoop{PoolWorkerConfig{1}};
-    gsl::owner<IExecutor*> overflowJob = new CallbackExecutor([&]() noexcept { ++jobsExecuted; });
-    ASSERT_TRUE(workerLoop.getTask().addJob(new CallbackExecutor([&]() noexcept { ++jobsExecuted; })));
+    std::atomic<int> jobsExecuted{0};
+    WorkerLoop       workerLoop{PoolWorkerConfig{1}};
+    auto             overflowJob = std::shared_ptr<IExecutor>{new CallbackExecutor([&]() noexcept { ++jobsExecuted; })};
+    workerLoop.getTask().addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
+        ++jobsExecuted;
+    }));
     ASSERT_FALSE(workerLoop.getTask().addJob(overflowJob));
     ASSERT_FALSE(workerLoop.getTask().addJob(overflowJob));
     ASSERT_TRUE(workerLoop.start(true));
     ASSERT_TRUE(tryVerify([&]() { return !workerLoop.getTask().hasPendingWork(); }));
-    delete overflowJob;
+    overflowJob.reset();
     EXPECT_EQ(jobsExecuted.load(), 1);
 }
 
@@ -56,7 +67,7 @@ TEST(WorkerPool, distribution)
 
     for (int i = 0; i < 16; ++i)
     {
-        workerPool.addJob(new CallbackExecutor([&]() noexcept {
+        workerPool.addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
             ++jobsExecuted;
             threadIds.getMutableRef()->emplace(std::this_thread::get_id());
         }));
@@ -77,7 +88,7 @@ TEST(WorkerPool, overflowHandling)
 
     for (int i = 0; i < 16; ++i)
     {
-        workerPool.addJob(new CallbackExecutor([&]() noexcept {
+        workerPool.addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
             ++jobsExecuted;
             threadIds.getMutableRef()->emplace(std::this_thread::get_id());
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
@@ -109,7 +120,7 @@ TEST(WorkerPool, invalidation)
             block_worker = false;
         }
 
-        workerPool.addJob(new CallbackExecutor([&]() noexcept {
+        workerPool.addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
             ++jobsExecuted;
             while (block_worker)
             {
@@ -120,6 +131,27 @@ TEST(WorkerPool, invalidation)
     ASSERT_TRUE(tryVerify([&]() { return !workerPool.hasPendingWork(); }));
     // first job, plus the last 8
     EXPECT_EQ(jobsExecuted.load(), 9);
+}
+
+TEST(WorkerPool, distributeToAll)
+{
+    SmartLocked<std::map<std::thread::id, std::atomic<unsigned>>> threadIds{{}};
+    WorkerPool                                                    workerPool{PassToAll{}, WorkerPoolConfig{}};
+    workerPool.start();
+
+    for (int i = 0; i < 16; ++i)
+    {
+        workerPool.addJob(std::make_shared<CallbackExecutor<std::function<void()>>>([&]() noexcept -> void {
+            threadIds.getMutableRef().operator*()[std::this_thread::get_id()]++;
+        }));
+    }
+    ASSERT_TRUE(tryVerify([&]() { return !workerPool.hasPendingWork(); }));
+    EXPECT_EQ(threadIds.getReadonlyRef()->size(), 4);
+
+    for (auto const& [_, callCount] : *threadIds.getReadonlyRef())
+    {
+        EXPECT_EQ(callCount, 16);
+    }
 }
 
 // todo jack: allocation failure of worker threads?

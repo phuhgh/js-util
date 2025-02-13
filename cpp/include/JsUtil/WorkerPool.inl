@@ -5,9 +5,11 @@ namespace JsUtil
 
 PoolWorkerConfig::PoolWorkerConfig(uint16_t jobQueueSize)
     : m_jobs(
-          CircularFIFOStack<gsl::owner<IExecutor*>, ECircularStackOverflowMode::NoOp, uint16_t, std::atomic<uint16_t>>(
-              jobQueueSize
-          )
+          CircularFIFOStack<
+              std::shared_ptr<IExecutor>,
+              ECircularStackOverflowMode::NoOp,
+              uint16_t,
+              std::atomic<uint16_t>>(jobQueueSize)
       )
 {
 }
@@ -21,7 +23,7 @@ PoolWorkerConfig::~PoolWorkerConfig()
 {
     while (!m_jobs.getIsEmpty())
     {
-        delete m_jobs.pop();
+        m_jobs.pop();
     }
 }
 
@@ -32,7 +34,7 @@ PoolWorkerConfig& PoolWorkerConfig::operator=(JsUtil::PoolWorkerConfig&& other) 
         m_jobs = std::move(other.m_jobs);
         // the destructor deletes all the jobs, guard against "unspecified" state
         other.m_jobs = CircularFIFOStack<
-            gsl::owner<IExecutor*>,
+            std::shared_ptr<IExecutor>,
             ECircularStackOverflowMode::NoOp,
             uint16_t,
             std::atomic<uint16_t>>{0};
@@ -44,10 +46,11 @@ PoolWorkerConfig& PoolWorkerConfig::operator=(JsUtil::PoolWorkerConfig&& other) 
 void PoolWorkerConfig::setJobQueueSize(uint16_t jobQueueSize)
 {
     Debug::debugAssert(m_jobs.getIsEmpty(), "changing job queue size with jobs queued will destroy jobs");
-    m_jobs =
-        CircularFIFOStack<gsl::owner<IExecutor*>, ECircularStackOverflowMode::NoOp, uint16_t, std::atomic<uint16_t>>{
-            jobQueueSize
-        };
+    m_jobs = CircularFIFOStack<
+        std::shared_ptr<IExecutor>,
+        ECircularStackOverflowMode::NoOp,
+        uint16_t,
+        std::atomic<uint16_t>>{jobQueueSize};
 }
 
 void PoolWorkerConfig::onTick()
@@ -60,8 +63,7 @@ void PoolWorkerConfig::onTick()
             // no invalidation has been requested, run the job
             // we rely on indexes to determine if we're in a valid state, so do the pop after the work
             m_jobs[0]->run(); // the circular buffer will translate for us...
-            delete m_jobs[0];
-            m_jobs.pop(); // it's a circular buffer, the pop moves the front
+            m_jobs.pop();     // it's a circular buffer, the pop moves the front
         }
         else
         {
@@ -69,7 +71,7 @@ void PoolWorkerConfig::onTick()
             while (m_jobs.getAbsoluteStart() < invalidateToIndex)
             {
                 Debug::debugAssert(!m_jobs.getIsEmpty(), "unexpected state, probably received invalid index...");
-                delete m_jobs.pop();
+                m_jobs.pop();
             }
             // reset, assuming the value hasn't changed, otherwise just go around again...
             m_invalidateToIndex.compare_exchange_weak(invalidateToIndex, 0);
@@ -207,7 +209,7 @@ bool WorkerPool<TDistributionStrategy>::isBatchDone() const noexcept
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
-bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job) noexcept
+bool WorkerPool<TDistributionStrategy>::addJob(std::shared_ptr<IExecutor> job) noexcept
 {
     if (job == nullptr)
     {
@@ -221,7 +223,6 @@ bool WorkerPool<TDistributionStrategy>::addJob(gsl::owner<IExecutor*> job) noexc
         // handle backpressure by throttling the producer... not pretty but will "work"...
         Debug::verboseLog("job overflow, running synchronously...");
         job->run();
-        delete job;
     }
     return jobAdded;
 }
@@ -246,7 +247,10 @@ bool WorkerPool<TDistributionStrategy>::areAllWorkersSynced() const noexcept
     return synced;
 }
 
-bool RoundRobin::distributeWork(std::span<WorkerLoop<PoolWorkerConfig>*> o_workers, gsl::owner<IExecutor*> job) noexcept
+bool RoundRobin::distributeWork(
+    std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
+    std::shared_ptr<IExecutor>               job
+) noexcept
 {
     if (o_workers.empty())
     {
@@ -274,6 +278,40 @@ bool RoundRobin::distributeWork(std::span<WorkerLoop<PoolWorkerConfig>*> o_worke
 void RoundRobin::configure(WorkerPoolConfig const&)
 {
     m_index = 0;
+}
+
+inline void PassToAll::configure(WorkerPoolConfig const&)
+{
+    // no action required?
+    // todo jack: is that true?
+}
+
+inline bool PassToAll::distributeWork(
+    std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
+    std::shared_ptr<IExecutor>               job
+) noexcept
+{
+    bool allStarted{true};
+
+    for (auto& worker : o_workers)
+    {
+        if (worker->isRunning())
+        {
+            bool added = worker->getTask().addJob(job);
+            allStarted = allStarted && added;
+            if (added)
+            {
+                worker->proceed();
+            }
+        }
+        else
+        {
+            Debug::error("expected worker to have been started");
+            allStarted = false;
+        }
+    }
+
+    return allStarted;
 }
 
 } // namespace JsUtil

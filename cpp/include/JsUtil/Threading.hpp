@@ -11,11 +11,11 @@ struct IExecutor
     virtual void run() noexcept = 0;
 };
 
-template <WithNoThrowCallable<void> TCallback>
+template <WithCallable<void> TCallback>
 class CallbackExecutor : public IExecutor
 {
   public:
-    explicit CallbackExecutor(TCallback callback)
+     CallbackExecutor(TCallback callback)
         : m_callback(std::move(callback))
     {
     }
@@ -26,6 +26,9 @@ class CallbackExecutor : public IExecutor
   private:
     TCallback m_callback;
 };
+
+template <WithCallable<void> TCallback>
+CallbackExecutor(TCallback) -> CallbackExecutor<TCallback>;
 
 struct INotifiable
 {

@@ -25,7 +25,7 @@ class PoolWorkerConfig : public IWorkerLoopConfig
      */
     bool        isWorkerSynced() const noexcept { return m_invalidateToIndex == 0 || m_jobs.getIsEmpty(); }
     bool        hasPendingWork() const noexcept { return !m_jobs.getIsEmpty(); }
-    bool        addJob(gsl::owner<IExecutor*> job) { return m_jobs.push(std::move(job)); }
+    bool        addJob(std::shared_ptr<IExecutor> job) { return m_jobs.push(std::move(job)); }
     inline void setJobQueueSize(uint16_t jobQueueSize);
     void        setBatchEndPoint() noexcept { m_batchEndIndex = m_jobs.getAbsoluteEnd(); };
     bool        isBatchDone() { return m_jobs.getAbsoluteStart() >= m_batchEndIndex; };
@@ -40,7 +40,7 @@ class PoolWorkerConfig : public IWorkerLoopConfig
     void        onComplete() override { m_acceptingWork = false; }
 
   private:
-    CircularFIFOStack<gsl::owner<IExecutor*>, ECircularStackOverflowMode::NoOp, uint16_t, std::atomic<uint16_t>> m_jobs;
+    CircularFIFOStack<std::shared_ptr<IExecutor>, ECircularStackOverflowMode::NoOp, uint16_t, std::atomic<uint16_t>> m_jobs;
     std::atomic<uint64_t> m_batchEndIndex = 0;
     std::atomic<bool>     m_acceptingWork = false;
     std::atomic<uint64_t> m_invalidateToIndex = 0;
@@ -59,7 +59,7 @@ struct IDistributionStrategy
     virtual void configure(WorkerPoolConfig const& config) = 0;
     virtual bool distributeWork(
         std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
-        gsl::owner<IExecutor*>                   job
+        std::shared_ptr<IExecutor>                   job
     ) noexcept = 0;
 };
 
@@ -76,7 +76,7 @@ struct IWorkerPool
     /**
      * @return true if the job was distributed to a worker, false if it ran synchronously.
      */
-    virtual bool addJob(gsl::owner<IExecutor*> job) noexcept = 0;
+    virtual bool addJob(std::shared_ptr<IExecutor> job) noexcept = 0;
     virtual bool hasPendingWork() const noexcept = 0;
     virtual bool isAcceptingJobs() const noexcept = 0;
     virtual bool isAnyWorkerRunning() const noexcept = 0;
@@ -107,7 +107,7 @@ class WorkerPool final : public IWorkerPool
     inline void     stop(bool wait) noexcept override;
 
     // See `TDistributionStrategy` for threading guarantees.
-    inline bool addJob(gsl::owner<IExecutor*> job) noexcept override;
+    inline bool addJob(std::shared_ptr<IExecutor> job) noexcept override;
 
     bool isAcceptingJobs() const noexcept override;
     bool isAnyWorkerRunning() const noexcept override;
@@ -131,7 +131,8 @@ class WorkerPool final : public IWorkerPool
 };
 
 /**
- * @remark not thread safe
+ * @brief Passes the job to a single worker, giving a job to each in sequence, then "going around again".
+ * @remark Not thread safe.
  */
 class RoundRobin : public IDistributionStrategy
 {
@@ -139,11 +140,25 @@ class RoundRobin : public IDistributionStrategy
     inline void configure(WorkerPoolConfig const& config) override;
     inline bool distributeWork(
         std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
-        gsl::owner<IExecutor*>                   job
+        std::shared_ptr<IExecutor>                   job
     ) noexcept override;
 
   private:
     uint16_t m_index{0};
+};
+
+/**
+ * @brief Passes each job to every worker.
+ * @remark Not thread safe.
+ */
+class PassToAll : public IDistributionStrategy
+{
+public:
+  inline void configure(WorkerPoolConfig const& config) override;
+  inline bool distributeWork(
+      std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
+      std::shared_ptr<IExecutor>                   job
+  ) noexcept override;
 };
 
 } // namespace JsUtil
