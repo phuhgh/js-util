@@ -1,6 +1,6 @@
 #include "JsUtil/FunctionFactory.hpp"
 #include "JsUtilTestUtil/DisableJsIntegration.hpp"
-#include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
+#include "JsUtilTestUtil/TestObjects.hpp"
 #include <gtest/gtest.h>
 
 [[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;

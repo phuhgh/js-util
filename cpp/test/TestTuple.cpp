@@ -1,6 +1,6 @@
 #include "JsUtil/LangExt.hpp"
 #include "JsUtil/Tuple.hpp"
-#include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
+#include "JsUtilTestUtil/TestObjects.hpp"
 #include <gtest/gtest.h>
 
 struct A

@@ -1,7 +1,7 @@
 #include "JsUtil/FixedHashMap.hpp"
 #include "JsUtil/HashMap.hpp"
 #include "JsUtil/Number.hpp"
-#include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
+#include "JsUtilTestUtil/TestObjects.hpp"
 #include <JsUtilTestUtil/DisableJsIntegration.hpp>
 #include <gmock/gmock-matchers.h>
 #include <gtest/gtest.h>

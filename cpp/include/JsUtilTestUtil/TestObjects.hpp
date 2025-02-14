@@ -18,6 +18,24 @@ class MoveOnlyTestObject
     bool operator!=(MoveOnlyTestObject const& other) const { return other.m_val != m_val; }
 };
 
+class UnmoveableTestObject
+{
+public:
+    int m_val;
+    constexpr explicit UnmoveableTestObject(int val = 0)
+        : m_val(val) {};
+    ~UnmoveableTestObject() = default;
+
+    UnmoveableTestObject(UnmoveableTestObject const&) = delete;
+    UnmoveableTestObject& operator=(UnmoveableTestObject const&) = delete;
+
+    UnmoveableTestObject(UnmoveableTestObject&&) = delete;
+    UnmoveableTestObject& operator=(UnmoveableTestObject&&) = delete;
+
+    bool operator==(UnmoveableTestObject const& other) const { return other.m_val == m_val; }
+    bool operator!=(UnmoveableTestObject const& other) const { return other.m_val != m_val; }
+};
+
 namespace std
 {
 template <>

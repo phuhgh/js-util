@@ -49,8 +49,8 @@ auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
         }
 
         return new (std::nothrow) JsInterop::SharedMemoryValue<JsUtil::ResizableArray<T>>{
-            JsUtil::ResizableArray<T>(size),
             std::move(attributesMap),
+            size,
         };
     };
 });

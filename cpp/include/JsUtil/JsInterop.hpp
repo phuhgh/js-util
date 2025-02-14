@@ -4,6 +4,7 @@
 #include "JsUtil/HashMap.hpp"
 #include "JsUtil/HashSet.hpp"
 #include "JsUtil/Identifiers.hpp"
+#include "JsUtil/Pointers.hpp"
 #include "JsUtil/TypeTraits.hpp"
 
 namespace JsInterop
@@ -35,8 +36,9 @@ class ASharedMemoryObject
     /// category -> specialization
     using TDescriptors = JsUtil::HashMap<JsUtil::TInteropId, JsUtil::TInteropId>;
 
-    explicit ASharedMemoryObject(TDescriptors&& descriptors)
-        : m_descriptors(descriptors)
+    template <typename TDesc>
+    explicit ASharedMemoryObject(TDesc&& descriptors)
+        : m_descriptors(std::forward<TDesc>(descriptors))
     {
     }
     virtual ~ASharedMemoryObject() = default;
@@ -61,7 +63,23 @@ template <typename T>
 struct SharedMemoryValue final : ASharedMemoryObject
 {
     ~SharedMemoryValue() override = default;
-    SharedMemoryValue(T&& value, TDescriptors&& descriptors);
+
+    template <typename... TArgs>
+    SharedMemoryValue(TDescriptors&& descriptors, TArgs&&... ctorArgs)
+        : ASharedMemoryObject(std::move(descriptors))
+        , m_value(std::forward<TArgs>(ctorArgs)...)
+    {
+        static_assert(!std::is_pointer_v<T>, "T must be a value type");
+        static_assert(!JsUtil::IsSmartPointer<T>::value, "T must be a value type");
+    }
+
+    SharedMemoryValue(TDescriptors&& descriptors, T&& moveable)
+        : ASharedMemoryObject(std::move(descriptors))
+        , m_value(std::move(moveable))
+    {
+        static_assert(!std::is_pointer_v<T>, "T must be a value type");
+        static_assert(!JsUtil::IsSmartPointer<T>::value, "T must be a value type");
+    }
 
     SharedMemoryValue(SharedMemoryValue const&) = delete;
     SharedMemoryValue(SharedMemoryValue&&) = delete;
@@ -109,7 +127,6 @@ template <typename TValue>
     gsl::owner<TValue*>                 owner_ptr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept;
-
 
 inline ASharedMemoryObject::TDescriptors createEmptyDescriptor()
 {

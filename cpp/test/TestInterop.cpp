@@ -3,6 +3,7 @@
 #include <JsUtil/JsUtil.hpp>
 #include <JsUtil/SharedArray.hpp>
 #include <JsUtilTestUtil/DisableJsIntegration.hpp>
+#include <JsUtilTestUtil/TestObjects.hpp>
 #include <gtest/gtest.h>
 
 using namespace JsInterop;
@@ -55,4 +56,10 @@ TEST(IdRegistry, lookup)
     EXPECT_EQ(IdRegistry::getId("TEST_CAT_2"), 5);
     EXPECT_EQ(IdRegistry::getId("CAT_2_A"), 1);
     EXPECT_EQ(IdRegistry::getId("CAT_2_B"), 2);
+}
+
+TEST(IdRegistry, valueNoMove)
+{
+    auto val = new (std::nothrow) SharedMemoryValue<UnmoveableTestObject>({}, 1);
+    delete val;
 }

@@ -1,5 +1,5 @@
 #include "JsUtil/LinkedList.hpp"
-#include "JsUtilTestUtil/MoveOnlyTestObject.hpp"
+#include "JsUtilTestUtil/TestObjects.hpp"
 #include <JsUtilTestUtil/DisableJsIntegration.hpp>
 #include <gtest/gtest.h>
 

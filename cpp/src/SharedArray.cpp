@@ -37,8 +37,8 @@ auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
         }
 
         return new (std::nothrow) JsInterop::SharedMemoryValue<JsUtil::SharedArray<T>>{
-            JsUtil::SharedArray<T>::createOne(size, clearMemory),
             std::move(attributesMap),
+            JsUtil::SharedArray<T>::createOne(size, clearMemory),
         };
     };
 });
