@@ -108,6 +108,27 @@ Range2d<T> Range2d<T>::getSw() const
 }
 
 template <typename T>
+Range2d<T> Range2d<T>::getQuad(EQuadrant quad) const
+{
+    if constexpr (Debug::isDebug())
+    {
+        Debug::debugAssert(static_cast<unsigned>(quad) < 4, "quad out of range");
+    }
+
+    switch (quad)
+    {
+    case EQuadrant::eNW:
+        return getNw();
+    case EQuadrant::eNE:
+        return getNe();
+    case EQuadrant::eSE:
+        return getSe();
+    case EQuadrant::eSW:
+        return getSw();
+    }
+}
+
+template <typename T>
 Range2d<T> Range2d<T>::getN() const
 {
     return Range2d<T>{{

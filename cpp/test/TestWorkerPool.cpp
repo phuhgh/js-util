@@ -135,6 +135,20 @@ TEST(WorkerPool, invalidation)
 
 TEST(WorkerPool, distributeToAll)
 {
+    /**
+     *todo jack: I've seen for this test, only once, possibly missing a null check somewhere?
+    node:internal/event_target:1062
+  process.nextTick(() => { throw err; });
+                           ^
+Error [RuntimeError]: null function or function signature mismatch
+    at wasm://wasm/0017fb0e:wasm-function[525]:0x21505
+    at wasm://wasm/0017fb0e:wasm-function[687]:0x2d60e
+    at invokeEntryPoint (/home/jack/dev/rc/js-util/cpp/build/release/test/TestWorkerPool.js:1:17029)
+    at handleMessage (/home/jack/dev/rc/js-util/cpp/build/release/test/TestWorkerPool.js:1:5988)
+    at MessagePort.<anonymous> (/home/jack/dev/rc/js-util/cpp/build/release/test/TestWorkerPool.js:1:4353)
+    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:786:20)
+    at exports.emitMessage (node:internal/per_context/messageport:23:28)
+    */
     SmartLocked<std::map<std::thread::id, std::atomic<unsigned>>> threadIds{{}};
     WorkerPool                                                    workerPool{PassToAll{}, WorkerPoolConfig{}};
     workerPool.start();

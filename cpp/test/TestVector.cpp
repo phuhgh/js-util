@@ -198,6 +198,20 @@ TEST(Range2d, basicFunctionality)
     EXPECT_FALSE(r2d.getNe() == r2d.getNw());
 }
 
+TEST(Range2d, quadrants)
+{
+    Range2d<int> r2d{{1, 2, 3, 4}};
+    r2d.setXMin(4);
+    r2d.setXMax(2);
+    r2d.setYMin(6);
+    r2d.setYMax(8);
+    r2d.ensureAABB();
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eNE) == Range2d<int>{{3, 4, 7, 8}}));
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eSE) == Range2d<int>{{3, 4, 6, 7}}));
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eSW) == Range2d<int>{{2, 3, 6, 7}}));
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eNW) == Range2d<int>{{2, 3, 7, 8}}));
+}
+
 TEST(Range2d, integerQuadSubdivision)
 {
     Range2d<unsigned> r1{{0, 11, 0, 21}};

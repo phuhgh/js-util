@@ -2,10 +2,19 @@
 
 #include "JsUtil/Mat2.hpp"
 #include "JsUtil/Vec2.hpp"
+#include "Debug.hpp"
 #include <cmath>
 
 namespace JsUtil
 {
+
+enum class EQuadrant : uint8_t
+{
+    eNW = 0,
+    eNE,
+    eSE,
+    eSW
+};
 
 template <typename T>
 class Range2d : public Mat2<T>
@@ -47,6 +56,7 @@ class Range2d : public Mat2<T>
     Range2d<T> getNe() const;
     Range2d<T> getSw() const;
     Range2d<T> getSe() const;
+    Range2d<T> getQuad(EQuadrant quad) const;
 
     // halves
     Range2d<T> getN() const;
