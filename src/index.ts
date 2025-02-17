@@ -106,6 +106,7 @@ export { TUnionToIntersection } from "./typescript/t-union-to-intersection.js";
 export { TUnpackArray } from "./typescript/t-unpack-array.js";
 export { TUnpackIfArray } from "./typescript/t-unpack-if-array.js";
 export { TWriteable } from "./typescript/t-writable.js";
+export { nullPtr } from "./web-assembly/emscripten/null-pointer.js";
 export { IInteropBindings } from "./web-assembly/emscripten/i-interop-bindings.js";
 export { IEmscriptenWrapper, IEmscriptenDebugUtils, IEmscriptenBinder } from "./web-assembly/emscripten/i-emscripten-wrapper.js";
 export { getEmscriptenWrapper, EmscriptenWrapperOptions } from "./web-assembly/emscripten/get-emscripten-wrapper.js";
