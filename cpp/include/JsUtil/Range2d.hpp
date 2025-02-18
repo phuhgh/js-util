@@ -16,6 +16,7 @@ enum class EQuadrant : uint8_t
     eSW
 };
 
+// todo jack: why isn't this xMin, yMin, xMax, yMax?
 template <typename T>
 class Range2d : public Mat2<T>
 {

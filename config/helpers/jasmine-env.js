@@ -7,9 +7,3 @@ if (globalObject._BUILD == null) {
 globalObject._BUILD = {..._BUILD, DEBUG: true, DISABLE_BREAKPOINT: true};
 
 console.log("test timeout: ", jasmine.DEFAULT_TIMEOUT_INTERVAL);
-
-// const ORIGINAL_ERROR_FUNCTION = console.error;
-// console.error = function (...args) {
-//     ORIGINAL_ERROR_FUNCTION.apply(console, args);
-//     fail("By default, everything logged to error is considered a test failure...");
-// };

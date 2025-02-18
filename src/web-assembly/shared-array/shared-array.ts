@@ -122,6 +122,7 @@ function createSharedObject
 
     if (ptr === nullPtr && allocationFailThrows)
     {
+        // todo jack: extensible error here?
         throw _Production.createError("Failed to allocate memory for shared array.");
     }
 

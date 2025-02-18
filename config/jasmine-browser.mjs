@@ -39,7 +39,7 @@ export default {
         "random": true
     },
     "browser": {
-        "name": "firefox"
+        "name": "headlessChrome"
     },
     express: expressShim,
 };

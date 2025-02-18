@@ -12,3 +12,4 @@
 !README.md
 !components.spdx
 !scripts/**/*
+!config/**/*
