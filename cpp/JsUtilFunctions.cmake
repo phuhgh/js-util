@@ -66,9 +66,9 @@ function(jsu_set_build_flags mode)
     elseif (${CMAKE_BUILD_TYPE} STREQUAL "Release")
         set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
-        list(APPEND JSU_CXX_FLAGS -O3 -msimd128)
-        list(APPEND JSU_EXE_LINKER_FLAGS -O3 -msimd128)
-        list(APPEND JSU_STATIC_LINKER_FLAGS -O3 -msimd128)
+        list(APPEND JSU_CXX_FLAGS -O3)
+        list(APPEND JSU_EXE_LINKER_FLAGS -O3)
+        list(APPEND JSU_STATIC_LINKER_FLAGS -O3)
     endif ()
 
     if (NOT mode)

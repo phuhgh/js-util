@@ -145,8 +145,8 @@ TEST(Range2d, basicFunctionality)
 
     Range2d<int> r2d{{1, 2, 3, 4}};
     EXPECT_EQ(r2d.xMin(), 1);
-    EXPECT_EQ(r2d.xMax(), 2);
-    EXPECT_EQ(r2d.yMin(), 3);
+    EXPECT_EQ(r2d.yMin(), 2);
+    EXPECT_EQ(r2d.xMax(), 3);
     EXPECT_EQ(r2d.yMax(), 4);
 
     r2d.setXMin(4);
@@ -170,29 +170,29 @@ TEST(Range2d, basicFunctionality)
     EXPECT_FALSE(r2d.pointInRange(Vec2<int>{{3, 5}}));
     EXPECT_FALSE(r2d.pointInRange(Vec2<int>{{3, 9}}));
 
-    EXPECT_TRUE(r2d.rangeIntersects(Range2d<float>{{1, 3, 6.5, 7}}));
-    EXPECT_FALSE(r2d.rangeIntersects(Range2d<float>{{1, 2, 6.5, 7}}));
-    EXPECT_TRUE(r2d.rangeIntersects(Range2d<float>{{3, 5, 6.5, 7}}));
-    EXPECT_FALSE(r2d.rangeIntersects(Range2d<float>{{4, 5, 6.5, 7}}));
+    EXPECT_TRUE(r2d.rangeIntersects(Range2d<float>{{1, 6.5, 3, 7}}));
+    EXPECT_FALSE(r2d.rangeIntersects(Range2d<float>{{1, 6.5, 2, 7}}));
+    EXPECT_TRUE(r2d.rangeIntersects(Range2d<float>{{3, 6.5, 5, 7}}));
+    EXPECT_FALSE(r2d.rangeIntersects(Range2d<float>{{4, 6.5, 5, 7}}));
     EXPECT_TRUE(r2d.rangeIntersects(Range2d<float>{{2.5, 3, 3, 7}}));
     EXPECT_FALSE(r2d.rangeIntersects(Range2d<float>{{2.5, 3, 3, 6}}));
-    EXPECT_TRUE(r2d.rangeIntersects(Range2d<float>{{2.5, 3, 7, 10}}));
-    EXPECT_FALSE(r2d.rangeIntersects(Range2d<float>{{2.5, 3, 8, 10}}));
+    EXPECT_TRUE(r2d.rangeIntersects(Range2d<float>{{2.5, 7, 3, 10}}));
+    EXPECT_FALSE(r2d.rangeIntersects(Range2d<float>{{2.5, 8, 3, 10}}));
 
     r2d.setYMax(10);
     EXPECT_EQ(r2d.getXRange(), 2);
     EXPECT_EQ(r2d.getYRange(), 4);
 
     r2d.setYMax(8);
-    EXPECT_TRUE((r2d.getNe() == Range2d<int>{{3, 4, 7, 8}}));
-    EXPECT_TRUE((r2d.getSe() == Range2d<int>{{3, 4, 6, 7}}));
-    EXPECT_TRUE((r2d.getSw() == Range2d<int>{{2, 3, 6, 7}}));
-    EXPECT_TRUE((r2d.getNw() == Range2d<int>{{2, 3, 7, 8}}));
+    EXPECT_TRUE((r2d.getNe() == Range2d<int>{{3, 7, 4, 8}}));
+    EXPECT_TRUE((r2d.getSe() == Range2d<int>{{3, 6, 4, 7}}));
+    EXPECT_TRUE((r2d.getSw() == Range2d<int>{{2, 6, 3, 7}}));
+    EXPECT_TRUE((r2d.getNw() == Range2d<int>{{2, 7, 3, 8}}));
 
-    EXPECT_TRUE((r2d.getN() == Range2d<int>{{2, 4, 7, 8}}));
-    EXPECT_TRUE((r2d.getE() == Range2d<int>{{3, 4, 6, 8}}));
-    EXPECT_TRUE((r2d.getS() == Range2d<int>{{2, 4, 6, 7}}));
-    EXPECT_TRUE((r2d.getW() == Range2d<int>{{2, 3, 6, 8}}));
+    EXPECT_TRUE((r2d.getN() == Range2d<int>{{2, 7, 4, 8}}));
+    EXPECT_TRUE((r2d.getE() == Range2d<int>{{3, 6, 4, 8}}));
+    EXPECT_TRUE((r2d.getS() == Range2d<int>{{2, 6, 4, 7}}));
+    EXPECT_TRUE((r2d.getW() == Range2d<int>{{2, 6, 3, 8}}));
 
     // should be able to use overloads from vector base
     EXPECT_FALSE(r2d.getNe() == r2d.getNw());
@@ -200,32 +200,27 @@ TEST(Range2d, basicFunctionality)
 
 TEST(Range2d, quadrants)
 {
-    Range2d<int> r2d{{1, 2, 3, 4}};
-    r2d.setXMin(4);
-    r2d.setXMax(2);
-    r2d.setYMin(6);
-    r2d.setYMax(8);
-    r2d.ensureAABB();
-    EXPECT_TRUE((r2d.getQuad(EQuadrant::eNE) == Range2d<int>{{3, 4, 7, 8}}));
-    EXPECT_TRUE((r2d.getQuad(EQuadrant::eSE) == Range2d<int>{{3, 4, 6, 7}}));
-    EXPECT_TRUE((r2d.getQuad(EQuadrant::eSW) == Range2d<int>{{2, 3, 6, 7}}));
-    EXPECT_TRUE((r2d.getQuad(EQuadrant::eNW) == Range2d<int>{{2, 3, 7, 8}}));
+    Range2d<int> r2d{{2, 6, 4, 8}};
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eNE) == Range2d<int>{{3, 7, 4, 8}}));
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eSE) == Range2d<int>{{3, 6, 4, 7}}));
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eSW) == Range2d<int>{{2, 6, 3, 7}}));
+    EXPECT_TRUE((r2d.getQuad(EQuadrant::eNW) == Range2d<int>{{2, 7, 3, 8}}));
 }
 
 TEST(Range2d, integerQuadSubdivision)
 {
-    Range2d<unsigned> r1{{0, 11, 0, 21}};
-    EXPECT_TRUE(r1.getNw() == (Range2d<unsigned>{{0, 5, 10, 21}}));
-    EXPECT_TRUE(r1.getNe() == (Range2d<unsigned>{{5, 11, 10, 21}}));
-    EXPECT_TRUE(r1.getSw() == (Range2d<unsigned>{{0, 5, 0, 10}}));
-    EXPECT_TRUE(r1.getSe() == (Range2d<unsigned>{{5, 11, 0, 10}}));
+    Range2d<unsigned> r1{{0, 0, 11, 21}};
+    EXPECT_TRUE(r1.getNw() == (Range2d<unsigned>{{0, 10, 5, 21}}));
+    EXPECT_TRUE(r1.getNe() == (Range2d<unsigned>{{5, 10, 11, 21}}));
+    EXPECT_TRUE(r1.getSw() == (Range2d<unsigned>{{0, 0, 5, 10}}));
+    EXPECT_TRUE(r1.getSe() == (Range2d<unsigned>{{5, 0, 11, 10}}));
 }
 
 TEST(Range2d, integerHalfSubdivision)
 {
-    Range2d<unsigned> r1{{0, 11, 0, 21}};
-    EXPECT_TRUE(r1.getN() == (Range2d<unsigned>{{0, 11, 10, 21}}));
-    EXPECT_TRUE(r1.getE() == (Range2d<unsigned>{{5, 11, 0, 21}}));
-    EXPECT_TRUE(r1.getS() == (Range2d<unsigned>{{0, 11, 0, 10}}));
-    EXPECT_TRUE(r1.getW() == (Range2d<unsigned>{{0, 5, 0, 21}}));
+    Range2d<unsigned> r1{{0, 0, 11, 21}};
+    EXPECT_TRUE(r1.getN() == (Range2d<unsigned>{{0, 10, 11, 21}}));
+    EXPECT_TRUE(r1.getE() == (Range2d<unsigned>{{5, 0, 11, 21}}));
+    EXPECT_TRUE(r1.getS() == (Range2d<unsigned>{{0, 0, 11, 10}}));
+    EXPECT_TRUE(r1.getW() == (Range2d<unsigned>{{0, 0, 5, 21}}));
 }

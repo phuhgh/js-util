@@ -4,15 +4,15 @@ namespace JsUtil
 {
 
 template <typename T>
-JsUtil::Range2d<T> Range2d<T>::fromCorners(JsUtil::Vec2<T> _bottomLeft, JsUtil::Vec2<T> _topRight)
+Range2d<T> Range2d<T>::fromCorners(Vec2<T> _bottomLeft, Vec2<T> _topRight)
 {
-    return JsUtil::Range2d<T>{{_bottomLeft.x(), _topRight.x(), _bottomLeft.y(), _topRight.y()}};
+    return Range2d{{_bottomLeft.x(), _bottomLeft.y(), _topRight.x(), _topRight.y()}};
 }
 
 template <typename T>
-JsUtil::Range2d<T> Range2d<T>::fromRanges(JsUtil::Vec2<T> _horizontal, JsUtil::Vec2<T> _vertical)
+Range2d<T> Range2d<T>::fromRanges(Vec2<T> _horizontal, Vec2<T> _vertical)
 {
-    return JsUtil::Range2d<T>{{_horizontal.min(), _horizontal.max(), _vertical.min(), _vertical.max()}};
+    return Range2d{{_horizontal.min(), _vertical.min(), _horizontal.max(), _vertical.max()}};
 }
 
 template <typename T>
@@ -58,7 +58,7 @@ T Range2d<T>::getYRange() const
 
 template <typename T>
 template <typename U>
-bool Range2d<T>::pointInRange(JsUtil::Vec2<U> _point) const
+bool Range2d<T>::pointInRange(Vec2<U> _point) const
 {
     return _point.x() >= xMin() && _point.x() <= xMax() && _point.y() >= yMin() && _point.y() <= yMax();
 }
@@ -66,10 +66,10 @@ bool Range2d<T>::pointInRange(JsUtil::Vec2<U> _point) const
 template <typename T>
 Range2d<T> Range2d<T>::getNw() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         xMin(),
-        static_cast<T>(xMin() + getXRange() / 2),
         static_cast<T>(yMin() + getYRange() / 2),
+        static_cast<T>(xMin() + getXRange() / 2),
         yMax(),
     }};
 }
@@ -77,10 +77,10 @@ Range2d<T> Range2d<T>::getNw() const
 template <typename T>
 Range2d<T> Range2d<T>::getNe() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         static_cast<T>(xMin() + getXRange() / 2),
-        xMax(),
         static_cast<T>(yMin() + getYRange() / 2),
+        xMax(),
         yMax(),
     }};
 }
@@ -88,10 +88,10 @@ Range2d<T> Range2d<T>::getNe() const
 template <typename T>
 Range2d<T> Range2d<T>::getSe() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         static_cast<T>(xMin() + getXRange() / 2),
-        xMax(),
         yMin(),
+        xMax(),
         static_cast<T>(yMin() + getYRange() / 2),
     }};
 }
@@ -99,10 +99,10 @@ Range2d<T> Range2d<T>::getSe() const
 template <typename T>
 Range2d<T> Range2d<T>::getSw() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         xMin(),
-        static_cast<T>(xMin() + getXRange() / 2),
         yMin(),
+        static_cast<T>(xMin() + getXRange() / 2),
         static_cast<T>(yMin() + getYRange() / 2),
     }};
 }
@@ -112,29 +112,25 @@ Range2d<T> Range2d<T>::getQuad(EQuadrant quad) const
 {
     if constexpr (Debug::isDebug())
     {
-        Debug::debugAssert(static_cast<unsigned>(quad) < 4, "quad out of range");
+        Debug::debugAssert(static_cast<uint8_t>(quad) < 4, "quad out of range");
     }
 
-    switch (quad)
-    {
-    case EQuadrant::eNW:
-        return getNw();
-    case EQuadrant::eNE:
-        return getNe();
-    case EQuadrant::eSE:
-        return getSe();
-    case EQuadrant::eSW:
-        return getSw();
-    }
+    T width = (xMax() - xMin()) / 2;
+    T height = (yMax() - yMin()) / 2;
+
+    T quad_xMin = xMin() + (static_cast<uint8_t>(quad) & 0b1) * width;
+    T quad_yMin = yMin() + (static_cast<uint8_t>(quad) >> 1) * height;
+
+    return Range2d{{quad_xMin, quad_yMin, quad_xMin + width, quad_yMin + height}};
 }
 
 template <typename T>
 Range2d<T> Range2d<T>::getN() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         xMin(),
-        xMax(),
         static_cast<T>(yMin() + getYRange() / 2),
+        xMax(),
         yMax(),
     }};
 }
@@ -142,10 +138,10 @@ Range2d<T> Range2d<T>::getN() const
 template <typename T>
 Range2d<T> Range2d<T>::getE() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         static_cast<T>(xMin() + getXRange() / 2),
-        xMax(),
         yMin(),
+        xMax(),
         yMax(),
     }};
 }
@@ -153,10 +149,10 @@ Range2d<T> Range2d<T>::getE() const
 template <typename T>
 Range2d<T> Range2d<T>::getS() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         xMin(),
-        xMax(),
         yMin(),
+        xMax(),
         static_cast<T>(yMin() + getYRange() / 2),
     }};
 }
@@ -164,10 +160,10 @@ Range2d<T> Range2d<T>::getS() const
 template <typename T>
 Range2d<T> Range2d<T>::getW() const
 {
-    return Range2d<T>{{
+    return Range2d{{
         xMin(),
-        static_cast<T>(xMin() + getXRange() / 2),
         yMin(),
+        static_cast<T>(xMin() + getXRange() / 2),
         yMax(),
     }};
 }

@@ -12,7 +12,7 @@ import { populateTypedArrayConstructorMap } from "../../../../runtime/rtti-inter
 /**
  * @public
  */
-export type TMargin2dCtorArgs = [left: number, right: number, top: number, bottom: number];
+export type TMargin2dCtorArgs = [left: number, bottom: number, right: number, top: number];
 
 /**
  * @public
@@ -80,15 +80,15 @@ export abstract class Margin2d<TArray extends TTypedArray> extends Mat2<TArray>
      */
     public 0!: number;
     /**
-     * right
+     * bottom
      */
     public 1!: number;
     /**
-     * top
+     * right
      */
     public 2!: number;
     /**
-     * bottom
+     * top
      */
     public 3!: number;
 

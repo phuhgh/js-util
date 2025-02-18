@@ -13,8 +13,8 @@ export class _F32
     public static MIN_POSITIVE_VALUE = Math.pow(2, -126);
     public static bounds = Range2d.f32.factory.createOne(
         -_F32.MAX_VALUE,
-        _F32.MAX_VALUE,
         -_F32.MAX_VALUE,
+        _F32.MAX_VALUE,
         _F32.MAX_VALUE,
     );
 

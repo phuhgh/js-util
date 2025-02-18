@@ -12,7 +12,7 @@ import { populateTypedArrayConstructorMap } from "../../../../runtime/rtti-inter
 /**
  * @public
  */
-export type TRange2dCtorArgs = [xMin: number, xMax: number, yMin: number, yMax: number];
+export type TRange2dCtorArgs = [xMin: number, yMin: number, xMax: number, yMax: number];
 
 /**
  * @public
@@ -82,11 +82,13 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
      */
     public 0!: number;
     /**
-     * xMax
-     */
-    public 1!: number;
-    /**
      * yMin
+     */
+
+    public 1!: number;
+
+    /**
+     * xMax
      */
     public 2!: number;
     /**

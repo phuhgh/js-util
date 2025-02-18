@@ -14,7 +14,8 @@ if (NOT TARGET JsUtil)
     jsu_create_libray(JsUtil
             SOURCE_FILES src/*.cpp
             PUBLIC_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include"
-            COMPILE_OPTIONS ${pedantic_flags} -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread -msimd128
+            LINK_OPTIONS -s SIMD=1
             PRIVATE_COMPILE_FEATURES "cxx_std_20"
     )
 endif ()

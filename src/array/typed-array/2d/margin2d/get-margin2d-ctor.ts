@@ -29,17 +29,17 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
             return this[0];
         }
 
-        public getRight(): number
+        public getBottom(): number
         {
             return this[1];
         }
 
-        public getTop(): number
+        public getRight(): number
         {
             return this[2];
         }
 
-        public getBottom(): number
+        public getTop(): number
         {
             return this[3];
         }
@@ -49,17 +49,17 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
             this[0] = value;
         }
 
-        public setRight(value: number): void
+        public setBottom(value: number): void
         {
             this[1] = value;
         }
 
-        public setTop(value: number): void
+        public setRight(value: number): void
         {
             this[2] = value;
         }
 
-        public setBottom(value: number): void
+        public setTop(value: number): void
         {
             this[3] = value;
         }
@@ -82,9 +82,9 @@ export function getMargin2dCtor<TCtor extends TTypedArrayCtor>
             : Range2d<TResult>
         {
             result[0] = range[0] + this[0]; // xMin
-            result[1] = range[1] - this[1]; // xMax
-            result[2] = range[2] + this[3]; // yMin
-            result[3] = range[3] - this[2]; // yMax
+            result[1] = range[1] + this[1]; // yMin
+            result[2] = range[2] - this[2]; // xMax
+            result[3] = range[3] - this[3]; // yMax
 
             return result;
         }

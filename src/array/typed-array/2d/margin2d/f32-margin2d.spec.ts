@@ -16,14 +16,12 @@ describe("=> F32Margin2d", () =>
         {
             const innerRange = Margin2d.f32.factory
                 .createOne(9, 8, 7, 6)
-                .getInnerRange(
-                    Range2d.f32.factory.createOne(50, 100, 50, 100),
-                );
+                .getInnerRange(Range2d.f32.factory.createOne(50, 50, 100, 100));
 
             expect(innerRange.getXMin()).toBe(59);
-            expect(innerRange.getXMax()).toBe(92);
-            expect(innerRange.getYMin()).toBe(56);
-            expect(innerRange.getYMax()).toBe(93);
+            expect(innerRange.getYMin()).toBe(58);
+            expect(innerRange.getXMax()).toBe(93);
+            expect(innerRange.getYMax()).toBe(94);
         });
     });
 
@@ -37,14 +35,12 @@ describe("=> F32Margin2d", () =>
 
             const newRange = Margin2d.f32.factory
                 .createOne(9, 8, 7, 6)
-                .mat3TransformLength(
-                    transform,
-                );
+                .mat3TransformLength(transform);
 
             expect(newRange.getLeft()).toBe(18);
-            expect(newRange.getRight()).toBe(16);
-            expect(newRange.getTop()).toBe(14);
-            expect(newRange.getBottom()).toBe(12);
+            expect(newRange.getBottom()).toBe(16);
+            expect(newRange.getRight()).toBe(14);
+            expect(newRange.getTop()).toBe(12);
         });
     });
 

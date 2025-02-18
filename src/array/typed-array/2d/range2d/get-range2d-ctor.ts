@@ -31,12 +31,12 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             this[0] = value;
         }
 
-        public setXMax(value: number): void
+        public setYMin(value: number): void
         {
             this[1] = value;
         }
 
-        public setYMin(value: number): void
+        public setXMax(value: number): void
         {
             this[2] = value;
         }
@@ -46,17 +46,17 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             this[3] = value;
         }
 
+
         public getXMin(): number
         {
             return this[0];
         }
 
-        public getXMax(): number
+        public getYMin(): number
         {
             return this[1];
         }
-
-        public getYMin(): number
+        public getXMax(): number
         {
             return this[2];
         }
@@ -80,12 +80,12 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public getXRange(): number
         {
-            return this[1] - this[0];
+            return this[2] - this[0];
         }
 
         public getYRange(): number
         {
-            return this[3] - this[2];
+            return this[3] - this[1];
         }
 
         public getXMaxAbs(): number
@@ -118,12 +118,12 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public getXCenter(): number
         {
-            return (this[0] + this[1]) * 0.5;
+            return (this[0] + this[2]) * 0.5;
         }
 
         public getYCenter(): number
         {
-            return (this[2] + this[3]) * 0.5;
+            return (this[1] + this[3]) * 0.5;
         }
 
         public mat3Multiply<TResult extends TTypedArray = InstanceType<TCtor>>
@@ -149,8 +149,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             : Range2d<TResult>
         {
             writeTo[0] = this[0] > range[0] ? range[0] : this[0];
-            writeTo[1] = this[1] < range[1] ? range[1] : this[1];
-            writeTo[2] = this[2] > range[2] ? range[2] : this[2];
+            writeTo[1] = this[1] > range[1] ? range[1] : this[1];
+            writeTo[2] = this[2] < range[2] ? range[2] : this[2];
             writeTo[3] = this[3] < range[3] ? range[3] : this[3];
 
             return writeTo;
@@ -165,8 +165,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             : Range2d<TResult>
         {
             writeTo[0] = this[0] > x ? x : this[0];
-            writeTo[1] = this[1] < x ? x : this[1];
-            writeTo[2] = this[2] > y ? y : this[2];
+            writeTo[1] = this[1] > y ? y : this[1];
+            writeTo[2] = this[2] < x ? x : this[2];
             writeTo[3] = this[3] < y ? y : this[3];
 
             return writeTo;
@@ -211,8 +211,8 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public doesRangeIntersect(range: IReadonlyRange2d<TTypedArray>): boolean
         {
-            return (Math.abs((this[0] + this[1]) - (range[0] + range[1])) < (this.getXRange() + range.getXRange()))
-                   && (Math.abs(((this[2] + this[3])) - (range[2] + range[3])) < (this.getYRange() + range.getYRange()));
+            return (Math.abs((this[0] + this[2]) - (range[0] + range[2])) < (this.getXRange() + range.getXRange()))
+                   && (Math.abs(((this[1] + this[3])) - (range[1] + range[3])) < (this.getYRange() + range.getYRange()));
         }
 
         public containsRange(range: IReadonlyRange2d<TTypedArray>): boolean
@@ -300,17 +300,17 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
 
         public ensureAABB(): void
         {
-            if (this[0] > this[1])
+            if (this[0] > this[2])
             {
                 const tmp = this[0];
-                this[0] = this[1];
-                this[1] = tmp;
+                this[0] = this[2];
+                this[2] = tmp;
             }
 
-            if (this[2] > this[3])
+            if (this[1] > this[3])
             {
-                const tmp = this[2];
-                this[2] = this[3];
+                const tmp = this[1];
+                this[1] = this[3];
                 this[3] = tmp;
             }
         }
