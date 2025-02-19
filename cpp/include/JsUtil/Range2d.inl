@@ -121,7 +121,12 @@ Range2d<T> Range2d<T>::getQuad(EQuadrant quad) const
     T quad_xMin = xMin() + (static_cast<uint8_t>(quad) & 0b1) * width;
     T quad_yMin = yMin() + (static_cast<uint8_t>(quad) >> 1) * height;
 
-    return Range2d{{quad_xMin, quad_yMin, quad_xMin + width, quad_yMin + height}};
+    return Range2d{
+        {static_cast<T>(quad_xMin),
+         static_cast<T>(quad_yMin),
+         static_cast<T>(quad_xMin + width),
+         static_cast<T>(quad_yMin + height)}
+    };
 }
 
 template <typename T>
