@@ -1,7 +1,7 @@
 import { SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
 import { _Debug } from "../../debug/_debug.js";
 import { nullPtr } from "./null-pointer.js";
-import utilTestModule from "../../external/util-test-module.mjs";
+import utilTestModule from "../../external/test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { getTestModuleOptions } from "../../test-util/test-utils.js";
 import { ENumberIdentifier } from "../../runtime/rtti-interop.js";

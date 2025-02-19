@@ -4,7 +4,7 @@ import { Test_setDefaultFlags } from "../test-util/test_set-default-flags.js";
 import { blockScope } from "./block-scoped-lifecycle.js";
 import { SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/sanitized-emscripten-test-module.js";
 import { getTestModuleOptions } from "../test-util/test-utils.js";
-import utilTestModule from "../external/util-test-module.mjs";
+import utilTestModule from "../external/test-module.mjs";
 import type { IManagedResourceNode } from "./manged-resources.js";
 
 describe("=> blockScope", () =>

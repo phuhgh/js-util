@@ -5,7 +5,7 @@ import { ReferenceCountedStrategy } from "./reference-counted-strategy.js";
 import { _Debug } from "../../debug/_debug.js";
 import { SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
 import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
-import utilTestModule from "../../external/util-test-module.mjs";
+import utilTestModule from "../../external/test-module.mjs";
 import { SharedArray } from "../shared-array/shared-array.js";
 import type { IJsUtilBindings } from "../i-js-util-bindings.js";
 

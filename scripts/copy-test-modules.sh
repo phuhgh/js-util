@@ -2,7 +2,8 @@
 
 set -e
 
-# this script is only relevant to JsUtil
+# this script is only relevant to JsUtil - or if your project conforms to the same build process
+
 while [ "$1" != "" ]; do
   PARAM="$(printf "%s\n" "$1" | awk -F= '{print $1}')"
   VALUE="$(printf "%s\n" "$1" | sed 's/^[^=]*=//g')"
@@ -22,9 +23,9 @@ while [ "$1" != "" ]; do
 done
 
 if [ "$SKIP_BUILD" != "true" ]; then
-  cp cpp/build/"${PRESET}"/util-test-module.js bin/esm/external/util-test-module.mjs || exit
+  cp cpp/build/"${PRESET}"/test-module.js bin/esm/external/test-module.mjs || exit
   # todo jack: can we do any better?
   # mysteriously, on linux the name is different
-  cp cpp/build/"${PRESET}"/util-test-module.js bin/esm/external/util-test-module.js || exit
-  cp cpp/build/"${PRESET}"/util-test-module.wasm bin/esm/external/util-test-module.wasm || exit
+  cp cpp/build/"${PRESET}"/test-module.js bin/esm/external/test-module.js || exit
+  cp cpp/build/"${PRESET}"/test-module.wasm bin/esm/external/test-module.wasm || exit
 fi

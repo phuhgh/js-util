@@ -22,7 +22,7 @@ find_package(JsUtil 10.0 REQUIRED)
 
 if (${BUILD_JSUTIL_TEST})
     # javascript test module
-    jsu_create_executable(util-test-module
+    jsu_create_executable(test-module
             SOURCE_FILES test-util/JsTestModuleBindings.cpp
             LINK_LIBRARIES JsUtil
             COMPILE_OPTIONS -pthread

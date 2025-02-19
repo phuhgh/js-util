@@ -1,5 +1,5 @@
 import { SanitizedEmscriptenTestModule } from "./sanitized-emscripten-test-module.js";
-import utilTestModule from "../../external/util-test-module.mjs";
+import utilTestModule from "../../external/test-module.mjs";
 import { getTestModuleOptions } from "../../test-util/test-utils.js";
 import { numberCategory, numberSpecializations } from "../../runtime/rtti-interop.js";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";

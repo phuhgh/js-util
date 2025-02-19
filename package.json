@@ -43,6 +43,7 @@
   },
   "bin": {
     "rc-build-cpp": "scripts/build-cpp.sh",
+    "rc-build-local": "scripts/build-local.sh",
     "rc-ci-local": "scripts/ci-local.sh",
     "rc-test-cpp-local": "scripts/test-cpp-local.sh"
   },
@@ -58,6 +59,15 @@
         "types": "./bin/cjs/index.d.ts",
         "default": "./bin/cjs/index.js"
       }
+    },
+    "./config/jasmine-browser.mjs": {
+      "default": "./config/jasmine-browser.mjs"
+    },
+    "./config/jasmine-node.mjs": {
+      "default": "./config/jasmine-node.mjs"
+    },
+    "./config/jasmine-util.mjs": {
+      "default": "./config/jasmine-util.mjs"
     }
   },
   "keywords": [

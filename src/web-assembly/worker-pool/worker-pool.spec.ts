@@ -1,4 +1,4 @@
-import utilTestModule from "../../external/util-test-module.mjs";
+import utilTestModule from "../../external/test-module.mjs";
 import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js";
 import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
 import { type IErrorExclusions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
