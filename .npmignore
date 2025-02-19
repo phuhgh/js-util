@@ -13,3 +13,4 @@
 !components.spdx
 !scripts/**/*
 !config/**/*
+!plugins/**/*

@@ -14,32 +14,33 @@ function expressShim() {
 
 Object.setPrototypeOf(expressShim, express);
 
-export default {
-    "srcDir": "bin/esm/",
-    "srcFiles": [
-        "**/*.cjs",
-        "**/*.js"
-    ],
-    "specDir": ".",
-    "specFiles": [
-        "bin/esm/**/*[sS]pec.js"
-    ],
-    "helpers": getHelpers("browser"),
-    "importMap": {
-        "moduleRootDir": "node_modules",
-        "imports": {
-            "tslib": "tslib/tslib.es6.mjs",
-            "rc-js-util-globals": "rc-js-util-globals/index.js"
-        }
-    },
-    "esmFilenameExtension": ".js",
-    "env": {
-        "stopSpecOnExpectationFailure": false,
-        "stopOnSpecFailure": false,
-        "random": true
-    },
-    "browser": {
-        "name": "headlessChrome"
-    },
-    express: expressShim,
-};
+export function createConfig(path = "") {
+    return {
+        "srcDir": "bin/esm/",
+        "srcFiles": [], // all imports through spec requires
+        "specDir": ".",
+        "specFiles": [
+            "bin/esm/**/*[sS]pec.js"
+        ],
+        "helpers": getHelpers("browser", path),
+        "importMap": {
+            "moduleRootDir": "node_modules",
+            "imports": {
+                "tslib": "tslib/tslib.es6.mjs",
+                "rc-js-util-globals": "rc-js-util-globals/index.js"
+            }
+        },
+        "esmFilenameExtension": ".js",
+        "env": {
+            "stopSpecOnExpectationFailure": false,
+            "stopOnSpecFailure": false,
+            "random": true
+        },
+        "browser": {
+            "name": "headlessChrome"
+        },
+        express: expressShim,
+    };
+}
+
+export default createConfig();

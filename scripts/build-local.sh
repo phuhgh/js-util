@@ -2,6 +2,8 @@
 
 set -e
 
+DIR="$(dirname -- "$0")"
+
 # this script is only relevant to JsUtil - or if your project conforms to the same build process
-./scripts/build-cpp.sh "$@"  || exit
-./scripts/copy-test-modules.sh "$@" || exit
+"$DIR/build-cpp.sh" "$@" || exit
+"$DIR/copy-test-modules.sh" "$@" || exit
