@@ -14,8 +14,7 @@ TEST(SegmentedDataView, sharedArrayCompat)
 {
     auto sa = SharedArray<int>::createOne(10, true);
     std::iota(sa.asSpan().begin(), sa.asSpan().end(), 0);
-
-    SegmentedDataView<SharedArray<int>> dv{sa, 2};
+    SegmentedDataView dv{sa, {.blockSize = 2}};
 
     EXPECT_EQ(dv.getLength(), 5);
     for (auto i : VectorExt::range(5))
@@ -39,7 +38,7 @@ TEST(SegmentedDataView, resizableArrayCompat)
 {
     auto data = ResizableArray<double>(10);
     std::iota(data.asSpan().begin(), data.asSpan().end(), 0);
-    auto dataView = SegmentedDataView{data, 2};
+    auto dataView = SegmentedDataView{data, {.blockSize = 2}};
     static_assert(std::is_same_v<ResizableArray<int>::size_type, unsigned int>);
     static_assert(std::is_same_v<ResizableArray<int>::value_type, int>);
     static_assert(std::is_same_v<decltype(dataView)::size_type, unsigned int>);
@@ -66,7 +65,7 @@ TEST(SegmentedDataView, strideOffset)
 {
     auto data = ResizableArray<double>(10);
     std::iota(data.asSpan().begin(), data.asSpan().end(), 0);
-    auto dataView = SegmentedDataView{data, 1, 2, 1};
+    auto dataView = SegmentedDataView{data, {.blockSize = 1, .stride = 2, .offset = 1}};
 
     EXPECT_EQ(dataView.getLength(), 4);
 

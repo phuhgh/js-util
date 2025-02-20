@@ -265,21 +265,23 @@ TEST(FunctionFactory, operatorsForSpan)
     TestContext    o1Context{&o1Result, 1};
     TestContext    o2Context{&o2Result, 1};
 
+    // initializer lists copy...
+    auto v = std::vector<MoveOnlyTestObject>{};
+    v.emplace_back(MoveOnlyTestObject{2});
+    v.emplace_back(MoveOnlyTestObject{99});
+    v.emplace_back(MoveOnlyTestObject{-1});
+
     auto constexpr operations = std::make_tuple(
         std::make_tuple(
             Autogen::FuncStep{
                 scTEST_SPEC_1_A,
-                [](TestContext const& context, int arg) {
-                    // initializer lists copy...
-                    auto v = std::vector<MoveOnlyTestObject>{};
-                    v.emplace_back(MoveOnlyTestObject{arg});
-                    v.emplace_back(MoveOnlyTestObject{context.value});
-                    v.emplace_back(MoveOnlyTestObject{-1});
-                    return v;
+                [](TestContext const& context, std::vector<MoveOnlyTestObject>& arg) {
+                    arg[1].m_val = context.value; // this ought to be a hanging offense, but we're just checking...
+                    return JsUtil::SegmentedDataView{arg, {.blockSize = 2, .stride = 3}};
                 }
             }
         ),
-        std::make_tuple(Autogen::ForEachSpanConnector({.spanSize = 2, .stride = 3})),
+        std::make_tuple(Autogen::SegmentedDataViewConnector()),
         std::make_tuple(
             Autogen::FuncStep{
                 scTEST_SPEC_2_A,
@@ -308,8 +310,8 @@ TEST(FunctionFactory, operatorsForSpan)
     static_assert(std::tuple_size_v<decltype(functions)> == 2);
 
     // factory generation is constexpr, the actual running of the pipeline is not in this case
-    std::get<0>(functions).run(o1Context, 2);
-    std::get<1>(functions).run(o2Context, 2);
+    std::get<0>(functions).run(o1Context, v);
+    std::get<1>(functions).run(o2Context, v);
 
     EXPECT_EQ(o1Result.size(), 2);
     EXPECT_EQ(o1Result[0].val, 4);
@@ -340,10 +342,12 @@ TEST(FunctionFactory, operatorsForSpanNoCopy)
         std::make_tuple(
             Autogen::FuncStep{
                 scTEST_SPEC_1_A,
-                [](TestContext const&, std::vector<MoveOnlyTestObject> const& arg) { return std::span{arg}; }
+                [](TestContext const&, std::vector<MoveOnlyTestObject> const& arg) {
+                    return JsUtil::SegmentedDataView{arg, {.blockSize = 2, .stride = 3}};
+                }
             }
         ),
-        std::make_tuple(Autogen::ForEachSpanConnector({.spanSize = 2, .stride = 3})),
+        std::make_tuple(Autogen::SegmentedDataViewConnector()),
         std::make_tuple(
             Autogen::FuncStep{
                 scTEST_SPEC_2_A,
@@ -421,9 +425,12 @@ TEST(FunctionFactory, getMapping)
 
     constexpr auto pipeline_specification = std::make_tuple(
         std::make_tuple(Autogen::FuncStep{scTEST_SPEC_1_A, f1}, Autogen::FuncStep{scTEST_SPEC_1_B, f2}),
-        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_2_A, f3}),
+        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_2_A, [](int context, B arg) -> A { return A{arg.val + 3 + context}; }}),
         std::make_tuple(Autogen::FuncStep{scTEST_SPEC_3_A, f4}, Autogen::FuncStep{scTEST_SPEC_3_B, f5})
     );
+
+    constexpr auto pipeline = Autogen::applyFunctionFactory(TupleExt::flattenCombinations(pipeline_specification));
+    static_assert(std::tuple_size_v<decltype(pipeline)> == 4);
 
     auto mapping = Autogen::createFunctionMapping(pipeline_specification);
     ASSERT_NE(mapping.find(JsUtil::getCategoryId(scTEST_CAT_1)), nullptr);

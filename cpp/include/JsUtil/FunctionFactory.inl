@@ -70,19 +70,12 @@ constexpr auto ForEachConnector<BlockSize>::createOne(TFunction callback) const
 }
 
 template <typename TContext, typename TArg, typename TStep>
-constexpr auto ForEachSpanConnector::createOne(TStep callback) const
+constexpr auto SegmentedDataViewConnector::createOne(TStep callback) const
 {
-    return [callback, _opts = options](TContext&& context, TArg items) {
-        using TIndex = typename TArg::size_type;
-
-        auto const spanSize = static_cast<TIndex>(_opts.spanSize);
-        auto const stride = static_cast<TIndex>(_opts.stride);
-        auto const offset = static_cast<TIndex>(_opts.offset);
-        auto const end = std::min(static_cast<TIndex>(_opts.end), items.size());
-
-        for (TIndex i = offset; i < end; i += stride)
+    return [callback](TContext&& context, TArg items) {
+        for (typename TArg::size_type i = 0, length = items.getLength(); i < length; ++i)
         {
-            callback(std::forward<TContext>(context), std::span{&items[i], spanSize});
+            callback(std::forward<TContext>(context), items.getBlock(i));
         }
     };
 }
@@ -130,9 +123,9 @@ constexpr auto Impl::PipelineExtensions<ForEachConnector<BlockSize>>::apply(
 }
 
 template <typename TFactory, typename TPrevStep>
-constexpr auto Impl::PipelineExtensions<ForEachSpanConnector>::apply(
-    TFactory const&             factory,
-    ForEachSpanConnector const& step,
+constexpr auto Impl::PipelineExtensions<SegmentedDataViewConnector>::apply(
+    TFactory const&                   factory,
+    SegmentedDataViewConnector const& step,
     TPrevStep
 )
 {
@@ -243,8 +236,7 @@ auto createFunctionMapping(std::tuple<TPipelineSteps...> pipelineStages)
 
             auto const& specialization = Impl::SpecializationMatcher<TStep>::getSpecialization(step);
             auto        specializationId = JsUtil::getSpecializationId(specialization);
-
-            auto* insertedSpecialization = specializationMap->insert(specializationId, offset);
+            auto*       insertedSpecialization = specializationMap->insert(specializationId, offset);
 
             if (insertedSpecialization == nullptr)
             {

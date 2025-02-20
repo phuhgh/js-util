@@ -29,7 +29,7 @@ void JsUtil::initializeJsu()
             Autogen::scFOR_EACH_1,
             Autogen::scFOR_EACH_2,
             Autogen::scFOR_EACH_3,
-            Autogen::scFOR_EACH_SPAN
+            Autogen::scSEGMENTED_DATA_VIEW
         )
     );
 

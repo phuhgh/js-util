@@ -4,15 +4,15 @@
 #include "JsUtil/Identifiers.hpp"
 #include "JsUtil/LangExt.hpp"
 #include "JsUtil/Number.hpp"
+#include "JsUtil/SegmentedDataView.hpp"
 #include "JsUtil/Tuple.hpp"
-#include <span>
 
 namespace Autogen
 {
 
 template <unsigned BlockSize>
 struct ForEachConnector;
-struct ForEachSpanConnector;
+struct SegmentedDataViewConnector;
 
 inline constexpr JsUtil::IdCategory<struct FFIterator>                               scITERATOR{"JSU_FF_ITERATOR"};
 inline constexpr JsUtil::IdSpecialization<ForEachConnector<1>, decltype(scITERATOR)> scFOR_EACH_1{
@@ -27,9 +27,9 @@ inline constexpr JsUtil::IdSpecialization<ForEachConnector<3>, decltype(scITERAT
     scITERATOR,
     "JSU_FF_FOR_EACH_3"
 };
-inline constexpr JsUtil::IdSpecialization<ForEachSpanConnector, decltype(scITERATOR)> scFOR_EACH_SPAN{
+inline constexpr JsUtil::IdSpecialization<SegmentedDataViewConnector, decltype(scITERATOR)> scSEGMENTED_DATA_VIEW{
     scITERATOR,
-    "JSU_FF_FOR_EACH_SPAN"
+    "JSU_FF_SEGMENTED_DATA_VIEW"
 };
 
 template <typename TSpecialization, typename TFn>
@@ -127,27 +127,13 @@ ForEachConnector(T) -> ForEachConnector<T::blockSize>;
 ForEachConnector() -> ForEachConnector<1>;
 
 /**
- * @brief Connects the previous pipeline step (which should return some STL like collection) with the next step in
- * the pipeline.
- *
- * Optionally You may specify an `offset`, `end` and `stride` - which all have the usual meaning. The `spanSize`
- * should be smaller than the stride, and provides a window into the data via std::span, which is provided in the
- * callback.
+ * @brief Connects the previous pipeline step (which should return a SegmentedDataView) with the next step in the
+ * pipeline.
  */
-struct ForEachSpanConnector
+struct SegmentedDataViewConnector
 {
-    struct Options
-    {
-        unsigned spanSize{1};
-        unsigned stride{spanSize};
-        unsigned offset{0};
-        size_t   end{std::numeric_limits<size_t>::max()};
-    };
-
     template <typename TContext, typename TArg, typename TStep>
     constexpr auto createOne(TStep callback) const;
-
-    Options options;
 };
 
 namespace Impl
@@ -163,9 +149,9 @@ struct SpecializationMatcher<ForEachConnector<BlockSize>>
 };
 
 template <>
-struct SpecializationMatcher<ForEachSpanConnector>
+struct SpecializationMatcher<SegmentedDataViewConnector>
 {
-    static constexpr auto const& getSpecialization(ForEachSpanConnector const&) { return scFOR_EACH_SPAN; }
+    static constexpr auto const& getSpecialization(SegmentedDataViewConnector const&) { return scSEGMENTED_DATA_VIEW; }
 };
 
 template <typename TSpecialization, typename TFn>
@@ -221,23 +207,23 @@ struct PipelineExtensions<ForEachConnector<BlockSize>>
 };
 
 template <>
-struct PipelineExtensions<ForEachSpanConnector>
+struct PipelineExtensions<SegmentedDataViewConnector>
 {
     template <typename TStep>
     static constexpr auto apply(TStep)
     {
-        static_assert(false, "ForEachSpanConnector must not be the last step");
+        static_assert(false, "SegmentedDataViewConnector must not be the last step");
     }
 
     template <typename TFactory, typename TStep>
     static constexpr auto apply(TFactory, TStep)
     {
         // encode each collection type in a step before (even if it's just identity), they will then be expanded out
-        static_assert(false, "ForEachSpanConnector must not be the first step");
+        static_assert(false, "SegmentedDataViewConnector must not be the first step");
     }
 
     template <typename TFactory, typename TPrevStep>
-    static constexpr auto apply(TFactory const& factory, ForEachSpanConnector const& step, TPrevStep);
+    static constexpr auto apply(TFactory const& factory, SegmentedDataViewConnector const& step, TPrevStep);
 };
 
 } // namespace Impl
@@ -258,6 +244,9 @@ auto getRequiredCategories(std::tuple<TPipelineSteps...> pipelineStages);
 
 /**
  * @brief Creates a mapping between categories and specializations onto the function index.
+ * @remark In order to get the offset in applyFunctionFactory, just add up each "level" of the pipeline.
+ * @remark Any stage which has only one option can be discounted from the calculation.
+ * @remark No stage should have a duplicate specialization.
  */
 template <typename... TPipelineSteps>
 auto createFunctionMapping(std::tuple<TPipelineSteps...> pipelineStages);
