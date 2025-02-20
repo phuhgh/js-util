@@ -37,7 +37,7 @@ auto getCategoryFromStage(auto const& stage)
 {
     auto const& firstStep = std::get<0>(stage);
     using TFirstStep = std::decay_t<decltype(firstStep)>;
-    auto const& specialization = Impl::SpecializationMatcher<TFirstStep>::getSpecialization(firstStep);
+    auto const& specialization = SpecializationMatcher<TFirstStep>::getSpecialization(firstStep);
     return *specialization.category;
 }
 

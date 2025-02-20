@@ -374,6 +374,43 @@ TEST(FunctionFactory, operatorsForSpanNoCopy)
     EXPECT_EQ(o1Result[1].val, 4);
 }
 
+TEST(FunctionFactory, contextNoCopy)
+{
+    struct TestContext
+    {
+        std::vector<MoveOnlyTestObject> result;
+    };
+
+    auto constexpr operations = std::make_tuple(
+        std::make_tuple(
+            Autogen::FuncStep{
+                scTEST_SPEC_1_A,
+                [](TestContext& context, int arg) -> int {
+                    context.result.emplace_back(arg);
+                    return 10;
+                }
+            }
+        ),
+        std::make_tuple(
+            Autogen::FuncStep{
+                scTEST_SPEC_2_A, [](TestContext& context, int arg) -> void { context.result.emplace_back(arg); }
+            }
+        )
+    );
+
+    constexpr auto combinations = TupleExt::flattenCombinations(operations);
+    static_assert(std::tuple_size_v<decltype(combinations)> == 1);
+    constexpr auto functions = Autogen::applyFunctionFactory(combinations);
+    static_assert(std::tuple_size_v<decltype(functions)> == 1);
+
+    // this is technically supported, but probably an absolutely awful idea
+    TestContext context{};
+    std::get<0>(functions).run(context, 1);
+    EXPECT_EQ(context.result.size(), 2);
+    EXPECT_EQ(context.result[0].m_val, 1);
+    EXPECT_EQ(context.result[1].m_val, 10);
+}
+
 TEST(FunctionFactory, getFunctionOffsets)
 {
     constexpr auto specification = std::make_tuple(
@@ -425,7 +462,9 @@ TEST(FunctionFactory, getMapping)
 
     constexpr auto pipeline_specification = std::make_tuple(
         std::make_tuple(Autogen::FuncStep{scTEST_SPEC_1_A, f1}, Autogen::FuncStep{scTEST_SPEC_1_B, f2}),
-        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_2_A, [](int context, B arg) -> A { return A{arg.val + 3 + context}; }}),
+        std::make_tuple(
+            Autogen::FuncStep{scTEST_SPEC_2_A, [](int context, B arg) -> A { return A{arg.val + 3 + context}; }}
+        ),
         std::make_tuple(Autogen::FuncStep{scTEST_SPEC_3_A, f4}, Autogen::FuncStep{scTEST_SPEC_3_B, f5})
     );
 
