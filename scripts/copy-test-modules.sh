@@ -23,6 +23,7 @@ while [ "$1" != "" ]; do
 done
 
 if [ "$SKIP_BUILD" != "true" ]; then
+  echo "Copying test-module from ${PRESET} into bin/esm/external/"
   cp cpp/build/"${PRESET}"/test-module.js bin/esm/external/test-module.mjs || exit
   # todo jack: can we do any better?
   # mysteriously, on linux the name is different

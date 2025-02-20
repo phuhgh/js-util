@@ -11,9 +11,11 @@ function isAsan() {
 export function getHelpers(env, path) {
     const helpers = [];
     if (isAsan()) {
+        console.log("Adding ASAN variables...");
         helpers.push(join(path, "config/helpers/jasmine-asan.js"));
     }
     if (isDebug()) {
+        console.log("Adding debug variables...");
         helpers.push(join(path, "config/helpers/jasmine-debug.js"));
     }
     switch (env) {
