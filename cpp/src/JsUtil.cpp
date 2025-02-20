@@ -25,11 +25,8 @@ void JsUtil::initializeJsu()
 
     JsInterop::IdRegistry::registerIdentifiers(
         std::make_tuple(
-            Autogen::scITERATOR,
-            Autogen::scFOR_EACH_1,
-            Autogen::scFOR_EACH_2,
-            Autogen::scFOR_EACH_3,
-            Autogen::scSEGMENTED_DATA_VIEW
+            Autogen::scFUNCTION_FACTORY_CATEGORIES,
+            Autogen::scITERATOR_SPECIALIZATION
         )
     );
 

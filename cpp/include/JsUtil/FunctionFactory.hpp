@@ -10,27 +10,51 @@
 namespace Autogen
 {
 
-template <unsigned BlockSize>
-struct ForEachConnector;
-struct SegmentedDataViewConnector;
+namespace Iterators
+{
 
-inline constexpr JsUtil::IdCategory<struct FFIterator>                               scITERATOR{"JSU_FF_ITERATOR"};
-inline constexpr JsUtil::IdSpecialization<ForEachConnector<1>, decltype(scITERATOR)> scFOR_EACH_1{
-    scITERATOR,
-    "JSU_FF_FOR_EACH_1"
+/**
+ * @brief Takes a SegmentedDataView, calling the callback on each block within.
+ */
+constexpr auto scFOR_EACH_SEGMENT =
+    []<class TContext, class TArg, class TStep>(TContext&& context, TArg&& items, TStep&& callback) {
+        for (typename TArg::size_type i = 0, length = std::forward<TArg>(items).getLength(); i < length; ++i)
+        {
+            std::forward<TStep>(callback)(std::forward<TContext>(context), std::forward<TArg>(items).getBlock(i));
+        }
+    };
+
+/**
+ * @brief Takes a STL like container and iterates over its elements according to static options.
+ */
+template <JsUtil::SegmentedDataViewOptions TOptions>
+constexpr auto scFOR_EACH_ELEMENT =
+    []<class TContext, class TArg, class TStep>(TContext&& context, TArg&& items, TStep&& callback) {
+        using TIndex = typename TArg::size_type;
+        auto stride = static_cast<TIndex>(TOptions.stride);
+        auto offset = static_cast<TIndex>(TOptions.offset);
+
+        for (TIndex i = offset, end = std::forward<TArg>(items).size(); i < end; i += stride)
+        {
+            [&]<std::size_t... Is>(std::index_sequence<Is...>) {
+                std::forward<TStep>(callback)(std::forward<TContext>(context), std::forward<TArg>(items)[i + Is]...);
+            }(std::make_index_sequence<TOptions.blockSize>());
+        }
+    };
+} // namespace Iterators
+
+/**
+ * @brief Only one iterator is supported at a given level.
+ * @remark Because an iterator cannot be the first or last step, and it has to be the only step of its kind in its
+ * stage, it doesn't need to be RTTI addressable in a unique way like other steps, it is essentially invisible.
+ */
+struct IteratorInteropConnectorToken
+{
 };
-inline constexpr JsUtil::IdSpecialization<ForEachConnector<2>, decltype(scITERATOR)> scFOR_EACH_2{
-    scITERATOR,
-    "JSU_FF_FOR_EACH_2"
-};
-inline constexpr JsUtil::IdSpecialization<ForEachConnector<3>, decltype(scITERATOR)> scFOR_EACH_3{
-    scITERATOR,
-    "JSU_FF_FOR_EACH_3"
-};
-inline constexpr JsUtil::IdSpecialization<SegmentedDataViewConnector, decltype(scITERATOR)> scSEGMENTED_DATA_VIEW{
-    scITERATOR,
-    "JSU_FF_SEGMENTED_DATA_VIEW"
-};
+
+inline constexpr JsUtil::IdCategory<struct FFIterator> scFUNCTION_FACTORY_CATEGORIES{"JSU_FF_CAT"};
+inline constexpr JsUtil::IdSpecialization<IteratorInteropConnectorToken, decltype(scFUNCTION_FACTORY_CATEGORIES)>
+    scITERATOR_SPECIALIZATION{scFUNCTION_FACTORY_CATEGORIES, "JSU_FF_ITERATOR_SPEC"};
 
 template <typename TSpecialization, typename TFn>
 struct FuncStep
@@ -98,43 +122,30 @@ class FunctionFactory
 };
 
 /**
- * @brief Connects the previous pipeline step (which should return some STL like collection) with the next function in
- * the pipeline.
- *
- * Optionally You may specify an `offset`, `end` and `stride` - which all have the usual meaning. The `BlockSize`
- * should be smaller than the stride, and provides a window into the data, which is "spread" over the callback, e.g. for
- * a block size of 2 the callback signature would be TRet *(TContext, TItem, TItem).
+ * @brief Connects the previous pipeline step with the next step in the pipeline, iteration happening through the
+ * iteratorCallback. See the namespace Iterators.
  */
-template <unsigned BlockSize>
-struct ForEachConnector
+template <typename TCallback>
+struct IteratorConnector : IteratorInteropConnectorToken
 {
-    struct Options
+    constexpr IteratorConnector(TCallback iteratorCallback)
+        : m_iteratorCallback(iteratorCallback)
     {
-        static constexpr unsigned blockSize{BlockSize};
-        unsigned                  stride{BlockSize};
-        unsigned                  offset{0};
-        size_t                    end{std::numeric_limits<size_t>::max()};
-    };
+    }
 
-    template <typename TContext, typename TArg, typename TFunction>
-    constexpr auto createOne(TFunction callback) const;
-
-    Options options;
-};
-
-template <typename T>
-ForEachConnector(T) -> ForEachConnector<T::blockSize>;
-ForEachConnector() -> ForEachConnector<1>;
-
-/**
- * @brief Connects the previous pipeline step (which should return a SegmentedDataView) with the next step in the
- * pipeline.
- */
-struct SegmentedDataViewConnector
-{
     template <typename TContext, typename TArg, typename TStep>
-    constexpr auto createOne(TStep callback) const;
+    constexpr auto createOne(TStep nextPipelineCallback) const
+    {
+        return [nextPipelineCallback, iteratorCallback = m_iteratorCallback](TContext&& context, TArg items) {
+            iteratorCallback(std::forward<TContext>(context), std::forward<TArg>(items), nextPipelineCallback);
+        };
+    }
+
+    TCallback m_iteratorCallback;
 };
+
+template <typename TCallback>
+IteratorConnector(TCallback) -> IteratorConnector<TCallback>;
 
 namespace Impl
 {
@@ -142,16 +153,13 @@ namespace Impl
 template <typename T>
 struct SpecializationMatcher;
 
-template <unsigned BlockSize>
-struct SpecializationMatcher<ForEachConnector<BlockSize>>
+template <typename TCallback>
+struct SpecializationMatcher<IteratorConnector<TCallback>>
 {
-    static constexpr auto const& getSpecialization(ForEachConnector<BlockSize> const&);
-};
-
-template <>
-struct SpecializationMatcher<SegmentedDataViewConnector>
-{
-    static constexpr auto const& getSpecialization(SegmentedDataViewConnector const&) { return scSEGMENTED_DATA_VIEW; }
+    static constexpr auto const& getSpecialization(IteratorConnector<TCallback> const&)
+    {
+        return scITERATOR_SPECIALIZATION;
+    }
 };
 
 template <typename TSpecialization, typename TFn>
@@ -186,44 +194,34 @@ struct PipelineExtensions<FuncStep<TSpecialization, TFn>>
     }
 };
 
-template <unsigned BlockSize>
-struct PipelineExtensions<ForEachConnector<BlockSize>>
+template <typename TCallback>
+struct PipelineExtensions<IteratorConnector<TCallback>>
 {
     template <typename TStep>
     static constexpr auto apply(TStep)
     {
-        static_assert(false, "ForEachConnector must not be the last step");
-    }
-
-    template <typename TFactory>
-    static constexpr auto apply(TFactory, ForEachConnector<BlockSize> const&)
-    {
-        // encode each collection type in a step before (even if it's just identity), they will then be expanded out
-        static_assert(false, "ForEachConnector must not be the first step");
-    }
-
-    template <typename TFactory, typename TPrevStep>
-    static constexpr auto apply(TFactory factory, ForEachConnector<BlockSize> const& step, TPrevStep);
-};
-
-template <>
-struct PipelineExtensions<SegmentedDataViewConnector>
-{
-    template <typename TStep>
-    static constexpr auto apply(TStep)
-    {
-        static_assert(false, "SegmentedDataViewConnector must not be the last step");
+        static_assert(false, "IteratorConnector must not be the last step");
     }
 
     template <typename TFactory, typename TStep>
     static constexpr auto apply(TFactory, TStep)
     {
         // encode each collection type in a step before (even if it's just identity), they will then be expanded out
-        static_assert(false, "SegmentedDataViewConnector must not be the first step");
+        static_assert(false, "IteratorConnector must not be the first step");
     }
 
     template <typename TFactory, typename TPrevStep>
-    static constexpr auto apply(TFactory const& factory, SegmentedDataViewConnector const& step, TPrevStep);
+    static constexpr auto apply(TFactory const& factory, IteratorConnector<TCallback> const& step, TPrevStep)
+    {
+        using TContext = typename TFactory::TContext;
+        using TFTraits = LangExt::FunctionTraits<typename TPrevStep::TFunction>;
+        // the step before must be a regular function
+        static_assert(TFTraits::arity == 2);
+        using TArg = typename TFTraits::TRet;
+
+        // step is itself a factory, which takes a callback to create the chainable
+        return FunctionFactory(step.template createOne<TContext, TArg>(factory.m_callback));
+    }
 };
 
 } // namespace Impl

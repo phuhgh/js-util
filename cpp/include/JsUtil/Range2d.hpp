@@ -3,6 +3,7 @@
 #include "Debug.hpp"
 #include "JsUtil/Mat2.hpp"
 #include "JsUtil/Vec2.hpp"
+#include "Tuple.hpp"
 
 namespace JsUtil
 {
@@ -27,6 +28,7 @@ template <typename T>
 class Range2d : public Mat2<T>
 {
   public:
+    static Range2d fromPair(TupleExt::RepeatedPair<Vec2<T>> pair);
     static Range2d fromCorners(Vec2<T> _bottomLeft, Vec2<T> _topRight);
     static Range2d fromRanges(Vec2<T> _horizontal, Vec2<T> _vertical);
 

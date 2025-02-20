@@ -21,6 +21,8 @@ jsu_set_build_flags("${JSU_BUILD_MODE}")
 find_package(JsUtil 10.0 REQUIRED)
 
 if (${BUILD_JSUTIL_TEST})
+    set(pedantic_flags -Werror -Wall -Wextra -pedantic)
+
     # javascript test module
     jsu_create_executable(test-module
             SOURCE_FILES test-util/JsTestModuleBindings.cpp
@@ -34,83 +36,91 @@ if (${BUILD_JSUTIL_TEST})
     # c++ tests
     jsu_create_test(TestVector
             SOURCE_FILES test/TestVector.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestTuple
             SOURCE_FILES test/TestTuple.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestResizableArray
             SOURCE_FILES test/TestResizableArray.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             LINK_OPTIONS -sINITIAL_MEMORY=16mb
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestDebug
             SOURCE_FILES test/TestDebug.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestCircularBuffer
             SOURCE_FILES test/TestCircularBuffer.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestCircularFifoStack
             SOURCE_FILES test/TestCircularFifoStack.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestWorkerLoop
             SOURCE_FILES test/TestWorkerLoop.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestWorkerPool
             SOURCE_FILES test/TestWorkerPool.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestFunctionFactory
             SOURCE_FILES test/TestFunctionFactory.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestHashMap
             SOURCE_FILES test/TestHashMap.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestHashSet
             SOURCE_FILES test/TestHashSet.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestLinkedList
             SOURCE_FILES test/TestLinkedList.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestSet
             SOURCE_FILES test/TestSet.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestInterop
             SOURCE_FILES test/TestInterop.cpp
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
-            COMPILE_OPTIONS -pthread
+            COMPILE_OPTIONS ${pedantic_flags} -pthread
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH -pthread
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestLangExt
             SOURCE_FILES test/TestLangExt.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
     jsu_create_test(TestSegmentedDataView
             SOURCE_FILES test/TestSegmentedDataView.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)

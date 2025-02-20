@@ -3,7 +3,6 @@
 #include <emscripten/em_js.h>
 #include <emscripten/em_macros.h>
 #include <emscripten/threading.h>
-#include <iostream>
 
 EM_JS(void, jsu_dbgOnAlloc, (), { Module.JSU_DEBUG_UTIL.onAllocate.emit(); });
 

@@ -57,6 +57,9 @@ class SharedArray
     operator std::span<TValue>() const noexcept { return asSpan(); }
     size_t size() const noexcept { return m_view.size(); }
 
+    TValue*       data() noexcept { return m_view.data(); }
+    TValue const* data() const noexcept { return m_view.data(); }
+
     TValue const& operator[](size_t index) const noexcept
     {
         if constexpr (Debug::isDebug())

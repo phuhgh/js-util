@@ -1,7 +1,6 @@
 #pragma once
 
 #include "JsUtil/TypeTraits.hpp"
-#include <format>
 #include <string_view>
 
 namespace JsUtil
@@ -31,7 +30,7 @@ class Debug
     }
 
     static bool hasJsIntegration() { return sJS_INTEGRATION; }
-    static void disableJsIntegration(bool disable = true) { sJS_INTEGRATION = !disable; };
+    static void disableJsIntegration(bool disable = true) { sJS_INTEGRATION = !disable; }
     static void setDebugDisabled(bool disabled) { sDEBUG_DISABLED = disabled; }
     static bool isDebugDisabled() { return sDEBUG_DISABLED; }
 

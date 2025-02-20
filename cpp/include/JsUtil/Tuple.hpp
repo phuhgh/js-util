@@ -46,6 +46,9 @@ constexpr size_t getItemIndex()
 namespace TupleExt
 {
 
+template <typename T>
+using RepeatedPair = std::pair<T, T>;
+
 /**
  * @brief Return all elements minus the first one.
  */

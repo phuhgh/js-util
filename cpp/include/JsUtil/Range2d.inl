@@ -4,6 +4,14 @@ namespace JsUtil
 {
 
 template <typename T>
+Range2d<T> Range2d<T>::fromPair(TupleExt::RepeatedPair<Vec2<T>> pair)
+{
+    auto range = Range2d{{pair.first.x(), pair.first.y(), pair.second.x(), pair.second.y()}};
+    range.ensureAABB();
+    return range;
+}
+
+template <typename T>
 Range2d<T> Range2d<T>::fromCorners(Vec2<T> _bottomLeft, Vec2<T> _topRight)
 {
     return Range2d{{_bottomLeft.x(), _bottomLeft.y(), _topRight.x(), _topRight.y()}};

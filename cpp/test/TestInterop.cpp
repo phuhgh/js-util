@@ -50,7 +50,7 @@ class MockSharedMemoryObject : public ASharedMemoryObject
 TEST(IdRegistry, lookup)
 {
     // this test is quite brittle, it needs to be updated every time a category is added...
-    EXPECT_EQ(IdRegistry::getCount(), 24);
+    EXPECT_EQ(IdRegistry::getCount(), 21);
     EXPECT_EQ(IdRegistry::getId("TEST_CAT_1"), 4);
     EXPECT_EQ(IdRegistry::getId("CAT_1_A"), 1);
     EXPECT_EQ(IdRegistry::getId("TEST_CAT_2"), 5);

@@ -97,3 +97,39 @@ TEST(SegmentedDataView, mapIndex)
     EXPECT_EQ(v2.x(), 3);
     EXPECT_EQ(v2.y(), 4);
 }
+
+TEST(SegmentedDataView, getLength)
+{
+    auto empty = ResizableArray<double>(0);
+    auto emptyDv = SegmentedDataView{empty, {.blockSize = 2, .offset = 2}};
+    EXPECT_EQ(emptyDv.getLength(), 0);
+
+    // useful for interpreting a buffer of points as e.g. a line
+    // 4 points of size 4 (1 removed because of offset)
+    auto data = ResizableArray<double>(16);
+    std::iota(data.asSpan().begin(), data.asSpan().end(), 0);
+    auto dataView = SegmentedDataView{data, {.blockSize = 8, .stride = 4, .offset = 1}};
+    ASSERT_EQ(dataView.getLength(), 2);
+
+    auto b1 = dataView.getBlock(0);
+    ASSERT_EQ(b1.size(), 8);
+    EXPECT_EQ(b1[0], 1);
+    EXPECT_EQ(b1[1], 2);
+    EXPECT_EQ(b1[2], 3);
+    EXPECT_EQ(b1[3], 4);
+    EXPECT_EQ(b1[4], 5);
+    EXPECT_EQ(b1[5], 6);
+    EXPECT_EQ(b1[6], 7);
+    EXPECT_EQ(b1[7], 8);
+
+    auto b2 = dataView.getBlock(1);
+    ASSERT_EQ(b2.size(), 8);
+    EXPECT_EQ(b2[0], 5);
+    EXPECT_EQ(b2[1], 6);
+    EXPECT_EQ(b2[2], 7);
+    EXPECT_EQ(b2[3], 8);
+    EXPECT_EQ(b2[4], 9);
+    EXPECT_EQ(b2[5], 10);
+    EXPECT_EQ(b2[6], 11);
+    EXPECT_EQ(b2[7], 12);
+}

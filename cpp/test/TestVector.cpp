@@ -96,19 +96,19 @@ TEST(Vec2, multiply)
 {
     Vec2<float>   result{};
     Vec2<float>   vec2{{3, 4}};
-    Mat3<int32_t> scaling_mat{{2, 0, 0, 0, 2, 0, 0, 0, 2}};
+    Mat3<int32_t> scalingMat{{2, 0, 0, 0, 2, 0, 0, 0, 2}};
 
-    vec2.matrixMultiply(scaling_mat, &result);
+    vec2.matrixMultiply(scalingMat, &result);
     EXPECT_EQ(result.x(), 6);
     EXPECT_EQ(result.y(), 8);
 
-    vec2.matrixMultiply<int32_t>(scaling_mat);
+    vec2.matrixMultiply<int32_t>(scalingMat);
     EXPECT_EQ(vec2.x(), 6);
     EXPECT_EQ(vec2.y(), 8);
 
     // compilation tests
     auto const& vec2Ref = vec2;
-    vec2Ref.matrixMultiply(scaling_mat, &result);
+    vec2Ref.matrixMultiply(scalingMat, &result);
 }
 
 TEST(Vec3, gettersSetters)
@@ -133,6 +133,31 @@ TEST(Vec4, gettersSetters)
     EXPECT_EQ(result.y(), 6);
     EXPECT_EQ(result.z(), 7);
     EXPECT_EQ(result.w(), 8);
+}
+
+TEST(Mat3, gettersSetters)
+{
+    Mat3<int32_t> mat3{};
+    mat3.setIdentityMatrix();
+    EXPECT_EQ(mat3[0], 1);
+    EXPECT_EQ(mat3[1], 0);
+    EXPECT_EQ(mat3[2], 0);
+    EXPECT_EQ(mat3[3], 0);
+    EXPECT_EQ(mat3[4], 1);
+    EXPECT_EQ(mat3[5], 0);
+    EXPECT_EQ(mat3[6], 0);
+    EXPECT_EQ(mat3[7], 0);
+    EXPECT_EQ(mat3[8], 1);
+    mat3.setScalingMatrix(2, 4);
+    EXPECT_EQ(mat3[0], 2);
+    EXPECT_EQ(mat3[1], 0);
+    EXPECT_EQ(mat3[2], 0);
+    EXPECT_EQ(mat3[3], 0);
+    EXPECT_EQ(mat3[4], 4);
+    EXPECT_EQ(mat3[5], 0);
+    EXPECT_EQ(mat3[6], 0);
+    EXPECT_EQ(mat3[7], 0);
+    EXPECT_EQ(mat3[8], 1);
 }
 
 TEST(Range2d, basicFunctionality)
