@@ -1,6 +1,7 @@
 #include "JsUtil/SegmentedDataView.hpp"
 #include <JsUtil/ResizableArray.hpp>
 #include <JsUtil/SharedArray.hpp>
+#include <JsUtil/Vec2.hpp>
 #include <JsUtil/VectorUtil.hpp>
 #include <JsUtilTestUtil/DisableJsIntegration.hpp>
 #include <gtest/gtest.h>
@@ -77,4 +78,22 @@ TEST(SegmentedDataView, strideOffset)
     EXPECT_EQ(dataView.getBlock(2)[0], 5);
     EXPECT_EQ(dataView.getBlock(3)[0], 7);
     EXPECT_EQ(dataView.getBlock(4)[0], 9);
+}
+
+TEST(SegmentedDataView, mapIndex)
+{
+    auto data = ResizableArray<double>(10);
+    std::iota(data.asSpan().begin(), data.asSpan().end(), 0);
+    auto dataView = SegmentedDataView{data, {.blockSize = 1, .stride = 2, .offset = 1}};
+
+    EXPECT_EQ(dataView.getLength(), 4);
+
+    Vec2<double> v1 =
+        dataView.mapBlock(0, [](auto const& segment, auto const&) { return Vec2<double>{{segment[0], segment[1]}}; });
+    Vec2<double> v2 =
+        dataView.mapBlock(1, [](auto const& segment, auto const&) { return Vec2<double>{{segment[0], segment[1]}}; });
+    EXPECT_EQ(v1.x(), 1); // (offset of 1...)
+    EXPECT_EQ(v1.y(), 2);
+    EXPECT_EQ(v2.x(), 3);
+    EXPECT_EQ(v2.y(), 4);
 }

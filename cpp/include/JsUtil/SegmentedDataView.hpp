@@ -45,6 +45,18 @@ class SegmentedDataView : public ISegmentedDataView<typename TContainer::size_ty
     // from ISegmentedDataView
     SegmentedDataViewOptions<size_type> getOptions() const override { return m_options; }
 
+    template <typename TCallback>
+    auto mapBlock(size_type index, TCallback callback) const
+    {
+        size_type start = m_options.offset + index * m_options.stride;
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(start + m_options.blockSize <= m_container.size(), "index out of bounds");
+        }
+
+        return callback(std::span<value_type>(&m_container[start], m_options.blockSize), m_options);
+    }
+
     /// @returns A block, which contains one or more value_type.
     template <typename T = TContainer, std::enable_if_t<!std::is_const<T>::value, int> = 0>
     std::span<value_type> getBlock(size_type index)
