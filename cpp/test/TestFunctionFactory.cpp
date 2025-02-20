@@ -3,6 +3,7 @@
 #include "JsUtilTestUtil/TestObjects.hpp"
 #include <gtest/gtest.h>
 
+// todo jack: can we support array -> simd type here? it's basically a reduce operation...
 [[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
 
 inline constexpr JsUtil::IdCategory<struct Cat1>                              scTEST_CAT_1{"CAT_1"};

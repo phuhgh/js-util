@@ -35,7 +35,7 @@ TEST(SegmentedDataView, sharedArrayCompat)
     }
 }
 
-TEST(SegmentedDataView, resiableArrayCompat)
+TEST(SegmentedDataView, resizableArrayCompat)
 {
     auto data = ResizableArray<double>(10);
     std::iota(data.asSpan().begin(), data.asSpan().end(), 0);
