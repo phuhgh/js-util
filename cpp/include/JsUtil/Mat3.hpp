@@ -11,6 +11,7 @@ class Mat3 : public AVectorBase<T, 9, Mat3<T>>
   public:
     using AVectorBase<T, 9, Mat3<T>>::AVectorBase;
 
+    // todo jack: can we template all of this? it's a pain to do it for each one
     Mat3& setIdentityMatrix()
     {
         this->m_elements.fill(T(0));

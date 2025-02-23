@@ -43,18 +43,19 @@ constexpr auto scFOR_EACH_ELEMENT =
     };
 } // namespace Iterators
 
+inline constexpr JsUtil::IdCategory<struct FFIterator> scFUNCTION_FACTORY_CATEGORY{"JSU_FF_CAT"};
 /**
  * @brief Only one iterator is supported at a given level.
  * @remark Because an iterator cannot be the first or last step, and it has to be the only step of its kind in its
  * stage, it doesn't need to be RTTI addressable in a unique way like other steps, it is essentially invisible.
  */
-struct IteratorInteropConnectorToken
-{
-};
-
-inline constexpr JsUtil::IdCategory<struct FFIterator> scFUNCTION_FACTORY_CATEGORIES{"JSU_FF_CAT"};
-inline constexpr JsUtil::IdSpecialization<IteratorInteropConnectorToken, decltype(scFUNCTION_FACTORY_CATEGORIES)>
-    scITERATOR_SPECIALIZATION{scFUNCTION_FACTORY_CATEGORIES, "JSU_FF_ITERATOR_SPEC"};
+inline constexpr JsUtil::IdSpecialization<struct IteratorInteropConnector, decltype(scFUNCTION_FACTORY_CATEGORY)>
+    scITERATOR_SPECIALIZATION{scFUNCTION_FACTORY_CATEGORY, "JSU_FF_ITERATOR_SPEC"};
+/**
+ * For use with function stages with only one step.
+ */
+inline constexpr JsUtil::IdSpecialization<struct NullInteropConnectorToken, decltype(scFUNCTION_FACTORY_CATEGORY)>
+    scNULL_SPECIALIZATION{scFUNCTION_FACTORY_CATEGORY, "JSU_FF_ITERATOR_SPEC"};
 
 template <typename TSpecialization, typename TFn>
 struct FuncStep
@@ -126,7 +127,7 @@ class FunctionFactory
  * iteratorCallback. See the namespace Iterators.
  */
 template <typename TCallback>
-struct IteratorConnector : IteratorInteropConnectorToken
+struct IteratorConnector
 {
     constexpr IteratorConnector(TCallback iteratorCallback)
         : m_iteratorCallback(iteratorCallback)

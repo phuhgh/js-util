@@ -39,6 +39,11 @@ class SegmentedDataView : public ISegmentedDataView
         : m_container(container)
         , m_options(options)
     {
+        if constexpr (Debug::isDebug())
+        {
+            Debug::debugAssert(m_options.blockSize > 0, "invalid block size");
+            Debug::debugAssert(m_options.stride > 0, "invalid stride size");
+        }
     }
 
     // from ISegmentedDataView

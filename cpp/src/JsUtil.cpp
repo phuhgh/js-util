@@ -25,7 +25,7 @@ void JsUtil::initializeJsu()
 
     JsInterop::IdRegistry::registerIdentifiers(
         std::make_tuple(
-            Autogen::scFUNCTION_FACTORY_CATEGORIES,
+            Autogen::scFUNCTION_FACTORY_CATEGORY,
             Autogen::scITERATOR_SPECIALIZATION
         )
     );

@@ -13,7 +13,7 @@ using namespace JsUtil;
 
 TEST(SegmentedDataView, sharedArrayCompat)
 {
-    auto sa = SharedArray<int>::createOne(10, true);
+    auto sa = SharedArray<int>(10);
     std::iota(sa.asSpan().begin(), sa.asSpan().end(), 0);
     SegmentedDataView dv{sa, {.blockSize = 2}};
 

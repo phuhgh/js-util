@@ -88,7 +88,12 @@ class SegmentedBufferView<TCTor extends TTypedArrayCtor> implements IManagedObje
         owner: IManagedResourceNode | null,
     )
     {
-        _Debug.assert(descriptor.stride >= descriptor.blockSize, "The stride should be either the same or larger than the block size");
+        if (_BUILD.DEBUG)
+        {
+            _Debug.assert(descriptor.stride > 0, "invalid stride size");
+            _Debug.assert(descriptor.blockSize > 0, "invalid block size");
+        }
+
         if (descriptor.count === -1)
         {
             const writable = descriptor as TWriteable<SegmentedBufferDescriptor>;

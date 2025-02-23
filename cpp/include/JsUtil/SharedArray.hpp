@@ -1,14 +1,15 @@
 #pragma once
 
 #include "JsUtil/Debug.hpp"
-#include "JsUtil/JsInterop.hpp"
 #include <gsl/pointers>
 #include <span>
+#include <type_traits>
 
 namespace JsUtil
 {
 
 template <typename TValue>
+    requires std::is_trivial_v<TValue>
 class SharedArray
 {
   public:
@@ -16,7 +17,11 @@ class SharedArray
     using value_type = TValue;
     using size_type = size_t;
 
-    ~SharedArray() { free(m_view.data()); }
+    ~SharedArray()
+    {
+        std::destroy(m_view.begin(), m_view.end());
+        free(m_view.data());
+    }
 
     // allow move
     SharedArray(SharedArray&& other) noexcept
@@ -38,19 +43,49 @@ class SharedArray
     SharedArray(SharedArray const&) = delete;
     SharedArray& operator=(SharedArray const&) = delete;
 
-    static SharedArray createOne(size_t size, bool clearMemory) noexcept
+    SharedArray(size_t size, bool clearMemory = true) noexcept
     {
         if constexpr (Debug::isDebug())
         {
             Debug::onBeforeAllocate();
         }
 
-        return SharedArray{
-            static_cast<gsl::owner<TValue*>>(
-                clearMemory ? std::calloc(size, sizeof(TValue)) : std::malloc(size * sizeof(TValue))
-            ),
-            size
-        };
+        TValue* arrayStart = static_cast<gsl::owner<TValue*>>(
+            clearMemory ? std::calloc(size, sizeof(TValue)) : std::malloc(size * sizeof(TValue))
+        );
+        if (arrayStart == nullptr)
+        {
+            size = 0;
+        }
+        else
+        {
+            std::uninitialized_default_construct_n(arrayStart, size);
+        }
+
+        m_view = std::span<TValue>(arrayStart, size);
+    }
+
+    SharedArray(std::initializer_list<TValue> initList, bool clearMemory = true) noexcept
+    {
+        if constexpr (Debug::isDebug())
+        {
+            Debug::onBeforeAllocate();
+        }
+
+        size_t  size = initList.size();
+        TValue* arrayStart = static_cast<gsl::owner<TValue*>>(
+            clearMemory ? std::calloc(size, sizeof(TValue)) : std::malloc(size * sizeof(TValue))
+        );
+        if (arrayStart == nullptr)
+        {
+            size = 0;
+        }
+        else
+        {
+            std::uninitialized_copy(initList.begin(), initList.end(), arrayStart);
+        }
+
+        m_view = std::span<TValue>(arrayStart, size);
     }
 
     std::span<TValue> asSpan() const noexcept { return m_view; }
