@@ -4,12 +4,9 @@ namespace JsInterop
 {
 
 template <typename T>
-SharedMemoryOwner<T>::SharedMemoryOwner(
-    gsl::owner<T*, std::enable_if_t<std::is_pointer_v<T*>>> ptr,
-    TDescriptors&&                                          descriptors
-)
+SharedMemoryOwner<T>::SharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& descriptors)
     : ASharedMemoryObject(std::move(descriptors))
-    , m_owningPtr(ptr)
+    , m_owningPtr(std::move(ptr))
 {
     static_assert(!std::is_pointer_v<T>, "T must be a value type");
     static_assert(!JsUtil::IsSmartPointer<T>::value, "T must be a value type");
@@ -17,12 +14,12 @@ SharedMemoryOwner<T>::SharedMemoryOwner(
 }
 
 template <typename TValue>
-[[nodiscard]] SharedMemoryOwnerPtr<TValue> createSharedMemoryOwner(
-    gsl::owner<TValue*>                 owner_ptr,
+[[nodiscard]] gsl::owner<std::shared_ptr<ASharedMemoryObject>*> createSharedMemoryOwner(
+    std::shared_ptr<TValue>             valuePtr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept
 {
-    if (owner_ptr == nullptr)
+    if (valuePtr == nullptr)
     {
         return nullptr;
     }
@@ -32,14 +29,25 @@ template <typename TValue>
         JsUtil::Debug::onBeforeAllocate();
     }
 
-    auto* wrapper = new (std::nothrow) SharedMemoryOwner<TValue>(owner_ptr, std::move(descriptors));
+    auto* ownerPtr = new (std::nothrow) SharedMemoryOwner<TValue>(std::move(valuePtr), std::move(descriptors));
 
-    if (wrapper == nullptr)
+    if (ownerPtr == nullptr)
     {
-        delete owner_ptr;
+        return nullptr;
     }
 
-    return wrapper;
+    auto ownerPtrPtr = new (std::nothrow) std::shared_ptr<ASharedMemoryObject>;
+
+    if (ownerPtrPtr == nullptr)
+    {
+        delete ownerPtr;
+    }
+    else
+    {
+        ownerPtrPtr->reset(ownerPtr);
+    }
+
+    return ownerPtrPtr;
 }
 template <typename... TIds>
 void IdRegistry::registerIdentifiers(std::tuple<TIds...> tuple)

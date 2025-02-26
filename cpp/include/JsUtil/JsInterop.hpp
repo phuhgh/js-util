@@ -104,26 +104,16 @@ using SharedMemoryValuePtr = gsl::owner<SharedMemoryValue<T>*>;
 template <typename T>
 struct SharedMemoryOwner final : ASharedMemoryObject
 {
-    ~SharedMemoryOwner() override { delete m_owningPtr; }
-    SharedMemoryOwner(gsl::owner<T*> ptr, TDescriptors&& descriptors);
+    SharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& descriptors);
 
-    SharedMemoryOwner(SharedMemoryOwner const&) = delete;
-    SharedMemoryOwner(SharedMemoryOwner&&) = delete;
+    void*       getValuePtr() override { return static_cast<void*>(m_owningPtr.get()); };
+    void const* getValuePtr() const override { return static_cast<void const*>(m_owningPtr.get()); };
 
-    SharedMemoryOwner& operator=(SharedMemoryOwner const&) = delete;
-    SharedMemoryOwner& operator=(SharedMemoryOwner&&) = delete;
-
-    void*       getValuePtr() override { return static_cast<void*>(m_owningPtr); };
-    void const* getValuePtr() const override { return static_cast<void const*>(m_owningPtr); };
-
-    gsl::owner<T*> m_owningPtr;
+    std::shared_ptr<T> m_owningPtr;
 };
 
-template <typename T>
-using SharedMemoryOwnerPtr = gsl::owner<SharedMemoryOwner<T>*>;
-
 template <typename TValue>
-[[nodiscard]] SharedMemoryOwnerPtr<TValue> createSharedMemoryOwner(
+[[nodiscard]] gsl::owner<std::shared_ptr<ASharedMemoryObject>*> createSharedMemoryOwner(
     gsl::owner<TValue*>                 owner_ptr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept;

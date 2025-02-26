@@ -88,6 +88,7 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
         const protectedView = _BUILD.DEBUG ? new DebugProtectedView(
             `SharedBufferView - memory resize danger: don't hold reference to the DataView ${numberGetHexString(this.pointer)}`,
         ) : null;
+        // todo jack: not sure if this is on the right thing now?
         wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "SharedBufferView"), protectedView);
         this.wrapper.memoryResize.addListener(this.impl);
         this.resourceHandle.onFreeChannel.addListener(this.impl);

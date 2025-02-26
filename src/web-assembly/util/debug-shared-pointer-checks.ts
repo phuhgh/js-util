@@ -96,7 +96,7 @@ export class DebugSharedPointerChecks
             const label = stringNormalizeNullUndefinedToEmpty(_Debug.label);
             _Debug.verboseLog(["WASM", "MEMORY", "DEALLOCATIONS"], `Released ${metadata.instanceName} ${address} - ${label}`);
 
-            _Debug.assert(wrapper.debugUtils.uniquePointers.has(pointer), `expected pointer to find  (${address})`);
+            _Debug.assert(wrapper.debugUtils.uniquePointers.has(pointer), `expected to find pointer (${address})`);
             wrapper.debugUtils.uniquePointers.delete(pointer);
         }
     }

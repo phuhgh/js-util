@@ -138,6 +138,32 @@ struct FunctionTraits
 };
 
 template <JsUtil::WithCallable<void> TCallable>
+class FailureGuard
+{
+  public:
+    template <JsUtil::WithCallable<void> TCallableParam>
+    explicit FailureGuard(TCallableParam&& on_error)
+        : m_onError(std::forward<TCallableParam>(on_error))
+    {
+    }
+    ~FailureGuard()
+    {
+        if (!m_success)
+        {
+            m_onError();
+        }
+    }
+    void markSucceeded() { m_success = true; }
+
+  private:
+    TCallable m_onError;
+    bool      m_success = false;
+};
+
+template <JsUtil::WithCallable<void> TCallable>
+FailureGuard(TCallable) -> FailureGuard<TCallable>;
+
+template <JsUtil::WithCallable<void> TCallable>
 class ScopeGuard
 {
   public:

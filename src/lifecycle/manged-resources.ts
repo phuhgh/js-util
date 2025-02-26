@@ -13,6 +13,23 @@ export interface IPointer
 
 /**
  * @public
+ * Like pointer, but it's owned by a smart pointer.
+ */
+export interface ISharedObjectSmartPtr extends IPointer
+{
+    /**
+     * The raw pointer, not owning.
+     */
+    pointer: number;
+    /**
+     * A newed shared pointer (it's very odd to do this, but required to go across the C bridge 🤷). I.e. this is a
+     * pointer to a shared pointer which points to {@link ISharedObjectSmartPtr.pointer}.
+     */
+    sharedPointerPointer: number;
+}
+
+/**
+ * @public
  * A listener for {@link IManagedResourceNode}.
  */
 export interface IOnFreeListener

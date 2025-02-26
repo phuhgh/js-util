@@ -35,9 +35,17 @@ static std::array<JsInterop::InteropDescriptorBinding volatile, sBINDING_COUNT> 
 extern "C"
 {
     EMSCRIPTEN_KEEPALIVE
-    void jsUtilDeleteObject(JsInterop::ASharedMemoryObject* objPtr) noexcept
+    void jsUtilDeleteObject(gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*> objPtr) noexcept
     {
         delete objPtr;
+    }
+
+    EMSCRIPTEN_KEEPALIVE
+    JsInterop::ASharedMemoryObject* jsUtilUnwrapObject(
+        gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*> objPtr
+    ) noexcept
+    {
+        return objPtr->get();
     }
 
     EMSCRIPTEN_KEEPALIVE

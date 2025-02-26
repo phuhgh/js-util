@@ -56,12 +56,13 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         : SharedArray<TCtor> | null
     {
         const numberId = getNumberIdentifier(containerType);
-        const ptr = createSharedObject(wrapper, numberId, length, clearMemory, allocationFailThrows);
-        return ptr === nullPtr ? null : new SharedArray(containerType, wrapper, bindToReference, length, ptr, numberId);
+        const sharedPointerPointer = createSharedObject(wrapper, numberId, length, clearMemory, allocationFailThrows);
+        return sharedPointerPointer === nullPtr ? null : new SharedArray(containerType, wrapper, bindToReference, length, sharedPointerPointer, numberId);
     }
 
     public readonly length: number;
     public readonly pointer: number;
+    public readonly sharedPointerPointer: number;
 
     // @internal
     public constructor
@@ -70,14 +71,16 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
         owner: IManagedResourceNode | null,
         length: number,
-        pointer: number,
+        sharedPointerPointer: number,
         numberId: ENumberIdentifier,
     )
     {
+        const pointer =  wrapper.instance._jsUtilUnwrapObject(sharedPointerPointer);
         super(wrapper, owner, ctor, wrapper.instance._sharedArray_getDataAddress(numberId, pointer), length * ctor.BYTES_PER_ELEMENT);
         this.length = length;
+        this.sharedPointerPointer = sharedPointerPointer;
         this.pointer = pointer;
-        this.cleanup = new SharedArrayImpl(wrapper, pointer);
+        this.cleanup = new SharedArrayImpl(wrapper, sharedPointerPointer);
 
         // annotations
         wrapper.interopIds.setSpecializations(this, [sharedArraySpecialization, getNumberSpecialization(ctor)]);
@@ -97,14 +100,14 @@ class SharedArrayImpl implements IOnFreeListener
     public constructor
     (
         public readonly wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
-        public readonly pointer: number,
+        public readonly owningPointer: number,
     )
     {
     }
 
     public onFree(): void
     {
-        this.wrapper.instance._jsUtilDeleteObject(this.pointer);
+        this.wrapper.instance._jsUtilDeleteObject(this.owningPointer);
     }
 }
 
@@ -118,13 +121,13 @@ function createSharedObject
 )
     : number
 {
-    const ptr = wrapper.instance._sharedArray_createOne(numberId, length, clearMemory);
+    const sharedPointerPointer = wrapper.instance._sharedArray_createOne(numberId, length, clearMemory);
 
-    if (ptr === nullPtr && allocationFailThrows)
+    if (sharedPointerPointer === nullPtr && allocationFailThrows)
     {
         // todo jack: extensible error here?
         throw _Production.createError("Failed to allocate memory for shared array.");
     }
 
-    return ptr;
+    return sharedPointerPointer;
 }

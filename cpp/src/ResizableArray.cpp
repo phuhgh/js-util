@@ -1,6 +1,6 @@
+#include "JsUtil/ResizableArray.hpp"
 #include "JsUtil/JsInterop.hpp"
 #include "JsUtil/RTTI.hpp"
-#include "JsUtil/ResizableArray.hpp"
 #include <emscripten/em_macros.h>
 
 auto const offsets = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
@@ -25,7 +25,7 @@ auto const getSizes = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
 });
 
 auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
-    return [](size_t size) -> gsl::owner<JsInterop::ASharedMemoryObject*> {
+    return [](size_t size) -> gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*> {
         auto bufferCategory = getCategoryId(JsRTTI::scBUFFER_CATEGORY);
         auto bufferSpecialization = getSpecializationId(JsRTTI::scRESIZABLE_ARRAY);
 
@@ -48,10 +48,28 @@ auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
             JsUtil::Debug::onBeforeAllocate();
         }
 
-        return new (std::nothrow) JsInterop::SharedMemoryValue<JsUtil::ResizableArray<T>>{
+        auto* array = new (std::nothrow) JsInterop::SharedMemoryValue<JsUtil::ResizableArray<T>>{
             std::move(attributesMap),
             size,
         };
+        LangExt::FailureGuard aGuard{[array] { delete array; }};
+
+        if (array == nullptr)
+        {
+            return nullptr;
+        }
+
+        auto* sharedPtr = new (std::nothrow) std::shared_ptr<JsInterop::ASharedMemoryObject>{};
+
+        if (sharedPtr == nullptr)
+        {
+            return nullptr;
+        }
+
+        sharedPtr->reset(array);
+        aGuard.markSucceeded();
+
+        return sharedPtr;
     };
 });
 
@@ -92,17 +110,15 @@ extern "C"
         return TupleExt::select(setSizes, static_cast<size_t>(numberId))(o_resizableArray, newSize);
     }
 
-    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<JsInterop::ASharedMemoryObject*> resizableArray_createOne(
-        JsRTTI::ENumberIdentifier const numberId,
-        size_t const                    requestedSize
-    ) noexcept
+    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*>
+    resizableArray_createOne(JsRTTI::ENumberIdentifier const numberId, size_t const requestedSize) noexcept
     {
-        gsl::owner<JsInterop::ASharedMemoryObject*> resizableArray =
+        gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*> resizableArray =
             TupleExt::select(factories, static_cast<size_t>(numberId))(requestedSize);
 
         if (resizableArray != nullptr)
         {
-            auto actualSize = TupleExt::select(getSizes, static_cast<size_t>(numberId))(resizableArray);
+            auto actualSize = TupleExt::select(getSizes, static_cast<size_t>(numberId))(resizableArray->get());
             if (actualSize != requestedSize)
             {
                 // we failed to allocate the memory
