@@ -1,5 +1,5 @@
 import type { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
-import type { IManagedObject, ISharedObjectSmartPtr } from "../../lifecycle/manged-resources.js";
+import type { IManagedObject, IPointer } from "../../lifecycle/manged-resources.js";
 import type { IBuffer } from "../../array/typed-array/i-buffer-view.js";
 
 /**
@@ -12,7 +12,7 @@ import type { IBuffer } from "../../array/typed-array/i-buffer-view.js";
  */
 export interface ISharedArray<TCtor extends TTypedArrayCtor>
     extends IManagedObject,
-            ISharedObjectSmartPtr,
+            IPointer,
             IBuffer<TCtor>
 {
     readonly length: number;

@@ -58,8 +58,9 @@ TEST(IdRegistry, lookup)
     EXPECT_EQ(IdRegistry::getId("CAT_2_B"), 2);
 }
 
-TEST(IdRegistry, valueNoMove)
-{
-    auto val = new (std::nothrow) SharedMemoryValue<UnmoveableTestObject>({}, 1);
-    delete val;
-}
+// todo jack: clearly missing some tests
+// TEST(IdRegistry, valueNoMove)
+// {
+//     auto val = new (std::nothrow) SharedMemoryValue<UnmoveableTestObject>({}, 1);
+//     delete val;
+// }

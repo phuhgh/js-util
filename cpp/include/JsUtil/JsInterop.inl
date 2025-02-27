@@ -14,8 +14,8 @@ SharedMemoryOwner<T>::SharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& d
 }
 
 template <typename TValue>
-[[nodiscard]] gsl::owner<std::shared_ptr<ASharedMemoryObject>*> createSharedMemoryOwner(
-    std::shared_ptr<TValue>             valuePtr,
+[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
+    gsl::owner<TValue*>                 valuePtr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept
 {
@@ -29,26 +29,9 @@ template <typename TValue>
         JsUtil::Debug::onBeforeAllocate();
     }
 
-    auto* ownerPtr = new (std::nothrow) SharedMemoryOwner<TValue>(std::move(valuePtr), std::move(descriptors));
-
-    if (ownerPtr == nullptr)
-    {
-        return nullptr;
-    }
-
-    auto ownerPtrPtr = new (std::nothrow) std::shared_ptr<ASharedMemoryObject>;
-
-    if (ownerPtrPtr == nullptr)
-    {
-        delete ownerPtr;
-    }
-    else
-    {
-        ownerPtrPtr->reset(ownerPtr);
-    }
-
-    return ownerPtrPtr;
+    return new (std::nothrow) SharedMemoryOwner<TValue>(std::shared_ptr<TValue>{valuePtr}, std::move(descriptors));
 }
+
 template <typename... TIds>
 void IdRegistry::registerIdentifiers(std::tuple<TIds...> tuple)
 {

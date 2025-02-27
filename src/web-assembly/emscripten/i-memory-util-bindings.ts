@@ -4,7 +4,6 @@
 export interface IMemoryUtilBindings
 {
     _jsUtilDeleteObject(objPtr: number): void;
-    _jsUtilUnwrapObject(objPtr: number): number;
     _jsUtilFree(pointer: number): void;
     _jsUtilMalloc(size: number): number;
     _jsUtilCalloc(size: number, elementSize: number): number;

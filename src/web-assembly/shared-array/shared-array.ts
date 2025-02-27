@@ -56,13 +56,12 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         : SharedArray<TCtor> | null
     {
         const numberId = getNumberIdentifier(containerType);
-        const sharedPointerPointer = createSharedObject(wrapper, numberId, length, clearMemory, allocationFailThrows);
-        return sharedPointerPointer === nullPtr ? null : new SharedArray(containerType, wrapper, bindToReference, length, sharedPointerPointer, numberId);
+        const pointer = createSharedObject(wrapper, numberId, length, clearMemory, allocationFailThrows);
+        return pointer === nullPtr ? null : new SharedArray(containerType, wrapper, bindToReference, length, pointer, numberId);
     }
 
     public readonly length: number;
     public readonly pointer: number;
-    public readonly sharedPointerPointer: number;
 
     // @internal
     public constructor
@@ -71,16 +70,14 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
         owner: IManagedResourceNode | null,
         length: number,
-        sharedPointerPointer: number,
+        pointer: number,
         numberId: ENumberIdentifier,
     )
     {
-        const pointer =  wrapper.instance._jsUtilUnwrapObject(sharedPointerPointer);
         super(wrapper, owner, ctor, wrapper.instance._sharedArray_getDataAddress(numberId, pointer), length * ctor.BYTES_PER_ELEMENT);
         this.length = length;
-        this.sharedPointerPointer = sharedPointerPointer;
         this.pointer = pointer;
-        this.cleanup = new SharedArrayImpl(wrapper, sharedPointerPointer);
+        this.cleanup = new SharedArrayImpl(wrapper, pointer);
 
         // annotations
         wrapper.interopIds.setSpecializations(this, [sharedArraySpecialization, getNumberSpecialization(ctor)]);
@@ -121,13 +118,13 @@ function createSharedObject
 )
     : number
 {
-    const sharedPointerPointer = wrapper.instance._sharedArray_createOne(numberId, length, clearMemory);
+    const pointer = wrapper.instance._sharedArray_createOne(numberId, length, clearMemory);
 
-    if (sharedPointerPointer === nullPtr && allocationFailThrows)
+    if (pointer === nullPtr && allocationFailThrows)
     {
         // todo jack: extensible error here?
         throw _Production.createError("Failed to allocate memory for shared array.");
     }
 
-    return sharedPointerPointer;
+    return pointer;
 }

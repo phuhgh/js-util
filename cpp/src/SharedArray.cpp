@@ -13,7 +13,7 @@ auto const offsets = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
 });
 
 auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
-    return [](size_t size, bool clearMemory) -> gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*> {
+    return [](size_t size, bool clearMemory) -> gsl::owner<JsInterop::ASharedMemoryObject*> {
         auto bufferCategory = getCategoryId(JsRTTI::scBUFFER_CATEGORY);
         auto bufferSpecialization = getSpecializationId(JsRTTI::scSHARED_ARRAY);
 
@@ -36,28 +36,9 @@ auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
             JsUtil::Debug::onBeforeAllocate();
         }
 
-        auto* sharedArray = new (std::nothrow) JsInterop::SharedMemoryValue<JsUtil::SharedArray<T>>{
-            std::move(attributesMap),
-            JsUtil::SharedArray<T>(size, clearMemory),
-        };
-        LangExt::FailureGuard saGuard{[sharedArray] { delete sharedArray; }};
-
-        if (sharedArray == nullptr)
-        {
-            return nullptr;
-        }
-
-        auto* sharedPtr = new (std::nothrow) std::shared_ptr<JsInterop::ASharedMemoryObject>{};
-
-        if (sharedPtr == nullptr)
-        {
-            return nullptr;
-        }
-
-        sharedPtr->reset(sharedArray);
-        saGuard.markSucceeded();
-
-        return sharedPtr;
+        return JsInterop::createSharedMemoryOwner(
+            new (std::nothrow) JsUtil::SharedArray<T>(size, clearMemory), std::move(attributesMap)
+        );
     };
 });
 
@@ -80,15 +61,18 @@ extern "C"
         return TupleExt::select(offsets, static_cast<size_t>(numberId))(sharedArray);
     }
 
-    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*>
-    sharedArray_createOne(JsRTTI::ENumberIdentifier const numberId, size_t const size, bool const clearMemory) noexcept
+    [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<JsInterop::ASharedMemoryObject*> sharedArray_createOne(
+        JsRTTI::ENumberIdentifier const numberId,
+        size_t const                    size,
+        bool const                      clearMemory
+    ) noexcept
     {
-        gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*> sharedArray =
+        gsl::owner<JsInterop::ASharedMemoryObject*> sharedArray =
             TupleExt::select(factories, static_cast<size_t>(numberId))(size, clearMemory);
 
         if (sharedArray != nullptr)
         {
-            if (sharedArray_getDataAddress(numberId, sharedArray->get()) == nullptr)
+            if (sharedArray_getDataAddress(numberId, sharedArray) == nullptr)
             {
                 // we failed to allocate the memory
                 delete sharedArray;

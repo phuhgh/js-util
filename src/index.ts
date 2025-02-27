@@ -76,7 +76,7 @@ export { IBroadcastChannel } from "./eventing/i-broadcast-channel.js";
 export { TListener } from "./eventing/t-listener.js";
 export { IManagedResourceLinks } from "./lifecycle/managed-resource-links.js";
 export { CleanupRegistry, ICleanupRegistry } from "./lifecycle/cleanup-registry.js";
-export { IManagedResourceNode, IManagedObject, IOnFreeListener, IPointer, PointerDebugMetadata, ISharedObjectSmartPtr } from "./lifecycle/manged-resources.js";
+export { IManagedResourceNode, IManagedObject, IOnFreeListener, IPointer, PointerDebugMetadata } from "./lifecycle/manged-resources.js";
 export { ITreeNodeLike } from "./tree/tree-model.js";
 export { _Tree } from "./tree/_tree.js";
 export { treeIterate } from "./tree/impl/tree-iterate.js";

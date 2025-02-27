@@ -6,7 +6,7 @@ import type { IWorkerPoolBindings } from "./i-worker-pool-bindings.js";
 import { promisePoll } from "../../promise/impl/promise-poll.js";
 import { _Debug } from "../../debug/_debug.js";
 import { NestedError } from "../../error-handling/nested-error.js";
-import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type ISharedObjectSmartPtr, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
+import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
 
 /**
  * @public
@@ -73,7 +73,7 @@ export interface IWorkerPoolConfig
  */
 export interface IWorkerPool
     extends IManagedObject,
-            ISharedObjectSmartPtr
+            IPointer
 {
     /**
      * @returns The number of workers that started.
@@ -147,7 +147,6 @@ export class WorkerPool implements IWorkerPool
 
     public readonly resourceHandle: IManagedResourceNode;
     public readonly pointer: number;
-    public readonly sharedPointerPointer: number;
 
     public start(): Promise<number>
     {
@@ -236,15 +235,14 @@ export class WorkerPool implements IWorkerPool
     (
         private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
         ownerNode: IManagedResourceNode | null,
-        sharedPointerPointer: number,
+        pointer: number,
         overflowMode: EWorkerPoolOverflowMode,
     )
     {
         this.resourceHandle = wrapper.lifecycleStrategy.createNode(ownerNode);
-        this.sharedPointerPointer = sharedPointerPointer;
-        this.pointer = wrapper.instance._jsUtilUnwrapObject(sharedPointerPointer);
+        this.pointer = pointer;
         this.overflowMode = overflowMode;
-        this.impl = new WorkerPoolImpl(wrapper, sharedPointerPointer);
+        this.impl = new WorkerPoolImpl(wrapper, pointer);
 
         wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "WorkerPool"), null);
         this.resourceHandle.onFreeChannel.addListener(this.impl);
@@ -259,14 +257,14 @@ class WorkerPoolImpl implements IOnFreeListener
     public constructor
     (
         public readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
-        public readonly sharedPointerPointer: number,
+        public readonly pointer: number,
     )
     {
     }
 
     public onFree()
     {
-        this.wrapper.instance._jsUtilDeleteObject(this.sharedPointerPointer);
+        this.wrapper.instance._jsUtilDeleteObject(this.pointer);
     }
 }
 
@@ -293,13 +291,13 @@ function createRoundRobinImpl
         throw _Production.createError(`Requested queue size ${config.queueSize}, exceeds limit ${maxSize}.`);
     }
 
-    const sharedPointerPointer = wrapper.instance._workerPool_createRoundRobin(
+    const pointer = wrapper.instance._workerPool_createRoundRobin(
         config.workerCount,
         config.queueSize,
         overflowMode === EWorkerPoolOverflowMode.Synchronous,
     );
 
-    if (sharedPointerPointer == nullPtr)
+    if (pointer == nullPtr)
     {
         if (allocationFailThrows)
         {
@@ -311,5 +309,5 @@ function createRoundRobinImpl
         }
     }
 
-    return new WorkerPool(wrapper, bindToReference, sharedPointerPointer, overflowMode);
+    return new WorkerPool(wrapper, bindToReference, pointer, overflowMode);
 }

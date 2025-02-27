@@ -59,43 +59,6 @@ class ASharedMemoryObject
     TDescriptors m_descriptors;
 };
 
-template <typename T>
-struct SharedMemoryValue final : ASharedMemoryObject
-{
-    ~SharedMemoryValue() override = default;
-
-    template <typename... TArgs>
-    SharedMemoryValue(TDescriptors&& descriptors, TArgs&&... ctorArgs)
-        : ASharedMemoryObject(std::move(descriptors))
-        , m_value(std::forward<TArgs>(ctorArgs)...)
-    {
-        static_assert(!std::is_pointer_v<T>, "T must be a value type");
-        static_assert(!JsUtil::IsSmartPointer<T>::value, "T must be a value type");
-    }
-
-    SharedMemoryValue(TDescriptors&& descriptors, T&& moveable)
-        : ASharedMemoryObject(std::move(descriptors))
-        , m_value(std::move(moveable))
-    {
-        static_assert(!std::is_pointer_v<T>, "T must be a value type");
-        static_assert(!JsUtil::IsSmartPointer<T>::value, "T must be a value type");
-    }
-
-    SharedMemoryValue(SharedMemoryValue const&) = delete;
-    SharedMemoryValue(SharedMemoryValue&&) = delete;
-
-    SharedMemoryValue& operator=(SharedMemoryValue const&) = delete;
-    SharedMemoryValue& operator=(SharedMemoryValue&&) = delete;
-
-    void*       getValuePtr() override { return static_cast<void*>(&m_value); };
-    void const* getValuePtr() const override { return static_cast<void const*>(&m_value); };
-
-    T m_value;
-};
-
-template <typename T>
-using SharedMemoryValuePtr = gsl::owner<SharedMemoryValue<T>*>;
-
 /**
  * Where there is an interface which is "primary", value semantics are very clunky to use in the C glue code. This can
  * be simplified at the cost of an extra dereference at use time. The cost of this is negligible relative to general
@@ -113,7 +76,7 @@ struct SharedMemoryOwner final : ASharedMemoryObject
 };
 
 template <typename TValue>
-[[nodiscard]] gsl::owner<std::shared_ptr<ASharedMemoryObject>*> createSharedMemoryOwner(
+[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
     gsl::owner<TValue*>                 owner_ptr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept;

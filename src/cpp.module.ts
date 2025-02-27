@@ -14,7 +14,6 @@ export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } =
     runtimeKeepalivePush: true,
     runtimeKeepalivePop: true,
     _jsUtilDeleteObject: true,
-    _jsUtilUnwrapObject: true,
     _isDebugBuild: true,
     _sharedArray_createOne: true,
     _sharedArray_getDataAddress: true,

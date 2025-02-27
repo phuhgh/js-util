@@ -37,7 +37,6 @@ export class ResizableArray<TCtor extends TTypedArrayCtor>
 
     public readonly length: number;
     public readonly pointer: number;
-    public readonly sharedPointerPointer: number;
 
     // @internal
     public constructor
@@ -46,16 +45,14 @@ export class ResizableArray<TCtor extends TTypedArrayCtor>
         ctor: TCtor,
         owner: IManagedResourceNode | null,
         length: number,
-        sharedPointerPointer: number,
+        pointer: number,
         numberId: ENumberIdentifier,
     )
     {
-        const pointer = wrapper.instance._jsUtilUnwrapObject(sharedPointerPointer);
         super(wrapper, owner, ctor, wrapper.instance._resizableArray_getDataAddress(numberId, pointer), length * ctor.BYTES_PER_ELEMENT);
         this.length = length;
-        this.sharedPointerPointer = sharedPointerPointer;
         this.pointer = pointer;
-        this.cleanup = new SharedArrayImpl(wrapper, sharedPointerPointer);
+        this.cleanup = new SharedArrayImpl(wrapper, pointer);
 
         // annotations
         wrapper.interopIds.setSpecializations(this, [resizableArraySpecialization, getNumberSpecialization(ctor)]);
@@ -75,14 +72,14 @@ class SharedArrayImpl implements IOnFreeListener
     public constructor
     (
         public readonly wrapper: IEmscriptenWrapper<IResizableArrayBindings & IJsUtilBindings>,
-        public readonly sharedPointerPointer: number,
+        public readonly pointer: number,
     )
     {
     }
 
     public onFree(): void
     {
-        this.wrapper.instance._jsUtilDeleteObject(this.sharedPointerPointer);
+        this.wrapper.instance._jsUtilDeleteObject(this.pointer);
     }
 }
 

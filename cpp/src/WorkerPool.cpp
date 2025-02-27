@@ -5,7 +5,7 @@
 extern "C"
 {
     EMSCRIPTEN_KEEPALIVE
-    gsl::owner<std::shared_ptr<JsInterop::ASharedMemoryObject>*> workerPool_createRoundRobin(
+    gsl::owner<JsInterop::SharedMemoryOwner<JsUtil::IWorkerPool>*> workerPool_createRoundRobin(
         uint16_t workerCount,
         uint16_t queueSize,
         bool     syncOverflowHandling
@@ -19,16 +19,18 @@ extern "C"
             Debug::onBeforeAllocate();
         }
 
-        auto pool = std::shared_ptr<IWorkerPool>{new (std::nothrow) WorkerPool(
+        auto pool = new (std::nothrow) WorkerPool(
             RoundRobin{},
             WorkerPoolConfig{
                 .workerCount = workerCount,
                 .jobCount = queueSize,
                 .syncOverflowHandling = syncOverflowHandling,
             }
-        )};
+        );
 
-        return createSharedMemoryOwner(pool, createEmptyDescriptor());
+        return static_cast<gsl::owner<SharedMemoryOwner<IWorkerPool>*>>(
+            createSharedMemoryOwner(static_cast<IWorkerPool*>(pool), createEmptyDescriptor())
+        );
     }
 
     EMSCRIPTEN_KEEPALIVE
