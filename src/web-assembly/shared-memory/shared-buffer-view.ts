@@ -1,13 +1,13 @@
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
-import { IMemoryUtilBindings } from "../emscripten/i-memory-util-bindings.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
 import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
 import type { IBuffer } from "../../array/typed-array/i-buffer-view.js";
 import { ENumberIdentifier, getNumberIdentifier } from "../../runtime/rtti-interop.js";
+import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
 
 /**
  * @public
@@ -33,6 +33,11 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
     public readonly pointer: number;
     public readonly byteSize: number;
     public readonly numberId: ENumberIdentifier;
+
+    public getWrapper(): IEmscriptenWrapper<IInteropBindings>
+    {
+        return this.wrapper;
+    }
 
     public getSharedObjectHandle(): IManagedObject | null
     {
@@ -71,7 +76,7 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
 
     public constructor
     (
-        private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        private readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
         owner: IManagedResourceNode | null,
         ctor: TCtor,
         pointer: number,
@@ -94,7 +99,7 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
         this.resourceHandle.onFreeChannel.addListener(this.impl);
     }
 
-    private impl: SharedBufferViewImpl<TCtor>;
+    private readonly impl: SharedBufferViewImpl<TCtor>;
 }
 
 class SharedBufferViewImpl<TCtor extends TTypedArrayCtor>
@@ -105,7 +110,7 @@ class SharedBufferViewImpl<TCtor extends TTypedArrayCtor>
 
     public constructor
     (
-        public readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        public readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
         public readonly ctor: TCtor,
         public readonly pointer: number,
         public readonly byteSize: number,

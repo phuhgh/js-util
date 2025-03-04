@@ -82,3 +82,33 @@ TEST(HashSet, move)
     EXPECT_TRUE(assigned.contains(4));
     EXPECT_EQ(assigned.size(), 1);
 }
+
+TEST(HashSet, iteration)
+{
+    JsUtil::HashSet<int> s;
+
+    for (auto const& _ : s)
+    {
+        FAIL() << "The loop should not run.";
+    }
+
+    s.insert(1);
+    s.insert(3);
+    s.insert(5);
+    s.insert(7);
+    s.insert(9);
+
+    std::set<int>              values{};
+    JsUtil::HashSet<int> const huh = s;
+    for (auto const& key : huh)
+    {
+        values.insert(key);
+    }
+
+    EXPECT_EQ(values.size(), 5);
+    EXPECT_TRUE(values.contains(1));
+    EXPECT_TRUE(values.contains(3));
+    EXPECT_TRUE(values.contains(5));
+    EXPECT_TRUE(values.contains(7));
+    EXPECT_TRUE(values.contains(9));
+}

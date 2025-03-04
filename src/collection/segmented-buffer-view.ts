@@ -4,6 +4,7 @@ import type { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten
 import { _Debug } from "../debug/_debug.js";
 import type { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor.js";
 import type { TWriteable } from "../typescript/t-writable.js";
+import type { IInteropBindings } from "../web-assembly/emscripten/i-interop-bindings.js";
 
 /**
  * @public
@@ -31,7 +32,7 @@ export class SegmentedBufferDescriptor
  */
 export interface ISegmentedBufferView<TCTor extends TTypedArrayCtor>
 {
-    getView(): IBuffer<TCTor>;
+    getBuffer(): IBuffer<TCTor>;
     getDescriptor(): SegmentedBufferDescriptor;
 }
 
@@ -39,10 +40,10 @@ export interface ISegmentedBufferView<TCTor extends TTypedArrayCtor>
  * @public
  * A view into a shared typed array.
  */
-export interface ISharedSegmentedBufferView<TCTor extends TTypedArrayCtor> extends IManagedObject
+export interface ISharedSegmentedBufferView<TCTor extends TTypedArrayCtor>
+    extends ISegmentedBufferView<TCTor>,
+            IManagedObject
 {
-    getBuffer(): IBuffer<TCTor>;
-    getDescriptor(): SegmentedBufferDescriptor;
 }
 
 /**
@@ -53,7 +54,7 @@ export function createSegmentedBufferView<TCTor extends TTypedArrayCtor>
 (
     buffer: IBuffer<TCTor>,
     descriptor: SegmentedBufferDescriptor,
-    wrapper: IEmscriptenWrapper<object>,
+    wrapper: IEmscriptenWrapper<IInteropBindings>,
     owner: IManagedResourceNode | null,
 )
     : ISharedSegmentedBufferView<TCTor>;
@@ -62,12 +63,12 @@ export function createSegmentedBufferView<TCTor extends TTypedArrayCtor>
     buffer: IBuffer<TCTor>,
     descriptor: SegmentedBufferDescriptor,
 )
-    : ISharedSegmentedBufferView<TCTor>;
+    : ISegmentedBufferView<TCTor>;
 export function createSegmentedBufferView<TCTor extends TTypedArrayCtor>
 (
     buffer: IBuffer<TCTor>,
     descriptor: SegmentedBufferDescriptor,
-    wrapper?: IEmscriptenWrapper<object>,
+    wrapper?: IEmscriptenWrapper<IInteropBindings>,
     owner?: IManagedResourceNode | null,
 )
 {
@@ -79,12 +80,16 @@ class SegmentedBufferView<TCTor extends TTypedArrayCtor> implements IManagedObje
 {
     public readonly resourceHandle!: IManagedResourceNode;
 
+    public getWrapper(): IEmscriptenWrapper<IInteropBindings>
+    {
+        return this.wrapper!;
+    }
 
     public constructor
     (
         private readonly buffer: IBuffer<TCTor>,
         private readonly descriptor: SegmentedBufferDescriptor,
-        wrapper: IEmscriptenWrapper<object> | null,
+        private readonly wrapper: IEmscriptenWrapper<IInteropBindings> | null,
         owner: IManagedResourceNode | null,
     )
     {

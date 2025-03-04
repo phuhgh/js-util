@@ -1,6 +1,7 @@
 import type { IBroadcastChannel } from "../eventing/i-broadcast-channel.js";
 import { type IManagedResourceLinks } from "./managed-resource-links.js";
 import type { IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten-wrapper.js";
+import type { IInteropBindings } from "../web-assembly/emscripten/i-interop-bindings.js";
 
 /**
  * @public
@@ -52,9 +53,10 @@ export interface IManagedResourceNode
  * @public
  * An object which is backed by some sort of shared resource, holds a handle to a {@link IManagedResourceNode}.
  */
-export interface IManagedObject
+export interface IManagedObject<TModule extends IInteropBindings = IInteropBindings>
 {
     readonly resourceHandle: IManagedResourceNode;
+    getWrapper(): IEmscriptenWrapper<TModule>;
 }
 
 

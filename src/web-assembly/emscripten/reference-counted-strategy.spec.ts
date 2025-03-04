@@ -8,6 +8,8 @@ import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test
 import utilTestModule from "../../external/test-module.mjs";
 import { SharedArray } from "../shared-array/shared-array.js";
 import type { IJsUtilBindings } from "../i-js-util-bindings.js";
+import type { IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
+import type { IInteropBindings } from "./i-interop-bindings.js";
 
 
 describe("=> ReferenceCountedStrategy", () =>
@@ -91,10 +93,14 @@ class TestManagedObject implements IManagedObject
     )
     {
     }
+
+    public getWrapper(): IEmscriptenWrapper<IInteropBindings>
+    {
+        throw new Error("not implemented");
+    }
 }
 
 function createTestManagedObject(testModule: SanitizedEmscriptenTestModule<IJsUtilBindings, object>): IManagedObject
 {
-
     return new TestManagedObject(testModule.wrapper.lifecycleStrategy.createNode(testModule.wrapper.rootNode));
 }

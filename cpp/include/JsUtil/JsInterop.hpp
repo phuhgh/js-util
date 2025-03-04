@@ -62,6 +62,29 @@ class ASharedMemoryObject
     // we only have the base class so that there is a common type to refer to, we don't want any other extensions
     template <typename T>
     friend struct SharedMemoryOwner;
+    template <typename T>
+    friend struct WeakSharedMemoryOwner;
+};
+
+template <typename T>
+struct WeakSharedMemoryOwner final : ASharedMemoryObject
+{
+    WeakSharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& descriptors);
+
+    // NOT THREAD SAFE!
+    void* getValuePtr() override { return static_cast<void*>(m_weakPtr.lock().get()); };
+    // NOT THREAD SAFE!
+    void const* getValuePtr() const override { return static_cast<void const*>(m_weakPtr.lock().get()); };
+
+    std::shared_ptr<T> lock() const { return m_weakPtr.lock(); }
+
+    WeakSharedMemoryOwner<void> elide() const
+    {
+        auto descriptors = m_descriptors;
+        return WeakSharedMemoryOwner<void>{m_weakPtr, std::move(descriptors)};
+    }
+
+    std::weak_ptr<T> m_weakPtr;
 };
 
 template <typename T>
@@ -76,6 +99,12 @@ struct SharedMemoryOwner final : ASharedMemoryObject
     {
         auto descriptors = m_descriptors;
         return SharedMemoryOwner<void>{m_owningPtr, std::move(descriptors)};
+    }
+
+    WeakSharedMemoryOwner<T> createWeak() const
+    {
+        auto descriptors = m_descriptors;
+        return WeakSharedMemoryOwner<T>{m_owningPtr, std::move(descriptors)};
     }
 
     std::shared_ptr<T> m_owningPtr;

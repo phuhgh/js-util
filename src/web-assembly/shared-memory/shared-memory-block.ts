@@ -3,10 +3,10 @@ import { nullPtr } from "../emscripten/null-pointer.js";
 import { _Production } from "../../production/_production.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
-import { IMemoryUtilBindings } from "../emscripten/i-memory-util-bindings.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
 import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
+import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
 
 /**
  * @public
@@ -36,14 +36,14 @@ export class SharedMemoryBlock
      */
     public static createOne
     (
-        wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        wrapper: IEmscriptenWrapper<IInteropBindings>,
         bindToReference: IManagedResourceNode | null,
         byteSize: number,
     )
         : SharedMemoryBlock
     public static createOne
     (
-        wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        wrapper: IEmscriptenWrapper<IInteropBindings>,
         bindToReference: IManagedResourceNode | null,
         byteSize: number,
         allocationFailThrows: boolean,
@@ -51,7 +51,7 @@ export class SharedMemoryBlock
         : SharedMemoryBlock | null
     public static createOne
     (
-        wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        wrapper: IEmscriptenWrapper<IInteropBindings>,
         bindToReference: IManagedResourceNode | null,
         byteSize: number,
         allocationFailThrows: boolean = true,
@@ -76,6 +76,11 @@ export class SharedMemoryBlock
         return new SharedMemoryBlock(wrapper, bindToReference, pointer, byteSize);
     }
 
+    public getWrapper(): IEmscriptenWrapper<IInteropBindings>
+    {
+        return this.wrapper;
+    }
+
     public getDataView(): DataView
     {
         if (_BUILD.DEBUG)
@@ -93,7 +98,7 @@ export class SharedMemoryBlock
 
     protected constructor
     (
-        private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        private readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
         owner: IManagedResourceNode | null,
         pointer: number,
         byteSize: number,
@@ -124,7 +129,7 @@ class SharedMemoryBlockImpl
 
     public constructor
     (
-        public readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        public readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
         public readonly pointer: number,
         public readonly byteSize: number,
     )

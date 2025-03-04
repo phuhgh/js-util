@@ -5,9 +5,9 @@ import { ITypedArrayTupleFactory } from "./i-typed-array-tuple-factory.js";
 import { ISharedMemoryBlock, SharedMemoryBlock } from "../../web-assembly/shared-memory/shared-memory-block.js";
 import { isLittleEndian } from "../../web-assembly/util/is-little-endian.js";
 import { IEmscriptenWrapper } from "../../web-assembly/emscripten/i-emscripten-wrapper.js";
-import { IMemoryUtilBindings } from "../../web-assembly/emscripten/i-memory-util-bindings.js";
 import { ATypedArrayTuple } from "./a-typed-array-tuple.js";
 import type { IManagedObject, IManagedResourceNode } from "../../lifecycle/manged-resources.js";
+import type { IInteropBindings } from "../../web-assembly/emscripten/i-interop-bindings.js";
 
 /**
  * @public
@@ -44,7 +44,7 @@ export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTyp
     (
         typedArrayCtor: TExtendedTypedArrayCtor<TArray>,
         bindToReference: IManagedResourceNode | null,
-        wrapper: IEmscriptenWrapper<IMemoryUtilBindings>,
+        wrapper: IEmscriptenWrapper<IInteropBindings>,
     )
         : ISharedTypedArrayTuple<TArray>
     {
@@ -52,6 +52,11 @@ export class SharedTypedArrayTuple<TArray extends (ATypedArrayTuple<number, TTyp
         const block = SharedMemoryBlock.createOne(wrapper, bindToReference, byteSize);
 
         return new SharedTypedArrayTuple<TArray>(block);
+    }
+
+    public getWrapper(): IEmscriptenWrapper<IInteropBindings>
+    {
+        return this.memory.getWrapper();
     }
 
     public copyToBuffer(readFrom: TArray)

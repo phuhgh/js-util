@@ -90,6 +90,7 @@ export { ISetLike } from "./typescript/i-set-like.js";
 export { TObjectValue } from "./typescript/t-object-value.js";
 export { TExtractTypeTypedArrayTuple } from "./typescript/t-extract-type-typed-array-tuple.js";
 export { TKeysOf } from "./typescript/t-keys-of.js";
+export { TMaybeObject } from "./typescript/t-maybe-object.js";
 export { TNeverFallback } from "./typescript/t-never-fallback.js";
 export { TNeverPredicate } from "./typescript/t-never-predicate.js";
 export { TNextInt } from "./typescript/t-next-int.js";

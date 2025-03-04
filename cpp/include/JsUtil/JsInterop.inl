@@ -4,6 +4,16 @@ namespace JsInterop
 {
 
 template <typename T>
+WeakSharedMemoryOwner<T>::WeakSharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& descriptors)
+    : ASharedMemoryObject(std::move(descriptors))
+    , m_weakPtr(std::move(ptr))
+{
+    static_assert(!std::is_pointer_v<T>, "T must be a value type");
+    static_assert(!JsUtil::IsSmartPointer<T>::value, "T must be a value type");
+    static_assert(!JsUtil::IsArrayPointer<T>::value, "T must be a value type");
+}
+
+template <typename T>
 SharedMemoryOwner<T>::SharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& descriptors)
     : ASharedMemoryObject(std::move(descriptors))
     , m_owningPtr(std::move(ptr))

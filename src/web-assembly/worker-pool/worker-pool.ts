@@ -1,5 +1,4 @@
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
-import { IMemoryUtilBindings } from "../emscripten/i-memory-util-bindings.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { _Production } from "../../production/_production.js";
 import type { IWorkerPoolBindings } from "./i-worker-pool-bindings.js";
@@ -120,7 +119,7 @@ export class WorkerPool implements IWorkerPool
 {
     public static createRoundRobin
     (
-        wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+        wrapper: IEmscriptenWrapper<IWorkerPoolBindings>,
         config: IWorkerPoolConfig,
         bindToReference: IManagedResourceNode | null,
         allocationFailThrows: boolean,
@@ -128,14 +127,14 @@ export class WorkerPool implements IWorkerPool
         : WorkerPool | null;
     public static createRoundRobin
     (
-        wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+        wrapper: IEmscriptenWrapper<IWorkerPoolBindings>,
         config: IWorkerPoolConfig,
         bindToReference: IManagedResourceNode | null,
     )
         : IWorkerPool;
     public static createRoundRobin
     (
-        wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+        wrapper: IEmscriptenWrapper<IWorkerPoolBindings>,
         config: IWorkerPoolConfig,
         bindToReference: IManagedResourceNode | null,
         allocationFailThrows: boolean = true,
@@ -147,6 +146,11 @@ export class WorkerPool implements IWorkerPool
 
     public readonly resourceHandle: IManagedResourceNode;
     public readonly pointer: number;
+
+    public getWrapper(): IEmscriptenWrapper<IWorkerPoolBindings>
+    {
+        return this.wrapper;
+    }
 
     public start(): Promise<number>
     {
@@ -233,7 +237,7 @@ export class WorkerPool implements IWorkerPool
     // @internal
     public constructor
     (
-        private readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+        private readonly wrapper: IEmscriptenWrapper<IWorkerPoolBindings>,
         ownerNode: IManagedResourceNode | null,
         pointer: number,
         overflowMode: EWorkerPoolOverflowMode,
@@ -256,7 +260,7 @@ class WorkerPoolImpl implements IOnFreeListener
 {
     public constructor
     (
-        public readonly wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+        public readonly wrapper: IEmscriptenWrapper<IWorkerPoolBindings>,
         public readonly pointer: number,
     )
     {
@@ -270,7 +274,7 @@ class WorkerPoolImpl implements IOnFreeListener
 
 function createRoundRobinImpl
 (
-    wrapper: IEmscriptenWrapper<IMemoryUtilBindings & IWorkerPoolBindings>,
+    wrapper: IEmscriptenWrapper<IWorkerPoolBindings>,
     config: IWorkerPoolConfig,
     bindToReference: IManagedResourceNode | null,
     allocationFailThrows: boolean = true,

@@ -66,3 +66,23 @@ TEST(SharedMemoryOwner, elide)
     SharedMemoryOwner<void> elided = sharedInt.elide();
     EXPECT_EQ(static_cast<MoveOnlyTestObject*>(elided.getValuePtr())->m_val, 11);
 }
+
+TEST(SharedMemoryOwner, createWeak)
+{
+    WeakSharedMemoryOwner<MoveOnlyTestObject> weak{nullptr, {}};
+    {
+        std::shared_ptr<MoveOnlyTestObject> strong{};
+
+        {
+            SharedMemoryOwner sharedInt{std::make_shared<MoveOnlyTestObject>(11), {{1, 2}}};
+            weak = sharedInt.createWeak();
+            EXPECT_EQ(static_cast<MoveOnlyTestObject*>(weak.getValuePtr())->m_val, 11);
+            strong = weak.lock();
+        }
+
+        // relies on ASAN
+        EXPECT_EQ(strong->m_val, 11);
+    }
+
+    EXPECT_EQ(static_cast<MoveOnlyTestObject*>(weak.getValuePtr()), nullptr);
+}

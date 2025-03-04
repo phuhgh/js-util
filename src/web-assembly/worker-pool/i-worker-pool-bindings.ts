@@ -1,7 +1,9 @@
+import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
+
 /**
  * @public
  */
-export interface IWorkerPoolBindings
+export interface IWorkerPoolBindings extends IInteropBindings
 {
     _workerPool_createRoundRobin(workerCount: number, queueSize: number, syncOverflowHandling: boolean): number;
     _workerPool_addJob(o_poolPtr: number, jobPtr: number): boolean;

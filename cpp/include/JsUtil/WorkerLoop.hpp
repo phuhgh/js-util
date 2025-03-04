@@ -91,4 +91,4 @@ class WorkerLoop : public INotifiable
 
 } // namespace JsUtil
 
-#include "WorkerLoop.inl"
+#include "JsUtil/WorkerLoop.inl"

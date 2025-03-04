@@ -5,7 +5,6 @@ import { nullPtr } from "../emscripten/null-pointer.js";
 import { ISharedArray } from "./i-shared-array.js";
 import { ISharedArrayBindings } from "./i-shared-array-bindings.js";
 import { bufferCategory, type ENumberIdentifier, getNumberIdentifier, getNumberSpecialization, IdSpecialization } from "../../runtime/rtti-interop.js";
-import type { IJsUtilBindings } from "../i-js-util-bindings.js";
 import { type IManagedResourceNode, type IOnFreeListener } from "../../lifecycle/manged-resources.js";
 import { SharedBufferView } from "../shared-memory/shared-buffer-view.js";
 
@@ -27,7 +26,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
      */
     public static createOne<TCtor extends TTypedArrayCtor>
     (
-        wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         containerType: TCtor,
         bindToReference: IManagedResourceNode | null,
         length: number,
@@ -36,7 +35,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         : SharedArray<TCtor>
     public static createOne<TCtor extends TTypedArrayCtor>
     (
-        wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         containerType: TCtor,
         bindToReference: IManagedResourceNode | null,
         length: number,
@@ -46,7 +45,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         : SharedArray<TCtor> | null
     public static createOne<TCtor extends TTypedArrayCtor>
     (
-        wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         containerType: TCtor,
         bindToReference: IManagedResourceNode | null,
         length: number,
@@ -63,11 +62,16 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
     public readonly length: number;
     public readonly pointer: number;
 
+    public getWrapper(): IEmscriptenWrapper<ISharedArrayBindings>
+    {
+        return this.localImpl.wrapper;
+    }
+
     // @internal
     public constructor
     (
         ctor: TCtor,
-        wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
+        wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         owner: IManagedResourceNode | null,
         length: number,
         pointer: number,
@@ -77,16 +81,16 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         super(wrapper, owner, ctor, wrapper.instance._sharedArray_getDataAddress(numberId, pointer), length * ctor.BYTES_PER_ELEMENT);
         this.length = length;
         this.pointer = pointer;
-        this.cleanup = new SharedArrayImpl(wrapper, pointer);
+        this.localImpl = new SharedArrayImpl(wrapper, pointer);
 
         // annotations
         wrapper.interopIds.setSpecializations(this, [sharedArraySpecialization, getNumberSpecialization(ctor)]);
 
         // configure listeners
-        this.resourceHandle.onFreeChannel.addListener(this.cleanup);
+        this.resourceHandle.onFreeChannel.addListener(this.localImpl);
     }
 
-    private readonly cleanup: SharedArrayImpl;
+    private readonly localImpl: SharedArrayImpl;
     // @internal
     public debugOnAllocate?: (() => void);
 }
@@ -96,7 +100,7 @@ class SharedArrayImpl implements IOnFreeListener
 
     public constructor
     (
-        public readonly wrapper: IEmscriptenWrapper<ISharedArrayBindings & IJsUtilBindings>,
+        public readonly wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         public readonly owningPointer: number,
     )
     {
