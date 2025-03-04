@@ -11,14 +11,14 @@ export class LifecycleStack
     public constructor()
     {
         const existingOwners = getGlobal()["RC_ALLOCATION_OWNER_STACK"] as IManagedResourceNode[] | undefined;
-        this.ownerStack = existingOwners ?? arrayMap(new Array<IManagedResourceNode[]>(100), () => new BlockScopeNode());
+        this.ownerStack = existingOwners ?? arrayMap(new Array<IManagedResourceNode[]>(128), () => new BlockScopeNode());
     }
 
     public push(): IManagedResourceNode
     {
         if (_BUILD.DEBUG)
         {
-            _Debug.assert(this.index < 100, "overflowed the allocation stack...");
+            _Debug.assert(this.index < 128, "overflowed the allocation stack...");
         }
 
         return this.ownerStack[this.index++];

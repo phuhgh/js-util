@@ -59,8 +59,10 @@ TEST(IdRegistry, lookup)
 }
 
 // todo jack: clearly missing some tests
-// TEST(IdRegistry, valueNoMove)
-// {
-//     auto val = new (std::nothrow) SharedMemoryValue<UnmoveableTestObject>({}, 1);
-//     delete val;
-// }
+TEST(SharedMemoryOwner, elide)
+{
+    // somewhat relying on ASAN to check that this is correct
+    SharedMemoryOwner       sharedInt{std::make_shared<MoveOnlyTestObject>(11), {{1, 2}}};
+    SharedMemoryOwner<void> elided = sharedInt.elide();
+    EXPECT_EQ(static_cast<MoveOnlyTestObject*>(elided.getValuePtr())->m_val, 11);
+}

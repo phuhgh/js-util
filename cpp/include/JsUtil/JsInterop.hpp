@@ -35,12 +35,6 @@ class ASharedMemoryObject
   public:
     /// category -> specialization
     using TDescriptors = JsUtil::HashMap<JsUtil::TInteropId, JsUtil::TInteropId>;
-
-    template <typename TDesc>
-    explicit ASharedMemoryObject(TDesc&& descriptors)
-        : m_descriptors(std::forward<TDesc>(descriptors))
-    {
-    }
     virtual ~ASharedMemoryObject() = default;
 
     virtual void*       getValuePtr() = 0;
@@ -57,13 +51,19 @@ class ASharedMemoryObject
     }
 
     TDescriptors m_descriptors;
+
+  private:
+    template <typename TDesc>
+    explicit ASharedMemoryObject(TDesc&& descriptors)
+        : m_descriptors(std::forward<TDesc>(descriptors))
+    {
+    }
+
+    // we only have the base class so that there is a common type to refer to, we don't want any other extensions
+    template <typename T>
+    friend struct SharedMemoryOwner;
 };
 
-/**
- * Where there is an interface which is "primary", value semantics are very clunky to use in the C glue code. This can
- * be simplified at the cost of an extra dereference at use time. The cost of this is negligible relative to general
- * interop.
- */
 template <typename T>
 struct SharedMemoryOwner final : ASharedMemoryObject
 {
@@ -71,6 +71,12 @@ struct SharedMemoryOwner final : ASharedMemoryObject
 
     void*       getValuePtr() override { return static_cast<void*>(m_owningPtr.get()); };
     void const* getValuePtr() const override { return static_cast<void const*>(m_owningPtr.get()); };
+
+    SharedMemoryOwner<void> elide() const
+    {
+        auto descriptors = m_descriptors;
+        return SharedMemoryOwner<void>{m_owningPtr, std::move(descriptors)};
+    }
 
     std::shared_ptr<T> m_owningPtr;
 };
