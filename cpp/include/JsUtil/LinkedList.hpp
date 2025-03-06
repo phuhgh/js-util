@@ -8,6 +8,12 @@ namespace JsUtil
 {
 
 template <typename T>
+struct EqualityComparer
+{
+    static bool isEqual(T const& lhs, T const& rhs) { return lhs == rhs; }
+};
+
+template <typename T>
 class LinkedList
 {
   public:
@@ -113,7 +119,7 @@ class LinkedList
     {
         for (Node* node = m_head; node != nullptr; node = node->next)
         {
-            if (node->data == key)
+            if (EqualityComparer<T>::isEqual(node->data, key))
             {
                 return true;
             }
@@ -136,7 +142,7 @@ class LinkedList
             return false;
         }
 
-        if (m_tail == nullptr)
+        if (m_head == nullptr)
         {
             // it's the first node
             m_head = newNode;
@@ -190,7 +196,7 @@ class LinkedList
 
         while (current != nullptr)
         {
-            if (current->data == key)
+            if (EqualityComparer<T>::isEqual(current->data, key))
             {
                 if (prev)
                 {

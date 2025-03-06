@@ -5,6 +5,29 @@
 
 [[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
 
+namespace JsUtil
+{
+
+template <typename T>
+struct EqualityComparer<std::weak_ptr<T>>
+{
+    static bool isEqual(std::weak_ptr<T> const& lhs, std::weak_ptr<T> const rhs) { return lhs.lock() == rhs.lock(); }
+};
+
+} // namespace JsUtil
+
+namespace std
+{
+template <typename T>
+struct hash<std::weak_ptr<T>>
+{
+    std::size_t operator()(std::weak_ptr<T> const& ptr) const noexcept
+    {
+        return std::hash<T const*>()(ptr.lock().get());
+    }
+};
+} // namespace std
+
 TEST(HashSet, insert)
 {
     JsUtil::HashSet<int> s; // default ctor (59)
@@ -111,4 +134,20 @@ TEST(HashSet, iteration)
     EXPECT_TRUE(values.contains(5));
     EXPECT_TRUE(values.contains(7));
     EXPECT_TRUE(values.contains(9));
+}
+
+TEST(HashSet, specialization)
+{
+    auto                                a = std::make_shared<int>(1);
+    auto                                b = std::make_shared<int>(1);
+    JsUtil::HashSet<std::weak_ptr<int>> hashSet;
+
+    hashSet.insert(a);
+    EXPECT_TRUE(hashSet.contains(a));
+    EXPECT_TRUE(hashSet.erase(a));
+    EXPECT_FALSE(hashSet.contains(a));
+    EXPECT_EQ(hashSet.size(), 0);
+
+    EXPECT_FALSE(hashSet.erase(b));
+    EXPECT_EQ(hashSet.size(), 0);
 }

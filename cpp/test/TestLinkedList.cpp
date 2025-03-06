@@ -5,6 +5,17 @@
 
 [[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
 
+namespace JsUtil
+{
+
+template <typename T>
+struct EqualityComparer<std::weak_ptr<T>>
+{
+    static bool isEqual(std::weak_ptr<T> const& lhs, std::weak_ptr<T> const rhs) { return lhs.lock() == rhs.lock(); }
+};
+
+} // namespace JsUtil
+
 using namespace JsUtil;
 
 TEST(LinkedList, moveOverloads)
@@ -89,6 +100,24 @@ TEST(LinkedList, eraseEnd)
     EXPECT_FALSE(list.contains(MoveOnlyTestObject(2)));
     EXPECT_EQ(list.head()->data.m_val, 1);
     EXPECT_EQ(list.tail()->data.m_val, 1);
+}
+
+TEST(LinkedList, specialization)
+{
+    LinkedList<std::weak_ptr<MoveOnlyTestObject>> list;
+    // use same values as we should be comparing who owns it...
+    auto a = std::make_shared<MoveOnlyTestObject>(1);
+    auto b = std::make_shared<MoveOnlyTestObject>(1);
+    list.append(a);
+    list.append(b);
+
+    EXPECT_TRUE(list.erase(a));
+
+    EXPECT_EQ(list.size(), 1);
+    EXPECT_FALSE(list.contains(a));
+    EXPECT_TRUE(list.contains(b));
+    EXPECT_EQ(list.head()->data.lock()->m_val, 1);
+    EXPECT_EQ(list.tail()->data.lock()->m_val, 1);
 }
 
 class LinkedListBoilerplate : public ::testing::Test
