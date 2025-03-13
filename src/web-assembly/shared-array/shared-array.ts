@@ -7,6 +7,8 @@ import { ISharedArrayBindings } from "./i-shared-array-bindings.js";
 import { bufferCategory, type ENumberIdentifier, getNumberIdentifier, getNumberSpecialization, IdSpecialization } from "../../runtime/rtti-interop.js";
 import { type IManagedResourceNode, type IOnFreeListener } from "../../lifecycle/manged-resources.js";
 import { SharedBufferView } from "../shared-memory/shared-buffer-view.js";
+import { NestedError } from "../../error-handling/nested-error.js";
+import { WasmErrorCause } from "../wasm-error-cause.js";
 
 /**
  * @public
@@ -126,8 +128,7 @@ function createSharedObject
 
     if (pointer === nullPtr && allocationFailThrows)
     {
-        // todo jack: extensible error here?
-        throw _Production.createError("Failed to allocate memory for shared array.");
+        throw new NestedError("Failed to allocate memory for shared array.", WasmErrorCause.allocationFailure);
     }
 
     return pointer;

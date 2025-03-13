@@ -85,7 +85,7 @@ describe("=> ResizableArray", () =>
             testModule.wrapper.rootNode.getLinked().unlink(resizableArray.resourceHandle);
             expect(
                 () => ResizableArray.createOne(testModule.wrapper, Float32Array, testModule.wrapper.rootNode, 0xffffffff)
-            ).toThrowError("Failed to allocate memory for shared array.");
+            ).toThrowError("Failed to allocate memory for resizable array.");
         }));
 
         describe("=> debug mode", () =>

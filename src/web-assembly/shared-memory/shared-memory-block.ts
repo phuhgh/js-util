@@ -7,6 +7,8 @@ import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
 import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
 import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
+import { NestedError } from "../../error-handling/nested-error.js";
+import { WasmErrorCause } from "../wasm-error-cause.js";
 
 /**
  * @public
@@ -65,7 +67,7 @@ export class SharedMemoryBlock
         {
             if (allocationFailThrows)
             {
-                throw _Production.createError("Failed to allocate memory for shared memory block.");
+                throw new NestedError("Failed to allocate memory for shared memory block.", WasmErrorCause.allocationFailure);
             }
             else
             {

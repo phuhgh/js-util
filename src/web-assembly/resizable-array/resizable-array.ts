@@ -8,6 +8,8 @@ import { type IManagedResourceNode, type IOnFreeListener } from "../../lifecycle
 import { SharedBufferView } from "../shared-memory/shared-buffer-view.js";
 import type { ISharedArray } from "../shared-array/i-shared-array.js";
 import type { IResizableArrayBindings } from "./i-resizable-array-bindings.js";
+import { NestedError } from "../../error-handling/nested-error.js";
+import { WasmErrorCause } from "../wasm-error-cause.js";
 
 /**
  * @public
@@ -96,7 +98,7 @@ function createSharedObject
 
     if (ptr === nullPtr && allocationFailThrows)
     {
-        throw _Production.createError("Failed to allocate memory for shared array.");
+        throw new NestedError("Failed to allocate memory for resizable array.", WasmErrorCause.allocationFailure);
     }
 
     return ptr;

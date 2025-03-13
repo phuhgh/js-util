@@ -6,6 +6,7 @@ import { promisePoll } from "../../promise/impl/promise-poll.js";
 import { _Debug } from "../../debug/_debug.js";
 import { NestedError } from "../../error-handling/nested-error.js";
 import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
+import { WasmErrorCause } from "../wasm-error-cause.js";
 
 /**
  * @public
@@ -41,7 +42,7 @@ export enum EWorkerPoolOverflowMode
  */
 export class WorkerPoolErrorCause
 {
-    public static readonly overflow = Symbol("overflow");
+    public static readonly overflow = "WorkerPoolErrorCause.overflow";
 }
 
 /**
@@ -304,7 +305,7 @@ function createRoundRobinImpl
     {
         if (allocationFailThrows)
         {
-            throw _Production.createError("Failed to allocate memory for shared memory block.");
+            throw new NestedError("Failed to allocate memory for worker pool.", WasmErrorCause.allocationFailure);
         }
         else
         {

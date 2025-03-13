@@ -122,6 +122,7 @@ export { isLittleEndian } from "./web-assembly/util/is-little-endian.js";
 export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/shared-memory/shared-memory-block.js";
 export { SharedBufferView, ISharedBufferView } from "./web-assembly/shared-memory/shared-buffer-view.js";
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";
+export { WasmErrorCause } from "./web-assembly/wasm-error-cause.js";
 export { IDebugBindings } from "./web-assembly/emscripten/i-debug-bindings.js";
 export { IEmscriptenBindings } from "./web-assembly/emscripten/i-emscripten-bindings.js";
 export { IOnMemoryResize } from "./web-assembly/emscripten/i-on-memory-resize.js";
