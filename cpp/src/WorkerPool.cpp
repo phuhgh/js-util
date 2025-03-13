@@ -96,10 +96,4 @@ extern "C"
     {
         o_pool->m_owningPtr->stop(wait);
     }
-
-    EMSCRIPTEN_KEEPALIVE
-    void workerPool_deleteJob(gsl::owner<JsUtil::IExecutor*> job)
-    {
-        delete job;
-    }
 }

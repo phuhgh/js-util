@@ -224,8 +224,7 @@ export class WorkerPool implements IWorkerPool
                     break;
                 case EWorkerPoolOverflowMode.Throw:
                 {
-                    this.wrapper.instance._workerPool_deleteJob(jobPtr);
-                    throw new NestedError("WorkerPool overflow", WorkerPoolErrorCause.overflow);
+                    throw new NestedError("WorkerPool job queue overflowed.", WorkerPoolErrorCause.overflow);
                 }
                 default:
                     _Production.assertValueIsNever(this.overflowMode);

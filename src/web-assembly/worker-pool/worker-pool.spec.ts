@@ -3,11 +3,12 @@ import { Test_setDefaultFlags } from "../../test-util/test_set-default-flags.js"
 import { getTestModuleOptions, TestGarbageCollector } from "../../test-util/test-utils.js";
 import { type IErrorExclusions, SanitizedEmscriptenTestModule } from "../emscripten/sanitized-emscripten-test-module.js";
 import { IJsUtilBindings } from "../i-js-util-bindings.js";
-import { EWorkerPoolOverflowMode, type IWorkerPool, WorkerPool } from "./worker-pool.js";
+import { EWorkerPoolOverflowMode, type IWorkerPool, WorkerPool, WorkerPoolErrorCause } from "./worker-pool.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { promisePoll } from "../../promise/impl/promise-poll.js";
 import { _Debug } from "../../debug/_debug.js";
 import type { ITestOnlyBindings } from "../i-test-only-bindings.js";
+import { NestedError } from "../../error-handling/nested-error.js";
 
 describe("=> WorkerPool", () =>
 {
@@ -96,6 +97,34 @@ describe("=> WorkerPool", () =>
         expect(await TestGarbageCollector.testFriendlyGc()).toBeGreaterThan(0);
         expect(spy).toHaveBeenCalledWith(jasmine.stringMatching("A shared object was leaked"));
         testModule.wrapper.rootNode.getLinked().unlinkAll();
+    });
+
+    it("| throws when a job overflows the queue and the mode is to throw", async () =>
+    {
+        const pool = WorkerPool.createRoundRobin(
+            testModule.wrapper,
+            { workerCount: 1, queueSize: 1, overflowMode: EWorkerPoolOverflowMode.Throw },
+            testModule.wrapper.rootNode,
+        );
+        expect(pool.pointer).not.toBe(nullPtr);
+        expect(testModule.wrapper.instance.fakeWorkerJob_getTickCount()).toBe(0);
+        expect(await pool.start()).toBe(1);
+
+        expect((): void =>
+        {
+            for (let i = 0; i < 10; ++i)
+            {
+                addTestJob(testModule, pool, true);
+            }
+        }).toThrowMatching((err): boolean =>
+        {
+            return NestedError.normalizeError(err).causedBy === WorkerPoolErrorCause.overflow;
+        });
+
+        await pool.stop();
+
+        // ignore "error" emitted by emscripten around joining on the main thread
+        testModule.runWithDisabledErrors(disabledErrors, () => testModule.wrapper.rootNode.getLinked().unlinkAll());
     });
 });
 

@@ -27,7 +27,6 @@ export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } =
     _workerPool_invalidateBatch: true,
     _workerPool_areWorkersSynced: true,
     _workerPool_stop: true,
-    _workerPool_deleteJob: true,
     _workerPool_addJob: true,
     _workerPool_isAnyWorkerRunning: true,
     _workerPool_isAcceptingJobs: true,
