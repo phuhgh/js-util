@@ -71,9 +71,9 @@ class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
     {
         if constexpr (Debug::isDebug())
         {
-            Debug::debugAssert(index + m_start < m_end, "index out of bounds");
+            Debug::debugAssert(index + m_start.load() < m_end.load(), "index out of bounds");
         }
-        return m_buffer[index + m_start];
+        return m_buffer[index + m_start.load()];
     }
 
     TValue pop()
@@ -83,15 +83,15 @@ class CircularFIFOStackBase<TValue, TIndex, std::atomic<TIndex>>
             Debug::debugAssert(!getIsEmpty(), "Attempted to pop empty stack.");
         }
 
-        return std::move(m_buffer[m_start++]);
+        return std::move(m_buffer[m_start.fetch_add(1)]);
     }
 
-    bool   getIsEmpty() const noexcept { return m_start == m_end; }
+    bool   getIsEmpty() const noexcept { return m_start.load() == m_end.load(); }
     TIndex getCapacity() const noexcept { return m_buffer.getSize(); }
     /** the number of pushes left */
-    TIndex getRemainingCapacity() const noexcept { return m_start + m_buffer.getSize() - m_end; }
+    TIndex getRemainingCapacity() const noexcept { return m_start.load() + m_buffer.getSize() - m_end.load(); }
     /** the number of pops left */
-    TIndex getElementCount() const noexcept { return m_end - m_start; }
+    TIndex getElementCount() const noexcept { return m_end.load() - m_start.load(); }
     TIndex getAbsoluteStart() const noexcept { return m_start.load(); }
     TIndex getAbsoluteEnd() const noexcept { return m_end.load(); }
 

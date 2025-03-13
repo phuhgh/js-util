@@ -7,7 +7,10 @@ template <WithWorkerLoopConfig TConfig>
 WorkerLoop<TConfig>::~WorkerLoop()
 {
     stop(true);
-    safeDeleteThread();
+    {
+        std::unique_lock lock(m_state_mutex);
+        deleteThread();
+    }
 }
 
 template <WithWorkerLoopConfig TConfig>
@@ -17,21 +20,17 @@ bool WorkerLoop<TConfig>::start(bool tickOnStart)
     {
         std::unique_lock lock(m_state_mutex);
 
-        if (m_loop_state == eREADY_TO_START || m_loop_state == eCOMPLETE)
+        if (m_loop_state != eRUNNING)
         {
-            safeDeleteThread();
-            m_loop_state = eRUNNING;
-            m_notification = tickOnStart ? eSPIN_LOOP : eNO_NOTIFICATION;
-
-            if constexpr (Debug::isDebug())
-            {
-                Debug::onBeforeAllocate();
-            }
+            deleteThread();
+            m_notification = eNO_NOTIFICATION;
+            Debug::onBeforeAllocate();
 
             // the thread may not outlive the WorkerLoop, so no special measures are required for lifecycles
-            m_thread = new (std::nothrow) std::thread([this, tickOnStart]() {
+            m_thread = std::unique_ptr<std::thread>{new (std::nothrow) std::thread([this, tickOnStart]() {
                 m_config.onReady();
 
+                // consume one notification if not tick on start
                 if (!tickOnStart && consumeNotification() == eEND)
                 {
                     // end happened before we got a tick
@@ -39,28 +38,32 @@ bool WorkerLoop<TConfig>::start(bool tickOnStart)
                 else
                 {
                     // the wait (consumeNotification) must come after the operation for `isRunning` not to be a lie
-                    while (true)
+                    // i.e. the job would be marked as complete while it was still running otherwise
+                    do
                     {
                         m_config.onTick();
-                        if (consumeNotification() == eEND)
-                        {
-                            break;
-                        }
-                    }
+                    } while (consumeNotification() != eEND);
                 }
+
+                // notify before setting the state, ensures that all work is done once the state becomes complete
+                // the callee will know it's complete because we just told them it is so...
+                m_config.onComplete();
 
                 {
                     std::unique_lock lock(m_state_mutex);
                     m_loop_state = eCOMPLETE;
                 }
                 m_state_cv.notify_all();
-                // notify after setting the state, in case downstream uses this to check if the job is done
-                m_config.onComplete();
-            });
+            })};
 
             if (m_thread != nullptr)
             {
                 started = true;
+                m_loop_state = eRUNNING;
+            }
+            else
+            {
+                m_loop_state = eCOMPLETE;
             }
         }
     }
@@ -96,7 +99,7 @@ void WorkerLoop<TConfig>::awaitCompletion() noexcept
 }
 
 template <WithWorkerLoopConfig TConfig>
-TConfig& WorkerLoop<TConfig>::getTask() noexcept
+TConfig& WorkerLoop<TConfig>::getTaskConfig() noexcept
 {
     return m_config;
 }
@@ -115,7 +118,7 @@ void WorkerLoop<TConfig>::proceed()
 }
 
 template <WithWorkerLoopConfig TConfig>
-void WorkerLoop<TConfig>::setWorkerNotification(WorkerLoop::ENotification notification) noexcept
+void WorkerLoop<TConfig>::setWorkerNotification(ENotification notification) noexcept
 {
     {
         std::unique_lock lock(m_state_mutex);
@@ -126,7 +129,7 @@ void WorkerLoop<TConfig>::setWorkerNotification(WorkerLoop::ENotification notifi
 }
 
 template <WithWorkerLoopConfig TConfig>
-WorkerLoop<TConfig>::ENotification WorkerLoop<TConfig>::consumeNotification()
+typename WorkerLoop<TConfig>::ENotification WorkerLoop<TConfig>::consumeNotification()
 {
     std::unique_lock lock(m_state_mutex);
 
@@ -144,14 +147,13 @@ WorkerLoop<TConfig>::ENotification WorkerLoop<TConfig>::consumeNotification()
 }
 
 template <WithWorkerLoopConfig TConfig>
-void WorkerLoop<TConfig>::safeDeleteThread()
+void WorkerLoop<TConfig>::deleteThread()
 {
     if (m_thread != nullptr && m_thread->joinable())
     {
         m_thread->join();
     }
-
-    delete m_thread;
+    m_thread.reset(nullptr);
 }
 
 } // namespace JsUtil

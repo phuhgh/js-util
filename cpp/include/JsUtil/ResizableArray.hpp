@@ -30,7 +30,7 @@ class ResizableArray
     static ResizableArray<TValue, TIndex> createPointerArray(TIndex size, TCallback createItem);
 
     template <typename T = TValue>
-    typename std::enable_if<std::is_pointer<T>::value, void>::type compact();
+    typename std::enable_if<WithPointerOrSmartPointer<T>::value, void>::type compact();
 
     // noexcept if TValue is noexcept...
     ~ResizableArray();

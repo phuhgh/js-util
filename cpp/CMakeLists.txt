@@ -21,7 +21,7 @@ jsu_set_build_flags("${JSU_BUILD_MODE}")
 find_package(JsUtil 10.0 REQUIRED)
 
 if (${BUILD_JSUTIL_TEST})
-    set(pedantic_flags -Werror -Wall -Wextra -pedantic)
+    set(pedantic_flags -Werror -Wall -Wextra -pedantic -Wbad-function-cast -Wcast-function-type)
 
     # javascript test module
     jsu_create_executable(test-module

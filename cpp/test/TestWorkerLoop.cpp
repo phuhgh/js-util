@@ -1,18 +1,20 @@
 #include "FakeWorkerConfig.h"
 #include "JsUtil/WorkerLoop.hpp"
+#include "JsUtilTestUtil/DisableJsIntegration.hpp"
 #include "JsUtilTestUtil/ThreadingHelpers.hpp"
 #include <gtest/gtest.h>
 
 using namespace JsUtil;
 
+[[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
+
 TEST(WorkerLoop, sequencing)
 {
-    Debug::disableJsIntegration();
     auto       conf = FakeWorkerConfig{};
     WorkerLoop worker{conf};
     EXPECT_EQ(conf.m_ready_calls->load(), 0);
 
-    worker.start();
+    ASSERT_TRUE(worker.start());
     ASSERT_TRUE(tryVerify([&] { return *conf.m_ready_calls == 1; }));
 
     EXPECT_EQ(*conf.m_tick_calls, 0);
@@ -60,4 +62,48 @@ TEST(WorkerLoop, cleanup)
         ASSERT_TRUE(worker.start());
         ASSERT_TRUE(tryVerify([&] { return *conf.m_ready_calls == 1; }));
     }
+}
+
+TEST(WorkerLoop, tickOnStart)
+{
+    auto       conf = FakeWorkerConfig{};
+    WorkerLoop worker{conf};
+    EXPECT_EQ(conf.m_ready_calls->load(), 0);
+    ASSERT_TRUE(worker.start(true));
+    EXPECT_TRUE(tryVerify([&] { return *conf.m_ready_calls == 1; }));
+}
+
+TEST(WorkerLoop, stopAndWait)
+{
+    auto       conf = FakeWorkerConfig{};
+    WorkerLoop worker{conf};
+    EXPECT_EQ(conf.m_ready_calls->load(), 0);
+
+    ASSERT_TRUE(worker.start());
+    EXPECT_EQ(*conf.m_tick_calls, 0);
+    worker.proceed();
+
+    EXPECT_EQ(*conf.m_complete_calls, 0);
+    worker.stop(true);
+    EXPECT_EQ(*conf.m_complete_calls, 1);
+}
+
+TEST(WorkerLoop, multipleStart)
+{
+    auto       conf = FakeWorkerConfig{};
+    WorkerLoop worker{conf};
+    EXPECT_EQ(conf.m_ready_calls->load(), 0);
+
+    // it's daft, but it just needs to not deadlock
+    ASSERT_TRUE(worker.start());
+    worker.start();
+    worker.start();
+    worker.start();
+    worker.start();
+    worker.start();
+
+    EXPECT_EQ(*conf.m_tick_calls, 0);
+    worker.proceed();
+    EXPECT_TRUE(tryVerify([&] { return *conf.m_tick_calls== 1; }));
+    worker.stop(true);
 }

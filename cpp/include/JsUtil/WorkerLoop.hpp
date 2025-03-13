@@ -5,7 +5,7 @@
 #include "JsUtil/JsInterop.hpp"
 #include "JsUtil/Threading.hpp"
 #include <condition_variable>
-#include <gsl/pointers>
+#include <memory>
 #include <mutex>
 #include <thread>
 
@@ -59,7 +59,7 @@ class WorkerLoop : public INotifiable
     void     proceed() override;
     void     stop(bool wait = false) noexcept;
     void     awaitCompletion() noexcept;
-    TConfig& getTask() noexcept;
+    TConfig& getTaskConfig() noexcept;
     bool     isRunning() const noexcept;
 
   private:
@@ -78,15 +78,15 @@ class WorkerLoop : public INotifiable
 
     void          setWorkerNotification(ENotification notification) noexcept;
     ENotification consumeNotification();
-    void          safeDeleteThread();
+    void          deleteThread();
 
-    TConfig                  m_config;
-    gsl::owner<std::thread*> m_thread{nullptr};
-    mutable std::mutex       m_state_mutex; // locks all state below
-    std::condition_variable  m_notification_cv;
-    ENotification            m_notification{eNO_NOTIFICATION};
-    std::condition_variable  m_state_cv;
-    ELoopState               m_loop_state{eREADY_TO_START};
+    TConfig                      m_config;
+    std::unique_ptr<std::thread> m_thread{nullptr};
+    mutable std::mutex           m_state_mutex; // locks all state below
+    std::condition_variable      m_notification_cv;
+    ENotification                m_notification{eNO_NOTIFICATION};
+    std::condition_variable      m_state_cv;
+    ELoopState                   m_loop_state{eREADY_TO_START};
 };
 
 } // namespace JsUtil

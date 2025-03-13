@@ -10,7 +10,10 @@ template <typename TCallback>
     requires std::invocable<TCallback> && std::is_invocable_r<TValue, TCallback>::value
 ResizableArray<TValue, TIndex> ResizableArray<TValue, TIndex>::createPointerArray(TIndex size, TCallback createItem)
 {
-    static_assert(std::is_pointer_v<TValue>, "TValue must be a pointer type");
+    static_assert(
+        WithPointerOrSmartPointer<TValue>::value, "TValue must be a pointer, std::unique_ptr, or std::shared_ptr type"
+    );
+
     ResizableArray<TValue, TIndex> array(size);
 
     auto allocFailed = false;
@@ -33,7 +36,7 @@ ResizableArray<TValue, TIndex> ResizableArray<TValue, TIndex>::createPointerArra
 
 template <typename TValue, WithUnsigned TIndex>
 template <typename T>
-typename std::enable_if<std::is_pointer<T>::value, void>::type ResizableArray<TValue, TIndex>::compact()
+typename std::enable_if<WithPointerOrSmartPointer<T>::value, void>::type ResizableArray<TValue, TIndex>::compact()
 {
     TIndex last = 0;
     for (TIndex i = 0; i < m_size; ++i)
@@ -42,7 +45,7 @@ typename std::enable_if<std::is_pointer<T>::value, void>::type ResizableArray<TV
         {
             if (i != last)
             {
-                m_values[last] = m_values[i];
+                m_values[last] = std::move(m_values[i]);
                 m_values[i] = nullptr;
             }
             ++last;

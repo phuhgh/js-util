@@ -6,7 +6,7 @@ if (NOT TARGET JsUtil)
     jsu_initializeModule(JsUtil)
 
     if (${BUILD_JSUTIL_TEST})
-        set(pedantic_flags -Werror -Wall -Wextra -pedantic)
+        set(pedantic_flags -Werror -Wall -Wextra -pedantic -Wbad-function-cast -Wcast-function-type)
     else ()
         set(pedantic_flags "")
     endif ()

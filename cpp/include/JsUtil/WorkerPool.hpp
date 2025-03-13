@@ -2,35 +2,62 @@
 
 #include "JsUtil/Threading.hpp"
 #include "JsUtil/WorkerLoop.hpp"
-#include <gsl/pointers>
+#include <memory>
 
 namespace JsUtil
 {
 /**
  * @remark Only thread safe in for single producer consumer pair.
  */
-class PoolWorkerConfig : public IWorkerLoopConfig
+class WorkerPoolTaskConfig : public IWorkerLoopConfig
 {
   public:
-    inline explicit PoolWorkerConfig(uint16_t jobQueueSize = 32);
-    inline PoolWorkerConfig(PoolWorkerConfig&& other) noexcept;
-    inline ~PoolWorkerConfig() override;
-    inline PoolWorkerConfig& operator=(PoolWorkerConfig&& other) noexcept;
-    PoolWorkerConfig(PoolWorkerConfig& other) = delete;
-    PoolWorkerConfig& operator=(PoolWorkerConfig& other) = delete;
+    inline explicit WorkerPoolTaskConfig(uint16_t jobQueueSize = 32);
+    inline WorkerPoolTaskConfig(WorkerPoolTaskConfig&& other) noexcept;
+    inline WorkerPoolTaskConfig& operator=(WorkerPoolTaskConfig&& other) noexcept;
+    WorkerPoolTaskConfig(WorkerPoolTaskConfig& other) = delete;
+    WorkerPoolTaskConfig& operator=(WorkerPoolTaskConfig& other) = delete;
 
     /**
      * @return True if there's no job possibility of an invalidated job running.
      * @remark Thread safe from the producer thread.
      */
-    bool        isWorkerSynced() const noexcept { return m_invalidateToIndex == 0 || m_jobs.getIsEmpty(); }
-    bool        hasPendingWork() const noexcept { return !m_jobs.getIsEmpty(); }
-    bool        addJob(std::shared_ptr<IExecutor> job) { return m_jobs.push(std::move(job)); }
+    bool isWorkerSynced() const noexcept
+    {
+        std::unique_lock lock(m_state_mutex);
+        return m_jobs.getAbsoluteStart() >= m_invalidateToIndex;
+    }
+    bool hasPendingWork() const noexcept
+    {
+        std::unique_lock lock(m_state_mutex);
+        return !m_jobs.getIsEmpty();
+    }
+    bool addJob(std::shared_ptr<IExecutor> job)
+    {
+        std::unique_lock lock(m_state_mutex);
+        return m_jobs.push(std::move(job));
+    }
     inline void setJobQueueSize(uint16_t jobQueueSize);
-    void        setBatchEndPoint() noexcept { m_batchEndIndex = m_jobs.getAbsoluteEnd(); };
-    bool        isBatchDone() { return m_jobs.getAbsoluteStart() >= m_batchEndIndex; };
-    void        invalidateBatch() noexcept { m_invalidateToIndex = m_batchEndIndex.load(); }
-    bool        isAcceptingWork() const noexcept { return m_acceptingWork; }
+    void        setBatchEndPoint() noexcept
+    {
+        std::unique_lock lock(m_state_mutex);
+        m_batchEndIndex = m_jobs.getAbsoluteEnd();
+    };
+    bool isBatchDone()
+    {
+        std::unique_lock lock(m_state_mutex);
+        return m_jobs.getAbsoluteStart() >= m_batchEndIndex;
+    };
+    void invalidateBatch() noexcept
+    {
+        std::unique_lock lock(m_state_mutex);
+        m_invalidateToIndex = m_batchEndIndex;
+    }
+    bool isAcceptingWork() const noexcept
+    {
+        std::unique_lock lock(m_state_mutex);
+        return m_acceptingWork;
+    }
 
   public: // from IWorkerLoopConfig
     void onRegistered(JsUtil::INotifiable*) override {}
@@ -40,10 +67,11 @@ class PoolWorkerConfig : public IWorkerLoopConfig
     void        onComplete() override { m_acceptingWork = false; }
 
   private:
-    CircularFIFOStack<std::shared_ptr<IExecutor>, ECircularStackOverflowMode::NoOp, uint16_t, std::atomic<uint16_t>> m_jobs;
-    std::atomic<uint64_t> m_batchEndIndex = 0;
-    std::atomic<bool>     m_acceptingWork = false;
-    std::atomic<uint64_t> m_invalidateToIndex = 0;
+    mutable std::mutex m_state_mutex; // locks all state below
+    CircularFIFOStack<std::shared_ptr<IExecutor>, ECircularStackOverflowMode::NoOp, uint16_t> m_jobs;
+    uint64_t                                                                                  m_batchEndIndex = 0;
+    bool                                                                                      m_acceptingWork = false;
+    uint64_t                                                                                  m_invalidateToIndex = 0;
 };
 
 struct WorkerPoolConfig
@@ -58,8 +86,8 @@ struct IDistributionStrategy
     virtual ~IDistributionStrategy() = default;
     virtual void configure(WorkerPoolConfig const& config) = 0;
     virtual bool distributeWork(
-        std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
-        std::shared_ptr<IExecutor>                   job
+        std::span<std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>> o_workers,
+        std::shared_ptr<IExecutor>                                   job
     ) noexcept = 0;
 };
 
@@ -125,9 +153,9 @@ class WorkerPool final : public IWorkerPool
     bool areAllWorkersSynced() const noexcept override;
 
   private:
-    ResizableArray<gsl::owner<WorkerLoop<PoolWorkerConfig>*>, uint16_t> m_workers;
-    TDistributionStrategy                                               m_strategy;
-    bool                                                                m_syncOverflowHandling;
+    ResizableArray<std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>, uint16_t> m_workers;
+    TDistributionStrategy                                                       m_strategy;
+    bool                                                                        m_syncOverflowHandling;
 };
 
 /**
@@ -139,8 +167,8 @@ class RoundRobin : public IDistributionStrategy
   public:
     inline void configure(WorkerPoolConfig const& config) override;
     inline bool distributeWork(
-        std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
-        std::shared_ptr<IExecutor>                   job
+        std::span<std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>> o_workers,
+        std::shared_ptr<IExecutor>                                   job
     ) noexcept override;
 
   private:
@@ -153,12 +181,12 @@ class RoundRobin : public IDistributionStrategy
  */
 class PassToAll : public IDistributionStrategy
 {
-public:
-  inline void configure(WorkerPoolConfig const& config) override;
-  inline bool distributeWork(
-      std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
-      std::shared_ptr<IExecutor>                   job
-  ) noexcept override;
+  public:
+    inline void configure(WorkerPoolConfig const& config) override;
+    inline bool distributeWork(
+        std::span<std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>> o_workers,
+        std::shared_ptr<IExecutor>                                   job
+    ) noexcept override;
 };
 
 } // namespace JsUtil

@@ -3,79 +3,59 @@
 namespace JsUtil
 {
 
-PoolWorkerConfig::PoolWorkerConfig(uint16_t jobQueueSize)
-    : m_jobs(
-          CircularFIFOStack<
-              std::shared_ptr<IExecutor>,
-              ECircularStackOverflowMode::NoOp,
-              uint16_t,
-              std::atomic<uint16_t>>(jobQueueSize)
-      )
+WorkerPoolTaskConfig::WorkerPoolTaskConfig(uint16_t jobQueueSize)
+    : m_jobs(CircularFIFOStack<std::shared_ptr<IExecutor>, ECircularStackOverflowMode::NoOp, uint16_t>(jobQueueSize))
 {
 }
 
-PoolWorkerConfig::PoolWorkerConfig(PoolWorkerConfig&& other) noexcept
+WorkerPoolTaskConfig::WorkerPoolTaskConfig(WorkerPoolTaskConfig&& other) noexcept
     : m_jobs(std::move(other.m_jobs))
 {
 }
 
-PoolWorkerConfig::~PoolWorkerConfig()
-{
-    while (!m_jobs.getIsEmpty())
-    {
-        m_jobs.pop();
-    }
-}
-
-PoolWorkerConfig& PoolWorkerConfig::operator=(JsUtil::PoolWorkerConfig&& other) noexcept
+WorkerPoolTaskConfig& WorkerPoolTaskConfig::operator=(JsUtil::WorkerPoolTaskConfig&& other) noexcept
 {
     if (this != &other)
     {
         m_jobs = std::move(other.m_jobs);
         // the destructor deletes all the jobs, guard against "unspecified" state
-        other.m_jobs = CircularFIFOStack<
-            std::shared_ptr<IExecutor>,
-            ECircularStackOverflowMode::NoOp,
-            uint16_t,
-            std::atomic<uint16_t>>{0};
+        other.m_jobs = CircularFIFOStack<std::shared_ptr<IExecutor>, ECircularStackOverflowMode::NoOp, uint16_t>{0};
     }
 
     return *this;
 }
 
-void PoolWorkerConfig::setJobQueueSize(uint16_t jobQueueSize)
+void WorkerPoolTaskConfig::setJobQueueSize(uint16_t jobQueueSize)
 {
     Debug::debugAssert(m_jobs.getIsEmpty(), "changing job queue size with jobs queued will destroy jobs");
-    m_jobs = CircularFIFOStack<
-        std::shared_ptr<IExecutor>,
-        ECircularStackOverflowMode::NoOp,
-        uint16_t,
-        std::atomic<uint16_t>>{jobQueueSize};
+    m_jobs = CircularFIFOStack<std::shared_ptr<IExecutor>, ECircularStackOverflowMode::NoOp, uint16_t>{jobQueueSize};
 }
 
-void PoolWorkerConfig::onTick()
+void WorkerPoolTaskConfig::onTick()
 {
-    while (!m_jobs.getIsEmpty())
+    while (true)
     {
-        auto invalidateToIndex = m_invalidateToIndex.load();
-        if (invalidateToIndex == 0)
+        std::shared_ptr<IExecutor> job;
+        bool                       runJob{false};
         {
-            // no invalidation has been requested, run the job
-            // we rely on indexes to determine if we're in a valid state, so do the pop after the work
-            m_jobs[0]->run(); // the circular buffer will translate for us...
-            m_jobs.pop();     // it's a circular buffer, the pop moves the front
-        }
-        else
-        {
-            // producer has asked us to invalidate up to a job index
-            while (m_jobs.getAbsoluteStart() < invalidateToIndex)
+            std::unique_lock lock(m_state_mutex);
+
+            if (m_jobs.getIsEmpty())
             {
-                Debug::debugAssert(!m_jobs.getIsEmpty(), "unexpected state, probably received invalid index...");
-                m_jobs.pop();
+                break;
             }
-            // reset, assuming the value hasn't changed, otherwise just go around again...
-            m_invalidateToIndex.compare_exchange_weak(invalidateToIndex, 0);
+
+            job = m_jobs[0];
+            runJob = m_jobs.getAbsoluteStart() >= m_invalidateToIndex;
         }
+
+        if (runJob)
+        {
+            job->run();
+        }
+
+        std::unique_lock lock(m_state_mutex);
+        m_jobs.pop();
     }
 }
 
@@ -84,19 +64,16 @@ WorkerPool<TDistributionStrategy>::~WorkerPool()
 {
     // the stop method is more optimized than just relying on destructors (which would serial wait)
     stop(true);
-    for (auto* worker : m_workers.asSpan())
-    {
-        delete worker;
-    }
 }
 
 template <WithDistributionStrategy TDistributionStrategy>
 WorkerPool<TDistributionStrategy>::WorkerPool(TDistributionStrategy strategy, WorkerPoolConfig const& config)
     : m_workers(
-          ResizableArray<gsl::owner<WorkerLoop<PoolWorkerConfig>*>, uint16_t>::createPointerArray(
+          ResizableArray<std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>, uint16_t>::createPointerArray(
               config.workerCount,
-              []() -> gsl::owner<WorkerLoop<PoolWorkerConfig>*> {
-                  return new (std::nothrow) WorkerLoop<PoolWorkerConfig>();
+              [&config]() {
+                  return std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>{new (std::nothrow
+                  ) WorkerLoop(WorkerPoolTaskConfig{config.jobCount})};
               }
           )
       )
@@ -106,7 +83,7 @@ WorkerPool<TDistributionStrategy>::WorkerPool(TDistributionStrategy strategy, Wo
     m_strategy.configure(config);
     for (auto& worker : m_workers.asSpan())
     {
-        worker->getTask().setJobQueueSize(config.jobCount);
+        worker->getTaskConfig().setJobQueueSize(config.jobCount);
     }
 }
 
@@ -122,8 +99,7 @@ uint16_t WorkerPool<TDistributionStrategy>::start()
         }
         else
         {
-            delete workerPtr;
-            workerPtr = nullptr;
+            workerPtr.reset();
         }
     }
 
@@ -160,7 +136,7 @@ bool WorkerPool<TDistributionStrategy>::isAcceptingJobs() const noexcept
     bool isAcceptingJobs{true};
     for (auto& worker : m_workers.asSpan())
     {
-        isAcceptingJobs = isAcceptingJobs && worker->getTask().isAcceptingWork();
+        isAcceptingJobs = isAcceptingJobs && worker->getTaskConfig().isAcceptingWork();
     }
     return isAcceptingJobs;
 }
@@ -182,7 +158,7 @@ bool WorkerPool<TDistributionStrategy>::hasPendingWork() const noexcept
     bool hasPendingWork{false};
     for (auto& worker : m_workers.asSpan())
     {
-        hasPendingWork = hasPendingWork || worker->getTask().hasPendingWork();
+        hasPendingWork = hasPendingWork || worker->getTaskConfig().hasPendingWork();
     }
     return hasPendingWork;
 }
@@ -192,7 +168,7 @@ void WorkerPool<TDistributionStrategy>::setBatchEndPoint() noexcept
 {
     for (auto& worker : m_workers.asSpan())
     {
-        worker->getTask().setBatchEndPoint();
+        worker->getTaskConfig().setBatchEndPoint();
     }
 }
 
@@ -203,7 +179,7 @@ bool WorkerPool<TDistributionStrategy>::isBatchDone() const noexcept
     auto ready{true};
     for (auto& worker : m_workers.asSpan())
     {
-        ready = ready && worker->getTask().isBatchDone();
+        ready = ready && worker->getTaskConfig().isBatchDone();
     }
     return ready;
 }
@@ -232,7 +208,7 @@ void WorkerPool<TDistributionStrategy>::invalidateBatch() noexcept
 {
     for (auto& worker : m_workers.asSpan())
     {
-        worker->getTask().invalidateBatch();
+        worker->getTaskConfig().invalidateBatch();
     }
 }
 
@@ -242,23 +218,22 @@ bool WorkerPool<TDistributionStrategy>::areAllWorkersSynced() const noexcept
     bool synced{true};
     for (auto& worker : m_workers.asSpan())
     {
-        synced = synced && worker->getTask().isWorkerSynced();
+        synced = synced && worker->getTaskConfig().isWorkerSynced();
     }
     return synced;
 }
 
 bool RoundRobin::distributeWork(
-    std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
-    std::shared_ptr<IExecutor>               job
+    std::span<std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>> o_workers,
+    std::shared_ptr<IExecutor>                                   job
 ) noexcept
 {
     if (o_workers.empty())
     {
         return false;
     }
-    auto  index = m_index % o_workers.size();
-    auto& worker = o_workers[index];
-    m_index = (index + 1) % o_workers.size();
+    auto& worker = o_workers[m_index];
+    m_index = (m_index + 1) % o_workers.size();
 
     if (!worker->isRunning())
     {
@@ -266,7 +241,7 @@ bool RoundRobin::distributeWork(
         return false;
     }
 
-    auto added = worker->getTask().addJob(job);
+    auto added = worker->getTaskConfig().addJob(job);
     if (added)
     {
         worker->proceed();
@@ -282,13 +257,12 @@ void RoundRobin::configure(WorkerPoolConfig const&)
 
 inline void PassToAll::configure(WorkerPoolConfig const&)
 {
-    // no action required?
-    // todo jack: is that true?
+    // no action required
 }
 
 inline bool PassToAll::distributeWork(
-    std::span<WorkerLoop<PoolWorkerConfig>*> o_workers,
-    std::shared_ptr<IExecutor>               job
+    std::span<std::unique_ptr<WorkerLoop<WorkerPoolTaskConfig>>> o_workers,
+    std::shared_ptr<IExecutor>                                   job
 ) noexcept
 {
     bool allStarted{true};
@@ -297,7 +271,7 @@ inline bool PassToAll::distributeWork(
     {
         if (worker->isRunning())
         {
-            bool added = worker->getTask().addJob(job);
+            bool added = worker->getTaskConfig().addJob(job);
             allStarted = allStarted && added;
             if (added)
             {
