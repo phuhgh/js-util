@@ -44,7 +44,7 @@ class StableIdKey
     {
     }
 
-    char const* getName() const noexcept { return m_name; }
+    [[nodiscard]] char const* getName() const noexcept { return m_name; }
 
   private:
     char const* m_name;
@@ -66,10 +66,12 @@ struct IdCategory
 {
     using TToken = Token;
 
-    constexpr IdCategory(char const* name)
+    consteval IdCategory(char const* name, bool isFlag = false)
         : StableIdKey(name)
+        , isFlag(isFlag)
     {
     }
+    bool isFlag;
 };
 
 template <typename T>
@@ -85,7 +87,7 @@ struct IdSpecialization
 {
     using TCategory = Category;
 
-    constexpr IdSpecialization(TCategory const& category, char const* name)
+    consteval IdSpecialization(TCategory const& category, char const* name)
         : StableIdKey(name)
         , category(&category)
     {

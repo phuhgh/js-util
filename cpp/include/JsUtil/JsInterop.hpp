@@ -6,6 +6,7 @@
 #include "JsUtil/Identifiers.hpp"
 #include "JsUtil/Pointers.hpp"
 #include "JsUtil/TypeTraits.hpp"
+#include <sstream>
 
 namespace JsInterop
 {
@@ -91,6 +92,7 @@ template <typename T>
 struct SharedMemoryOwner final : ASharedMemoryObject
 {
     SharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& descriptors);
+    ~SharedMemoryOwner();
 
     void*       getValuePtr() override { return static_cast<void*>(m_owningPtr.get()); };
     void const* getValuePtr() const override { return static_cast<void const*>(m_owningPtr.get()); };
@@ -113,6 +115,12 @@ struct SharedMemoryOwner final : ASharedMemoryObject
 template <typename TValue>
 [[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
     gsl::owner<TValue*>                 owner_ptr,
+    ASharedMemoryObject::TDescriptors&& descriptors
+) noexcept;
+
+template <typename TValue>
+[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
+    std::shared_ptr<TValue>             owner_ptr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept;
 

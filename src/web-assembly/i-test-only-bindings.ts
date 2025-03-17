@@ -8,4 +8,5 @@ export interface ITestOnlyBindings
     fakeWorkerJob_getTickCount(): number;
     fakeWorkerJob_getDestroyCount(): number;
     fakeWorkerJob_createJob(goSlow: boolean): number;
+    setTestCategoryFlag(): void;
 }

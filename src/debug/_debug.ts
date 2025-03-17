@@ -226,9 +226,12 @@ export class _Debug
             return;
         }
 
-        const prefixedMessage = tags.length > 0
-            ? ["[", tags.join(", "), "] ", message].join("")
-            : message;
+        const tagString = tags.length > 0 ? ["[", tags.join(", "), "]"].join("") : "";
+        const labelString = _Debug.label == null ? "" : [_Debug.label, ":"].join("");
+        const prefix = [tagString, labelString].join(" ").trim();
+        const prefixedMessage = [prefix, message]
+            .join(" ")
+            .trimStart();
 
         if (ancillaryObject == null)
         {

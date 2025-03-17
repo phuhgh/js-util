@@ -5,8 +5,9 @@ import type { IWorkerPoolBindings } from "./i-worker-pool-bindings.js";
 import { promisePoll } from "../../promise/impl/promise-poll.js";
 import { _Debug } from "../../debug/_debug.js";
 import { NestedError } from "../../error-handling/nested-error.js";
-import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
+import { type IManagedObject, type IManagedResourceNode, type IPointer } from "../../lifecycle/manged-resources.js";
 import { WasmErrorCause } from "../wasm-error-cause.js";
+import { ESharedObjectOwnerKind, SharedObjectCleanup } from "../shared-memory/shared-object-cleanup.js";
 
 /**
  * @public
@@ -246,30 +247,16 @@ export class WorkerPool implements IWorkerPool
         this.resourceHandle = wrapper.lifecycleStrategy.createNode(ownerNode);
         this.pointer = pointer;
         this.overflowMode = overflowMode;
-        this.impl = new WorkerPoolImpl(wrapper, pointer);
-
-        wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "WorkerPool"), null);
-        this.resourceHandle.onFreeChannel.addListener(this.impl);
+        this.cleanup = new SharedObjectCleanup(this, ESharedObjectOwnerKind.SharedMemoryOwner);
+        SharedObjectCleanup.registerCleanup(
+            this,
+            this.cleanup,
+            new SharedObjectCleanup.Options("WorkerPool", null, ESharedObjectOwnerKind.SharedMemoryOwner),
+        );
     }
 
     private readonly overflowMode: EWorkerPoolOverflowMode;
-    private readonly impl: WorkerPoolImpl;
-}
-
-class WorkerPoolImpl implements IOnFreeListener
-{
-    public constructor
-    (
-        public readonly wrapper: IEmscriptenWrapper<IWorkerPoolBindings>,
-        public readonly pointer: number,
-    )
-    {
-    }
-
-    public onFree()
-    {
-        this.wrapper.instance._jsUtilDeleteObject(this.pointer);
-    }
+    private readonly cleanup: SharedObjectCleanup;
 }
 
 function createRoundRobinImpl

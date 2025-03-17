@@ -28,40 +28,57 @@ export async function getEmscriptenWrapper<TExt extends object, TMod extends IJs
 )
     : Promise<IEmscriptenWrapper<TExt & TMod, TLifeStrategy>>
 {
-    const memoryListener = _BUILD.DEBUG
-        ? new DebugWeakBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize")
-        : new BroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize");
-    const debug = new EmscriptenDebug();
-    const binder = new EmscriptenBinder();
-
-    if (_BUILD.DEBUG)
+    let debugLabel: string | undefined = undefined;
+    try
     {
-        const debugInstance = extension as never as IEmscriptenDebugInstance;
-        debugInstance.JSU_DEBUG_UTIL = debug;
+        if (_BUILD.DEBUG)
+        {
+            debugLabel = _Debug.label;
+            _Debug.label = "EmscriptenWrapper";
+        }
+
+        const memoryListener = _BUILD.DEBUG
+            ? new DebugWeakBroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize")
+            : new BroadcastChannel<"onMemoryResize", TWebAssemblyMemoryListenerArgs>("onMemoryResize");
+        const debug = new EmscriptenDebug();
+        const binder = new EmscriptenBinder();
+
+        if (_BUILD.DEBUG)
+        {
+            const debugInstance = extension as never as IEmscriptenDebugInstance;
+            debugInstance.JSU_DEBUG_UTIL = debug;
+        }
+
+        const instance = await emscriptenModuleFactory({
+            wasmMemory: memory,
+            INITIAL_MEMORY: memory.buffer.byteLength,
+            JSU_BINDER: binder,
+            ...extension,
+        } as TExt) as TExt & TMod & Emscripten.EmscriptenModule;
+
+        const wrapper = new EmscriptenWrapper<TExt & TMod, TLifeStrategy>(
+            memoryListener,
+            instance,
+            memory,
+            debug,
+            binder,
+            lifecycleStrategy,
+            options
+        );
+        lifecycleStrategy.setWrapper(wrapper);
+        // this depends on the lifecycle strategy having being initialized...
+        wrapper.interopIds.initialize();
+        initializeSubmodules(instance);
+        return wrapper;
+    }
+    finally
+    {
+        if (_BUILD.DEBUG)
+        {
+            _Debug.label = debugLabel;
+        }
     }
 
-    const instance = await emscriptenModuleFactory({
-        wasmMemory: memory,
-        INITIAL_MEMORY: memory.buffer.byteLength,
-        JSU_BINDER: binder,
-        ...extension,
-    } as TExt) as TExt & TMod & Emscripten.EmscriptenModule;
-
-    const wrapper = new EmscriptenWrapper<TExt & TMod, TLifeStrategy>(
-        memoryListener,
-        instance,
-        memory,
-        debug,
-        binder,
-        lifecycleStrategy,
-        options
-    );
-    lifecycleStrategy.setWrapper(wrapper);
-    // this depends on the lifecycle strategy having being initialized...
-    wrapper.interopIds.initialize();
-    initializeSubmodules(instance);
-
-    return wrapper;
 }
 
 /**
@@ -145,7 +162,7 @@ class EmscriptenDebug implements IEmscriptenDebugUtils
         _Debug.error(message);
     }
 
-    public verboseLog(message: string, tags: readonly string[] = defaultTags): void
+    public verboseLog(tags: readonly string[], message: string): void
     {
         _Debug.verboseLog(tags, message);
     }
@@ -179,8 +196,6 @@ class EmscriptenBinder implements IEmscriptenBinder
     private readonly bindingObjects = new Map<number, unknown>();
     private counter = 0;
 }
-
-const defaultTags = ["WASM"];
 
 class EWState
 {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "JsUtil/TypeTraits.hpp"
+#include <span>
 #include <string_view>
 
 namespace JsUtil
@@ -10,7 +11,7 @@ namespace Impl
 {
 void Debug_onAllocate();
 void Debug_error(std::string_view _message);
-void Debug_log(std::string_view _message);
+void Debug_log(std::string_view _message, std::span<char const* const> tags);
 } // namespace Impl
 
 class Debug
@@ -62,9 +63,12 @@ class Debug
 #endif
 
 #ifndef NDEBUG
-    static void verboseLog(std::string_view _message) { Impl::Debug_log(_message); }
+    static void verboseLog(std::string_view message, std::span<char const* const> tags)
+    {
+        Impl::Debug_log(message, tags);
+    }
 #else
-    static void verboseLog(char const*) {}
+    static void verboseLog(char const*, std::span<char const* const>) {}
 #endif
 
 #ifndef NDEBUG

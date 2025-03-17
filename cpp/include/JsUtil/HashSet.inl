@@ -97,7 +97,8 @@ void HashSet<T, TSize>::rehash()
         // the allocation failed
         if constexpr (Debug::isDebug())
         {
-            Debug::verboseLog("failed to resize HashSet...");
+            static auto const sTAGS = std::array<char const*, 3>{{"WASM", "MEMORY", "ALLOCATIONS"}};
+            Debug::verboseLog("Failed to resize HashSet.", sTAGS);
         }
         return;
     }

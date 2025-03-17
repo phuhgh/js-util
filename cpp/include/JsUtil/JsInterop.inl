@@ -21,11 +21,43 @@ SharedMemoryOwner<T>::SharedMemoryOwner(std::shared_ptr<T> ptr, TDescriptors&& d
     static_assert(!std::is_pointer_v<T>, "T must be a value type");
     static_assert(!JsUtil::IsSmartPointer<T>::value, "T must be a value type");
     static_assert(!JsUtil::IsArrayPointer<T>::value, "T must be a value type");
+
+    if constexpr (JsUtil::Debug::isDebug())
+    {
+        static auto const sTAGS = std::array<char const*, 4>{{"WASM", "MEMORY", "ALLOCATIONS", "CPP"}};
+        std::stringstream ss;
+        ss << "Created SharedMemoryOwner: " << "0x" << std::hex << reinterpret_cast<std::uintptr_t>(this)
+           << ", holding a reference to: " << std::hex << reinterpret_cast<std::uintptr_t>(m_owningPtr.get());
+        auto str = ss.str();
+        JsUtil::Debug::verboseLog(str.c_str(), sTAGS);
+    }
+}
+
+template <typename T>
+SharedMemoryOwner<T>::~SharedMemoryOwner()
+{
+    if constexpr (JsUtil::Debug::isDebug())
+    {
+        static auto const sTAGS = std::array<char const*, 4>{{"WASM", "MEMORY", "DEALLOCATIONS", "CPP"}};
+        std::stringstream ss;
+        ss << "Destroyed SharedMemoryOwner: " << "0x" << std::hex << reinterpret_cast<std::uintptr_t>(this);
+        auto str = ss.str();
+        JsUtil::Debug::verboseLog(str.c_str(), sTAGS);
+    }
 }
 
 template <typename TValue>
 [[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
     gsl::owner<TValue*>                 valuePtr,
+    ASharedMemoryObject::TDescriptors&& descriptors
+) noexcept
+{
+    return createSharedMemoryOwner(std::shared_ptr<TValue>{valuePtr}, std::move(descriptors));
+}
+
+template <typename TValue>
+[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
+    std::shared_ptr<TValue>             valuePtr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept
 {
@@ -39,7 +71,7 @@ template <typename TValue>
         JsUtil::Debug::onBeforeAllocate();
     }
 
-    return new (std::nothrow) SharedMemoryOwner<TValue>(std::shared_ptr<TValue>{valuePtr}, std::move(descriptors));
+    return new (std::nothrow) SharedMemoryOwner<TValue>(valuePtr, std::move(descriptors));
 }
 
 template <typename... TIds>
@@ -63,6 +95,7 @@ void IdRegistry::registerIdentifiers(std::tuple<TIds...> tuple)
 
         if constexpr (JsUtil::WithSpecializationKey<TId>)
         {
+            JsUtil::Debug::debugAssert(!identifier.category->isFlag, "flags may not be specialized");
             auto stableId = getSpecializationId(identifier);
             ids.insert(identifier.getName(), stableId);
         }

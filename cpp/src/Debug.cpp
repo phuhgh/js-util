@@ -8,7 +8,18 @@ EM_JS(void, jsu_dbgOnAlloc, (), { Module.JSU_DEBUG_UTIL.onAllocate.emit(); });
 
 EM_JS(void, jsu_dbgErr, (char const* message), { Module.JSU_DEBUG_UTIL.error(UTF8ToString(message)); });
 
-EM_JS(void, jsu_dbgLog, (char const* message), { Module.JSU_DEBUG_UTIL.verboseLog(UTF8ToString(message)); });
+// clang-format off
+EM_JS(void, jsu_dbgLog, (char const* message, char const* const* tagsPtr, int tagCount), {
+    const tags = new Array(tagCount);
+    const tagOffset = tagsPtr >> 2;
+    for (let i = 0; i < tagCount; ++i)
+    {
+        const tagPtr = HEAP32[tagOffset + i];
+        tags[i] = UTF8ToString(tagPtr);
+    }
+    Module.JSU_DEBUG_UTIL.verboseLog(tags, UTF8ToString(message));
+});
+// clang-format on
 
 namespace JsUtil
 {
@@ -36,11 +47,11 @@ void Impl::Debug_error(std::string_view _message)
     }
     else
     {
-        Debug_log(_message);
+        Debug_log(_message, {});
         assert(false);
     }
 }
-void Impl::Debug_log(std::string_view _message)
+void Impl::Debug_log(std::string_view _message, std::span<char const* const> tags)
 {
     if (Debug::isDebugDisabled())
     {
@@ -49,7 +60,7 @@ void Impl::Debug_log(std::string_view _message)
 
     if (Debug::hasJsIntegration() && static_cast<bool>(emscripten_is_main_runtime_thread()))
     {
-        jsu_dbgLog(_message.data());
+        jsu_dbgLog(_message.data(), tags.data(), tags.size());
     }
     else
     {

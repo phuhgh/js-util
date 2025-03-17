@@ -6,6 +6,7 @@ import { SanitizedEmscriptenTestModule } from "../web-assembly/emscripten/saniti
 import { getTestModuleOptions } from "../test-util/test-utils.js";
 import utilTestModule from "../external/test-module.mjs";
 import type { IManagedResourceNode } from "./manged-resources.js";
+import { _Debug } from "../debug/_debug.js";
 
 describe("=> blockScope", () =>
 {

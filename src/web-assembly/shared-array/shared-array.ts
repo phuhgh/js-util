@@ -1,14 +1,14 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
-import { _Production } from "../../production/_production.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { ISharedArray } from "./i-shared-array.js";
 import { ISharedArrayBindings } from "./i-shared-array-bindings.js";
 import { bufferCategory, type ENumberIdentifier, getNumberIdentifier, getNumberSpecialization, IdSpecialization } from "../../runtime/rtti-interop.js";
-import { type IManagedResourceNode, type IOnFreeListener } from "../../lifecycle/manged-resources.js";
+import { type IManagedResourceNode } from "../../lifecycle/manged-resources.js";
 import { SharedBufferView } from "../shared-memory/shared-buffer-view.js";
 import { NestedError } from "../../error-handling/nested-error.js";
 import { WasmErrorCause } from "../wasm-error-cause.js";
+import { ESharedObjectOwnerKind, SharedObjectCleanup } from "../shared-memory/shared-object-cleanup.js";
 
 /**
  * @public
@@ -57,8 +57,8 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         : SharedArray<TCtor> | null
     {
         const numberId = getNumberIdentifier(containerType);
-        const pointer = createSharedObject(wrapper, numberId, length, clearMemory, allocationFailThrows);
-        return pointer === nullPtr ? null : new SharedArray(containerType, wrapper, bindToReference, length, pointer, numberId);
+        const pointerToContainer = createSharedObject(wrapper, numberId, length, clearMemory, allocationFailThrows);
+        return pointerToContainer === nullPtr ? null : new SharedArray(containerType, wrapper, bindToReference, length, pointerToContainer, numberId);
     }
 
     public readonly length: number;
@@ -66,7 +66,7 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
 
     public getWrapper(): IEmscriptenWrapper<ISharedArrayBindings>
     {
-        return this.localImpl.wrapper;
+        return this.wrapper as IEmscriptenWrapper<ISharedArrayBindings>;
     }
 
     // @internal
@@ -76,43 +76,25 @@ export class SharedArray<TCtor extends TTypedArrayCtor>
         wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
         owner: IManagedResourceNode | null,
         length: number,
-        pointer: number,
+        pointerToContainer: number,
         numberId: ENumberIdentifier,
     )
     {
-        super(wrapper, owner, ctor, wrapper.instance._sharedArray_getDataAddress(numberId, pointer), length * ctor.BYTES_PER_ELEMENT);
+        super(wrapper, owner, ctor, wrapper.instance._sharedArray_getDataAddress(numberId, pointerToContainer), length * ctor.BYTES_PER_ELEMENT);
         this.length = length;
-        this.pointer = pointer;
-        this.localImpl = new SharedArrayImpl(wrapper, pointer);
+        this.pointer = pointerToContainer;
+        this.cleanup = new SharedObjectCleanup(this, ESharedObjectOwnerKind.SharedMemoryOwner);
+        SharedObjectCleanup.registerCleanup(this, this.cleanup, new SharedObjectCleanup.Options("SharedArray", null, ESharedObjectOwnerKind.SharedMemoryOwner));
 
         // annotations
         wrapper.interopIds.setSpecializations(this, [sharedArraySpecialization, getNumberSpecialization(ctor)]);
-
-        // configure listeners
-        this.resourceHandle.onFreeChannel.addListener(this.localImpl);
     }
 
-    private readonly localImpl: SharedArrayImpl;
     // @internal
     public debugOnAllocate?: (() => void);
+    private readonly cleanup: SharedObjectCleanup;
 }
 
-class SharedArrayImpl implements IOnFreeListener
-{
-
-    public constructor
-    (
-        public readonly wrapper: IEmscriptenWrapper<ISharedArrayBindings>,
-        public readonly owningPointer: number,
-    )
-    {
-    }
-
-    public onFree(): void
-    {
-        this.wrapper.instance._jsUtilDeleteObject(this.owningPointer);
-    }
-}
 
 function createSharedObject
 (

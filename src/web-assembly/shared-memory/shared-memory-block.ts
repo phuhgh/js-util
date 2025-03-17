@@ -1,14 +1,14 @@
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
-import { _Production } from "../../production/_production.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
-import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
+import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener } from "../../lifecycle/manged-resources.js";
 import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
 import { NestedError } from "../../error-handling/nested-error.js";
 import { WasmErrorCause } from "../wasm-error-cause.js";
+import { ESharedObjectOwnerKind, SharedObjectCleanup } from "./shared-object-cleanup.js";
 
 /**
  * @public
@@ -109,14 +109,16 @@ export class SharedMemoryBlock
         this.resourceHandle = wrapper.lifecycleStrategy.createNode(owner);
         this.pointer = pointer;
         this.byteSize = byteSize;
-        this.impl = new SharedMemoryBlockImpl(wrapper, pointer, byteSize);
-
-        const protectedView = _BUILD.DEBUG ? new DebugProtectedView(
-            `SharedMemoryBlock - memory resize danger: don't hold reference to the DataView ${numberGetHexString(this.pointer)}`,
-        ) : null;
-        wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "SharedMemoryBlock"), protectedView);
-        this.wrapper.memoryResize.addListener(this.impl);
-        this.resourceHandle.onFreeChannel.addListener(this.impl);
+        this.impl = new SharedMemoryBlockImpl(this, pointer, byteSize);
+        SharedObjectCleanup.registerCleanup(
+            this,
+            this.impl,
+            new SharedObjectCleanup.Options("SharedMemoryBlock", _BUILD.DEBUG ? new DebugProtectedView(
+                    `SharedMemoryBlock - memory resize danger: don't hold reference to the DataView ${numberGetHexString(pointer)}`,
+                ) : null,
+                ESharedObjectOwnerKind.Freeable
+            )
+        );
     }
 
     // @internal
@@ -125,24 +127,27 @@ export class SharedMemoryBlock
 }
 
 class SharedMemoryBlockImpl
+    extends SharedObjectCleanup
     implements IOnMemoryResize, IOnFreeListener
 {
     public dataView: DataView;
 
     public constructor
     (
-        public readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
+        sharedMemoryBlock: SharedMemoryBlock,
         public readonly pointer: number,
         public readonly byteSize: number,
     )
     {
+        super(sharedMemoryBlock, ESharedObjectOwnerKind.Freeable);
         this.dataView = this.recreateDataView();
+        this.wrapper.memoryResize.addListener(this);
     }
 
     public onFree(): void
     {
+        super.onFree();
         this.wrapper.memoryResize.removeListener(this);
-        this.wrapper.instance._jsUtilFree(this.pointer);
     }
 
     public onMemoryResize(): void

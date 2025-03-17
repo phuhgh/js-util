@@ -11,7 +11,6 @@ import type { IJsUtilBindings } from "../i-js-util-bindings.js";
 import type { IEmscriptenWrapper } from "./i-emscripten-wrapper.js";
 import type { IInteropBindings } from "./i-interop-bindings.js";
 
-
 describe("=> ReferenceCountedStrategy", () =>
 {
     let strategy: ReferenceCountedStrategy;

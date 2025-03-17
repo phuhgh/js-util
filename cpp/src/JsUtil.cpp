@@ -9,7 +9,7 @@
 
 void JsUtil::initializeJsu()
 {
-    auto jsIntegration = JsUtil::Debug::hasJsIntegration();
+    auto jsIntegration = Debug::hasJsIntegration();
     Debug::disableJsIntegration();
     LangExt::ScopeGuard const guard{[jsIntegration] {
         // this will run before the javascript is available, and well before anything downstream could get
@@ -24,10 +24,7 @@ void JsUtil::initializeJsu()
     );
 
     JsInterop::IdRegistry::registerIdentifiers(
-        std::make_tuple(
-            Autogen::scFUNCTION_FACTORY_CATEGORY,
-            Autogen::scITERATOR_SPECIALIZATION
-        )
+        std::make_tuple(Autogen::scFUNCTION_FACTORY_CATEGORY, Autogen::scITERATOR_SPECIALIZATION)
     );
 
     JsInterop::IdRegistry::registerIdentifiers(
@@ -54,7 +51,8 @@ extern "C"
     {
         if constexpr (JsUtil::Debug::isDebug())
         {
-            JsUtil::Debug::verboseLog("exiting program...");
+            static auto const sTAGS = std::array<char const*, 1>{{"WASM"}};
+            JsUtil::Debug::verboseLog("exiting program...", sTAGS);
         }
 
         std::exit(_statusCode);
@@ -65,18 +63,45 @@ extern "C"
     EMSCRIPTEN_KEEPALIVE
     void* jsUtilMalloc(std::uint32_t _size) noexcept
     {
-        return malloc(_size);
+        void* block = malloc(_size);
+        if constexpr (JsUtil::Debug::isDebug())
+        {
+            static auto const sTAGS = std::array<char const*, 4>{{"WASM", "MEMORY", "ALLOCATIONS", "CPP"}};
+            std::stringstream ss;
+            ss << "Malloc'd: " << "0x" << std::hex << reinterpret_cast<std::uintptr_t>(block);
+            auto str = ss.str();
+            JsUtil::Debug::verboseLog(str.c_str(), sTAGS);
+        }
+        return block;
     }
 
     EMSCRIPTEN_KEEPALIVE
     void* jsUtilCalloc(std::uint32_t _sizeToAllocate, std::uint32_t _sizeOfElement) noexcept
     {
-        return calloc(_sizeToAllocate, _sizeOfElement);
+        void* block = calloc(_sizeToAllocate, _sizeOfElement);
+        if constexpr (JsUtil::Debug::isDebug())
+        {
+            static auto const sTAGS = std::array<char const*, 4>{{"WASM", "MEMORY", "ALLOCATIONS", "CPP"}};
+            std::stringstream ss;
+            ss << "Calloc'd: " << "0x" << std::hex << reinterpret_cast<std::uintptr_t>(block);
+            auto str = ss.str();
+            JsUtil::Debug::verboseLog(str.c_str(), sTAGS);
+        }
+        return block;
     }
 
     EMSCRIPTEN_KEEPALIVE
     void jsUtilFree(void* ptr) noexcept
     {
+        if constexpr (JsUtil::Debug::isDebug())
+        {
+            static auto const sTAGS = std::array<char const*, 4>{{"WASM", "MEMORY", "DEALLOCATIONS", "CPP"}};
+            std::stringstream ss;
+            ss << "Freed: " << "0x" << std::hex << reinterpret_cast<std::uintptr_t>(ptr);
+            auto str = ss.str();
+            JsUtil::Debug::verboseLog(str.c_str(), sTAGS);
+        }
+
         free(ptr);
     }
 

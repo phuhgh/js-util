@@ -119,6 +119,7 @@ export { resizableArraySpecialization, ResizableArray } from "./web-assembly/res
 export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bindings.js";
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/util/t-web-assembly-memory-listener-args.js";
 export { isLittleEndian } from "./web-assembly/util/is-little-endian.js";
+export { SharedObjectCleanup, ESharedObjectOwnerKind } from "./web-assembly/shared-memory/shared-object-cleanup.js";
 export { SharedMemoryBlock, ISharedMemoryBlock } from "./web-assembly/shared-memory/shared-memory-block.js";
 export { SharedBufferView, ISharedBufferView } from "./web-assembly/shared-memory/shared-buffer-view.js";
 export { IJsUtilBindings } from "./web-assembly/i-js-util-bindings.js";

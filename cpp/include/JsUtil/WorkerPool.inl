@@ -105,7 +105,8 @@ uint16_t WorkerPool<TDistributionStrategy>::start()
 
     if (startedCount != m_workers.size())
     {
-        Debug::verboseLog("failed to start all worker threads");
+        static auto const sTAGS = std::array<char const*, 2>{{"WASM", "THREADING"}};
+        Debug::verboseLog("failed to start all worker threads", sTAGS);
         m_workers.compact();
     }
 
@@ -197,7 +198,8 @@ bool WorkerPool<TDistributionStrategy>::addJob(std::shared_ptr<IExecutor> job) n
     if (!jobAdded && m_syncOverflowHandling)
     {
         // handle backpressure by throttling the producer... not pretty but will "work"...
-        Debug::verboseLog("job overflow, running synchronously...");
+        static auto const sTAGS = std::array<char const*, 2>{{"WASM", "THREADING"}};
+        Debug::verboseLog("job overflow, running synchronously...", sTAGS);
         job->run();
     }
     return jobAdded;

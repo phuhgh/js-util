@@ -38,7 +38,7 @@ export interface IEmscriptenDebugUtils
     /**
      * Wrapper of `_Debug.verboseLog`.
      */
-    verboseLog: (message: string) => void;
+    verboseLog: (tags: string[], message: string) => void;
     /**
      * {@link DebugSharedObjectLifeCycleChecker}.
      */

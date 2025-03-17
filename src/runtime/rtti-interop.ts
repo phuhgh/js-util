@@ -4,6 +4,7 @@ import { type IEmscriptenWrapper } from "../web-assembly/emscripten/i-emscripten
 import type { IManagedObject, IPointer } from "../lifecycle/manged-resources.js";
 import { type ISharedBufferView, SharedBufferView } from "../web-assembly/shared-memory/shared-buffer-view.js";
 import { _Debug } from "../debug/_debug.js";
+import { numberGetHexString } from "../number/impl/number-get-hex-string.js";
 
 /**
  * @public
@@ -228,6 +229,10 @@ export class StableIdStore implements IStableStore
         if (id == null)
         {
             const namePtr = this.wrapper.instance.stringToNewUTF8(key.name);
+            if (_BUILD.DEBUG)
+            {
+                _Debug.verboseLog(["WASM", "MEMORY", "ALLOCATIONS"], `StableIdStore: created temporary string at ${numberGetHexString(namePtr)} (${key.name}).`);
+            }
             id = this.wrapper.instance._jsUtilGetRuntimeMappingId(namePtr);
             this.ids.set(key, id);
             this.wrapper.instance._jsUtilFree(namePtr);
@@ -239,7 +244,7 @@ export class StableIdStore implements IStableStore
     public setSpecializations(sharedObjectHandle: IManagedObject & IPointer, specializations: readonly IdSpecialization[]): void
     {
         _BUILD.DEBUG && _Debug.assert(this.idBuffer != null, "attempted to set ids before initialization happened...");
-        _BUILD.DEBUG && _Debug.assert(specializations.length < 32, "a maximum of 30 specializations can be added at one time");
+        _BUILD.DEBUG && _Debug.assert(specializations.length <= 32, "a maximum of 32 specializations can be added at one time");
         const idBuffer = this.idBuffer!.getArray(); // [[category, specialization],  ...]
 
         for (let i = 0, iEnd = specializations.length; i < iEnd; i++)
@@ -262,5 +267,8 @@ export class StableIdStore implements IStableStore
     }
 
     private ids: Map<IdSpecialization | IdCategory, number> = new Map();
-    private idBuffer: ISharedBufferView<Uint16ArrayConstructor> | null = null;
+    /**
+     * @internal
+     */
+    public idBuffer: ISharedBufferView<Uint16ArrayConstructor> | null = null;
 }

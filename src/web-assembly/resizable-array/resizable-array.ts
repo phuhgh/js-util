@@ -1,15 +1,15 @@
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
-import { _Production } from "../../production/_production.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import { bufferCategory, type ENumberIdentifier, getNumberIdentifier, getNumberSpecialization, IdSpecialization } from "../../runtime/rtti-interop.js";
 import type { IJsUtilBindings } from "../i-js-util-bindings.js";
-import { type IManagedResourceNode, type IOnFreeListener } from "../../lifecycle/manged-resources.js";
+import { type IManagedResourceNode } from "../../lifecycle/manged-resources.js";
 import { SharedBufferView } from "../shared-memory/shared-buffer-view.js";
 import type { ISharedArray } from "../shared-array/i-shared-array.js";
 import type { IResizableArrayBindings } from "./i-resizable-array-bindings.js";
 import { NestedError } from "../../error-handling/nested-error.js";
 import { WasmErrorCause } from "../wasm-error-cause.js";
+import { ESharedObjectOwnerKind, SharedObjectCleanup } from "../shared-memory/shared-object-cleanup.js";
 
 /**
  * @public
@@ -54,36 +54,18 @@ export class ResizableArray<TCtor extends TTypedArrayCtor>
         super(wrapper, owner, ctor, wrapper.instance._resizableArray_getDataAddress(numberId, pointer), length * ctor.BYTES_PER_ELEMENT);
         this.length = length;
         this.pointer = pointer;
-        this.cleanup = new SharedArrayImpl(wrapper, pointer);
+        this.cleanup = new SharedObjectCleanup(this, ESharedObjectOwnerKind.SharedMemoryOwner);
+        SharedObjectCleanup.registerCleanup(this, this.cleanup, new SharedObjectCleanup.Options("ResizableArray", null, ESharedObjectOwnerKind.SharedMemoryOwner));
 
         // annotations
         wrapper.interopIds.setSpecializations(this, [resizableArraySpecialization, getNumberSpecialization(ctor)]);
-
-        // configure listeners
-        this.resourceHandle.onFreeChannel.addListener(this.cleanup);
     }
 
-    private readonly cleanup: SharedArrayImpl;
     // @internal
     public debugOnAllocate?: (() => void);
+    private readonly cleanup: SharedObjectCleanup;
 }
 
-class SharedArrayImpl implements IOnFreeListener
-{
-
-    public constructor
-    (
-        public readonly wrapper: IEmscriptenWrapper<IResizableArrayBindings & IJsUtilBindings>,
-        public readonly pointer: number,
-    )
-    {
-    }
-
-    public onFree(): void
-    {
-        this.wrapper.instance._jsUtilDeleteObject(this.pointer);
-    }
-}
 
 function createSharedObject
 (

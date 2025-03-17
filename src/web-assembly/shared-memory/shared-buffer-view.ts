@@ -3,15 +3,16 @@ import { DebugProtectedView } from "../../debug/debug-protected-view.js";
 import { _Debug } from "../../debug/_debug.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
 import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
-import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
+import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer } from "../../lifecycle/manged-resources.js";
 import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
 import type { IBuffer } from "../../array/typed-array/i-buffer-view.js";
 import { ENumberIdentifier, getNumberIdentifier } from "../../runtime/rtti-interop.js";
 import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
+import { ESharedObjectOwnerKind, SharedObjectCleanup } from "./shared-object-cleanup.js";
 
 /**
  * @public
- * Provides a view into shared memory, which avoids the need to keep recreating shared arrays.
+ * Provides a view into shared memory, which avoids the need to keep recreating shared arrays. The view is NOT owning.
  */
 export interface ISharedBufferView<TCtor extends TTypedArrayCtor>
     extends IManagedObject,
@@ -76,33 +77,37 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
 
     public constructor
     (
-        private readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
+        protected readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
         owner: IManagedResourceNode | null,
         ctor: TCtor,
-        pointer: number,
+        pointerToData: number,
         byteSize: number,
     )
     {
         this.resourceHandle = wrapper.lifecycleStrategy.createNode(owner);
         this.ctor = ctor;
-        this.pointer = pointer;
+        this.pointer = pointerToData;
         this.byteSize = byteSize;
-        this.impl = new SharedBufferViewImpl(wrapper, ctor, pointer, byteSize);
         this.numberId = getNumberIdentifier(ctor);
-
-        const protectedView = _BUILD.DEBUG ? new DebugProtectedView(
-            `SharedBufferView - memory resize danger: don't hold reference to the DataView ${numberGetHexString(this.pointer)}`,
-        ) : null;
-        // todo jack: not sure if this is on the right thing now?
-        wrapper.lifecycleStrategy.onSharedPointerCreated(this, new PointerDebugMetadata(this.pointer, true, "SharedBufferView"), protectedView);
-        this.wrapper.memoryResize.addListener(this.impl);
-        this.resourceHandle.onFreeChannel.addListener(this.impl);
+        this.impl = new SharedBufferViewImpl(this, ctor, pointerToData, byteSize);
+        SharedObjectCleanup.registerCleanup(
+            this,
+            this.impl,
+            new SharedObjectCleanup.Options(
+                "SharedBufferView",
+                _BUILD.DEBUG ? new DebugProtectedView(
+                    `SharedBufferView - memory resize danger: don't hold reference to the DataView ${numberGetHexString(pointerToData)}`,
+                ) : null,
+                ESharedObjectOwnerKind.NotOwning,
+            )
+        );
     }
 
     private readonly impl: SharedBufferViewImpl<TCtor>;
 }
 
 class SharedBufferViewImpl<TCtor extends TTypedArrayCtor>
+    extends SharedObjectCleanup
     implements IOnMemoryResize, IOnFreeListener
 {
     public dataView: DataView;
@@ -110,18 +115,21 @@ class SharedBufferViewImpl<TCtor extends TTypedArrayCtor>
 
     public constructor
     (
-        public readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
+        sbv: SharedBufferView<TCtor>,
         public readonly ctor: TCtor,
         public readonly pointer: number,
         public readonly byteSize: number,
     )
     {
+        super(sbv, ESharedObjectOwnerKind.NotOwning);
         this.dataView = this.recreateDataView();
         this.array = this.recreateArray();
+        this.wrapper.memoryResize.addListener(this);
     }
 
-    public onFree(): void
+    public onFree()
     {
+        super.onFree();
         this.wrapper.memoryResize.removeListener(this);
     }
 

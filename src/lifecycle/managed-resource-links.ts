@@ -9,6 +9,9 @@ import type { IManagedResourceNode } from "./manged-resources.js";
 export interface IManagedResourceLinks
 {
     isLinkedTo(ref: IManagedResourceNode): boolean;
+    /**
+     * Link this node to `ref`, i.e. this node owns `ref`.
+     */
     link(ref: IManagedResourceNode): IManagedResourceLinks;
     unlink(ref: IManagedResourceNode): IManagedResourceLinks;
     unlinkAll(): void;

@@ -1,11 +1,9 @@
 import { _Debug } from "../../debug/_debug.js";
 import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
-import { stringNormalizeNullUndefinedToEmpty } from "../../string/impl/string-normalize-null-undefined-to-empty.js";
 import { nullPtr } from "../emscripten/null-pointer.js";
 import type { IDebugProtectedViewFactory } from "../../debug/i-debug-protected-view-factory.js";
 import type { IManagedObject, IManagedResourceNode, IPointer, PointerDebugMetadata } from "../../lifecycle/manged-resources.js";
 import type { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
-import { stringConcat2 } from "../../string/impl/string-concat-2.js";
 
 /**
  * @internal
@@ -58,13 +56,20 @@ export class DebugSharedPointerChecks
             // stringifying the stack would be far too verbose, most debuggers allow expansion of objects...
             const allocationStack = { stack: _Debug.getStackTrace() };
             const pointer = instance.pointer;
-            const address = stringConcat2("0x", numberGetHexString(pointer));
-            const message = `Allocated ${metadata.instanceName} ${address} - ${stringNormalizeNullUndefinedToEmpty(_Debug.label)}`;
+            const address = numberGetHexString(pointer);
+            const message = `JS claimed ${metadata.instanceName} ${address}`;
             _Debug.verboseLog(["WASM", "MEMORY", "ALLOCATIONS"], message, allocationStack);
 
             _Debug.assert(pointer !== nullPtr && pointer != null, "expected pointer to object but got null pointer");
             _Debug.assert(!wrapper.debugUtils.uniquePointers.has(pointer), `expected pointer to be unique (${address})`);
             wrapper.debugUtils.uniquePointers.add(pointer);
+        }
+        else
+        {
+            const pointer = instance.pointer;
+            const address = numberGetHexString(pointer);
+            const message = `JS points to (NON-OWNING) ${metadata.instanceName} ${address}`;
+            _Debug.verboseLog(["WASM", "MEMORY"], message);
         }
     }
 
@@ -92,12 +97,18 @@ export class DebugSharedPointerChecks
         if (metadata.isOwning)
         {
             const pointer = metadata.address;
-            const address = stringConcat2("0x", numberGetHexString(pointer));
-            const label = stringNormalizeNullUndefinedToEmpty(_Debug.label);
-            _Debug.verboseLog(["WASM", "MEMORY", "DEALLOCATIONS"], `Released ${metadata.instanceName} ${address} - ${label}`);
+            const address = numberGetHexString(pointer);
+            _Debug.verboseLog(["WASM", "MEMORY", "DEALLOCATIONS"], `JS released ${metadata.instanceName} ${address}`);
 
             _Debug.assert(wrapper.debugUtils.uniquePointers.has(pointer), `expected to find pointer (${address})`);
             wrapper.debugUtils.uniquePointers.delete(pointer);
+        }
+        else
+        {
+            const pointer = metadata.address;
+            const address = numberGetHexString(pointer);
+            const message = `JS stops pointing to (NON-OWNING) ${metadata.instanceName} ${address}`;
+            _Debug.verboseLog(["WASM", "MEMORY"], message);
         }
     }
 }

@@ -9,6 +9,7 @@ import { Test_resetLifeCycle } from "../../test-util/test_reset-life-cycle.js";
 import { _Debug } from "../../debug/_debug.js";
 import type { IJsUtilBindings } from "../i-js-util-bindings.js";
 import { ReferenceCountedStrategy } from "./reference-counted-strategy.js";
+import { StableIdStore } from "../../runtime/rtti-interop.js";
 
 /**
  * @public
@@ -166,6 +167,12 @@ export class SanitizedEmscriptenTestModule<TEmscriptenBindings extends IJsUtilBi
      */
     public endEmscriptenProgram(errorLoggingAllowed: boolean = false): void
     {
+        const idStore = this.wrapper.interopIds as StableIdStore;
+        if (idStore.idBuffer != null)
+        {
+            this.wrapper.rootNode.getLinked().unlink(idStore.idBuffer.resourceHandle);
+        }
+
         this.runWithDisabledErrors(
             { ...this.state.currentDisabledErrors, ...this.options.disabledShutdownErrors },
             () =>
