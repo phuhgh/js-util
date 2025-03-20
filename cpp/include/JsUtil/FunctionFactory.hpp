@@ -43,7 +43,7 @@ constexpr auto scFOR_EACH_ELEMENT =
     };
 } // namespace Iterators
 
-inline constexpr JsUtil::IdCategory<struct FFIterator> scFUNCTION_FACTORY_CATEGORY{"JSU_FF_CAT"};
+inline constexpr JsUtil::IdCategory<struct FFIterator, void> scFUNCTION_FACTORY_CATEGORY{"JSU_FF_CAT"};
 /**
  * @brief Only one iterator is supported at a given level.
  * @remark Because an iterator cannot be the first or last step, and it has to be the only step of its kind in its

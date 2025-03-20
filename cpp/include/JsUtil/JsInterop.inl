@@ -47,7 +47,7 @@ SharedMemoryOwner<T>::~SharedMemoryOwner()
 }
 
 template <typename TValue>
-[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
+[[nodiscard]] gsl::owner<SharedMemoryOwner<TValue>*> createSharedMemoryOwner(
     gsl::owner<TValue*>                 valuePtr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept
@@ -56,7 +56,7 @@ template <typename TValue>
 }
 
 template <typename TValue>
-[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
+[[nodiscard]] gsl::owner<SharedMemoryOwner<TValue>*> createSharedMemoryOwner(
     std::shared_ptr<TValue>             valuePtr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept
@@ -120,6 +120,11 @@ inline JsUtil::TInteropId IdRegistry::getId(std::string_view name) noexcept
     auto  ptr = ids.find(name);
     JsUtil::Debug::debugAssert(ptr != nullptr, "expected to find entry, but it was not populated");
     return *ptr;
+}
+
+inline JsUtil::TInteropId IdRegistry::getId(JsUtil::StableIdKey const& id) noexcept
+{
+    return getId(id.getName());
 }
 
 } // namespace JsInterop

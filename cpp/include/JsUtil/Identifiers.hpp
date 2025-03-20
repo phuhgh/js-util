@@ -59,12 +59,13 @@ extern IdFactory<uint8_t> sID_CATEGORY_FACTORY;
  * @brief Represents a conceptual category, e.g. buffer, which can then be specialized via `IdSpecialization` (e.g.
  * interleaved buffer).
  */
-template <typename Token>
+template <typename Token, typename TCategory>
 struct IdCategory
     : StableIdKey
     , Impl::CategoryToken
 {
     using TToken = Token;
+    using TAssociatedType = TCategory;
 
     consteval IdCategory(char const* name, bool isFlag = false)
         : StableIdKey(name)
@@ -80,17 +81,19 @@ concept WithCategoryKey = std::is_base_of_v<Impl::CategoryToken, T>;
 /**
  * @brief Represents a specialization of an `IdCategory`, e.g. interleaved buffer, which is a specialization of buffer.
  */
-template <typename, WithCategoryKey Category>
+template <typename TSpecialized, WithCategoryKey Category>
 struct IdSpecialization
     : StableIdKey
     , Impl::SpecializationToken
 {
     using TCategory = Category;
+    using TAssociatedType = TSpecialized;
 
     consteval IdSpecialization(TCategory const& category, char const* name)
         : StableIdKey(name)
         , category(&category)
     {
+        static_assert(std::is_convertible_v<TSpecialized*, typename TCategory::TAssociatedType*>);
     }
 
     TCategory const* category;

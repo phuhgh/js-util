@@ -8,11 +8,11 @@
 
 using namespace JsInterop;
 
-inline constexpr JsUtil::IdCategory<struct Cat1>                              scTEST_CAT_1{"TEST_CAT_1"};
+inline constexpr JsUtil::IdCategory<struct Cat1, void>                        scTEST_CAT_1{"TEST_CAT_1"};
 inline constexpr JsUtil::IdSpecialization<struct C1A, decltype(scTEST_CAT_1)> scTEST_CAT_1_A{scTEST_CAT_1, "CAT_1_A"};
 inline constexpr JsUtil::IdSpecialization<struct C1B, decltype(scTEST_CAT_1)> scTEST_CAT_1_B{scTEST_CAT_1, "CAT_1_B"};
 
-inline constexpr JsUtil::IdCategory<struct Cat2>                              scTEST_CAT_2{"TEST_CAT_2"};
+inline constexpr JsUtil::IdCategory<struct Cat2, void>                        scTEST_CAT_2{"TEST_CAT_2"};
 inline constexpr JsUtil::IdSpecialization<struct C2A, decltype(scTEST_CAT_2)> scTEST_CAT_2_A{scTEST_CAT_2, "CAT_2_A"};
 inline constexpr JsUtil::IdSpecialization<struct C2B, decltype(scTEST_CAT_2)> scTEST_CAT_2_B{scTEST_CAT_2, "CAT_2_B"};
 

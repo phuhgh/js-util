@@ -68,8 +68,8 @@ constexpr ENumberIdentifier getNumberIdFromType()
 /**
  * Data which can be interpreted through `SegmentedDataView` (must be contiguous).
  */
-inline constexpr JsUtil::IdCategory<struct BufferCategory> scBUFFER_CATEGORY{"JSU_BUFFER"};
-inline constexpr JsUtil::IdCategory<struct NumberCategory> scNUMBER_CATEGORY{"JSU_NUMBER"};
+inline constexpr JsUtil::IdCategory<struct BufferCategory, void> scBUFFER_CATEGORY{"JSU_BUFFER"};
+inline constexpr JsUtil::IdCategory<struct NumberCategory, void> scNUMBER_CATEGORY{"JSU_NUMBER"};
 
 inline constexpr JsUtil::IdSpecialization<uint8_t, decltype(scBUFFER_CATEGORY)> scSHARED_ARRAY{
     scBUFFER_CATEGORY,

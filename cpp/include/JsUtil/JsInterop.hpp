@@ -113,13 +113,13 @@ struct SharedMemoryOwner final : ASharedMemoryObject
 };
 
 template <typename TValue>
-[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
+[[nodiscard]] gsl::owner<SharedMemoryOwner<TValue>*> createSharedMemoryOwner(
     gsl::owner<TValue*>                 owner_ptr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept;
 
 template <typename TValue>
-[[nodiscard]] gsl::owner<ASharedMemoryObject*> createSharedMemoryOwner(
+[[nodiscard]] gsl::owner<SharedMemoryOwner<TValue>*> createSharedMemoryOwner(
     std::shared_ptr<TValue>             owner_ptr,
     ASharedMemoryObject::TDescriptors&& descriptors
 ) noexcept;
@@ -166,6 +166,7 @@ class IdRegistry
     static void               registerIdentifiers(std::tuple<TIds...> tuple);
     static unsigned           getCount() noexcept;
     static JsUtil::TInteropId getId(std::string_view name) noexcept;
+    static JsUtil::TInteropId getId(JsUtil::StableIdKey const& id) noexcept;
 
   private:
     static JsUtil::HashMap<std::string_view, std::uint16_t>& getIds();

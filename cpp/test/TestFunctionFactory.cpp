@@ -10,15 +10,15 @@
 
 [[maybe_unused]] static DisableJsIntegration const scDISABLE_JS_INTEGRATION;
 
-inline constexpr JsUtil::IdCategory<struct Cat1>                              scTEST_CAT_1{"CAT_1"};
+inline constexpr JsUtil::IdCategory<struct Cat1, void>                        scTEST_CAT_1{"CAT_1"};
 inline constexpr JsUtil::IdSpecialization<struct C1A, decltype(scTEST_CAT_1)> scTEST_SPEC_1_A{scTEST_CAT_1, "1_A"};
 inline constexpr JsUtil::IdSpecialization<struct C1B, decltype(scTEST_CAT_1)> scTEST_SPEC_1_B{scTEST_CAT_1, "1_B"};
 
-inline constexpr JsUtil::IdCategory<struct Cat2>                              scTEST_CAT_2{"CAT_2"};
+inline constexpr JsUtil::IdCategory<struct Cat2, void>                        scTEST_CAT_2{"CAT_2"};
 inline constexpr JsUtil::IdSpecialization<struct C2A, decltype(scTEST_CAT_2)> scTEST_SPEC_2_A{scTEST_CAT_2, "2_A"};
 inline constexpr JsUtil::IdSpecialization<struct C2B, decltype(scTEST_CAT_2)> scTEST_SPEC_2_B{scTEST_CAT_2, "2_B"};
 
-inline constexpr JsUtil::IdCategory<struct Cat3>                              scTEST_CAT_3{"CAT_3"};
+inline constexpr JsUtil::IdCategory<struct Cat3, void>                        scTEST_CAT_3{"CAT_3"};
 inline constexpr JsUtil::IdSpecialization<struct C3A, decltype(scTEST_CAT_3)> scTEST_SPEC_3_A{scTEST_CAT_3, "3_A"};
 inline constexpr JsUtil::IdSpecialization<struct C3B, decltype(scTEST_CAT_3)> scTEST_SPEC_3_B{scTEST_CAT_3, "3_B"};
 
