@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class MoveOnlyTestObject
 {
   public:
@@ -20,7 +22,7 @@ class MoveOnlyTestObject
 
 class UnmoveableTestObject
 {
-public:
+  public:
     int m_val;
     constexpr explicit UnmoveableTestObject(int val = 0)
         : m_val(val) {};
