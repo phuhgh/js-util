@@ -7,6 +7,7 @@
 #include "JsUtil/TypeTraits.hpp"
 #include <atomic>
 #include <cstdint>
+#include <type_traits>
 
 namespace JsUtil
 {
@@ -98,6 +99,13 @@ struct IdSpecialization
 
     TCategory const* category;
 };
+
+template <typename TSpecialized>
+consteval auto createSpecialization(auto const& category, char const* name)
+{
+    using TCategory = std::remove_cvref_t<decltype(category)>;
+    return IdSpecialization<TSpecialized, TCategory>{category, name};
+}
 
 template <typename T>
 concept WithSpecializationKey = std::is_base_of_v<Impl::SpecializationToken, T>;

@@ -71,25 +71,19 @@ constexpr ENumberIdentifier getNumberIdFromType()
 inline constexpr JsUtil::IdCategory<struct BufferCategory, void> scBUFFER_CATEGORY{"JSU_BUFFER"};
 inline constexpr JsUtil::IdCategory<struct NumberCategory, void> scNUMBER_CATEGORY{"JSU_NUMBER"};
 
-inline constexpr JsUtil::IdSpecialization<uint8_t, decltype(scBUFFER_CATEGORY)> scSHARED_ARRAY{
-    scBUFFER_CATEGORY,
-    "JSU_SHARED_ARRAY"
-};
-inline constexpr JsUtil::IdSpecialization<uint8_t, decltype(scBUFFER_CATEGORY)> scRESIZABLE_ARRAY{
-    scBUFFER_CATEGORY,
-    "JSU_RESIZABLE_ARRAY"
-};
+inline constexpr auto scSHARED_ARRAY = JsUtil::createSpecialization<void>(scBUFFER_CATEGORY, "JSU_SHARED_ARRAY");
+inline constexpr auto scRESIZABLE_ARRAY = JsUtil::createSpecialization<void>(scBUFFER_CATEGORY, "JSU_RESIZABLE_ARRAY");
 
-inline constexpr JsUtil::IdSpecialization<uint8_t, decltype(scNUMBER_CATEGORY)>  scU8{scNUMBER_CATEGORY, "JSU_U8"};
-inline constexpr JsUtil::IdSpecialization<uint16_t, decltype(scNUMBER_CATEGORY)> scU16{scNUMBER_CATEGORY, "JSU_U16"};
-inline constexpr JsUtil::IdSpecialization<uint32_t, decltype(scNUMBER_CATEGORY)> scU32{scNUMBER_CATEGORY, "JSU_U32"};
-inline constexpr JsUtil::IdSpecialization<uint64_t, decltype(scNUMBER_CATEGORY)> scU64{scNUMBER_CATEGORY, "JSU_U64"};
-inline constexpr JsUtil::IdSpecialization<int8_t, decltype(scNUMBER_CATEGORY)>   scI8{scNUMBER_CATEGORY, "JSU_I8"};
-inline constexpr JsUtil::IdSpecialization<int16_t, decltype(scNUMBER_CATEGORY)>  scI16{scNUMBER_CATEGORY, "JSU_I16"};
-inline constexpr JsUtil::IdSpecialization<int32_t, decltype(scNUMBER_CATEGORY)>  scI32{scNUMBER_CATEGORY, "JSU_I32"};
-inline constexpr JsUtil::IdSpecialization<int64_t, decltype(scNUMBER_CATEGORY)>  scI64{scNUMBER_CATEGORY, "JSU_I64"};
-inline constexpr JsUtil::IdSpecialization<float, decltype(scNUMBER_CATEGORY)>    scF32{scNUMBER_CATEGORY, "JSU_F32"};
-inline constexpr JsUtil::IdSpecialization<double, decltype(scNUMBER_CATEGORY)>   scF64{scNUMBER_CATEGORY, "JSU_F64"};
+inline constexpr auto scU8 = JsUtil::createSpecialization<uint8_t>(scNUMBER_CATEGORY, "JSU_U8");
+inline constexpr auto scU16 = JsUtil::createSpecialization<uint16_t>(scNUMBER_CATEGORY, "JSU_U16");
+inline constexpr auto scU32 = JsUtil::createSpecialization<uint32_t>(scNUMBER_CATEGORY, "JSU_U32");
+inline constexpr auto scU64 = JsUtil::createSpecialization<uint64_t>(scNUMBER_CATEGORY, "JSU_U64");
+inline constexpr auto scI8 = JsUtil::createSpecialization<int8_t>(scNUMBER_CATEGORY, "JSU_I8");
+inline constexpr auto scI16 = JsUtil::createSpecialization<int16_t>(scNUMBER_CATEGORY, "JSU_I16");
+inline constexpr auto scI32 = JsUtil::createSpecialization<int32_t>(scNUMBER_CATEGORY, "JSU_I32");
+inline constexpr auto scI64 = JsUtil::createSpecialization<int64_t>(scNUMBER_CATEGORY, "JSU_I64");
+inline constexpr auto scF32 = JsUtil::createSpecialization<float>(scNUMBER_CATEGORY, "JSU_F32");
+inline constexpr auto scF64 = JsUtil::createSpecialization<double>(scNUMBER_CATEGORY, "JSU_F64");
 
 using NumberKinds = std::tuple<uint8_t, uint16_t, uint32_t, uint64_t, int8_t, int16_t, int32_t, int64_t, float, double>;
 
