@@ -298,13 +298,15 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
             }
         }
 
-        public ensureAABB(): void
+        public ensureAABB(): boolean
         {
+            let fixed = false;
             if (this[0] > this[2])
             {
                 const tmp = this[0];
                 this[0] = this[2];
                 this[2] = tmp;
+                fixed = true;
             }
 
             if (this[1] > this[3])
@@ -312,7 +314,10 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
                 const tmp = this[1];
                 this[1] = this[3];
                 this[3] = tmp;
+                fixed = true;
             }
+
+            return fixed;
         }
 
         public ensureMinRange

@@ -35,13 +35,15 @@ bool Range2d<T>::rangeIntersects(Range2d<U> const& _range) const
 }
 
 template <typename T>
-void Range2d<T>::ensureAABB()
+bool Range2d<T>::ensureAABB()
 {
+    bool fixed{false};
     if (xMin() > xMax())
     {
         T tmp = xMin();
         setXMin(xMax());
         setXMax(tmp);
+        fixed = true;
     }
 
     if (yMin() > yMax())
@@ -49,7 +51,10 @@ void Range2d<T>::ensureAABB()
         T tmp = yMin();
         setYMin(yMax());
         setYMax(tmp);
+        fixed = true;
     }
+
+    return fixed;
 }
 
 template <typename T>

@@ -54,7 +54,7 @@ class Range2d : public Mat2<T>
     [[nodiscard]] bool pointInRange(Vec2<U> _point) const;
 
     /// adjusts min & maxes such that max >= min
-    void ensureAABB();
+    bool ensureAABB();
 
     // ranges
     [[nodiscard]] T getXRange() const;

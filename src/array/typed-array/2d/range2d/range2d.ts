@@ -293,7 +293,7 @@ export abstract class Range2d<TArray extends TTypedArray> extends Mat2<TArray>
         throw new Error();
     }
 
-    public ensureAABB(): void
+    public ensureAABB(): boolean
     {
         throw new Error();
     }

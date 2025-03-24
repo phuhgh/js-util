@@ -183,11 +183,12 @@ TEST(Range2d, basicFunctionality)
     EXPECT_EQ(r2d.yMin(), 8);
     EXPECT_EQ(r2d.yMax(), 6);
 
-    r2d.ensureAABB();
+    EXPECT_TRUE(r2d.ensureAABB());
     EXPECT_EQ(r2d.xMin(), 2);
     EXPECT_EQ(r2d.xMax(), 4);
     EXPECT_EQ(r2d.yMin(), 6);
     EXPECT_EQ(r2d.yMax(), 8);
+    EXPECT_FALSE(r2d.ensureAABB());
 
     EXPECT_TRUE(r2d.pointInRange(Vec2<int>{{3, 7}}));
     EXPECT_FALSE(r2d.pointInRange(Vec2<int>{{5, 7}}));
