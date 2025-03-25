@@ -1,6 +1,7 @@
 #pragma once
 
 #include "JsUtil/Debug.hpp"
+#include "JsUtil/TypeTraits.hpp"
 #include <gsl/pointers>
 #include <span>
 #include <type_traits>
@@ -8,14 +9,14 @@
 namespace JsUtil
 {
 
-template <typename TValue>
+template <typename TValue, WithUnsigned TIndex = std::uint32_t>
     requires std::is_trivial_v<TValue>
 class SharedArray
 {
   public:
     // imitate stl containers
     using value_type = TValue;
-    using size_type = size_t;
+    using size_type = TIndex;
 
     ~SharedArray()
     {
@@ -43,7 +44,7 @@ class SharedArray
     SharedArray(SharedArray const&) = delete;
     SharedArray& operator=(SharedArray const&) = delete;
 
-    SharedArray(size_t size, bool clearMemory = true) noexcept
+    SharedArray(TIndex size, bool clearMemory = true) noexcept
     {
         if constexpr (Debug::isDebug())
         {
@@ -72,7 +73,7 @@ class SharedArray
             Debug::onBeforeAllocate();
         }
 
-        size_t  size = initList.size();
+        TIndex  size = initList.size();
         TValue* arrayStart = static_cast<gsl::owner<TValue*>>(
             clearMemory ? std::calloc(size, sizeof(TValue)) : std::malloc(size * sizeof(TValue))
         );
@@ -90,12 +91,12 @@ class SharedArray
 
     std::span<TValue> asSpan() const noexcept { return m_view; }
     operator std::span<TValue>() const noexcept { return asSpan(); }
-    size_t size() const noexcept { return m_view.size(); }
+    TIndex size() const noexcept { return m_view.size(); }
 
     TValue*       data() noexcept { return m_view.data(); }
     TValue const* data() const noexcept { return m_view.data(); }
 
-    TValue const& operator[](size_t index) const noexcept
+    TValue const& operator[](TIndex index) const noexcept
     {
         if constexpr (Debug::isDebug())
         {
@@ -103,7 +104,7 @@ class SharedArray
         }
         return m_view[index];
     }
-    TValue& operator[](size_t index) noexcept
+    TValue& operator[](TIndex index) noexcept
     {
         if constexpr (Debug::isDebug())
         {
@@ -113,7 +114,7 @@ class SharedArray
     }
 
   private:
-    explicit SharedArray(TValue* _arrayStart, size_t _size)
+    explicit SharedArray(TValue* _arrayStart, TIndex _size)
         : m_view(_arrayStart, _size)
     {
     }

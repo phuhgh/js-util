@@ -13,7 +13,7 @@ auto const offsets = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
 });
 
 auto const factories = TupleExt::map(JsRTTI::NumberKinds{}, []<typename T>(T) {
-    return [](size_t size, bool clearMemory) -> gsl::owner<JsInterop::ASharedMemoryObject*> {
+    return [](uint32_t size, bool clearMemory) -> gsl::owner<JsInterop::ASharedMemoryObject*> {
         auto bufferCategory = getCategoryId(JsRTTI::scBUFFER_CATEGORY);
         auto bufferSpecialization = getSpecializationId(JsRTTI::scSHARED_ARRAY);
 
@@ -63,7 +63,7 @@ extern "C"
 
     [[maybe_unused]] EMSCRIPTEN_KEEPALIVE gsl::owner<JsInterop::ASharedMemoryObject*> sharedArray_createOne(
         JsRTTI::ENumberIdentifier const numberId,
-        size_t const                    size,
+        uint32_t const                    size,
         bool const                      clearMemory
     ) noexcept
     {
