@@ -4,6 +4,7 @@
 #include "JsUtil/Vec2.hpp"
 #include "JsUtilTestUtil/DisableJsIntegration.hpp"
 #include "JsUtilTestUtil/TestObjects.hpp"
+#include <JsUtil/JsUtil.hpp>
 #include <JsUtil/Range2d.hpp>
 #include <gtest/gtest.h>
 #include <numeric>
@@ -21,6 +22,24 @@ inline constexpr JsUtil::IdSpecialization<struct C2B, decltype(scTEST_CAT_2)> sc
 inline constexpr JsUtil::IdCategory<struct Cat3, void>                        scTEST_CAT_3{"CAT_3"};
 inline constexpr JsUtil::IdSpecialization<struct C3A, decltype(scTEST_CAT_3)> scTEST_SPEC_3_A{scTEST_CAT_3, "3_A"};
 inline constexpr JsUtil::IdSpecialization<struct C3B, decltype(scTEST_CAT_3)> scTEST_SPEC_3_B{scTEST_CAT_3, "3_B"};
+
+[[maybe_unused]] static LangExt::OnCreate const scBEFORE_TESTS{[] {
+    JsUtil::Debug::disableJsIntegration();
+    JsUtil::initializeJsu();
+    JsInterop::IdRegistry::registerIdentifiers(
+        std::make_tuple(
+            scTEST_CAT_1,
+            scTEST_SPEC_1_A,
+            scTEST_SPEC_1_B,
+            scTEST_CAT_2,
+            scTEST_SPEC_2_A,
+            scTEST_SPEC_2_B,
+            scTEST_CAT_3,
+            scTEST_SPEC_3_A,
+            scTEST_SPEC_3_B
+        )
+    );
+}};
 
 struct A
 {
@@ -420,27 +439,12 @@ TEST(FunctionFactory, contextNoCopy)
     EXPECT_EQ(context.result[1].m_val, 10);
 }
 
-TEST(FunctionFactory, getFunctionOffsets)
-{
-    constexpr auto specification = std::make_tuple(
-        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_1_A, f1}, Autogen::FuncStep{scTEST_SPEC_1_B, f2}),
-        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_2_A, f3}),
-        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_3_A, f4}, Autogen::FuncStep{scTEST_SPEC_3_B, f5})
-    );
-
-    constexpr auto mapping = Autogen::Impl::getFunctionOffsets(specification);
-    static_assert(std::tuple_size_v<decltype(mapping)> == 3);
-    EXPECT_EQ(std::get<0>(mapping), (std::tuple<size_t, size_t>{0, 2}));
-    EXPECT_EQ(std::get<1>(mapping), std::tuple<size_t>{0});
-    EXPECT_EQ(std::get<2>(mapping), (std::tuple<size_t, size_t>{0, 1}));
-}
-
 TEST(FunctionFactory, getRequiredCategories)
 {
-    // this is a little brittle because it depends on initialization order
-    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_1), 1);
-    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_2), 2);
-    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_3), 3);
+    // this needs updating when categories are added
+    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_1), 4);
+    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_2), 5);
+    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_3), 6);
 
     constexpr auto specification = std::make_tuple(
         std::make_tuple(Autogen::FuncStep{scTEST_SPEC_1_A, f1}, Autogen::FuncStep{scTEST_SPEC_1_B, f2}),
@@ -458,10 +462,10 @@ TEST(FunctionFactory, getRequiredCategories)
 
 TEST(FunctionFactory, getMapping)
 {
-    // this is a little brittle because it depends on initialization order
-    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_1), 1);
-    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_2), 2);
-    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_3), 3);
+    // this needs updating when categories are added
+    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_1), 4);
+    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_2), 5);
+    EXPECT_EQ(JsUtil::getCategoryId(scTEST_CAT_3), 6);
 
     EXPECT_EQ(JsUtil::getSpecializationId(scTEST_SPEC_1_A), 1);
     EXPECT_EQ(JsUtil::getSpecializationId(scTEST_SPEC_1_B), 2);
@@ -634,4 +638,51 @@ TEST(IntegrationTests, lineQuadIndexer)
     EXPECT_EQ(context.aabbs[2].yMin(), 33);
     EXPECT_EQ(context.aabbs[2].xMax(), 30);
     EXPECT_EQ(context.aabbs[2].yMax(), 51);
+}
+
+struct TestEntity : JsInterop::ISpecializable
+{
+    JsUtil::TInteropId getSpecializationId(JsUtil::TInteropId categoryId) const noexcept override
+    {
+        if (categoryId == JsInterop::IdRegistry::getId(scTEST_CAT_1))
+        {
+            return JsInterop::IdRegistry::getId(scTEST_SPEC_1_B);
+        }
+        else if (categoryId == JsInterop::IdRegistry::getId(scTEST_CAT_2))
+        {
+            return JsInterop::IdRegistry::getId(scTEST_SPEC_2_A);
+        }
+        else if (categoryId == JsInterop::IdRegistry::getId(scTEST_CAT_3))
+        {
+            return JsInterop::IdRegistry::getId(scTEST_SPEC_3_B);
+        }
+        else
+        {
+            // not an ideal way to fail a test... but it should work...
+            std::exit(1);
+        }
+
+        return 0;
+    }
+
+    std::optional<JsUtil::TInteropId> getOptionalSpecializationId(JsUtil::TInteropId) const noexcept override
+    {
+        // not used...
+        return std::nullopt;
+    }
+};
+
+TEST(IntegrationTests, getOffsetFromSpecializable)
+{
+    // this pipeline doesn't actually make any sense, but we don't need to actually invoke anything so it's OK
+    constexpr auto specification = std::make_tuple(
+        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_1_A, f1}, Autogen::FuncStep{scTEST_SPEC_1_B, f2}),
+        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_2_A, f1}, Autogen::FuncStep{scTEST_SPEC_2_B, f2}),
+        std::make_tuple(Autogen::FuncStep{scTEST_SPEC_3_A, f4}, Autogen::FuncStep{scTEST_SPEC_3_B, f5})
+    );
+    auto       requiredCats = Autogen::getRequiredCategories(specification);
+    auto       offsetsMap = Autogen::createFunctionMapping(specification);
+    TestEntity testEntity{};
+    auto       offset = Autogen::getOffsetFromSpecializable(offsetsMap, requiredCats, testEntity);
+    EXPECT_EQ(offset, 5);
 }

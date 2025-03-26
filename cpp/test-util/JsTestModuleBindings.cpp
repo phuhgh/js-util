@@ -6,7 +6,7 @@
 namespace JsUtil
 {
 
-inline constexpr IdCategory<struct CatFlag, void> scTEST_CAT_FLAG{"TEST_CAT_FLAG"};
+inline constexpr IdCategory<struct CatFlag, void> scTEST_CAT_FLAG{"TEST_CAT_FLAG", true};
 
 class TestExecutor : public IExecutor
 {

@@ -172,6 +172,18 @@ class IdRegistry
     static JsUtil::HashMap<std::string_view, std::uint16_t>& getIds();
 };
 
+/**
+ * An entity which can in some way act as a category, through specializations.
+ */
+struct ISpecializable
+{
+    virtual ~ISpecializable() {}
+    virtual JsUtil::TInteropId                getSpecializationId(JsUtil::TInteropId category) const noexcept = 0;
+    virtual std::optional<JsUtil::TInteropId> getOptionalSpecializationId(
+        JsUtil::TInteropId category
+    ) const noexcept = 0;
+};
+
 } // namespace JsInterop
 
 #include "JsUtil/JsInterop.inl"

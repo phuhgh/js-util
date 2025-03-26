@@ -132,44 +132,6 @@ template <size_t i = 0, typename... TInput, typename TCallback>
     }
 }
 
-/**
- *@brief Multiplies out tuple combinations to a depth of 2, e.g.:
- * [
- *   [A, B],
- *   [C, D]
- * ]
- *
- * Would become:
- * [
- *   [A, C],
- *   [A, D],
- *   [B, C],
- *   [B, D]
- * ]
- */
-
-template <typename... TInputs>
-[[nodiscard]] constexpr auto flattenCombinations(std::tuple<TInputs...> const& tuple)
-{
-    using TTuple = std::tuple<TInputs...>;
-
-    if constexpr (0 < std::tuple_size_v<TTuple>)
-    {
-        auto first = std::get<0>(tuple);
-        auto combinationsOfRest = flattenCombinations(tail(tuple));
-
-        return flatMap(first, [&combinationsOfRest](auto element) {
-            return map(combinationsOfRest, [&element](auto combination) {
-                return std::tuple_cat(std::make_tuple(element), combination);
-            });
-        });
-    }
-    else
-    {
-        return std::tuple<std::tuple<>>{std::tuple<>{}};
-    }
-}
-
 template <typename TTuple>
 [[nodiscard]] constexpr auto reverse(TTuple&& tuple)
 {
@@ -306,6 +268,89 @@ template <std::size_t Index, typename TTuple>
     }(std::make_index_sequence<std::tuple_size_v<std::decay_t<TTuple>> - Index>{});
 
     return std::make_tuple(std::move(h1), std::move(h2));
+}
+
+/**
+ *@brief Multiplies out tuple combinations to a depth of 2, e.g.:
+ * [
+ *   [A, B],
+ *   [C, D]
+ * ]
+ *
+ * Would become:
+ * [
+ *   [A, C],
+ *   [A, D],
+ *   [B, C],
+ *   [B, D]
+ * ]
+ */
+template <typename... TInputs>
+[[nodiscard]] constexpr auto flattenCombinations(std::tuple<TInputs...> const& tuple)
+{
+    using TTuple = std::tuple<TInputs...>;
+
+    if constexpr (0 < std::tuple_size_v<TTuple>)
+    {
+        auto first = std::get<0>(tuple);
+        auto combinationsOfRest = flattenCombinations(tail(tuple));
+
+        return flatMap(first, [&combinationsOfRest](auto element) {
+            return map(combinationsOfRest, [&element](auto combination) {
+                return std::tuple_cat(std::make_tuple(element), combination);
+            });
+        });
+    }
+    else
+    {
+        return std::tuple<std::tuple<>>{std::tuple<>{}};
+    }
+}
+
+/**
+ * @returns A tuple of matching structure to `combinations` which contains the offsets to a particular combination set
+ * produced by `flattenCombinations`. For example:
+ * [
+ *   [a, b],
+ *   [c, d],
+ * ]
+ *
+ * would become:
+ * [
+ *   [0, 2],
+ *   [1, 2],
+ * ]
+ *
+ * which provides a mapping for the flattened combinations (by simply adding the indexes):
+ * [
+ *  [a, c], (0) <- 0 + 0
+ *  [a, d], (1) <- 0 + 1
+ *  [b, c], (2) <- 2 + 0
+ *  [b, d], (3) <- 2 + 1
+ * ]
+ */
+template <typename... TCombinations>
+constexpr auto getCombinationOffsets(std::tuple<TCombinations...> const& combinations)
+{
+    auto combinationsSizes =
+        map(combinations, []<typename TCombination>(TCombination const&) { return std::tuple_size_v<TCombination>; });
+
+    return map(combinations, [&combinationsSizes]<typename TCombination>(TCombination combination) {
+        constexpr auto combinationIndex = IndexOf<TCombination, decltype(combinations)>::value;
+
+        auto weightAbove = combinationIndex + 1 < sizeof...(TCombinations)
+                               ? TupleExt::reduce(
+                                     std::get<1>(TupleExt::splitAt<combinationIndex + 1>(combinationsSizes)),
+                                     [](auto totalOffset, auto size) { return totalOffset * size; },
+                                     1
+                                 )
+                               : 1;
+
+        return map(combination, [weightAbove]<typename TValue>(TValue) {
+            constexpr auto stepIndex = IndexOf<TValue, decltype(combination)>::value;
+            return stepIndex * weightAbove;
+        });
+    });
 }
 
 } // namespace TupleExt

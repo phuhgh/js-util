@@ -47,29 +47,33 @@ inline constexpr D d{6};
 inline constexpr E e{5};
 inline constexpr F f{4};
 
-consteval auto testCombinations()
-{
-    constexpr auto input = std::make_tuple(
-        std::make_tuple(a, b), //
-        std::make_tuple(c),
-        std::make_tuple(e, f)
-    );
-    return TupleExt::flattenCombinations(input);
-}
-
 TEST(Tuple, flattenCombinations)
 {
-    constexpr auto result = testCombinations();
+    constexpr auto combinations = std::make_tuple(
+        std::make_tuple(a, b), //
+        std::make_tuple(e, f),
+        std::make_tuple(e, f, c)
+    );
+    constexpr auto result = TupleExt::flattenCombinations(combinations);
 
     // we're substantially interested in the types, so check those explicitly
     using Result = decltype(result);
-    static_assert(std::tuple_size<Result>::value == 4, "Result length is incorrect");
+    static_assert(std::tuple_size<Result>::value == 12, "Result length is incorrect");
 
     // check the values are those that we constructed, instead of defaults
-    EXPECT_EQ(std::get<0>(result), std::make_tuple(a, c, e));
-    EXPECT_EQ(std::get<1>(result), std::make_tuple(a, c, f));
-    EXPECT_EQ(std::get<2>(result), std::make_tuple(b, c, e));
-    EXPECT_EQ(std::get<3>(result), std::make_tuple(b, c, f));
+    EXPECT_EQ(std::get<0>(result), std::make_tuple(a, e, e));
+    EXPECT_EQ(std::get<1>(result), std::make_tuple(a, e, f));
+    EXPECT_EQ(std::get<2>(result), std::make_tuple(a, e, c));
+    EXPECT_EQ(std::get<3>(result), std::make_tuple(a, f, e));
+    EXPECT_EQ(std::get<4>(result), std::make_tuple(a, f, f));
+    EXPECT_EQ(std::get<5>(result), std::make_tuple(a, f, c));
+    EXPECT_EQ(std::get<6>(result), std::make_tuple(b, e, e));
+
+    constexpr auto offsets = TupleExt::getCombinationOffsets(combinations);
+    static_assert(std::tuple_size<decltype(offsets)>::value == 3, "offset length should match input length");
+    EXPECT_EQ(std::get<0>(offsets), std::make_tuple(0, 6));
+    EXPECT_EQ(std::get<1>(offsets), std::make_tuple(0, 3));
+    EXPECT_EQ(std::get<2>(offsets), std::make_tuple(0, 1, 2));
 }
 
 consteval int forEach()
@@ -187,7 +191,7 @@ TEST(Tuple, constexprSelect)
     EXPECT_EQ(element.val, 8);
 }
 
-TEST(Tuple, spltAt)
+TEST(Tuple, spiltAt)
 {
     constexpr auto result = TupleExt::splitAt<2>(std::make_tuple(a, b, c, d, e, f));
     EXPECT_EQ(std::get<0>(result), std::make_tuple(a, b));

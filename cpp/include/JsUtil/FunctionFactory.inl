@@ -6,34 +6,7 @@ namespace Autogen
 namespace Impl
 {
 
-/**
- * @returns A mapping of pipeline step to offset in the function array.
- */
-template <typename... TPipelineSteps>
-constexpr auto getFunctionOffsets(std::tuple<TPipelineSteps...> const& pipelineStages)
-{
-    auto stageSizes =
-        TupleExt::map(pipelineStages, []<typename TStage>(TStage const&) { return std::tuple_size_v<TStage>; });
-
-    return TupleExt::map(pipelineStages, [&stageSizes]<typename TStage>(TStage stage) {
-        constexpr auto stageIndex = TupleExt::IndexOf<TStage, decltype(pipelineStages)>::value;
-
-        auto offset = stageIndex + 1 < sizeof...(TPipelineSteps)
-                          ? TupleExt::reduce(
-                                std::get<1>(TupleExt::splitAt<stageIndex + 1>(stageSizes)),
-                                [](auto totalOffset, auto size) { return totalOffset + (size > 1 ? size : 0); },
-                                0
-                            )
-                          : 1;
-
-        return TupleExt::map(stage, [offset]<typename TStep>(TStep) {
-            constexpr auto stepIndex = TupleExt::IndexOf<TStep, decltype(stage)>::value;
-            return stepIndex * offset;
-        });
-    });
-}
-
-auto getCategoryFromStage(auto const& stage)
+constexpr auto getCategoryFromStage(auto const& stage)
 {
     auto const& firstStep = std::get<0>(stage);
     using TFirstStep = std::decay_t<decltype(firstStep)>;
@@ -106,7 +79,7 @@ auto getRequiredCategories(std::tuple<TPipelineSteps...> pipelineStages)
 template <typename... TPipelineSteps>
 auto createFunctionMapping(std::tuple<TPipelineSteps...> pipelineStages)
 {
-    auto           offsets = Impl::getFunctionOffsets(pipelineStages);
+    auto           offsets = TupleExt::getCombinationOffsets(pipelineStages);
     constexpr auto categoryCount =
         TupleExt::reduce(pipelineStages, [](auto total, auto const&) { return total + 1; }, 0);
     constexpr auto maxStageSize = TupleExt::reduce(

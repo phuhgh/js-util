@@ -2,6 +2,7 @@
 
 #include "JsUtil/FixedHashMap.hpp"
 #include "JsUtil/Identifiers.hpp"
+#include "JsUtil/JsInterop.hpp"
 #include "JsUtil/LangExt.hpp"
 #include "JsUtil/Number.hpp"
 #include "JsUtil/SegmentedDataView.hpp"
@@ -243,12 +244,28 @@ auto getRequiredCategories(std::tuple<TPipelineSteps...> pipelineStages);
 
 /**
  * @brief Creates a mapping between categories and specializations onto the function index.
- * @remark In order to get the offset in applyFunctionFactory, just add up each "level" of the pipeline.
+ * @remark provides offsets for `applyFunctionFactory` - sum over each category to obtain the complete offset.
  * @remark Any stage which has only one option can be discounted from the calculation.
  * @remark No stage should have a duplicate specialization.
  */
 template <typename... TPipelineSteps>
 auto createFunctionMapping(std::tuple<TPipelineSteps...> pipelineStages);
+
+uint32_t getOffsetFromSpecializable(
+    auto const&                      offsetsMap,
+    auto const&                      requiredCategories,
+    JsInterop::ISpecializable const& specializable
+)
+{
+    uint32_t offsetSum{0};
+    for (auto const& category : requiredCategories)
+    {
+        auto const* specsMap = offsetsMap.find(category);
+        auto const* offset = specsMap->find(specializable.getSpecializationId(category));
+        offsetSum += *offset;
+    }
+    return offsetSum;
+}
 
 } // namespace Autogen
 
