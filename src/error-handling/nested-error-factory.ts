@@ -222,7 +222,7 @@ export function getNestedErrorCtor<TLocalization>
                 case "undefined": // we checked for == null above
                 default:
                     // notionally it's not possible to get here, but just in case
-                    _Debug.error(`unexpected code path, unknown type ${typeof this.causedBy}`);
+                    _BUILD.DEBUG && _Debug.error(`unexpected code path, unknown type ${typeof this.causedBy}`);
                     return "Received non-serializable exception, skipping.";
             }
         }
