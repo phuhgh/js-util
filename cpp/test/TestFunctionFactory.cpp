@@ -62,7 +62,7 @@ auto constexpr f5 = [](int context, A arg) -> B { return B{arg.val + 6 + context
 
 TEST(FunctionFactory, basicConstexprFunctionComposition)
 {
-    constexpr auto pipeline = Autogen::FunctionFactory([](int context, int arg) -> std::tuple<int, int> {
+    constexpr auto pipeline = Autogen::createFunctionFactory([](int context, int arg) -> std::tuple<int, int> {
                                   return std::make_tuple(arg, context);
                               }) //
                                   .extend([](int context, std::tuple<int, int> const& arg) -> int {
@@ -70,24 +70,28 @@ TEST(FunctionFactory, basicConstexprFunctionComposition)
                                   })
                                   .extend([](int context, int arg) -> int { return arg * 2 + context; });
 
-    constexpr auto result = pipeline.run(3, 2);
+    constexpr auto lValue = 2;
+    constexpr auto result = pipeline.run(3, lValue);
     EXPECT_EQ(result, 19);
 }
 
 TEST(FunctionFactory, moveOnlyObjects)
 {
     constexpr auto pipeline =
-        Autogen::FunctionFactory(
-            [](MoveOnlyTestObject context, MoveOnlyTestObject arg) -> std::tuple<MoveOnlyTestObject, int> {
+        Autogen::createFunctionFactory(
+            [](MoveOnlyTestObject const& context, MoveOnlyTestObject&& arg) -> std::tuple<MoveOnlyTestObject, int> {
                 return std::make_tuple(std::move(arg), context.m_val);
             }
         )
-            .extend([](MoveOnlyTestObject context, std::tuple<MoveOnlyTestObject, int> const& arg) {
+            .extend([](MoveOnlyTestObject const& context, std::tuple<MoveOnlyTestObject, int> const& arg) -> int {
                 return std::get<0>(arg).m_val + std::get<1>(arg) + context.m_val;
             })
-            .extend([](MoveOnlyTestObject context, int arg) { return MoveOnlyTestObject{arg * 2 + context.m_val}; });
+            .extend([](MoveOnlyTestObject const& context, int arg) {
+                return MoveOnlyTestObject{arg * 2 + context.m_val};
+            });
 
-    constexpr auto result = pipeline.run(MoveOnlyTestObject{3}, MoveOnlyTestObject{2});
+    constexpr auto context = MoveOnlyTestObject{3};
+    constexpr auto result = pipeline.run(context, MoveOnlyTestObject{2});
     EXPECT_EQ(result.m_val, 19);
 }
 
@@ -100,7 +104,8 @@ TEST(FunctionFactory, combinatorialFunctionComposition)
         TupleExt::flattenCombinations(
             std::make_tuple( //
                 std::make_tuple(Autogen::FuncStep{scTEST_SPEC_1_A, f1}, Autogen::FuncStep{ scTEST_SPEC_1_B, f2}),
-                std::make_tuple(Autogen::FuncStep{ scTEST_SPEC_2_A, a_f3}, Autogen::FuncStep{ scTEST_SPEC_2_B, a_f4})));
+                std::make_tuple(Autogen::FuncStep{ scTEST_SPEC_2_A, a_f3}, Autogen::FuncStep{ scTEST_SPEC_2_B,
+                a_f4})));
     static_assert(std::tuple_size_v<decltype(combinations)> == 4);
 
     constexpr auto functions = applyFunctionFactory(combinations);
@@ -287,15 +292,14 @@ TEST(FunctionFactory, operatorsForSpan)
     // initializer lists copy...
     auto v = std::vector<MoveOnlyTestObject>{};
     v.emplace_back(MoveOnlyTestObject{2});
-    v.emplace_back(MoveOnlyTestObject{99});
+    v.emplace_back(MoveOnlyTestObject{1});
     v.emplace_back(MoveOnlyTestObject{-1});
 
     auto constexpr operations = std::make_tuple(
         std::make_tuple(
             Autogen::FuncStep{
                 scTEST_SPEC_1_A,
-                [](TestContext const& context, std::vector<MoveOnlyTestObject>& arg) {
-                    arg[1].m_val = context.value; // this ought to be a hanging offense, but we're just checking...
+                [](TestContext const&, std::vector<MoveOnlyTestObject> const& arg) {
                     return JsUtil::SegmentedDataView{arg, {.blockSize = 2, .stride = 3}};
                 }
             }
@@ -503,6 +507,80 @@ TEST(FunctionFactory, getMapping)
     EXPECT_EQ(*mapping.find(JsUtil::getCategoryId(scTEST_CAT_3))->find(2), 1);
 }
 
+TEST(FunctionFactory, typeErasureValueParam)
+{
+    constexpr auto combinations =
+        TupleExt::flattenCombinations(
+            std::make_tuple( //
+                std::make_tuple(
+                    Autogen::FuncStep{scTEST_SPEC_1_A, f1},
+                    Autogen::FuncStep{ scTEST_SPEC_1_B, f2}
+                    ),
+                std::make_tuple(
+                    Autogen::FuncStep{ scTEST_SPEC_2_A, [](int, B arg) -> C { return C{arg.val * 2}; }},
+                    Autogen::FuncStep{ scTEST_SPEC_2_B, [](int, B arg) -> C { return C{arg.val * 3}; }}))
+                    );
+
+    constexpr auto functions = applyFunctionFactory(combinations);
+    static_assert(std::tuple_size_v<decltype(functions)> == 4);
+    static auto elidedFns = TupleExt::toArray(TupleExt::map(functions, [](auto ff) { return ff.elide(); }));
+    static_assert(elidedFns.size() == 4);
+
+    A a{1};
+    EXPECT_EQ(elidedFns.at(0).run(1, static_cast<void*>(&a)).val, 6);
+    EXPECT_EQ(elidedFns.at(1).run(1, static_cast<void const*>(&a)).val, 9);
+}
+
+TEST(FunctionFactory, typeErasureConstRefParam)
+{
+    constexpr auto combinations = TupleExt::flattenCombinations(
+        std::make_tuple(
+            std::make_tuple(
+                Autogen::FuncStep{
+                    scTEST_SPEC_1_A, [](int context, A const& arg) -> B { return B{arg.val + 1 + context}; }
+                },
+                Autogen::FuncStep{
+                    scTEST_SPEC_1_B, [](int context, A const& arg) -> B { return B{arg.val + 2 + context}; }
+                }
+            )
+        )
+    );
+
+    constexpr auto functions = applyFunctionFactory(combinations);
+    static auto    elidedFns = TupleExt::toArray(TupleExt::map(functions, [](auto ff) { return ff.elide(); }));
+    static_assert(elidedFns.size() == 2);
+
+    A a{1};
+    EXPECT_EQ(elidedFns.at(0).run(1, static_cast<void const*>(&a)).val, 3);
+    EXPECT_EQ(elidedFns.at(1).run(1, static_cast<void const*>(&a)).val, 4);
+}
+
+TEST(FunctionFactory, typeErasurePointerParam)
+{
+    constexpr auto combinations = TupleExt::flattenCombinations(
+        std::make_tuple(
+            std::make_tuple(
+                Autogen::FuncStep{
+                    scTEST_SPEC_1_A, [](int context, A const* arg) -> B { return B{arg->val + 1 + context}; }
+                },
+                Autogen::FuncStep{
+                    scTEST_SPEC_1_B, [](int context, A const* arg) -> B { return B{arg->val + 2 + context}; }
+                }
+            )
+        )
+    );
+
+    // this pipeline would be compatible for flattening while retaining A const* as the input, but that's not supported
+    // (and almost certainly isn't worth the effort...)
+    constexpr auto functions = applyFunctionFactory(combinations);
+    static auto    elidedFns = TupleExt::toArray(TupleExt::map(functions, [](auto ff) { return ff.elide(); }));
+    static_assert(elidedFns.size() == 2);
+
+    A a{1};
+    EXPECT_EQ(elidedFns.at(0).run(1, static_cast<void const*>(&a)).val, 3);
+    EXPECT_EQ(elidedFns.at(1).run(1, static_cast<void const*>(&a)).val, 4);
+}
+
 struct Point2dOffsets
 {
     std::uint8_t x{0};
@@ -596,7 +674,7 @@ constexpr auto scPIPE = std::make_tuple(
     std::make_tuple(
         Autogen::FuncStep{
             scTEST_SPEC_3_A,
-            [](Index2dContext&, TupleExt::RepeatedPair<JsUtil::Vec2<float>> points) {
+            [](Index2dContext&, TupleExt::RepeatedPair<JsUtil::Vec2<float>> const& points) {
                 return JsUtil::Range2d<float>::fromPair(points);
             }
         }

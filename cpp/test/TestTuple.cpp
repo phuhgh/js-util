@@ -87,7 +87,7 @@ consteval int forEach()
 TEST(Tuple, forEach)
 {
     constexpr int result = forEach();
-    static_assert(result == 17);
+    EXPECT_EQ(result, 17);
 }
 
 consteval int forEachWithIndex()
@@ -101,7 +101,7 @@ consteval int forEachWithIndex()
 TEST(Tuple, forEachWithIndex)
 {
     constexpr int result = forEachWithIndex();
-    static_assert(result == 18);
+    EXPECT_EQ(result, 18);
 }
 
 TEST(Tuple, map)
@@ -171,7 +171,8 @@ TEST(Tuple, select)
     auto& element = TupleExt::select(input, 1);
     EXPECT_EQ(element.val, 8);
     element.val = 1;
-    EXPECT_EQ(TupleExt::select(input, 1).val, 1);
+    auto anIndex = 1;
+    EXPECT_EQ(TupleExt::select(input, 1).val, anIndex);
 }
 
 TEST(Tuple, selectNoCopy)
@@ -199,4 +200,11 @@ TEST(Tuple, spiltAt)
     // shouldn't be an issue, but check it plays nice with empty...
     EXPECT_EQ(std::get<0>(TupleExt::splitAt<0>(std::make_tuple(a, b, c, d, e, f))), std::make_tuple());
     EXPECT_EQ(std::get<1>(TupleExt::splitAt<6>(std::make_tuple(a, b, c, d, e, f))), std::make_tuple());
+}
+
+TEST(Tuple, toArray)
+{
+    constexpr auto t = std::make_tuple(1, 2, 3);
+    constexpr auto a = TupleExt::toArray(t);
+    EXPECT_EQ(a, std::to_array({1, 2, 3}));
 }

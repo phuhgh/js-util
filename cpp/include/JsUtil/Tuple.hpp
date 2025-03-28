@@ -1,5 +1,6 @@
 #pragma once
 
+#include "JsUtil/Array.hpp"
 #include "JsUtil/Debug.hpp"
 #include "JsUtil/LangExt.hpp"
 #include <tuple>
@@ -271,6 +272,26 @@ template <std::size_t Index, typename TTuple>
 }
 
 /**
+ * @brief Convert a uniform tuple into an array.
+ * @remark The way the array is constructed might be quite slow, depending on optimization.
+ */
+template <typename TTuple>
+    requires(std::tuple_size_v<std::remove_cvref_t<TTuple>> > 0)
+[[nodiscard]] constexpr auto toArray(TTuple&& tuple)
+{
+    using TValue = std::tuple_element_t<0, std::remove_cvref_t<TTuple>>;
+    return reduce(
+        std::forward<TTuple>(tuple),
+        [](auto&& array, auto&& item) {
+            return ArrayExt::concat(
+                std::forward<decltype(array)>(array), std::array<TValue, 1>{std::forward<decltype(item)>(item)}
+            );
+        },
+        std::array<TValue, 0>{}
+    );
+}
+
+/**
  *@brief Multiplies out tuple combinations to a depth of 2, e.g.:
  * [
  *   [A, B],
@@ -318,7 +339,7 @@ template <typename... TInputs>
  * would become:
  * [
  *   [0, 2],
- *   [1, 2],
+ *   [0, 1],
  * ]
  *
  * which provides a mapping for the flattened combinations (by simply adding the indexes):

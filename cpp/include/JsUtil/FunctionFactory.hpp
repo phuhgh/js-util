@@ -73,13 +73,20 @@ struct FuncStep
 };
 
 template <typename TFn>
+constexpr static auto createFunctionFactory(TFn fn);
+
+/**
+ * @remark create using `createFunctionFactory`.
+ * @remark TArg of reference (non-const) is not supported, if you would like to mutate something, use the context...
+ */
+template <typename TPFn, typename TPArg, typename TPContext, typename TPRet>
 class FunctionFactory
 {
   public:
-    using TFTraits = LangExt::FunctionTraits<TFn>;
-    using TArg = typename TFTraits::template argument<1>::type;
-    using TContext = typename TFTraits::template argument<0>::type;
-    using TRet = typename TFTraits::TRet;
+    using TFn = TPFn;
+    using TArg = TPArg;
+    using TContext = TPContext;
+    using TRet = TPRet;
 
     constexpr explicit FunctionFactory(TFn callback)
         : m_callback(callback)
@@ -90,38 +97,41 @@ class FunctionFactory
      * @brief Extend the chain of function calls right. If `this` is A, and `callback` is B, the result would be A > B.
      */
     template <typename TExtFn>
-    constexpr auto extend(TExtFn const& callback) const
+    constexpr auto extend(TExtFn const& callback) const;
+
+    /**
+     * @brief Like `extend` but taking a factory instead of a function.
+     */
+    template <typename TFact>
+    constexpr auto wrap(TFact const& functionFactory) const;
+
+    template <typename TFContext, typename TFArg>
+    constexpr TRet run(TFContext&& context, TFArg&& arg) const
     {
-        auto wrapper = [other = m_callback, callback](TContext&& context, TArg&& arg) {
-            return callback(
-                std::forward<TContext>(context), other(std::forward<TContext>(context), std::forward<TArg>(arg))
-            );
-        };
-        return FunctionFactory<decltype(wrapper)>(wrapper);
+        return m_callback(std::forward<TFContext>(context), std::forward<TFArg>(arg));
     }
 
     /**
-     * @brief Extend the chain of function calls left. If `functionFactory` is A, and `this` is B, the result
-     * would be B > A.
+     * @brief Hide the input type behind `void*`.
+     * @remark This can't be constexpr because std::function isn't constexpr...
      */
-    template <typename TFact>
-    constexpr auto wrap(TFact const& functionFactory) const
-    {
-        auto wrapper = [other = m_callback, functionFactory](TContext&& context, TArg&& arg) {
-            return functionFactory.m_callback(
-                std::forward<TContext>(context), other(std::forward<TContext>(context), std::forward<TArg>(arg))
-            );
-        };
-        return FunctionFactory<decltype(wrapper)>(wrapper);
-    }
-
-    constexpr TRet run(TContext&& context, TArg&& arg) const
-    {
-        return m_callback(std::forward<TContext>(context), std::forward<TArg>(arg));
-    }
+    auto elide() const;
 
     TFn m_callback;
 };
+
+/**
+ * @brief Creates a `FunctionFactory`, inferring the template parameters from the supplied function.
+ */
+template <typename TFn>
+constexpr static auto createFunctionFactory(TFn fn)
+{
+    using TFTraits = LangExt::FunctionTraits<TFn>;
+    using TArg = typename TFTraits::template argument<1>::type;
+    using TContext = typename TFTraits::template argument<0>::type;
+    using TRet = typename TFTraits::TRet;
+    return FunctionFactory<TFn, TArg, TContext, TRet>{fn};
+}
 
 /**
  * @brief Connects the previous pipeline step with the next step in the pipeline, iteration happening through the
@@ -179,20 +189,23 @@ struct PipelineExtensions;
 template <typename TSpecialization, typename TFn>
 struct PipelineExtensions<FuncStep<TSpecialization, TFn>>
 {
-    static constexpr auto apply(FuncStep<TSpecialization, TFn> const& step) { return FunctionFactory(step.function); }
+    static constexpr auto apply(FuncStep<TSpecialization, TFn> const& step)
+    {
+        return createFunctionFactory(step.function);
+    }
 
     template <typename TFactory>
     static constexpr auto apply(TFactory&& factory, FuncStep<TSpecialization, TFn> const& step)
     {
         // it should be a plain function
-        return FunctionFactory(step.function).wrap(std::forward<TFactory>(factory));
+        return createFunctionFactory(step.function).wrap(std::forward<TFactory>(factory));
     }
 
     template <typename TFactory, typename TPrevStep>
     static constexpr auto apply(TFactory&& factory, FuncStep<TSpecialization, TFn> const& step, TPrevStep&&)
     {
         // it should be a plain function
-        return FunctionFactory(step.function).wrap(std::forward<TFactory>(factory));
+        return createFunctionFactory(step.function).wrap(std::forward<TFactory>(factory));
     }
 };
 
@@ -213,17 +226,7 @@ struct PipelineExtensions<IteratorConnector<TCallback>>
     }
 
     template <typename TFactory, typename TPrevStep>
-    static constexpr auto apply(TFactory const& factory, IteratorConnector<TCallback> const& step, TPrevStep)
-    {
-        using TContext = typename TFactory::TContext;
-        using TFTraits = LangExt::FunctionTraits<typename TPrevStep::TFunction>;
-        // the step before must be a regular function
-        static_assert(TFTraits::arity == 2);
-        using TArg = typename TFTraits::TRet;
-
-        // step is itself a factory, which takes a callback to create the chainable
-        return FunctionFactory(step.template createOne<TContext, TArg>(factory.m_callback));
-    }
+    static constexpr auto apply(TFactory const& factory, IteratorConnector<TCallback> const& step, TPrevStep);
 };
 
 } // namespace Impl
