@@ -1,5 +1,7 @@
 #pragma once
 
+#include "JsUtil/Identifiers.hpp"
+
 namespace JsRTTI
 {
 
@@ -89,5 +91,16 @@ using NumberKinds = std::tuple<uint8_t, uint16_t, uint32_t, uint64_t, int8_t, in
 
 inline constexpr auto scNUMBER_KINDS =
     std::make_tuple(scU8, scU16, scU32, scU64, scI8, scI16, scI32, scI64, scF32, scF64);
+
+enum class EVectorIdentifier : uint32_t
+{
+    Vec2 = 0, // used for indexing
+    Vec3,
+    Vec4,
+    Mat2,
+    Mat3,
+    Mat4,
+    Range2d,
+};
 
 } // namespace JsRTTI

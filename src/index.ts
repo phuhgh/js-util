@@ -114,8 +114,10 @@ export { getEmscriptenWrapper, EmscriptenWrapperOptions } from "./web-assembly/e
 export { ISharedArray } from "./web-assembly/shared-array/i-shared-array.js";
 export { SharedArray, sharedArraySpecialization } from "./web-assembly/shared-array/shared-array.js";
 export { ISharedArrayBindings } from "./web-assembly/shared-array/i-shared-array-bindings.js";
+export { ITypedArrayTuple, TypedArrayTuple } from "./web-assembly/shared-array/typed-array-tuple.js";
 export { IResizableArrayBindings } from "./web-assembly/resizable-array/i-resizable-array-bindings.js";
 export { resizableArraySpecialization, ResizableArray } from "./web-assembly/resizable-array/resizable-array.js";
+export { EVectorIdentifier, ISharedVectorBindings } from "./web-assembly/resizable-array/i-shared-vector-bindings.js";
 export { IMemoryUtilBindings } from "./web-assembly/emscripten/i-memory-util-bindings.js";
 export { TWebAssemblyMemoryListenerArgs } from "./web-assembly/util/t-web-assembly-memory-listener-args.js";
 export { isLittleEndian } from "./web-assembly/util/is-little-endian.js";

@@ -1,6 +1,8 @@
 #include "FakeWorkerConfig.h"
 #include "JsUtil/WorkerPool.hpp"
 #include "JsUtilTestUtil/CreateDestroyTestCounter.hpp"
+
+#include <JsUtil/Vec2.hpp>
 #include <emscripten/bind.h>
 
 namespace JsUtil
@@ -69,6 +71,21 @@ void setTestCategoryFlag()
     JsInterop::IdRegistry::registerIdentifiers(std::make_tuple(JsUtil::scTEST_CAT_FLAG));
 }
 
+uint32_t testVector_readWriteF32Vec2(uint32_t maybeVec2)
+{
+    // if you believe REALLY HARD, the type will be correct... true story...
+    auto* vec2 = (JsUtil::Vec2<uint16_t>*)maybeVec2;
+    if (vec2 == nullptr)
+    {
+        return -1;
+    }
+    // it's impractical to test every combination, but they're all generated the same way, so it should "Just work"TM
+    auto prev = vec2->x() + vec2->y();
+    vec2->setX(101);
+    vec2->setY(102);
+    return prev;
+}
+
 EMSCRIPTEN_BINDINGS(clazz)
 {
     emscripten::class_<JsUtil::TestExecutor>("TestExecutor");
@@ -82,4 +99,5 @@ EMSCRIPTEN_BINDINGS(jsUtil)
     emscripten::function("fakeWorkerJob_getDestroyCount", &fakeWorkerJob_getDestroyCount);
     emscripten::function("fakeWorkerJob_createJob", &fakeWorkerJob_createJob, emscripten::allow_raw_pointers());
     emscripten::function("setTestCategoryFlag", &setTestCategoryFlag);
+    emscripten::function("testVector_readWriteF32Vec2", &testVector_readWriteF32Vec2, emscripten::allow_raw_pointers());
 }

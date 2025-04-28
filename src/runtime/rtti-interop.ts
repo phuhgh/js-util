@@ -30,11 +30,14 @@ export enum ENumberIdentifier
  */
 export function getNumberIdentifier(ctor: TFullSetTypedArrayCtor): ENumberIdentifier
 {
+    _BUILD.DEBUG && _Debug.assert(numberIdentifierMapping.has(ctor), "expected to find ctor...");
+
     return numberIdentifierMapping.get(ctor)!;
 }
 
 const numberIdentifierMapping = new Map<TFullSetTypedArrayCtor, ENumberIdentifier>([
     [Uint8Array as TFullSetTypedArrayCtor, ENumberIdentifier.U8],
+    [Uint8ClampedArray as TFullSetTypedArrayCtor, ENumberIdentifier.U8],
     [Uint16Array as TFullSetTypedArrayCtor, ENumberIdentifier.U16],
     [Uint32Array as TFullSetTypedArrayCtor, ENumberIdentifier.U32],
     [BigUint64Array as TFullSetTypedArrayCtor, ENumberIdentifier.U64],

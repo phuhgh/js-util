@@ -2,6 +2,13 @@ import { Mat4Factory } from "./mat4-factory.js";
 import { NormalizedDataViewProvider } from "../normalized-data-view/normalized-data-view-provider.js";
 import { Mat4 } from "./mat4.js";
 import { Test_setDefaultFlags } from "../../../test-util/test_set-default-flags.js";
+import { SanitizedEmscriptenTestModule } from "../../../web-assembly/emscripten/sanitized-emscripten-test-module.js";
+import { IJsUtilBindings } from "../../../web-assembly/i-js-util-bindings.js";
+import type { ITestOnlyBindings } from "../../../web-assembly/i-test-only-bindings.js";
+import utilTestModule from "../../../external/test-module.mjs";
+import { getTestModuleOptions } from "../../../test-util/test-utils.js";
+import { fpRunWithin } from "../../../fp/impl/fp-run-within.js";
+import { blockScope } from "../../../lifecycle/block-scoped-lifecycle.js";
 
 describe("=> Mat4Factory", () =>
 {
@@ -62,5 +69,28 @@ describe("=> Mat4Factory", () =>
             expect(memory[16]).toBe(16);
             expect(memory[17]).toBe(18);
         });
+    });
+
+    describe("=> shared vector", () =>
+    {
+        const testModule = new SanitizedEmscriptenTestModule<IJsUtilBindings, ITestOnlyBindings>(utilTestModule, getTestModuleOptions());
+
+        beforeEach(async () =>
+        {
+            Test_setDefaultFlags();
+            await testModule.initialize();
+        });
+
+        afterEach(() =>
+        {
+            testModule.endEmscriptenProgram();
+        });
+
+        it("| handles lifecycle and exposes expected methods", fpRunWithin([blockScope], () =>
+        {
+            const sharedVec = Mat4.u16.factory.createShared(testModule.wrapper, null);
+            const view = sharedVec.getArray();
+            view.setIdentityMatrix();
+        }));
     });
 });

@@ -7,7 +7,7 @@ import type { IDebugBindings } from "./i-debug-bindings.js";
  */
 export interface IInteropBindings extends IMemoryUtilBindings, IEmscriptenBindings, IDebugBindings
 {
-    // special convention, anything which starts _jsuInitialize* will be called on module initialization
+    // special convention: anything which starts _jsuInitialize* will be called on module initialization
     // these should never rely on call order...
     _jsuInitializeSelf(): boolean;
 

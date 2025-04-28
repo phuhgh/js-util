@@ -18,6 +18,7 @@ export type TMat2CtorArgs = [c1r1: number, c2r1: number, c2r2: number, c2r2: num
  */
 export interface IMat2Ctor<TArray extends TTypedArray>
 {
+    readonly BASE: TTypedArrayCtor;
     /**
      * The size in bytes of each element in the array.
      */

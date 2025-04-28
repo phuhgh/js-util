@@ -3,6 +3,11 @@ import { ATypedTupleFactory } from "../a-typed-tuple-factory.js";
 import { TTypedArray } from "../t-typed-array.js";
 import { IMat3Ctor, Mat3, TMat3CtorArgs } from "./mat3.js";
 import { INormalizedDataView } from "../normalized-data-view/i-normalized-data-view.js";
+import { getNumberIdentifier } from "../../../runtime/rtti-interop.js";
+import { EVectorIdentifier, type ISharedVectorBindings } from "../../../web-assembly/resizable-array/i-shared-vector-bindings.js";
+import { IEmscriptenWrapper } from "../../../web-assembly/emscripten/i-emscripten-wrapper.js";
+import type { IManagedResourceNode } from "../../../lifecycle/manged-resources.js";
+import type { ITypedArrayTuple } from "../../../web-assembly/shared-array/typed-array-tuple.js";
 
 export class Mat3Factory<T extends Mat3<TTypedArray>>
     extends ATypedTupleFactory<T, TMat3CtorArgs>
@@ -14,7 +19,17 @@ export class Mat3Factory<T extends Mat3<TTypedArray>>
         dataView: INormalizedDataView,
     )
     {
-        super(9, ctor.BYTES_PER_ELEMENT, dataView);
+        super(9, ctor.BYTES_PER_ELEMENT, dataView, getNumberIdentifier(ctor.BASE), EVectorIdentifier.Mat3);
+    }
+
+    public createShared
+    (
+        wrapper: IEmscriptenWrapper<ISharedVectorBindings>,
+        owner: IManagedResourceNode | null,
+    )
+        : ITypedArrayTuple<T>
+    {
+        return ATypedTupleFactory.createSharedVector(wrapper, owner, this.ctor, this) as ITypedArrayTuple<T>;
     }
 
     public createOneEmpty(): T

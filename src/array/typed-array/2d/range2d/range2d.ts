@@ -20,6 +20,7 @@ export type TRange2dCtorArgs = [xMin: number, yMin: number, xMax: number, yMax: 
  */
 export interface IRange2dCtor<TArray extends TTypedArray>
 {
+    readonly BASE: TTypedArrayCtor;
     /**
      * The size in bytes of each element in the array.
      */

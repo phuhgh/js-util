@@ -18,6 +18,7 @@ export function getVec4Ctor<TCtor extends TTypedArrayCtor>
     return class Vec4Impl
         extends (ctor as unknown as ITypedArrayCtor<Vec4<InstanceType<TCtor>>>)
     {
+        public static readonly BASE: TTypedArrayCtor = ctor;
         public static factory: Vec4Factory<Vec4<InstanceType<TCtor>>> = new Vec4Factory(Vec4Impl, NormalizedDataViewProvider.getView(ctor));
         public static readonly elementCount: number = 4;
 

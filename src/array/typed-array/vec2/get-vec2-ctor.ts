@@ -19,6 +19,7 @@ export function getVec2Ctor<TCtor extends TTypedArrayCtor>
     return class Vec2Impl
         extends (ctor as unknown as ITypedArrayCtor<Vec2<InstanceType<TCtor>>>)
     {
+        public static readonly BASE: TTypedArrayCtor = ctor;
         public static factory: Vec2Factory<Vec2<InstanceType<TCtor>>> = new Vec2Factory(Vec2Impl, NormalizedDataViewProvider.getView(ctor));
 
         public ["constructor"]!: typeof Vec2Impl;

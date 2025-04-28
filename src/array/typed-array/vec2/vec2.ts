@@ -19,6 +19,7 @@ export type TVec2CtorArgs = [x: number, y: number];
  */
 export interface IVec2Ctor<TArray extends TTypedArray>
 {
+    readonly BASE: TTypedArrayCtor;
     /**
      * The size in bytes of each element in the array.
      */

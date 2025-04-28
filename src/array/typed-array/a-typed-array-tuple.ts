@@ -2,6 +2,7 @@ import { TTupleLike } from "../../typescript/t-tuple-like.js";
 import { TTupleLikeOfLength } from "../../typescript/t-tuple-like-of-length.js";
 import { TTypedArray } from "./t-typed-array.js";
 import { TNeverFallback } from "../../typescript/t-never-fallback.js";
+import type { TTypedArrayCtor } from "./t-typed-array-ctor.js";
 
 /**
  * @public
@@ -34,6 +35,8 @@ export type TDecayedTypedArrayTuple = TTupleLike<number, number, number> & AType
  */
 export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray>
 {
+    public static readonly BASE: TTypedArrayCtor;
+
     /**
      * The size in bytes of each element in the array.
      */
@@ -58,6 +61,15 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      */
     public readonly length!: TLength;
 
+    public constructor(
+        _bufferOrLength: number | ArrayBufferLike = 2,
+        _offset?: number,
+        _length?: number,
+    )
+    {
+        throw new Error();
+    }
+
     /**
      * Returns the this object after copying a section of the array identified by start and end
      * to the same array starting at position target
@@ -65,7 +77,7 @@ export class ATypedArrayTuple<TLength extends number, TArray extends TTypedArray
      * length of the array.
      * @param _start - If start is negative, it is treated as length+start. If end is negative, it
      * is treated as length+end.
-     * @param _end - If not specified, length of the this object is used as its default value.
+     * @param _end - If not specified, length of this object is used as its default value.
      */
     public copyWithin(_target: number, _start: number, _end?: number): this
     {

@@ -28,6 +28,7 @@ export type TMat3CtorArgs = [
  */
 export interface IMat3Ctor<TArray extends TTypedArray>
 {
+    readonly BASE: TTypedArrayCtor;
     /**
      * The size in bytes of each element in the array.
      */

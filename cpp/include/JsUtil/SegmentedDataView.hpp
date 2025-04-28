@@ -8,6 +8,7 @@
 namespace JsUtil
 {
 
+// todo jack2: binding for this
 struct SegmentedDataViewOptions
 {
     uint8_t blockSize{1};

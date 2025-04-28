@@ -19,6 +19,7 @@ export type TRange1dCtorArgs = [min: number, max: number];
  */
 export interface IRange1dCtor<TArray extends TTypedArray>
 {
+    readonly BASE: TTypedArrayCtor;
     /**
      * The size in bytes of each element in the array.
      */

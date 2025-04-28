@@ -1,34 +1,40 @@
+import { ATypedArrayTuple } from "../../array/typed-array/a-typed-array-tuple.js";
+import { TTypedArray } from "../../array/typed-array/t-typed-array.js";
+import type { IManagedObject, IManagedResourceNode, IOnFreeListener, IPointer } from "../../lifecycle/manged-resources.js";
 import { IEmscriptenWrapper } from "../emscripten/i-emscripten-wrapper.js";
+import { ESharedObjectOwnerKind, SharedObjectCleanup } from "../shared-memory/shared-object-cleanup.js";
 import { DebugProtectedView } from "../../debug/debug-protected-view.js";
+import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
 import { _Debug } from "../../debug/_debug.js";
 import { IOnMemoryResize } from "../emscripten/i-on-memory-resize.js";
-import { numberGetHexString } from "../../number/impl/number-get-hex-string.js";
-import { type IManagedObject, type IManagedResourceNode, type IOnFreeListener, type IPointer } from "../../lifecycle/manged-resources.js";
-import { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor.js";
-import type { IBuffer } from "../../array/typed-array/i-buffer-view.js";
-import { ENumberIdentifier, getNumberIdentifier } from "../../runtime/rtti-interop.js";
-import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
-import { ESharedObjectOwnerKind, SharedObjectCleanup } from "./shared-object-cleanup.js";
+import { ENumberIdentifier } from "../../runtime/rtti-interop.js";
+import type { ISharedVectorBindings } from "../resizable-array/i-shared-vector-bindings.js";
+
 
 /**
  * @public
- * Provides a view into shared memory, which avoids the need to keep recreating shared arrays. The view is NOT owning.
  */
-export interface ISharedBufferView<TCtor extends TTypedArrayCtor>
+export interface ITypedArrayTuple<TArray extends ATypedArrayTuple<number, TTypedArray>>
     extends IManagedObject,
-            IPointer,
-            IBuffer<TCtor>
+            IPointer
 {
+    readonly ctor: new (buffer: ArrayBufferLike, offset: number, byteSize: number) => TArray;
+    readonly numberId: ENumberIdentifier;
+    // size of the shared array
+    readonly byteSize: number;
+
+    getSharedObjectHandle(): IManagedObject | null;
+    getDataView(): DataView;
+    getArray(): TArray;
 }
 
 /**
  * @public
- * {@inheritDoc ISharedBufferView}
  */
-export class SharedBufferView<TCtor extends TTypedArrayCtor>
-    implements ISharedBufferView<TCtor>
+export class TypedArrayTuple<TArray extends ATypedArrayTuple<number, TTypedArray>>
+    implements ITypedArrayTuple<TArray>
 {
-    public readonly ctor: TCtor;
+    public readonly ctor: new (buffer: ArrayBufferLike, offset: number, byteSize: number) => TArray;
     public readonly resourceHandle: IManagedResourceNode;
     public readonly pointer: number;
     public readonly byteSize: number;
@@ -36,10 +42,11 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
 
     public constructor
     (
-        protected readonly wrapper: IEmscriptenWrapper<IInteropBindings>,
+        protected readonly wrapper: IEmscriptenWrapper<ISharedVectorBindings>,
         owner: IManagedResourceNode | null,
-        ctor: TCtor,
+        ctor: new (buffer: ArrayBufferLike, offset: number, byteSize: number) => TArray,
         pointerToData: number,
+        numberId: ENumberIdentifier,
         byteSize: number,
     )
     {
@@ -47,22 +54,22 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
         this.ctor = ctor;
         this.pointer = pointerToData;
         this.byteSize = byteSize;
-        this.numberId = getNumberIdentifier(ctor);
-        this.impl = new SharedBufferViewImpl(this, ctor, pointerToData, byteSize);
+        this.numberId = numberId;
+        this.impl = new TypedArrayTupleImpl(this, ctor, pointerToData, byteSize);
         SharedObjectCleanup.registerCleanup(
             this,
             this.impl,
             new SharedObjectCleanup.Options(
-                "SharedBufferView",
+                "TypedArrayTuple",
                 _BUILD.DEBUG ? new DebugProtectedView(
-                    `SharedBufferView - memory resize danger: don't hold reference to the DataView ${numberGetHexString(pointerToData)}`,
+                    `TypedArrayTuple - memory resize danger: don't hold reference to the DataView ${numberGetHexString(pointerToData)}`,
                 ) : null,
                 ESharedObjectOwnerKind.NotOwning,
             )
         );
     }
 
-    public getWrapper(): IEmscriptenWrapper<IInteropBindings>
+    public getWrapper(): IEmscriptenWrapper<ISharedVectorBindings>
     {
         return this.wrapper;
     }
@@ -87,7 +94,7 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
         }
     }
 
-    public getArray(): InstanceType<TCtor>
+    public getArray(): TArray
     {
         if (_BUILD.DEBUG)
         {
@@ -102,20 +109,20 @@ export class SharedBufferView<TCtor extends TTypedArrayCtor>
         }
     }
 
-    private readonly impl: SharedBufferViewImpl<TCtor>;
+    private readonly impl: TypedArrayTupleImpl<TArray>;
 }
 
-class SharedBufferViewImpl<TCtor extends TTypedArrayCtor>
+class TypedArrayTupleImpl<TArray extends ATypedArrayTuple<number, TTypedArray>>
     extends SharedObjectCleanup
     implements IOnMemoryResize, IOnFreeListener
 {
     public dataView: DataView;
-    public array: InstanceType<TCtor>;
+    public array: TArray;
 
     public constructor
     (
-        sbv: SharedBufferView<TCtor>,
-        public readonly ctor: TCtor,
+        sbv: TypedArrayTuple<TArray>,
+        public readonly ctor: new (buffer: ArrayBufferLike, offset: number, byteSize: number) => TArray,
         public readonly pointer: number,
         public readonly byteSize: number,
     )
@@ -149,8 +156,8 @@ class SharedBufferViewImpl<TCtor extends TTypedArrayCtor>
         return new DataView(this.wrapper.memory.buffer, this.pointer, this.byteSize);
     }
 
-    private recreateArray(): InstanceType<TCtor>
+    private recreateArray(): TArray
     {
-        return new this.ctor(this.wrapper.memory.buffer, this.pointer, this.byteSize / this.ctor.BYTES_PER_ELEMENT) as InstanceType<TCtor>;
+        return new this.ctor(this.wrapper.memory.buffer, this.pointer, this.byteSize);
     }
 }

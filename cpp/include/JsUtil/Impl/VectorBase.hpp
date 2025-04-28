@@ -16,6 +16,8 @@ class AVectorBase
     explicit AVectorBase(std::array<TStorage, TSize> values)
         : m_elements(std::move(values))
     {
+        static_assert(offsetof(AVectorBase, m_elements) == 0);
+        static_assert(sizeof(AVectorBase) == sizeof(std::array<TStorage, TSize>));
     }
 
     bool operator==(TExt const& other) { return m_elements == other.m_elements; }

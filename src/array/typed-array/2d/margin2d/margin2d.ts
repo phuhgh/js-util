@@ -20,6 +20,7 @@ export type TMargin2dCtorArgs = [left: number, bottom: number, right: number, to
  */
 export interface IMargin2dCtor<TArray extends TTypedArray>
 {
+    readonly BASE: TTypedArrayCtor;
     /**
      * The size in bytes of each element in the array.
      */

@@ -11,6 +11,7 @@ export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } =
     _jsUtilGetRuntimeMappingAddress: true,
     _jsUtilRemoveRuntimeMappings: true,
     _jsUtilGetRuntimeMappingId: true,
+    _jsUtilCreateVec: true,
     runtimeKeepalivePush: true,
     runtimeKeepalivePop: true,
     _jsUtilDeleteObject: true,

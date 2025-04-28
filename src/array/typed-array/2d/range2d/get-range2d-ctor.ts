@@ -56,6 +56,7 @@ export function getRange2dCtor<TCtor extends TTypedArrayCtor>
         {
             return this[1];
         }
+
         public getXMax(): number
         {
             return this[2];

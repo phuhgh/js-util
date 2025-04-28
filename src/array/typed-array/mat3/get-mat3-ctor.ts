@@ -20,6 +20,7 @@ export function getMat3Ctor<TCtor extends TTypedArrayCtor>
     return class Mat3Impl
         extends (ctor as unknown as ITypedArrayCtor<Mat3<InstanceType<TCtor>>>)
     {
+        public static readonly BASE: TTypedArrayCtor = ctor;
         public static factory: Mat3Factory<Mat3<InstanceType<TCtor>>> = new Mat3Factory(Mat3Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec3Ctor = Vec3.getCtor(ctor);
 

@@ -18,6 +18,7 @@ export function getMat2Ctor<TCtor extends TTypedArrayCtor>
 {
     return class Mat2Impl extends (ctor as unknown as ITypedArrayCtor<Mat2<InstanceType<TCtor>>>)
     {
+        public static readonly BASE: TTypedArrayCtor = ctor;
         public static factory: Mat2Factory<Mat2<InstanceType<TCtor>>> = new Mat2Factory(Mat2Impl, NormalizedDataViewProvider.getView(ctor));
         protected static vec2Ctor = Vec2.getCtor(ctor);
 
