@@ -83,7 +83,7 @@ describe("=> Vec2Factory", () =>
             view.setX(1);
             view.setY(2);
             expect(view.getMagnitude()).toBe(Math.sqrt(5));
-            const sum = testModule.wrapper.instance.testVector_readWriteF32Vec2(sharedVec.pointer);
+            const sum = testModule.wrapper.instance.testVector_readWriteU16Vec2(sharedVec.pointer);
             expect(sum).toBe(3);
             expect(view.getX()).toBe(101);
             expect(view.getY()).toBe(102);

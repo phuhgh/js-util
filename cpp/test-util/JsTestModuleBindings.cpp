@@ -2,6 +2,7 @@
 #include "JsUtil/WorkerPool.hpp"
 #include "JsUtilTestUtil/CreateDestroyTestCounter.hpp"
 
+#include <JsUtil/SegmentedDataView.hpp>
 #include <JsUtil/Vec2.hpp>
 #include <emscripten/bind.h>
 
@@ -71,9 +72,8 @@ void setTestCategoryFlag()
     JsInterop::IdRegistry::registerIdentifiers(std::make_tuple(JsUtil::scTEST_CAT_FLAG));
 }
 
-uint32_t testVector_readWriteF32Vec2(uint32_t maybeVec2)
+uint32_t testVector_readWriteU16Vec2(uint32_t maybeVec2)
 {
-    // if you believe REALLY HARD, the type will be correct... true story...
     auto* vec2 = (JsUtil::Vec2<uint16_t>*)maybeVec2;
     if (vec2 == nullptr)
     {
@@ -84,6 +84,40 @@ uint32_t testVector_readWriteF32Vec2(uint32_t maybeVec2)
     vec2->setX(101);
     vec2->setY(102);
     return prev;
+}
+
+std::uint32_t testSegmentedDataView_readWriteU16(std::uint32_t maybeData, std::uint32_t maybeDescriptor)
+{
+    auto* data = (JsUtil::ResizableArray<std::uint16_t>*)maybeData;
+    auto* descriptor = (JsUtil::SegmentedDataViewOptions*)maybeDescriptor;
+    auto  view = JsUtil::SegmentedDataView{*data, *descriptor};
+
+    std::uint32_t sum{0};
+    for (size_t i = 0; i < view.getLength(); ++i)
+    {
+        auto span = view.getBlock(i);
+        for (auto value : span)
+        {
+            sum += value;
+        }
+    }
+
+    return sum;
+}
+
+std::uint32_t testResizableArray_readWriteU16(std::uint32_t maybeData)
+{
+    auto*         data = (JsUtil::ResizableArray<std::uint16_t>*)maybeData;
+    std::uint32_t sum{0};
+
+    for (auto value : data->asSpan())
+    {
+        sum += value;
+    }
+
+    (*data)[0] = 101;
+
+    return sum;
 }
 
 EMSCRIPTEN_BINDINGS(clazz)
@@ -99,5 +133,11 @@ EMSCRIPTEN_BINDINGS(jsUtil)
     emscripten::function("fakeWorkerJob_getDestroyCount", &fakeWorkerJob_getDestroyCount);
     emscripten::function("fakeWorkerJob_createJob", &fakeWorkerJob_createJob, emscripten::allow_raw_pointers());
     emscripten::function("setTestCategoryFlag", &setTestCategoryFlag);
-    emscripten::function("testVector_readWriteF32Vec2", &testVector_readWriteF32Vec2, emscripten::allow_raw_pointers());
+    emscripten::function("testVector_readWriteU16Vec2", &testVector_readWriteU16Vec2, emscripten::allow_raw_pointers());
+    emscripten::function(
+        "testSegmentedDataView_readWriteU16", &testSegmentedDataView_readWriteU16, emscripten::allow_raw_pointers()
+    );
+    emscripten::function(
+        "testResizableArray_readWriteU16", &testResizableArray_readWriteU16, emscripten::allow_raw_pointers()
+    );
 }

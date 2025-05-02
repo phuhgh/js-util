@@ -10,5 +10,7 @@ export interface ITestOnlyBindings
     fakeWorkerJob_createJob(goSlow: boolean): number;
     setTestCategoryFlag(): void;
 
-    testVector_readWriteF32Vec2(ptrF32Vec2: number): number;
+    testVector_readWriteU16Vec2(ptrF32Vec2: number): number;
+    testSegmentedDataView_readWriteU16(data: number, descriptor: number): number;
+    testResizableArray_readWriteU16(data: number): number;
 }

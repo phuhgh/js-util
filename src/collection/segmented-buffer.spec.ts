@@ -7,10 +7,13 @@ import { blockScope } from "../lifecycle/block-scoped-lifecycle.js";
 import { SharedArray } from "../web-assembly/shared-array/shared-array.js";
 import { createSegmentedBufferView, SegmentedBufferDescriptor } from "./segmented-buffer-view.js";
 import { _Array } from "../array/_array.js";
+import { IJsUtilBindings } from "../web-assembly/i-js-util-bindings.js";
+import type { ITestOnlyBindings } from "../web-assembly/i-test-only-bindings.js";
+import { ResizableArray } from "../web-assembly/resizable-array/resizable-array.js";
 
 describe("=> createSegmentedBufferView", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
+    const testModule = new SanitizedEmscriptenTestModule<IJsUtilBindings, ITestOnlyBindings>(utilTestModule, getTestModuleOptions());
 
     beforeEach(async () =>
     {
@@ -22,6 +25,17 @@ describe("=> createSegmentedBufferView", () =>
     {
         testModule.endEmscriptenProgram();
     });
+
+    // todo jack
+    xit("| creates a compatible C struct", _Fp.runWithin([blockScope], () =>
+    {
+        const descriptor = new SegmentedBufferDescriptor(1, 2, 3);
+        const smb = descriptor.createWrapped(testModule.wrapper, null);
+        const sharedArray = ResizableArray.createOne(testModule.wrapper, Uint16Array, null, 12);
+        _Array.forEachRange(12, 1, (value, index) => sharedArray.getArray()[index] = value);
+        const sum = testModule.wrapper.instance.testSegmentedDataView_readWriteU16(sharedArray.pointer, smb.pointer);
+        expect(sum).toBe(0);
+    }));
 
     it("| correctly handles lifecycle", _Fp.runWithin([blockScope], () =>
     {

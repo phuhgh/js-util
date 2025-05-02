@@ -9,10 +9,14 @@ import type { TTypedArrayCtor } from "../../array/typed-array/t-typed-array-ctor
 import { getNumberSpecialization, numberSpecializations } from "../../runtime/rtti-interop.js";
 import { ResizableArray, resizableArraySpecialization } from "./resizable-array.js";
 import type { ISharedArray } from "../shared-array/i-shared-array.js";
+import { _Array } from "../../array/_array.js";
+import { IJsUtilBindings } from "../i-js-util-bindings.js";
+import type { ITestOnlyBindings } from "../i-test-only-bindings.js";
+import { _Fp } from "../../fp/_fp.js";
 
 describe("=> ResizableArray", () =>
 {
-    const testModule = new SanitizedEmscriptenTestModule(utilTestModule, getTestModuleOptions());
+    const testModule = new SanitizedEmscriptenTestModule<IJsUtilBindings, ITestOnlyBindings>(utilTestModule, getTestModuleOptions());
 
     beforeEach(async () =>
     {
@@ -86,6 +90,13 @@ describe("=> ResizableArray", () =>
             expect(
                 () => ResizableArray.createOne(testModule.wrapper, Float32Array, testModule.wrapper.rootNode, 0xffffffff)
             ).toThrowError("Failed to allocate memory for resizable array.");
+        }));
+
+        fit("| can be used from C without triggering sanitizers", _Fp.runWithin([blockScope], () =>
+        {
+            const sharedArray = ResizableArray.createOne(testModule.wrapper, Uint16Array, null, 12);
+            _Array.forEachRange(12, 1, (value, index) => sharedArray.getArray()[index] = value);
+            expect(testModule.wrapper.instance.testResizableArray_readWriteU16(sharedArray.pointer)).toBe(0);
         }));
 
         describe("=> debug mode", () =>

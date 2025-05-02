@@ -5,6 +5,8 @@ import { _Debug } from "../debug/_debug.js";
 import type { TTypedArrayCtor } from "../array/typed-array/t-typed-array-ctor.js";
 import type { TWriteable } from "../typescript/t-writable.js";
 import type { IInteropBindings } from "../web-assembly/emscripten/i-interop-bindings.js";
+import { nullPtr } from "../web-assembly/emscripten/null-pointer.js";
+import { type ISharedMemoryBlock, SharedMemoryBlock } from "../web-assembly/shared-memory/shared-memory-block.js";
 
 /**
  * @public
@@ -22,6 +24,45 @@ export class SegmentedBufferDescriptor
     )
     {
         this.end = start + count;
+    }
+
+    /**
+     * @returns Malloc'd buffer in the shape of `SegmentedDataViewOptions`.
+     * @remarks You must manually `free` this.
+     */
+    public createRawOptions(wrapper: IEmscriptenWrapper<IInteropBindings>): number
+    {
+        const ptr = wrapper.instance._jsUtilMalloc(3);
+
+        if (ptr == nullPtr)
+        {
+            return nullPtr;
+        }
+
+        this.setMemory(wrapper, ptr);
+
+        return ptr;
+    }
+
+
+    public createWrapped
+    (
+        wrapper: IEmscriptenWrapper<IInteropBindings>,
+        owner: IManagedResourceNode | null,
+    )
+        : ISharedMemoryBlock
+    {
+        const smb = SharedMemoryBlock.createOne(wrapper, owner, 3);
+        this.setMemory(wrapper, smb.pointer);
+        return smb;
+    }
+
+    private setMemory(wrapper: IEmscriptenWrapper<IInteropBindings>, ptr: number): void
+    {
+        const dv = wrapper.getDataView();
+        dv.setUint8(ptr, this.blockSize);
+        dv.setUint8(ptr + 1, this.stride);
+        dv.setUint8(ptr + 2, this.start);
     }
 }
 

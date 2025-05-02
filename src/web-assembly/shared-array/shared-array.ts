@@ -115,3 +115,4 @@ function createSharedObject
 
     return pointer;
 }
+

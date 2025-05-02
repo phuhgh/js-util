@@ -16,6 +16,11 @@ struct SegmentedDataViewOptions
     uint8_t offset{0};
 };
 
+static_assert(sizeof(SegmentedDataViewOptions) == 3);
+static_assert(offsetof(SegmentedDataViewOptions, blockSize) == 0);
+static_assert(offsetof(SegmentedDataViewOptions, stride) == 1);
+static_assert(offsetof(SegmentedDataViewOptions, offset) == 2);
+
 struct ISegmentedDataView
 {
     virtual ~ISegmentedDataView() = default;
