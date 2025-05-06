@@ -170,6 +170,7 @@ export { arraySymmetricDifference } from "./array/impl/array-symmetric-differenc
 export { arrayUnion } from "./array/impl/array-union.js";
 export { arrayUnique } from "./array/impl/array-unique.js";
 export { dictionaryCloneExtend } from "./dictionary/impl/dictionary-clone-extend.js";
+export { dictionaryCollect } from "./dictionary/impl/dictionary-collect.js";
 export { dictionaryOverwrite } from "./dictionary/impl/dictionary-overwrite.js";
 export { dictionaryForEach } from "./dictionary/impl/dictionary-foreach.js";
 export { dictionaryPairs } from "./dictionary/impl/dictionary-pairs.js";

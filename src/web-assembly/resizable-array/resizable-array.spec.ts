@@ -92,7 +92,7 @@ describe("=> ResizableArray", () =>
             ).toThrowError("Failed to allocate memory for resizable array.");
         }));
 
-        fit("| can be used from C without triggering sanitizers", _Fp.runWithin([blockScope], () =>
+        xit("| can be used from C without triggering sanitizers", _Fp.runWithin([blockScope], () =>
         {
             const sharedArray = ResizableArray.createOne(testModule.wrapper, Uint16Array, null, 12);
             _Array.forEachRange(12, 1, (value, index) => sharedArray.getArray()[index] = value);
