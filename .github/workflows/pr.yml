@@ -1,4 +1,4 @@
-name: PR
+name: alpha CI
 
 on:
   pull_request:
@@ -8,8 +8,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install ninja
         run: sudo apt-get install ninja-build
@@ -24,8 +27,22 @@ jobs:
           emcc -v
           ninja --version
           cmake --version
+          node --version
+          npm --version
 
-      - name: Install and Build
+      - name: Install
+        shell: bash
         run: |
           npm ci
+
+      - name: Build and test
+        shell: bash
+        run: |
           npm run ci
+
+      - name: Output test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            test-report/*.xml
