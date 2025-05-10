@@ -14,7 +14,7 @@ while [ "$1" != "" ]; do
     PRESET=$VALUE
     ;;
   --output-junit)
-    OUTPUT_JUNIT="--output-junit $VALUE"
+    OUTPUT_JUNIT="--output-junit=$VALUE"
     ;;
   *)
     # can be ignored...
