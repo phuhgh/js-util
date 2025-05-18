@@ -16,7 +16,7 @@ export class _Dictionary
     public static readonly cloneExtend = dictionaryCloneExtend;
 
     /** {@inheritDoc dictionaryCollect} */
-    public static readonly dictionaryCollect = dictionaryCollect;
+    public static readonly collect = dictionaryCollect;
 
     /** {@inheritDoc dictionaryOverwrite} */
     public static readonly overwrite = dictionaryOverwrite;
