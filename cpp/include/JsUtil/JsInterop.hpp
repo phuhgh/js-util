@@ -31,7 +31,19 @@ static_assert(std::is_trivially_copyable_v<InteropDescriptorBinding>);
 static_assert(offsetof(InteropDescriptorBinding, categoryId) == 0);
 static_assert(offsetof(InteropDescriptorBinding, specializationId) == 2);
 
-class ASharedMemoryObject
+/**
+ * An entity which can in some way act as a category, through specializations.
+ */
+struct ISpecializable
+{
+    virtual ~ISpecializable() {}
+    virtual JsUtil::TInteropId                getSpecializationId(JsUtil::TInteropId category) const noexcept = 0;
+    virtual std::optional<JsUtil::TInteropId> getOptionalSpecializationId(
+        JsUtil::TInteropId category
+    ) const noexcept = 0;
+};
+
+class ASharedMemoryObject : public ISpecializable
 {
   public:
     /// category -> specialization
@@ -51,7 +63,18 @@ class ASharedMemoryObject
         return m_descriptors.erase(descriptor.categoryId);
     }
 
-    TDescriptors m_descriptors;
+    JsUtil::TInteropId getSpecializationId(JsUtil::TInteropId categoryId) const noexcept override
+    {
+        auto id = m_descriptors.find(categoryId);
+        JsUtil::Debug::debugAssert(id != nullptr, "expected to find specialization");
+        return *id;
+    }
+
+    std::optional<JsUtil::TInteropId> getOptionalSpecializationId(JsUtil::TInteropId categoryId) const noexcept override
+    {
+        auto* spec = m_descriptors.find(categoryId);
+        return spec == nullptr ? std::nullopt : std::optional{*spec};
+    }
 
   private:
     template <typename TDesc>
@@ -65,6 +88,8 @@ class ASharedMemoryObject
     friend struct SharedMemoryOwner;
     template <typename T>
     friend struct WeakSharedMemoryOwner;
+
+    TDescriptors m_descriptors;
 };
 
 template <typename T>
@@ -170,18 +195,6 @@ class IdRegistry
 
   private:
     static JsUtil::HashMap<std::string_view, std::uint16_t>& getIds();
-};
-
-/**
- * An entity which can in some way act as a category, through specializations.
- */
-struct ISpecializable
-{
-    virtual ~ISpecializable() {}
-    virtual JsUtil::TInteropId                getSpecializationId(JsUtil::TInteropId category) const noexcept = 0;
-    virtual std::optional<JsUtil::TInteropId> getOptionalSpecializationId(
-        JsUtil::TInteropId category
-    ) const noexcept = 0;
 };
 
 } // namespace JsInterop

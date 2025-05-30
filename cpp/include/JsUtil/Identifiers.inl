@@ -8,7 +8,7 @@ inline TNumber IdFactory<TNumber>::generateId() noexcept
 {
     if constexpr (Debug::isDebug())
     {
-        Debug::debugAssert(m_counter < std::numeric_limits<std::uint32_t>::max(), "ran out of address space");
+        Debug::debugAssert(m_counter < std::numeric_limits<TNumber>::max(), "ran out of address space");
     }
 
     return m_counter++;

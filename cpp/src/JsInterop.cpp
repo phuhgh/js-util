@@ -95,8 +95,8 @@ extern "C"
         JsUtil::TInteropId                    specId
     )
     {
-        auto const* c_spec = sharedObj->m_descriptors.find(catId);
-        return c_spec == nullptr ? false : *c_spec == specId;
+        auto c_val = sharedObj->getOptionalSpecializationId(catId);
+        return c_val.has_value() ? *c_val == specId : false;
     }
 
     EMSCRIPTEN_KEEPALIVE

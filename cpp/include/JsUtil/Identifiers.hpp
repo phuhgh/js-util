@@ -25,7 +25,7 @@ struct SpecializationToken
 using TInteropId = std::uint16_t;
 
 /// Provides unique numbers in a way which is safe statically across translation units.
-template <WithUnsigned TNumber = std::uint32_t>
+template <WithUnsigned TNumber = TInteropId>
 class IdFactory
 {
   public:
@@ -54,7 +54,7 @@ class StableIdKey
 template <typename T>
 concept WithStableIdKey = std::is_base_of_v<StableIdKey, T>;
 
-extern IdFactory<uint8_t> sID_CATEGORY_FACTORY;
+extern IdFactory<TInteropId> sID_CATEGORY_FACTORY;
 
 /**
  * @brief Represents a conceptual category, e.g. buffer, which can then be specialized via `IdSpecialization` (e.g.
@@ -110,7 +110,7 @@ consteval auto createSpecialization(auto const& category, char const* name)
 template <typename T>
 concept WithSpecializationKey = std::is_base_of_v<Impl::SpecializationToken, T>;
 
-template <WithUnsigned TNumber = std::uint32_t, WithStableIdKey T>
+template <WithUnsigned TNumber = TInteropId, WithStableIdKey T>
 IdFactory<TNumber>* getStableIdFactory(T)
 {
     static IdFactory<TNumber> factory{};
@@ -118,17 +118,17 @@ IdFactory<TNumber>* getStableIdFactory(T)
 }
 
 template <WithCategoryKey TIdCategory>
-uint8_t getCategoryId(TIdCategory)
+TInteropId getCategoryId(TIdCategory)
 {
-    static uint8_t const id = sID_CATEGORY_FACTORY.generateId();
+    static TInteropId const id = sID_CATEGORY_FACTORY.generateId();
     return id;
 }
 
 template <WithSpecializationKey TSpecialization>
-uint8_t getSpecializationId(TSpecialization specialization)
+TInteropId getSpecializationId(TSpecialization specialization)
 {
-    IdFactory<uint8_t>*  factory = getStableIdFactory<uint8_t>(*specialization.category);
-    static uint8_t const id = factory->generateId();
+    IdFactory<TInteropId>*  factory = getStableIdFactory<TInteropId>(*specialization.category);
+    static TInteropId const id = factory->generateId();
     return id;
 }
 
