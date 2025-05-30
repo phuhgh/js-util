@@ -55,7 +55,7 @@ describe("=> ResizableArray", () =>
                 }
             };
 
-            // use one for sanity checking purposes...
+            // use one for sanity checking...
             const u8Array = ResizableArray.createOne(testModule.wrapper, Uint8Array, testModule.wrapper.rootNode, 8);
             expect(testModule.wrapper.interopIds.hasId(u8Array, numberSpecializations.f64)).toBe(false);
 
@@ -92,12 +92,13 @@ describe("=> ResizableArray", () =>
             ).toThrowError("Failed to allocate memory for resizable array.");
         }));
 
-        xit("| can be used from C without triggering sanitizers", _Fp.runWithin([blockScope], () =>
+        it("| can be used from C without triggering sanitizers", _Fp.runWithin([blockScope], () =>
         {
-            const sharedArray = ResizableArray.createOne(testModule.wrapper, Uint16Array, null, 12);
-            _Array.forEachRange(12, 1, (value, index) => sharedArray.getArray()[index] = value);
-            expect(testModule.wrapper.instance.testResizableArray_readWriteU16(sharedArray.pointer)).toBe(0);
+            const sharedArray = ResizableArray.createOne(testModule.wrapper, Uint16Array, null, 4);
+            _Array.forEachRange(4, 1, (value, index) => sharedArray.getArray()[index] = value);
+            expect(testModule.wrapper.instance.testResizableArray_readWriteU16(sharedArray.pointer)).toBe(4 + 3 + 2 + 1);
         }));
+
 
         describe("=> debug mode", () =>
         {

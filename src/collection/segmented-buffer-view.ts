@@ -23,7 +23,7 @@ export class SegmentedBufferDescriptor
         public readonly count: number = -1,
     )
     {
-        this.end = start + count;
+        this.end = count === -1 ? -1 : start + count;
     }
 
     /**

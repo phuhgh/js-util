@@ -86,9 +86,9 @@ uint32_t testVector_readWriteU16Vec2(uint32_t maybeVec2)
     return prev;
 }
 
-std::uint32_t testSegmentedDataView_readWriteU16(std::uint32_t maybeData, std::uint32_t maybeDescriptor)
+std::uint32_t testSegmentedDataView_readWriteU16(std::uint32_t maybeDataOwner, std::uint32_t maybeDescriptor)
 {
-    auto* data = (JsUtil::ResizableArray<std::uint16_t>*)maybeData;
+    auto  data = ((JsInterop::SharedMemoryOwner<JsUtil::ResizableArray<std::uint16_t>>*)maybeDataOwner)->m_owningPtr;
     auto* descriptor = (JsUtil::SegmentedDataViewOptions*)maybeDescriptor;
     auto  view = JsUtil::SegmentedDataView{*data, *descriptor};
 
@@ -105,9 +105,9 @@ std::uint32_t testSegmentedDataView_readWriteU16(std::uint32_t maybeData, std::u
     return sum;
 }
 
-std::uint32_t testResizableArray_readWriteU16(std::uint32_t maybeData)
+std::uint32_t testResizableArray_readWriteU16(std::uint32_t maybeDataOwner)
 {
-    auto*         data = (JsUtil::ResizableArray<std::uint16_t>*)maybeData;
+    auto data = ((JsInterop::SharedMemoryOwner<JsUtil::ResizableArray<std::uint16_t>>*)maybeDataOwner)->m_owningPtr;
     std::uint32_t sum{0};
 
     for (auto value : data->asSpan())

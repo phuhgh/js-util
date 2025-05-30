@@ -26,15 +26,14 @@ describe("=> createSegmentedBufferView", () =>
         testModule.endEmscriptenProgram();
     });
 
-    // todo jack
-    xit("| creates a compatible C struct", _Fp.runWithin([blockScope], () =>
+    it("| creates a compatible C struct", _Fp.runWithin([blockScope], () =>
     {
         const descriptor = new SegmentedBufferDescriptor(1, 2, 3);
         const smb = descriptor.createWrapped(testModule.wrapper, null);
         const sharedArray = ResizableArray.createOne(testModule.wrapper, Uint16Array, null, 12);
         _Array.forEachRange(12, 1, (value, index) => sharedArray.getArray()[index] = value);
         const sum = testModule.wrapper.instance.testSegmentedDataView_readWriteU16(sharedArray.pointer, smb.pointer);
-        expect(sum).toBe(0);
+        expect(sum).toBe(9 + 7 + 5 + 3);
     }));
 
     it("| correctly handles lifecycle", _Fp.runWithin([blockScope], () =>
