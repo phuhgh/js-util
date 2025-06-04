@@ -231,6 +231,7 @@ export { setIsSetEqual } from "./set/impl/set-is-set-equal.js";
 export { setSetDifference } from "./set/impl/set-set-difference.js";
 export { setSymmetricDifference } from "./set/impl/set-symmetric-difference.js";
 export { setValuesToArray } from "./set/impl/set-values-to-array.js";
+export { stringCreateHorspoolTable, stringSearchInHorspool, Needle } from "./string/impl/string-boyer-moore-horspool.js";
 export { stringNormalizeEmptyToUndefined } from "./string/impl/string-normalize-empty-to-undefined.js";
 export { stringNormalizeNullUndefinedToEmpty } from "./string/impl/string-normalize-null-undefined-to-empty.js";
 export { stringConcat2 } from "./string/impl/string-concat-2.js";
