@@ -23,6 +23,12 @@ jobs:
         with:
           version: 'latest'
 
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.12
+        with:
+          cmake-version: '4.0.x'
+          github-api-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Echo versions
         run: |
           emcc -v
