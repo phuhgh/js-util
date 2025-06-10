@@ -1,7 +1,7 @@
 import { stringNormalizeEmptyToUndefined } from "./impl/string-normalize-empty-to-undefined.js";
 import { stringNormalizeNullUndefinedToEmpty } from "./impl/string-normalize-null-undefined-to-empty.js";
 import { stringConcat2 } from "./impl/string-concat-2.js";
-import { stringCreateHorspoolTable, stringSearchInHorspool } from "./impl/string-boyer-moore-horspool.js";
+import { stringCountOccurrences, stringCreateHorspoolTable, stringSearchInHorspool } from "./impl/string-boyer-moore-horspool.js";
 
 /**
  * @public
@@ -14,6 +14,9 @@ export class _String
 
     /** {@inheritDoc stringSearchInHorspool} */
     public static readonly searchInHorspool = stringSearchInHorspool;
+
+    /** {@inheritDoc stringCountOccurrences} */
+    public static readonly countOccurrences = stringCountOccurrences;
 
     /** {@inheritDoc stringConcat2} */
     public static readonly concat2 = stringConcat2;

@@ -1,4 +1,4 @@
-import { stringCreateHorspoolTable, stringSearchInHorspool } from "./string-boyer-moore-horspool.js";
+import { stringCountOccurrences, stringCreateHorspoolTable, stringSearchInHorspool } from "./string-boyer-moore-horspool.js";
 
 describe("=> Boyer-Moore-Horspool Search", () =>
 {
@@ -6,7 +6,6 @@ describe("=> Boyer-Moore-Horspool Search", () =>
     {
         const needleObj = stringCreateHorspoolTable(needle);
         return stringSearchInHorspool(haystack, needleObj, startIndex);
-
     }
 
     it("| returns -1 if the needle (1 character) cannot be found", () =>
@@ -139,5 +138,32 @@ describe("=> Boyer-Moore-Horspool Search", () =>
         // multi character handled separately
         expect(find("aa", "aabaa", 0)).toBe(0);
         expect(find("aa", "aabbaa", 2)).toBe(4);
+    });
+});
+
+describe("=> Boyer-Moore-Horspool Count Occurrences", () =>
+{
+    function count(needle: string, haystack: string, startIndex: number = 0): number
+    {
+        const needleObj = stringCreateHorspoolTable(needle);
+        return stringCountOccurrences(haystack, needleObj, startIndex);
+    }
+
+    it("| counts multiple non-overlapping occurrences", () =>
+    {
+        expect(count("ab", "abababab")).toBe(4);
+        expect(count("test", "test1test2test")).toBe(3);
+    });
+
+    it("| counts overlapping occurrences", () =>
+    {
+        expect(count("aa", "aaaa")).toBe(3);
+        expect(count("aaa", "aaaa")).toBe(2);
+    });
+
+    it("| respects start index", () =>
+    {
+        expect(count("ab", "ababab", 2)).toBe(2);
+        expect(count("test", "test1test2test", 5)).toBe(2);
     });
 });

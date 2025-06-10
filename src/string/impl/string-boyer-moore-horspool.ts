@@ -5,9 +5,18 @@
  *
  * Adapted from:
  * https://github.com/FooBarWidget/boyer-moore-horspool/blob/master/Horspool.cpp
+ *
+ * @param haystack - The thing to search.
+ * @param needle - The thing to search for.
+ * @param startIndex - Where to start searching.
  */
-export function stringSearchInHorspool(haystack: string,
-                                       needle: Needle, startIndex: number = 0): number
+export function stringSearchInHorspool
+(
+    haystack: string,
+    needle: Needle,
+    startIndex: number = 0
+)
+    : number
 {
     const needle_length = needle.value.length;
     const haystack_length = haystack.length;
@@ -44,7 +53,14 @@ export function stringSearchInHorspool(haystack: string,
     return -1;
 }
 
-function matchNeedleHaystack(needle: string, haystack: string, haystackPosition: number, matchLength: number)
+function matchNeedleHaystack
+(
+    needle: string,
+    haystack: string,
+    haystackPosition: number,
+    matchLength: number
+)
+    : boolean
 {
     for (let i = 0; i < matchLength; ++i)
     {
@@ -79,6 +95,7 @@ export class Needle
 /**
  * @public
  * Creates the needle for {@link stringSearchInHorspool}.
+ * @param needle - The thing to search for.
  */
 export function stringCreateHorspoolTable(needle: string): Needle
 {
@@ -94,4 +111,35 @@ export function stringCreateHorspoolTable(needle: string): Needle
         }
     }
     return new Needle(needle, table);
+}
+
+/**
+ * @public
+ * Uses {@link stringSearchInHorspool} to count instances of needle. Use {@link stringCreateHorspoolTable} to create the needle.
+ * Supports utf-16.
+ * @param haystack - The thing to search.
+ * @param needle - The thing to search for.
+ * @param startIndex - Where to start searching.
+ */
+export function stringCountOccurrences
+(
+    haystack: string,
+    needle: Needle,
+    startIndex: number = 0
+)
+    : number
+{
+    let count = 0;
+    let currentIndex = startIndex;
+
+    while (currentIndex < haystack.length) {
+        const foundIndex = stringSearchInHorspool(haystack, needle, currentIndex);
+        if (foundIndex === -1) {
+            break;
+        }
+        count++;
+        currentIndex = foundIndex + 1;
+    }
+
+    return count;
 }
