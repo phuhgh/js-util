@@ -5,6 +5,10 @@ on:
     branches: [ alpha ]
   workflow_dispatch: # manual run
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build-and-alpha-publish:
     runs-on: ubuntu-latest
@@ -51,6 +55,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
+          comment_mode: off
           files: |
             test-report/*.xml
 

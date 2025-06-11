@@ -5,6 +5,11 @@ on:
     branches: [ master ]
   workflow_dispatch: # manual run
 
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -45,6 +50,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
+          comment_mode: off
           files: |
             test-report/*.xml
 
