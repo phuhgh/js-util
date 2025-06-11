@@ -153,7 +153,7 @@ class CircularFIFOStack
 {
 };
 
-/// thread safe for single producer consumer pair
+/// thread safe for a single producer consumer pair
 template <typename TValue, WithUnsigned TIndex, typename TStorage>
 class CircularFIFOStack<TValue, ECircularStackOverflowMode::NoOp, TIndex, TStorage>
     : public CircularFIFOStackBase<TValue, TIndex, TStorage>
@@ -277,7 +277,7 @@ class CircularFIFOStack<TValue, ECircularStackOverflowMode::Overwrite, TIndex>
     }
 };
 
-/// thread safe for single producer consumer pair
+/// thread safe for a single producer consumer pair
 template <typename TValue, WithUnsigned TIndex, typename TStorage>
 class CircularFIFOStack<TValue, ECircularStackOverflowMode::DebugException, TIndex, TStorage>
     : public CircularFIFOStackBase<TValue, TIndex, TStorage>

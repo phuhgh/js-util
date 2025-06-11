@@ -34,4 +34,8 @@ export const exportedFunctions: { [index in keyof IJsUtilBindings]: boolean; } =
     _workerPool_hasPendingWork: true,
     _malloc: true,
     _free: true,
+    _vtCreateGroup: true,
+    _vtAddEntityToGroup: true,
+    _vtRemoveEntityFromGroup: true,
+    _vtCreateEntity: true
 };

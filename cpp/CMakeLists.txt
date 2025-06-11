@@ -124,4 +124,10 @@ if (${BUILD_JSUTIL_TEST})
             INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
             LINK_OPTIONS -sALLOW_MEMORY_GROWTH
             LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
+    jsu_create_test(TestQuadTree
+            SOURCE_FILES test/TestQuadTree.cpp
+            COMPILE_OPTIONS ${pedantic_flags}
+            INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/test-util"
+            LINK_OPTIONS -sALLOW_MEMORY_GROWTH
+            LINK_LIBRARIES JsUtil GTest::gtest_main GTest::gmock)
 endif ()
