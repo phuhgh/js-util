@@ -1,5 +1,3 @@
-import {join} from "path";
-
 function isDebug() {
     return process.argv.slice(2).includes("--debug");
 }
@@ -12,23 +10,26 @@ export function getHelpers(env, path) {
     const helpers = [];
     if (isAsan()) {
         console.log("Adding ASAN variables...");
-        helpers.push(join(path, "config/helpers/jasmine-asan.js"));
+        helpers.push(stripLeadingSlash(`${path}/config/helpers/jasmine-asan.js`));
     }
     if (isDebug()) {
         console.log("Adding debug variables...");
-        helpers.push(join(path, "config/helpers/jasmine-debug.js"));
+        helpers.push(stripLeadingSlash(`${path}config/helpers/jasmine-debug.js`));
     }
     switch (env) {
         case "browser":
             return [
-                join(path, "config/helpers/jasmine-env.js"),
+                stripLeadingSlash(`${path}/config/helpers/jasmine-env.js`),
             ].concat(helpers);
         case "node":
             return [
-                join(path, "config/helpers/jasmine-env.js"),
-                join(path, "config/helpers/jasmine-reporter.cjs"),
+                stripLeadingSlash(`${path}config/helpers/jasmine-env.js`),
+                stripLeadingSlash(`${path}config/helpers/jasmine-reporter.cjs`),
             ].concat(helpers);
         default:
             throw new Error(`unexpected environment ${env}`);
     }
 }
+
+// bizarrely, jasmine doesn't play well with windows paths...
+function stripLeadingSlash(path) { return path.replace(/^\/+/, ""); }
