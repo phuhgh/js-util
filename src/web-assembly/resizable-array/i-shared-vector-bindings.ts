@@ -4,7 +4,7 @@ import type { IInteropBindings } from "../emscripten/i-interop-bindings.js";
 /**
  * @public
  */
-export enum EVectorIdentifier
+export const enum EVectorIdentifier
 {
     Vec2 = 0,
     Vec3,

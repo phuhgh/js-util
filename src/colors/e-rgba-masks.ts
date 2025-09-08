@@ -7,7 +7,7 @@
  * Left shift to pack (0-255 as input).
  * Stored as ABGR to allow packing of RGB into float32.
  */
-export enum ERgbaShift
+export const enum ERgbaShift
 {
     R = 0,
     G = 8,
@@ -19,7 +19,7 @@ export enum ERgbaShift
  * @public
  * Bit mask for packed RGBA colors.
  */
-export enum ERgbaMasks
+export const enum ERgbaMasks
 {
     R = 0xFF << ERgbaShift.R,
     G = 0xFF << ERgbaShift.G,

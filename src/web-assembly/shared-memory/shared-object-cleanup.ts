@@ -8,7 +8,7 @@ import { _Production } from "../../production/_production.js";
  * @public
  * Defines the cleanup behavior of {@link SharedObjectCleanup}
  */
-export enum ESharedObjectOwnerKind
+export const enum ESharedObjectOwnerKind
 {
     NotOwning = 1,
     SharedMemoryOwner,

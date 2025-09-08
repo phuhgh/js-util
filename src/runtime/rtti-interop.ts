@@ -10,7 +10,7 @@ import { numberGetHexString } from "../number/impl/number-get-hex-string.js";
  * @public
  * Matches ENumberIdentifier in `RTTI.hpp`.
  */
-export enum ENumberIdentifier
+export const enum ENumberIdentifier
 {
     U8 = 0, // used for indexing
     U16,

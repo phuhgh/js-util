@@ -9,7 +9,7 @@ import { IFIFOStack } from "./i-fifo-stack.js";
  * @remarks
  * Does not affect underflow, which is always considered exceptional.
  */
-export enum ECircularStackOverflowMode
+export const enum ECircularStackOverflowMode
 {
     /**
      * Do nothing.

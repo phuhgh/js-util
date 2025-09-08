@@ -13,7 +13,7 @@ import { ESharedObjectOwnerKind, SharedObjectCleanup } from "../shared-memory/sh
  * @public
  * How to handle jobs which don't "overflow", i.e. the workers cannot keep up with the work being sent.
  */
-export enum EWorkerPoolOverflowMode
+export const enum EWorkerPoolOverflowMode
 {
     /**
      * Delete the job and then throw a {@link NestedError} with a cause of {@link WorkerPoolErrorCause.overflow}.

@@ -13,7 +13,7 @@ export interface INonblockingPoll
 /**
  * @public
  */
-export enum EResolutionState
+export const enum EResolutionState
 {
     Resolved,
     TimedOut,
